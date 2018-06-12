@@ -1,0 +1,75 @@
+---
+title: "Intro to Statistical Modeling and Designed Experiments"
+output: 
+  html_document:
+    css: style.css
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+library(tidyverse)
+options(digits=6)
+```
+
+# Intro to Statistical Modeling and Designed Experiments
+
+We begin our dive into Statistical Modeling by first reviewing content from your introductory statistics course. The learning objective of this unit unclude:
+
+* Basic structure of statistical model
+* Understanding statistical inference can be formulated as the comparison of models
+* Difference between observational studies and designed experiments
+* Full analysis involving a one-factor experiment
+
+## Statistical Analyses is Modeling
+
+two-sample $t$-test as a model... Build up with math
+
+### Two-sample inference example
+
+A key concept from your introductory statistics course that builds off sampling distribution theory is the comparison of the mean from two population based on the sample means using a two-sample *t*-test. Consider testing
+$$H_0:\ \mu_A = \mu_B ~~~\textrm{versus}~~~ H_A:\ \mu_A <\neq> \mu_B$$
+where the notation $<\neq>$ represents one of the common alternative hypotheses from your introdoctory statistics course and $\mu_A$ is the population mean from population $A$ and $\mu_B$ is the population mean from population $B$. We statistically test this hypothesis via
+$$t_0 = \frac{\bar{x}_A - \bar{x}_B}{{SE}_{\bar{x}_A-\bar{x}_B}}$$
+
+where ${SE}_{\bar{x}_A-\bar{x}_B}$ is the standard error of the difference of sample means $\bar{x}_A$ and $\bar{x}_B$. It can be estimated in one of two ways (depending if we assume the population variances are equal or not) and we reference your intro stat class for details on it (pooled versus non-pooled variance). In R, we can perform this test, and construct the associated $(1-\alpha)100\%$ confidence interval for $\mu_A-\mu_B$,
+$$\bar{x}_A - \bar{x}_B \pm t_{\alpha/2} {SE}_{\bar{x}_A-\bar{x}_B}$$
+using the function `t.test()`. Here $t_{\alpha/2}$ is the $1-\alpha/2$ quantile from the *t*-distribution (the degrees of freedom depend on your assumption about equal variance).
+
+Consider comparing the ACT scores for incoming freshmen in 1996 to 2000 using the university admission data. Perhaps we have a theory that ACT scores were higher in 1996 than 2000. That is, we are formally testing
+$$H_0:\ \mu_{1996} = \mu_{2000} ~~~\textrm{versus}~~~ \mu_{1996} > \mu_{2000}$$
+
+First we need to select a subset of the data.
+
+```{r}
+site <- "http://www.users.miamioh.edu/hughesmr/sta363/univadmissions.txt"
+uadata <- read.table(site, header=TRUE)
+uadata.trim <- uadata %>%
+  filter(year %in% c(1996, 2000) )
+```
+
+Here we filter the `uadata` so that only years in the vector 1998, 2001 are included. Now that we have a proper subset of the data, we can compare the ACT scores between the two years and build a 98\% confidence interval for the mean difference.
+
+```{r}
+t.test(act ~ year, data=uadata.trim, conf.level=0.98, alternative="greater", var.equal=TRUE)
+```
+
+We are 98\% confident that the mean difference between 1996 ACT scores and 2000 ACT scores is in the interval (-0.792, $\infty$). Further, we lack significant evidence (*p*-value$\approx 0.3817$) to conclude that the average ACT score in 1996 is greater than that in 2000 for incoming freshmen. (also note that the value 0 is included in the confidence interval
+
+A few things to note about the code in the above. We use the notation `act ~ year` this tells R that the `act` scores are a function of `year`. We specify the data set that contains the data in which to perform the test (`data=uadata.trim`). We specify the confidence limit (by detault it is 0.95) and the alternative hypothesis (by default it is a not-equal test). Lastly, we set `var.equal=TRUE` so the standard error (and degrees of freedom) are calculated under the assumption that the variance of the two populations is equal. 
+
+## Observational Studies versus designed experiments
+
+## Paired *t*-test
+
+## Designed experiement vocabulary
+
+## One-Way ANOVA
+
+## Assumption Checking
+
+## Follow-up procedures -- Multiple Comparisons
+
+
+
