@@ -240,7 +240,7 @@ As a working example we will consider the university admissions data we read in 
 
 This is the first dataset we input above, in the `uadata` data frame. 
 
-**Source:** Kutner...
+**Source:** Kutner, Nachtsheim, Neter. Applied Linear Regression Models, 4th edition. McGraw-Hill Irwin, New York, NY 10020, 2004.
 
 
 
@@ -681,7 +681,7 @@ Here we filter the `uadata` so that only years in the vector 1998, 2001 are incl
 t.test(act ~ year, data=uadata.trim, conf.level=0.98, alternative="greater")
 ```
 
-We are 98\% confident that the mean difference between 1996 ACT scores and 2000 ACT scores is in the interval (-0.790, $\infty$). Further, we lack significant evidence (*p*-value$\approx$0.3816) to conclude that the average ACT score in 1996 is greater than that in 2000 for incoming freshmen. (also note that the value 0 is included in the confidence interval
+We are 98\% confident that the mean difference between 1996 ACT scores and 2000 ACT scores is in the interval (-0.790, $\infty$). Further, we lack significant evidence (*p*-value$\approx 0.3816$) to conclude that the average ACT score in 1996 is greater than that in 2000 for incoming freshmen. (also note that the value 0 is included in the confidence interval
 
 A few things to note about the code in the above. We use the notation `act ~ year` this tells R that the `act` scores are a function of `year`. We specify the data set that contains the data in which to perform the test (`data=uadata.trim`). We specify the confidence limit (by detault it is 0.95) and the alternative hypothesis (by default it is a not-equal test).
 
