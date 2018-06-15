@@ -1,0 +1,12 @@
+
+# More on multiple linear regression
+
+
+## Model comparision -- Reduced $F$-tests
+
+
+## Categorical Predictor Variables
+
+## Briding Regression and Designed Experiments -- ANCOVA
+
+

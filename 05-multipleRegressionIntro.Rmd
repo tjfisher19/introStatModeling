@@ -1,0 +1,25 @@
+
+# Introduction to Multiple Regression
+
+## Regression Model
+
+## Inference regarding Multiple Regression
+
+### Overall $F$-test for model signifance
+
+### Individual parameter inference
+
+#### $t$-tests
+
+#### Confidence Intervals
+
+### Confidence and prediction bands
+
+## Goodness-of-fit
+
+### Coefficient of determination
+
+### Akaike's Information Criterion
+
+## Assumption checking
+

@@ -1,16 +1,4 @@
----
-title: "Intro R and Intro Statistics Review"
-output: 
-  html_document:
-    css: style.css
-    number_sections: true
----
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-library(knitr)
-options(digits=6)
-```
 
 # Intro Statistics in R
 
@@ -629,6 +617,10 @@ The normal distribution serves as a good sampling distribution model for the sam
 $$t_0 = \frac{\bar{x}-\mu}{{SE}_{\bar{x}}}$$
  
 counts up the number of standard error units between the true value of $\mu$ and its sample estimate $\bar{x}$; it can be thought of as the standardized distance between a true mean value and its sample mean estimate. If the original population was normally distributed, then the quantity $t_0$ will possess the $t$-distribution with $n - 1$ degrees of freedom. Degrees of freedom is the only parameter of a $t$-distribution.  Notationally, we indicate this by writing $t \sim t(df)$.
+
+```{r fig.align='center', echo=FALSE, include=identical(knitr:::pandoc_to(), 'html')}
+knitr::include_graphics('mrT.png', dpi = NA)
+```
 
 $t$-distributions look a lot like the standard normal distribution $N(0, 1)$: they both center at 0 and are symmetric and bell-shaped (see below).  The key difference is due to the fact that the quantity $t$ includes two sample summaries in its construction: the sample mean $\bar{x}$, and $SE_{\bar{x}}$, which incorporates the sample standard deviation $s$.  Because of this, $t$ is more variable than $N(0, 1)$.  However, as $n$ (and hence degrees of freedom) increases, $s$ becomes a better estimate of the true population SD, so the distinction ultimately vanishes with larger samples. This can all be vizualized in the below plot
 

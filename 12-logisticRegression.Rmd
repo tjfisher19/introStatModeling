@@ -1,0 +1,16 @@
+
+# Logistic Regression
+
+
+## Logistic Model
+
+
+## Inference on Logistic Regression
+
+## Goodness-of-fit ideas
+
+## Interpreting the models
+
+
+
+
