@@ -1,0 +1,41 @@
+--- 
+title: "Introduction to Statistical Modeling"
+author: "Michael Hughes and Thomas Fisher"
+date: "`r Sys.Date()`"
+cover-image: "mrT.png"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+github-repo: rstudio/bookdown-demo
+description: "Covers Regression and Elements of Design of Experiments R using the tidyverse."
+---
+
+
+# Preface{-}
+
+
+
+Here is where we put our blurbs about what we hopped to accomplish
+
+# Preliminary Review{-}
+
+Builds off an Introduction to Statistics course. See
+
+https://bookdown.org/chesterismay/rbasics/
+
+http://moderndive.com/index.html
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+library(tidyverse)
+library(GGally)
+library(ggfortify)
+library(gridExtra)
+#library(lindia)
+options(digits=6)
+```

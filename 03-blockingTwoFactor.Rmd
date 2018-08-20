@@ -1,0 +1,125 @@
+
+# Multiple Factor Designed Experiments
+
+In the previous chapters we have seen how one variable (perhaps a factor with multiple treatments) can influence the response variable. It should not be much of a stretch to consider the case of multiple predictor variables influencing the response.
+
+**Example.** Consider the ACT scores, besides the year of entry maybe a student's home neighborhood or state could be input?
+
+In this chapter we will explore the two main anlayses for designed exerpiements -- a Block design and Two-factor experiment.
+
+## Blocking
+
+Randomized Complete Block Designs are a bit of an odd duck. The type of design itself is straightforward, but the analysis might seem a bit unusual. 
+
+The design is best described in terms of the agricultural field trials that gave birth to it. When conducting field trials to compare plant varieties (or whatever), there is concern that some areas of a field may be more fertile than others. So, if one were comparing three plant varieties, say, it would not be a good idea to use one variety here, another variety over there, and the third variety way out back because the effects of the varieties would be confounded with the natural fertility of the land.  
+
+The natural fertility in this situation is a **confounding factor**, something we aren’t necessarily interested in, but that none the less will have an impact on our assessment of the factor of interest (e.g. plant variety).  
+
+A **block** is defined to be “a relatively homogeneous set of experimental material.”  OK … what does that mean?  It means that we would like to be able to assess the treatment effects without undue influence from a contaminating factor, such as land fertility.   One way to do this would be to apply all the treatments (e.g. plant varieties) to the same area of the field.  Within one area, we should see consistency in natural fertility levels, so differences observed in a measured response (such as crop yield) between plant varieties will not be due to variation in fertility levels, but rather due to the different plant varieties themselves.
+
+So, a bock design is one that attempts to reduce the noise in the measured response in order to “clarify” the effect due to the treatments under study.
+
+A **randomized block design** in the field study would be conducted this way: 
+
+* The field is divided into blocks.
+* Each block is divided into a number of units equal to the number of treatments. 
+* Within each block, the treatments are assigned at random so that a different treatment is applied to each unit. That is, all treatments are observed within each block. **The defining feature of the Randomized (Complete) Block Design is that each block sees each treatment exactly once.**
+
+A good experimental design will be able to “parse out” the variability due to potential confounding factors, and thus give clarity to our assessment of the factor of interest.  A block design can accomplish this task.
+
+**What can serve as a block?**  It is important to note that subjects (i.e. experimental units) themselves may form blocks in a block design.  It is also possible that different experimental units may collectively form a “block”.  It depends on the circumstances.  All that is needed is that a block, however, formed, creates a “relatively homogeneous set of experimental material.”
+
+**An example.** You've already seen the concept of a block design! Consider the paired *t*-test included in Section \@ref(paired-t-test). There, the individual people are essentially treated as blocks. We observe two responses within each block (or person).
+
+### Data structure, model form and analysis of variance of a RBD
+
+Here is the general data structure for a randomized block design (RBD):
+
+
+
+The model for such data has the form
+
+$$Y_{ij} = \mu + \tau_i + \beta_j + \varepsilon_{ij}$$
+
+where 
+
+* $Y_{ij}$ is the observation for treatment $i$ within block $j$
+* $\mu$ is the overall mean
+* $\tau_i$ is the effect of the $i^\mathrm{th}$ treatment on the mean response
+* $\beta_j$ is the effect of the $j^\mathrm{th}$ block on the mean response
+* $\varepsilon_{ij}$ is the random error term
+
+The usual test of interest is the same as in a one-way analysis of variance: is to compare the population means due to the different treatments.  The null and alternative hypotheses are given by:
+$$H_0: \tau_1 = \tau_2 = \ldots = \tau_k = 0 ~~\textrm{versus}~~ H_a: \textrm{at least one } \tau_i \neq 0$$
+We may also test for differences between blocks, but this is usually of secondary interest at best.  
+
+Here is an example in R.
+
+**Example:** Word recall study.  Five subjects are asked to memorize a list of words. The words on this list are of three types: positive words, negative words and neutral words. The response variable is the number of words recalled by word type, with a goal of determining if the ability to recall words is affected by the word type.  Each subject provides the number of recalled words of each type.  Here are the data:
+
+```{r, echo=FALSE}
+load("wordrecall.RData")
+knitr::kable( wordrecall %>% dplyr::select(-obs) %>% spread(word.type, recall))
+```
+
+*Solution.*
+
+```{r}
+load("wordrecall.RData")
+glimpse(wordrecall)
+```
+
+Each subject gives three responses instead of one as in a usual one-way design.  In this manner, each subject forms a block.  The design is a randomized block design, because the experimenter randomly determines the order of word type for recalling for each subject.
+
+Before doing a formal analysis, here are some descriptive looks at word type and subject factors:
+
+```{r}
+p1 <- ggplot(wordrecall) + 
+  geom_boxplot(aes(x=subject, y=recall) ) +
+  labs(x="Subject", y="Words Recalled")
+p2 <- ggplot(wordrecall) + 
+  geom_boxplot(aes(x=word.type, y=recall)) +
+  labs(x="Word Type", y="Words Recalled")
+grid.arrange(p1, p2, nrow=1)
+```
+
+In the above code, we build a simple boxplot of the words recalled by subject and call it `p1`. Similary we build a boxplot of words recalled by word type, called `p2`. We then use the `grid.arrange()` function in the `gridExtra` package to put the two plots side-by-side.
+
+The effect of word type appears quite stark, with positive word recalls being higher than the other two types.  There is also a bit of subject-to-subject variability, but not much.
+
+Here is how to do a formal analysis in a call of `aov()` -- make sure to check underlying assumptions
+
+```{r}
+word.fit <- aov(recall ~ subject + word.type, data=wordrecall)
+autoplot(word.fit)
+```
+
+The assumptions look generally fine here.  So, on to the analysis:
+
+```{r}
+summary(word.fit)
+```
+
+We see that there is a significant different in the mean recall between the three word types (F = 189.11, df1 = 2, df2 = 8, p-value = 0.0000001841)
+
+You can also see how the total variation was partitioned into three components: 
+
+1.	Within-subject (i.e. block) sum of squares (105.067)
+2.	Between word type (i.e. treatment) sum of squares (2029.73)
+3.	Residual sum of squares (42.93).   
+
+We can investigate the differences in mean recall between the three word types using a multiple comparison procedure.  
+
+```{r}
+
+```
+
+
+No CIs contain 0, so all word types are significantly different from each other.  Negative word types have significantly more recalls than neutral types; positive word types have significantly more recalls on average than either negative or neutral word types.
+
+
+## Two-factor
+
+### Main Effects
+
+### Interactions

@@ -1,0 +1,687 @@
+
+
+# Intro Statistics in R
+
+We begin our dive into Statistical Modeling by first reviewing content from your introductory statistics course. The learning objective of this unit unclude:
+
+* Review of the fundamental concepts of *population*, *sample*, *parameter* and *statistic*.
+* Review of exploratory and descriptive statistics: numerical quantities and graphics.
+* An introduction and overview of the R software for statistical computing.
+* Basic statistical inference through a two-sample *t*-test and confidence interval.
+
+## Goals of a statistical analysis
+
+We now embark on doing statistics. 
+The language R is our tool to facilitate investigations into data and process of making sense of it. 
+This is what the science of statistics is all about.
+
+**Statistics** can be broadly defined as the study of variation. 
+We collect **sample** data from a parent **population** of interest, typically because even though we are ultimately interested in characteristics about the **population**, it is entirely unfeasible to collect data from every member. 
+Good statistical practice demands that we collect **sample** data from the **population** in such a manner so as to ensure that the **sample** is representative; i.e., it is not presenting a systematic bias in its representation. 
+
+There are two issues that arise with respect to variation in such data:
+
+1. Measurements of the same attribute will vary from sample member to sample member. This is natural and is to be expected. This *random* (or *stochastic*) component of a sample typically modeled through probabilitistic assumptions (think *Normal* from your Intro Stat course).
+
+2. Any summary characteristic computed from the sample (known as a **sample statistic**) will only be an estimate of the corresponding summary characteristic for the population as a whole (known as a **population parameter**), since only a small subset of the population is used in its calculation. Thus, *sample statistics will vary from their corresponding population parameters*. In fact, different samples from the same population will produce different estimates of the same parameter, so sample statistics also vary from sample to sample.
+
+This variation gives rise to the concept of uncertainty in any findings that we make about a population based on sample data. 
+A meaningful statistical analysis helps us quantify this uncertainty.
+
+<center>
+**Goals of a statistical analysis**
+</center>
+
+*	To make sense of data in the face of uncertainty.
+*	To be able to meaningfully describe the patterns of variation in collected sample data, and use this information to make reliable inferences/generalizations about the parent population.
+
+
+## Before you begin a statistical analysis.
+
+Statistics starts with a problem, continues with the collection of data, proceeds with a data analysis, and then finishes with conclusions. 
+It is a common mistake of inexperienced statisticians to plunge into a complex analysis without paying attention to what the objectives are, or even whether the data are appropriate for the proposed analysis. 
+Look before you leap!
+
+<center>
+**Problem formulation**
+</center>
+
+To attack a problem correctly, you should:
+
+1. **Understand the background**. Statisticians often work in collaboration with researchers in other disciplines and need to understand something about the subject area. You should regard this as an opportunity to learn something new. In essense, a Statistician must be a renaissance (wo)man. Some level of *elementary* expertises is needed in the subject area of study.
+
+2. **Understand the objectives**. Again, often you will be working with a collaborator who may not be clear about what the objectives are. Beware of conducting "fishing expeditions": if you look hard enough, you'll almost always find something, but that something may just be a coincidence of no consequence. Also, sometimes an analysis far more complicated than what is really needed is performed. You may find sometimes that simple descriptive statistics are all that are really required. Even if a more complex analysis is necessary, simple descriptive statistics can provide a valuable supplement.
+
+3. **Translate the problem into statistical terms**.  This can be a challenging step and oftentimes requires creativity on the part of the statistician (in other words, not every problem fits into a neat little box like in an intro stats course!). Care must be taken at this step.
+
+
+<center>
+**Data Collection**
+</center>
+
+It is also vitally important to understand how the data was collected. Consider:
+
+* Are the data observational or experimental? Are the data a "sample of convenience", or were they obtained via a designed experiment or random sampling? How the data were collected has a crucial impact on what conclusions can be meaningfully made.
+*	Is there "non-response"? The data you don't see may be just as important as the data you do see! This gets to the issue of a sample being representative of the intended target population.
+*	Are there missing values? This is a common problem that is troublesome and time consuming to deal with. Data that are "missing" according to some pattern are particularly troublesome.
+*	How are the data coded? In particular, how are the qualitative or categorical variables represented? This has important impact on the implementation of statistical methods in R.
+*	What are the units of measurement? Sometimes data is collected or represented using far more digits than are necessary. Consider rounding if this will help with the interpretation. For example, starting an R session with the command `options(digits=4)` will round all output to four digits.
+*	Beware of data entry errors. This problem is all too common, and is almost a certainty in any real dataset of at least moderate size. Perform some data sanity checks.
+
+
+
+## Data frames
+
+A statistical dataset in R is known as a data frame, or `data.frame`, and is a rectangular array of information (essentially a table or matrix).
+Rows of a data frame constitute different observations in the data, and the columns constitute different variables measured.
+
+Imagine we record the name, height and age of all the students in the class:
+the first column will record each students' name, with the second column their height and third column their age.
+Each row corresponds to a particular student and each column a variable.
+
+
+### Built-in data
+
+R packages come bundled with many pre-entered datasets for exploration purposes. 
+For example, here is the data frame `stackloss` from the `datasets` package (which loads automatically upon starting R):
+
+```{r}
+stackloss
+```
+
+This data frame contains 21 observations on 4 different variables.  Note the listing of the variable names, this is known as the *header*.
+
+Another famous dataset is the Edgar Anderson's Iris data
+```{r}
+head(iris, n=10)
+tail(iris, n=7)
+```
+
+Note the `head()` function prints the first handful of observations of the dataset, here consisting of the first 10 rows. 
+The `tail()` functions prints out the last $n$ rows (here specified to be 7). The dataset is actually much bigger which can be determined with the `dim` function,
+
+```{r}
+dim(iris)
+```
+
+### Types of Data
+
+You'll notice in the above examples we see a mix of numeric and character values in the data frames. 
+In R, every object has a type, or *class*. To discover the type for a specific variable use the `class` function,
+
+```{r}
+class(iris)
+```
+
+We see that the class of the object `iris` is a `data.frame` consisting of 150 rows and 5 columns. 
+You should also note that the first four columns are numeric while the last column appears to be characters.
+We can explore the class of each variable by specifying the name of the column of the dataset using the `$` notation.
+First, let's get the list of variables in the dataset using the `names()` function.
+
+```{r}
+names(iris)
+class(iris$Sepal.Length)
+class(iris$Species)
+```
+
+The `class` of `Sepal.Length` is numeric, which should not be too surprising given the value is a number.
+The `class` of `Species` on the other hand is a `factor`. In R, a `factor` is a categorical variable, here it happens to be labeled with the scientific species name, but R treats it as a `category`.
+
+**Note**: The `factor` class can be quite important when performing Statistics. Depending if a variable is of class `factor` or `numeric` it can cause different statistical methods to perform differently.
+
+The command `data()` lets you see what datasets are currently in the search path. 
+
+### Importing datasets into R
+
+In practice you will often encounter datasets from other external sources. 
+These are most commonly created or provided in formats that can be read in Excel. 
+The best formats for importing dataset files into R is space-delimited, tab-delimited text (both typically have the file extension .txt) or comma-separated values (file extension .csv). R can handle other formats, but these are the easiest with which to work. 
+
+#### `read.table()` -- for Space \& Tab delimited files
+
+There are multiple functions to import a data file in R. One common tool is using the `read.table()` command. Below are two examples:
+
+1. Read a file directly from the web. The below code imports the file `univadmissions.txt` from a data repository into the current R session, and assigns the name `uadata` to the data frame object:
+
+```{r, eval=FALSE}
+site <- "http://www.users.miamioh.edu/hughesmr/sta363/univadmissions.txt"
+class(site)
+uadata <- read.table(site, header=TRUE)
+head(uadata)
+```
+
+```{r, echo=FALSE}
+uadata <- read.table("univadmissions.txt", header=TRUE)
+head(uadata)
+```
+
+A few notes on the above code. In the first line, we are creating a string of characters (that happens to be a web address) and *assigning* it to the R object `site` using the `<-` notation. You should note the `class` of the object `site` is `character`. In the third line, we are applying the function `read.table()` with the file specified in the `site` variable, with the option `header=TRUE`, the output of the function is being assigned to `uadata`, again using the `<-` notation. We will be using this same data again below.
+
+2. Another option is to download the file to your computer, then read it.
+This is typically what you will do for homework and class examples.
+You could go to the URL above and save the data file to your default working directory on your computer. 
+After saving it into a folder (or directory), you can read the file with code similar to:
+
+```{r, eval=FALSE}
+uadata <- read.table("univadmissions.txt", header=TRUE)
+```
+
+If you save the file to a directory on your computer other than the local directory (where your R code is stored), you must provide the path in the `read.table()` command:
+
+```{r, eval=FALSE}
+uadata <- read.table("c:/My Documents/My STA363 Files/univadmissions.txt", header=TRUE)
+```
+
+
+The function `read.table()` automatically converts a space (or tab) delimited text file to a data frame in R. The `header=TRUE` option tells R that the top line in the text file contains the variable names rather than data values.
+
+
+#### `read.csv()` -- for Comma Separated Value files
+
+Similar to the above examples, reading in a Comma Separated Value (CSV) file is very similar.
+This is becoming the standard format for transferring files.
+
+```{r, eval=FALSE}
+used.car <- read.csv("c:/My Documents/My STA363 Files/kuiperCars.csv", header=TRUE)
+```
+
+#### `load()` -- Loading an existing R `data.frame`
+
+If data has already been input and processed into R as a `data.frame`, it can be saved in a format designed for R using the `save()` function and then can be reloaded using `load()`.
+
+```{r, eval=FALSE}
+load("someData.RData")
+```
+
+#### Creating your own data frames in R
+
+The easiest way to do this is to use Excel. Work in Excel as normal but save the file as a tab-delimited text or comma-separated values (recommended) file. Then you can write reproducible code to read in the file using `read.table()` or `read.csv()`.
+
+Here are details for each method.
+
+**Using Excel**. If you are working with your own data, I usually suggest entering it into an Excel spreadsheet. This is the easiest method since Excel is universally available and it is easy to use.  
+
+Steps:
+
+1. Enter your data in Excel, putting variable names in the top row according to R naming guidelines. Different variables should be in different columns, and different cases in different rows. Remember that missing data entries should be indicated by `NA`.  
+
+2. Save your Excel file as a tab-delimited or comma seaparated text file using the following menu choice:
+
+		File > Save As...
+
+3. From the Save as type options, choose Text (Tab delimited) or CSV. Save the file to the desired directory on your computer.
+
+4. Once you are back in R, use the instructions in the previous section to import your text file.
+
+
+## Referencing data from inside a data frame
+
+We saw above that we can access a specific variable within a dataset using the `$` notation.
+We can also access specific observations in the dataset based on rules we may wish to implement.
+As a working example we will consider the university admissions data we read in above.
+
+**Example:** University admissions. The director of admissions at a state university wanted to determine how accurately students' grade point averages at the end of their freshman year could be predicted by entrance test scores and high school class rank. The academic years covered 1996 through 2000. This example uses the `univadmissions.txt` dataset in the repository.  The variables are as follows:
+
+*	`id` -- Identification number
+
+*	`gpa.endyr1` -- Grade point average following freshman year
+
+*	`hs.pct` -- High school class rank (as a percentile)
+
+*	`act` -- ACT entrance exam score
+
+*	`year` -- Calendar year the freshman entered university 
+
+This is the first dataset we input above, in the `uadata` data frame. 
+
+**Source:** Kutner, Nachtsheim, Neter. Applied Linear Regression Models, 4th edition. McGraw-Hill Irwin, New York, NY 10020, 2004.
+
+
+
+The `tidyverse` package is actually a wrapper for many R packages. 
+One of the key packages we use for data processing is the `dplyr` package. 
+It includes many functions that are similar to SQL (for those who know it). 
+These tools tend to be easier to understand, similar to the syntax in SQL. First we will load the package and then take a *glimpse* of the dataset with which we are working
+
+```{r, message=FALSE}
+library(tidyverse)   # Load the necessary package
+glimpse(uadata)      # Take a glimpse at the data
+```
+
+A key feature of the tidyverse is the pipe command, `%>%`. 
+As an example, consider the case of extracting students with a GPA greater than 3.9:
+
+* Take the data frame `uadata` (read in above) and pipe it (send it) to a function that will `filter`
+* Then `filter` it based on some criteria, say `gpa.endyr1 > 3.9`.
+
+```{r, warning=FALSE, error=FALSE}
+uadata %>% filter(gpa.endyr1 > 3.9)
+```
+
+We can also use `dplyr` commands for selecting specific variables using the `select` function. 
+Below we select the ACT scores for students who have a first year GPA greater than 3.9 and with a graduating year of 1998.
+
+```{r}
+uadata %>% 
+  filter(gpa.endyr1 > 3.9, year==1998) %>%
+  select(act)
+```
+
+Note in the above, we take the `uadata` and pipe it to a `filter`, which selects only those observations with `gpa.endyr1` greater than 3.9 and `year` equal (==) to 1998, then we pipe that subset to the `select` function that only returns the variable `act`.
+
+
+##  Missing values and computer arithmetic in R
+
+Sometimes data from an individual is lost or not available. R indicates such occurrences using the value `NA`.
+Missing values are important to account for, because we cannot simply ignore them when performing functions that involve all values. 
+For example, we can't find the mean of the elements of a data vector when some are set to `NA`.
+Consider the simple case of a vector of 6 values with one `NA`.
+
+```{r}
+x <- c(14, 18, 12, NA, 22, 16)
+class(x)
+mean(x)
+```
+
+Here, the object `x` is a *vector* of class `numeric`. We will not be working with vectors much in this class (a column within a data frame can be considered a vector) but we do so here to demonstrate functionality.
+
+**Many R functions have a `na.rm=` logical argument**, which is set to `FALSE` by default. 
+It basically asks if you want to remove the missing values before applying the function.
+It can be set to `TRUE` in order to remove the `NA`s. For example,
+
+```{r}
+mean(x, na.rm=TRUE)    # mean of the non-missing elements
+```
+
+The number system used by R has the following ways of accommodating results of calculations on missing values or extreme values:
+
+* `NA`: **Not Available**. Any data value, numeric or not, can be NA. This is what you use for missing data. Always use NA for this purpose.
+
+* `NaN`: **Not a Number**. This is a special value that only numeric variables can take. It is the result of an undefined operation like 0/0.
+
+* `Inf`: **Infinity**. Numeric variables can also take the values `-Inf` and `Inf`. 
+These are produced by the low level arithmetic of all modern computers by operations such as 1/0. (You shouldn't think of these as real infinities, but rather the result of the the correct calculation if the computer could handle extremely large (or extremely small, near 0) numbers, larger than the largest numbers the computer can hold (about $10^300$)).
+
+**Scientific notation**.
+This is a shorthand way of displaying very small or very large numbers. 
+For example, if R displays `3e-8` as a value, it really means $3\times 10^{-8} = 0.00000003$.  
+
+In general, you should convert numbers from scientific notation into decimal notation when writing findings in your reports. 
+For a really small number (like 0.00000003), it will suffice to write "< 0.0001" instead.
+
+
+
+## Exploratory Data Analysis (EDA)
+
+The material presented in this section is more commonly known as descriptive statistics. This is an important step that should always be performed prior to a formal analysis. It looks simple but it is vital to conducting a meaningful analysis. EDA is comprised of:
+
+*	Numerical summaries (means, standard devidations, five-number summaries, correlations)
+*	Graphical summaries
+    + One variable: boxplots, histograms, etc.
+    + Two variables: scatterplots
+    + Many variables: scatterplot matrices, interactive graphics
+
+We look for outliers, data-entry errors and skewness or unusual distributions. Are the data distributed as you expect? Getting data into a form suitable for analysis by cleaning out mistakes and aberrations is often time consuming. It often takes more time than the data analysis itself! In this course, data will usually be ready to analyze but you should realize that in practice this is rarely the case. 
+
+We will consider the university admissions data as a working example.
+
+### Numeric Summaries
+
+
+#### Measures of centrality and quantiles
+
+Common descriptive measures of centrality and quantiles from a sample include
+
+* Sample mean -- typically denoted by $\bar{x}$, this is implemented in the function `mean()`
+* Sample median -- this is implemented in the function `median()`
+* Quantiles -- Quantiles, or sample percentiles, can be found using the `quantile()` function. Three common values are $Q_1$ (the sample $25^\mathrm{th}$ percentile, or first quartile), $Q_2$ (the $50^\mathrm{th}$ percentile, second quartile or *median*) and $Q_3$ (the sample $75^\mathrm{th}$ percentile or third quartile).
+* Min and Max -- the Minimum and Maximum values of a sample can be found using the `min()` or `max()` functions.
+
+Each of theses were covered in your introductory statistics course. We refer you to that material for more details.
+
+#### Measuring variance and variability
+
+Earlier we defined statistics as the study of variation in data. The truth is that everything naturally varies: 
+
+* If you measure the same characteristic on two different individuals, you'd get two different answers (subject variability).
+* If you measure the same characteristic twice on the same individual, you'd get two different answers (measurement error). 
+* If you measure the same characteristic on the same individual but at different times, you'd get two different answers (temporal variability). 
+
+Because everything varies, determining that things vary is simply not very interesting. What we need is a way of discriminating between variation that is scientifically interesting and variation that just reflects the natural background fluctuations that are always there. This is what the science of statistics is for.
+
+The key concept is knowing about the amount of variation that we would expect to occur just by chance alone when nothing scientifically interesting is going on. If we then observe bigger differences than we would expect by chance alone, we say the result is statistically significant. If instead we observe differences no larger than we would expect by chance alone, we say the result is not statistically significant.  
+
+Although covered in your introductory statistics course, due to importance we review measuing the variance of a sample.
+
+<center>
+**Variance**
+</center>
+
+A variance is a numeric descriptor of the variation of a quantity. Variances will serve as the foundation for much of what we use in making statistical inferences in this course. In fact, a standard method of data analysis for many of the problems we will encounter is known as analysis of variance (shorthanded ANOVA).
+
+You were (or should have been) exposed to variance in your introductory statistics course. What is crucial now is that you know what you are finding the variance of; i.e., what is the "quantity" I was referring to in the preceding paragraph? Consider this:
+
+* *Example*. Suppose you collect a simple random sample of *n* fasting blood glucose measurements from a population of diabetic patients. The measurements are denoted $x_1$, $x_2$, $\ldots$, $x_n$. What are some of the different "variances" that one might encounter in this scenario?
+
+1. The $n$ sampled measurements vary around their sample mean $\bar{x}$. This is called the sample variance (traditionally denoted $s^2$). In R, the function is `var()`.
+
+2. All fasting blood glucose values in the population vary around the true mean of the population $\mu$. This is called the population variance (usually denoted $\sigma^2$). Note that $\sigma^2$ cannot be calculated without a census of the entire population, so $s^2$ serves as an estimate of $\sigma^2$.
+
+3. $\bar{X}$ is only a sample estimate of $\mu$, so we should expect that will vary depending on which $n$ individual diabetic patients get randomly chosen into our sample. This is called the variance of $\bar{x}$, and is denoted $\sigma_{\bar{x}}^2$. This variance, unlike the sample or population variance, describes how sample estimates of $\mu$ vary around $\mu$ itself. We will need to estimate $\sigma_{\bar{x}}^2$, since it cannot be determined without a full survey of the population. The estimate of $\sigma_{\bar{x}}^2$ is denoted $s_{\bar{x}}^2$.
+
+
+The variances cited above are each very different things. We could dream up even more if we wanted to: for example, each different possible random sample of $n$ patients will produce a different sample variance $s^2$. Since these would all be estimates of the population variance $\sigma^2$, we could even find the variance of the sample variances.
+
+Some formulas:
+
+$$\textbf{Population Variance: } \sigma^2 = \frac{1}{N}\sum_{i=1}^N (x_i - \mu)^2, \textrm{ for population size } N$$
+
+$$\textbf{Sample Variance: } s^2 = \frac{1}{n-1}\sum_{i=1}^n (x_i - \bar{x})^2, \textrm{ for sample size } n$$
+
+$$\textbf{Estimated Variance of } \bar{x}: s^2_{\bar{x}} = \frac{s^2}{n}$$
+
+Three important notes:
+
+1. The general form of any variance is a sum of squared deviations, divided by a quantity related to the number of independent elements in the sum known as **degrees of freedom**. So in general,
+
+$$\textrm{Variance} = \frac{\textrm{sum of squares}}{\textrm{degrees of freedom}} = \frac{SS}{df}$$
+
+2. The formula for the population variance $\sigma^2$ is only given for completeness. You will never use it, since $\sigma^2$ cannot be calculated without a population census.
+
+3. When considering how a statistic (like $\bar{x}$) varies around the parameter it is estimating ($\mu$), it makes sense that the more data you build the statistic with, the better it should perform as an estimator. This is precisely why the variance of $\bar{x}$ is inversely related to the sample size. **As $n$ increases, the variance of the estimate decreases**; i.e. the estimate will be closer to the thing it is estimating. The latter is known as the law of large numbers.
+
+<center>
+**Standard deviations and standard errors**
+</center>
+
+While variances are the usual items of interest for statistical testing, often we will find that we would like a description of variation that is in the original units of the quantity being studied. Variances are always in units squared, so if we take their square roots, we are thrown back into the original units. The square root of a variance is called a standard deviation (SD). The square root of the variance of an estimate is called the standard error (SE) of the estimate:
+
+
+$$\textbf{Population Standard Deviation: } \sigma = \sqrt{\sigma^2} =  \sqrt{\frac{1}{N}\sum_{i=1}^N (x_i - \mu)^2}, \textrm{ for population size } N$$
+
+$$\textbf{Sample Standard Deviation: } s = \sqrt{s^2} = \sqrt{\frac{1}{n-1}\sum_{i=1}^n (x_i - \bar{x})^2}, \textrm{ for sample size } n$$
+
+$$\textbf{Standard error of } \bar{x}: s_{\bar{x}} = \sqrt{s^2_{\bar{x}}} = \sqrt{\frac{s^2}{n}} = \frac{s}{\sqrt{n}}$$
+
+### Numeric Summaries in R
+
+In this class we will be using `dplyr` for data handling. We can pipe (`%>%`) our data frame into a summarize function to calculate numeric summaries.
+
+```{r}
+uadata %>% 
+  gather() %>% 
+  group_by(key) %>%
+  summarize_all(funs(mean, sd, min, median, max))
+```
+
+For now ignore the code that is used, we will describe the `gather()` and `group_by()` functions below.
+Presented here are the mean, standard deviation, the minimum, median and maximum of each numeric variable in the data frame. 
+For example, the mean freshman year-end GPA over the period 1996-2000 was 2.977; the median over the same period was 3.05, suggesting the GPA distribution is slightly skewed left (not surprising). 
+The range of the GPA distribution is from 0.51 to 4. 
+The median ACT score for entering freshman was 25, and and the range of ACT scores was from 13 to 35.
+
+This display introduces two points you need to be aware of:
+
+* Since we applied the command to the entire data frame, we also see numeric summaries of the variable `id`, even though it is meaningless to do so. (just because a computer spits it out at you, that doesn't mean it's useful)
+
+* If you look carefully, you'll see that year is entered as a number (e.g. 1996, 1997, etc.).
+However, that doesn't necessarily mean it should be treated as a numeric variable! 
+It is meaningless to find numeric summaries like means or medians for the `year`, because it is really a qualitative (categorical) variable in the context of these data. (again, just because a computer spits out a number to you, that doesn't mean it is contextually correct)
+This is a common mistake. 
+It is as simple as this: when R encounters a variable whose values are entered as numbers in a data frame, R will treat the variable as if it were a numeric variable (whether it is contextually or not).
+If R encounters a variable whose values are character strings, R will treat the variable as a categorical `factor`. 
+But, in a case like year above, you have to explicitly tell R that the variable is really a `factor` since it was coded with numbers.
+To do this, we will `mutate` the variables `id` and `year`.
+
+```{r}
+uadata <- uadata %>%
+  mutate(id=as.factor(id),
+         year=as.factor(year))
+```
+
+Here we tell R to take the `uadata` data, pipe it to the `mutate` function. We then assign the variables `id` and `year` as versions of themselves that are being treated *as factors*. 
+
+We can then check the type of each variable by *summarizing* over *all* the variables using the `class` function.
+
+```{r}
+uadata %>% summarize_all(class)
+```
+
+No we can check the summary values again for only numeric values (i.e., the use of the `select_if(is.numeric)` function).
+
+```{r}
+uadata %>% 
+  select_if(is.numeric) %>%
+  gather() %>% 
+  group_by(key) %>%
+  summarize_all(funs(mean, sd, min, median, max))
+```
+
+For the categorical variables, the main numeric measure we can consider is the count (or proportions) of each category. To do this in R, we want to tell us to treat each category as a *group* and then count within the group. We will `group_by` the `year` and then within that year, count the number of observations. We also add a new variable (using `mutate`) that is the proportion.
+
+```{r}
+uadata %>%
+  group_by(year) %>%
+  summarize(Count=n() ) %>%
+  mutate(Prop = Count/sum(Count))
+```
+
+
+### Graphical Summaries
+
+We begin a graphical summary with a scatterplot matrix.
+Here we use the `ggscatmat` function in the `GGally` package.
+
+```{r, message=FALSE}
+library(GGally)
+ggscatmat(uadata)
+```
+
+You will note that by default the function provides a scatterplot of each variable along with the Pearson correlation of each numeric variable (it warns us that `factor` variables are not included).
+The Pearson correlations assesses the strength of any linear relationship existing between the GPA, ACT and HS rank variables. 
+
+Recall from introductory statistics that the Pearson correlation $r$ between two variables $x$ and $y$ is given by the formula
+$$r = \frac{1}{n-1}\sum_{i=1}^n\left(\frac{x_i - \bar{x}}{s_x}\right)\left(\frac{y_i - \bar{y}}{s_y}\right)$$
+$r$ is a unitless measure with the property that  $-1 \leq r \leq 1$.  Values of $r$ near $\pm 1$ indicate a near perfect (positive or negative) linear relationship between $x$ and $y$. A frequently used rule of thumb is that $|r| > 0.80$ or so qualifies as a strong linear relationship.
+
+All pairwise correlations in this example are of modest magnitude ($r \approx 0.4$).
+
+You will also note that the function provides a look at the distributional shape of each variable using what is known as a *density plot* (can consider this a more-modern, and less subjective, histogram).
+
+The `ggscatmat` function builds off a function known as `ggplot()` from the `ggplot2` package (included in `tidyverse`).
+
+```{r}
+ggplot(uadata) + 
+  geom_density(aes(x=gpa.endyr1))
+```
+
+The function works similar to the `%>%` operator but think in terms of layers. The first line `ggplot(uadata)` sets up a plot object based on the existing dataset `uadata`. The `+` says to add a layer, this layer is a density plot (`geom_density`) where the aesthetic values include an $x$-axis variable matching that of `gpa.endyr``.
+
+To generate even more complex distributional plots first we need to perform some data processing. In the `tidyverse` package is package called `tidyr` which is comprised of two main functions: `gather()` and `spread()`. The purpose of the `gather()` function is to collect variables in a dataset and create a *tall* (or *long*) dataset (this is typically known as going from wide-to-tall format). The `spread()` function does the opposite.
+
+```{r}
+uadata.tall <- uadata %>%
+  gather(key=variable, value=value, gpa.endyr1, hs.pct, act)
+head(uadata)
+head(uadata.tall)
+dim(uadata)
+dim(uadata.tall)
+```
+
+Now that the data is in a tall format, we can utilize the ``ggplot` package for more advanced plotting. 
+We want to draw a density plot for each `variable` in the dataset `uadata` but we want a different plot for each $variable$ (act, gpa.endyr1, hs.pct).
+
+```{r}
+ggplot(uadata.tall) +
+  geom_density(aes(x=value, fill=value)) + 
+  facet_grid(.~variable, scales="free_x") + 
+  theme_bw()
+```
+
+**Notes**: The `facet_grid` option tells the plot to draw each density plot for each observed value in `variable`. The `theme_bw()` specifies the plotting style (there are others!). The `free_x` option tells the plot that each $x$-axis is on a different scale. Feel free to modify the code to see how the plot changes!
+
+We can see that GPA and high school percentile rankings are skewed left, and that ACT scores are reasonably symmetrically distributed. 
+
+
+The best visual tool for simple counts is the Bar Graph (**note:** you should never use a pie chart, see http://www.businessinsider.com/pie-charts-are-the-worst-2013-6).
+
+```{r}
+ggplot(uadata) + 
+  geom_bar(aes(x=year) )
+```
+
+
+
+###  Descriptive statistics and visualizations by levels of a factor variable
+
+
+
+
+While the above summaries are informative, they overlook the fact that we have several years of data and that it may be more interesting to see how things might be changing year to year.
+This is why treating year as a factor is important, because it enables us to split out descriptions of the numeric variables by levels of the factor. The key numeric tool for categorical data is to count. Here, we will tell R to count the number of observations for each categorical type. Another way to phrase this: within each group (that is, a year of the potential years) calculate the sample size.
+
+
+One of the best visualization tool for comparing distributions is the boxplot, which displays information about quartiles and potential outliers. 
+
+```{r}
+ggplot(uadata) +
+  geom_boxplot(aes(x=year, y=act) ) +
+  xlab("Year") + ylab("Composite ACT Score") +
+  ggtitle("ACT scores of Incoming Freshment") + 
+  theme_classic()
+```
+
+We see here the code is similar to the above except now we call the ``geom_boxplot` function. Also note we are using `theme_classic()` which has some subtle differences compared to `theme_bw()` used above. Lastly, we include proper labels and titles on our plot here for a more professional appearance.
+
+Here we construct side-by-side boxplots by year for each of the three numeric variables in the data frame
+
+```{r}
+ggplot(uadata.tall) + 
+  geom_boxplot(aes(x=year, y=value) ) +
+  facet_grid(variable~., scales="free_y") + 
+  theme_dark()
+```
+
+Note here that the order of the `variable` statement in the `facet_grid` statement has changed compared to the previous side-by-side density plots. Also note another theme option (obviously you generally will NOT want to use this theme if planning to print the document).
+
+This is a nice compact visual description of the changes in patterns of response of these three variables over time.  All three variables appear pretty stable over the years; the left skews in GPA and high school percentile rankings are still evident here.  Note the detection of some low outliers for year on these two variables.
+
+Extensive grouped numeric summary statistics are available by using the `group_by()` and `summarize()` functions in `tidyverse`.
+The below example is a more detailed version of the summary table from above.
+
+```{r, results=FALSE}
+summary.table <- uadata.tall %>% 
+  group_by(variable) %>%
+  summarise(Mean=mean(value),
+            StDev=sd(value),
+            Min=min(value),
+            Q2=quantile(value, prob=0.25),
+            Median=median(value),
+            Q3=quantile(value, prob=0.75),
+            Max=max(value) )
+kable(summary.table)
+```
+
+Here, we first pipe the `uadata.long` into a `group_by()` function grouping by the `variable` variable. Then we take that output and pipe it to the `summarize` function which allows us to calculate various summary statistics for each of the groups. In the above we calculate the mean and standard deviation of each group, along with the 5-number summary. Lastly, we wrap the constructed table (its technically a data frame) in the `kable()` function from the `knitr` package (literally means `knitr` `table`) for a nice display.
+
+In the next example we group by both the `year` and the variables of interest.
+
+```{r, results=FALSE}
+summary.table2 <- uadata.tall %>%
+  group_by(variable, year) %>%
+  summarize(Mean=mean(value),
+            StDev=sd(value))
+kable(summary.table2)
+```
+
+
+
+
+## Sampling distributions: describing how a statistic varies
+
+As described in the discussion on variability above, each of the numeric quantities calculated has some associated uncertainty. It is not enough to know just the variance or standard deviation of an estimate. Those are just ways to get a measure of the inconsistency in an estimate's value from sample to sample of a given size $n$.  
+
+If we wish to make a confident conclusion about an unknown population parameter using a sample statistic (e.g. $\bar{x}$), we also need to know something about the general pattern of behavior that statistic would take on if we had observed it over many, many different potential random samples. 
+
+This long-run behavior pattern is described via the probability distribution of the statistic, also known as the **sampling distribution** of the statistic.  
+
+It is important to remember that we usually only collect one sample, so only one sample mean will be available in practice.
+However, knowledge of the sampling distribution of our statistic or estimate is important because it will enable us to assess the reliability or confidence we can place in any generalizations we make about the population using our estimate.
+
+<center>
+**Two useful sampling distributions: Normal and $t$**
+</center>
+
+You should be very familiar with normal distributions and $t$-distributions from your introductory statistics course. In particular, both serve as useful sampling distributions to describe the behavior of the sample mean $\bar{x}$ as an estimator for a population mean $\mu$. We briefly review them here, and illustrate the use of R functions to replace old-fashioned normal tables and $t$-tables.
+
+**Normal distributions.** A variable $X$ that is normally distributed is one that has a symmetric bell-shaped density curve. A normal density curve has two parameters: its mean $\mu$ and its variance $\sigma^2$. Notationally, we indicate that $X$ is normal by writing $X \sim N(\mu, \sigma^2)$.
+
+The normal distribution serves as a good sampling distribution model for the sample mean $\bar{x}$ because of the powerful Central Limit Theorem, which states that if $n$ is sufficiently large, the sampling distribution of $\bar{x}$ will be approximately normal, regardless of the shape of the distribution of the original parent population from which you collect your sample.
+
+**t distributions.** The formula given by 
+$$t_0 = \frac{\bar{x}-\mu}{{SE}_{\bar{x}}}$$
+ 
+counts up the number of standard error units between the true value of $\mu$ and its sample estimate $\bar{x}$; it can be thought of as the standardized distance between a true mean value and its sample mean estimate. If the original population was normally distributed, then the quantity $t_0$ will possess the $t$-distribution with $n - 1$ degrees of freedom. Degrees of freedom is the only parameter of a $t$-distribution.  Notationally, we indicate this by writing $t \sim t(df)$.
+
+```{r fig.align='center', echo=FALSE, include=identical(knitr:::pandoc_to(), 'html')}
+knitr::include_graphics('mrT.png', dpi = NA)
+```
+
+$t$-distributions look a lot like the standard normal distribution $N(0, 1)$: they both center at 0 and are symmetric and bell-shaped (see below).  The key difference is due to the fact that the quantity $t$ includes two sample summaries in its construction: the sample mean $\bar{x}$, and $SE_{\bar{x}}$, which incorporates the sample standard deviation $s$.  Because of this, $t$ is more variable than $N(0, 1)$.  However, as $n$ (and hence degrees of freedom) increases, $s$ becomes a better estimate of the true population SD, so the distinction ultimately vanishes with larger samples. This can all be vizualized in the below plot
+
+```{r, echo=FALSE}
+x.val <- seq(-4, 4, 0.01)
+y.norm <- dnorm(x.val)
+y.t3 <- dt(x.val, df=3)
+y.t5 <- dt(x.val, df=5)
+y.t10 <- dt(x.val, df=10)
+my.data <- data.frame(x.val=x.val, Normal=y.norm, t3=y.t3, t5=y.t5, t10=y.t10)
+my.data.tall <- my.data %>% 
+  gather(key="key", value="value", -x.val) %>%
+  mutate(key=factor(key, levels=c("Normal", "t3", "t5", "t10")))
+ggplot(my.data.tall) +
+  geom_line(aes(x=x.val, y=value, col=key, linetype=key)) +
+  scale_colour_manual(labels=c("Normal", "t(t=3)", "t(df=5)", "t(df=10)"), values=c("black", "darkblue", "green4",  "cyan")) + 
+  scale_linetype_manual(labels=c("Normal", "t(t=3)", "t(df=5)", "t(df=10)"), values=c(1,3,4,2)) + 
+  labs(x="", y="Density Function value") + 
+  theme_classic()
+```
+
+From introductory statistics, you may be familiar with looking up values in a $t$-table. With R, using such tables is a thing of the past
+
+
+The $t$-distribution is usually the relevant sampling distribution when we use a sample mean $\bar{x}$ to make inferences about the corresponding population mean $\mu$. Later in the course, the need to make more complicated inferences will require us to develop different sampling distribution models to facilitate the statistics involved. These will be presented as needed. 
+
+## Two-sample inference
+
+A key concept from your introductory statistics course that builds off sampling distribution theory is the comparison of the mean from two population based on the sample means using a two-sample *t*-test. Consider testing
+$$H_0:\ \mu_A = \mu_B ~~~\textrm{versus}~~~ H_A:\ \mu_A <\neq> \mu_B$$
+where the notation $<\neq>$ represents one of the common alternative hypotheses from your introdoctory statistics course and $\mu_A$ is the population mean from population $A$ and $\mu_B$ is the population mean from population $B$. We statistically test this hypothesis via
+$$t_0 = \frac{\bar{x}_A - \bar{x}_B}{{SE}_{\bar{x}_A-\bar{x}_B}}$$
+
+where ${SE}_{\bar{x}_A-\bar{x}_B}$ is the standard error of the difference of sample means $\bar{x}_A$ and $\bar{x}_B$. It can be estimated in one of two ways (depending if we assume the population variances are equal or not) and we reference your intro stat class for details on it (pooled versus non-pooled variance). In R, we can perform this test, and construct the associated $(1-\alpha)100\%$ confidence interval for $\mu_A-\mu_B$,
+$$\bar{x}_A - \bar{x}_B \pm t_{\alpha/2} {SE}_{\bar{x}_A-\bar{x}_B}$$
+using the function `t.test()`. Here $t_{\alpha/2}$ is the $1-\alpha/2$ quantile from the *t*-distribution (the degrees of freedom depend on your assumption about equal variance).
+
+Consider comparing the ACT scores for incoming freshmen in 1996 to 2000 using the university admission data. Perhaps we have a theory that ACT scores were higher in 1996 than 2000. That is, we are formally testing
+$$H_0:\ \mu_{1996} = \mu_{2000} ~~~\textrm{versus}~~~ \mu_{1996} > \mu_{2000}$$
+
+First we need to select a subset of the data.
+
+```{r}
+uadata.trim <- uadata %>%
+  filter(year %in% c(1996, 2000) )
+```
+
+Here we filter the `uadata` so that only years in the vector 1998, 2001 are included. Now that we have a proper subset of the data, we can compare the ACT scores between the two years and build a 98\% confidence interval for the mean difference.
+
+```{r}
+t.test(act ~ year, data=uadata.trim, conf.level=0.98, alternative="greater", var.equal=TRUE)
+```
+
+We are 98\% confident that the mean difference between 1996 ACT scores and 2000 ACT scores is in the interval (-0.792, $\infty$). Further, we lack significant evidence (*p*-value$\approx 0.3817$) to conclude that the average ACT score in 1996 is greater than that in 2000 for incoming freshmen. (also note that the value 0 is included in the confidence interval
+
+A few things to note about the code in the above. We use the notation `act ~ year` this tells R that the `act` scores are a function of `year`. We specify the data set that contains the data in which to perform the test (`data=uadata.trim`). We specify the confidence limit (by detault it is 0.95) and the alternative hypothesis (by default it is a not-equal test). Lastly, we set `var.equal=TRUE` so the standard error (and degrees of freedom) are calculated under the assumption that the variance of the two populations is equal. 
+
+
+

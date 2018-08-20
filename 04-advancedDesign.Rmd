@@ -1,0 +1,14 @@
+
+# Advanced Designs
+
+We begin our dive into Statistical Modeling by first reviewing content from your introductory statistics course. The learning objective of this unit unclude:
+
+* Basic structure of statistical model
+* Understanding statistical inference can be formulated as the comparison of models
+* Difference between observational studies and designed experiments
+* Full analysis involving a one-factor experiment
+
+## Repeated Measures
+
+
+## Within subject designs
