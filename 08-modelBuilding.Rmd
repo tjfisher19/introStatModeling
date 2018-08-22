@@ -33,7 +33,7 @@ What if we have non-normal errors?
 
 Let’s look at a simple linear regression to predict highway mileage (MPG.highway) from the weight of the car (Weight).  I will look at the normal Q-Q plot for the residuals, too:
 
-```{r}
+```{r ch8.1}
 library(MASS)
 data(Cars93)
 m1 <- lm(MPG.highway ~ Weight, data=Cars93)
@@ -52,7 +52,7 @@ From the data, the “power” $\lambda$ is estimated.  Once optimally determine
 $$t_\lambda(Y) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_k X_k + \varepsilon$$
 
 <div style="float:right;position: relative; ">
-```{r, echo=FALSE, fig.width=3.25, fig.height=3.25}
+```{r ch8.2, echo=FALSE, fig.width=3.25, fig.height=3.25}
 gg_boxcox(m1)
 ```
 </div>
@@ -60,7 +60,7 @@ gg_boxcox(m1)
 
 The `gg_boxcox()` function in the `lindia` package will produce a plot of the profile likelihood against the transformation parameter $\lambda$.  I do this here for model m1 just fitted:
 
-```{r, eval=FALSE}
+```{r ch8.3, eval=FALSE}
 gg_boxcox(m1)
 ```
 
@@ -70,7 +70,7 @@ $$t_\lambda(Y) = \frac{Y^{-1}-1}{-1} = \frac{1}{Y}$$
 
 Since $Y$ = `MPG.highway`, we instead use the reciprocal `1/MPG.highway` as our response variable. This should help normalize the residuals and hence validate any test or confidence or prediction intervals.  Let’s see:
 
-```{r}
+```{r ch8.4}
 Cars93 <- Cars93 %>%
   mutate(Rec.MPG.highway = 1/MPG.highway)
 t.m1 <- lm(Rec.MPG.highway ~ Weight, data=Cars93)
@@ -85,14 +85,14 @@ Two notes:
 
 2.	Even if you transform the response, you will want to express model predictions back in the original scale. This is simply a matter of “untransforming” by using the inverse function of the original transformation.  For example, suppose I use model trans.m1 to obtain a 95% PI for the true highway mileage for a car weighing 3000 lb:
 
-```{r}
+```{r ch8.5}
 car.pred <- predict(t.m1, newdata=data.frame(Weight=3000),int="pred") 
 car.pred
 ```
 
 The PI (0.028, 0.0414) is in terms of `1/MPG.highway`. (Note that this is actually equivalent to “gallons per mile” here!)   To untransform, reciprocate:
 
-```{r}
+```{r ch8.6}
 car.pred.mpg <- 1/car.pred
 car.pred.mpg
 ```
@@ -105,7 +105,7 @@ For test and CI or PI results to be correct, we must assume that the variance of
 
 The basic plot to investigate the constant variance assumption is a Residuals vs Fitted plot, i.e. a plot of  $e_i$ vs. $\hat{y}_i$. If all is well, you should see fairly uniform (“constant”) variability in the vertical direction and the scatter should be symmetric vertically around zero. This plot is the first of the four-plot diagnostic summary in R:
 
-```{r}
+```{r ch8.7}
 appraisal.fit <- lm(saleprice ~ landvalue + impvalue + area, data=appraisal)
 autoplot(appraisal.fit, nrow=1)
 ```
@@ -125,14 +125,14 @@ What if we have non-constant error variance?  There are a few strategies to addr
 
 **Example:** University admissions.  A director of admissions at a state university wanted to determine how accurately students’ grade point averages at the end of their freshman year could be predicted by entrance test scores and high school class rank.  We want to develop a model to predict `gpa.endyr1` from `hs.pct` (High school class rank as a percentile), `act` (ACT entrance exam score) and `year` (Calendar year the freshman entered university).  `year` will be treated as a categorical factor.
 
-```{r}
+```{r ch8.8}
 uadata.fit <- lm(gpa.endyr1 ~ hs.pct + act + factor(year), data=uadata)
 autoplot(uadata.fit)
 ```
 
 We see some substantial non-constant variance (the residuals vs fitted plot shows clearly systematic fanning; the scale-location plot shows a downward trend in the adjusted residuals as the fitted values increase) as well as some non-normality.  Even though $n$ is large here and hence the non-normality isn’t a serious issue, let’s see what a Box-Cox normalizing transformation does for the error variance problem:
 
-```{r}
+```{r ch8.9}
 gg_boxcox(uadata.fit)
 ```
 
@@ -140,7 +140,7 @@ Using $\lambda = 2$ (i.e. squaring the response `gpa.endyr1`) will be the best n
 
 How does the transformation improve our error variance problem?  Below is a direct comparison of the residuals vs fitted plots for the original response (model m, on the left) and the transformed response (model m2, on the right):
 
-```{r}
+```{r ch8.10}
 uadata.fit2 <- lm(I(gpa.endyr1^2) ~ hs.pct + act + factor(year), data=uadata)
 autoplot(uadata.fit, which=1)
 autoplot(uadata.fit2, which=1)
@@ -148,7 +148,7 @@ autoplot(uadata.fit2, which=1)
 
 The left skew in the residuals around 0 is gone, and the overall pattern looks much more uniform as a result of the transformation.  So, a normalizing transformation helped cure a non-constant variance problem.  The scale-location plots show the “cure” even better:
 
-```{r}
+```{r ch8.11}
 autoplot(uadata.fit, which=3)
 autoplot(uadata.fit2, which=3)
 ```
@@ -178,7 +178,7 @@ If the data are obtained in a time sequence, a residuals vs. order plot (or inde
 
 Below is R code for the corn yield data. This code fits a simple linear regression model, and generates a plot of the standardized (mean 0, standard deviation of 1) residuals vs `year` (which corresponds to the order of the data).
 
-```{r}
+```{r ch8.12}
 site <- "http://www.users.miamioh.edu/hughesmr/sta363/cornyield.txt"
 corn <- read.table(site, header=TRUE)
 corn.fit <- lm(yield ~ rain, data=corn)
@@ -202,7 +202,7 @@ Why might non-independence be a concern in this example?  Think about two measur
 Pseudoreplication is actually a form of spatial correlation introduced above in the ground cover example, but here it is purposefully built into the sampling plan of a designed experiment.  Here’s an example:
 
 <div style="float:right;position: relative; ">
-```{r, echo=FALSE, fig.width=4.25, fig.height=3.25}
+```{r ch8.13, echo=FALSE, fig.width=4.25, fig.height=3.25}
 knitr::include_graphics('leavesCalcium.png')
 ```
 </div>
@@ -231,7 +231,7 @@ It is assumed that the structural part of the model has been correctly specified
 
 First, let’s look at a plot of Volume against Girth.  I add a scatterplot smoother (called a LOESS, or LOWESS, curve) to make a preliminary assessment of the relationship:
 
-```{r}
+```{r ch8.14}
 data(trees)
 ggplot(trees) + 
   geom_point(aes(x=Girth, y=Volume) ) + 
@@ -241,7 +241,7 @@ ggplot(trees) +
 
 It’s pretty clear that the relationship is non-linear: the rate of increase in volume per inch of girth is higher for larger trees.  If we fit the model `VOLUME` = $\beta_0$ + $\beta_1$`GIRTH` + $\varepsilon$ to these data, we are erroneously forcing the same rate of increase in volume regardless of tree size, since the rate parameter $\beta_1$ is the same regardless of girth.  Let’s see the effect of doing this on the residual diagnostics:
 
-```{r}
+```{r ch8.15}
 tree.fit <- lm(Volume ~ Girth, data=trees)     # fits an incorrect straight-line model
 autoplot(tree.fit, which=1)
 ```
@@ -258,20 +258,20 @@ $$VOLUME = \beta_0 + \beta_1 GIRTH + \beta_2 GIRTH^2 + \varepsilon$$
 
 We fit this model in R:
 
-```{r}
+```{r ch8.16}
 tree.fit2 <- lm(Volume ~ Girth + I(Girth^2), data=trees)
 summary(tree.fit2)
 ```
 
 Note the p-value of the quadratic term (0.000152).  This means that curvature in the girth/volume relationship is statistically significant.  We could have equivalently investigated this by using `anova()` to compare the straight-line model (`tree.fit`) to the quadratic model (`tree.fit2`):
 
-```{r}
+```{r ch8.17}
 anova(tree.fit, tree.fit2)
 ```
 
 Now consider the residuals from the quadratic fit
 
-```{r}
+```{r ch8.18}
 autoplot(tree.fit2, which=1)
 ```
 
@@ -293,7 +293,7 @@ In regression, there are three classifications of unusual observations:
 3. **Influential observations.** These are observations that are both outlying and have high leverage.   These are called influential because the $\beta$-parameter estimates can change dramatically depending on whether or not they are included in the analysis.
 
 <div style="float:right;position: relative; ">
-```{r, echo=FALSE, fig.width=3.25, fig.height=3.25}
+```{r ch8.19, echo=FALSE, fig.width=3.25, fig.height=3.25}
 set.seed(1) 
 x <- c(runif(19, 0, 10),20)
 y <- 10 - c(rep(0.5, 19),1)*x + rnorm(20)
@@ -359,14 +359,14 @@ bodyfat <- read.table(site, header=TRUE)
 bodyfat.fit <- lm(bodyfat.pct ~ ., data=bodyfat)
 ```
 
-```{r, echo=FALSE}
+```{r ch8.20, echo=FALSE}
 bodyfat <- read.table("bodyfat.txt", header=TRUE)
 bodyfat.fit <- lm(bodyfat.pct ~ ., data=bodyfat)
 ```
 
 The notation ` bodyfat.pct ~ .` tells R to treat the variable `bodyfat.pct` as the response and all other variables are predictors.
 
-```{r}
+```{r ch8.21}
 autoplot(bodyfat.fit, which=5)
 ```
 
@@ -395,13 +395,13 @@ Why is MC a potential concern?  Very strong MC can have a severe impact on your 
 
 **Example:** Housing Appraisal. Consider the housing appraisal data we've used multiple times. We have already established that the two values (improved appraised value and land value appear connected).
 
-```{r}
+```{r ch8.22}
 ggscatmat(appraisal)
 ```
 
 We see that all the predictor variables appear to be linearly connected (fairly strong correlations). We have moderately strong correlation between all three predictors and all three appear to be linearly connected to the response variable. Recall the full regression model.
 
-```{r}
+```{r ch8.23}
 summary(appraisal.fit)
 ```
 
@@ -428,7 +428,7 @@ where $R_i^2$ is the $R^2$ value from modeling $X_i$ on the remaining predictors
 
 The function `vif()` in the add-on package `car` computes VIFs for a fitted model. Based on our preliminar view there is some concern
 
-```{r}
+```{r ch8.24}
 library(car)
 vif(appraisal.fit)
 ```
@@ -486,7 +486,7 @@ Note two of the variables are in the units of dollars and the other is in square
 
 First let's recall the fitted model:
 
-```{r}
+```{r ch8.25}
 summary(appraisal.fit)
 ```
 
@@ -494,7 +494,7 @@ Those who know much about houses know that the size of the home and plot of land
 
 This idea will make more sense with a plot. Using material from the first chapter we convert the predictor variables from wide to tall format to make a side-by-side boxplot.
 
-```{r}
+```{r ch8.26}
 appraisal.tall <- appraisal %>%
   dplyr::select(-saleprice) %>%
   gather(key="Variable", value="Value")
@@ -504,7 +504,7 @@ ggplot(appraisal.tall) +
 
 Note the range for the `impvalue` variable compared to `area` and `landvalue`. Remember each value is also mapped to a `saleprice` value, the information provided in `impvalue` will overpower any information in `area` or `landvalue` since the variable are not on the same scale. Let's standardize each predictor variable by applying the `scale()` function to each column of the dataset.
 
-```{r}
+```{r ch8.27}
 z.appraisal <- appraisal %>%
   mutate_at(c("landvalue", "impvalue", "area"), scale)
 head(z.appraisal)
@@ -512,7 +512,7 @@ head(z.appraisal)
 
 And note a regurgitation of the box-plot on the standardized variables
 
-```{r}
+```{r ch8.28}
 z.appraisal.tall <- z.appraisal %>%
   dplyr::select(-saleprice) %>%
   gather(key="Variable", value="Value")
@@ -522,7 +522,7 @@ ggplot(z.appraisal.tall) +
 
 Now the units on all three predictor variables is essentailly the same. Let's fit our model again.
 
-```{r}
+```{r ch8.29}
 z.appraisal.fit <- lm(saleprice ~ landvalue + impvalue + area, data=z.appraisal)
 summary(z.appraisal.fit)
 ```

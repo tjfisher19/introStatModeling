@@ -47,7 +47,7 @@ ggplot(muscle) +
   theme_minimal()
 ```
 
-```{r, echo=FALSE}
+```{r ch5.1, echo=FALSE}
 muscle <- read.table("musclemass.txt", header=TRUE)
 head(muscle)
 ggplot(muscle) + 
@@ -59,7 +59,7 @@ ggplot(muscle) +
 We can clearly see the negative trend one would expect: as age increases, muscle mass tends to decrease.  You should also notice that it decreases in a roughly linear fashion, so it makes sense to fit a simple linear regression model to this data.
 
 <div style="float:right;position: relative; ">
-```{r, echo=FALSE, fig.width=3.25, fig.height=3.25}
+```{r ch5.2, echo=FALSE, fig.width=3.25, fig.height=3.25}
 ggplot(muscle) + 
   geom_point(aes(x=age,y=mass)) +
   geom_smooth(aes(x=age,y=mass), method="lm", se=FALSE)+
@@ -76,7 +76,7 @@ There are an infinite number of possible straight line models of the form $Y = \
 
 Our criterion for finding the best fitting line is rooted in the residuals that the line would produce.  In the two-dimensional simple linear regression case, it is easy to visualize what we mean.  When a straight line is “fit” to a data set, the fitted (or “predicted”) values for each observation fall on the fitted line (see figure below).  However, the actual observed values randomly scatter around the line.  The vertical discrepancies between the observed and predicted values are the residuals we spoke of earlier.  We can visualize this by zooming into the plot.
 
-```{r, echo=FALSE}
+```{r ch5.3, echo=FALSE}
 muscle <- muscle %>% mutate(Fitted=fitted(lm(mass~age,data=muscle)))
 ggplot(muscle) + 
   geom_segment(aes(x=age,xend=age, y=mass, yend=Fitted), color="red") +
@@ -141,7 +141,7 @@ The `~` (“tilde”) here is read “is modeled as a linear function of” and 
 
 The y-intercept is always included, unless you specify otherwise.  `lm()` creates a model object containing essential information about the fit that we can extract with other R functions. We illustrate via an example involving the muscle mass dataset.
 
-```{r}
+```{r ch5.4}
 muscle.fit <- lm(mass ~ age, data=muscle)
 glimpse(muscle.fit)
 ```
@@ -169,7 +169,7 @@ Similar to our study of ANOVA modeling we follow a standard pattern for analysis
 
 Before I embark on addressing these, it might be instructive, just once, (since this is your first multiple regression encounter) to actually look at the raw data to see its form:
 
-```{r}
+```{r ch5.5}
 load("appraisal.RData")
 head(appraisal)
 ```
@@ -178,7 +178,7 @@ We see there are four variables ($k+1 = 4$) and 20 observations ($n = 20$).  Eac
 
 Pairwise scatterplots are given below to visualize the bivariate associations.  Here we use the `ggscatmat()` function in the add-on package `GGally`. 
 
-```{r}
+```{r ch5.6}
 ggscatmat(appraisal)
 ```
 
@@ -188,7 +188,7 @@ In the upper right corner is the Pearson correlation coefficient (which measures
 
 We now fit the “main effects” MLR model for predicting $Y$ = `saleprice` from the three predictors.  Initially, we might be interested in seeing how individual characteristic(s) impact sales price.
 
-```{r}
+```{r ch5.7}
 appraisal.fit <- lm(saleprice ~ landvalue + impvalue + area, data=appraisal)
 summary(appraisal.fit)
 ```
@@ -247,14 +247,14 @@ As we shall see, this approach to regression is fundamentally flawed and is to b
 
 First we fit a simple regression predicting AMA (average math ability score) from height:
 
-```{r}
+```{r ch5.8}
 math <- read.table("mathability.txt", header=TRUE)
 summary(lm(ama ~ height, data=math))
 ```
 
 Although we have not formally covered inference on regression, We might conclude from this result that height influences math ability (see the very small p-value).  A two-dimensional scatterplot seems to bear this out as well:
 
-```{r}
+```{r ch5.9}
 ggplot(math) + 
   geom_point(aes(x=height, y=ama))
 ```
@@ -263,7 +263,7 @@ However, it would be erroneous to conclude that this relationship implies causat
 
 We fit a multiple regression predicting AMA from both age and height:
 
-```{r}
+```{r ch5.10}
 summary(lm(ama ~ age + height, data=math))
 ```
 
@@ -299,13 +299,13 @@ Predictors:
 
 Soap concentration was controlled at two levels (15% and 25%), lauric acid at four levels (10%, 20%, 30%, 40%), and citric acid at three levels (10%, 12%, 14%). Each possible combination of the three predictors was tested on five separate stained cloths, for a total of $5 \times 2 \times 4 \times 3 = 120$ measurements.  We want to illustrate the effect of orthogonality on the $\beta$-parameter estimates.
 
-```{r}
+```{r ch5.11}
 load("cleaningexp.RData")
 head(cleaningexp)
 ```
 To start, let’s fit a linear model to all three predictors:
 
-```{r}
+```{r ch5.12}
 summary(lm(pct.removed ~ soap.conc + lauric.acid + citric.acid, data=cleaningexp))
 ```
 
@@ -313,19 +313,19 @@ Take note of the model’s $\beta$-parameter estimates (in boldface) and their S
 
 Now for illustration only, let’s drop `soap.conc` from the first model (the output is abridged):
 
-```{r}
+```{r ch5.13}
 summary(lm(pct.removed ~ lauric.acid + citric.acid, data=cleaningexp))
 ```
 
 Dropping `lauric.acid` from the first model:
 
-```{r}
+```{r ch5.14}
 summary(lm(pct.removed ~ soap.conc + citric.acid, data=cleaningexp))
 ```
 
 Dropping `citric.acid` from the first model:
 
-```{r}
+```{r ch5.15}
 summary(lm(pct.removed ~ soap.conc + lauric.acid, data=cleaningexp))
 ```
 
@@ -355,7 +355,7 @@ Furthermore, this interpretation requires the specification of the other variabl
 
 **Example:** Property appraisals.  We earlier fit a full “main effects” model predicting $Y$ = salesprice from three predictor variables dealing with property appraisals.  This is an observational study, since the predictor values are not set by design by the researcher.  Here’s a brief recap of those results:
 
-```{r}
+```{r ch5.16}
 summary(appraisal.fit)
 ```
 
@@ -368,7 +368,7 @@ summary(appraisal.fit)
 
 Now, suppose we delete `landvalue` (an insignificant predictor, p-value > 0.05).  How is the model affected?
 
-```{r}
+```{r ch5.17}
 summary(lm(saleprice ~ impvalue + area, data=appraisal))
 ```
 

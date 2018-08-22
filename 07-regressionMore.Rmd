@@ -35,7 +35,7 @@ The R function `anova()` will do the computation of the ANOVA F-statistic and it
 
 So, the test of $H_0$: The two appraisals collectively have no effect on mean sale price (i.e. $\beta_1 = \beta_2 = 0$) is conducted as follows (recall `appraisal.fit` is the full model):
 
-```{r}
+```{r ch7.1}
 reduced.appraisal.fit <- lm(saleprice ~ area, data=appraisal)
 anova(reduced.appraisal.fit, appraisal.fit)
 ```
@@ -76,7 +76,7 @@ Note in this last notation the null hypothesis essentially is performing a multi
 
 **Method 1** - Creating a new variable
 
-```{r}
+```{r ch7.2}
 appraisal <- appraisal %>%
   mutate(LandImprov = landvalue + impvalue)
 red.model1 <- lm(saleprice ~ LandImprov + area, data=appraisal)
@@ -87,7 +87,7 @@ anova(red.model1, appraisal.fit)
 
 The `I()` function in R can be used to create a single new predictor for the null model by calculating the sum of the landvalue and impvalue variables “on the fly”.  Here is the analysis:
 
-```{r}
+```{r ch7.3}
 red.model2 <- lm(saleprice ~ I(landvalue + impvalue) + area, data=appraisal)
 anova(red.model2, appraisal.fit)
 ```
@@ -96,7 +96,7 @@ In both cases we see the F-statistic value is essentially 0, with 1 and 16 degre
 
 Lastly, note the two fitted reduced models are the same
 
-```{r}
+```{r ch7.4}
 red.model1
 red.model2
 ```
@@ -145,14 +145,14 @@ www <- "http://www.users.miamioh.edu/hughesmr/sta363/diabeticoffspring.txt"
 diabetes <- read.table(www, header=TRUE)
 head(diabetes)
 ```
-```{r, echo=FALSE}
+```{r ch7.5, echo=FALSE}
 diabetes <- read.table("diabeticoffspring.txt", header=TRUE)
 head(diabetes)
 ```
 
 Now we perform a two-sample *t*-test.
 
-```{r}
+```{r ch7.6}
 t.test(sys.bp ~ mother, var.equal=TRUE, data=diabetes)
 ```
 
@@ -160,13 +160,13 @@ Now, let’s re-do this as a regression problem using a quantitative predictor. 
 
 Note that the variable `mother` is a character variable in the data frame, R automatically treates it as a qualittative variable and creates a dummy variable for you.
 
-```{r}
+```{r ch7.7}
 class(diabetes$mother)
 ```
 
 So we can perform regression as we do, and R will handle the variable.
 
-```{r}
+```{r ch7.8}
 diabetes.fit <- lm(sys.bp ~ mother, data=diabetes)
 summary(diabetes.fit)
 ```
@@ -194,7 +194,7 @@ Not~diabetic & 1 & \mu_{nondiabetic} = \beta_0 + \beta_1(1) = \beta_0 + \beta_1 
 
 Confidence intervals for the $\beta$ parameters in this regression model should be interpreted accordingly, and are found the same as before using `confint()`:
 
-```{r}
+```{r ch7.9}
 confint(diabetes.fit)
 ```
 
@@ -283,14 +283,14 @@ load("http://www.users.miamioh.edu/hughesmr/sta363/ptsd.RData")
 head(ptsd)
 ```
 
-```{r, echo=FALSE}
+```{r ch7.10, echo=FALSE}
 load("ptsd.RData")
 head(ptsd)
 ```
 
 As always, first look at the data.  Since the predictor is qualitative (although coded as numeric), side-by-side boxplots are in order. It is also a good idea to coerce the numeric codes for the variable Group to be recognized by R as qualitative values rather than quantitative numbers.  This can be done via the `factor()` command
 
-```{r}
+```{r ch7.11}
 ptsd <- ptsd %>%
   mutate(Group=as.factor(Group))
 ggplot(ptsd) + 
@@ -305,7 +305,7 @@ The dramatic difference in variability patterns in the response from treatment t
 
 Let’s run a regression using Group as our qualitative predictor of PTSD score. As always, first check the regression assumptions before any inference:
 
-```{r}
+```{r ch7.12}
 ptsd.fit <- lm(Score ~ Group, data=ptsd)
 autoplot(ptsd.fit) + theme_minimal()
 ```
@@ -314,7 +314,7 @@ Note how these plots look different when dealing with a qualitative predictor.
 
 Normality appears to be OK.  No outliers appear to be present.  Constant variance appears to be violated somewhat (see the wobbly Scale-Location plot).  Nonetheless, we will proceed for now with hypothesis tests as an illustration, even though we know the results may be suspect. 
 
-```{r}
+```{r ch7.13}
 summary(ptsd.fit)
 ```
 
@@ -322,7 +322,7 @@ Note that R by default used a dummy variable coding that sets Group=1 as the ref
 
 For convenience, you can change the reference level.  The command to do so is called `relevel()` in R.  In this example, Group=4 (the Waiting List baseline control group) is the most natural choice for a reference group to which we may compare the other treatments for PTSD.  So, I change the Group reference level to 4 below and re-fit the model.  Take note of what changes and what does not change from the first coding scheme:
 
-```{r}
+```{r ch7.14}
 ptsd <- ptsd %>%
   mutate(Group=relevel(Group, ref="4"))
 ptsd.fit <- lm(Score ~ Group, data=ptsd)
@@ -342,7 +342,7 @@ We can investigate the effects of different therapies using elements from the ou
 
 A 95% confidence interval for $\beta_1$ (and hence $\mu_{SIT} – \mu_{WL}$) can be found thus:
 
-```{r}
+```{r ch7.15}
 confint(ptsd.fit)
 ```
 
@@ -421,13 +421,13 @@ load("http://www.users.miamioh.edu/hughesmr/sta363/drug2.RData")
 head(drug2)
 ```
 
-```{r, echo=FALSE}
+```{r ch7.16, echo=FALSE}
 load("drug2.RData")
 head(drug2)
 ```
 First, let’s look at the data and generate a scatterplot of glu.red by weight. Because we now have a trend line relating glucose reduction to weight for each drug group, we can use an enhanced scatterplot by adding on another aesthetic layer (color)
 
-```{r}
+```{r ch7.17}
 ggplot(drug2) + 
   geom_point(aes(x=weight, y=glu.red, color=drug) ) + 
   geom_smooth(aes(x=weight, y=glu.red, color=drug), se=FALSE, method="lm") + 
@@ -441,14 +441,14 @@ We get to see the scatter, plus both a linear trend line for both drug groups.  
 
 Because of the third bullet point above, we should fit the interaction model first.  I do so below, after first checking assumptions:
 
-```{r}
+```{r ch7.18}
 drug.fit <- lm(glu.red ~ weight + drug + weight:drug, data=drug2)
 autoplot(drug.fit) + theme_minimal()
 ```
 
 The assumptions are looking good.  We proceed to investigate the model:
 
-```{r}
+```{r ch7.19}
 summary(drug.fit)
 ```
 
@@ -461,7 +461,7 @@ The whole-model F-test is significant (F(3, 23) = 4.712, p-value = 0.01047), ver
 *The first terms you should always check in an interaction model are the interaction terms*!  Here, we proceed to first check for “equal slopes” by testing the interaction term to see if we can simplify the model.  There is only one dummy variable constructed since drug has two levels, so we can just look at the single interaction term weight:drugP.  We test $H_0: \beta_{weight.drug~P} = 0$ to check for equal slopes.  The test statistic is t = 0.809 with a p-value of 0.4267. Since this is not significant, we can delete the interaction term without hurting the explanatory power of the model. So, an equal slopes (i.e. additive) model is warranted.
 
 We now drop the interaction term, which reduces the model to a main effects model:
-```{r}
+```{r ch7.20}
 drug.fit.reduced <- lm(glu.red ~ weight + drug, data=drug2)
 summary(drug.fit.reduced)
 ```
@@ -485,7 +485,7 @@ A       & 0 &	31.116 - 0.013\times\textrm{weight} - 9.087() \\
 \end{array}$$
 
 Confidence intervals for model parameters. We can use confint() to find CIs for the $\beta$-parameters in an ANCOVA model since ANCOVA is just a special case of the usual multiple linear regression model.  Here is the result from R, with interpretations provided: 
-```{r}
+```{r ch7.21}
 confint(drug.fit.reduced)
 ```
 
@@ -494,7 +494,7 @@ confint(drug.fit.reduced)
 
 Predictions using the fitted model. $R^2$ is not great for this model, but none the less we may use the model for making predictions.  Here are a few model predictions using R:
 
-```{r}
+```{r ch7.22}
 p.A.150 <- predict(drug.fit.reduced, newdata=data.frame(weight=150, drug="A"),int="conf")
 p.A.150
 p.P.150 <- predict(drug.fit.reduced, newdata=data.frame(weight=150, drug="P"),int="conf")
@@ -529,7 +529,7 @@ The above dummy variable coding scheme is the most meaningful way to code drug f
 
 The data are in the R workspace `drug4.RData` and let's look at an advanced scatterplot
 
-```{r, echo=FALSE}
+```{r ch7.23, echo=FALSE}
 load("drug4.RData")
 ggplot(drug4) + 
   geom_point(aes(x=weight, y=glu.red, color=drug)) + 
@@ -541,7 +541,7 @@ ggplot(drug4) +
 
 **Step 1.** We start with the full interaction (“different slopes”) model. We also choose to set the placebo as the reference level. (checking residual assumptions are left as an exercise to the interested reader).
 
-```{r}
+```{r ch7.24}
 drug4 <- drug4 %>%
   mutate(drug=relevel(drug, ref="P"))
 m1 <- lm(glu.red ~ weight + drug + drug:weight, data=drug4)
@@ -554,7 +554,7 @@ $H_0: $\beta_{weight.drugA} = \beta_{weight.drugB} = \beta_{weight.drugC} = 0$
 
 If this hypothesis is true, then the four slopes are the same, i.e. parallel.  To see if we can simplify to an “equal slopes” model, test these three parameters using an ANOVA F-test:
 
-```{r}
+```{r ch7.25}
 m2 <- lm(glu.red ~ weight + drug, data=drug4)
 anova(m2, m1)
 ```
@@ -564,13 +564,13 @@ The F-test for the null hypothesis of parallel slopes is marginally significant 
 Should we simplify to the “equal slopes” model (model m2 above)?   There are a couple of things you can consider to help you decide:
 
 * From the parameter estimates above, it appears that the largest difference between drugs with respect to how weight affects the reduction in glucose is between the placebo and drug $B$. The slope estimate for the placebo is –0.08882; for drug $B$, the slope estimate is –0.08882 + (–0.16043) = –0.249. This means that each additional pound of weight lowers the mean glucose reduction by 0.249 mg/dl if taking drug $B$. This change is marginally significant (see `weight.drugB`: *t* = –1.822, *p*-value=0.0753), and can be estimated with a CI for $\beta_{weight.drugB}$:
-```{r}
+```{r ch7.26}
 confint(m1)
 ```
 The 95% confidence interval for the true mean difference in slopes between the placebo and $B$ is (–0.3379, 0.0170) mg/dl per pound. This CI contains 0, suggesting no significant slope difference.
 
 * You could check the change in the residual SE or $R_{adj}^2$ values by using the “equal slopes” model:
-```{r}
+```{r ch7.27}
 summary(m2)
 ```
 

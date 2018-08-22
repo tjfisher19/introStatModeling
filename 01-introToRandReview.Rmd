@@ -85,14 +85,14 @@ Each row corresponds to a particular student and each column a variable.
 R packages come bundled with many pre-entered datasets for exploration purposes. 
 For example, here is the data frame `stackloss` from the `datasets` package (which loads automatically upon starting R):
 
-```{r}
+```{r ch1.1}
 stackloss
 ```
 
 This data frame contains 21 observations on 4 different variables.  Note the listing of the variable names, this is known as the *header*.
 
 Another famous dataset is the Edgar Anderson's Iris data
-```{r}
+```{r ch1.2}
 head(iris, n=10)
 tail(iris, n=7)
 ```
@@ -100,7 +100,7 @@ tail(iris, n=7)
 Note the `head()` function prints the first handful of observations of the dataset, here consisting of the first 10 rows. 
 The `tail()` functions prints out the last $n$ rows (here specified to be 7). The dataset is actually much bigger which can be determined with the `dim` function,
 
-```{r}
+```{r ch1.3}
 dim(iris)
 ```
 
@@ -109,7 +109,7 @@ dim(iris)
 You'll notice in the above examples we see a mix of numeric and character values in the data frames. 
 In R, every object has a type, or *class*. To discover the type for a specific variable use the `class` function,
 
-```{r}
+```{r ch1.4}
 class(iris)
 ```
 
@@ -118,7 +118,7 @@ You should also note that the first four columns are numeric while the last colu
 We can explore the class of each variable by specifying the name of the column of the dataset using the `$` notation.
 First, let's get the list of variables in the dataset using the `names()` function.
 
-```{r}
+```{r ch1.5}
 names(iris)
 class(iris$Sepal.Length)
 class(iris$Species)
@@ -150,7 +150,7 @@ uadata <- read.table(site, header=TRUE)
 head(uadata)
 ```
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, ch1.6}
 uadata <- read.table("univadmissions.txt", header=TRUE)
 head(uadata)
 ```
@@ -243,7 +243,7 @@ One of the key packages we use for data processing is the `dplyr` package.
 It includes many functions that are similar to SQL (for those who know it). 
 These tools tend to be easier to understand, similar to the syntax in SQL. First we will load the package and then take a *glimpse* of the dataset with which we are working
 
-```{r, message=FALSE}
+```{r ch1.7, message=FALSE}
 library(tidyverse)   # Load the necessary package
 glimpse(uadata)      # Take a glimpse at the data
 ```
@@ -254,14 +254,14 @@ As an example, consider the case of extracting students with a GPA greater than 
 * Take the data frame `uadata` (read in above) and pipe it (send it) to a function that will `filter`
 * Then `filter` it based on some criteria, say `gpa.endyr1 > 3.9`.
 
-```{r, warning=FALSE, error=FALSE}
+```{r ch1.8, warning=FALSE, error=FALSE}
 uadata %>% filter(gpa.endyr1 > 3.9)
 ```
 
 We can also use `dplyr` commands for selecting specific variables using the `select` function. 
 Below we select the ACT scores for students who have a first year GPA greater than 3.9 and with a graduating year of 1998.
 
-```{r}
+```{r ch1.9}
 uadata %>% 
   filter(gpa.endyr1 > 3.9, year==1998) %>%
   select(act)
@@ -277,7 +277,7 @@ Missing values are important to account for, because we cannot simply ignore the
 For example, we can't find the mean of the elements of a data vector when some are set to `NA`.
 Consider the simple case of a vector of 6 values with one `NA`.
 
-```{r}
+```{r ch1.10}
 x <- c(14, 18, 12, NA, 22, 16)
 class(x)
 mean(x)
@@ -289,7 +289,7 @@ Here, the object `x` is a *vector* of class `numeric`. We will not be working wi
 It basically asks if you want to remove the missing values before applying the function.
 It can be set to `TRUE` in order to remove the `NA`s. For example,
 
-```{r}
+```{r ch1.11}
 mean(x, na.rm=TRUE)    # mean of the non-missing elements
 ```
 
@@ -407,7 +407,7 @@ $$\textbf{Standard error of } \bar{x}: s_{\bar{x}} = \sqrt{s^2_{\bar{x}}} = \sqr
 
 In this class we will be using `dplyr` for data handling. We can pipe (`%>%`) our data frame into a summarize function to calculate numeric summaries.
 
-```{r}
+```{r ch1.12}
 uadata %>% 
   gather() %>% 
   group_by(key) %>%
@@ -433,7 +433,7 @@ If R encounters a variable whose values are character strings, R will treat the 
 But, in a case like year above, you have to explicitly tell R that the variable is really a `factor` since it was coded with numbers.
 To do this, we will `mutate` the variables `id` and `year`.
 
-```{r}
+```{r ch1.13}
 uadata <- uadata %>%
   mutate(id=as.factor(id),
          year=as.factor(year))
@@ -443,13 +443,13 @@ Here we tell R to take the `uadata` data, pipe it to the `mutate` function. We t
 
 We can then check the type of each variable by *summarizing* over *all* the variables using the `class` function.
 
-```{r}
+```{r ch1.14}
 uadata %>% summarize_all(class)
 ```
 
 No we can check the summary values again for only numeric values (i.e., the use of the `select_if(is.numeric)` function).
 
-```{r}
+```{r ch1.15}
 uadata %>% 
   select_if(is.numeric) %>%
   gather() %>% 
@@ -459,7 +459,7 @@ uadata %>%
 
 For the categorical variables, the main numeric measure we can consider is the count (or proportions) of each category. To do this in R, we want to tell us to treat each category as a *group* and then count within the group. We will `group_by` the `year` and then within that year, count the number of observations. We also add a new variable (using `mutate`) that is the proportion.
 
-```{r}
+```{r ch1.16}
 uadata %>%
   group_by(year) %>%
   summarize(Count=n() ) %>%
@@ -472,7 +472,7 @@ uadata %>%
 We begin a graphical summary with a scatterplot matrix.
 Here we use the `ggscatmat` function in the `GGally` package.
 
-```{r, message=FALSE}
+```{r ch1.17, message=FALSE}
 library(GGally)
 ggscatmat(uadata)
 ```
@@ -490,7 +490,7 @@ You will also note that the function provides a look at the distributional shape
 
 The `ggscatmat` function builds off a function known as `ggplot()` from the `ggplot2` package (included in `tidyverse`).
 
-```{r}
+```{r ch1.18}
 ggplot(uadata) + 
   geom_density(aes(x=gpa.endyr1))
 ```
@@ -499,7 +499,7 @@ The function works similar to the `%>%` operator but think in terms of layers. T
 
 To generate even more complex distributional plots first we need to perform some data processing. In the `tidyverse` package is package called `tidyr` which is comprised of two main functions: `gather()` and `spread()`. The purpose of the `gather()` function is to collect variables in a dataset and create a *tall* (or *long*) dataset (this is typically known as going from wide-to-tall format). The `spread()` function does the opposite.
 
-```{r}
+```{r ch1.19}
 uadata.tall <- uadata %>%
   gather(key=variable, value=value, gpa.endyr1, hs.pct, act)
 head(uadata)
@@ -511,7 +511,7 @@ dim(uadata.tall)
 Now that the data is in a tall format, we can utilize the ``ggplot` package for more advanced plotting. 
 We want to draw a density plot for each `variable` in the dataset `uadata` but we want a different plot for each $variable$ (act, gpa.endyr1, hs.pct).
 
-```{r}
+```{r ch1.20}
 ggplot(uadata.tall) +
   geom_density(aes(x=value, fill=value)) + 
   facet_grid(.~variable, scales="free_x") + 
@@ -525,7 +525,7 @@ We can see that GPA and high school percentile rankings are skewed left, and tha
 
 The best visual tool for simple counts is the Bar Graph (**note:** you should never use a pie chart, see http://www.businessinsider.com/pie-charts-are-the-worst-2013-6).
 
-```{r}
+```{r ch1.21}
 ggplot(uadata) + 
   geom_bar(aes(x=year) )
 ```
@@ -543,7 +543,7 @@ This is why treating year as a factor is important, because it enables us to spl
 
 One of the best visualization tool for comparing distributions is the boxplot, which displays information about quartiles and potential outliers. 
 
-```{r}
+```{r ch1.22}
 ggplot(uadata) +
   geom_boxplot(aes(x=year, y=act) ) +
   xlab("Year") + ylab("Composite ACT Score") +
@@ -555,7 +555,7 @@ We see here the code is similar to the above except now we call the ``geom_boxpl
 
 Here we construct side-by-side boxplots by year for each of the three numeric variables in the data frame
 
-```{r}
+```{r ch1.23}
 ggplot(uadata.tall) + 
   geom_boxplot(aes(x=year, y=value) ) +
   facet_grid(variable~., scales="free_y") + 
@@ -569,7 +569,7 @@ This is a nice compact visual description of the changes in patterns of response
 Extensive grouped numeric summary statistics are available by using the `group_by()` and `summarize()` functions in `tidyverse`.
 The below example is a more detailed version of the summary table from above.
 
-```{r, results=FALSE}
+```{r ch1.24, results=FALSE}
 summary.table <- uadata.tall %>% 
   group_by(variable) %>%
   summarise(Mean=mean(value),
@@ -586,7 +586,7 @@ Here, we first pipe the `uadata.long` into a `group_by()` function grouping by t
 
 In the next example we group by both the `year` and the variables of interest.
 
-```{r, results=FALSE}
+```{r ch1.25, results=FALSE}
 summary.table2 <- uadata.tall %>%
   group_by(variable, year) %>%
   summarize(Mean=mean(value),
@@ -623,13 +623,9 @@ $$t_0 = \frac{\bar{x}-\mu}{{SE}_{\bar{x}}}$$
  
 counts up the number of standard error units between the true value of $\mu$ and its sample estimate $\bar{x}$; it can be thought of as the standardized distance between a true mean value and its sample mean estimate. If the original population was normally distributed, then the quantity $t_0$ will possess the $t$-distribution with $n - 1$ degrees of freedom. Degrees of freedom is the only parameter of a $t$-distribution.  Notationally, we indicate this by writing $t \sim t(df)$.
 
-```{r fig.align='center', echo=FALSE, include=identical(knitr:::pandoc_to(), 'html')}
-knitr::include_graphics('mrT.png', dpi = NA)
-```
-
 $t$-distributions look a lot like the standard normal distribution $N(0, 1)$: they both center at 0 and are symmetric and bell-shaped (see below).  The key difference is due to the fact that the quantity $t$ includes two sample summaries in its construction: the sample mean $\bar{x}$, and $SE_{\bar{x}}$, which incorporates the sample standard deviation $s$.  Because of this, $t$ is more variable than $N(0, 1)$.  However, as $n$ (and hence degrees of freedom) increases, $s$ becomes a better estimate of the true population SD, so the distinction ultimately vanishes with larger samples. This can all be vizualized in the below plot
 
-```{r, echo=FALSE}
+```{r ch1.26, echo=FALSE}
 x.val <- seq(-4, 4, 0.01)
 y.norm <- dnorm(x.val)
 y.t3 <- dt(x.val, df=3)
@@ -668,14 +664,14 @@ $$H_0:\ \mu_{1996} = \mu_{2000} ~~~\textrm{versus}~~~ \mu_{1996} > \mu_{2000}$$
 
 First we need to select a subset of the data.
 
-```{r}
+```{r ch1.27}
 uadata.trim <- uadata %>%
   filter(year %in% c(1996, 2000) )
 ```
 
 Here we filter the `uadata` so that only years in the vector 1998, 2001 are included. Now that we have a proper subset of the data, we can compare the ACT scores between the two years and build a 98\% confidence interval for the mean difference.
 
-```{r}
+```{r ch1.28}
 t.test(act ~ year, data=uadata.trim, conf.level=0.98, alternative="greater", var.equal=TRUE)
 ```
 

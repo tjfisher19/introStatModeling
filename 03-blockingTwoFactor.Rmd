@@ -57,14 +57,14 @@ Here is an example in R.
 
 **Example:** Word recall study.  Five subjects are asked to memorize a list of words. The words on this list are of three types: positive words, negative words and neutral words. The response variable is the number of words recalled by word type, with a goal of determining if the ability to recall words is affected by the word type.  Each subject provides the number of recalled words of each type.  Here are the data:
 
-```{r, echo=FALSE}
+```{r ch3.1, echo=FALSE}
 load("wordrecall.RData")
 knitr::kable( wordrecall %>% dplyr::select(-obs) %>% spread(word.type, recall))
 ```
 
 *Solution.*
 
-```{r}
+```{r ch3.2}
 load("wordrecall.RData")
 glimpse(wordrecall)
 ```
@@ -73,7 +73,7 @@ Each subject gives three responses instead of one as in a usual one-way design. 
 
 Before doing a formal analysis, here are some descriptive looks at word type and subject factors:
 
-```{r}
+```{r ch3.3}
 p1 <- ggplot(wordrecall) + 
   geom_boxplot(aes(x=subject, y=recall) ) +
   labs(x="Subject", y="Words Recalled")
@@ -89,14 +89,14 @@ The effect of word type appears quite stark, with positive word recalls being hi
 
 Here is how to do a formal analysis in a call of `aov()` -- make sure to check underlying assumptions
 
-```{r}
+```{r ch3.4}
 word.fit <- aov(recall ~ subject + word.type, data=wordrecall)
 autoplot(word.fit)
 ```
 
 The assumptions look generally fine here.  So, on to the analysis:
 
-```{r}
+```{r ch3.5}
 summary(word.fit)
 ```
 

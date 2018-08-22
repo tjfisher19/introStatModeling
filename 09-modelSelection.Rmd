@@ -56,13 +56,13 @@ Strategy for stepwise variable selection using AIC:
 
 **Long-winded example** To demonstrate the step-wise process let's consider the housing appraisal dataset. We've used the full model fit multiple times.
 
-```{r}
+```{r ch9.1}
 AIC(appraisal.fit)
 ```
 
 Now lets consider the three models were we remove a single predictor.
 
-```{r}
+```{r ch9.2}
 appraisal.no.land <- lm(saleprice ~ impvalue + area, data=appraisal)
 appraisal.no.imp <- lm(saleprice ~ landvalue + area, data=appraisal)
 appraisal.no.area <- lm(saleprice ~ landvalue + impvalue, data=appraisal)
@@ -85,7 +85,7 @@ bodyfat.fit <- lm(bodyfat.pct ~ ., data=bodyfat)
 autoplot(bodyfat.fit)
 ```
 
-```{r, echo=FALSE}
+```{r ch9.3, echo=FALSE}
 bodyfat <- read.table("bodyfat.txt", header=TRUE)
 bodyfat.fit <- lm(bodyfat.pct ~ ., data=bodyfat)
 autoplot(bodyfat.fit)
@@ -93,13 +93,13 @@ autoplot(bodyfat.fit)
 
 The assumptions generally look fine here.  We then test for whole-model utility:
 
-```{r}
+```{r ch9.4}
 summary(bodyfat.fit)
 ```
 
 The F-test for the whole model is significant (F = 54.65, df=(13, 238), p-value < 0.0001), so we know at least one predictor is significant.  So, we proceed to run a backward variable selection using AIC as our criterion.  The R function step() does this nicely in one pass.  I have broken up the output and added comments for clarification: 
 
-```{r}
+```{r ch9.5}
 step(bodyfat.fit, direction="backward")
 ```
 
@@ -124,13 +124,13 @@ The idea of a best-subsets selection method is to choose candidate models based 
 
 The `regsubsets()` function in the R add-on package `leaps` finds the optimal subset of predictors of each model size.  By default, the function returns only optimal subsets and only computes subsets up to size 8; these defaults can be changed using the `nbest` and `nvmax` arguments, respectively.
 
-```{r}
+```{r ch9.6}
 bodyfat.gsub <- regsubsets(bodyfat.pct ~ ., data=bodyfat, nbest=5, nvmax=13)
 ```
 
 The object `bodyfat.gsub` contains a ton of information (we just fit upwards of $5\times 13$ models). It works best to plot the $R^2_{adj}$ and BIC values to get a feel for which models to consider. The following code extracts the $R_{adj}^2$ and BIC values for each model fit.
 
-```{r, fig.height=7, fig.width=7}
+```{r ch9.7, fig.height=7, fig.width=7}
 stats <- summary(bodyfat.gsub)
 gsub.df <- data.frame(Model.Number=1:length(stats$adjr2), Adjusted.R2=stats$adjr2, BIC=stats$bic)
 p1 <- ggplot(gsub.df, aes(x=Model.Number, y=Adjusted.R2)) + 
@@ -148,7 +148,7 @@ grid.arrange(p1,p2, nrow=2)
 
 First we note that these plots may include too much information. It is hard to tell exactly what is happening. Recall that we want a large $R^2_{adj}$ or small BIC value. From the computed $R_{adj}^2$ and BIC values, model number `r which.min(gsub.df$BIC)` has the best BIC value and model `r which.max(gsub.df$Adjusted.R2)` has the best $R^2_{adj}$. However we note from the plot that model `r which.max(gsub.df$Adjusted.R2)` has essentially the same $R^2_{adj}$ as all the other models nearby. In fact consider the following:
 
-```{r, echo=FALSE}
+```{r ch9.8, echo=FALSE}
 df <- data.frame(Model=c(which.max(gsub.df$Adjusted.R2), which.min(gsub.df$BIC)),
                  Adjusted.R2=c(gsub.df$Adjusted.R2[which.max(gsub.df$Adjusted.R2)],
                                gsub.df$Adjusted.R2[which.min(gsub.df$BIC)]),
@@ -160,7 +160,7 @@ kable(df)
 
 The best model in terms of $R_{adj}^2$ barely improves over the best BIC model. Let's extract the coefficients from the two model fits.
 
-```{r}
+```{r ch9.9}
 coef(bodyfat.gsub, which.max(gsub.df$Adjusted.R2))
 coef(bodyfat.gsub, which.min(gsub.df$BIC))
 ```

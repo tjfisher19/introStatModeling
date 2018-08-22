@@ -29,7 +29,7 @@ This section is only meant to provide you with the means to run a cursory check 
 
 **Example** Muscle mass.  Consider the age and muscle mass dataset from earlier. Before using the muscle mass regression model to perform tests/CIs about the mass vs. age relationship, check the regression assumptions. This can be achieved by using the `autoplot()` function on the fitted `lm` object.
 
-```{r}
+```{r ch6.1}
 muscle.fit <- lm(mass ~ age, data=muscle)
 autoplot(muscle.fit)
 ```
@@ -97,7 +97,7 @@ This type of test is called an analysis of variance (ANOVA) F-test.  This test i
 ```{example, label="appraisal_f", name="Property Appraisals"}
 Recall the property appraisal dataset from chapter 5. 
 ```
-```{r}
+```{r ch6.2}
 load("appraisal.RData")
 appraisal.fit <- lm(saleprice ~ landvalue + impvalue + area, data=appraisal)
 summary(appraisal.fit)
@@ -107,7 +107,7 @@ The $F$-statistic on 3 and 16 degrees of freedom is 46.72, with *p*-value < 0.00
 
 Alternatively we could test this with the `anova()` function
 
-```{r}
+```{r ch6.3}
 anova(appraisal.fit)
 ```
 
@@ -148,7 +148,7 @@ and is provided in the `summary()` output in R.
 ```{example, label="appraisal_t_test", name="Property Appraisals"}
 Consider individual test from the Property Appraisal data. 
 ```
-```{r}
+```{r ch6.4}
 summary(appraisal.fit)
 ```
 
@@ -179,7 +179,7 @@ What about insignificant predictors?  At this point, one might wonder about the 
 
 So, here’s what happens by deleting landvalue as a predictor (we actually did this in the last lecture to see the effect on the β parameters):
 
-```{r}
+```{r ch6.5}
 summary(lm(saleprice ~ impvalue + area, data=appraisal))
 ```
 
@@ -200,7 +200,7 @@ The point estimates and their SEs were provided in the R output from `summary()`
 
 After fitting the linear model, getting 95% CIs for $\beta_i$ is a snap with the `confint()` function:
 
-```{r}
+```{r ch6.6}
 confint(appraisal.fit)
 ```
 We focus only on interpretation of the significant predictors:
@@ -237,7 +237,7 @@ To help distinguish between the two kinds of intervals, we will call an interval
 
 The `predict()` extractor function in R will generate CIs and PIs from a linear model object according to your specifications for values of xp:
 
-```{r}
+```{r ch6.7}
 muscle.fit <- lm(mass~age,data=muscle)
 predict(muscle.fit, newdata=data.frame(age=65), int="conf")
 predict(muscle.fit, newdata=data.frame(age=65), int="pred")
@@ -251,7 +251,7 @@ Note that the fitted value (labeled fit) is the same for both (78.996).  However
 
 If we had deleted `newdata=data.frame(age=65)` from the `predict()` function call, we would get PIs (or CIs) for every age value that occurred in the original data set.  However, since the values of age appear in random order, it might be a bit nicer to first sort them, and then generate the intervals:
 
-```{r}
+```{r ch6.8}
 muscle.trim <- muscle %>%
   distinct(age) %>%
   arrange(age)
@@ -269,7 +269,7 @@ Two things you should notice:
 
 The below code will plot the fitted line with the confidence and prediction bands.
 
-```{r}
+```{r ch6.9}
 muscle.bands <- muscle.trim %>%
   mutate(ci.lo = predict(muscle.fit, newdata=muscle.trim, int="conf")[,2],
          ci.hi = predict(muscle.fit, newdata=muscle.trim, int="conf")[,3],
@@ -299,7 +299,7 @@ In summary, don’t extrapolate because:
 * the structural form of the relationship may not be the same as you move away from the observed predictor space.
 The two plots below illustrate these points. Suppose you only observe the data in the narrow range around $X = 0$ as shown in the left hand plot.  If you fit a line to these data, you get the observed trend (and confidence bands).  However, if the true nature of the relationship outside this narrow range were radically different (and you don’t know this because you collected no data outside your “narrow” range), then extrapolating beyond your limited view of the relationship may produce wildly inaccurate predictions (see the right side plot).
 
-```{r, echo=FALSE}
+```{r ch6.10, echo=FALSE}
 set.seed(1)
 x <- runif(80, -15, 10)
 y <- -(x+5)^2 + rnorm(80, sd=7)
@@ -327,7 +327,7 @@ grid.arrange(p1,p2, nrow=1)
 
 **Back to multiple regression.** We can do the same sort of thing with a multiple regression dataset, unfortunately it is not as easy to plot.
 
-```{r}
+```{r ch6.11}
 x.pred <- data.frame(landvalue=11000, impvalue=43500, area=2000)
 predict(appraisal.fit, x.pred, int="pred")
 ```
@@ -354,7 +354,7 @@ We start as follows:
 Formulaically, $TSS = \sum_{i=1}^n (y_i - \bar{y})^2$ and $RSS = \sum_{i=1}^n (y_i - \hat{y}_i)^2$.
 
 <div style="float:right;position: relative; ">
-```{r, echo=FALSE, fig.width=3.25, fig.height=3.25}
+```{r ch6.12, echo=FALSE, fig.width=3.25, fig.height=3.25}
 set.seed(1)
 x <- runif(500)
 y <- 5 - 10*x + rnorm(500, sd=0.5)
@@ -393,7 +393,7 @@ $$R_{adj}^2 = 1 - \frac{RSS/df_{error}}{TSS/df_{total}} = 1 - \frac{RSS/(n-p)}{T
 
 $R_{adj}^2$ is not technically a proportion like $R^2$, but it is more useful than $R^2$ when comparing different models for the same data.  It should also be said that, although informative, these measures do not give any direct indication of how well the regression equation will predict when applied to a new data set. Like $R^2$, $R_{adj}^2$ is supplied with the `summary()` function and is labeled `Adjusted R-squared`. We show the output below for the appraisal model.
 
-```{r}
+```{r ch6.13}
 summary(appraisal.fit)
 ```
 
@@ -410,7 +410,7 @@ $$AIC = n\log(RSS/n) + 2p$$
 where $n$ = sample size, $RSS$ is the model residual sum of squares, and $p$ = number of model parameters (i.e. number of $\beta$ parameters in the model).  In R we can calculate the AIC value for a fit using the `AIC()` function.
 
 
-```{r}
+```{r ch6.14}
 AIC(appraisal.fit)
 ```
 
@@ -422,7 +422,7 @@ $$BIC = n\log(RSS/n) + \log(n)p$$
 
 and is calculated in R with the `BIC()` function.
 
-```{r}
+```{r ch6.15}
 BIC(appraisal.fit)
 ```
 

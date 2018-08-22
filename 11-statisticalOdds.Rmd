@@ -1,14 +1,141 @@
 
 # Statistical Odds
 
+Before moving onto Generalized Linear Models we take a quick tangent to discuss statistical odds. This is necessary in order to truly understand and appreciate the finer details of Logistic Regression.
+
+Consider the game of Roulette:
+
+```{r ch11.1}
+knitr::include_graphics('Roulette-Table-Wheel-1024x463.png')
+```
+
+In this game a croupier spins the wheel in one direction, then spins a ball, known as *the pill*, int the opposite direction. The *pin* will stop on one of the 38 designated numbers (0, 00, 1, 2, $\ldots$, 36). You will note that zero values are colored green while the remaining numbers alternate the colors red or black. Players of the game will place bets on various parts of the board.
+
+The goal here is not to study games of chance but this provides a good example of basic probability and odds. Consider the simple case where the player bets on either <span style="color:red">**red**</span> or **black**.
+
+For discussion, suppose a player bets on <span style="color:red">**red**</span>. What is the probability they win?
+
+**Solution** There are 38 possible outcomes in the game, of which 18 are <span style="color:red">**red**</span>. The probability the player wins the game is simply 18/38, or `r round(18/38, 4)`. The probability the player loses is the complement, which is 20/38 or `r round(20/38, 4)`.
 
 ## Probability versus Odds
 
+*Odds* are related to probabilities but the contents are different. The *odds* of winning are calculated by counting the number of ways you win the game, and divide by the number of ways you lose the game. So in our working example there are 18 ways of <span style="color:red">**red**</span> while there are 20 ways the outcome is not <span style="color:red">**red**</span>. Thus the odds of red are 18/20 = `r 18/20`.
+
+Note,
+$$ \textrm{Odds of red} = \frac{18}{20} = \frac{P(red)}{P(not red)} = \frac{18/38}{20/38} = \frac{18}{20} = 0.9 = \frac{9}{10}.$$
+
+In the gambling world, one may saw the odds of <span style="color:red">**red**</span> are 9 to 10. 
+
+**Thought exercise:** For those who like games of chance, in a standard casino betting on <span style="color:red">**red**</span> or **black** typically pays a 1 to 1 ratio, meaning if you bet \$100 on **black** and the outcome is **black**, you win \$100. *Should you play this game?* *Would* you play this game?
 
 ## Odds ratios
 
+Now that we have a basic understanding of *odds*, let consider a non-gambling (motivated by data) example.
+
+<div style="float:right;position: relative; ">
+```{r ch11.2 ch8.13, echo=FALSE, fig.width=4.00, fig.height=3.25}
+knitr::include_graphics('RMS_Titanic_3.jpg')
+```
+</div>
+
+On April 14, 1912, the RMS Titanic truck an Iceberg in the North Atlantic Ocean off the coast of Newfoundland. Roughly 3 hours after striking the iceberg, the Titanic sunk on April 15, 1912 are 2:20am. 
+
+In the paper, The "Unusual Episode" Data Revisited published in the Journal of Statistics Education vol.3, no.3 (1995), records for 2201 passengers and crew were recorded with their ticket status (the Class variable), Age (categorized as Adult/Child), Gender (Female/Male) and whether they survived the sinking.
+
+```{r ch11.3}
+titanic <- read.csv("titanic.csv")
+head(titanic)
+```
+
+In this example, we will explore the odds of surviving the sinking of the Titanic as a function of different variables. First consider the basic case of surviving:
+
+```{r ch11.4}
+xtabs(~Survived, data=titanic)
+```
+
+What is the probability a randomly selected passenger suvived the sinking of the Titanic?
+
+For a randomly selected passenger, what are the odds of survival?
+
+**Solutions**
+
+The probability a randomly selected passenger survived is $\frac{711}{1490+711}$, or `r round(711/2201, 4)`. 
+
+The odds of survival are $\frac{711}{1490}$ or `r round(711/1490, 4)`. 
+
+**Scary though exercise:** If the odds of Roulette were similar to surviving the Titanic, would you play the game?
+
+
+In the Titanic dataset we have other information besides whether a person survived or not. Consider a simple question: Does *Gender* help explain, or predict, a person's ability to survive this disaster?
+
+We have studied problems such as this already in this class. Does Wart type influence skin coverage; does mileage influence the price of a used car; does tornado length predict property damage; etc... 
+
+Here things are different because our response variable (survived or not) is categorical (binary) as well as our predictor variable (gender). The most basic way to explore this sort of relationship is with a contigency table:
+
+```{r ch11.5}
+xtabs( ~ Gender + Survived, data=titanic)
+```
+
+If you are a female, what are your odds of surviving? 
+
+$\frac{344}{126}$ =  `r round(344/126, 4)`
+
+If you are a male, what are your odds of surviving?
+
+$\frac{367}{1364}$ =  `r round(367/1364, 4)`
+
+**Thought exercise** -- Consider the gambling ideas from above. If you know a person's gender, are you willing to bet on surviving or not?
+
+It sure looks like there is a relationship, or association, between gender and surviving the titanic. 
+
+Ultimately in this class we are interested in statistical modeling but the titanic dataset provides an example of categorical data analysis, an area of study that was briefly covered in your Introductory Statistics course. This analysis is still popular in several areas (Psychology and Sociology) and appropriate for some sorts of data.
+
+In the above odds calculated regarding the Tatanic, we essentially were determining an association between categories with a binary response (survived or died). The are several quantitative measures of association for categorical data. There are pros and cons to each. We will just list them here as we do not want to get into the weeds of the topic:
+
+* Cramer's V
+* The $\phi$ statistic
+* Relative risk
+
+The first two methods are based on the Chi-square test for association (maybe covered in Intro Stat). The can be considered analogous measures of the correlation coefficient $r$ we saw with regression.
+Relative risk is derived from the world of Biostatistics and can be a great tool for comparing these sorts of relationships. Basically you compare the conditional probabilities: $\textrm{P(survived | female)} = \frac{344}{344+126}$ =  `r round(344/470, 4)`
+and $\textrm{P(survived | male)} = \frac{367}{1731}$ =  `r round(367/1731, 4)`
+
+The relative risk of surviving for a female compared to a male is $\frac{344/470}{367/1731} = $`r round((344/470)/(367/1731), 4)`.
+
+If there were no associated between gender and surviving, this relative risk value would be approximately 1.
+
+Here, we see a random female passenger had greater than a $3\times$ chance of surviving compared to a male passenger. 
+
+**Note** This example is a bit strange because *risk* normally is a bad thing. In our above discussion, surviving is the outcome of interest. If I reworked things in terms of not surviving (i.e., death!), we see the relative risk of dying for a female compared to a male is `r round((126/470)/(1364/1731), 4)`. So the likelihood of a random female perishing in the disaster was only about 1/3 of that of a male.
+
 ## Ideas of modeling odds
 
+In the above discussion, it sure seems like gender is a predictor for surviving. Other variables are included in the dataset. Some additional contingency table analysis provides additional insight.
 
+```{r ch11.6}
+xtabs(~ Age + Survived, data=titanic)
+```
+
+The odds of a child surviving are `r round(57/52, 4)` while that of an adult are `r round(654/1438, 4)`. 
+
+Although not ideal, it was better to be a child than an adult on the Titanic.
+
+What about the `Class` variable. Here things get a little more interesting because there are multiple influences
+
+```{r ch11.7}
+xtabs(~ Class + Survived, data=titanic)
+```
+
+Here, we see some obvious things:
+
+* Best to be in first class
+* If not first, take your chances in second class.
+* Crew members and third class did not fare well.
+
+To make things more interesting, there is interaction among the predictor variables.
+
+```{r ch11.8}
+xtabs( ~ Class + Gender + Survived, data=titanic)
+```
 
 

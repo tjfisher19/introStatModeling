@@ -22,7 +22,7 @@ It is in this sense that you can think of a statistical model as a “simplifica
 
 It turns out, we've already fit a statistical model. Consider a variation of the two-sample $t$-test we performed in the previous chapter.
 
-```{r}
+```{r ch2.1}
 uadata.trim <- uadata %>%
   filter(year %in% c(1996, 2000) )
 t.test(act ~ year, data=uadata.trim, conf.level=0.98, alternative="two.sided", var.equal=TRUE)
@@ -150,8 +150,8 @@ All experiments have factors, a response variable, and experimental units.  Here
 
 * **Factors.** A factor is an explanatory variable manipulated by the experimenter.  Each factor has two or more levels (i.e., different values of the factor).  Combinations of factor levels form what are called treatments. The table below shows factors, factor levels, and treatments for a hypothetical experiment:
 
-```{r, echo=FALSE}
-knitr::include_graphics("designTable.png")
+```{r ch2.2, echo=FALSE}
+# knitr::include_graphics("designTable.png")
 ```
 
 
@@ -178,7 +178,7 @@ In the hypothetical experiment above, the experimental units would probably be p
 For example, suppose we had 12 experimental units which we wanted to completely randomly allocate to three different treatments (call them A, B and C).  
 We can accomplish this as follows in R:
 
-```{r}
+```{r ch2.3}
 ids <- 1:12
 trt <- rep(c('A','B','C'), each=4)
 randomized <- sample(ids, size=length(ids), replace=FALSE)
@@ -228,7 +228,7 @@ The use of the paired *t*-test is not limited to experimental designs, it also a
 
 To answer to this question, the weight of the 20 mice has been measured before and after the treatment and is in the file `miceWeight.csv`. Below is some code to implement the test.
 
-```{r}
+```{r ch2.4}
 mice <- read.csv("miceWeight.csv")
 head(mice)
 t.test(weight ~ group, data=mice, paired=TRUE)
@@ -241,7 +241,7 @@ Note that similar to the two-sample *t*-test here we state the weight is a funct
 
 To graphically compare paired data we must use some caution and consider the data is paired. Ultimately we are interested in the pairwise difference between observations. Thus, side-by-side boxplots are not fully appropriate since tehy do not account for the pairing. We can report a boxplot of the differences but this requires some data manipulation.
 
-```{r}
+```{r ch2.5}
 mice.wide <- mice %>%
   spread(key=group, value=weight) %>%
   mutate(Difference=after-before)
@@ -253,7 +253,7 @@ ggplot(mice.wide) +
 
 Another type of plot that can be handy for this sort of data (and will be more important later) is known as a profile plot. Here we use the `id` values to group data. Again we need to do some light data processing.
 
-```{r}
+```{r ch2.6}
 mice <- mice %>%
   mutate(id=factor(id),
          group=factor(group, levels=c("before","after")))
@@ -261,7 +261,7 @@ mice <- mice %>%
 
 The above statement simply tells R to consider the numeric value `id` as a factor variable. We also specify the group ordering so that `before` is before `after`.
 
-```{r}
+```{r ch2.7}
 ggplot(mice) + 
   geom_line(aes(x=group, y=weight, group=id) ) +
   theme_minimal()
@@ -317,7 +317,7 @@ We test these hypotheses by partitioning the total variability in the response i
 
 **Example:** Drug effects on alertness.  Three different medications are tested on a sample of 18 individuals to see if they impact alertness.  Each subject is randomly assigned one drug, the drug is administered.  After 60 minutes, a test is administered that scores the alertness level of each subject (a higher score means higher alertness).  The data appear in the R dataframe onewaydrug.RData in our repository.
 
-```{r}
+```{r ch2.8}
 load("onewaydrug.RData")
 glimpse(onewaydrug)
 ggplot(onewaydrug) + 
@@ -328,7 +328,7 @@ Visually it appears the scores under drug C seem to be noticeably lower on avera
 
 To perform One-Way ANOVA we employ the `aov` function (for Analysis Of Variance).
 
-```{r}
+```{r ch2.9}
 fit.drug <- aov(alertness ~ drug, data=onewaydrug)
 summary(fit.drug)
 ```
@@ -362,7 +362,7 @@ In general, independence (or lack thereof) is the result of the sampling scheme 
 ### Constant Variance
 
 <div style="float:right;position: relative; ">
-```{r, echo=FALSE, fig.width=3.25, fig.height=9.75}
+```{r ch2.10, echo=FALSE, fig.width=3.25, fig.height=9.75}
 autoplot(fit.drug, which=c(1,3,5), nrow=3)
 ```
 </div>
@@ -384,7 +384,7 @@ Using the absolute values of the residuals is a good refinement.  The reason is 
 ### Checking Normality
 
 <div style="float:right;position: relative; ">
-```{r, echo=FALSE, fig.width=3.25, fig.height=3.25}
+```{r ch2.11, echo=FALSE, fig.width=3.25, fig.height=3.25}
 autoplot(fit.drug, which=c(2), nrow=1)
 ```
 </div>
@@ -398,7 +398,7 @@ A normal Q-Q plot of the residuals is presented to the right. There is some mino
 
 The code to generate the above plots can be acheived via the `autoplot` function when including the `ggfortify` library.
 
-```{r, eval=FALSE}
+```{r ch2.12, eval=FALSE}
 library(ggfortify)
 autoplot(fit.drug)
 ```
@@ -407,7 +407,7 @@ autoplot(fit.drug)
 
 We have evidence from the above plots that the variance appears to be increasing with the response (determined by the constant variance assumption). One way to typically address this issue is to transform the response variable. We will go into more details later but common transformations include $Y^*=log(Y)$, $Y^*=\sqrt{Y}$ and $Y^*=1/Y$. Here we will use a logarithmic as it is fairly common. Later in the class we will describe the other transformations in more detail. We can acheive this in R with the following:
 
-```{r, fig.width=7, fig.height=7}
+```{r ch2.13, fig.width=7, fig.height=7}
 fit.log.drug <- aov(log(alertness) ~ drug, data=onewaydrug)
 autoplot(fit.log.drug)
 ```
@@ -416,7 +416,7 @@ This is maybe a bit better, but a stronger transformation might be warranted.
 
 The test comparing the three drug population means (on a log scale) is given via the `summary()` command:
 
-```{r}
+```{r ch2.14}
 summary(fit.log.drug)
 ```
 
