@@ -1,11 +1,190 @@
 
 # Model Selection
 
+One of the important themes running through what we do in regression concerns model simplification.  The principle of parsimony by which we should abide is attributed to the 14th century English logician William of Occam, who developed what is known as Occam’s Razor):
+
+**Occam’s Razor** (paraphrased)
+All other things being equal, the simplest explanation tends to be the correct explanation.
+
+The term razor refers to the act of shaving away unnecessary complications to get to the simplest explanation.  In statistical models, application of Occam’s Razor means that models should have as few parameters as possible, and should be pared down until they are “minimally adequate”. This theme extends beyond this course (model parsimony is important in many areas of statistics).
+
+Historically, the process of model simplification required the application of hypothesis testing in regression models.  In general, a predictor variable $X_j$ under investigation was retained in a model only if it was statistically significant (i.e. if the test for $H_0: \beta_j = 0$ had a small *p*-value). However, one can show that this method of choosing predictors to retain is fraught with potential problems, so luckily more robust methods have been developed for the task.
+
+In our quest to simplify models, however, we must be careful not to throw out the baby with the bathwater. Too simple is not good, either! Building statistical models is as much an art as it is a science, so you must be aware of how your models are explaining the observed data at every step along the way to obtaining a final model.
 
 ## Step-wide Procedures
 
+Variable selection is intended to select some “best” subset of predictors.  Why bother?
+
+1. Occam’s Razor applied to regression implies that the smallest model that fits the data is best.  Unnecessary predictors can add noise to the estimation of other quantities that we are interested in.
+
+2. Multicollinearity may result by having too many variables trying to do the same job.  Judicious removal of redundant variables can greatly improve estimation of the effects of the predictors on the response.
+
+3. Cost considerations: if the model is to be used for prediction, we can save time and/or money by not measuring redundant predictors.
+
+Prior to any variable selection, you should:
+
+1. Identify outliers/influential points, perhaps excluding them at least temporarily.
+
+2. Apply transformations to the variables that seem appropriate from a preliminary inspection of the data (standardizing predictor variables).
+
+There are two useful measures for comparing the quality of the fits of regression models:  $R_{adj}^2$ and the Akaike Information Criterion (AIC). We will do a demonstration of variable selection using both measures, but the AIC is preferable in practice because its concept is applicable to a broader array of model types.
+
+Minimizing the “loss of information”.  Before engaging in the construction of a regression model, we must first accept that there are no true models.  Indeed, models only approximate reality. The question then is to find which model would best approximate reality given the data we have recorded. In other words, we are trying to minimize the loss of information. Kullback and Leibler addressed such issues in the 1950s and developed a measure to represent the information lost when approximating reality (i.e., a good model minimizes the loss of information). A few decades later, Japanese statistician Hirotugu Akaike proposed using Kullback and Leibler’s measure for variable selection. He established a relationship between the maximum likelihood, which is an estimation method used in many statistical analyses, and the Kullback-Leibler measure.  The result is known as the Akaike Information Criterion, defined by 
+
+$$AIC = n\log\left(\frac{RSS}{n}) + 2k$$
+
+The AIC penalizes for the addition of parameters, and thus selects a model that fits well but also has a minimum number of parameters (i.e., simplicity and parsimony). 
+
+By itself, the value of the AIC for a given data set has no meaning. It becomes interesting when it is compared to the AICs of a series of models, specified in advance, the model with the lowest AIC being the best model among all models specified for the data at hand.   Thus, if only poor models are considered, the AIC will select the best of the poor models.  This highlights the importance of spending time to determine the set of candidate models based on previous investigations, as well as judgment and knowledge of the system under study. 
+
+Once appropriate transformations have been applied (if warranted), one may run each of the models and compute the AIC.  The models can then be ranked from best to worse (i.e., low to high AIC values). But, be aware of the following:
+
+* One should ensure that the same data set is used for each model, i.e., the same observations must be used for each analysis. 
+* Missing values for only certain variables in the data set can also lead to variations in the number of observations. 
+* Furthermore, the same response variable $Y$ must be used for all models (i.e., it must be identical across models, consistently with or without transformation). 
+
+Strategy for stepwise variable selection using AIC:
+
+1. Start with all the candidate predictors in the model. Check assumptions and make corrections if necessary.
+2. Run a whole-model F-test on this “global” model. Be sure it indicates that your model does have utility.  (If not, then none of your variables should be selected!)
+3. Find the AIC of the global model.
+4. Look at all candidate models that result by the removal of one predictor from the global model.  (This is called “backward selection”). Calculate the AIC for each of these models.
+5. Pick the model with the smallest AIC. (Akaike’s rule of thumb: two models are essentially indistinguishable if the difference in their AIC is less than 2.)
+6. Return to step 4, and repeat the process starting with the revised model.
+7. Continue the process until the deletion of any predictor results in a rise in the AIC.
+
+**Long-winded example** To demonstrate the step-wise process let's consider the housing appraisal dataset. We've used the full model fit multiple times.
+
+```{r}
+AIC(appraisal.fit)
+```
+
+Now lets consider the three models were we remove a single predictor.
+
+```{r}
+appraisal.no.land <- lm(saleprice ~ impvalue + area, data=appraisal)
+appraisal.no.imp <- lm(saleprice ~ landvalue + area, data=appraisal)
+appraisal.no.area <- lm(saleprice ~ landvalue + impvalue, data=appraisal)
+AIC(appraisal.no.land)
+AIC(appraisal.no.imp)
+AIC(appraisal.no.area)
+```
+We see that the full model has the best AIC (smallest) with a value of 421.3557. Removing any of the variables will make the model worse (in terms of AIC).
+
+Performing the 7 step algorithm above would be redundant and tedious. Computers are excellent at performing redundant and tedious task. R has functions that will perform step-wise AIC model selection. We highlight its use with another example.
+
+**Example: Estimating body fat percentage.**  Making accurate measurement of body fat is inconvenient and costly, so it is desirable to have methods of estimating body fat that are cheaper and easier to implement.  The standard technique of underwater weighing computes body volume as the difference between body weight measured in air and weight measured during water submersion.  Our goal is to develop a good predictive model for percentage of body fat that uses body measurements only; i.e., a model that gives body fat percentage estimates very close to the accurate measurements obtained via underwater weighing.  Since underwater weighing is inconvenient and expensive, a good model based solely on body measurements only will be of much use in practice.
+
+We first fit the full model and check the assumptions.
+
+```{r, eval=FALSE}
+site <- "http://www.users.miamioh.edu/hughesmr/sta363/bodyfat.txt"
+bodyfat <- read.table(site, header=TRUE)
+bodyfat.fit <- lm(bodyfat.pct ~ ., data=bodyfat)
+autoplot(bodyfat.fit)
+```
+
+```{r, echo=FALSE}
+bodyfat <- read.table("bodyfat.txt", header=TRUE)
+bodyfat.fit <- lm(bodyfat.pct ~ ., data=bodyfat)
+autoplot(bodyfat.fit)
+```
+
+The assumptions generally look fine here.  We then test for whole-model utility:
+
+```{r}
+summary(bodyfat.fit)
+```
+
+The F-test for the whole model is significant (F = 54.65, df=(13, 238), p-value < 0.0001), so we know at least one predictor is significant.  So, we proceed to run a backward variable selection using AIC as our criterion.  The R function step() does this nicely in one pass.  I have broken up the output and added comments for clarification: 
+
+```{r}
+step(bodyfat.fit, direction="backward")
+```
+
+The full (“global”) model AIC is 749.36.  The resulting AICs obtained via the deletion of one predictor is given for each predictor considered.  Remember that lower AIC values are better.  Moreover, the above list is ordered based on the lack of contribution for each predictor.  For example: 
+
+•	deleting knee from the global model will result in an AIC of 747.36 (a reduction of 749.36 – 747.36 = 2.0 in AIC).  This is the largest reduction in AIC possible for any single variable deletion, so knee is at the top of the list.
+•	Remember: if the change in AIC < 2, then there is a no appreciable difference in the quality of the fit.  Since the change in AIC here equals 2, there is a change in the fit quality … since dropping knee lowers the AIC this much, the model can be said to be better by deleting it.
+
+The steps continue below.  The new “global” model in the next step below is the 12-predictor model that excludes knee:
+
+Next in line for deletion is chest.  Note that the change in AIC by deleting chest will be 747.36 – 745.43 = 1.93.  This is less than 2, so the models with and without chest are not appreciably different.  However, we now apply the principle of parsimony to default to the simpler model that excludes chest.  
+
+We continue on through until the process terminates, which occurs when the deletion of any remaining predictor results in a rise in the AIC:
+
+This stepwise procedure terminates at an eight-predictor model.  
 
 ## Best subsets
+
+If there are $p$ potential predictors, then there are $2^p$ possible models. This can get out of hand in a hurry. For example, the body fat example has 13 potential predictors, meaning we have $2^{13} = 8192$ models to consider!  
+
+The idea of a best-subsets selection method is to choose candidate models based on some objective criterion that measures the quality of the fit or quality of the predictions resulting from the model.  Because there are so many potential candidates to consider, we usually select the best few models of each size to evaluate.  There are several possible criteria we could use to compare candidate models, but the usual criterion of choice is $R_{adj}^2$ or BIC.
+
+The `regsubsets()` function in the R add-on package `leaps` finds the optimal subset of predictors of each model size.  By default, the function returns only optimal subsets and only computes subsets up to size 8; these defaults can be changed using the `nbest` and `nvmax` arguments, respectively.
+
+```{r}
+bodyfat.gsub <- regsubsets(bodyfat.pct ~ ., data=bodyfat, nbest=5, nvmax=13)
+```
+
+The object `bodyfat.gsub` contains a ton of information (we just fit upwards of $5\times 13$ models). It works best to plot the $R^2_{adj}$ and BIC values to get a feel for which models to consider. The following code extracts the $R_{adj}^2$ and BIC values for each model fit.
+
+```{r, fig.height=7, fig.width=7}
+stats <- summary(bodyfat.gsub)
+gsub.df <- data.frame(Model.Number=1:length(stats$adjr2), Adjusted.R2=stats$adjr2, BIC=stats$bic)
+p1 <- ggplot(gsub.df, aes(x=Model.Number, y=Adjusted.R2)) + 
+  geom_line() + 
+  geom_point(color="red", size=2) + 
+  theme_minimal() +
+  ylab("Adjusted R-squared") + xlab("Model Number")
+p2 <- ggplot(gsub.df, aes(x=Model.Number, y=BIC)) + 
+  geom_line() + 
+  geom_point(color="red", size=2) + 
+  theme_minimal() +
+  ylab("BIC") + xlab("Model Number")
+grid.arrange(p1,p2, nrow=2)
+```
+
+First we note that these plots may include too much information. It is hard to tell exactly what is happening. Recall that we want a large $R^2_{adj}$ or small BIC value. From the computed $R_{adj}^2$ and BIC values, model number `r which.min(gsub.df$BIC)` has the best BIC value and model `r which.max(gsub.df$Adjusted.R2)` has the best $R^2_{adj}$. However we note from the plot that model `r which.max(gsub.df$Adjusted.R2)` has essentially the same $R^2_{adj}$ as all the other models nearby. In fact consider the following:
+
+```{r, echo=FALSE}
+df <- data.frame(Model=c(which.max(gsub.df$Adjusted.R2), which.min(gsub.df$BIC)),
+                 Adjusted.R2=c(gsub.df$Adjusted.R2[which.max(gsub.df$Adjusted.R2)],
+                               gsub.df$Adjusted.R2[which.min(gsub.df$BIC)]),
+                 BIC=c(gsub.df$BIC[which.max(gsub.df$Adjusted.R2)],
+                       gsub.df$BIC[which.min(gsub.df$BIC)]) )
+rownames(df) <- c("Best Adjusted-R2", "Best BIC")
+kable(df)
+```
+
+The best model in terms of $R_{adj}^2$ barely improves over the best BIC model. Let's extract the coefficients from the two model fits.
+
+```{r}
+coef(bodyfat.gsub, which.max(gsub.df$Adjusted.R2))
+coef(bodyfat.gsub, which.min(gsub.df$BIC))
+```
+
+The model based on $R^2_{adj}$ choose 9 predictor variables compared to only 4 for the best BIC model. So, there is no clear-cut answer, but that’s the point: the “best subsets” idea is for you to consider options and to weigh the relative trade-offs in using one model over another. 
+
+Some sanity checks when performing a variable selection procedure
+
+Some important points worth noting:
+
+* Variable selection is a means to an end, not an end unto itself.  Too often, I have found that researchers use these techniques as a substitute for thinking about the problem for themselves, being content to “let a computer choose the variables” for them.  Don’t fall into that trap!  Your aim is to construct a model that predicts well or explains the relationships in the data. Automatic variable selection is not guaranteed to be consistent with these goals.  Use these methods as a guide only.
+
+* Some models have a natural hierarchy. For example, in polynomial models, X2 is a higher order term than X.  When performing variable selection, it is important to respect hierarchies. Lower order terms should not be removed from the model before higher order terms in the same variable. Another example is when you have a model containing interaction terms, e.g. X1X2.  Any model containing X1X2 as a model term must also contain main effect terms for X1 and X2 to respect the hierarchy.
+
+Finally, it is entirely possible that there may be several models that fit (roughly) equally well.  If this happens, you should consider:
+
+1. Do the models have similar qualitative consequences?
+2. Do they make similar predictions?
+3. What is the practical cost of measuring the predictors?
+4. Which has better diagnostics?
+
+If you find models that seem (roughly) equally as good yet lead to quite different conclusions, then it is clear that the data cannot answer the question of interest without ambiguity.
+
+
 
 ## Others
 
