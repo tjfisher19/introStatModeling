@@ -9,28 +9,50 @@ documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
-github-repo: rstudio/bookdown-demo
+github-repo: tjfisher19/introStatModeling
 description: "Covers Regression and Elements of Design of Experiments R using the tidyverse."
 ---
 
 
+
+
 # Preface{-}
 
+```{r dino, echo=FALSE, fig.height=3, fig.width=4, message=FALSE, error=FALSE, warning=FALSE}
+library(tidyverse)
+library(datasauRus)
+data("datasaurus_dozen")
+dino_data <- datasaurus_dozen %>%
+  dplyr::filter(dataset=="dino")
+ggplot(dino_data) + geom_point(aes(x,y)) + theme_bw() + xlab("") + ylab("") + theme(axis.text=element_blank()) + ggtitle("DatasauRus Rex")
+```
 
 
 Here is where we put our blurbs about what we hopped to accomplish
 
 # Preliminary Review{-}
 
-Builds off an Introduction to Statistics course. See
+This text assumes the reader has completed an introductory statistics course. For those needing a refresher, two links are provided below.
 
 https://bookdown.org/chesterismay/rbasics/
 
 http://moderndive.com/index.html
 
+The text utilizes the R computing system. We will be using the following add-on packages.
+
+* `tidyverse`
+* `knitr`
+* `GGally`
+* `ggfortify`
+* `gridExtra`
+* `emmeans`
+* `lindia`
+* `car`
+* `leaps`
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(emmeans)
 library(knitr)
 library(tidyverse)
 library(GGally)

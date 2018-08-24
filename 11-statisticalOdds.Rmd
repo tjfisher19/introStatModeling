@@ -5,7 +5,7 @@ Before moving onto Generalized Linear Models we take a quick tangent to discuss 
 
 Consider the game of Roulette:
 
-```{r ch11.1}
+```{r ch11.1, echo=FALSE}
 knitr::include_graphics('Roulette-Table-Wheel-1024x463.png')
 ```
 
@@ -22,7 +22,7 @@ For discussion, suppose a player bets on <span style="color:red">**red**</span>.
 *Odds* are related to probabilities but the contents are different. The *odds* of winning are calculated by counting the number of ways you win the game, and divide by the number of ways you lose the game. So in our working example there are 18 ways of <span style="color:red">**red**</span> while there are 20 ways the outcome is not <span style="color:red">**red**</span>. Thus the odds of red are 18/20 = `r 18/20`.
 
 Note,
-$$ \textrm{Odds of red} = \frac{18}{20} = \frac{P(red)}{P(not red)} = \frac{18/38}{20/38} = \frac{18}{20} = 0.9 = \frac{9}{10}.$$
+$$ \textrm{Odds of red} = \frac{18}{20} = \frac{P(red)}{P(not~red)} = \frac{18/38}{20/38} = \frac{18}{20} = 0.9 = \frac{9}{10}.$$
 
 In the gambling world, one may saw the odds of <span style="color:red">**red**</span> are 9 to 10. 
 
@@ -47,7 +47,7 @@ titanic <- read.csv("titanic.csv")
 head(titanic)
 ```
 
-In this example, we will explore the odds of surviving the sinking of the Titanic as a function of different variables. First consider the basic case of surviving:
+In this example, we will explore the odds of surviving the sinking of the Titanic as a function of different variables. First consider the basic case of surviving, we will build a contigency table using the `xtabs()` function in R.
 
 ```{r ch11.4}
 xtabs(~Survived, data=titanic)
@@ -70,7 +70,7 @@ In the Titanic dataset we have other information besides whether a person surviv
 
 We have studied problems such as this already in this class. Does Wart type influence skin coverage; does mileage influence the price of a used car; does tornado length predict property damage; etc... 
 
-Here things are different because our response variable (survived or not) is categorical (binary) as well as our predictor variable (gender). The most basic way to explore this sort of relationship is with a contigency table:
+Here things are different because our response variable (survived or not) is categorical (binary) as well as our predictor variable (gender). The most basic way to explore this sort of relationship is with a two-way contigency table:
 
 ```{r ch11.5}
 xtabs( ~ Gender + Survived, data=titanic)
@@ -132,10 +132,26 @@ Here, we see some obvious things:
 * If not first, take your chances in second class.
 * Crew members and third class did not fare well.
 
-To make things more interesting, there is interaction among the predictor variables.
+Of course, all these factors may interact! We'll revisit that topic in the next chapter but for now we can build more complicated contigency tables. Here we wrap the output of `xtabs` in the `ftable()` function for more pleasing output. First consider `Class` and `Age` on surviving.
 
 ```{r ch11.8}
-xtabs( ~ Class + Gender + Survived, data=titanic)
+ftable(xtabs( ~ Class + Age + Survived, data=titanic))
 ```
 
+We can see that being a child in first or second class turned out fairly well. The third class children did not survive at as higher of a frequency.
+
+Similarly we can explore other interactions.
+
+```{r ch11.9}
+ftable(xtabs( ~ Class + Gender + Survived, data=titanic))
+ftable(xtabs( ~ Age + Gender + Survived, data=titanic))
+```
+
+Lastly, we can do a full interaction between all the variables
+
+```{r ch11.10}
+ftable(xtabs( ~ Class + Age + Gender + Survived, data=titanic))
+```
+
+Of note here is the number of 0 counts that occur (all first and second class children survived, and there were no children on the crew). This will impact the feasible chose of models we consider in the next chapter.
 

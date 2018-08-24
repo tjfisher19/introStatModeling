@@ -226,48 +226,80 @@ The use of the paired *t*-test is not limited to experimental designs, it also a
 
 20 mice received a dietary treatment during 3 months. We want to know whether the dietary treatment has an impact on the weight of the mice.
 
-To answer to this question, the weight of the 20 mice has been measured before and after the treatment and is in the file `miceWeight.csv`. Below is some code to implement the test.
+To answer to this question, the weight of the 20 mice has been measured before and after the treatment and is in the file `miceWeightwideform.csv`. Below is some code to implement the test.
 
-```{r ch2.4}
-mice <- read.csv("miceWeight.csv")
-head(mice)
-t.test(weight ~ group, data=mice, paired=TRUE)
+```{r, eval=FALSE}
+www <- "http://users.miamioh.edu/hughesmr/sta363/miceWeightwideform.csv"
+mice <- read.csv(www)
+mice
 ```
 
-First we input the data with `read.csv` and then use the head function to get a sneak peak of the data (similar to `glimpse` earlier). Then we call the function `t.test` to perform the hypothesis test.
-Note that similar to the two-sample *t*-test here we state the weight is a function of the group with the formula notation `weight ~ group` but here we state the data is paired with `paired=TRUE`. Lastly we note with a $p$-value of approximately zero we have strong evidence to support that the weight gain is non-zero.
+```{r ch2.4, echo=FALSE}
+mice <- read.csv("miceWeightwideform.csv")
+mice
+```
+
+First we note each row of the data consist of an `id` with a `before` and `after` measurement. In the paired *t*-test, we are comparing the differences between the before and after measuremements. We perform this test in two different ways: (1) we explicitly calculuate the difference and (2) we use features in the `t.test` function.
+
+```{r ch2.5a}
+mice <- mice %>%
+  mutate(Difference = before - after)
+t.test(mice$Difference)
+```
+
+```{r ch2.5b}
+t.test(mice$before, mice$after, paired=TRUE)
+```
+
+In the first method, since we explicitly calculated the Difference as a new variable, we are determining if it is significantly different than zero. In the second method, we compare the before and after measures but we tell R that the data are paired with the `paired=TRUE` option. Lastly we note both methods provide the same findings with a $p$-value of approximately zero we have strong evidence to support that the weight gain is non-zero.
 
 **Graphical comparison**
 
-To graphically compare paired data we must use some caution and consider the data is paired. Ultimately we are interested in the pairwise difference between observations. Thus, side-by-side boxplots are not fully appropriate since tehy do not account for the pairing. We can report a boxplot of the differences but this requires some data manipulation.
+To graphically compare paired data we must use some caution and consider the data is paired. Ultimately we are interested in the pairwise difference between observations. Thus, side-by-side boxplots are not fully appropriate since tehy do not account for the pairing. We can report a boxplot of the differences.
 
 ```{r ch2.5}
-mice.wide <- mice %>%
-  spread(key=group, value=weight) %>%
-  mutate(Difference=after-before)
-ggplot(mice.wide) + 
+ggplot(mice) + 
   geom_boxplot(aes(x="",y=Difference) )+
   labs(x="", y="Weight gain (After - Before)") +
   theme_minimal()
 ```
 
-Another type of plot that can be handy for this sort of data (and will be more important later) is known as a profile plot. Here we use the `id` values to group data. Again we need to do some light data processing.
+Another type of plot that can be handy for this sort of data (and will be more important later) is known as a profile plot. Here we use the `id` values to group data. Basically we wish to draw a line for each and every individual mouse.
+We begin with some data manipulation.
 
 ```{r ch2.6}
-mice <- mice %>%
+mice.tall <- mice %>%
+  select(-Difference) %>%
+  gather(key=Time, value=Weight, c(before, after)) %>%
   mutate(id=factor(id),
-         group=factor(group, levels=c("before","after")))
+         Time=factor(Time, levels=c("before","after")))
 ```
 
-The above statement simply tells R to consider the numeric value `id` as a factor variable. We also specify the group ordering so that `before` is before `after`.
+Let's step through the above R code where we go from wide-to-tall format. In the first statement `select(-Difference)` we are telling R to drop the `Difference variable as we do not need it right now. Then we are gathering the `before` and `after measurements into two new variables, one called `Time` which states if it is the before or after measure and another called `Weight` with the correspond weight in that time.  Lastly, we tell R to treat `id` as a factor and set the levels of `Time` so that `before` is first (alphabetical order by default).
+
+Now that the data is in a tall format, we can make our profile plot. Here we simply tell R to treat the factor `Time` as the x-variable with `Weight` as the y-variable, but group each line by mouse `id`.
 
 ```{r ch2.7}
-ggplot(mice) + 
-  geom_line(aes(x=group, y=weight, group=id) ) +
+ggplot(mice.tall) + 
+  geom_line(aes(x=Time, y=Weight, group=id) ) +
   theme_minimal()
 ```
 
-In both of these two plots it is clear there is significant weight gain during the study.
+To jazz up our plot we can add the overall effect by including some summary values.
+First we calculate summary statistics. Since we use a `group` variable for each mouse we need to *trick* R into plotting the overall summary lines as well, thus we create an `id="Summary"` variable in `mice.summary` to use for grouping.
+
+```{r, message=FALSE}
+mice.summary <- mice.tall %>%
+  group_by(Time) %>%
+  summarize(Weight=mean(Weight),
+            id="Summary")
+ggplot(mice.tall) + 
+  geom_line(aes(x=Time, y=Weight, group=id), color="gray40" ) +
+  theme_minimal() +
+  geom_line(data=mice.summary, aes(x=Time, y=Weight, group=id), color="red", size=2)
+```
+
+In all of these plots it is clear there is significant weight gain during the study.
 
 ## One-Way ANOVA
 
@@ -429,5 +461,104 @@ Of course, what remains to be seen is which pairs of drugs produce different mea
 
 ## Follow-up procedures -- Multiple Comparisons
 
+When there is no significant difference detected among treatment means, we can safely conclude that the treatment had no effect on the mean response that was any larger than the type of change we might expect just due to random chance. In such a case, the analysis is essentially over, except that we might want to assess the size of the observed treatment differences for descriptive purposes.
+
+However, if significant differences are detected among the treatments (as in the example above), the ANOVA F-test does not inform you where the differences lie. In such a situation, a follow-up procedure known as a multiple comparison procedure is warranted for seeking out pairwise mean differences where they exist.
+
+There are numerous multiple comparison methods in existence, and they all have certain advantages and disadvantages, and some are designed for specific sorts of follow-up comparisons. Here I will discuss two procedures for handling the following scenarios:
+
+1. All possible pairwise comparisons
+2. All comparisons versus a control group
+
+So for example, if we had a one-way design with five treatment groups *A*, *B*, *C*, *D* and *E*, there would be 10 possible pairwise comparisons:
+
+$$\begin{array}{cccc}
+A~\textrm{vs.}~B & B~\textrm{vs.}~C & C~\textrm{vs.}~D & D~\textrm{vs.}~E  \\
+A~\textrm{vs.}~C & B~\textrm{vs.}~D & C~\textrm{vs.}~E &                  \\
+A~\textrm{vs.}~D & B~\textrm{vs.}~E &                  &                   \\
+A~\textrm{vs.}~E &                  &                  &                   \\
+\end{array}$$
+
+whereas if (say) *A* was a control group and we were only interested in comparisons versus a control group, then there would be only 4 pairwise comparisons of interest:
+
+$$\begin{array}{c}
+A~\textrm{vs.}~B & \\
+A~\textrm{vs.}~C & \\
+A~\textrm{vs.}~D & \\
+A~\textrm{vs.}~E & \\
+\end{array}$$
+
+So what’s the big deal? Well, if you find yourself in a multiple comparison situation, it’s because you have declared that at least two groups differ based on the result of a single hypothesis test (the F-test). For that test, you used a specific criterion to make the decision (probably p-value < 0.05).
+
+But to tease out where the differences are, you now need to run multiple tests under the same “umbrella”. That gives rise to something known as the multiple testing problem. The problem is an increase in the false positive rate (also known as Type I error rate) that occurs when statistical tests are used repeatedly.
+
+Multiple testing problem. If m independent comparisons are made, each using a Type I error rate of $\alpha_{PCER}$, then the family-wise (overall) Type I error rate for all comparisons considered simultaneously is given by
+$$\alpha_{FWER} = 1 -  (1 - \alpha_{PCER})^m.$$
+
+**Illustration: Coin flips.** Suppose that we declare that a coin is biased if in 10 flips it landed heads at least 9 times. Indeed, if one assumes as a null hypothesis that the coin is fair, then it can be shown that the probability that a fair coin would come up heads at least 9 out of 10 times is 0.0107. This is relatively unlikely, and under usual statistical criteria such as “reject H 0 if *p*-value < 0.05”, one would declare that the null hypothesis should be rejected — i.e., declare the coin is unfair.
+
+A multiple testing problem arises if one wanted to use this test (which is appropriate for testing the fairness of a single coin) to test the fairness of many coins. Now, imagine if you were to test 100 fair coins by this method. Given that the probability of a fair coin coming up 9 or 10 heads in 10 flips is 0.0107, one would expect that in flipping 100 fair coins ten times each, to see a particular (i.e., pre-selected) coin come up heads 9 or 10 times would still be very unlikely, but seeing some coin behave that way, without concern for which one, would be more likely than not.
+In fact, the likelihood that all 100 fair coins are identified as fair by this criterion is $(1 - 0.0107)^{100} \approx 0.34$. Therefore the application of a “single-test coin-fairness criterion” to multiple comparisons would more likely than not falsely identify at least one fair coin as unfair!
+
+But alas, multiple testing is a reality and a natural follow-up procedure to ANOVA. To address the problem, many multiple comparison procedures have been developed that help control the accumulation of the false positive rate. Some methods perform better than others, but common to all of them is making adjustments to *p*-values or CIs based upon how many comparisons are being made. Multiple comparisons in an ANOVA framework can be performed using the add-on R package `emmeans`. We will focus on two useful methods: Tukey’s HSD and Dunnett’s.
+
+### Tukey’s HSD method
+
+One of the more widely used methods is attributable to statistician John Tukey. It is sometimes referred to as Tukey’s Honestly Significant Difference method (honestly!). It has the advantage of controlling the Type I error rate when performing all possible pairwise comparisons.
+First we load the library and then run our fitted model `fit.log.drug` through the `emmeans()` function. Then we tell it to do a "pairwise" comparison via the `contrast()` function.
+
+```{r}
+library(emmeans)
+drug.mc <- emmeans(fit.log.drug, "drug")
+contrast(drug.mc, "pairwise")
+```
+
+The significant differences are what we expected earlier: drug C is significantly different in terms of mean alertness as compared to the other two drugs. This is borne out from the Tukey-adjusted p-values of 0.0003 (when comparing drugs A and C) and 0.0027 (when comparing drugs B and C). B and A are not significantly different. The *p*-values in this output have been adjusted, so we can just compare them to our usual 0.05. Easy!
+
+We can also obtain simultaneous 95% confidence intervals for the true mean differences due to
+each drug pairing using the `confint()` function on our `contrast` of an `emmeans` object:
+
+```{r}
+confint(contrast(drug.mc, "pairwise"))
+```
+
+These may be interpreted as follows:
+
+95\% CI for $\mu_A - \mu_B$ = (-0.1203, 0.355788).  This interval contains 0, so we cannot conclude that the true log-mean alertness scores significantly differ between drugs *A* and *B*.
+
+95\% CI for $\mu_A - \mu_C$ = (0.2521, 0.7702). We can be 95\% confident that drug *A* procudes a true log-mean alertness score that is between 0.2521 to 0.7702 higher than drug *C*.
+
+95\% CI for $\mu_B - \mu_C$ = (0.1429, 0.6439). We can be 95\% confident that drug *B* produces a true log-mean alertness score that is between 0.1429 and 0.6439 higher than drug *C*.
+
+To put back in the original units we could "un"-log the intervals by taking exponents.
+
+We can also visualize these sizes via a plot:
+
+```{r}
+plot(contrast(drug.mc, "pairwise"))
+```
+
+### Dunnett multiple comparisons
+
+The Dunnett method is applicable when one of your experimental groups serves as a natural control to which you want to compare the remaining groups. In this situation, it is advisable to use a method that only controls the family-wise error rate for the comparisons of interest, rather than over-controlling by using a method like Tukey.
+
+```{r}
+contrast(drug.mc, "trt.vs.ctrl")
+```
+
+The two comparisons provided are *A* vs. *B* and *A* vs. *C*. The only significant difference is between *A* and *C* (p-value = 0.0002). As before, here are simultaneous CIs and plots:
+
+```{r}
+confint(contrast(drug.mc, "trt.vs.ctrl"))
+plot(contrast(drug.mc, "trt.vs.ctrl"))
+```
+
+It is interesting to compare the results you get via the two methods for the same comparisons (e.g. *A* vs. *C*). Can you explain what you see?
+
+Note. Group a was automatically chosen as the reference group for Dunnett (R’s default is to choose the group appearing first alphabetically). To change this from the default, just tell R to do so in the `contrast` statement. In the below example we set the second (2) factor to be the control.
+
+```{r}
+contrast(drug.mc, "trt.vs.ctrl", ref=2)
+```
 
 
