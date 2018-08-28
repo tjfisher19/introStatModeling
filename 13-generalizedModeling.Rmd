@@ -1,12 +1,261 @@
 
 # Generalized Linear Models
 
+In the previous chapter we introduced the idea of a **Generalized Linear Model**, where we fit a linear regression model to a link function of the response. There, highlighted the case of a binary outcome (TRUE/FALSE, Success/Failure, Alive/Dead, 1/0). The ideas expressed in that chapter can be extended to a multitude of situations. 
 
-## Poisson Regression ideas
+**Example: Prevalence of salamanders.**  An observational field study is conducted in which the number of salamanders in different locations is counted. For this dataset, salamander count (the response variable) takes on integer values. This response is to be modeled as a function of two quantitative predictor variables: forest age and percentage of canopy cover.
+
+What makes this problem different from problems we saw in the previous chapters? Since the response variable $Y$ is a count (integers 0, 1, 2, $\ldots$), it is discrete and bounded below by 0. A common characteristic of counts is that the variability in the count increases with the mean. For example:
+
+* If we had sampled sites with field conditions that produced low salamander counts, the counts would tend to be very similar because of the physical count boundary of 0. 
+* Conversely, sampled sites with field conditions that produce higher salamander counts would tend to be less similar (i.e. more variable).
+
+Count variables by their very nature violate the usual constant variance assumption from regression. Furthermore, if the response $Y$ is a count, then it must be greater than or equal to 0 to be valid. A standard regression method may not ensure this will happen either. Using an appropriate link function will ensure valid predictions.
+
+For count data such as this, it is often more appropriate to assume the response variable $Y$ follows a Poisson or Negative Binomial distribution, as compared to a Normal distribution in regression.
+
+## Poisson Regression
+
+Before getting into the details of Poisson regression we will briefly introduce the Poisson distribution. This is a common distribution that is covered in most Introductory Statistics books (although it tends to be ommitted from Intro Stat classes).
+
+### Poisson distribution
+
+Suppose you had a binomial random variable $X$. A common example is a coin flip where you observed the number of heads ($X$) out of $n$ trials. Here we would say
+$$X \sim \textrm{Binomial}(n, p=0.5)$$
+where $p=P(Heads)$ on any given coin flip.
+
+Now, suppose that the number of trials $n$ is very large (say, $n\to\infty$) and the probability of success is relatively small such that as $n$ grows large, $np\to c$, where $c$ is some constant. In situations such as this, the observed value of $X$ can be considered a count, 0, 1, 2, 3, $\ldots$ and is unbounded since $n$ grows. 
+
+Mathematics can show that in this situation $X$ follows a Poisson distribution with rate parameter $\lambda$. The rate parameter corresponds to $\lambda=np$ and it can be shown that the theoretical mean of a Poisson random variable $X$ is $E[X]=\lambda$. Not only that, but $\mu=E[X]=\lambda = Var(X)$. That is, for a Poisson random variable, its mean and its variance are the same - this fact is important later.
+
+**Simplified.** A Poisson distribution is appropriate in many applications when the variable of interest is a count. Examples include the number of customers who enter a bank in a given hour, the number of earthquakes observed along a fault line, and as we'll see later, the number of tropical cyclones that develop in the Atlantic Ocean.
+
+### Poisson Regression Development
+
+The basic construct of the Poisson Regression model is to use a $\log$ link function. Namely, we are interested in modeling $E[Y] = \mu = \lambda$ and that is acheived via
+$$\log(\mu) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_k X_k$$
+Where $\beta_j$ is the coefficient on the $j^\mathrm{th}$ predictor variable $X_j$. Its easy to "untransform" this model with an exponenent. Namely
+$$E[Y] = \mu = \lambda = e^{\beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_k X_k}$$
+
+**Important Notes.** We've already established that for Poisson data $\lambda = E[Y] = Var(Y)$; i.e., the mean and the variance are equal. In many applications it may be the case that the observed variance is greater than the mean; this phenonemon is known as *overdispersion* and can be an indication a Poisson regression is not appropriate (more on that later).
+
+### Example - Tropical Cyclone Counts in the North Atlantic
+
+A tropical cyclone is a rapidly rotating storm system characterized by a low-pressure center, a closed low-level atmospheric circulation, strong winds, and a spiral arrangement of thunderstorms that produce heavy rain. Depending on its location and strength, a tropical cyclone is referred to by different names, including hurricane, typhoon, tropical storm, cyclonic storm, tropical depression, and simply cyclone. A hurricane or tropical storm is a tropical cyclone that occurs in the Atlantic Ocean and northeastern Pacific Ocean, and a typhoon occurs in the northwestern Pacific Ocean; while in the south Pacific or Indian Ocean, comparable storms are referred to simply as "tropical cyclones" or "severe cyclonic storms". We will consider the tropical cyclone record for the North Atlantic Basin.
+
+```{r 13.1}
+atlantic <- read.csv("atlanticCycloneRecord.csv")
+head(atlantic)
+tail(atlantic)
+```
+
+Consider 2017, news of hurricanes could not be missed (Harvey in Houston, Irma in Florida and Maria in Puerto Rico). In terms of impact on the United States, 2017 seemed extreme. But in a broader sense, one may ask, was 2017 that abnormal? 
+
+The answer to this is a complex problem that cannot but tackled in a single textbook example but we will look at the simple case of modeling the number of storms (we are not concentrating on storm intensity or accumulated cyclone energy). In particular, we will consider the Southern Oscillation Index (SOI) as a predictor variable on hurricane counts. The SOI is a standardized index based on the observed sea level pressure differences between Tahiti and Darwin, Australia. The SOI is one measure of the large-scale fluctuations in air pressure occurring between the western and eastern tropical Pacific (i.e., the state of the Southern Oscillation) during El Ni\~{n}o and La Nina episodes. In general, smoothed time series of the SOI correspond very well with changes in ocean temperatures across the eastern tropical Pacific. The negative phase of the SOI represents below-normal air pressure at Tahiti and above-normal air pressure at Darwin. Prolonged periods of negative (positive) SOI values coincide with abnormally warm (cold) ocean waters across the eastern tropical Pacific typical of El Ni?o (La Ni?a) episodes.
+
+We will attempt to tackle teh question of whether the SOI predict cyclone counts.
+
+We begin by creating a total storm count variable
+
+```{r 13.2}
+atlantic <- atlantic %>%
+  mutate(Storms=TS+H1+H2+H3+H4+H5)
+tail(atlantic)
+```
+
+The variable `Storms` is the total number of tropical storms and hurricanes in a given year.
+Let's plot the storm counts in time to look at the historic record.
+
+```{r 13.3}
+df.annotate <- data.frame(Year=c(1930,1960),
+                          y=rep(23,2),
+                          labs=c("1930", "1960"))
+ggplot(atlantic) +
+  geom_vline(xintercept=c(1930,1960), col="royalblue") + 
+  geom_text(data=df.annotate, aes(x=Year, y=y, label=labs), angle=90, nudge_x=-2.5, col="royalblue") +
+  geom_line(aes(x=Year, y=Storms), col="gray50") +
+  geom_point(aes(x=Year, y=Storms) ) +
+  ggtitle("North Atlantic Tropical Cyclone Storm Counts") +
+  theme_bw()
+```
+
+In our plot we have the number of tropical cyclones per year with 1930 and 1960 highlighted for the following reasons:
+Overall we see some distinct change in the record (highlighted by blue vertical lines).
+
+* Circa 1930 - Aircraft reconnaissance! Before this we only knew of a storm if it made land fall or a ship saw it.
+* Circa 1960 - Satellites! Since the early 1960s we have eyes on the ocean all the time. Counts after 1960 are considered much more reliable. 
+
+Thus we remove all data before 1961 and calculate some summary statistics
+
+```{r 13.4}
+atlantic <- atlantic %>% 
+  filter(Year>1960)
+atlantic %>% summarize(Avg.Storm = mean(Storms),
+                       Var.Storm = var(Storms))
+```
+
+We note that on average there are 11.6 storms per year with a variance of near 20. We have some indication that maybe our response variable suffers from overdispersion, we will revisit that a little later.
+
+Now we obtain the SOI data.
+
+```{r 13.5}
+soi <- read.table("soi.txt", header=TRUE)
+head(soi)
+```
+
+Since our storm counts are by year we need a single SOI value per year. The North Atlantic "Hurricane Season" is June through November, so we will consider the mean SOI value in those months. We much create the new variable using material from Chapter 1.
+
+We take the SOI data and `group_by` `YEAR`. Then within a given year we calculate the mean SOI level for June, July, August, September, October and November. Lastly We select the variables of interest for our analysis and rename `YEAR` to `Year` (thus matching the cyclone counts).
+
+```{r 13.6}
+soi <- soi %>%
+  group_by(YEAR) %>%
+  mutate(SOI = mean(c(JUN,JUL,AUG,SEP,OCT,NOV)) ) %>%
+  dplyr::select(YEAR, SOI) %>%
+  rename(Year=YEAR)
+tail(soi)
+```
+
+Now we need to combine our Atlantic Hurricane data with the SOI measures. Essentially we want to *join* or *merge* the two datasets linking observations by Year. For those who know SQL, this is a common operation known as a `join`. R includes several functions to do this. Today we will use an `inner_join` so only rows with a common year between the two datasets will be included. 
+
+First we select the necessary variables form the `atlantic` dataset and then `inner_join` it with the SOI.
+
+```{r 13.7}
+atlantic <- atlantic %>%
+  dplyr::select(Year, Storms)
+combine <- inner_join(atlantic, soi, by="Year")
+head(combine)
+tail(combine)
+```
+
+Let's plot our response variable `Storms` against our predictor variable `Yearly.SOI`. Here we use some extra features in `ggplot` to highlight 2017
+
+First we create a variable called `Highlight` if the year is 2017. Then we save another dataset with just that observation so we can annotate the point with text. We use the aesthetic option `color` to highlight 2017 as a different color.
+
+```{r 13.8}
+combine <- combine %>%
+  mutate(Highlight = ifelse(Year==2017, "highlight", "normal"))
+recent.2017 <- combine %>%
+  filter(Year==2017)
+ggplot(combine) + 
+  geom_point(aes(x=SOI, y=Storms, color=Highlight)) + 
+  scale_color_manual("Status", values=c("highlight"="red", "normal"="black")) +
+  geom_text(data=recent.2017, aes(x=SOI*1.05, y=Storms*1.05, label="2017")) +
+  theme_bw() +
+  theme(legend.position = "none")
+```
+
+Visually we see that 2017 does not appear to be all that different. We also see that the `Storms` appear to increase with a positive SOI value. Let's test this with a poisson model.
+
+```{r 13.9}
+storm.fit <- glm(Storms ~ SOI, data=combine, family=poisson)
+summary(storm.fit)
+```
+
+To interpret the model I need to recognize that I am modeling
+
+$$\log(\lambda) = 2.42473 + 0.20502\times SOI$$
+
+So I need to "un"-log.
+
+The intercept of 2.42473 corresponds to $\exp(2.42473)$ = `r exp(2.42473)` storms when the SOI value is 0.
+
+The slope term must be interpretation on a log scale. That is, $2.42473+0.20502\times$(one units of SOI) is a mean number of storm of `r exp(2.42473+0.20502*1)`.
+
+We also note that the covariate predictor variable `SOI` is significant according to the Wald test (*p*-value=0.000152). So we have evidence that SOI does in fact explain storm counts. Let's look at the predictive ability of the model. First we will plot the fitted model against the data.
+
+```{r 13.10}
+combine <- combine %>%
+  mutate(Fitted = predict(storm.fit, type="response"))
+ggplot(combine) + 
+  geom_point(aes(x=SOI, y=Storms)) + 
+  geom_line(aes(x=SOI, y=Fitted), col="blue") +
+  theme_bw()
+```
+Note the slight curvature to the fit (its modeling $e^{\beta_0 + \beta_1 X_1}$). What about 2017?
+
+```{r 13.11}
+predict(storm.fit, newdata=recent.2017, type="response")
+```
+compared to the observed value of `r recent.2017$Storms`. So we see that 2017 does appear to deviate from the predicted value.
+
+**Overdispersion.** Let's revisit the issue of overdispersion. Early we saw some indication of potential overdispersion in our data
+
+```{r 13.12}
+atlantic %>% summarize(Avg.Storm = mean(Storms),
+                       Var.Storm = var(Storms))
+```
+
+Here the variance appears to be nearly twice as big as the mean. However we must step back and realize this is BEFORE we fit our model. It is possible the covariate information will explain some of this variability. A quick check for overdispersion in Poisson models is to compare the `Residual deviance` to its degrees of freedom. In the ideal situation, the ratio should be 1. In cases when it is much greater than 1, we have strong indication of overdispersion. Here we have the following output
+
+    Residual deviance: 77.728  on 55  degrees of freedom
+
+and note $77.728/55 = $ `r 77.728/55` which is not that much greater than 1. In fact, a formal hypothesis test confirms we do not have overdispersion, but we exclude that from this introductory text.
 
 
-## Negative Binomial Regression?
+## Negative Binomial Regression
+
+```{r}
+load("attendance.RData")
+glimpse(attendance)
+```
+
+```{r}
+attendance <- attendance %>%
+  mutate(prog = factor(prog, levels = 1:3, labels = c("General", "Academic", "Vocational")),
+         id = factor(id) )
+glimpse(attendance)
+```
+
+```{r}
+ggplot(attendance) + 
+  geom_point(aes(x=math, y=daysabs, color=prog, shape=gender)) + 
+  theme_minimal()
+```
+
+```{r}
+ggplot(attendance) + 
+  geom_histogram(aes(x=daysabs)) + 
+  facet_grid(.~gender)
+ggplot(attendance) + 
+  geom_histogram(aes(x=daysabs)) + 
+  facet_grid(.~prog)
+```
+
+```{r}
+attend.pois <- glm(daysabs ~ math + gender + prog, data=attendance, family=poisson)
+summary(attend.pois)
+```
+
+```{r}
+library(MASS)
+attend.negbin1 <- glm.nb(daysabs ~ math + gender + prog, data=attendance)
+summary(attend.negbin1)
+```
+
+```{r}
+attend.negbin2 <- glm.nb(daysabs ~ math + prog, data=attendance)
+summary(attend.negbin2)
+anova(attend.negbin1, attend.negbin2)
+```
+
+
+```{r}
+newdata2 <- data.frame(
+  math = rep(seq(from = min(attendance$math), to = max(attendance$math), length.out = 100), 3),
+  prog = factor(rep(1:3, each = 100), levels = 1:3, labels =
+  levels(attendance$prog)))
+```
 
 
 
-
+```{r}
+newdata3 <- predict(attend.negbin2, newdata2, type = "link", se.fit=TRUE)
+newdata2 <- newdata2 %>%
+  mutate(DaysAbsent.Fitted = exp(newdata3$fit),
+         lo = exp(newdata3$fit - 1.96*newdata3$se.fit),
+         up = exp(newdata3$fit + 1.96*newdata3$se.fit))
+ggplot(newdata2) +
+  geom_ribbon(aes(x=math, ymin=lo, max=up, fill=prog), alpha=0.3)+
+  geom_line(aes(x=math, y=DaysAbsent.Fitted, color=prog), size=1.5)
+```
