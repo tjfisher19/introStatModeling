@@ -152,6 +152,13 @@ All experiments have factors, a response variable, and experimental units.  Here
 
 ```{r ch2.2, echo=FALSE}
 # knitr::include_graphics("designTable.png")
+tab <- data.frame("Vitamin E" = c("0 mg", "400 mg"),
+                  "0 mg" = c("Treatment 1", "Treatment 4"),
+                  "250 mg" = c("Treatment 2", "Treatment 5"),
+                  "500 mg" = c("Treatment 3", "Treatment 6"))
+names(tab) <- c("Vitamin E", "0 mg", "250 mg", "500 mg")
+kable(tab) %>% kable_styling(full_width=FALSE) %>%
+  add_header_above(c(" " = 1, "Vitamin C" = 3))
 ```
 
 
