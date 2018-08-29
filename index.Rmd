@@ -54,6 +54,7 @@ The text utilizes the R computing system. We will be using the following add-on 
 knitr::opts_chunk$set(echo = TRUE)
 library(emmeans)
 library(knitr)
+library(kableExtra)
 library(tidyverse)
 library(GGally)
 library(ggfortify)
