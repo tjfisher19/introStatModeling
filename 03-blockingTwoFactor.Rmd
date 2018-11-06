@@ -3,23 +3,28 @@
 
 In the previous chapters we have seen how one variable (perhaps a factor with multiple treatments) can influence the response variable. It should not be much of a stretch to consider the case of multiple predictor variables influencing the response.
 
-**Example.** Consider the ACT scores, besides the year of entry maybe a student's home neighborhood or state could be input?
+**Example.** Consider the admissions dataset with ACT scores as a response, besides the year of entry maybe a student's home neighborhood or state could also be a predictor?
 
-In this chapter we will explore the two main anlayses for designed exerpiements -- a Block design and Two-factor experiment.
+In this chapter we will explore the two main anlayses for designed exerpiements -- a Block design and Two-factor experiment. The learning objective of this unit unclude:
+
+* Understanding the structure of a multi-factor model
+* Understanding the rationale of a block design
+* Understanding the rationale and structure of a two-factor design
+* Performing a full analysis involving multiple predictor variables
 
 ## Blocking
 
 Randomized Complete Block Designs are a bit of an odd duck. The type of design itself is straightforward, but the analysis might seem a bit unusual. 
 
-The design is best described in terms of the agricultural field trials that gave birth to it. When conducting field trials to compare plant varieties (or whatever), there is concern that some areas of a field may be more fertile than others. So, if one were comparing three plant varieties, say, it would not be a good idea to use one variety here, another variety over there, and the third variety way out back because the effects of the varieties would be confounded with the natural fertility of the land.  
+The design is best described in terms of the agricultural field trials that gave birth to it. When conducting field trials to compare plant varieties (or whatever), there is concern that some areas of a field may be more fertile than others. So, if one were comparing three plant varieties, it would not be a good idea to use one variety in one location, another variety in a different location, and the third variety way out back because the effects of the varieties would be confounded with the natural fertility of the land.  
 
 The natural fertility in this situation is a **confounding factor**, something we aren’t necessarily interested in, but that none the less will have an impact on our assessment of the factor of interest (e.g. plant variety).  
 
-A **block** is defined to be “a relatively homogeneous set of experimental material.”  OK … what does that mean?  It means that we would like to be able to assess the treatment effects without undue influence from a contaminating factor, such as land fertility.   One way to do this would be to apply all the treatments (e.g. plant varieties) to the same area of the field.  Within one area, we should see consistency in natural fertility levels, so differences observed in a measured response (such as crop yield) between plant varieties will not be due to variation in fertility levels, but rather due to the different plant varieties themselves.
+A **block** is defined to be “a relatively homogeneous set of experimental material.” This essentially means that we would like to be able to assess the treatment effects without undue influence from a contaminating factor, such as land fertility.   One way to do this would be to apply all the treatments (e.g. plant varieties) to the same area of the field.  Within one area, we should see consistency in natural fertility levels. Thus differences observed in a measured response (such as crop yield) between plant varieties will not be due to variation in fertility levels, but rather due to the different plant varieties themselves.
 
-So, a bock design is one that attempts to reduce the noise in the measured response in order to “clarify” the effect due to the treatments under study.
+A bock design is one that attempts to reduce the noise in the measured response in order to “clarify” the effect due to the treatments under study.
 
-A **randomized block design** in the field study would be conducted this way: 
+A **randomized block design** in the field study would be conducted in the following way: 
 
 * The field is divided into blocks.
 * Each block is divided into a number of units equal to the number of treatments. 
@@ -29,13 +34,22 @@ A good experimental design will be able to “parse out” the variability due t
 
 **What can serve as a block?**  It is important to note that subjects (i.e. experimental units) themselves may form blocks in a block design.  It is also possible that different experimental units may collectively form a “block”.  It depends on the circumstances.  All that is needed is that a block, however, formed, creates a “relatively homogeneous set of experimental material.”
 
-**An example.** You've already seen the concept of a block design! Consider the paired *t*-test included in Section \@ref(paired-t-test). There, the individual people are essentially treated as blocks. We observe two responses within each block (or person).
+**An example.** You've already seen the concept of a block design! Consider the paired *t*-test included in Section \@ref(paired-t-test). There, the individual mice are essentially treated as blocks. We observe two responses within each block (or mouse).
 
 ### Data structure, model form and analysis of variance of a RBD
 
 Here is the general data structure for a randomized block design (RBD):
 
-
+$$\begin{array}{c|cccc}
+\hline
+         & \textbf{Treatment 1} & \textbf{Treatment 2} & \ldots & \textbf{Treatment } k \\
+\hline
+\textbf{Block 1} & Y_{11} & Y_{21} & \ldots & Y_{k1} \\
+\textbf{Block 2} & Y_{12} & Y_{22} & \ldots & Y_{k2} \\
+\vdots & \vdots & \vdots & \vdots & \vdots \\
+\textbf{Block } b & Y_{1b} & Y_{2b} & \ldots & Y_{kb} \\
+\hline
+\end{array}$$
 
 The model for such data has the form
 
@@ -49,20 +63,21 @@ where
 * $\beta_j$ is the effect of the $j^\mathrm{th}$ block on the mean response
 * $\varepsilon_{ij}$ is the random error term
 
-The usual test of interest is the same as in a one-way analysis of variance: is to compare the population means due to the different treatments.  The null and alternative hypotheses are given by:
+The usual test of interest is the same as in a one-way analysis of variance: to compare the population means due to the different treatments.  The null and alternative hypotheses are given by:
 $$H_0: \tau_1 = \tau_2 = \ldots = \tau_k = 0 ~~\textrm{versus}~~ H_a: \textrm{at least one } \tau_i \neq 0$$
 We may also test for differences between blocks, but this is usually of secondary interest at best.  
 
 Here is an example in R.
 
-**Example:** Word recall study.  Five subjects are asked to memorize a list of words. The words on this list are of three types: positive words, negative words and neutral words. The response variable is the number of words recalled by word type, with a goal of determining if the ability to recall words is affected by the word type.  Each subject provides the number of recalled words of each type.  Here are the data:
+**Example:** Word recall study. Five subjects are asked to memorize a list of words. The words on this list are of three types: positive words, negative words and neutral words. The response variable is the number of words recalled by word type, with a goal of determining if the ability to recall words is affected by the word type.  Each subject provides the number of recalled words of each type.  Here are the data:
 
 ```{r ch3.1, echo=FALSE}
 load("wordrecall.RData")
 knitr::kable( wordrecall %>% dplyr::select(-obs) %>% spread(word.type, recall))
 ```
 
-*Solution.*
+There data are available in the R dataframe `wordrecall.RData` on the class repository. Below is an analysis of this data.
+
 
 ```{r ch3.2}
 load("wordrecall.RData")
@@ -94,19 +109,21 @@ word.fit <- aov(recall ~ subject + word.type, data=wordrecall)
 autoplot(word.fit)
 ```
 
-The assumptions look generally fine here.  So, on to the analysis:
+The assumptions look generally fine here (nothing too concerning about constant variance or normality). So, on to the analysis:
 
 ```{r ch3.5}
 summary(word.fit)
 ```
 
-We see that there is a significant different in the mean recall between the three word types (F = 189.11, df1 = 2, df2 = 8, p-value = 0.0000001841)
+We see that there is a significant different in the mean recall between the three word types ($F$ = 189.11, df1 = 2, df2 = 8, p-value = 0.0000001841)
 
 You can also see how the total variation was partitioned into three components: 
 
 1.	Within-subject (i.e. block) sum of squares (105.067)
 2.	Between word type (i.e. treatment) sum of squares (2029.73)
 3.	Residual sum of squares (42.93).   
+
+We see that R also reports an $F$-statistic and associated $p$-value for the `subject`. This is the block term and is not of concern to our analysis. So we ignore that $p$-value!
 
 We can investigate the differences in mean recall between the three word types using a multiple comparison procedure.  
 
@@ -119,9 +136,9 @@ plot(word.mc)
 No CIs contain 0, so all word types are significantly different from each other.  Negative word types have significantly more recalls than neutral types; positive word types have significantly more recalls on average than either negative or neutral word types.
 
 
-## Two-factor
+## Two-factor Designs
 
-A factorial structure in an experimental design is one in which there are two or more factors, and the levels of the factors are all observed in combination. For example, suppose you are testing for the effectiveness of three drugs (A, B, C) at three different dosages (5 mg, 10 mg, 25 mg). In a factorial design, you would observed a total of nine treatments, each of which consists of a combination of drug and dose (e.g. treatment 1 is drug A administered at 5 mg, treatment 2 is drug A administered at 10 mg, etc).
+A factorial structure in an experimental design is one in which there are two or more factors, and the levels of the factors are all observed in combination. For example, suppose you are testing for the effectiveness of three drugs (A, B, C) at three different dosages (5 mg, 10 mg, 25 mg). In a factorial design, you would observed a total of nine treatments, each of which consists of a combination of drug and dose (e.g. treatment 1 is drug A administered at 5 mg, treatment 2 is drug A administered at 10 mg, etc). Note how quickly things will grow if you have more than two factors!
 
 In this design, the data are usually obtained by collecting a random sample of individuals to participate in the study, and then randomly allocating a single treatment to each of the study participants as in a one-way design structure. The only difference now is that a “treatment” consists of a combination of different factors. If there are two factors, the data may be analyzed using a two-way ANOVA.
 
@@ -147,6 +164,7 @@ The general model for such data has the form
 
 $$Y_{ijk} = \mu + \alpha_i + \beta_j + \alpha\beta_{ij} + \varepsilon_{ijk}$$
 where
+
 * $Y_{ijk}$ is the $k^\mathrm{th}$ observation in the $i^\mathrm{th}$ level of factor $A$ and the $j^\mathrm{th}$ level of factor $B$.
 * $\mu$ is the overall mean
 * $\alpha_i$ is the "main effect" of the $i^\mathrm{th}$ level of factor $A$ on the mean response
@@ -156,7 +174,7 @@ where
 
 ### Analysis
 
-First recall an important feature of designed experiments -- the analysis is determined by the experiment! In most cases of factorial design, the primary interest is to see if the two factors interact to determine the response! Therefore it is crucial to test the interaction term before assessing the effects of factor $A$ alone on the response, because if $A$ and $B$ interact, then we cannot separate their effects. In other words, if the interaction between $A$ and $B$ significantly influences the response, then the effect that factor $A$ has on the response changes depending on what the level of factor $B$.
+First recall an important feature of designed experiments -- the analysis is determined by the experiment! In most cases of factorial design, the primary interest is to determine if some interaction between the two factors influences the response! Therefore it is crucial to test the interaction term before assessing the effects of factor $A$ alone on the response, because if $A$ and $B$ interact, then we cannot separate their effects. In other words, if the interaction between $A$ and $B$ significantly influences the response, then the effect that factor $A$ has on the response changes depending on the level of factor $B$.
 
 The usual testing strategy is as follows:
 
@@ -165,14 +183,14 @@ The usual testing strategy is as follows:
     a. If the interaction term is significant, you must look at comparisons in terms of treatment combination; i.e., you cannot separate the effects of $A$ and $B$.
     b. If the interaction term is non-significant, you can look into deleting the interaction term from your model, fitting a reduced **main-effects model**. Then (and only then) may you look at the effects of $A$ and $B$ separately.
     
-We consider two examples.
+We consider two examples below.
 
 #### Example: An alertness study with two factors. 
 
 An experimental medication is tested on a sample of 16 individuals at two dosage levels (10 mg, 25 mg) to see how it impacts alertness. It is also of interest to investigate the effect of gender, and to see if the effect of a particular dosage on alertness depends on gender. Thus, this is a two-factor factorial design: factor A is dosage (two levels) and factor B is gender (two levels). Sometimes this is referred to as a 2×2 factorial design. Each subject is randomly assigned one drug, the drug is administered. After 60 minutes, a test is administered that scores the alertness level of each subject (a higher score means higher alertness). The data appear in the R dataframe `twowaydrug.Rdata` in our repository.
 
 First take a look at the alertness scores by treatment (note that we need to coerce dosage
-to be an R factor):
+to be an R factor since it is coded numerically):
 
 ```{r ch3.6}
 load("twowaydrug.RData")
@@ -185,10 +203,10 @@ ggplot(twowaydrug) +
   theme_bw()
 ```
 
-There may be a gender effect: it appears that male responses are (on average) lower than females. However, the large spread in the 25 mg dosage
+There may be a gender effect: it appears that male responses are grpahically lower than females. However, the large spread in the 25 mg dosage
 group for males may mask this effect.
 
-We fit the interaction model in `aov()` using the usual means of specifying interactions. First, though, run a check on the residuals:
+We fit the interaction model in `aov()` by telling R to include an interaction term with the notation `factor1:factor2`. Below is the specific example for our study but first run a check on the residuals:
 
 ```{r 3.7}
 twoway.fit <- aov(alertness ~ factor(dosage) + gender + factor(dosage):gender, data=twowaydrug)
@@ -199,17 +217,18 @@ The assumptions look to be reasonably met. While there may be some issue with co
 
 At this point, we can also generate tables of response means after we fit the interaction model.
 These consist of:
-* The “grand mean” (overall mean, all data pooled together ... estimate of $\mu$)
+
+* The “grand mean” (overall mean, all data pooled together and estimate $\mu$)
 * Main effect means (i.e. means for each factor level, taken one factor at a time)
 * Interaction means (i.e. treatment means for all factor combinations)
 
-These means are estimates from the data and are purely descriptive (like the boxplots were), but informative nonetheless. They can be obtained easily using the R function `model.tables()` and calling up the fitted interaction model:
+These means are estimates from the data and are purely descriptive (like the boxplots were), but informative nonetheless. We could calculate each one of the above using a series of `tidyverse` commands or using the R function `model.tables()`:
 
 ```{r ch3.8}
 model.tables(twoway.fit, "means")
 ```
 
-We proceed to the tests:
+We proceed to the hypothesis tests:
 
 ```{r ch3.9}
 summary(twoway.fit)
@@ -217,7 +236,7 @@ summary(twoway.fit)
 
 **The first test to inspect is the interaction test.** The interaction is insignificant (F = 0.0024, df 1 = 1, df 2 = 12, p-value = 0.9617). Thus, we could conclude the effect that dosage has on the mean alertness level does not depend on gender.
 
-A visualization of the interaction effect may be obtained using an interactions plot. An interaction plot is basically a plot of treatment means, whereby the means for all treatments having a given fixed level of one of the factors are visually “connected”. We can build this using aesthetic options in `ggplot()` plot and with the `stat_summary` functions.
+A visualization of the interaction effect may be obtained using an interactions plot. An interaction plot is basically a plot of treatment means, whereby the means for all treatments having a given fixed level of one of the factors are visually “connected”. We can build this using aesthetic options in `ggplot()` plot and with the `stat_summary` functions. Note both `color` and `group` are determined based on the `gender` variable.
 
 ```{r ch3.10}
 ggplot(twowaydrug, aes(x=dosage, y=alertness, color=gender, group=gender) ) +  
@@ -227,11 +246,11 @@ ggplot(twowaydrug, aes(x=dosage, y=alertness, color=gender, group=gender) ) +
 
 There are two treatment mean traces, one for each gender. Each trace connects the mean alertness level of the dosage within each gender level.
 
-**The lack of significant interaction is evidenced by the parallelism of these traces:** the dosage effect for females is depicted by the “gap” between the traces at the far left. Similarly, the dosage effect for the males is depicted by the gap between the traces at the far right. Note that these two “gaps” are of roughly the same size (which happens when the traces are parallel): this means that the effect of dose within females is about the same as the effect of dose within males.
+**The lack of significant interaction is evidenced by the parallelism of these traces:** the gender effect for 10mg dosage is depicted by the “gap” between the traces on the left. Similarly, the gender effect for the 25mg dosage is depicted by the gap between the traces at the far right. Note that these two “gaps” are of roughly the same size (which happens when the traces are parallel): this means that the effect of dose within females is about the same as the effect of dose within males.
 
 In other words, the effect of dose does not depend on gender. This is the textbook definition of non-interaction between dose and gender in determining mean alertness.
 
-Since the interaction term was non-significant and now we have visual support that the two factors do not interact, we may look at a reduced model that eliminates the interaction term and includes only main effects:
+Since the interaction term was non-significant and we have visual support that the two factors do not interact, we may look at a reduced model that eliminates the interaction term and includes only main effects:
 
 ```{r ch3.11}
 twoway.main.fit <- aov(alertness ~ gender + dosage, data=twowaydrug)
@@ -244,18 +263,27 @@ At this point, the follow-up work would involve multiple comparisons among the l
 
 ```{r ch3.12}
 twoway.mc <- emmeans(twoway.main.fit, "gender")
-confint(twoway.mc)
+confint(contrast(twoway.mc, "pairwise"))
 ```
 
-We note that the adjusted 95\% confidence overlap, this should not be surprising given we only had marginal (*p*-value$\approx$0.097) evidence that alertness was different between genders.
+We note that the adjusted 95\% confidence includes the value 0, this should not be surprising given we only had marginal ($p$-value $\approx$ 0.097) evidence that alertness was different between genders.
 
 #### Example: Tooth growth in guinea pigs.
 
 Let’s consider an example that investigates the effects of ascorbic acid and delivery method on tooth growth in guinea pigs. Sixty guinea pigs are randomly assigned to receive one of three levels of ascorbic acid (0.5, 1.0 or 2.0 mg) via one of two delivery methods (orange juice or Vitamin C), under the restriction that each treatment combination has an equal number of guinea pigs. The response variable `len` is tooth length. The two-way data structure here looks like this:
 
-**ENTER IMAGE HERE**
+```{r, echo=FALSE}
+# knitr::include_graphics("designTable.png")
+tab <- data.frame("Supplement" = c("Orange Juice", "Vitamin C"),
+                  "0.5 mg" = c("Treatment 1", "Treatment 4"),
+                  "1.0 mg" = c("Treatment 2", "Treatment 5"),
+                  "2.0 mg" = c("Treatment 3", "Treatment 6"))
+names(tab) <- c("Supplement", "0.5 mg", "1.0 mg", "2.0 mg")
+kable(tab) %>% kable_styling(full_width=FALSE) %>%
+  add_header_above(c(" " = 1, "Dose" = 3))
+```
 
-As stated before, there are ten replicate guinea pigs per treatment. The data appear in the R workspace `ToothGrowth` included in the `datasets` package. Here is the head of the dataframe:
+As alluded to before, there are ten replicate guinea pigs per treatment. The data appear in the R workspace `ToothGrowth` included in the `datasets` package. Here is the head of the dataframe:
 
 ```{r ch3.14}
 data("ToothGrowth")
@@ -271,6 +299,7 @@ ggplot(ToothGrowth, aes(x=dose, y=len, group=supp, color=supp) ) +
 ```
 
 There are a couple of things to note here:
+
 1. There appears to be a substantial dose effect, in that higher doses of ascorbic acid generally result in higher mean length.
 2. **However, there may be a substantial interaction effect between the type of supplement and dose in determining mean tooth length.** In particular, orange juice appears to be more effective than Vitamin C as a delivery method (longer tooth length), but only at lower dose levels. At the high dose level, there appears to be no difference between the supplements.
 
@@ -290,16 +319,18 @@ summary(tooth.fit)
 The test for interaction is significant (F = 4.107, df 1 = 2, df 2 = 54, p-value = 0.0218). Thus, we conclude the effect that supplement has on the mean tooth growth does depend on the dosage level. **Ignore the main effects tests if the interaction is significant.**
 
 Remember the strategy we introduced earlier:
+
 1. Fit a full interaction model.
 2. Test for significant interaction between $A$ and $B$:
-    a. **If interaction is significant, you must look at comparisons in terms of treatment combinations, i.e., you cannot separate the effects of $A$ and $B$**.
+    a. **If interaction is significant, you must look at comparisons in terms of treatment combinations; i.e., you cannot separate the effects of $A$ and $B$**.
     b. If interaction is non-significant, you may delete the interaction term from the model, fitting a reduced main-effects model. Then (and only then) may you look at the effects of $A$ and $B$ separately.
 
 **Performing multiple comparisons. **In the case of a significant interaction effect in a two-factor ANOVA model, we typically follow up by performing multiple comparisons for the levels of one of the factors while holding the other factor fixed (the “conditioning” factor). So for example, in the present problem we could either
+
 * Compare the supplements at each of the dose levels (3 tests total), or
 * Compare the dose levels within each of the supplement types (3 × 2 = 6 tests total)
 
-This can all be done quite easily in the `emmeans` package. We include both comparisons below.
+Frequently in practice, the context of the problem will dictate to the researcher which way makes the most sense. We'll provide code that performs both cases using the `emmeans` package.
 
 ```{r ch3.18}
 tooth.mc1 <- emmeans(tooth.fit, pairwise ~ factor(dose) | supp)
@@ -310,11 +341,15 @@ tooth.mc2
 
 Here we see the output includes the estimates and confidence intervals for the means (while holding one factor fixed) and also includes the contrasts (comparisons) of one factor while holding the second factor constant.
 
-At a dose level of 0.5 mg, ascorbic acid delivery via orange juice produces significantly larger mean tooth growth than does delivery via Vitamin C. We determined this based on the the second set of output, where we see an adjusted *p*-value of 0.0021 comparing orange juice with Vitamin C. Similarly, at `dose=1.0`, there is still a different but not at `dose=2.0`.
+At a dose level of 0.5 mg, ascorbic acid delivery via orange juice produces significantly larger mean tooth growth than does delivery via Vitamin C. We determined this based on the the second set of output, where we see an adjusted $p$-value of 0.0021 comparing orange juice with Vitamin C. Similarly, at `dose=1.0`, there is still a difference but not at `dose=2.0`.
 
 We can also use plotting features to graphically explore the factors while holding another factor constant.
 
 ```{r ch3.19}
 plot(tooth.mc1)
 ```
+
+Here we explore the performance of the dosage amounts conditioning (essentially faceting) on the delivery type. Graphically we can see that the OJ method tends to have higher tooth lengths than Vitamin C for the low dosage levels of ascorbic acid.
+
+
 

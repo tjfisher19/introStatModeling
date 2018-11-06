@@ -1,6 +1,10 @@
 # Inference regarding Multiple Regression
 
-We now start the discussion of using the least squares simple linear regression model for the purpose of statistical inference about the parent population from which the sample was drawn.  Remember that by “inference,” we mean finding relevant confidence intervals or running hypothesis tests about various aspects of the modeled relationship.
+We now start the discussion of using the least squares simple linear regression model for the purpose of statistical inference about the parent population from which the sample was drawn.  Remember that by “inference,” we mean finding relevant confidence intervals or running hypothesis tests about various aspects of the modeled relationship. After this unit, you should be able to
+
+* Statistically determine if a model significantly predicts a response variable
+* Test each predictor variable's ability to significantly predict the response and measure its impact with a confidence interval
+* Determine the amount of variation in the response variable explained by the model
 
 ## Assumption checking
 
@@ -9,9 +13,9 @@ Any time we run a hypothesis test or build a confidence interval in the context 
 The five collective assumptions for a standard regression models are as follows:
 
 * **Error assumptions**:
-   1. The errors are independent (the independence assumption) 
-   2. The errors have homogeneous variance (the constant variance assumption)
-   3. The errors are normally distributed (the normality assumption)
+    1. The errors are independent (the independence assumption) 
+    2. The errors have homogeneous variance (the constant variance assumption)
+    3. The errors are normally distributed (the normality assumption)
 * **Linearity assumption**: We assume that the structural part of the linear regression model is correctly specified.
 * **Unusual observations**: Occasionally, a few observations may not fit the model well.  These have the potential to dramatically alter the results, so we should check for them and investigate their validity.
 
@@ -25,7 +29,7 @@ Since modeling seeks to identify structure in the data, the goal of a good model
 
 Diagnostic techniques can be either graphical or numerical, but **we will focus on graphical diagnostics of the assumptions**.  *The important thing to keep in mind when you fit a regression model is that the first model you try might prove to be inadequate.  Regression diagnostics often suggest improvements or remedies, which means that model building is an iterative and interactive process.*  It is quite common to repeat diagnostics on a succession of models fit to the same data.
 
-This section is only meant to provide you with the means to run a cursory check of the assumptions in a simple linear regression problem.  We will deal with remedies for addressing assumption violations later in the course. 
+This section is only meant to provide you with the means to run a cursory check of the assumptions in a simple linear regression problem.  We will deal with specific issues and remedies for addressing assumption violations in more detail later in the book.
 
 **Example** Muscle mass.  Consider the age and muscle mass dataset from earlier. Before using the muscle mass regression model to perform tests/CIs about the mass vs. age relationship, check the regression assumptions. This can be achieved by using the `autoplot()` function on the fitted `lm` object.
 
@@ -52,64 +56,58 @@ In regression, there are two basic classifications of unusual observations:
 
 The plot labeled Residuals vs Leverage (in the lower right hand corner of the diagnostic plot quartet) provides a nice visualization of both the standardized residuals and hat values.  Suspect points are flagged in R by their observation number.  Observation 53 appears to be a potential outlier.  Since none of the leverage values appear to be above $2p/n = 4/60 = 0.0667$, we do not have any high leverage points.  
 
-More about Cook’s Distance later.
+We will discuss this phenomenon later when we learn about Cook’s Distance.
 
 
 ## Overall $F$-test for model signifance
 
-Motivation for the whole-model test.  Before proceeding to investigating the effects of the individual predictors one at a time, we usually perform a “whole-model” test to first confirm that there is merit (i.e. “utility”) to the model.  This is in essence testing the following hypotheses:
+Before proceeding to investigating the effects of the individual predictors one at a time, we usually perform a “whole-model” test to first confirm that there is merit (i.e. “utility”) to the model.  This is in essence testing the following hypotheses:
 
-    $H_0:$ none of the predictor variables ($X_i$’s) are useful in determining the response
-    $H_a:$ at least one of the predictor variables is useful in determining the response
+$H_0:$ none of the predictor variables ($X_i$’s) are useful in determining the response
+
+$H_a:$ at least one of the predictor variables is useful in determining the response
 
 Since the general form of the model is $Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_k X_k + \varepsilon$, these hypotheses can be equivalently written in terms of the model’s $\beta$-parameters as follows:
 
-    $H_0: \beta_1 = \beta_2 = \ldots = \beta_k = 0$
-    $H_a: \textrm{at least one} \beta_i \neq 0$
+$$H_0: \beta_1 = \beta_2 = \ldots = \beta_k = 0 ~~~~\textrm{vs.}~~~~ H_a: \textrm{at least one} \beta_i \neq 0$$
 
 One way of thinking about testing this null hypothesis is to think about fitting two models to the data, one using all the predictors (the ‘full” model), and the other using none of the predictors (a “reduced” null model), and seeing if there is a significant difference between them.  Thinking this way, the hypotheses may be rewritten again as:
 
-    $H_0:$ the model is $Y = \beta_0 + \varepsilon$
-    $H_a:$ the model is $Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_k X_k + \varepsilon$
+$$H_0: \textrm{the model is } Y = \beta_0 + \varepsilon ~~\textrm{vs.}~~ H_a: \textrm{the model is } Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_k X_k + \varepsilon$$
     
-Deriving a useful test statistic.  We now construct a test statistic that compares the residual variance of the two models.  We fit both the full $H_a$ model and the reduced $H_0$ model and obtain their respective residual sums of squares values.  It is a mathematical fact that $RSS_{H_a} \geq RSS_{H_0}$ (why?), so if the difference $RSS_{H_a}-RSS_{H_0}$ is small, then the fit of the reduced $H_0$ model is almost as good as the full $H_a$ model, so we would prefer the reduced model on the basis of simplicity. On the other hand, if the difference is large, then the superior fit of the full $H_a$ model would be preferred.  If we scale this difference by how much error variation was in the full model in the first place, then this suggests that something like
+We now construct a test statistic that compares the residual variance of the two models.  We fit both the full $H_a$ model and the reduced $H_0$ model and obtain their respective residual sums of squares values.  It is a mathematical fact that $RSS_{H_a} \geq RSS_{H_0}$ (thought exercise: why?), so if the difference $RSS_{H_a}-RSS_{H_0}$ is small, then the fit of the reduced $H_0$ model is almost as good as the full $H_a$ model, so we would prefer the reduced model on the basis of simplicity. On the other hand, if the difference is large, then the superior fit of the full $H_a$ model would be preferred.  If we scale this difference by how much error variation was in the full model in the first place, then this suggests that something like
 
-$$\frac{Reduction in error variance, H_0 model \rightarrow H_a model}{Error variance in H_a model} \leftrightarrow \frac{RSS_{H_a}-RSS_{H_0}}{RSS_{H_a}}$$
+$$\frac{\textrm{Reduction in error variance, }H_0 \textrm{ model} \rightarrow H_a\textrm{ model}}{\textrm{Error variance in }H_a \textrm{ model}} \leftrightarrow \frac{RSS_{H_a}-RSS_{H_0}}{RSS_{H_a}}$$
 
-would be a potentially good test statistic.  
+would potentially be a good test statistic.  
 
 In practice, we will use what is known as **ANOVA F-statistic** to compare the numerator variance to the denominator variance:
 
 
-$$F = \frac{\left(RSS_{H_a}-RSS_{H_0}\right)/\left(error df_{H_a} - error df_{H_0}\right)}{RSS_{H_a}/error df_{H_a}}$$
+$$F = \frac{\left(RSS_{H_a}-RSS_{H_0}\right)/\left(\textrm{error }df_{H_a} - \textrm{error } df_{H_0}\right)}{RSS_{H_a}/\textrm{error } df_{H_a}}$$
 
-Under the usual regression assumptions, this F-ratio follows a sampling distribution known as an F-distribution.  F-distributions have two parameters: the degrees of freedom for the numerator, and the degrees of freedom for the denominator. Yes, it is the same underlying test as that in ANOVA from experimental design!
+Under the usual regression assumptions, this $F$-ratio follows a sampling distribution known as an $F$-distribution.  $F$-distributions have two parameters: the degrees of freedom for the numerator, and the degrees of freedom for the denominator. Yes, it is the same underlying test as that in ANOVA from experimental design!
 
-F-statistics are the standard method for comparing two variances.  Here’s what could happen:
+$F$-statistics are the standard method for comparing two variances.  Here’s what could happen:
 
-* If F is too large, we reject H0 in favor of Ha and conclude that at least one of the predictor variables is useful in determining the response (i.e. at least one $\beta_i \neq 0$).
+* If $F$ is too large, we reject $H_0$ in favor of $H_a$ and conclude that at least one of the predictor variables is useful in determining the response (i.e. at least one $\beta_i \neq 0$).
 
-* If F is small, fail to reject $H_0$ in favor of Ha and conclude that there is insignificant evidence to conclude that at least one of the predictor variables is useful in determining the response.
+* If $F$ is small, fail to reject $H_0$ in favor of $H_a$ and conclude that there is insignificant evidence to conclude that at least one of the predictor variables is useful in determining the response.
 
-This type of test is called an analysis of variance (ANOVA) F-test.  This test is widely used in many types of statistical modeling, and especially in the analysis of designed experiments (we saw this before!).  The “whole-model” F-test for model utility is generally assessed first when fitting a model.  
+The “whole-model” F-test for model utility is generally assessed first when fitting a model.  
 
+**Example. Property Appraisals.** 
 
-```{example, label="appraisal_f", name="Property Appraisals"}
 Recall the property appraisal dataset from chapter 5. 
-```
+
 ```{r ch6.2}
 load("appraisal.RData")
 appraisal.fit <- lm(saleprice ~ landvalue + impvalue + area, data=appraisal)
 summary(appraisal.fit)
 ```
 
-The $F$-statistic on 3 and 16 degrees of freedom is 46.72, with *p*-value < 0.0001. We reject $H_0$.  At least one predictor is useful for predicting sales price.  
+The $F$-statistic on 3 and 16 degrees of freedom is 46.72, with *p*-value < 0.0001. We reject $H_0$ and conclude at least one predictor is useful for predicting sales price.  
 
-Alternatively we could test this with the `anova()` function
-
-```{r ch6.3}
-anova(appraisal.fit)
-```
 
 Two things to be aware of:
 
@@ -121,7 +119,7 @@ Two things to be aware of:
 
 ## Individual parameter inference
 
-After running a whole-model F-test and determining that the fitted model has utility (i.e. if we rejected $H_0: \beta_1 = \beta_2 = \ldots = \beta_k = 0$), we may proceed to running tests or finding confidence intervals for the individual $\beta_i$ parameters.  These inferences may be used to
+After running a whole-model $F$-test and determining that the fitted model has utility (i.e. if we rejected $H_0: \beta_1 = \beta_2 = \ldots = \beta_k = 0$), we may proceed to running tests or finding confidence intervals for the individual $\beta_i$ parameters.  These inferences may be used to
 
 * Determine which predictors are significant predictors of the mean response
 * Estimate the size of the partial effect of each predictor on the response
@@ -129,7 +127,7 @@ After running a whole-model F-test and determining that the fitted model has uti
 
 The last point above will serve as our first taste of model building, i.e. the “arts and crafts” aspect of tweaking a model so that it best explains the observed patterns and trends in the data.  There will be much more on this later, but for now we can at least see a bit of it in action.
 
-The calculated values of $b_i$ are just point estimates of the true values $\beta_i$ for the population relationship.  $\beta_i$ is an unknown parameter, so we use our estimate $b_i$ to build confidence intervals or run hypothesis tests about $\beta_i$.  While $\beta_0$ is usually of limited interest (and only in specific circumstances), the remaining $\beta_i$ terms are critical parameters because it measures the “true” linear rate of change in $Y$ as $X_i$ is increased by one unit.  
+The calculated values of $b_i$ are just point estimates of the true values $\beta_i$ for the population relationship.  $\beta_i$ is an unknown parameter, so we use our estimate $b_i$ to build confidence intervals or run hypothesis tests about $\beta_i$ (much like in Intro stat when you used $\bar{x}$ as a proxy for $\mu$).  While $\beta_0$ is usually of limited interest (and only in specific circumstances), the remaining $\beta_i$ terms are critical parameters because it measures the “true” linear rate of change in $Y$ as $X_i$ is increased by one unit.  
 
 
 
@@ -139,45 +137,44 @@ The usual parameter test of interest in regression deals with the slope on term 
 
 $$H_0: \beta_i = 0~~~~\textrm{versus}~~~~ H_a: \beta_1 \neq 0$$
 
-This null hypothesis basically states that X and Y have no linear relationship.  Rejection of this null hypothesis offers statistical confirmation that there is a significant linear relationship between X and Y.  The test statistic for this is a t-statistic, and is given by
+This null hypothesis basically states that $X_i$ and $Y$ have no linear relationship.  Rejection of this null hypothesis offers statistical confirmation that there is a significant linear relationship between $X_i$ and $Y$.  The test statistic for this is a $t$-statistic, and is given by
 
-$$t=\frac{\textrm{point estimate}-\textrm{hypothesized value}}{\textrm{standard error of point estimate}} = \frac{b_i - 0}{SE_{b_1}}$$
+$$t=\frac{\textrm{point estimate}-\textrm{hypothesized value}}{\textrm{standard error of point estimate}} = \frac{b_i - 0}{SE_{b_i}}$$
 
 and is provided in the `summary()` output in R.
 
-```{example, label="appraisal_t_test", name="Property Appraisals"}
-Consider individual test from the Property Appraisal data. 
-```
+**Example. Property Appraisals** Consider individual test from the Property Appraisal data. 
+
 ```{r ch6.4}
 summary(appraisal.fit)
 ```
 
-    $H_0: \beta_1 = 0$ 	(appraised land value has no effect on sales price, after adjusting for appraised value of improvements and area of living space)
+> $H_0: \beta_1 = 0$ 	(appraised land value has no effect on sales price, after adjusting for appraised value of improvements and area of living space)
 
-    $H_a: \beta_1 \neq 0$	(appraised land value has an effect on sales price, after adjusting for appraised value of improvements and area of living space)
+> $H_a: \beta_1 \neq 0$	(appraised land value has an effect on sales price, after adjusting for appraised value of improvements and area of living space)
 
 The test statistic is $t = 1.599$ (with df=16), and *p*-value = 0.1294.  We fail to reject $H_0$ and conclude that appraised land value has no significant effect on sales price, after adjusting for appraised value of improvements and area of living space.  
 
-    $H_0: \beta_2 = 0$ 	(appraised value of improvements has no effect on sales price, after adjusting for appraised land value and area of living space)
+> $H_0: \beta_2 = 0$ 	(appraised value of improvements has no effect on sales price, after adjusting for appraised land value and area of living space)
     
-    $H_a: \beta_2 \neq 0$	(appraised value of improvements has an effect on sales price, after adjusting for appraised land value and area of living space)
+> $H_a: \beta_2 \neq 0$	(appraised value of improvements has an effect on sales price, after adjusting for appraised land value and area of living space)
 
 The test statistic is $t = 3.889$ (with df=16), and *p*-value = 0.0013.  We reject $H_0$ and conclude that appraised value of improvements has a significant effect on sales price, after adjusting for appraised land value and area of living space.  
 
-    $H_0: \beta_3 = 0$ 	(area of living space has no effect on sales price, after adjusting for appraised value of land and improvements)
+> $H_0: \beta_3 = 0$ 	(area of living space has no effect on sales price, after adjusting for appraised value of land and improvements)
 
-    $H_a: \beta_3 \neq 0$	(area of living space has an effect on sales price, after adjusting for appraised value of land and improvements)
+> $H_a: \beta_3 \neq 0$	(area of living space has an effect on sales price, after adjusting for appraised value of land and improvements)
 
 The test statistic is $t = 2.071$ (with df=16), and *p*-value = 0.0549.  We reject $H_0$ and conclude that the area of living space has a marginally significant effect on sales price, after adjusting for appraised value of improvements and area of living space.  
 
-**Summary:** The appraised value of improvements is the most significant predictor of sales price.  Area of living space is marginally significant. 
+**Summary:** The appraised value of improvements is the most significant predictor of sales price.  Area of living space is marginally significant and appraised land value is not significant. 
 
 
 #### Modeling trimming
 
 What about insignificant predictors?  At this point, one might wonder about the need for retaining appraised land value (landvalue) as a predictor due to its insignificance.  In fact, we may delete insignificant predictors (one at a time) to see the effect on the quality of the fit.  Remember: a simple model that does essentially as well as a more complex model is preferred.  
 
-So, here’s what happens by deleting landvalue as a predictor (we actually did this in the last lecture to see the effect on the β parameters):
+So, here’s what happens by deleting landvalue as a predictor (we actually did this in the last lecture to see the effect on the $\beta$ parameters):
 
 ```{r ch6.5}
 summary(lm(saleprice ~ impvalue + area, data=appraisal))
@@ -185,9 +182,9 @@ summary(lm(saleprice ~ impvalue + area, data=appraisal))
 
 The quality of the fit of this model is comparable, albeit a bit worse, to the model containing all three predictors.  Consider:
 
-* The residual SE has increased from $s$ = 7915 to $s$ = 8269.  In other words, the quality of saleprice predictions suffers somewhat by deleting landvalue as a predictor, even though it is statistically insignificant.  For this reason, we may wish to retain it.
+* The residual SE has increased from $s$ = 7915 to $s$ = 8269.  In other words, the quality of `saleprice` predictions suffers somewhat by deleting `landvalue` as a predictor, even though it is statistically insignificant. For this reason, we may wish to retain it.
 
-This is actually a wise method of determining the “value” of a predictor to the model.  Another (equivalent) way is to look at the adjusted $R^2$ values for the two models. We will cover that aspect shortly.
+This is actually a wise method of determining the “value” of a predictor to the model. Another (equivalent) way is to look at the adjusted $R^2$ values for the two models. We will cover that aspect shortly.
 
 
 ### Confidence Intervals
@@ -210,7 +207,7 @@ We focus only on interpretation of the significant predictors:
 
 ### Confidence and prediction bands
 
-If we are satisfied with the quality of the fit of a multiple linear regression model (i.e. if we feel the residual SE is low enough to facilitate decent predictions), we may use the model to generate CIs or PIs for the response variable Y given some settings for the predictor variables X1, X2, … Xk.   The only caveat to keep in mind when finding such CIs/PIs is the issue of extrapolation outside the region of the observed values of the predictors (called the predictor space).  You should stay inside the observed joint region of the predictors when making such predictions. We begin with a look at our simple linear regression example, the muslce mass dataset, for visualization and explanation.
+If we are satisfied with the quality of the fit of a multiple linear regression model (i.e. if we feel the residual SE is low enough to facilitate decent predictions), we may use the model to generate CIs or PIs for the response variable $Y$ given some settings for the predictor variables $X_1$, $X_2$, $\ldots$, $X_k$. The only caveat to keep in mind when finding such CIs/PIs is the issue of extrapolation outside the region of the observed values of the predictors (called the predictor space).  You should stay inside the observed joint region of the predictors when making such predictions. We begin with a look at our simple linear regression example, the muslce mass dataset, for visualization and explanation.
 
 
 One of the great uses of regression models is to generate useful predictions of the response variable $Y$ given some setting for the predictor variable $X$.
@@ -219,7 +216,7 @@ Given a hypothetical value of $X$ (call it $x_0$), what is the predicted respons
 
 $$\hat{Y} = 156.35 - 1.19(65) = 79.0$$
 
-However, as good statisticians we know that the above result isn’t sufficient.  Remember: it’s only an estimate of $\mu_{Y|X=65}$, the true mean muscle mass of women age 65.  We would like to construct confidence limits around this estimate to get an idea of its precision.  
+However, as good statisticians we know that the above result is not sufficient.  Remember: it’s only an estimate of $\mu_{Y|X=65}$, the true mean muscle mass of women age 65.  We would like to construct confidence limits around this estimate to get an idea of its precision.  
 
 There are actually two kinds of “prediction” that can be made using $\hat{Y}$ as our point estimate.  The distinction is between 
 
@@ -231,11 +228,11 @@ For example,
 * We could obtain an interval estimate for the true mean muscle mass of all 65 year old women; or,
 * We could obtain an interval estimate for the muscle mass of an individual unobserved 65 year old woman.
 
-Why would these be different?  It’s because if we are estimating the true mean response at a given $X$ value, the only contributor to the uncertainty of the prediction is the uncertainty in the line (i.e. uncertainty due to the slope and y-intercept estimates).  On the other hand, if we are estimating a future individual response value at a given $X$ value, the contributors to the uncertainty of the prediction are both the uncertainty in the line and the variation in the individual points about the line.  Thus, the $SE$ for the prediction of a single future response value will be larger than the SE for predicting a mean response value.
+Why would these be different?  It is because if we are estimating the true mean response at a given $X$ value, the only contributor to the uncertainty of the prediction is the uncertainty in the line (i.e. uncertainty due to the slope and intercept estimates).  On the other hand, if we are estimating a future individual response value at a given $X$ value, the contributors to the uncertainty of the prediction are both the uncertainty in the line and the variation in the individual points about the line.  Thus, the $SE$ for the prediction of a single future response value will be larger than the SE for predicting a mean response value.
 
 To help distinguish between the two kinds of intervals, we will call an interval estimate for the true mean response a confidence interval (CI) (also known as a confidence band) for the mean response, and an interval estimate for an individual future response value a prediction interval (PI) (also known as prediction bands) for an individual response.  Which one is more appropriate depends on context, but confidence intervals are used more frequently in practice.
 
-The `predict()` extractor function in R will generate CIs and PIs from a linear model object according to your specifications for values of xp:
+The `predict()` extractor function in R will generate CIs and PIs from a linear model object according to your specifications for values of $X$:
 
 ```{r ch6.7}
 muscle.fit <- lm(mass~age,data=muscle)
@@ -285,13 +282,13 @@ ggplot() +
   theme_minimal()
 ```
 
-**Notes about the code.** We are using the layering feature in ``ggplot()`. First we plot the prediction interval as a `geom_ribbon` type with a lighter colored gray. Then the confidence band (since we know it will be narrower). Then the fitted line and original data points.
+**Notes about the code.** We are using the layering features in `ggplot()`. First we plot the prediction interval as a `geom_ribbon` type with a lighter colored gray. Then the confidence band (since we know it will be narrower) on the next layer. Then the fitted line and original data points.
 
 **Extrapolation warning.**  It might be tempting to use your model to make predictions outside the observed range of your predictor variable (e.g., what is the predicted muscle mass of a 90 year old woman?).  The best advice: DON’T!  
 
 Regression isn’t some magic pill that will get you reliable predictions of what’s going on out in some region where you have no information.  You may have a model that fits the observed data well, but the model may be completely different when you move outside this range.  For instance, perhaps muscle mass reaches a point of stabilization near age 80, resulting in a plot that levels off.  If you used the model we fitted above to make a prediction for a geriatric female above age 80, you may vastly underpredict her true muscle mass.  A relationship that looks linear on a small scale might be completely different on a larger scale. 
 
-That is why when you conduct your own investigations, you should collect data from the entire region of predictor values of research interest to you.
+That is why when you conduct your own investigations, you should collect data from the entire region of predictor values of research interest.
 
 In summary, don’t extrapolate because:
 
@@ -303,7 +300,8 @@ The two plots below illustrate these points. Suppose you only observe the data i
 set.seed(1)
 x <- runif(80, -15, 10)
 y <- -(x+5)^2 + rnorm(80, sd=7)
-df <- data.frame(x,y)
+df <- data.frame(x,y) %>%
+  mutate(Inside = ifelse(abs(x)<3, "Yes", "No") ) 
 fit <- lm(y~x, data=dplyr::filter(df, x<3, x>-3) )
 df.new <- data.frame(x=seq(-15,15,0.1))
 df.new <- df.new %>%
@@ -319,9 +317,11 @@ p1 <- ggplot() +
 p2 <- ggplot() + 
   geom_ribbon(data=df.new, aes(x=x, ymin=pi.lo, ymax=pi.hi), fill="gray80") + 
   geom_line(data=df.new, aes(x=x,y=Fitted), size=1.25, color="blue") + 
-  geom_point(data=df, aes(x=x,y=y)) + 
+  geom_point(data=df, aes(x=x,y=y, color=Inside) ) + 
+  scale_color_manual(values=c("red", "black")) +
   theme_minimal() + ylab("y") + ylim(c(-250, 150)) + 
-  ggtitle("Extrapolation dangers!")
+  ggtitle("Extrapolation dangers!") + 
+  theme(legend.position="none")
 grid.arrange(p1,p2, nrow=1)
 ```
 
@@ -353,8 +353,9 @@ We start as follows:
 
 Formulaically, $TSS = \sum_{i=1}^n (y_i - \bar{y})^2$ and $RSS = \sum_{i=1}^n (y_i - \hat{y}_i)^2$.
 
-<div style="float:right;position: relative; ">
-```{r ch6.12, echo=FALSE, fig.width=3.25, fig.height=3.25}
+Below is a graphic illustrating how one may think of “sizing” these two quantities.  The picture shows a simulated data example where there is a clearly strong linear trend.  You can see that once you account for the linear trend element (which explains a lot of what you see in the plot), the relative size of the leftover residual variation is low, i.e. RSS is the much smaller partition of the total sums of squares.
+
+```{r ch6.12, echo=FALSE}
 set.seed(1)
 x <- runif(500)
 y <- 5 - 10*x + rnorm(500, sd=0.5)
@@ -370,9 +371,7 @@ ggplot(df) +
   annotate("text", x=0.95, y=-1.5, label="RSS", colour="blue") + 
   theme_minimal()
 ```
-</div>
 
-At right is a graphic illustrating how one may think of “sizing” these two quantities.  The picture shows a simulated data example where there is a clearly strong linear trend.  You can see that once you account for the linear trend element (which explains a lot of what you see in the plot), the relative size of the leftover residual variation is low, i.e. RSS is the much smaller partition of the total sums of squares.
 
 The difference between TSS and RSS is the sum of squares due to the model (let’s call it SS(model)).  One can show that 
 
@@ -387,7 +386,7 @@ $$R^2 = \frac{TSS - RSS}{TSS} = 1 - \frac{RSS}{TSS}$$
 
 This is valuable because it has a nice clean interpretation as the proportion of total variation in the response that is explained by the model.  Since it is a proportion, it is always true that $0 \leq R^2 \leq 1$.  In R, it is provided in the `summary()` function for a linear model object, labeled `Multiple R-squared`.  It is also known as the coefficient of determination.
 
-**Adjusted R^2**, or $R_{adj}^2$, takes into account the degrees of freedom for both total variation and error variation, and is generally preferable to $R^2$:
+**Adjusted $R^2$**, or $R_{adj}^2$, takes into account the degrees of freedom for both total variation and error variation, and is generally preferable to $R^2$:
 
 $$R_{adj}^2 = 1 - \frac{RSS/df_{error}}{TSS/df_{total}} = 1 - \frac{RSS/(n-p)}{TSS/(n-1)} = 1 - (1-R^2)\frac{n-1}{n-p-1}$$
 
@@ -414,7 +413,7 @@ where $n$ = sample size, $RSS$ is the model residual sum of squares, and $p$ = n
 AIC(appraisal.fit)
 ```
 
-It should be noted that, in itself, the value of AIC for a given data set has no meaning.  Its utility comes when we compare AIC values of different candidate models for the same data.  Later on, as regression models become more complex with the inclusion of potentially many predictor variables, we will revisit AIC to help us in the selection of the “best” model among many choices.
+It should be noted that, in itself, the value of AIC for a given date set and model has no meaning. Its utility comes when we compare AIC values of different candidate models for the same data.  Later on, as regression models become more complex with the inclusion of potentially many predictor variables, we will revisit AIC to help us in the selection of the “best” model among many choices.
 
 A similar measure is known as the Bayesian Schwarz Information Criteria, or BIC. It is calculated with the formula
 
@@ -426,9 +425,5 @@ and is calculated in R with the `BIC()` function.
 BIC(appraisal.fit)
 ```
 
-
-## Case Study
-
-We close this chapter with a fully-worked out example, or case study, of a multiple regression model.
 
 

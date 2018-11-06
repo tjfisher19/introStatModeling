@@ -36,7 +36,7 @@ A meaningful statistical analysis helps us quantify this uncertainty.
 *	To be able to meaningfully describe the patterns of variation in collected sample data, and use this information to make reliable inferences/generalizations about the parent population.
 
 
-## Before you begin a statistical analysis.
+## Before you begin an analysis
 
 Statistics starts with a problem, continues with the collection of data, proceeds with a data analysis, and then finishes with conclusions. 
 It is a common mistake of inexperienced statisticians to plunge into a complex analysis without paying attention to what the objectives are, or even whether the data are appropriate for the proposed analysis. 
@@ -145,8 +145,6 @@ head(uadata)
 ```
 
 ```{r, echo=FALSE, ch1.6}
-site <- "http://www.users.miamioh.edu/hughesmr/sta363/univadmissions.txt"
-class(site)
 uadata <- read.table("univadmissions.txt", header=TRUE)
 head(uadata)
 ```

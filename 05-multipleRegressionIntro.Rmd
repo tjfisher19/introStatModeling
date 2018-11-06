@@ -1,11 +1,17 @@
 
 # Introduction to Multiple Regression
 
-In the early chapters of our text we observed that everything varies.  In a statistical model, the goal is to identify structure in the variation that the data possess.  This means that we must partition the variation in the data into (1) a systematic component, and (2) a non-systematic or random component.  
+In the early chapters of our text we observed that everything varies.  In a statistical model, the goal is to identify structure in the variation that the data possess.  This means that we must partition the variation in the data into (1) a systematic component, and (2) a non-systematic or random component. After this unit, you should be able to
+
+* Recognize the structure of a multiple regression model
+* Fit a regression model in R
+* Interpret the coefficients in a regression model
+* Distinguishing between the model constructed in design of experiments (ANOVA) and that in regression.
+
 
 In ANOVA testing, the systematic component is comprised of measured factors of research interest that may relate to the response variable.  The random component is usually a catch-all for everything else: if the model is built well, there should be no systematic information left in the random component: rather, it should only contain random fluctuations due to the natural inherent variability in the measurements.
 
-Suppose instead of factors (categorical inputs) we have measured predictor variables. For example, consider the admissions data; there may be a systematic tendency to see higher freshman GPAs from students with higher ACT scores. Both variables are measured numeric values (compared to pre-determined treatments). This leads to the idea of regression modeling.
+Suppose instead of factors (categorical inputs) we have measured predictor variables. For example, consider the admissions data from Chapter 1 of this text; there may be a systematic tendency to see higher freshman GPAs from students with higher ACT scores. Both variables are measured numeric values (compared to pre-determined treatments). This leads to the idea of regression modeling.
 
 ## Regression Model
 
@@ -17,30 +23,32 @@ where $Y$ is the response variable, $X_j$ is the $j^\mathrm{th}$ predictor varia
 Note that if $\beta_1=\beta_2=\ldots=\beta_k=0$ we reduce to our baseline model
 
 $$Y=\beta_0 + \varepsilon = \mu + \varepsilon$$
+we saw earlier in the class. The multiple regression model is a generalization of a $k$ factor ANOVA model but instead of categorical inputs, we have numeric quantitative inputs.
 
 **Simple Linear Regression.** A special case of the above model occurs when $k=1$ and the model reduces to
 $$Y = \beta_0 + \beta_1 X + \varepsilon$$
 
 This is known as the simple linear regression (SLR) model (covered in your Intro Statistics course). It is very rare that a practicing Statistician will ever fit a SLR but we will utilize it to explain some concepts.
 
-It should be noted that multiple regression is in general a $k + 1$ dimensional problem, so it will usually not be feasible to graphically visualize a fitted model like we could easily do with SLR (which was 2-dimensional).  Not to worry, though, as we can quantitatively explain what is going on in higher dimensions using notions we introduced in simple regression.  In the following chapters will we utilize SLR to help visualize important statistical concepts.
+It should be noted that multiple regression is in general a $k + 1$ dimensional problem, so it will usually not be feasible to graphically visualize a fitted model like we can easily do with SLR (which was 2-dimensional).  Not to worry though, as we can quantitatively explain what is going on in higher dimensions.  In the following sections will we utilize SLR to help visualize important statistical concepts.
 
 The **goals of linear regression** are:
 
 * Formal assessment of the impact of the predictor variables on the response 
 * Prediction of future responses
 
+These two goals are fundamentally different and may require different techniques to build a model. We outline the fundamental concepts and statistical methods over the next six chapters.
 
 ## Fitting a regression model
 
 Regression models are typically estimated through the method of least squares. For the sake of visualizing the concept of least squares, we will consider a SLR example.
 
-**Example.** A person’s muscle mass is expected to decrease with age.  To explore this relationship in women, a nutritionist randomly selected 15 women from each 10-year age group beginning with age 40 and ending with age 79.  The data reside in the file `musclemass.txt`.  The variables in the dataset are mass and age. 
+**Example.** A person’s muscle mass is expected to decrease with age.  To explore this relationship in women, a nutritionist randomly selected 15 women from each 10-year age group beginning with age 40 and ending with age 79.  The data reside in the file `musclemass.txt`.  The variables in the dataset of interest are `mass` and `age`. 
 
 ```{r, eval=FALSE}
 site <- "http://www.users.miamioh.edu/hughesmr/sta363/musclemass.txt")
 muscle <- read.table(site, header=TRUE)
-head(muscle)
+glimpse(muscle)
 ggplot(muscle) + 
   geom_point(aes(x=age,y=mass)) +
   ggtitle("Muscle Mass vs Age")
@@ -49,7 +57,7 @@ ggplot(muscle) +
 
 ```{r ch5.1, echo=FALSE}
 muscle <- read.table("musclemass.txt", header=TRUE)
-head(muscle)
+glimpse(muscle)
 ggplot(muscle) + 
   geom_point(aes(x=age,y=mass)) + 
   ggtitle("Muscle Mass vs Age") +
@@ -58,21 +66,20 @@ ggplot(muscle) +
 
 We can clearly see the negative trend one would expect: as age increases, muscle mass tends to decrease.  You should also notice that it decreases in a roughly linear fashion, so it makes sense to fit a simple linear regression model to this data.
 
-<div style="float:right;position: relative; ">
-```{r ch5.2, echo=FALSE, fig.width=3.25, fig.height=3.25}
+
+
+
+The systematic component of a simple linear regression model passes a straight line through the data in an attempt to explain the linear trend (see the display below).  We can see that such a line effectively explains the trend, but it does not explain it perfectly since the line does not touch all the observed values.  The random fluctuations around the trend line are what the $\varepsilon$ terms account for in the model.
+
+```{r ch5.2, echo=FALSE}
 ggplot(muscle) + 
   geom_point(aes(x=age,y=mass)) +
   geom_smooth(aes(x=age,y=mass), method="lm", se=FALSE)+
   ggtitle("Muscle Mass vs Age") +
   theme_minimal()
 ```
-</div>
 
-The systematic component of a simple linear regression model passes a straight line through the data in an attempt to explain the linear trend (see the display at right).  We can see that such a line effectively explains the trend, but it doesn’t explain it perfectly because the line doesn’t touch all the observed values.  The random fluctuations around the trend line are what ε accounts for in the model.
-
-Our next goal is to somehow find the best fitting line for this data.
-
-There are an infinite number of possible straight line models of the form $Y = \beta_0 + \beta_1 X + \varepsilon$ that we could fit to a data set, depending on the values of the slope $\beta_1$ and y-intercept $\beta_0$ of the line.  Given a scatterplot as on the previous page, how do we determine which slope and y-intercept produces the “best fitting” line for a given data set?  Well, first we need to define what we mean by “best”.
+The next goal is to somehow find the best fitting line for this data. There are an infinite number of possible straight line models of the form $Y = \beta_0 + \beta_1 X + \varepsilon$ that we could fit to a data set, depending on the values of the slope $\beta_1$ and y-intercept $\beta_0$ of the line.  Given a scatterplot, how do we determine which slope and y-intercept produces the “best fitting” line for a given data set?  Well, first we need to define what we mean by “best”.
 
 Our criterion for finding the best fitting line is rooted in the residuals that the line would produce.  In the two-dimensional simple linear regression case, it is easy to visualize what we mean.  When a straight line is “fit” to a data set, the fitted (or “predicted”) values for each observation fall on the fitted line (see figure below).  However, the actual observed values randomly scatter around the line.  The vertical discrepancies between the observed and predicted values are the residuals we spoke of earlier.  We can visualize this by zooming into the plot.
 
@@ -87,15 +94,15 @@ ggplot(muscle) +
   theme_minimal()
 ```
 
-It makes logical sense to use a criterion that somehow collectively minimizes these residuals, since the best fitting line should be the one that most closely passes through the observed data.  We need to estimate $\beta_0$ and $\beta_1$ for this “best” line.
+It makes some logical sense to use a criterion that somehow collectively minimizes these residuals, since the best fitting line should be the one that most closely passes through the observed data.  We need to estimate $\beta_0$ and $\beta_1$ for this “best” line.
 
-Also note in the figure above that any reasonable candidate model must pass through the data, producing both positive residuals (actual response values > fitted response values) and negative residuals (actual response values < fitted response values).   When we collectively assess the residuals, we don’t want the positive ones to cancel out or offset the negative ones, so our criterion will be to minimize the sum of squared residuals.  This brings us to what is known as the method of least squares (LS), which I outline below in the context of simple linear regression.
+Also note in the figure above that any reasonable candidate model must pass through the data, producing both positive residuals (actual response values > fitted response values) and negative residuals (actual response values < fitted response values).   When we collectively assess the residuals, we don’t want the positive ones to cancel out or offset the negative ones, so our criterion will be to minimize the sum of squared residuals.  This brings us to what is known as the method of least squares (LS), which is outlined below in the context of simple linear regression.
 
-<center>**Method of Least Squares**</center>
+**Method of Least Squares**
 
 We propose to “fit” the model $Y = \beta_0 + \beta_1 X + \varepsilon$ to a data set of $n$ pairs: $(x_1, y_1), (x_2, y_2), \ldots, (x_n, y_n)$.  The goal is to optimally estimate $\beta_0$ and $\beta_1$ for the given data.  
 
-Let’s denote the estimated values of $\beta_0$ and $\beta_1$ by $b_0$ and $b_1$, respectively. Note, it is also common to denote the estimated values as $\hat{\beta}_0$ and $\hat{\beta}_1$.
+Denote the estimated values of $\beta_0$ and $\beta_1$ by $b_0$ and $b_1$, respectively. Note, it is also common to denote the estimated values as $\hat{\beta}_0$ and $\hat{\beta}_1$.
 
 The fitted values of $Y$ are found via the linear equation $\hat{Y}=b_0 + b_1 X$ (or $\hat{Y}=\hat{\beta}_0 + \hat{\beta}_1 X$).  In terms of each individual $(x_i, y_i)$ sample observation, the fitted and observed values are found as follows:
 
@@ -111,7 +118,7 @@ $$\begin{array}{c|c}
  
  
 
-The difference between each corresponding observed and predicted value is the residual for that observation: 
+The difference between each corresponding observed and predicted value is the sample residual for that observation: 
 $$\begin{array}{c}
 e_1 = y_1 - \hat{y}_1 \\
 e_2 = y_2 - \hat{y}_2 \\
@@ -122,22 +129,17 @@ e_n = y_n - \hat{y}_n
 or in general, $e_i = y_i - \hat{y}_i$. The method of least squares determines $b_0$ and $b_1$ so that
 
 $$\textrm{Residual sum of squares (RSS)} = \sum_{i=1}^n e_i^2 = \sum_{i=1}^n\left(y_i - \hat{y}_i\right)^2 = \sum_{i=1}^n\left(y_i - \left(b_0 + b_1 x_i\right)\right)^2$$
-is a minimum.  In other words, any other method of estimating the y-intercept and slope $\beta_0$ and $\beta_1$ will produce a larger RSS value than the method of least squares.  
+is a minimum.  In other words, any other method of estimating the y-intercept and slope, $\beta_0$ and $\beta_1$, respectively, will produce a larger RSS value than the method of least squares.  
 
 Minimizing RSS is a calculus exercise, so we will skip the details there.  The resulting line is the “best-fitting” straight line model we could possibly obtain for the data.
 
 * $b_0$ and $b_1$ are called the least squares estimates of $\beta_0$ and $\beta_1$.
 * The line given by $\hat{Y} = b_0 + b_1 X$ is called the simple linear regression equation.
 
-We use R to fit such models and estimate $\beta_0$ and $\beta_1$ using the `lm()` function (lm=linear model). No hand calculations required! Linear models are fit using the R function `lm()`, and the basic format for a formula is given by 
+We use R to fit such models and estimate $\beta_0$ and $\beta_1$ using the `lm()` function (lm=linear model). No hand calculations required! Linear models are fit using the R function `lm()`, and the basic format for a formula is given by `response ~ predictor`.
 
-<center>
-`response ~ predictor`
-</center>
 
-The `~` (“tilde”) here is read “is modeled as a linear function of” and is used to separate the response variable from the predictor variable(s).  For simple linear regression, the form is `lm(y ~ x)`.  In other words, 
-
-`lm(y ~ x)` fits the regression model $Y = \beta_0 + \beta_1 + \varepsilon$.
+The `~` (“tilde”) here is read "is modeled as a linear function of" and is used to separate the response variable from the predictor variable(s).  For simple linear regression, the form is `lm(y ~ x)`.  In other words, `lm(y ~ x)` fits the regression model $Y = \beta_0 + \beta_1 + \varepsilon$.
 
 The y-intercept is always included, unless you specify otherwise.  `lm()` creates a model object containing essential information about the fit that we can extract with other R functions. We illustrate via an example involving the muscle mass dataset.
 
@@ -150,39 +152,39 @@ You'll note from the `glimpse()` function there are many attributes inside the `
 
 To fit a multiple regression, the code is essentially the same. Consider another example
 
-**Example: Property appraisals.**  Suppose a property appraiser wants to model the relationship between the sale price (saleprice) of a residential property and the following three predictor variables:
+**Example: Property appraisals.**  Suppose a property appraiser wants to model the relationship between the sale price (`saleprice`) of a residential property and the following three predictor variables:
 
-    landvalue - Appraised land value of the property (in $)
-    impvalue - Appraised value of improvements to the property (in $)
-    area - Area of living space on the property (in sq ft)
+* `landvalue` - Appraised land value of the property (in $)
+* `impvalue` - Appraised value of improvements to the property (in $)
+* `area` - Area of living space on the property (in sq ft)
 
 The data are in the R workspace `appraisal.RData` in our repository.  Let’s use R to fit what is known as a “main effects” multiple regression model.  The form of this model is given by:
 
 $$\textrm{Sale Price} = \beta_0 + \beta_1(\textrm{Land Area}) + \beta_2(\textrm{Improvement Value}) + \beta_3(\textrm{Area}) + \varepsilon$$
 
-Similar to our study of ANOVA modeling we follow a standard pattern for analysis:
+Note the model is just an extension of the simple linear regression model but with three predictor variables. Similar to our study of ANOVA modeling we follow a standard pattern for analysis:
 
 1. Describe the data both numerically and graphically.
 2. Fit a model.
 3. Once satisfied with the fit, check the regression assumptions.
 4. Once the assumptions check out, use the model for inference and prediction.
 
-Before I embark on addressing these, it might be instructive, just once, (since this is your first multiple regression encounter) to actually look at the raw data to see its form:
+Before embarking on addressing each part, it might be instructive, just once, (since this is your first multiple regression encounter) to actually look at the raw data to see its form:
 
 ```{r ch5.5}
 load("appraisal.RData")
-head(appraisal)
+kable(appraisal)
 ```
 
 We see there are four variables ($k+1 = 4$) and 20 observations ($n = 20$).  Each row contains a different member of the sample (in this case, a different property).   Notice the one property with the relatively high selling price as compared to the others.
 
-Pairwise scatterplots are given below to visualize the bivariate associations.  Here we use the `ggscatmat()` function in the add-on package `GGally`. 
+Pairwise scatterplots are given below to visualize the bivariate associations.  Here we use the `ggscatmat()` function in the add-on package `GGally`. Pairwise scatterplots provide a means to visually explore all $k+1$ dimensions of a dataset, but note that as $k$ and $n$ (the sample size) increase, these plots can get very "busy".
 
 ```{r ch5.6}
 ggscatmat(appraisal)
 ```
 
-In the bottom left of matrix of plot we have pairwise scatterplots. At first glance, it seems as though each of the three predictors positively relates to sales price (ref. the top row of plots).  However, we also get to see the plots of predictors against themselves.  This can be highly informative and will be of some importance to us later on.  There appear to be positive associations between all the predictors (not surprisingly given the context).  It is also instructive to note that three specific individual properties with high appraised land values seem to be the catalyst for these apparent associations. 
+In the bottom left of the matrix of plots we have pairwise scatterplots. At first glance, it seems as though each of the three predictors positively relates to sales price.  However, we also get to see the plots of predictors against themselves.  This can be highly informative and will be of some importance to us later on.  There appear to be positive associations between all the predictors (not surprisingly given the context).  It is also instructive to note that three specific individual properties with high appraised land values seem to be the catalyst for these apparent associations. 
 
 In the upper right corner is the Pearson correlation coefficient (which measures the amount of linear relationship between the two variables) and along the diagonal are density plots of each variable (providing some information about each variables shape).
 
@@ -197,7 +199,7 @@ Here are some observations from this regression model fit:
 
 **Parameter estimates.**  The fitted model, where $Y$ = sale price, is:
 
-$$\hat{Y} = 1384.2 + 0.817(\textrm{Land value}) + 0.819(\textrm{Improvement value}) + 13.605(\textrm{Area})$$
+$$\hat{Y} = 1384.197 + 0.818(\textrm{Land value}) + 0.819(\textrm{Improvement value}) + 13.605(\textrm{Area})$$
 
 That is, the least squares estimates of the four $\beta$-parameters in the model are $b_0 = 1384.2$, $b_1 = 0.817$, $b_2 = 0.819$, and $b_3 = 13.605$.  We will discuss their interpretation later.
 
@@ -205,23 +207,17 @@ That is, the least squares estimates of the four $\beta$-parameters in the model
 
 Since a variance is always a sum of squares divided by degrees of freedom (SS/df), we can estimate $\sigma^2$ for a simple linear regression model using the following:
  
-$$S^2_{\varepsilon} = \frac{sum_{i=1}^n(y_i - \hat{y}_i)^2}{n-p} = \frac{\textrm{RSS}}{n-p}$$
+$$S^2_{\varepsilon} = \frac{\sum_{i=1}^n(y_i - \hat{y}_i)^2}{n-p} = \frac{\textrm{RSS}}{n-p}$$
 
-The degrees of freedom for this error variance estimate is $n -p$ where $p$ is the number of parametres estimated in the regression model.  So, we had to “spend” $p$ degrees of freedom from the $n$ available degrees of freedom in order to estimate $\beta_0, \beta_1$, $\ldots$, $\beta_k$. (Hopefully you can see that you cannot fit a model with $n$ or more parameters to a sample of size $n$; you will have “spent” all your available df, and hence you could not estimate $\sigma^2$.)
+The degrees of freedom for this error variance estimate is $n -p$ where $p$ is the number of parametres estimated in the regression model, here $p = k+1 = 3+1=4$.  So, we had to “spend” $p=k+1$ degrees of freedom from the $n$ available degrees of freedom in order to estimate $\beta_0, \beta_1$, $\ldots$, $\beta_k$. (Hopefully you can see that you cannot fit a model with $n$ or more parameters to a sample of size $n$; you will have “spent” all your available degrees of freedom, and hence you could not estimate $\sigma^2$.)
 
-We will usually just denote the estimated error variance using $S^2$ instead of $S^2_{\varepsilon}$. R provides the residual standard error in the `summary()` output from the linear model fit, which is the square root of the estimated error variance, and thus has the advantage of being in the original units of the response variable $Y$. Here, $s = 7915$ which is our estimate for $\sigma$.  Applying an Empirical Rule type argument, we could say that approximately 95% of this model’s predicted sale prices would fall within $\pm 2(7915) = \pm \$15,830$ of the actual sales prices.  The error degrees of freedom are $n – p$ = $20 – 4$ = 16.  (Recall that p = the number of model parameters, here 3+1.)
+We will usually just denote the estimated error variance using $S^2$ instead of $S^2_{\varepsilon}$. R provides the residual standard error in the `summary()` output from the linear model fit, which is the square root of the estimated error variance, and thus has the advantage of being in the original units of the response variable $Y$. Here, $s = 7915$ which is our estimate for $\sigma$.  Applying an Empirical Rule type argument (remember from Intro Statistics!), we could say that approximately 95% of this model’s predicted sale prices would fall within $\pm 2(7915) = \pm \$15,830$ of the actual sales prices.  The error degrees of freedom are $n – p$ = $20 – 4 = 16$. 
 
 
-**Interpretation.**  Since this is essentially the standard deviation of the residuals, we could interpret the value of $S$ as essentially the average residual size, i.e. the average size of the prediction errors produced by the regression model.  In the present context, this translates to stating that the regression model produces predicted sale prices that are, on average, \$7,915 dolalrs off from the actual measured sale price values. 
+**Interpretation.**  Since this is essentially the standard deviation of the residuals, we could interpret the value of $S$ as essentially the average residual size, i.e. the average size of the prediction errors produced by the regression model.  In the present context, this translates to stating that the regression model produces predicted sale prices that are, on average, \$7,915 dollars off from the actual measured sale price values. 
 
 As you can see, such a measure is valuable in helping us determine how well a model performs (i.e. smaller residual error $\rightarrow$ better fitting model).  So, $S^2$ and the standard errors are important ingredients in the development of inference in regression. 
 
-
-That’s all we’ll do with this model for now.  The next issues to tackle will include:
-
-•	Interpretation of the $\beta$-parameter estimates
-•	Checking regression assumptions
-•	Inference and prediction (tests and confidence intervals of interest)
 
 It should also be noted that at this point we are not even sure if this is a good model, and if not, how we might make it better.  So later on, we will discuss the “art” of model building.
 
@@ -229,11 +225,11 @@ It should also be noted that at this point we are not even sure if this is a goo
 
 ### Why should we use more than one predictor?
 
-We conclude this section with a discussion of why multiple linear regression is superior to running “separate” simple linear regressions.
+We briefly tangent with a discussion of why multiple linear regression is superior to running “separate” simple linear regressions.
 
 Because complex natural phenomena are typically impacted by many characteristics, it would be naïve in most circumstances to think that just one variable serves as an adequate explanation for an outcome.  Instead, we consider the simultaneous impact of potential predictors of interest on the response.  Useful models reflect this fact.
 
-The “one-predictor-at-a-time approach” is bad.  Suppose you are considering three potential predictors $X_1$, $X_2$, $X_3$ on a response $Y$.  You might be tempted to fit three separate simple linear regression models to each predictor:
+The “one-predictor-at-a-time approach” can be quite bad.  Suppose you are considering three potential predictors $X_1$, $X_2$, $X_3$ on a response $Y$.  You might be tempted to fit three separate simple linear regression models to each predictor:
 
 $$\begin{array}{c}
 Y = \beta_0 + \beta_1 X_1 + \varepsilon \\
@@ -241,18 +237,23 @@ Y = \beta_0 + \beta_2 X_2 + \varepsilon \\
 Y = \beta_0 + \beta_3 X_3 + \varepsilon
 \end{array}$$
 
-As we shall see, this approach to regression is fundamentally flawed and is to be avoided at all costs.  The problem is that if you fit “too simple” a model by not accounting for the “collective” impact of multiple predictors of interest, you may fail to detect significant relationships, or even come to completely wrong conclusions.  Here’s an example to illustrate:
+As we shall see, this approach to regression is fundamentally flawed and is to be avoided at all costs.  The problem is that if you fit “too simple” a model you will not account for the “collective” impact of multiple predictors of interest, you may then fail to detect significant relationships, or even come to completely wrong conclusions.  Here’s an example to illustrate:
 
-**Example:** Predictors of mathematical ability.  Suppose we construct a hypothesis that taller children are better at math, and we intend to test this using sample data collected from an elementary school.  A random sample of 32 children take a math test, and also have their heights measured.  The data are in the file mathability.txt.  In the code below, I first downloaded the text file to my default directory and then read it into R.
+**Example:** Predictors of mathematical ability.  Suppose we construct a hypothesis that taller children are better at math, and we intend to test this using sample data collected from an elementary school.  A random sample of 32 children take a math test, and also have their heights measured.  The data are in the file `mathability.txt`.  In the code below, I first downloaded the text file to my default directory and then read it into R.
 
 First we fit a simple regression predicting AMA (average math ability score) from height:
 
-```{r ch5.8}
+```{r, eval=FALSE}
+math <- read.table("http://www.users.miamioh.edu/hughesmr/sta363/mathability.txt", header=TRUE)
+summary(lm(ama ~ height, data=math))
+```
+
+```{r ch5.8, echo=FALSE}
 math <- read.table("mathability.txt", header=TRUE)
 summary(lm(ama ~ height, data=math))
 ```
 
-Although we have not formally covered inference on regression, We might conclude from this result that height influences math ability (see the very small p-value).  A two-dimensional scatterplot seems to bear this out as well:
+Although we have not formally covered inference on regression, We might conclude from this result that height influences math ability (see the very small $p$-value associated with the variable `height`).  A two-dimensional scatterplot seems to support this as well:
 
 ```{r ch5.9}
 ggplot(math) + 
@@ -267,9 +268,9 @@ We fit a multiple regression predicting AMA from both age and height:
 summary(lm(ama ~ age + height, data=math))
 ```
 
-Compare this result to the simple regression model.  When age is taken into account, height is unimportant (p-value = 0.860).  The earlier result occurred because both height and mathematical ability are highly correlated with age – so the omission of age led us to detect what is known as a **spurious association** between math ability and height.  
+Compare this result to the simple regression model.  When age is considered, height is unimportant ($p$-value = 0.860).  The earlier result occurred because both height and mathematical ability are highly correlated with age – so the omission of age led us to detect what is known as a **spurious association** between math ability and height.  
 
-The addition of a second predictor into the model also alters the nature of the question being asked.  The simple linear regression asks: “Does height influence mathematical ability?”  The multiple linear regression, however, asks a more useful question: “Does height influence mathematical ability once any differences due to age are accounted for?”  The answer is ‘not really’. It also asks: “Does age influence mathematical ability once any differences due to height are accounted for?”  The answer is ‘yes’. 
+The addition of a second predictor into the model also alters the nature of the question being asked.  The simple linear regression asks: “Does height influence mathematical ability?”  The multiple linear regression, however, asks a more useful question: “Does height influence mathematical ability once any differences due to age are considered?”  The answer is ‘not really’. It also asks: “Does age influence mathematical ability once any differences due to height are accounted for?”  The answer is ‘yes’. 
 
 ## Interpreting $\beta$-parameter estimates in MLR
 
@@ -279,7 +280,7 @@ $$\hat{Y} = b_0 + b_1 X_1 + b_2 X_2 + \ldots + b_k X_k$$
 
 What does $b_1$ mean?  In multiple regression involving simultaneous assessments of many predictors, interpretation can become problematic.  In certain cases, a $b_i$ coefficient might represent some real physical constant, but oftentimes the statistical model is just a convenience for representing a more complex reality, so the real meaning of a particular $b_i$ may not be obvious.
 
-At this point in our trek through regression, it is important to recognize that there are two methods for obtaining data for analysis: designed experiments and observational studies.  It is important to know the distinction because each type of data results in a different approach to interpreting the $\beta$-parameter estimates in in a multiple linear regression model. 
+At this point in our trek through statistical model, it is important to remember that there are two methods for obtaining data for analysis: designed experiments and observational studies.  It is important to recall the distinction because each type of data results in a different approach to interpreting the $\beta$-parameter estimates in in a multiple linear regression model. 
 
 
 ### Designed experiments
@@ -291,8 +292,11 @@ Having control over the conditions in an experiment allows us to make stronger c
 **Example.** Cleaning experiment.  An experiment was performed to measure the effects of three predictors on the ability of a cleaning solution to remove oil from cloth.  The data are in the R workspace `cleaningexp.RData`.  Here are some details:
 
 Response:
+
 * `pct.removed` - Percentage of the oil stain removed
+
 Predictors:	
+
 * `soap.conc` - Concentration of soap, in % by weight
 * `lauric.acid` - Percentage of lauric acid in the solution
 * `citric.acid` - Percentage of citric acid in the solution
@@ -301,55 +305,45 @@ Soap concentration was controlled at two levels (15% and 25%), lauric acid at fo
 
 ```{r ch5.11}
 load("cleaningexp.RData")
-head(cleaningexp)
+glimpse(cleaningexp)
 ```
-To start, let’s fit a linear model to all three predictors:
+Since we have many numeric levels and we are interested in the numeric association (as compared to the categorical association in ANOVA), we fit a linear model to all three predictors:
 
 ```{r ch5.12}
 summary(lm(pct.removed ~ soap.conc + lauric.acid + citric.acid, data=cleaningexp))
 ```
 
-Take note of the model’s $\beta$-parameter estimates (in boldface) and their SEs.  
+Take note of the model’s $\beta$-parameter estimates and their SEs.  
 
-Now for illustration only, let’s drop `soap.conc` from the first model (the output is abridged):
+Now for illustration only, let’s drop `soap.conc` from the model:
 
 ```{r ch5.13}
 summary(lm(pct.removed ~ lauric.acid + citric.acid, data=cleaningexp))
 ```
 
-Dropping `lauric.acid` from the first model:
+Notice that the coefficient estimates do not change regardless of what other predictors are in the model (this would hold true if we dropped `lauric.acid` or `citric.acid` from the model as well). This is what orthogonality ensures.  This means that we are safe in assessing the size of the impact of, say, soap concentration on the ability to remove the oil stain, without worrying about how other variables might impact the relationship.  
 
-```{r ch5.14}
-summary(lm(pct.removed ~ soap.conc + citric.acid, data=cleaningexp))
-```
+So in a designed experiment with orthogonality properties, we can interpret the value of $b_1$ unconditionally as follows: 
 
-Dropping `citric.acid` from the first model:
+> A one-unit increase in $x_1$ will cause a change of size $b_1$ in the mean response. 
 
-```{r ch5.15}
-summary(lm(pct.removed ~ soap.conc + lauric.acid, data=cleaningexp))
-```
-
-Notice that the coefficient estimates themselves do not change regardless of what other predictors are in the model.  This is what orthogonality ensures.  This means that we are safe in assessing the size of the impact of, say, soap concentration on the ability to remove the oil stain, without worrying about how other variables might impact the relationship.  
-
-So in a designed experiment with orthogonality properties, we can interpret the value of b1 unconditionally as follows: 
-
-    “A one-unit increase in x1 will cause a change of size $b_1$ in the mean response”. Side note.  When I deleted the predictors one at a time, I was effectively taking that predictor’s explanatory contribution to the response and dumping it into the error component of the model.   Here, since each predictor was significant (p-value < 0.0001), this removal caused the residual standard error to increase substantially, which subsequently made the SEs of the coefficients, t-statistics and p-values change.  I want to make it clear that in practice it would be stupid to remove significant effects from the model — it was only done here to show that orthogonality ensures that the model’s $\beta$-parameter estimates are unchanged regardless of what other predictors are included.  However, the results of tests/CIs for those coefficients may change depending on what is included in the model.  (If you remove an insignificant predictor, the residual SE will change only slightly and hence have negligible impact on SEs of the coefficients, t-statistics and p-values.)  
+**Side note.**  When we deleted the predictors one at a time, we effectively were taking that predictor’s explanatory contribution to the response and dumping it into the error component of the model. Here, since each predictor was significant ($p$-value < 0.0001), this removal caused the residual standard error to increase substantially, which subsequently made the SEs of the coefficients, $t$-statistics and $p$-values change. We want to make it clear that in practice it would not be recommended to remove significant effects from the model --- it was only done here to demonstrate that orthogonality ensures that the model’s $\beta$-parameter estimates are unchanged regardless of what other predictors are included. However, the results of tests/CIs for those coefficients may change depending on what is included in the model (if you remove an insignificant predictor, the residual SE will change only slightly and hence have negligible impact on SEs of the coefficients, $t$-statistics and $p$-values).  
 
 ### Observational studies
 
-In most regression settings, however, you simply collect measurements on predictor and response variables as they naturally occur, without intervention from the data collector.   Such data is called observational data.  
+In most regression settings,  you simply collect measurements on predictor and response variables as they naturally occur, without intervention from the data collector.   Such data is called observational data.  
 
-Interpreting models built on observational data can be challenging.  There are many opportunities for error and any conclusions will carry with them substantial unquantifiable uncertainty.  Nevertheless, there are many important questions for which only observational data will ever be available.  For example, how else would we study something like differences in prevalence of obesity, diabetes and other cardiovascular risk factors between different ethnic groups?  Or the effect of socio-economic status on self esteem?  It is impossible to design experiments to investigate these, so we must make the attempt to build good models with observational data in spite of their shortcomings.  
+Interpreting models built on observational data can be challenging.  There are many opportunities for error and any conclusions will carry with them substantial unquantifiable uncertainty.  Nevertheless, there are many important questions for which only observational data will ever be available.  For example, how else would we study something like differences in prevalence of obesity, diabetes and other cardiovascular risk factors between different ethnic groups?  Or the effect of socio-economic status on self esteem?  It is impossible to design experiments to investigate these since we cannot control variables (or it would be grossly unethical to do so), so we must make the attempt to build good models with observational data in spite of their shortcomings.  
 
-In observational studies, establishing causal connections between response and predictor variables is nearly impossible. In the limited scope of a single study, the best one can hope for is to establish associations between predictor variables and response variables.  But even this can be difficult due to the uncontrolled nature of observational data.  Why?  It’s because unmeasured and possibly unsuspected “lurking” variables may be the real cause of an observed relationship between Y and some predictor Xi.  (Remember the example in the last lecture, where we observed a positive correlation between the heights and mathematical abilities of school children? It turned out that this relationship was really driven by a lurking variable – the age of the child.  In this case, the variables height and age are said to be confounded, because for the purpose of predicting math ability in children, they basically measure the same predictive attribute.)
+In observational studies, establishing causal connections between response and predictor variables is nearly impossible. In the limited scope of a single study, the best one can hope for is to establish associations between predictor variables and response variables.  But even this can be difficult due to the uncontrolled nature of observational data.  **Why?**  It is because unmeasured and possibly unsuspected “lurking” variables may be the real cause of an observed relationship between response $Y$ and some predictor $X_i$.  Recall the earlier example where we observed a positive correlation between the heights and mathematical abilities of school children? It turned out that this relationship was really driven by a lurking variable – the age of the child.  In this case, the variables height and age are said to be confounded, because for the purpose of predicting math ability in children, they basically measure the same predictive attribute.
 
 In observational studies, it is important to adjust for the effects of possible confounding variables.  Unfortunately, one can never be sure that the all relevant confounding variables have been identified.  As a result, one must take care in interpreting $\beta$-parameter estimates from regression analyses involving observational data.
 
 Here is probably the best way of interpreting a β-parameter estimate (say $b_1$) when dealing with observational data:
 
-    “$b_1$ measures the effect of a one-unit increase in $x_1$ on the mean response when all the other (specified) predictors are held constant”.
+> $b_1$ measures the effect of a one-unit increase in $x_1$ on the mean response when all the other (specified) predictors are held constant.
 
-Even this, however, isn’t perfect.  Often in practice, one predictor cannot be changed without changing other predictors too. For example, competing species of ground cover in a botanical field study are often negatively correlated, so increasing the amount of cover of one species will likely mean the lowering of cover of the other.  In health studies, it is unrealistic to presume that an increase of 1% body fat in an individual wouldn’t correlate to changes in other physical characteristics too (e.g. waist circumference).  
+Even this, however, isn’t perfect.  Often in practice, one predictor cannot be changed without changing other predictors. For example, competing species of ground cover in a botanical field study are often negatively correlated, so increasing the amount of cover of one species will likely mean the lowering of cover of the other.  In health studies, it is unrealistic to presume that an increase of 1\% body fat in an individual would not correlate to changes in other physical characteristics too (e.g., waist circumference).  
 
 Furthermore, this interpretation requires the specification of the other variables – so changing which other variables are included in the model may change the interpretation of $b_1$.  Here’s an illustration:
 
@@ -359,7 +353,7 @@ Furthermore, this interpretation requires the specification of the other variabl
 summary(appraisal.fit)
 ```
 
-*Interpretation.*  For example, we see $b_3$ = 13.6051.  This value may be best interpreted in context by either of the following:  
+*Interpretation.*  We see $b_3$ = 13.605, this value may be best interpreted in context by either of the following:  
 
 * “For each additional square foot of living space on a property, we estimate an increase of $13.61 in the mean selling price, holding appraised land and improvement values fixed.”
 * “Each additional square foot of living space on a property results in an average increase of $13.61 in the mean selling price, after adjusting for the appraised value of the land and improvements.”
@@ -372,8 +366,10 @@ Now, suppose we delete `landvalue` (an insignificant predictor, p-value > 0.05).
 summary(lm(saleprice ~ impvalue + area, data=appraisal))
 ```
 
-Notice that the values of both $b_2$ and $b_3$ changed after the predictor $X_1$ (landvalue) was deleted from the model.  This means that our estimate of the effect that one predictor has on the response depends on what other predictors are in the model.
+Notice that the values of both $b_2$ and $b_3$ changed after the predictor $X_1$ (landvalue) was deleted from the model.  This means that our estimate of the effect that one predictor has on the response depends on what other predictors are in the model (compare this with the example of orthogonility from earlier)
 
-Hopefully this example will give you an appreciation for why we must strive to find a good model for our data, and not just “fit once and hope for the best”.  Many different models may be fit to the same data, but that doesn’t mean they’re all good!  Findings and results can vary based on which model we choose: precision of our predictions, interpretations of the parameter estimates, etc., so we must use caution and wisdom in our choices.  As statistician George Box once said:
+Hopefully this example will give you an appreciation for why we must strive to find a good model for our data, and not just “fit once and hope for the best”.  Many different models may be fit to the same data, but that doesn’t mean they are all good!  Findings and results can vary based on which model we choose: precision of our predictions, interpretations of the parameter estimates, etc., so we must use caution and wisdom in our choices.
 
-    “All models are wrong, but some are useful.”
+As statistician George Box once said:
+
+> “All models are wrong, but some are useful.”
