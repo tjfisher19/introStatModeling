@@ -1,9 +1,9 @@
 
 # Generalized Linear Models
 
-In the previous chapter we introduced the idea of a **Generalized Linear Model**, where we fit a linear regression model to a link function of the response. There, highlighted the case of a binary outcome (TRUE/FALSE, Success/Failure, Alive/Dead, 1/0). The ideas expressed in that chapter can be extended to a multitude of situations. 
+In the previous chapter we introduced the idea of a **Generalized Linear Model**, where we fit a linear regression model to a response variable via a link function. Logistic regression highlights the case of a binary outcome (TRUE/FALSE, Success/Failure, Alive/Dead, 1/0). The ideas expressed in that chapter can be extended to a multitude of situations. This chapter offers an overview of the topic concentrating on *count* responses.
 
-**Example: Prevalence of salamanders.**  An observational field study is conducted in which the number of salamanders in different locations is counted. For this dataset, salamander count (the response variable) takes on integer values. This response is to be modeled as a function of two quantitative predictor variables: forest age and percentage of canopy cover.
+**Example: Prevalence of salamanders.**  An observational field study is conducted in which the number of salamanders in different locations is counted. For this dataset, salamander count (the response variable) takes on non-negative integer values. This response is to be modeled as a function of two quantitative predictor variables: forest age and percentage of canopy cover.
 
 What makes this problem different from problems we saw in the previous chapters? Since the response variable $Y$ is a count (integers 0, 1, 2, $\ldots$), it is discrete and bounded below by 0. A common characteristic of counts is that the variability in the count increases with the mean. For example:
 
@@ -12,11 +12,11 @@ What makes this problem different from problems we saw in the previous chapters?
 
 Count variables by their very nature violate the usual constant variance assumption from regression. Furthermore, if the response $Y$ is a count, then it must be greater than or equal to 0 to be valid. A standard regression method may not ensure this will happen either. Using an appropriate link function will ensure valid predictions.
 
-For count data such as this, it is often more appropriate to assume the response variable $Y$ follows a Poisson or Negative Binomial distribution, as compared to a Normal distribution in regression.
+For count data such as this, it is often more appropriate to assume the response variable $Y$ follows a Poisson or Negative Binomial distribution, as compared to a Normal distribution utilized in standard regression.
 
 ## Poisson Regression
 
-Before getting into the details of Poisson regression we will briefly introduce the Poisson distribution. This is a common distribution that is covered in most Introductory Statistics books (although it tends to be ommitted from Intro Stat classes).
+Before getting into the details of Poisson regression we will briefly introduce the Poisson distribution. This is a common distribution that is covered in many Introductory Statistics books (although the topic tends to be omitted from many Intro Stat classes).
 
 ### Poisson distribution
 
@@ -24,24 +24,28 @@ Suppose you had a binomial random variable $X$. A common example is a coin flip 
 $$X \sim \textrm{Binomial}(n, p=0.5)$$
 where $p=P(Heads)$ on any given coin flip.
 
-Now, suppose that the number of trials $n$ is very large (say, $n\to\infty$) and the probability of success is relatively small such that as $n$ grows large, $np\to c$, where $c$ is some constant. In situations such as this, the observed value of $X$ can be considered a count, 0, 1, 2, 3, $\ldots$ and is unbounded since $n$ grows. 
+Now, suppose that the number of trials $n$ is very large (say, $n\to\infty$) and the probability of success is relatively small such that as $n$ grows large, $np\to c$, where $c$ is some constant. In situations such as this, the observed value of $X$ can be considered a count, 0, 1, 2, 3, $\ldots$ and is unbounded as $n$ grows. 
 
-Mathematics can show that in this situation $X$ follows a Poisson distribution with rate parameter $\lambda$. The rate parameter corresponds to $\lambda=np$ and it can be shown that the theoretical mean of a Poisson random variable $X$ is $E[X]=\lambda$. Not only that, but $\mu=E[X]=\lambda = Var(X)$. That is, for a Poisson random variable, its mean and its variance are the same - this fact is important later.
+Mathematics can show that in this situation $X$ follows the following distribution
 
-**Simplified.** A Poisson distribution is appropriate in many applications when the variable of interest is a count. Examples include the number of customers who enter a bank in a given hour, the number of earthquakes observed along a fault line, and as we'll see later, the number of tropical cyclones that develop in the Atlantic Ocean.
+$$P(X=k) = \frac{\lambda^k e^{-\lambda}}{k!}, ~~k=0,1,2,\ldots$$
+
+which is known as the Poisson distribution with rate parameter $\lambda$. The rate parameter corresponds to $\lambda=np$ in the aforementioned binomial situation and it can be shown that the theoretical mean of a Poisson random variable $X$ is $E[X]=\lambda$. Not only that, but $\mu=E[X]=\lambda = Var(X)$. That is, for a Poisson random variable, its mean and its variance are the same - this fact is important later.
+
+**Simplified.** A Poisson distribution is appropriate in some applications when the variable of interest is a count. Examples may include the number of customers who enter a bank in a given hour, the number of earthquakes observed along a fault line, and as we'll see later, the number of tropical cyclones that develop in the Atlantic Ocean.
 
 ### Poisson Regression Development
 
 The basic construct of the Poisson Regression model is to use a $\log$ link function. Namely, we are interested in modeling $E[Y] = \mu = \lambda$ and that is acheived via
 $$\log(\mu) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_k X_k$$
-Where $\beta_j$ is the coefficient on the $j^\mathrm{th}$ predictor variable $X_j$. Its easy to "untransform" this model with an exponenent. Namely
+Where $\beta_j$ is the coefficient on the $j^\mathrm{th}$ predictor variable $X_j$. It is easy to "untransform" this model with an exponenent. Namely
 
 \begin{equation}
 E[Y] = \mu = \lambda = e^{\beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_k X_k}
 (\#eq:poissonModel)
 \end{equation}
 
-**Important Notes.** We've already established that for Poisson data $\lambda = E[Y] = Var(Y)$; i.e., the mean and the variance are equal. In many applications it may be the case that the observed variance is greater than the mean; this phenonemon is known as *overdispersion* and can be an indication a Poisson regression is not appropriate (more on that later).
+**Important Notes.** We have already established that for Poisson data $\lambda = E[Y] = Var(Y)$; i.e., the mean and the variance are equal. In many applications it may be the case that the observed variance is greater than the mean; this phenonemon is known as *overdispersion* and can be an indication a Poisson regression is not appropriate (more on that later).
 
 ### Example - Tropical Cyclone Counts in the North Atlantic
 
@@ -55,9 +59,9 @@ tail(atlantic)
 
 Consider 2017, news of hurricanes could not be missed (Harvey in Houston, Irma in Florida and Maria in Puerto Rico). In terms of impact on the United States, 2017 seemed extreme. But in a broader sense, one may ask, was 2017 that abnormal? 
 
-The answer to this is a complex problem that cannot but tackled in a single textbook example but we will look at the simple case of modeling the number of storms (we are not concentrating on storm intensity or accumulated cyclone energy). In particular, we will consider the Southern Oscillation Index (SOI) as a predictor variable on hurricane counts. The SOI is a standardized index based on the observed sea level pressure differences between Tahiti and Darwin, Australia. The SOI is one measure of the large-scale fluctuations in air pressure occurring between the western and eastern tropical Pacific (i.e., the state of the Southern Oscillation) during El Ni\~{n}o and La Nina episodes. In general, smoothed time series of the SOI correspond very well with changes in ocean temperatures across the eastern tropical Pacific. The negative phase of the SOI represents below-normal air pressure at Tahiti and above-normal air pressure at Darwin. Prolonged periods of negative (positive) SOI values coincide with abnormally warm (cold) ocean waters across the eastern tropical Pacific typical of El Ni?o (La Ni?a) episodes.
+The answer to this question is a complex problem that cannot but tackled in a single textbook example but we will look at the simple case of modeling the number of storms (we are not concentrating on storm intensity or accumulated cyclone energy) and determined if 2017 seemed abnormal. In particular, we will consider the Southern Oscillation Index (SOI) as a predictor variable on trypical cyclone counts. The SOI is a standardized index based on the observed sea level pressure differences between Tahiti and Darwin, Australia. The SOI is one measure of the large-scale fluctuations in air pressure occurring between the western and eastern tropical Pacific (i.e., the state of the Southern Oscillation) during El Niño and La Niña episodes. In general, smoothed time series of the SOI correspond very well with changes in ocean temperatures across the eastern tropical Pacific. The negative phase of the SOI represents below-normal air pressure at Tahiti and above-normal air pressure at Darwin. Prolonged periods of negative (positive) SOI values coincide with abnormally warm (cold) ocean waters across the eastern tropical Pacific typical of El Niño (La Niña) episodes.
 
-We will attempt to tackle teh question of whether the SOI predict cyclone counts.
+We will attempt to tackle the question of whether the SOI predict cyclone counts.
 
 We begin by creating a total storm count variable
 
@@ -100,16 +104,16 @@ atlantic %>% summarize(Avg.Storm = mean(Storms),
 
 We note that on average there are 11.6 storms per year with a variance of near 20. We have some indication that maybe our response variable suffers from overdispersion, we will revisit that a little later.
 
-Now we obtain the SOI data.
+Now we load in the SOI data.
 
 ```{r 13.5}
 soi <- read.table("soi.txt", header=TRUE)
 head(soi)
 ```
 
-Since our storm counts are by year we need a single SOI value per year. The North Atlantic "Hurricane Season" is June through November, so we will consider the mean SOI value in those months. We much create the new variable using material from Chapter 1.
+Since our storm counts are by year we need a single SOI value per year. The North Atlantic "Hurricane Season" is June through November, so we will consider the mean SOI value in those months. We will create the new variable using material from Chapter 1.
 
-We take the SOI data and `group_by` `YEAR`. Then within a given year we calculate the mean SOI level for June, July, August, September, October and November. Lastly We select the variables of interest for our analysis and rename `YEAR` to `Year` (thus matching the cyclone counts).
+We take the SOI data and `group_by` `YEAR`. Then within a given year we calculate the mean SOI level for June, July, August, September, October and November. Lastly we select the variables of interest for our analysis and rename `YEAR` to `Year` (thus matching the cyclone counts).
 
 ```{r 13.6}
 soi <- soi %>%
@@ -149,24 +153,24 @@ ggplot(combine) +
   theme(legend.position = "none")
 ```
 
-Visually we see that 2017 does not appear to be all that different. We also see that the `Storms` appear to increase with a positive SOI value. Let's test this with a poisson model.
+Visually we see that 2017 does not appear to be all that different compared to the other observations (think back to the ideas of leverage and influence -- 2017 is in the middle of the pattern, not an outlier in any real way). We also see that the `Storms` appear to increase with a positive SOI value. Let's test this with a poisson model; we use the `glm` function as before with logistic regression, but here we specify the family to be `poisson`.
 
 ```{r 13.9}
 storm.fit <- glm(Storms ~ SOI, data=combine, family=poisson)
 summary(storm.fit)
 ```
 
-To interpret the model I need to recognize that I am modeling
+To interpret the model I need to recognize that our model is
 
 $$\log(\lambda) = 2.42473 + 0.20502\times SOI$$
 
-So I need to "un"-log.
+So we must "un"-log.
 
 The intercept of 2.42473 corresponds to $\exp(2.42473)$ = `r exp(2.42473)` storms when the SOI value is 0.
 
-The slope term must be interpretation on a log scale. That is, $2.42473+0.20502\times$(one units of SOI) is a mean number of storm of `r exp(2.42473+0.20502*1)`.
+The slope term must be interpretation on a log scale. That is, $2.42473+0.20502\times$(one unit of SOI) is a mean number of storm of `r exp(2.42473+0.20502*1)`.
 
-We also note that the covariate predictor variable `SOI` is significant according to the Wald test (*p*-value=0.000152). So we have evidence that SOI does in fact explain storm counts. Let's look at the predictive ability of the model. First we will plot the fitted model against the data.
+We also note that the covariate predictor variable `SOI` is significant according to the Wald test ($p$-value=0.000152). So we have evidence that SOI does in fact explain storm counts. Let's look at the predictive ability of the model. First we will plot the fitted model against the data.
 
 ```{r 13.10}
 combine <- combine %>%
@@ -176,30 +180,46 @@ ggplot(combine) +
   geom_line(aes(x=SOI, y=Fitted), col="blue") +
   theme_bw()
 ```
-Note the slight curvature to the fit (its modeling $e^{\beta_0 + \beta_1 X_1}$). What about 2017?
+
+Note the slight curvature in the fitted "line" (recall the model is $e^{\beta_0 + \beta_1 X_1}$). Using the model what doe we predict of 2017?
 
 ```{r 13.11}
 predict(storm.fit, newdata=recent.2017, type="response")
 ```
-compared to the observed value of `r recent.2017$Storms`. So we see that 2017 does appear to deviate from the predicted value.
 
-**Overdispersion.** Let's revisit the issue of overdispersion. Early we saw some indication of potential overdispersion in our data
+Compared to the observed value of `r recent.2017$Storms` we see that 2017 does appear to deviate from the predicted value. We may want to consider building an interval around this predicted value. To do this, we can tell the `predict` function to calculate a standard error for hte predicted value:
+
+```{r 13.11.2}
+predict(storm.fit, newdata=recent.2017, type="response", se.fit=TRUE)
+```
+
+Now, using *empirical rule* type arguments from your Intro Statistics class ($\pm 2$ standard errors is approximately 95\%), we see that the predicted number of storms is between `r 12.64788 -2*0.5507235` and `r 12.64788+2*0.5507235`, so 2017 is still outside the predicted value.
+
+**Note:** We want to remind the reader that we are performing a *simple* regression model here. Modeling complicated systems such as tropical cyclones is not a trivial exercise and would require greater expertise and (likely) more predictor variables than included here. However, we include this example as it is a practical example of Poisson regression, is scientifically interesting and relevant to modern society. 
+
+#### Overdispersion
+
+Let's revisit the issue of overdispersion. Early we saw some indication of potential overdispersion in our data
 
 ```{r 13.12}
 atlantic %>% summarize(Avg.Storm = mean(Storms),
                        Var.Storm = var(Storms))
 ```
 
-Here the variance appears to be nearly twice as big as the mean. However we must step back and realize this is BEFORE we fit our model. It is possible the covariate information will explain some of this variability. A quick check for overdispersion in Poisson models is to compare the `Residual deviance` to its degrees of freedom. In the ideal situation, the ratio should be 1. In cases when it is much greater than 1, we have strong indication of overdispersion. Here we have the following output
+Here the variance appears to be nearly twice as big as the mean. However we must step back and realize this is BEFORE we fit our model. It is possible the covariate information (that is, the SOI variable) will explain some of this variability. A quick check for overdispersion in Poisson models is to compare the `Residual deviance` to its degrees of freedom. In the ideal situation, the ratio should be 1. In cases when it is much greater than 1 (typically a value of 2 or more is considered a problem), we have indication of overdispersion. Here we have the following output
 
     Residual deviance: 77.728  on 55  degrees of freedom
 
-and note $77.728/55 = $ `r 77.728/55` which is not that much greater than 1. In fact, a formal hypothesis test confirms we do not have overdispersion, but we exclude that from this introductory text.
+and note $77.728/55 = $ `r 77.728/55` which is not that much greater than 1. In fact, a formal hypothesis test confirms we do not have overdispersion, but we exclude formal hypothesis testing of overdispersion from this introductory text.
 
 
-## Negative Binomial Regression
+## Handling overdispersion
 
-Although Poisson regression can be appropriate for *count* data, there are many cases when the highly restrictive property $\lambda = E[Y] = Var(Y)$ is violated. In situations such as this a different modeling approach is necessary. A generalization of Poisson regression is known as Negative Binomial Regression. It is based on properties of the Negative Binomial distribution that is typically covered in a formal Probability course. However, here we do not need all those details for our discussion. The key element for our understanding is that the Negative Binomial distribution allows for a second parameter, and thus loosens the restriction that $E[Y]=Var(Y)$. Formulaically the negative binomial model is the same equation as \@ref(eq:poissonModel) except an additional *dispersion* parameter is estimated. We walk through an example.
+Although Poisson regression can be appropriate for *count* data, there are many cases when the highly restrictive property $\lambda = E[Y] = Var(Y)$ is violated. In such situations, a different modeling approach is necessary. Two common approaches are to use a "Quasi-Poisson"" model or a Negative Binomial Regression. 
+
+In the former, a Poisson model is fit with an added variable such that $Var(Y) = c \lambda$. That is, we let the variance be a scalar multiple of the mean. This value $c$ is known as the *dispersion* parameter (in regular Poisson regression, $c=1$). This slight modification adds flexibility to Poisson regression model. To fit this sort of model in R, we simple state `family=quasipoisson` in the `glm` function. One thing to note is that the mean response (i.e., the fitted model) is the same for Poisson and Quasi-Poisson models. The only difference is in the calculation of standard errors and prediction intervals.
+
+Another approach to handle overdispersion is known as Negative Binomial regression. It is based on properties of the Negative Binomial distribution that is typically covered in a formal Probability course. However, here we do not need all those details for our discussion. The key element for our understanding is that the Negative Binomial distribution allows for a second parameter, and thus loosens the restriction that $E[Y]=Var(Y)$. Unlike Quasi-Poisson, it does not use a linear relationship between mean and variance, but rather a quadratic relationship. Formulaically the negative binomial model is the same equation as \@ref(eq:poissonModel) except an additional *dispersion* parameter is estimated. We walk through an example.
 
 ### Example -- Attendnace Records
 
@@ -214,7 +234,8 @@ As a first step we want to do a little data cleaning (making sure R properly han
 
 ```{r ch13.14}
 attendance <- attendance %>%
-  mutate(prog = factor(prog, levels = 1:3, labels = c("General", "Academic", "Vocational")),
+  mutate(prog = factor(prog, levels = 1:3, 
+                       labels = c("General", "Academic", "Vocational")),
          id = factor(id) )
 glimpse(attendance)
 ```
@@ -228,12 +249,12 @@ ggplot(attendance) +
   xlab("Standardized Math Score") + ylab("Number of Days Absent")
 ```
 
-It takes a minute to comprehend everything in this plot. Visually it is difficult to distinguish any differences in gender. There does appear to be a relationship between attendance and the program (visually speaking "Vocational" and "Academic" appear to be lower on the days missed compared to "Gender"). We take a deeper dive at looking at this two categorical variables by comparing histograms.
+It takes a minute to comprehend everything in this plot. Visually it is difficult to distinguish any differences in gender (shapes of the point). There does appear to be a relationship between attendance and the program (visually speaking "Vocational" and "Academic" appear to be lower on the days missed compared to "Gender"). We take a deeper dive at looking at these two categorical variables by comparing histograms.
 
 ```{r ch13.16}
 ggplot(attendance) + 
   geom_histogram(aes(x=daysabs), binwidth = 1) + 
-  facet_grid(.~gender) + xlab("Days Absent")
+  facet_grid(gender~.) + xlab("Days Absent")
 ```
 
 Here we see little difference between the number of days absent and gender (coincides with the scatterplot). Next we explore the relationship with the respective program.
@@ -245,7 +266,7 @@ ggplot(attendance) +
   xlab("Days Absent")
 ```
 
-Here we see three distinct shapes in the historgrams. For the "General" program it is more uniformly distributed (compared to the other two) with all recorded students having several days abseent. For "Academic" and "Vocational" we see more a decay type shape (also sometimes known as a Pareto shape). The "Academic" program definitely has more days absent compare to the "Vocational" program.
+Here we see three distinct shapes in the historgrams. For the "General" program it is fairly uniformly distributed (compared to the other two) with all recorded students having several days abseent. For "Academic" and "Vocational" we see more a decay type shape (also sometimes known as a Pareto shape). The "Academic" program definitely has more days absent compare to the "Vocational" program.
 
 ### Incorrect Poisson Model
 
@@ -255,12 +276,26 @@ We have a count response variable and previously we learned about Poisson regres
 attend.pois <- glm(daysabs ~ math + gender + prog, data=attendance, family=poisson)
 summary(attend.pois)
 ```
-In the response we see that all the predictor variables are significant (all *p*-values are less than $10^{-6}$) but there is a vary glaring problem. The `Residual deviance` is recorded as 1746.8 on 309 degrees of freedom. This is a ratio value of `r 1746.8/309` which is much greater than 1. There are some major concerns about overdispersion. We could see this visually as well. Revisit the scatter plot of the data, with lower math scores, the range of the days absent looks larger than with higher math scores (an indication the variance changes given the mean response). 
+In the response we see that all the predictor variables are significant (all *p*-values are less than $10^{-6}$) but there is a glaring problem. The `Residual deviance` is recorded as 1746.8 on 309 degrees of freedom. This is a ratio value of `r 1746.8/309` which is much greater than 1. There are some major concerns about overdispersion. We could see this visually as well. Revisit the scatter plot of the data, with lower math scores, the range of the days absent looks larger than with higher math scores (an indication the variance changes given the mean response). 
 
 So in this case, a Poisson regression model is not appropriate.
 
+### A quasi-Poisson approach
+
+We now fit a Quasi-Poisson model to the data.
+
+```{r ch13.18.1}
+attend.qpois <- glm(daysabs ~ math + gender + prog, data=attendance, family=quasipoisson)
+summary(attend.qpois)
+```
+
+Note, the estimated model is the same as the Poisson! Intercept of 2.759479, `math` slope of -0.006956 and so on. However, the standard errors are now different, along with the associated $p$-values. In fact, now we see that the `gendermale` variable is borderline significant with a $p$-value of 0.043. 
+
+Unfortunately, assessing the goodness-of-fit for a Quasi-Poisson regression is a difficult task. It is considered more of a "band-aid" type fix to Poisson regression, although there are practical applications where it is better than Negative Binomial regression.
+
 ### Fitting a Negative Binomial regression
 
+The negative binomial model is sometimes considered to be more of a *direct* model for overdispersed data. That is, the Negative Binomial distribution allows for a larger variance than the mean whereas Quasi-Poisson is a fix to Poisson regression.
 To fit a negative binomial model we use the `glm.nb()` function in the `MASS` package. The function largely works the same as `lm` and `glm`. Below we fit the full model
 
 ```{r ch13.19}
@@ -271,12 +306,16 @@ summary(attend.negbin1)
 
 In the summary output, we now see that the `gender` variable does not appear significant (this matches our visual plots). Just as important, we see a `Residual deviance` of 358.87 with 309 degrees of freedom, a ratio of `r 358.87/309` much closer to the value of 1 we hope to see. Based on a quick glance this model seems more appropriate. Recapping why
 
-* The model output now more closely matches our exploratory data analysis
+* The model output now more closely matches our exploratory data analysis (gender not important)
 * A quick check of the residual deviance suggest a better fit
+
+### Picking between Quasi-Poisson and Negative Binomial
+
+There is no general or clear answer on which model is preferred, it all depends on the application. There are datasets that are overdispersed but in such a way that a Quasi-Poisson approach is more appropriate than a negative binomial. However, in other cases, the Negative Binomial is better and more natural. A non-technical comparison between the two approaches (with an application to counting the number of harbor seals) is available here: https://doi.org/10.1890/07-0043.1
 
 ### Infererence on predictor variables
 
-In the previous fit we see that the `gender` variable does not appear significant. Let's fit a reduced model:
+Using the negative binomial regression model, we see that the `gender` variable does not appear significant. Let's fit a reduced model:
 
 ```{r ch13.20}
 attend.negbin2 <- glm.nb(daysabs ~ math + prog, data=attendance)
@@ -289,40 +328,41 @@ We note that residual deviance has actually decreased in this reduced model! The
 anova(attend.negbin1, attend.negbin2, test="Chisq")
 ```
 
-We see that the `math` variable does **not** significantly improve the model (*p*-value=0.0858).
+We see that the `math` variable does **not** significantly improve the model (*p*-value=0.0858). Arguably, its inclusion in the model was making things worse!
 
 ### Plotting fitted model
 
-Lastly, we will plot the fitted model. Even though the data used to fit the mode is technically 5 dimensional (days absent, math score, and 3 factor values), since we only have two covariate terms, we can use aesthetic opions in `ggplot` to plot the fitted model. We begin by creating some *fake* data that will results in a smooth fitted line:
+Lastly, we will plot the fitted model. Even though the data used to fit the model is technically 5 dimensional (days absent, math score, and 3 factor values), since we only have two numeric terms, we can use aesthetic opions in `ggplot` to plot the chosen fitted model. We begin by creating some *fake* data that will results in a smooth fitted line:
 
 ```{r ch13.22}
 newdata2 <- data.frame(
-  math = rep(seq(from = min(attendance$math), to = max(attendance$math), length.out = 100), 3),
+  math = rep(seq(from = min(attendance$math), 
+                 to = max(attendance$math), 
+                 length.out = 100), 3),
   prog = factor(rep(1:3, each = 100), levels = 1:3, labels =
                   levels(attendance$prog)))
 glimpse(newdata2)
 ```
 
-You'll note this dataset has 300 observations and the math scores range from 1 to 99 in small incremenets, repeating for each of the three factor levels in `prog`. We then run this the `predict` function. Here we specify the `type="link"` so that the log of the terms is fit. This is important for building confidence bands in the below plot.
+You'll note this dataset has 300 observations and the math scores range from 1 to 99 in small incremenets, repeating for each of the three factor levels in `prog`. We then use this data in the `predict` function. Here we specify the `type="resoibse"` so that output is in the original units.
 
 
 ```{r ch13.23}
-newdata3 <- predict(attend.negbin2, newdata2, type = "link", se.fit=TRUE)
+newdata3 <- predict(attend.negbin2, newdata2, type = "response", se.fit=TRUE)
 glimpse(newdata3)
 ```
 
-For each predicted response value (called `fit`) we have a standard error estimate (called `se.fit`). Using a standard $Z$-based confidence interval from your Intro Statistics course, we can build a confidence band around the fitted line.
+For each predicted response value (called `fit`) we have a standard error estimate (called `se.fit`). Using a standard empirical rule $Z$-based confidence interval from your Intro Statistics course ($\pm 2$ standard errors), we can build a confidence band around the fitted line.
 
 ```{r  ch13.24}
 newdata2 <- newdata2 %>%
-  mutate(DaysAbsent.Fitted = exp(newdata3$fit),
-         lo = exp(newdata3$fit - 1.96*newdata3$se.fit),
-         up = exp(newdata3$fit + 1.96*newdata3$se.fit))
+  mutate(DaysAbsent.Fitted = newdata3$fit,
+         lo = (newdata3$fit - 1.96*newdata3$se.fit),
+         up = (newdata3$fit + 1.96*newdata3$se.fit))
 glimpse(newdata2)
 ```
 
-Note the code specifying `lo` and `up`, it follows standard confidence intervals from your Intro Statistics course. The one thing that changes is application of the `exp()` function, here we are inverting the $\log$ link function used, see \@ref(eq:poissonModel).
-
+Note the code specifying `lo` and `up`, it follows standard confidence intervals from your Intro Statistics course. 
 Lastly, we can plot the fitted model with some aesthetic options.
 
 ```{r ch13.25}
@@ -331,3 +371,9 @@ ggplot(newdata2) +
   geom_line(aes(x=math, y=DaysAbsent.Fitted, color=prog), size=1.5) + 
   labs(fill="Program type", color="Program type", x="Standardized Math Score", y="Number of Days Absent")
 ```
+
+Thus, we have plotted our fitted model. The final plot helps tell the underlying story with this data
+
+* Program type has an effect on the number of days absent (vocational is less than academic which is less than general).
+* Number of days absent decreases with higher standardized math scores.
+
