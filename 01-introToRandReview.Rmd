@@ -4,36 +4,35 @@
 
 We begin our dive into Statistical Modeling by first reviewing content from your introductory statistics course. The learning objective of this unit unclude:
 
-* Review of the fundamental concepts of *population*, *sample*, *parameter* and *statistic*.
+* Review of the fundamental concepts of *populations*, *samples*, *parameters* and *statistics*.
 * Review of exploratory and descriptive statistics: numerical quantities and graphics.
 * An introduction and overview of the R software for statistical computing.
 * Basic statistical inference through a two-sample *t*-test and confidence interval.
 
 ## Goals of a statistical analysis
 
-We now embark on doing statistics. 
 The language R is our tool to facilitate investigations into data and the process of making sense of it. 
 This is what the science of statistics is all about.
 
 **Statistics** can be broadly defined as the study of variation. 
-We collect **sample** data from a parent **population** of interest, typically because even though we are ultimately interested in characteristics about the **population**, it is entirely unfeasible to collect data from every member. 
+We collect **sample** data from a parent **population** of interest typically because, even though we are ultimately interested in characteristics about the **population**, it is unfeasible to collect data from every member of a **population**. 
 Good statistical practice demands that we collect **sample** data from the **population** in such a manner so as to ensure that the **sample** is representative; i.e., it is not presenting a systematic bias in its representation. 
 
 There are two issues that arise with respect to variation in such data:
 
-1. Measurements of the same attribute will vary from sample member to sample member. This is natural and is to be expected. This *random* (or *stochastic*) component of a sample is typically modeled through probabilitistic assumptions (think *Normal* from your Intro Stat course).
+1. Measurements of the same attribute will vary from sample member to sample member. This is natural and is to be expected. This *random* (or *stochastic*) component of a sample is typically modeled through probabilitistic assumptions (think the *Normal* distribution from your Intro Stat course).
 
-2. Any summary characteristic computed from the sample (known as a **sample statistic**) will only be an estimate of the corresponding summary characteristic for the population as a whole (known as a **population parameter**), since only a small subset of the population is used in its calculation. Thus, *sample statistics will vary from their corresponding population parameters*. In fact, different samples from the same population will produce different estimates of the same parameter, so sample statistics also vary from sample to sample.
+2. Any summary characteristic computed from the sample (known as a sample **statistic**) will only be an estimate of the corresponding summary characteristic for the population as a whole (known as a population **parameter**), since only a small subset of the population is used in its calculation. Thus, *sample statistics will vary from their corresponding population parameters*. In fact, different samples from the same population will produce different estimates of the same parameter, so sample statistics also vary from sample to sample.
 
 This variation gives rise to the concept of uncertainty in any findings that we make about a population based on sample data. 
 A meaningful statistical analysis helps us quantify this uncertainty.
 
 
-**Goals of a statistical analysis**
+The **goals** of a statistical analysis typically are
 
 
-*	To make sense of data in the face of uncertainty.
-*	To be able to meaningfully describe the patterns of variation in collected sample data, and use this information to make reliable inferences/generalizations about the parent population.
+*	to make sense of data in the face of uncertainty.
+*	to meaningfully describe the patterns of variation in collected sample data, and use this information to make reliable inferences/generalizations about the parent population.
 
 
 ## Before you begin an analysis

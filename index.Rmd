@@ -2,7 +2,6 @@
 title: "Introduction to Statistical Modeling"
 author: "Michael Hughes and Thomas Fisher"
 date: "`r Sys.Date()`"
-cover-image: "mrT.png"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
@@ -21,14 +20,35 @@ description: "Covers Regression and Elements of Design of Experiments R using th
 ```{r dino, echo=FALSE, fig.height=3, fig.width=4, message=FALSE, error=FALSE, warning=FALSE}
 library(tidyverse)
 library(datasauRus)
+library(ggvoronoi)
 data("datasaurus_dozen")
+set.seed(1)
 dino_data <- datasaurus_dozen %>%
   dplyr::filter(dataset=="dino")
-ggplot(dino_data) + geom_point(aes(x,y)) + theme_bw() + xlab("") + ylab("") + theme(axis.text=element_blank()) + ggtitle("DatasauRus Rex")
+dino_data <- dino_data %>%
+  mutate(Fill=runif(dim(dino_data)[1]))
+ggplot(dino_data) + 
+  geom_voronoi(aes(x,y,fill=Fill), alpha=0.4) + 
+  geom_point(aes(x,y)) + theme_bw() + 
+  coord_cartesian(xlim=c(20,100), ylim=c(0,100) ) + 
+  scale_fill_distiller(palette="BuGn") + 
+  theme_minimal() + 
+  theme(axis.text=element_blank(), legend.position = "none") + 
+  labs(title="DatasauRus Rex", x="", y="", caption="Source: datasaurus_dozen from datasauRus package")
 ```
 
 
-Here is where we put our blurbs about what we hopped to accomplish
+This online text has been designed for **STA 363 - Introduction to Statistical Modeling** at Miami University. This text was original a set of notes written by Mr. Mike Hughes and has since been reformulated into this bookdown version. The original version of this document was not intended for publication but, as is common, has evolved into an online text. Future iterations will improve some coding examples and provide more references.
+
+The bulletin description for the course states:
+
+> Applications of statistics using regression and design of experiments techniques. Regression topics include simple linear regression, correlation, multiple regression and selection of the best model. Design topics include the completely randomized design, multiple comparisons, blocking and factorials.
+
+The book and course have been designed to be a follow-up to a standard introductory statistics course (in many ways, this can be considered "Intro Stat 2"). The course and text assumes the reader has a solid foundation in two-sample inference and some basic computing skills.
+
+The book mixes basic statistical background with applications using the R Project for Statistical Computing. We have attempted to perform all analysis in this text using the *tidyverse*, thus all plots and functionality should follow the new grammar (*ggplot* and `%>%` type code).
+
+The book was designed with 13 chapters with the intent to be used during the 14-week semester at Miami University (one week reserved for midterm examination and end-of-semester review). The first chapter reviews introductory statistics material and provides a crash course in dealing with R and making plots with `ggplot2`. Chatpers 2, 3 and 4 extend the idea of two-sample inference into the design setting, presenting all inference in the form of a linear model. Chapters 5--10 cover the *classic* topics involving multiple linear regression. Chapters 11 and 12 provides an overview of statistical odds and logistic regression. Chapter 13 provides an overview of Generalized Linear Modeling with examples of both Poisson and Negative Binomial regression.
 
 # Preliminary Review{-}
 
@@ -49,6 +69,7 @@ The text utilizes the R computing system. We will be using the following add-on 
 * `lindia`
 * `car`
 * `leaps`
+* `caret`
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -62,5 +83,6 @@ library(gridExtra)
 library(lindia)
 library(car)
 library(leaps)
+library(caret)
 options(digits=6)
 ```
