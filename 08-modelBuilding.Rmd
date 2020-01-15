@@ -409,7 +409,7 @@ You should certainly have a good idea now that identifying and handling outliers
 * An unusual observation might indicate a mistake in the data (like a typo, or a measuring error), in which case it should be corrected if possible or else removed from the data before fitting a regression model (and the reason for the mistake should be investigated). 
 
 
-## Multicollinarity
+## Multicollinearity
 
 Multicollinearity (abbreviated MC) is the condition where two or more of the predictors in a regression model are highly correlated among themselves.  It is a condition in the $X$s, and has nothing to do with the response variable $Y$.  MC is always present in non-orthogonal data (i.e., observational studies).  The issue is to what degree it is present.
 

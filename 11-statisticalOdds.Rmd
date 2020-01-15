@@ -5,7 +5,7 @@ We now begin our discussion on Generalized Linear Models. But before moving into
 
 Consider the game of Roulette:
 
-```{r ch11.1, echo=FALSE}
+```{r ch11-1, echo=FALSE, fig.align='center', fig.width=5, fig.cap="Image of American roulette table (with 0 and 00)."}
 knitr::include_graphics('Roulette-Table-Wheel-1024x463.png')
 ```
 
@@ -32,24 +32,22 @@ In the gambling world, one may say the odds of **red** are 9 to 10.
 
 Now that we have a basic understanding of *odds*, let consider a non-gambling (motivated by data) example.
 
-<div style="float:right;position: relative; ">
-```{r ch11.2 ch8.13, echo=FALSE, fig.width=4.00, fig.height=3.25}
+```{r ch11-2, echo=FALSE, fig.width=4.00, fig.height=3.25, fig.cap="Image of the RMS Titanic (damage from iceberg not included)"}
 knitr::include_graphics('RMS_Titanic_3.jpg')
 ```
-</div>
 
 On April 14, 1912, the RMS Titanic struck an Iceberg in the North Atlantic Ocean off the coast of Newfoundland. Roughly 3 hours after striking the iceberg, the Titanic sunk on April 15, 1912 at 2:20am. 
 
 In the paper, The "Unusual Episode" Data Revisited, published in the Journal of Statistics Education vol.3, no.3 (1995), records for 2201 passengers and crew were recorded with their ticket status (the Class variable), Age (categorized as Adult/Child), Gender (Female/Male) and whether they survived the sinking.
 
-```{r ch11.3}
+```{r ch11-3}
 titanic <- read.csv("titanic.csv")
 head(titanic)
 ```
 
 In this example, we will explore the odds of surviving the sinking of the Titanic as a function of different variables. First consider the basic case of surviving, we will build a contigency table using the `xtabs()` function in R.
 
-```{r ch11.4}
+```{r ch11-4}
 xtabs(~Survived, data=titanic)
 ```
 
@@ -72,7 +70,7 @@ We have studied many problems such as this. Does area influence the sale price o
 
 Here things are different because our response variable (survived or not) is categorical (binary) as well as our predictor variable (gender). The most basic way to explore this sort of relationship is with a two-way contigency table:
 
-```{r ch11.5}
+```{r ch11-5}
 xtabs( ~ Gender + Survived, data=titanic)
 ```
 
@@ -111,7 +109,7 @@ Here, we see a random female passenger had greater than a $3\times$ chance of su
 
 In the above discussion, it sure seems like gender is a predictor for surviving. Other variables are included in the dataset. Some additional contingency table analysis provides additional insight.
 
-```{r ch11.6}
+```{r ch11-6}
 xtabs(~ Age + Survived, data=titanic)
 ```
 
@@ -121,7 +119,7 @@ Although not ideal, it was better to be a child than an adult on the Titanic.
 
 What about the `Class` variable. Here things get a little more interesting because there are multiple categories
 
-```{r ch11.7}
+```{r ch11-7}
 xtabs(~ Class + Survived, data=titanic)
 ```
 
@@ -133,7 +131,7 @@ We see some obvious things:
 
 Of course, all these factors may interact! We'll revisit that topic in the next chapter but for now we can build more complicated contigency tables. Here we wrap the output of `xtabs` in the `ftable()` function for more pleasing output. First consider `Class` and `Age` on surviving.
 
-```{r ch11.8}
+```{r ch11-8}
 ftable(xtabs( ~ Class + Age + Survived, data=titanic))
 ```
 
@@ -141,14 +139,14 @@ We can see that being a child in first or second class turned out fairly well. T
 
 Similarly we can explore other interactions.
 
-```{r ch11.9}
+```{r ch11-9}
 ftable(xtabs( ~ Class + Gender + Survived, data=titanic))
 ftable(xtabs( ~ Age + Gender + Survived, data=titanic))
 ```
 
 Lastly, we can do a full interaction between all the variables
 
-```{r ch11.10}
+```{r ch11-10}
 ftable(xtabs( ~ Class + Age + Gender + Survived, data=titanic))
 ```
 

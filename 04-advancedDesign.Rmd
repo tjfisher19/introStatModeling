@@ -31,7 +31,7 @@ The quality of work performed was measured by an index taking into account sever
 
 You should note there are three factors in this experiment, with 3, 2 and 2 levels for each factor. This means the number of treatments is $3\times 2\times 2 = 12$ and can be summarized in the following table.
 
-```{r, echo=FALSE}
+```{r three_way_table, echo=FALSE}
 # knitr::include_graphics("designTable.png")
 tab <- data.frame("Fee Level" = c("High", "Average", "Low"),
                   "In house" = c("Treatment 1", "Treatment 5", "Treatment 9"),
@@ -73,7 +73,7 @@ Fortunately, for higher order factor problems there are statisticians available 
 
 First we read in the data and make sure R properly treats the factors.
 
-```{r}
+```{r ch4marketingData}
 marketing <- read.table("marketingResearch.txt", header=TRUE)
 marketing <- marketing %>%
   mutate(Fee = as.factor(Fee),
@@ -83,13 +83,13 @@ marketing <- marketing %>%
 
 We leave out EDA and residual analysis from this example for brevity. We fit the ANOVA model.
 
-```{r}
+```{r ch4marketingANOVA}
 marketing.anova <- aov(Quality ~ Fee*Scope*Supervision, data=marketing)
 ```
 
 Here we used the notation `Fee*Scope*Supervision` so R will fit a full factorial model (that is, all main effects and interaction terms). Now look at the ANOVA output.
 
-```{r}
+```{r ch4markingSummary}
 summary(marketing.anova)
 ```
 
@@ -118,12 +118,12 @@ The notion and purpose of blocking in an experimental design was introduced in s
 
 **Example.** 10 mice received a dietary treatment during 3 months. We want to know whether the dietary treatment has an impact on the weight of the mice. To answer to this question, the weight of the 20 mice has been measured before and after the treatment and is in the file `mice.csv`. Below is some code to quickly look at the data:
 
-```{r, eval=FALSE}
+```{r ch4-1webData, eval=FALSE}
 mice <- read.csv("http://www.users.miamioh.edu/hughesmr/sta363/miceWeighttallform.csv")
 head(mice)
 ```
 
-```{r ch4.1, echo=FALSE}
+```{r ch4-1, echo=FALSE}
 mice <- read.csv("miceWeighttallform.csv")
 head(mice)
 ```
@@ -132,7 +132,7 @@ Note the difference in the layout of the data here as compared to the file miceW
 
 We will analyze this same data (addressing the same research question) by using a **block design approach**:
 
-```{r ch4.2}
+```{r ch4-2}
 mice.block.aov <- aov(weight ~ factor(id) + group, data=mice)
 summary(mice.block.aov)
 ```
@@ -152,7 +152,7 @@ For a correct analysis, it is important that each factor of interest in the stud
 
 In the present example, this would be as follows:
 
-```{r ch4.3}
+```{r ch4-3}
 WS_aov <- aov(weight ~ group + Error(factor(id)/group), data=mice)
 summary(WS_aov)
 ```
@@ -181,7 +181,7 @@ chol <- read.csv("http://www.users.miamioh.edu/hughesmr/sta363/cholesterolreduct
 glimpse(chol)
 ```
 
-```{r ch4.4, echo=FALSE}
+```{r ch4-4, echo=FALSE}
 chol <- read.csv("cholesterolreduction.csv")
 glimpse(chol)
 ```
@@ -193,7 +193,7 @@ There are two factors of interest here:
 
 Note that the data is currently in wide form.  We need to convert it to tall form:
 
-```{r ch4.5}
+```{r ch4-5}
 library(tidyverse)
 chol_tall <- chol %>% 
   gather(time.pt, chol.level, Before:After8weeks, factor_key=TRUE)
@@ -206,7 +206,7 @@ Note here we specify `factor_key=TRUE`. We do this so the key variable `time.pt`
 
 We are now ready for some EDA.  A table of descriptive statistics by combinations of time and margarine group is our first cut:
 
-```{r ch4.6}
+```{r ch4-6}
 chol.summary <- chol_tall %>%
   group_by(Margarine, time.pt) %>%
   summarise(Mean = mean(chol.level),
@@ -218,7 +218,7 @@ kable(chol.summary)
 
 We generally observe that cholesterol levels with margarine A appear lower than with margarine B.  Also, there does appear to be some reduction in cholesterol level using both products: however, there also appears to be more unexplained variability (“noise”) in the cholesterol measurements under margarine A.  We can further check this using some data visualizations.  First let’s try boxplots:
 
-```{r ch4.7}
+```{r ch4-7}
 ggplot(chol_tall) +
   geom_boxplot(aes(x=time.pt, y=chol.level)) +
   facet_wrap(~Margarine) +
@@ -228,7 +228,7 @@ ggplot(chol_tall) +
 
 Here we see that perhaps cholesterol levels are generally more consistent under margarine B, and that it is just some outlier(s) that are the issue.  However, this plot does not reveal a crucial piece of information: **the responses are correlated over time**.  A better depiction would allow us to see how each individual subject’s cholesterol changed over the span of the experiment:
 
-```{r ch4.8}
+```{r ch4-8}
 # Plot the individual-level cholesterol profiles
 ggplot(chol_tall, aes(x=time.pt, y=chol.level, colour=Margarine, group=ID)) +
   geom_line() + geom_point(shape=21, fill="white") + 
@@ -240,7 +240,7 @@ ggplot(chol_tall, aes(x=time.pt, y=chol.level, colour=Margarine, group=ID)) +
 
 Now we see some things more clearly.  The general pattern over time appears to be pretty consistent for every experimental unit (visually, each “line” in the plot).  There are two individuals in margarine B whose cholesterol level seems unusually higher than the others: this might warrant further investigation. Now we provide an summary profile of the two treatments.
 
-```{r ch4.9}
+```{r ch4-9}
 # we inlude a position_dodge elements to avoid overlap
 ggplot(chol.summary, aes(x=time.pt, y=Mean, colour=Margarine)) + 
   geom_errorbar(aes(ymin=Mean-SE, ymax=Mean+SE), width=.1, position=position_dodge(0.3)) +
@@ -259,7 +259,7 @@ In the summary version we see that margarine A Cholesterol levels appear lower t
 
 Of more concern to a fully correct analysis is addressing why there appears to be a difference between the margarine groups at the “Before” stage.  At that point, no margarines had been administered, so if the subjects had been truly randomly assigned to the margarine groups (as they should be in a properly designed experiment!), we would have expected consistent cholesterol readings between the groups at that point.  This can be formally tested as follows, with a simple independent samples $t$-test comparing the mean cholesterol levels of the A and B groups at the “Before” stage:
 
-```{r ch4.10}
+```{r ch4-10}
 BeforeDataOnly <- chol_tall %>%
   filter(time.pt == "Before")
 t.test(chol.level ~ Margarine, data=BeforeDataOnly, var.equal=TRUE)
@@ -271,7 +271,7 @@ The result is not statistically significant (p-value = 0.1932).  That is actuall
 
 To get started, let’s do a within-subjects (repeated measures) ANOVA on the Margarine A data only.  The goal here would be to see if there is an effective reduction in mean cholesterol over the eight-week trial by using margarine A.  Here goes: follow the code!
 
-```{r ch4.11}
+```{r ch4-11}
 MargarineA <- chol_tall %>% 
   filter(Margarine == "A")
 RMaov_MargA <- aov(chol.level ~ time.pt + Error(factor(ID)/time.pt), data=MargarineA)
@@ -280,7 +280,7 @@ summary(RMaov_MargA)
 
 The test of interest is labeled time.pt.  It is significant (F = 106.3, df1 = 2, df2 = 16, p-value = 5.7 × 10-10).  What this means is that, using Margarine A, there is significant evidence to conclude that the *true mean cholesterol level differs between at least two of the time points*.  Of course, that result doesn’t mean that the margarine is effective at reducing cholesterol levels.  All it means is that the mean cholesterol level is changing at some point over the experiment.  Since there are three time points, a multiple comparison procedure is warranted:
 
-```{r ch4.12}
+```{r ch4-12}
 MargA.mc <- emmeans(RMaov_MargA, ~ time.pt)
 contrast(MargA.mc, "pairwise")
 plot(contrast(MargA.mc, "pairwise"))
@@ -292,7 +292,7 @@ The significant reductions in mean cholesterol level under Margarine A occurs ri
 
 It is always critically important to know the structure of the data, which here stems from the design of the experiment.  In this case, we cannot just “compared the margarines” because there is a subject-level time profile under each margarine.  Since the same time points are observed under each margarine group, the factors margarine and `time.pt` are crossed effects, which means we have a *factorial data structure* (see section 3.2).  The “wrinkle” here is that one of the two factors is a between-subjects factor (Margarine) and the other is within-subjects (`time.pt`).  But, we can handle this in `aov`: 
 
-```{r ch4.13}
+```{r ch4-13}
 RMaov_all <- aov(chol.level ~ Margarine + time.pt + Margarine:time.pt + 
                               Error(factor(ID)/time.pt), data=chol_tall)
 summary(RMaov_all)
@@ -300,7 +300,7 @@ summary(RMaov_all)
 
 As with the factorials models before, the first thing we must check is the significance of the interaction term.  If this is significant, it means that the effect of time on the mean cholesterol is different between the two margarines.  That is the case here (F = 4.777, df1 = 2, df2 = 32, $p$-value = 0.0153).  As a result, we should do our multiple comparisons **by conditioning on one of the two factors**.  Experimental context will dictate which of the two factors is the more reasonable to condition on.  Here, I choose to condition on Margarine group, so I will get a time-based comparison of mean cholesterol level, but specific to each Margarine group:
 
-```{r ch4.14}
+```{r ch4-14}
 RMall.mc <- emmeans(RMaov_all, ~ time.pt | Margarine)
 contrast(RMall.mc, "pairwise")
 plot(contrast(RMall.mc, "pairwise"))

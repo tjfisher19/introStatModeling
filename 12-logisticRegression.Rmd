@@ -62,6 +62,9 @@ Let $p$ = the probability that a postmenopausal woman is osteoporotic. Suppose o
 
 $$\log\left(\frac{\hat{p}}{1-\hat{p}}\right) = -4353 + 0.038(age)$$
 
+
+
+
 Since the coefficient for age is positive, the log odds (and, therefore, the probability) of osteoporosis increases with age. Taking anti-logarithms of both sides gives
 
 $$\frac{\hat{p}}{1-\hat{p}} = e^{-4353 + 0.038(age)}$$
@@ -111,7 +114,7 @@ tadpole.fit <- glm(Survived ~ UV.Level, data=tadUV, family=binomial)
 summary(tadpole.fit)
 ```
 
-The fitted logistic regression model is $\log\left(\frac{\hat{p}}{1-\hat{p}}}\right) = −1.300 − 0.0233(UV~level)$.
+The fitted logistic regression model is $\log\left(\frac{\hat{p}}{1-\hat{p}}\right) = -1.300 - 0.0233(UV~level)$.
 
 Here is some model info and interpretation:
 

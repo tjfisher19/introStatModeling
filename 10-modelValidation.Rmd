@@ -3,7 +3,7 @@
 
 At this point we have covered various concepts of statistical modeling but one fundamental question remains, "Is my model any good?"
 Answering this question is of fundamental importance and there is no single way to determine the appropriateness of a model. 
-We have covered techniques such as $R^2$, $R^2_a$ and AIC but all three of those measures essentially measure how well the fitted model *fits* the data you used to make the fit. 
+We have covered techniques such as $R^2$, $R^2_{adj}$ and AIC but all three of those measures essentially measure how well the fitted model *fits* the data you used to make the fit. 
 Generally speaking, we should consider other measures to validate our models as well.
 
 ## Underfitting vs. Overfitting Models
@@ -14,7 +14,7 @@ Of course, all this means is that such a model perfectly fits the data *it was b
 
 Consider the following three models fit to the same data points:
 
-```{r ch10.1, echo=FALSE, message=FALSE, warning=FALSE, fig.height=4, fig.width=10}
+```{r ch10-1, echo=FALSE, message=FALSE, warning=FALSE, fig.height=4, fig.width=10}
 x <- runif(80, 5, 8)
 y <- exp(x) + abs(rnorm(80, 0, 500))
 d <- data.frame(x,y)
@@ -73,7 +73,7 @@ Commonly used split proportions in practice are 80% for training data and 20% fo
 
 The first thing we need to do is split the data set consisting of $n$ = 252 men into a training set and a test set. This is done using the code below, creating a random 80/20 training/test split using R's `sample` function:
 
-```{r ch10.2}
+```{r ch10-2}
 set.seed(54321)   # Set a seed value for reproducability purposes in this document
 
 # Randomly select 80% of the data (rows)
@@ -86,7 +86,7 @@ test  <- bodyfat %>%
 
 The vector `index` consists of randomly selecting row numbers (cases) from the `bodyfat` dataset.  The size of the selection is set to be 80% of the number of rows in the datset itself.  Below we check to see how many cases landed in each of the training and test data sets:
 
-```{r ch10.3}
+```{r ch10-3}
 nrow(bodyfat)
 nrow(train)
 nrow(test)
@@ -100,9 +100,9 @@ We now use the training data (named `train` by us above) to build our model.  We
 
 ### Model training:
 
-Check various models' performance based on $R_a^2$ and BIC:
+Check various models' performance based on $R^2_{adj}$ and BIC:
 
-```{r ch10.4}
+```{r ch10-4}
 bodyfat.gsub <- regsubsets(bodyfat.pct ~ ., data=train, nbest=4, nvmax=13)
 stats <- summary(bodyfat.gsub)
 gsub.df <- data.frame(Model.Number=1:length(stats$adjr2), Adjusted.R2=stats$adjr2, BIC=stats$bic)
@@ -119,44 +119,44 @@ p2 <- ggplot(gsub.df, aes(x=Model.Number, y=BIC)) +
 grid.arrange(p1,p2, nrow=2)
 ```
 
-The estimated $\beta$-coefficients for the predictors of the best fitting model based on maximizing $R_a^2$ are as follows:
+The estimated $\beta$-coefficients for the predictors of the best fitting model based on maximizing $R^2_{adj}$ are as follows:
 
-```{r ch10.5}
+```{r ch10-5}
 coef(bodyfat.gsub, which.max(gsub.df$Adjusted.R2))
 ```
 
-We see that this criterion selects a 10-predictor model.  While this is OK, it would involve a lot of body measuring in practice, and so might not be the best choice from an implementation prespective.  Its adjusted $R_a^2$ is found as follows:
+We see that this criterion selects a 10-predictor model.  While this is OK, it would involve a lot of body measuring in practice, and so might not be the best choice from an implementation prespective.  Its adjusted $R^2_{adj}$ is found as follows:
 
-```{r ch10.6}
+```{r ch10-6}
 max(gsub.df$Adjusted.R2)
 ```
 
 Now, let's look at what model is selected as optimal when minimizing BIC:
 
-```{r ch10.7}
+```{r ch10-7}
 coef(bodyfat.gsub, which.min(gsub.df$BIC))
 ```
 
-The best fitting model based on BIC has four predictors: `weight`, `abdomen`, `biceps`, and `wrist`.  As a corrolary assessment, we can check the value of $R_a^2$ for this 4-predictor model:
+The best fitting model based on BIC has four predictors: `weight`, `abdomen`, `biceps`, and `wrist`.  As a corrolary assessment, we can check the value of $R^2_{adj}$ for this 4-predictor model:
 
-```{r ch10.8}
+```{r ch10-8}
 gsub.df$Adjusted.R2[which.min(gsub.df$BIC)]
 ```
 
-The best fitting model based on BIC is much simpler (4 predictors instead of 10), and its adjusted $R_a^2$ is not noticeably lower than the 10-predictor model (0.7427 vs. 0.7549).  **So, let's choose to use the four predictor model.**
+The best fitting model based on BIC is much simpler (4 predictors instead of 10), and its adjusted $R^2_{adj}$ is not noticeably lower than the 10-predictor model (0.7427 vs. 0.7549).  **So, let's choose to use the four predictor model.**
 
 ### Model validation step:
 
 Now, let's use this model to predict bodyfat percentages for the men in the holdout (test) dataset. First we fit the chosen model on the training dataset. Then we use that model to predict the holdout values in the testing set.
 
-```{r ch10.9}
+```{r ch10-9}
 fit1 <- lm(bodyfat.pct ~ weight + abdomen + biceps + wrist, data=train)
 test.predictions <- predict(fit1, newdata=test)
 ```
 
 The residual standard error (or equivalently, the square root of the mean squared residuals -- or **root mean squared error**) can be calculated on the test data to see how well our model predicts future observations. Below we manually calculate this value for explanation.
 
-```{r ch10.10}
+```{r ch10-10}
 # Calculate observed - predicted bodyfat for test data
 residuals <- test$bodyfat.pct - test.predictions          
 
@@ -169,7 +169,7 @@ This is an estimate of the average residual (prediction error) size for individu
 
 Compare this result to the artificially optimistic residual standard error we get by naively predicting the results for the *same men* we used to fit the model, using all the original data:
 
-```{r ch10.11}
+```{r ch10-11}
 # Fit model to all the data
 full.sample.fit <- lm(bodyfat.pct ~ weight + abdomen + biceps + wrist, data=bodyfat)  
 
@@ -187,7 +187,7 @@ The result might look better, but it is biased toward the sample it came from!
 
 The above example was quite involved and done so for the sake of explanation.  We can instead use some features in the `tidyverse` and the add-on `caret` library to effectively do the same thing.
 
-```{r ch10.12}
+```{r ch10-12}
 # Create a balanced 80/20 split of the sample based on the response variable
 train.index <- bodyfat$bodyfat.pct %>%
   createDataPartition(p = 0.8, list = FALSE)
@@ -238,7 +238,7 @@ More comprehensive methods **involve doing the training/testsing in multiple sta
 
 This is a very intensive process as you might imagine, but it is actually very easy to do in `caret`:
 
-```{r}
+```{r ch10-13}
 # Set training control method as LOOCV
 train.control <- trainControl(method = "LOOCV")
 
@@ -272,7 +272,7 @@ The $k$-fold cross-validation method evaluates model performance on different su
 
 Visually, the folds can be thought of as something like the below example, a $k=10$ fold segmentation.
 
-```{r pressure, echo=FALSE, out.width = '100%'}
+```{r ch10-14, echo=FALSE, out.width = '100%'}
 knitr::include_graphics("CVfolds.png")
 ```
 
@@ -285,7 +285,7 @@ It has been shown in practice that using $k$ = 5 or 10 yields test error rates t
 
 The following example uses `caret` to perform a 5-fold cross validation to estimate the prediction error for predicting bodyfat percentage in men from the `weight`, `abdomen`, `biceps`, and `wrist` measurement predictors.
 
-```{r}
+```{r ch10-15}
 # Set training control method as 5-fold CV
 train.control <- trainControl(method = "cv", number = 5)
 

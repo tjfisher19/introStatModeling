@@ -22,12 +22,14 @@ It is in this sense that you can think of a statistical model as a “simplifica
 
 It turns out, we've already fit a statistical model. Consider a variation of the two-sample $t$-test we performed in the previous chapter. For cohesiveness we input the data again.
 
-```{r, eval=FALSE}
-uadata <- read.table("http://www.users.miamioh.edu/hughesmr/sta363/univadmissions.txt", header=TRUE)
+```{r ch2-1web, eval=FALSE}
+uadata <- read.table("http://www.users.miamioh.edu/hughesmr/sta363/univadmissions.txt", 
+                     header=TRUE)
 ```
-```{r ch2.1}
+```{r ch2-1}
 uadata.trim <- uadata %>%
   filter(year %in% c(1996, 2000) )
+
 t.test(act ~ year, data=uadata.trim, conf.level=0.98, 
        alternative="two.sided", var.equal=TRUE)
 ```
@@ -152,7 +154,7 @@ We will cover each of these analyses.
 All experiments have factors, a response variable, and experimental units.  Here are some definitions and terms:
 
 * **Factors**: A factor is an explanatory variable manipulated by the experimenter.  Each factor has two or more levels (i.e., different values of the factor).  Combinations of factor levels form what are called **treatments**. The table below shows factors, factor levels, and treatments for a hypothetical experiment:
-```{r ch2.2, echo=FALSE}
+```{r ch2-2, echo=FALSE}
 # knitr::include_graphics("designTable.png")
 tab <- data.frame("Vitamin E" = c("0 mg", "400 mg"),
                   "0 mg" = c("Treatment 1", "Treatment 4"),
@@ -182,7 +184,7 @@ In the hypothetical experiment above, the experimental units would probably be p
 
 * **Randomization**: Randomization refers to the practice of using chance methods (random number generation, etc.) to assign experimental units to treatments. In this way, the potential effects of lurking variables are distributed at chance levels (hopefully roughly evenly) across treatment conditions. For example, suppose we had 12 experimental units which we wanted to completely randomly allocate to three different treatments (call them A, B and C). We can accomplish this as follows in R:
 
-```{r ch2.3}
+```{r ch2-3}
 ids <- 1:12
 trt <- rep(c('A','B','C'), each=4)
 randomized <- sample(ids, size=length(ids), replace=FALSE)
@@ -225,9 +227,9 @@ The use of the paired *t*-test is not limited to experimental designs, it also a
 
 **Implementation in R**
 
-To demonstrates its implementation in R we consider another example. 10 mice received a dietary treatment during 3 months. We want to know whether the dietary treatment has an impact on the weight of the mice.
+To demonstrates its implementation in R we consider another example. 10 mice received a dietary treatment during 3 months. We want to know whether the dietary treatment has an impact on the mass of the mice.
 
-To answer to this question, the weight of the 10 mice has been measured before and after the treatment and is in the file `miceWeightwideform.csv`. Below is some code to implement the test.
+To answer to this question, the mass of the 10 mice has been measured before and after the treatment and is in the file `miceWeightwideform.csv`. Below is some code to implement the test.
 
 ```{r, eval=FALSE}
 www <- "http://users.miamioh.edu/hughesmr/sta363/miceWeightwideform.csv"
@@ -235,7 +237,7 @@ mice <- read.csv(www)
 mice
 ```
 
-```{r ch2.4, echo=FALSE}
+```{r ch2-4, echo=FALSE}
 mice <- read.csv("miceWeightwideform.csv")
 mice
 ```
@@ -243,14 +245,14 @@ mice
 First we note each row of the data consist of an `id` with a `before` and `after` measurement. In the paired *t*-test, we are comparing the differences between the before and after measuremements. We perform this test in two different ways: (1) we explicitly calculuate the difference and (2) we use features in the `t.test` function.
 
 **Method 1**
-```{r ch2.5a}
+```{r ch2-5a}
 mice <- mice %>%
   mutate(Difference = before - after)
 t.test(mice$Difference)
 ```
 
 **Method 2**
-```{r ch2.5b}
+```{r ch2-5b}
 t.test(mice$before, mice$after, paired=TRUE)
 ```
 
@@ -260,17 +262,17 @@ In the first method, since we explicitly calculated the Difference as a new vari
 
 To graphically compare paired data we must use some caution and consider the pairing feature in the data. Ultimately we are interested in the pairwise difference between observations. Thus, side-by-side boxplots are not appropriate since they do not account for the pairing. We can report a boxplot of the differences as follows:
 
-```{r ch2.5}
+```{r ch2-5, fig.align='center', fig.cap='Box-whiskers plot showing the distribution of difference in mice mass (Before treatment - After treatment) demonstrating a weight gain of nearly 200 grams after the start of the study'}
 ggplot(mice) + 
   geom_boxplot(aes(x="",y=Difference) )+
-  labs(x="", y="Weight gain (After - Before)") +
+  labs(x="", y="Weight gain (Before - After)") +
   theme_minimal()
 ```
 
 Another type of plot that can be handy for this sort of data (and will be more important later) is known as a profile plot. Here we use the `id` values to group data. Basically we wish to draw a line for each and every individual mouse.
 We begin with some data manipulation.
 
-```{r ch2.6}
+```{r ch2-6}
 mice.tall <- mice %>%
   select(-Difference) %>%                    # Remove the Difference variable
   gather(key=Time, value=Weight, c(before, after)) %>%    # From wide-to-tall
@@ -282,7 +284,7 @@ Let's step through the above R code. In the first statement `select(-Difference)
 
 Now that the data is in a tall format, we can make our profile plot. Here we simply tell R to treat the factor `Time` as the x-variable with `Weight` as the y-variable, but group each line by mouse `id`.
 
-```{r ch2.7}
+```{r ch2-7, fig.align='center', fig.cap='Profiles of each mouse demonstrating all mice under study gains mass after treatment'}
 ggplot(mice.tall) + 
   geom_line(aes(x=Time, y=Weight, group=id) ) +
   theme_minimal()
@@ -291,15 +293,15 @@ ggplot(mice.tall) +
 To jazz up our plot we can add the overall effect by including some summary values.
 First we calculate summary statistics. Since we use a `group` variable for each mouse we need to *trick* R into plotting the overall summary line as well, thus we create an `id="Summary"` variable in `mice.summary` to use as a `group` variable.
 
-```{r, message=FALSE}
+```{r, message=FALSE, fig.align='center', fig.cap='Profiles of each mouse with the average profile highlight in a thick dark red line, this demonstrates that a typical mouse gained nearly 200 grams in mass after treatment.'}
 mice.summary <- mice.tall %>%
   group_by(Time) %>%
   summarize(Weight=mean(Weight),
             id="Summary")
 ggplot(mice.tall) + 
-  geom_line(aes(x=Time, y=Weight, group=id), color="gray40" ) +
+  geom_line(aes(x=Time, y=Weight, group=id), color="gray50" ) +
   theme_minimal() +
-  geom_line(data=mice.summary, aes(x=Time, y=Weight, group=id), color="red", size=2)
+  geom_line(data=mice.summary, aes(x=Time, y=Weight, group=id), color="darkred", size=2)
 ```
 
 In all of these plots it is clear there is significant weight gain during the study.
@@ -355,7 +357,7 @@ The $F$-test works like other hypothesis test. The test statistic is a ratio of 
 
 **Example:** Drug effects on alertness.  Three different medications are tested on a sample of 18 individuals to see if they impact alertness.  Each subject is randomly assigned one drug, the drug is administered.  After 60 minutes, a test is administered that scores the alertness level of each subject (a higher score means higher alertness).  The data appear in the R dataframe `onewaydrug.RData` in our repository: `http://users.miamioh.edu/hughesmr/sta363/`
 
-```{r ch2.8}
+```{r ch2-8, fig.align='center', fig.cap='Side-by-side Box-whiskers plots showing the distribution of `alertness` for each of the three drug treatments, `a`, `b` and `c`. Overall we see alertness is highest in treatment `a`, followed by `b` and `c`. We Also note that variability appears greatest in treatment `a`, followed by `b` and `c`.'}
 load("onewaydrug.RData")
 glimpse(onewaydrug)
 ggplot(onewaydrug) + 
@@ -367,7 +369,7 @@ Visually it appears the scores under drug C seem to be noticeably lower on avera
 
 To perform One-Way ANOVA we employ the `aov` function (for Analysis Of Variance). We use the `summary()` function to see its full output.
 
-```{r ch2.9}
+```{r ch2-9}
 fit.drug <- aov(alertness ~ drug, data=onewaydrug)
 summary(fit.drug)
 ```
@@ -401,7 +403,7 @@ In general, independence (or lack thereof) is the result of the sampling scheme 
 ### Constant Variance
 
 <div style="float:right;position: relative; ">
-```{r ch2.10, echo=FALSE, fig.width=3.25, fig.height=9.75}
+```{r ch2-10, echo=FALSE, fig.width=3.25, fig.height=9.75, fig.cap='Residual diagnostic plots showing a *fanning* effect in the residuals vs fitted and increasing linear trend in the Scale-Location plot, thus suggesting the variance increases with the mean.'}
 autoplot(fit.drug, which=c(1,3), nrow=2)
 ```
 </div>
@@ -423,7 +425,7 @@ Using the absolute values of the residuals is a good refinement.  The reason is 
 ### Checking Normality
 
 <div style="float:right;position: relative; ">
-```{r ch2.11, echo=FALSE, fig.width=3.25, fig.height=3.25}
+```{r ch2-11, echo=FALSE, fig.width=3.25, fig.height=3.25, fig.cap='Normal Q-Q plot demonstrating the residuals are reasonably Normally distributed.'}
 autoplot(fit.drug, which=c(2), nrow=1)
 ```
 </div>
@@ -437,7 +439,7 @@ A normal Q-Q plot of the residuals is presented to the right. There is some mino
 
 The code to generate the above plots can be achieved via the `autoplot` function when including the `ggfortify` library.
 
-```{r ch2.12, eval=FALSE}
+```{r ch2-12, eval=FALSE}
 library(ggfortify)
 autoplot(fit.drug)
 ```
@@ -446,7 +448,7 @@ autoplot(fit.drug)
 
 We have evidence from the above plots that the variance appears to be increasing with the response (determined by assessing the constant variance assumption). One way to typically address this issue is to transform the response variable. We will go into more details later but common transformations include $Y^*=log(Y)$, $Y^*=\sqrt{Y}$ and $Y^*=1/Y$. Here we will use a logarithmic as it is fairly common. Later in the class we will describe the other transformations in more detail. We can acheive this in R with the following:
 
-```{r ch2.13, fig.width=7, fig.height=7}
+```{r ch2-13, fig.width=7, fig.height=7, fig.align='center', fig.cap='Residual diagnostic plots when the response variable is the logarithm of the alertness. Here the heteroskedasticity in the original model has been improved, albeit not entirely mitigated, with some minor indication of increasing variability with the mean.'}
 fit.log.drug <- aov(log(alertness) ~ drug, data=onewaydrug)
 autoplot(fit.log.drug)
 ```
@@ -455,7 +457,7 @@ This is maybe a bit better, but a stronger transformation might be warranted. Fo
 
 The test comparing the three drug population means (on a log scale) is given via the `summary()` command:
 
-```{r ch2.14}
+```{r ch2-14}
 summary(fit.log.drug)
 ```
 
@@ -478,19 +480,19 @@ There are numerous multiple comparison methods in existence, and they all have c
 So for example, if we had a one-way design with five treatment groups *A*, *B*, *C*, *D* and *E*, there would be 10 possible pairwise comparisons:
 
 $$\begin{array}{cccc}
-A~\textrm{vs.}~B & B~\textrm{vs.}~C & C~\textrm{vs.}~D & D~\textrm{vs.}~E  \\
+A~\textrm{vs.}~B & B~\textrm{vs.}~C & C~\textrm{vs.}~D & D~\textrm{vs.}~E \\
 A~\textrm{vs.}~C & B~\textrm{vs.}~D & C~\textrm{vs.}~E &                  \\
-A~\textrm{vs.}~D & B~\textrm{vs.}~E &                  &                   \\
-A~\textrm{vs.}~E &                  &                  &                   \\
+A~\textrm{vs.}~D & B~\textrm{vs.}~E &                  &                  \\
+A~\textrm{vs.}~E &                  &                  &                  
 \end{array}$$
 
 whereas if (say) *A* was a control group and we were only interested in comparisons versus a control group, then there would be only 4 pairwise comparisons of interest:
 
 $$\begin{array}{c}
-A~\textrm{vs.}~B & \\
-A~\textrm{vs.}~C & \\
-A~\textrm{vs.}~D & \\
-A~\textrm{vs.}~E & \\
+A~\textrm{vs.}~B  \\
+A~\textrm{vs.}~C  \\
+A~\textrm{vs.}~D  \\
+A~\textrm{vs.}~E  \\
 \end{array}$$
 
 So what’s the big deal? Well, if you find yourself in a multiple comparison situation, it’s because you have declared that at least two groups differ based on the result of a single hypothesis test (the $F$-test). For that test, you used a specific criterion to make the decision (probably p-value < 0.05).
@@ -511,7 +513,7 @@ But alas, multiple testing is a reality and a natural follow-up procedure to ANO
 One of the more widely used methods is attributable to statistician John Tukey (creator of the Box-Whiskers plot). It is sometimes referred to as Tukey’s Honestly Significant Difference method (honestly!). It has the advantage of controlling the Type I error rate when performing all possible pairwise comparisons.
 First we load the library and then run our fitted model `fit.log.drug` through the `emmeans()` function. Then we tell it to do a "pairwise" comparison via the `contrast()` function.
 
-```{r}
+```{r ch2-15}
 library(emmeans)
 drug.mc <- emmeans(fit.log.drug, "drug")
 contrast(drug.mc, "pairwise")
@@ -522,7 +524,7 @@ The significant differences are what we expected based on our earlier EDA: drug 
 We can also obtain simultaneous 95% confidence intervals for the true mean differences due to
 each drug pairing using the `confint()` function on our `contrast` of an `emmeans` object:
 
-```{r}
+```{r ch2-16}
 confint(contrast(drug.mc, "pairwise"))
 ```
 
@@ -538,7 +540,7 @@ To put back in the original units we could "un"-log the intervals by taking expo
 
 We can also visualize these results via a plot:
 
-```{r}
+```{r ch2-17, fig.align='center', fig.cap='Tukey adjusted confidence interval plots comparing treatments treatments `a`, `b` and `c`. Here, we see that treatments `b` and `c` are significantly different as well as treatments `a` and `c`. We also note there is no significant difference between treatments `a` and `b`.'}
 plot(contrast(drug.mc, "pairwise"))
 ```
 
@@ -548,13 +550,13 @@ Here, we are interesting in comparing each plotted confident band to the value o
 
 The Dunnett method is applicable when one of your experimental groups serves as a natural control to which you want to compare the remaining groups. In this situation, it is advisable to use a method that only controls the family-wise error rate for the comparisons of interest, rather than over-controlling by using a method like Tukey. We still use the `emmeans` package but specify the comparisons are against a *control* group. The code is below:
 
-```{r}
+```{r ch2-18}
 contrast(drug.mc, "trt.vs.ctrl")
 ```
 
 The two comparisons provided are *A* vs. *B* and *A* vs. *C*. The only significant difference is between *A* and *C* (p-value = 0.0002). As before, here are simultaneous CIs and plots:
 
-```{r}
+```{r ch2-19, fig.align='center', fig.cap='Dunnett adjusted confidence interval plots demonstrating that treatment `c` is significantly different than control group `a`, while treatment `b` is not significantly different than control group `a`.'}
 confint(contrast(drug.mc, "trt.vs.ctrl"))
 plot(contrast(drug.mc, "trt.vs.ctrl"))
 ```
@@ -563,7 +565,7 @@ It is interesting to compare the results you get via the two methods for the sam
 
 **Note.** Group *A* was automatically chosen as the reference group for Dunnett (R’s default is to choose the group appearing first alphabetically). To change this from the default, just tell R to do so in the `contrast` statement. In the below example we set the second (2) factor, *B*, to be the control.
 
-```{r}
+```{r ch2-20}
 contrast(drug.mc, "trt.vs.ctrl", ref=2)
 ```
 

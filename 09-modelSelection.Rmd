@@ -12,7 +12,7 @@ Historically, the process of model simplification required the application of hy
 
 In our quest to simplify models, however, we must be careful not to throw out the baby with the bathwater. Too simple is not good, either! Building statistical models is as much an art as it is a science, so you must be aware of how your models are explaining the observed data at every step along the way to obtaining a final model.
 
-## Step-wide Procedures
+## Stepwise Procedures
 
 Variable selection is intended to select some “best” subset of predictors.  Why bother?
 
@@ -56,7 +56,7 @@ Strategy for stepwise variable selection using AIC:
 6. Return to step 4, and repeat the process starting with the revised model.
 7. Continue the process until the deletion of any predictor results in a rise in the AIC.
 
-**Long-winded example** To demonstrate the step-wise process let's consider the housing appraisal dataset. We've used the full model fit multiple times.
+**Long-winded example** To demonstrate the stepwise process let's consider the housing appraisal dataset. We've used the full model fit multiple times.
 
 ```{r ch9.1}
 AIC(appraisal.fit)
@@ -76,7 +76,7 @@ We see that the full model has the best AIC (smallest) with a value of 421.3557.
 
 So here there is nothing to do. But you can quickly imagine the tediousness of repeating the process over and over again.
 
-Performing the 7 step algorithm above would be redundant and tedious. Computers are excellent at performing redundant and tedious task. R has functions that will perform step-wise AIC model selection automatically. We highlight its use with another example.
+Performing the 7 step algorithm above would be redundant and tedious. Computers are excellent at performing redundant and tedious task. R has functions that will perform stepwise AIC model selection automatically. We highlight its use with another example.
 
 **Example: Estimating body fat percentage.**  Making accurate measurement of body fat is inconvenient and costly, so it is desirable to have methods of estimating body fat that are cheaper and easier to implement.  The standard technique of underwater weighing computes body volume as the difference between body weight measured in air and weight measured during water submersion.  Our goal is to develop a good predictive model for percentage of body fat that uses body measurements only; i.e., a model that gives body fat percentage estimates very close to the accurate measurements obtained via underwater weighing.  Since underwater weighing is inconvenient and expensive, a good model based solely on body measurements only will be of much use in practice.
 
@@ -138,7 +138,7 @@ step(bodyfat.null, scope=formula(bodyfat.fit), direction="forward")
 
 Here, we see at the first step that adding `abdomen` improves the model the most. At the second step, a model with `abdomen` and `weight` looks best. The resulting model matches that of backward selection.
 
-**IMPORTANT NOTE** It is possible that forward and backward selection will determine different models! If you have taken an elementary calculus course the concept of local versus global minimums should not be foreign. The step-wise procedures essentially find local minimums of AIC working in one direction, they can result in different models.
+**IMPORTANT NOTE** It is possible that forward and backward selection will determine different models! If you have taken an elementary calculus course the concept of local versus global minimums should not be foreign. The stepwise procedures essentially find local minimums of AIC working in one direction, they can result in different models.
 
 ## Best subsets
 
@@ -212,7 +212,7 @@ If you find models that seem (roughly) equally as good yet lead to quite differe
 
 ## Shrinkage Methods
 
-We conclude this chapter with a short review of what are known as *shrinkage* methods for regression. These methods are utilized more in *modern* practice than the subsets or step-wise procedures described above. The details and implementation of these methods are outside the scope of this class but the topic is relevant enough for a short introduction.
+We conclude this chapter with a short review of what are known as *shrinkage* methods for regression. These methods are utilized more in *modern* practice than the subsets or stepwise procedures described above. The details and implementation of these methods are outside the scope of this class but the topic is relevant enough for a short introduction.
 
 First, recall the least squares estimation procedure associated with regression; that is, find the set $b_0$, $b_1$, $\ldots$, $b_p$ that minimize
 
@@ -250,6 +250,6 @@ Both ridge and LASSO regression are implemented in the `glmnet` package in R and
 * Ridge regression can be used to mitigate the effects of multicollinearity
 * LASSO has the advantage of producing simpler models (it can be shown that LASSO can shrink some $b_i$ terms to exactly zero)
 * The tuning parameter, $\lambda$, needs to be specified by the user or selected via cross-validation (discussed in the next chapter)
-* Like step-wise regression, both Ridge and LASSO can be automated. 
+* Like stepwise regression, both Ridge and LASSO can be automated. 
 
 See An Introduction to Statistical Learning by James, Witten, Hastie and Tibshirani for a more thorough treatment on the topic.

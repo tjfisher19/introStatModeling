@@ -272,7 +272,7 @@ We note that the adjusted 95\% confidence includes the value 0, this should not 
 
 Let’s consider an example that investigates the effects of ascorbic acid and delivery method on tooth growth in guinea pigs. Sixty guinea pigs are randomly assigned to receive one of three levels of ascorbic acid (0.5, 1.0 or 2.0 mg) via one of two delivery methods (orange juice or Vitamin C), under the restriction that each treatment combination has an equal number of guinea pigs. The response variable `len` is tooth length. The two-way data structure here looks like this:
 
-```{r, echo=FALSE}
+```{r tooth_table, echo=FALSE}
 # knitr::include_graphics("designTable.png")
 tab <- data.frame("Supplement" = c("Orange Juice", "Vitamin C"),
                   "0.5 mg" = c("Treatment 1", "Treatment 4"),

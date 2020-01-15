@@ -3,13 +3,13 @@ title: "Introduction to Statistical Modeling"
 author: "Michael Hughes and Thomas Fisher"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
-output: bookdown::gitbook
+output: bookdown::html_book
 documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
 github-repo: tjfisher19/introStatModeling
-description: "Covers Regression and Elements of Design of Experiments R using the tidyverse."
+description: "Covers Regression and elements of Design of Experiments in R using the tidyverse."
 ---
 
 
@@ -17,7 +17,7 @@ description: "Covers Regression and Elements of Design of Experiments R using th
 
 # Preface{-}
 
-```{r dino, echo=FALSE, fig.height=3, fig.width=4, message=FALSE, error=FALSE, warning=FALSE}
+```{r dino, echo=FALSE, fig.height=4.5, fig.width=6, fig.align='center', message=FALSE, error=FALSE, warning=FALSE, fig.cap="Scatterplot resulting in the shape of a Tyrannusaurus with shaded Voronoi cells using the `ggvoronoi` package"}
 library(tidyverse)
 library(datasauRus)
 library(ggvoronoi)
@@ -38,19 +38,32 @@ ggplot(dino_data) +
 ```
 
 
-This online text has been designed for **STA 363 - Introduction to Statistical Modeling** at Miami University. This text was original a set of notes written by Mr. Mike Hughes and has since been reformulated into this bookdown version. The original version of this document was not intended for publication but, as is common, has evolved into an online text. Future iterations will improve some coding examples and provide more references.
+This online text has been designed for **STA 363 - Introduction to Statistical Modeling** at Miami University. What is now this text was originally a set of notes written by Mr. Mike Hughes and has since been reformulated into this bookdown version. The original version of this document was not intended for publication but, as is common, has evolved into an online text. Future iterations will improve some coding examples and provide more references.
 
 The bulletin description for the course states:
 
 > Applications of statistics using regression and design of experiments techniques. Regression topics include simple linear regression, correlation, multiple regression and selection of the best model. Design topics include the completely randomized design, multiple comparisons, blocking and factorials.
 
-The book and course have been designed to be a follow-up to a standard introductory statistics course (in many ways, this can be considered "Intro Stat 2"). The course and text assumes the reader has a solid foundation in two-sample inference and some basic computing skills.
+The book and course have been designed to be a follow-up to a standard introductory statistics course (in many ways, this course can be considered "Intro Stat 2"). The course and text assumes the reader has a solid foundation in two-sample inference and some basic computing skills.
 
-The book mixes basic statistical background with applications using the R Project for Statistical Computing. We have attempted to perform all analysis in this text using the *tidyverse*, thus all plots and functionality should follow the new grammar (*ggplot* and `%>%` type code).
+The book mixes statistical background with applications using the R Project for Statistical Computing. We have attempted to perform all data processing and analysis in this text using the *tidyverse*; thus all plots and functionality should follow the new grammar in R (*ggplot* and `%>%` type code).
 
-The book was designed with 13 chapters with the intent to be used during the 14-week semester at Miami University (one week reserved for midterm examination and end-of-semester review). The first chapter reviews introductory statistics material and provides a crash course in dealing with R and making plots with `ggplot2`. Chatpers 2, 3 and 4 extend the idea of two-sample inference into the design setting, presenting all inference in the form of a linear model. Chapters 5--10 cover the *classic* topics involving multiple linear regression. Chapters 11 and 12 provides an overview of statistical odds and logistic regression. Chapter 13 provides an overview of Generalized Linear Modeling with examples of both Poisson and Negative Binomial regression.
+The book was designed with 13 chapters with the intent to be used during the 14-week semester at Miami University (one week reserved for midterm examination and end-of-semester review). The first chapter reviews introductory statistics material and provides a crash course in the basics of R and making plots with `ggplot2`. Chatpers 2, 3 and 4 extend the idea of two-sample inference into the design setting, presenting all inference in the form of a linear model. Chapters 5--10 cover the *classic* topics around multiple linear regression. Chapters 11 and 12 provides an overview of statistical odds and logistic regression. Chapter 13 provides an overview of Generalized Linear Modeling with examples of both Poisson and Negative Binomial regression.
 
-# Preliminary Review{-}
+# About the Authors{-}
+
+```{r author-pic, echo=FALSE, fig.show = 'hold', fig.cap='Photographs of the authors: Michael R. Hughes (left) and Thomas J. Fisher (right)', out.width='30%', fig.align='center'}
+knitr::include_graphics(c('author_Hughes.jpg', 'author_Fisher.jpg') )
+```
+
+
+**Michael R. Hughes** is an instructor and manager of the statistical consulting center at Miami University. He has an M.S. in Statistics from Miami University and typically teaches the nonparametric, statistical modeling and data practicum courses. He spends his free time snuggling up to a roaring fireplace with the most recent texts, and loves long walks on the beach thinking about the latest modeling techniques and applications. He seeks a ambitous group of students who wish to be taught the subject of statistical modeling. 
+
+**Thomas J. Fisher** is a Pisces who enjoys hockey and hiking. He has a PhD in Mathematical Sciences from Clemson University and a B.S. in Computer Science from the University of Maryland, Baltimore County. He has taught a wide-range of courses from *intro stat* to graduate-level probability and inference. When not teaching Statistical modeling, you'll most likely find him teaching one of the coding courses or skating in the Goggin Ice Center. 
+
+# Important Preliminary Review{-}
+
+## Statistics background{-}
 
 This text assumes the reader has completed an introductory statistics course. For those needing a refresher, two links are provided below.
 
@@ -58,7 +71,21 @@ https://bookdown.org/chesterismay/rbasics/
 
 http://moderndive.com/index.html
 
-The text utilizes the R computing system. We will be using the following add-on packages.
+## Software{-}
+
+The text utilizes the R computing system. The course, STA 363 - Introduction to Statistical Modeling, utilizes RStudio and Rmarkdown. 
+
+R is a free statistical software platform that can be easily downloaded from the Comprehensive R Archive Network (CRAN): https://cran.r-project.org/
+
+You can download RStudio from here: https://rstudio.com/products/rstudio/download/#download
+
+Detailed instructions for installing R and RStudio can be found in this video: https://www.youtube.com/watch?v=d-u_7vdag-0
+
+An overview of using R and RStudio can be found here: https://www.youtube.com/watch?v=lVKMsaWju8w&t=458s
+
+## Add-on packages{-}
+
+We will be using the following add-on packages in this textbook (*note*: additional packages may be used in the course).
 
 * `tidyverse`
 * `knitr`
@@ -70,6 +97,26 @@ The text utilizes the R computing system. We will be using the following add-on 
 * `car`
 * `leaps`
 * `caret`
+
+You can install all of these packages by following the directions here: https://www.youtube.com/watch?v=u1r5XTqrCTQ
+
+Or by running the following command:
+
+```{r packeges, eval=FALSE}
+install.packages(c("tidyverse",
+                   "knitr",
+                   "GGally",
+                   "ggfortify",
+                   "gridExtra",
+                   "emmeans",
+                   "lindia",
+                   "car",
+                   "leaps",
+                   "caret"))
+```
+
+**IMPORTANT NOTE:** If running on a Mac, when asked, "Do you want to install from source?" In general it is better to select "No".
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -86,3 +133,16 @@ library(leaps)
 library(caret)
 options(digits=6)
 ```
+
+## Help with RMarkdown{-}
+
+Throughout the STA 363 course, Rmarkdown is utilized. In fact, this textbook was written using RMarkdown. You can find a tutorial of RMarkdown here: https://www.youtube.com/watch?v=tKUufzpoHDE
+
+RStudio provides tutorials as well: https://rmarkdown.rstudio.com/lesson-1.html
+
+## Managing your work in R{-}
+
+* Folders, directories, Projects (to be complete)
+
+
+
