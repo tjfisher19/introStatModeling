@@ -377,3 +377,10 @@ Thus, we have plotted our fitted model. The final plot helps tell the underlying
 * Program type has an effect on the number of days absent (vocational is less than academic which is less than general).
 * Number of days absent decreases with higher standardized math scores.
 
+
+
+
+
+`r if (knitr::is_html_output()) '# References {-}'`
+
+

@@ -1,5 +1,5 @@
 
-# Intro to Statistical Modeling and Designed Experiments
+# Introduction to Statistical Modeling and Designed Experiments
 
 We begin our dive into Statistical Modeling by first reviewing content from your introductory statistics course. The learning objective of this unit unclude:
 
@@ -227,84 +227,95 @@ The use of the paired *t*-test is not limited to experimental designs, it also a
 
 **Implementation in R**
 
-To demonstrates its implementation in R we consider another example. 10 mice received a dietary treatment during 3 months. We want to know whether the dietary treatment has an impact on the mass of the mice.
+To demonstrates its implementation in R we consider another example. 
 
-To answer to this question, the mass of the 10 mice has been measured before and after the treatment and is in the file `miceWeightwideform.csv`. Below is some code to implement the test.
+**Example.** (originally in @WeissText) The makers of the MAGNETIZER Engine Energizer System (EES) claim that it improves the gas mileage and reduces emissions in automobiles by using magnetic free energy to increase the amount of oxygen in the fuel for greater combustion efficiency. Test results for 14 vehicles that underwent testing is availble in the file `carCOemissions.csv`. The data includes the emitted carbon monoxide (CO) levels, in parts per million, of each of the 14 vehicles tested before and after installation of the EES.
+
+This is a classic before-after (Paired designe) study. Below is some code to implement the test.
 
 ```{r, eval=FALSE}
-www <- "http://users.miamioh.edu/hughesmr/sta363/miceWeightwideform.csv"
-mice <- read.csv(www)
-mice
+www <- "http://users.miamioh.edu/hughesmr/sta363/carCOemissions.csv"
+vehicleCO <- read.csv(www)
+vehicleCO
 ```
 
 ```{r ch2-4, echo=FALSE}
-mice <- read.csv("miceWeightwideform.csv")
-mice
+vehicleCO <- read.csv("carCOemissions.csv")
+vehicleCO
 ```
 
 First we note each row of the data consist of an `id` with a `before` and `after` measurement. In the paired *t*-test, we are comparing the differences between the before and after measuremements. We perform this test in two different ways: (1) we explicitly calculuate the difference and (2) we use features in the `t.test` function.
 
 **Method 1**
 ```{r ch2-5a}
-mice <- mice %>%
+vehicleCO <- vehicleCO %>%
   mutate(Difference = before - after)
-t.test(mice$Difference)
+t.test(vehicleCO$Difference)
 ```
 
 **Method 2**
 ```{r ch2-5b}
-t.test(mice$before, mice$after, paired=TRUE)
+t.test(vehicleCO$before, vehicleCO$after, paired=TRUE)
 ```
 
-In the first method, since we explicitly calculated the Difference as a new variable, we are determining if it is significantly different than zero. In the second method, we compare the before and after measures but we tell R that the data are paired with the `paired=TRUE` option. Lastly we note both methods provide the same findings with a $p$-value of approximately zero, thus we have strong evidence to support that the weight gain is non-zero.
+In the first method, since we explicitly calculated the Difference as a new variable, we are determining if it is significantly different than zero. In the second method, we compare the before and after measures but we tell R that the data are paired with the `paired=TRUE` option. Lastly we note both methods provide the same findings with a $p$-value of approximately `r round(t.test(vehicleCO$before, vehicleCO$after, paired=TRUE)$p.value, 4)`, thus we have strong evidence to support that the EES system changes carbon monoxide levels.
 
 **Graphical comparison**
 
-To graphically compare paired data we must use some caution and consider the pairing feature in the data. Ultimately we are interested in the pairwise difference between observations. Thus, side-by-side boxplots are not appropriate since they do not account for the pairing. We can report a boxplot of the differences as follows:
+To graphically compare paired data we must use some caution and consider the pairing feature in the data. Ultimately we are interested in the pairwise difference between observations. Thus, side-by-side boxplots are not appropriate since they do not account for the pairing. We can however report a boxplot of the differences. Figure \@ref(fig:ch2-5) provides a horizontal boxplot (the `coord_clip()` function causes the switch) of the differences.
 
-```{r ch2-5, fig.align='center', fig.cap='Box-whiskers plot showing the distribution of difference in mice mass (Before treatment - After treatment) demonstrating a weight gain of nearly 200 grams after the start of the study'}
-ggplot(mice) + 
+```{r ch2-5, fig.align='center', fig.cap='Box-whiskers plot showing the distribution of difference in CO emissions (Before installation of EES - After installation) demonstrating a CO emissions decreased for most vehicles under study.', out.width='70%', fig.asp=0.55}
+ggplot(vehicleCO) + 
   geom_boxplot(aes(x="",y=Difference) )+
-  labs(x="", y="Weight gain (Before - After)") +
+  labs(x="", y="Changes in CO Levels (ppm)", 
+       title="Effects of Engine Energizer System (EES) on 14 vehicles", 
+       subtitle="Change in Carbon Monoxide Emissions after installation of EES") +
+  coord_flip() +
   theme_minimal()
 ```
 
-Another type of plot that can be handy for this sort of data (and will be more important later) is known as a profile plot. Here we use the `id` values to group data. Basically we wish to draw a line for each and every individual mouse.
+Another type of plot that can be handy for this sort of data (and will be more important later) is known as a profile plot. Here we use the `id` values to group data. Basically we wish to draw a line for each and every individual vehicle.
 We begin with some data manipulation.
 
 ```{r ch2-6}
-mice.tall <- mice %>%
-  select(-Difference) %>%                    # Remove the Difference variable
-  gather(key=Time, value=Weight, c(before, after)) %>%    # From wide-to-tall
+vehicleCO.tall <- vehicleCO %>%
+  select(-Difference) %>% 
+  pivot_longer(c(before, after), names_to="Time", values_to="CO") %>%
   mutate(id=factor(id),
          Time=factor(Time, levels=c("before","after")))
 ```
 
-Let's step through the above R code. In the first statement `select(-Difference)` we are telling R to drop the `Difference` variable as we do not need it for the plot. Then we are gathering the `before` and `after` measurements into two new variables, one called `Time` which states if it is the before or after measure and another called `Weight` with the correspond weight at that time.  Lastly, we tell R to treat `id` as a factor and set the levels of `Time` so that `before` is first (otherwise it would put things in alphabetical order, by default).
+Let's step through the above R code. In the first statement `select(-Difference)` we are telling R to drop the `Difference` variable as we do not need it for the plot. Then we are pivoting from wide-to-long format with the `before` and `after` measurements. The resulting two new variables, one called `Time` which states if it is the before or after measure and another called `CO` with the corresponding Carbon Monoxide emissions at that time.  Lastly, we tell R to treat `id` as a factor and set the levels of `Time` so that `before` is first (otherwise it would put things in alphabetical order, by default).
 
-Now that the data is in a tall format, we can make our profile plot. Here we simply tell R to treat the factor `Time` as the x-variable with `Weight` as the y-variable, but group each line by mouse `id`.
+Now that the data is in a tall format, we can make our profile plot in Figure \@ref(fig:ch2-7). Here we simply tell R to treat the factor `Time` as the $x$-variable with `CO` as the $y$-variable, but group each line by vehicle `id`.
 
-```{r ch2-7, fig.align='center', fig.cap='Profiles of each mouse demonstrating all mice under study gains mass after treatment'}
-ggplot(mice.tall) + 
-  geom_line(aes(x=Time, y=Weight, group=id) ) +
-  theme_minimal()
+```{r ch2-7, fig.align='center', fig.cap='Profiles of each vehicle demonstrating a general decrease in CO emissions after EES installation.',out.width='70%', fig.asp=0.55}
+ggplot(vehicleCO.tall) + 
+  geom_line(aes(x=Time, y=CO, group=id) ) +
+  theme_minimal() + 
+  labs(y="CO Emissions (ppm)", x="Installation of EES")
 ```
 
 To jazz up our plot we can add the overall effect by including some summary values.
-First we calculate summary statistics. Since we use a `group` variable for each mouse we need to *trick* R into plotting the overall summary line as well, thus we create an `id="Summary"` variable in `mice.summary` to use as a `group` variable.
+First we calculate summary statistics. Since we use a `group` variable for each vehicle we need to *trick* R into plotting the overall summary line as well, thus we create an `id="Summary"` variable in `vehicleCO.summary` to use as a `group` variable.
+We also tweak the $x$-axis scale by limiting the amount of space around the before and after markings.
+The code below produces Figure \@ref(fig:ch2-7).
 
-```{r, message=FALSE, fig.align='center', fig.cap='Profiles of each mouse with the average profile highlight in a thick dark red line, this demonstrates that a typical mouse gained nearly 200 grams in mass after treatment.'}
-mice.summary <- mice.tall %>%
+```{r ch2-7annotated, message=FALSE, fig.align='center', fig.cap='Profiles of each vehicle, with average profile highlighted in a thick dark red line, demonstrating a general decrease in CO emissions after EES installation.', out.width='70%', fig.asp=0.55}
+vehicleCO.summary <- vehicleCO.tall %>%
   group_by(Time) %>%
-  summarize(Weight=mean(Weight),
+  summarize(CO=mean(CO),
             id="Summary")
-ggplot(mice.tall) + 
-  geom_line(aes(x=Time, y=Weight, group=id), color="gray50" ) +
-  theme_minimal() +
-  geom_line(data=mice.summary, aes(x=Time, y=Weight, group=id), color="darkred", size=2)
+
+ggplot(vehicleCO.tall) + 
+  geom_line(aes(x=Time, y=CO, group=id), color="gray50" ) +
+  geom_line(data=vehicleCO.summary, aes(x=Time, y=CO, group=id), color="darkred", size=2) +
+  labs(y="CO Emissions (ppm)", x="Installation of EES") + 
+  scale_x_discrete(expand=c(0.075, 0.075) ) + 
+  theme_minimal()
 ```
 
-In all of these plots it is clear there is significant weight gain during the study.
+Based on the two plots, coupled with the results of the paired $t$-test, it is clear there is significant decrease in CO emissions after installation of the EES.
 
 ## One-Way ANOVA
 
@@ -357,7 +368,7 @@ The $F$-test works like other hypothesis test. The test statistic is a ratio of 
 
 **Example:** Drug effects on alertness.  Three different medications are tested on a sample of 18 individuals to see if they impact alertness.  Each subject is randomly assigned one drug, the drug is administered.  After 60 minutes, a test is administered that scores the alertness level of each subject (a higher score means higher alertness).  The data appear in the R dataframe `onewaydrug.RData` in our repository: `http://users.miamioh.edu/hughesmr/sta363/`
 
-```{r ch2-8, fig.align='center', fig.cap='Side-by-side Box-whiskers plots showing the distribution of `alertness` for each of the three drug treatments, `a`, `b` and `c`. Overall we see alertness is highest in treatment `a`, followed by `b` and `c`. We Also note that variability appears greatest in treatment `a`, followed by `b` and `c`.'}
+```{r ch2-8, fig.align='center', fig.cap='Side-by-side Box-whiskers plots showing the distribution of `alertness` for each of the three drug treatments, `a`, `b` and `c`. Overall we see alertness is highest in treatment `a`, followed by `b` and `c`. We Also note that variability appears greatest in treatment `a`, followed by `b` and `c`.', out.width='70%', fig.asp=0.55}
 load("onewaydrug.RData")
 glimpse(onewaydrug)
 ggplot(onewaydrug) + 
@@ -402,16 +413,16 @@ In general, independence (or lack thereof) is the result of the sampling scheme 
 
 ### Constant Variance
 
-<div style="float:right;position: relative; ">
-```{r ch2-10, echo=FALSE, fig.width=3.25, fig.height=9.75, fig.cap='Residual diagnostic plots showing a *fanning* effect in the residuals vs fitted and increasing linear trend in the Scale-Location plot, thus suggesting the variance increases with the mean.'}
-autoplot(fit.drug, which=c(1,3), nrow=2)
+
+
+
+
+
+To assess the constant variance assumption we typically consider two simple plots: a Residuals vs Fitted plot and Scale-Location plot.
+
+```{r ch2-10, echo=FALSE,  fig.cap='Residual diagnostic plots showing a *fanning* effect in the residuals vs fitted and increasing linear trend in the Scale-Location plot, thus suggesting the variance increases with the mean.', out.width='70%', fig.align='center', fig.asp=0.8}
+autoplot(fit.drug, which=c(1,3), nrow=1)
 ```
-</div>
-
-
-To assess the constant variance assumption we typically build a Residuals vs Fitted plot.
-
-
 
 Consider the baseline model \@ref(eq:baseModel). We can estimate $\mu$ with $\bar{Y}$ and we would estimate each observed $Y$ with $\hat{Y}_i=\bar{Y}$. From there, we can approximate the random variation $\varepsilon_i$ with $e_i = Y_i - \hat{Y}_i$. The values $\hat{Y}_i$ are known as the *fitted*, or *predicted*, values and $e_i$ as the sample *residuals*.
 
@@ -424,20 +435,20 @@ Using the absolute values of the residuals is a good refinement.  The reason is 
 
 ### Checking Normality
 
-<div style="float:right;position: relative; ">
-```{r ch2-11, echo=FALSE, fig.width=3.25, fig.height=3.25, fig.cap='Normal Q-Q plot demonstrating the residuals are reasonably Normally distributed.'}
-autoplot(fit.drug, which=c(2), nrow=1)
-```
-</div>
 
 We typically make our assessment with a Normal quantile-quantile (Q-Q) plot. 
+
+```{r ch2-11, echo=FALSE, out.width='45%', fig.cap='Normal Q-Q plot demonstrating the residuals are reasonably Normally distributed.', fig.align='center'}
+autoplot(fit.drug, which=c(2), nrow=1)
+```
+
 In a normal Q-Q plot, the observed sample values (the “sample quantiles”) are plotted against the corresponding quantiles from a reference normal distribution (the “theoretical quantiles”).  If the parent population is normally distributed, then the sample values should reasonably match up one-to-one with normal reference quantiles, resulting in a plot of points that line up in a linear (straight line) fashion.  
 
 A normal Q-Q plot of the residuals is presented to the right. There is some minor deviation from the line here, coupled with the issues with variance, we may have evidence to suggest the normality assumption is not met.
 
 ### Code to check assumption
 
-The code to generate the above plots can be achieved via the `autoplot` function when including the `ggfortify` library.
+The code to generate the above plots can be achieved via the `autoplot` function when including the `ggfortify` library [@R-ggfortify]. The `autoplot` function provides 4 plots by default seen in Figure \@ref(fig:ch2-13) (note: we will discuss the Constant Leverage plot in Section \@ref(detecting-and-dealing-with-unusual-observations))
 
 ```{r ch2-12, eval=FALSE}
 library(ggfortify)
@@ -446,9 +457,9 @@ autoplot(fit.drug)
 
 ### Transforming your response
 
-We have evidence from the above plots that the variance appears to be increasing with the response (determined by assessing the constant variance assumption). One way to typically address this issue is to transform the response variable. We will go into more details later but common transformations include $Y^*=log(Y)$, $Y^*=\sqrt{Y}$ and $Y^*=1/Y$. Here we will use a logarithmic as it is fairly common. Later in the class we will describe the other transformations in more detail. We can acheive this in R with the following:
+We have evidence from the above plots that the variance appears to be increasing with the response (determined by assessing the constant variance assumption). One way to typically address this issue is to transform the response variable. We will go into more details later but common transformations include $Y^*=log(Y)$, $Y^*=\sqrt{Y}$ and $Y^*=1/Y$. Here we will use a logarithmic as it is fairly common. Later in the class we will describe the other transformations in more detail. We can acheive this in R with the following which provides the residuals plots in Figure \@ref(fig:ch2-13).
 
-```{r ch2-13, fig.width=7, fig.height=7, fig.align='center', fig.cap='Residual diagnostic plots when the response variable is the logarithm of the alertness. Here the heteroskedasticity in the original model has been improved, albeit not entirely mitigated, with some minor indication of increasing variability with the mean.'}
+```{r ch2-13, fig.width=7, fig.height=7, fig.align='center', fig.cap='Residual diagnostic plots when the response variable is the logarithm of the alertness. Here the heteroskedasticity in the original model has been improved, albeit not entirely mitigated, with some minor indication of increasing variability with the mean.', fig.asp=1, out.width='80%'}
 fit.log.drug <- aov(log(alertness) ~ drug, data=onewaydrug)
 autoplot(fit.log.drug)
 ```
@@ -461,7 +472,7 @@ The test comparing the three drug population means (on a log scale) is given via
 summary(fit.log.drug)
 ```
 
-The result is significant (F = 14.167, df1 = 2, df2 = 15, p-value = 0.00035). Thus, we could conclude that at least two of the drugs produce significantly different mean alertness responses.
+The result is significant ($F$ = 14.167, $df_1$ = 2, $df_2$ = 15, $p$-value = 0.00035). Thus, we could conclude that at least two of the drugs produce significantly different mean alertness responses.
 
 Of course, what remains to be seen is which pairs of drugs produce different mean alertness levels.  For that, we will need to look at techniques known as multiple comparison procedures.
 
@@ -540,7 +551,7 @@ To put back in the original units we could "un"-log the intervals by taking expo
 
 We can also visualize these results via a plot:
 
-```{r ch2-17, fig.align='center', fig.cap='Tukey adjusted confidence interval plots comparing treatments treatments `a`, `b` and `c`. Here, we see that treatments `b` and `c` are significantly different as well as treatments `a` and `c`. We also note there is no significant difference between treatments `a` and `b`.'}
+```{r ch2-17, fig.align='center', fig.cap='Tukey adjusted confidence interval plots comparing treatments treatments `a`, `b` and `c`. Here, we see that treatments `b` and `c` are significantly different as well as treatments `a` and `c`. We also note there is no significant difference between treatments `a` and `b`.', out.width='70%', fig.asp=0.55}
 plot(contrast(drug.mc, "pairwise"))
 ```
 
@@ -556,7 +567,7 @@ contrast(drug.mc, "trt.vs.ctrl")
 
 The two comparisons provided are *A* vs. *B* and *A* vs. *C*. The only significant difference is between *A* and *C* (p-value = 0.0002). As before, here are simultaneous CIs and plots:
 
-```{r ch2-19, fig.align='center', fig.cap='Dunnett adjusted confidence interval plots demonstrating that treatment `c` is significantly different than control group `a`, while treatment `b` is not significantly different than control group `a`.'}
+```{r ch2-19, fig.align='center', fig.cap='Dunnett adjusted confidence interval plots demonstrating that treatment `c` is significantly different than control group `a`, while treatment `b` is not significantly different than control group `a`.', out.width='70%', fig.asp=0.55}
 confint(contrast(drug.mc, "trt.vs.ctrl"))
 plot(contrast(drug.mc, "trt.vs.ctrl"))
 ```

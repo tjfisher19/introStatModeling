@@ -1,8 +1,8 @@
 
 
-# Intro Statistics in R
+# Introductory Statistics in R
 
-We begin our dive into Statistical Modeling by first reviewing content from your introductory statistics course. The learning objective of this unit unclude:
+We begin our dive into Statistical Modeling by first reviewing content from your introductory statistics course. The learning objective of this unit include:
 
 * Review of the fundamental concepts of *populations*, *samples*, *parameters* and *statistics*.
 * Review of exploratory and descriptive statistics: numerical quantities and graphics.
@@ -134,7 +134,7 @@ The best formats for importing dataset files into R is space-delimited, tab-deli
 
 There are multiple functions to import a data file in R. One common tool is using the `read.table()` command. Below are two examples:
 
-1. Read a file directly from the web. The below code imports the file `univadmissions.txt` from a data repository into the current R session, and assigns the name `uadata` to the data frame object:
+1. Read a file directly from the web. The below code imports the file `univadmissions.txt` (details about the data are below) from a data repository into the current R session, and assigns the name `uadata` to the data frame object:
 
 ```{r, eval=FALSE}
 site <- "http://www.users.miamioh.edu/hughesmr/sta363/univadmissions.txt"
@@ -186,26 +186,6 @@ If data has already been input and processed into R as a `data.frame`, it can be
 load("someData.RData")
 ```
 
-#### Creating your own data frames in R
-
-The easiest way to do this is to use Excel. Work in Excel as normal but save the file as a tab-delimited text or comma-separated values (recommended) file. Then you can write reproducible code to read in the file using `read.table()` or `read.csv()`.
-
-Here are details for each method.
-
-**Using Excel**. If you are working with your own data, I usually suggest entering it into an Excel spreadsheet. This is the easiest method since Excel is universally available and it is easy to use.  
-
-Steps:
-
-1. Enter your data in Excel, putting variable names in the top row according to R naming guidelines. Different variables should be in different columns, and different cases in different rows. Remember that missing data entries should be indicated by `NA`.  
-
-2. Save your Excel file as a tab-delimited or comma seaparated text file using the following menu choice:
-
-		File > Save As...
-
-3. From the Save as type options, choose Text (Tab delimited) or CSV. Save the file to the desired directory on your computer.
-
-4. Once you are back in R, use the instructions in the previous section to import your text file.
-
 
 ## Referencing data from inside a data frame
 
@@ -213,7 +193,7 @@ We saw above that we can access a specific variable within a dataset using the `
 We can also access specific observations in the dataset based on rules we may wish to implement.
 As a working example we will consider the university admissions data we read in above.
 
-**Example:** University admissions. The director of admissions at a state university wanted to determine how accurately students' grade point averages at the end of their freshman year could be predicted by entrance test scores and high school class rank. The academic years covered 1996 through 2000. This example uses the `univadmissions.txt` dataset in the repository.  The variables are as follows:
+**Example:** (originally in @KutnerText) University admissions. The director of admissions at a state university wanted to determine how accurately students' grade point averages at the end of their freshman year could be predicted by entrance test scores and high school class rank. The academic years covered 1996 through 2000. This example uses the `univadmissions.txt` dataset in the repository.  The variables are as follows:
 
 *	`id` -- Identification number
 
@@ -227,7 +207,6 @@ As a working example we will consider the university admissions data we read in 
 
 This is the first dataset we input above, in the `uadata` data frame. 
 
-**Source:** Kutner, Nachtsheim, Neter. Applied Linear Regression Models, 4th edition. McGraw-Hill Irwin, New York, NY 10020, 2004.
 
 
 
@@ -248,7 +227,8 @@ As an example, consider the case of extracting students with a GPA greater than 
 * Then `filter` it based on some criteria, say `gpa.endyr1 > 3.9`.
 
 ```{r ch1-8, warning=FALSE, error=FALSE}
-uadata %>% filter(gpa.endyr1 > 3.9)
+uadata %>% 
+  filter(gpa.endyr1 > 3.9)
 ```
 
 We can also use `dplyr` commands for selecting specific variables using the `select` function. 
@@ -377,8 +357,6 @@ The variances cited above are each very different things. We could dream up even
 
 Some formulas:
 
-$$\textbf{Population Variance: } \sigma^2 = \frac{1}{N}\sum_{i=1}^N (x_i - \mu)^2, \textrm{ for population size } N$$
-
 $$\textbf{Sample Variance: } s^2 = \frac{1}{n-1}\sum_{i=1}^n (x_i - \bar{x})^2, \textrm{ for sample size } n$$
 
 $$\textbf{Estimated Variance of } \bar{x}: s^2_{\bar{x}} = \frac{s^2}{n}$$
@@ -402,9 +380,6 @@ Variances are always in units squared, so if we take their square roots, we are 
 The square root of a variance is called a standard deviation (SD). 
 The square root of the variance of an estimate is called the standard error (SE) of the estimate:
 
-
-$$\textbf{Population Standard Deviation: } \sigma = \sqrt{\sigma^2} =  \sqrt{\frac{1}{N}\sum_{i=1}^N (x_i - \mu)^2}, \textrm{ for population size } N$$
-
 $$\textbf{Sample Standard Deviation: } s = \sqrt{s^2} = \sqrt{\frac{1}{n-1}\sum_{i=1}^n (x_i - \bar{x})^2}, \textrm{ for sample size } n$$
 
 $$\textbf{Standard error of } \bar{x}: s_{\bar{x}} = \sqrt{s^2_{\bar{x}}} = \sqrt{\frac{s^2}{n}} = \frac{s}{\sqrt{n}}$$
@@ -415,22 +390,22 @@ In this class we will be using `dplyr` for data handling. We can pipe (`%>%`) ou
 
 ```{r ch1-12}
 uadata %>% 
-  gather() %>% 
-  group_by(key) %>%
+  pivot_longer(everything()) %>% 
+  group_by(name) %>%
   summarize_all(funs(mean, sd, min, median, max))
 ```
 
-For now ignore the code that is used, we will describe the `gather()` and `group_by()` functions below.
+For now ignore the code that is used, we will describe the `pivot_longer()` and `group_by()` functions below.
 Presented here are the mean, standard deviation, the minimum, median and maximum of each numeric variable in the data frame. 
 For example, the mean freshman year-end GPA over the period 1996-2000 was 2.98; the median over the same period was 3.05, suggesting the GPA distribution is slightly skewed left (not surprising). 
 The range of the GPA distribution is from 0.51 to 4. 
 The median ACT score for entering freshman was 25, and and the range of ACT scores was from 13 to 35.
 
-This display introduces two points you need to be aware of:
+This display introduces a few keys points you need to be aware of:
 
-* Since we applied the command to the entire data frame, we also see numeric summaries of the variable `id`, even though it is meaningless to do so. (note: just because a computer outputs it, that doesn't mean it's useful)
-
-* If you look carefully, you'll see that year is entered as a number (e.g. 1996, 1997, etc.).
+* We have the code spread across 4 lines with most lines ending with the piping operator `%>%`. This is done (and recommended) for readability. When performing an analysis, you often will revist the code at a later time. Readable code is paramount to reproducibility.
+* Since we applied the command to the entire data frame (`everything()`), we also see numeric summaries of the variable `id`, even though it is meaningless to do so. (note: just because a computer outputs it, that doesn't mean it's useful)
+* If you look carefully, you'll see that `year` is treated as a number (e.g. 1996, 1997, etc.).
 However, that doesn't necessarily mean it should be treated as a numeric variable! 
 It is meaningless to find numeric summaries like means or medians for the `year`, because it is really a qualitative (categorical) variable in the context of these data (again, just because a computer outputs it, that doesn't mean it is contextually correct).
 This is a common mistake to make.
@@ -450,7 +425,8 @@ Here we tell R to take the `uadata` data, pipe it to the `mutate` function (whic
 We can then check the type of each variable by *summarizing* over *all* the variables using the `class` function.
 
 ```{r ch1-14}
-uadata %>% summarize_all(class)
+uadata %>% 
+  summarize_all(class)
 ```
 
 No we can check the summary values again for only numeric values (i.e., the use of the `select_if(is.numeric)` function).
@@ -458,8 +434,8 @@ No we can check the summary values again for only numeric values (i.e., the use 
 ```{r ch1-15}
 uadata %>% 
   select_if(is.numeric) %>%
-  gather() %>% 
-  group_by(key) %>%
+  pivot_longer(everything()) %>% 
+  group_by(name) %>%
   summarize_all(funs(mean, sd, min, median, max))
 ```
 
@@ -477,13 +453,14 @@ uadata %>%
 
 We begin a graphical summary with a scatterplot matrix.
 Here we use the `ggscatmat` function in the `GGally` package.
+This results in the scatterplot matrix seen in Figure \@ref(fig:ch1-17).
 
-```{r ch1-17, message=FALSE, fig.align='center', fig.cap='Scatterplot matrix showing the relationship between the variables `gpa.endy1`, `hs.pct`, and `act`.'}
+```{r ch1-17, message=FALSE, fig.align='center', fig.cap='Scatterplot matrix showing the relationship between the variables `gpa.endy1`, `hs.pct`, and `act`.', fig.asp=1, out.width='80%'}
 library(GGally)
 ggscatmat(uadata)
 ```
 
-You will note that by default the function provides a scatterplot of each variable along with the Pearson correlation of each numeric variable (it warns us that `factor` variables are not included).
+You will note that by default the function provides a scatterplot (Figure \@ref(fig:ch1-17)) of each variable along with the Pearson correlation of each numeric variable (it warns us that `factor` variables are not included).
 The Pearson correlations assesses the strength of any linear relationship existing between the GPA, ACT and HS rank variables. 
 
 Recall from introductory statistics that the Pearson correlation $r$ between two variables $x$ and $y$ is given by the formula
@@ -493,10 +470,11 @@ $r$ is a unitless measure with the property that  $-1 \leq r \leq 1$.  Values of
 All pairwise correlations in this example are of modest magnitude ($r \approx 0.4$).
 
 You will also note that the function provides a look at the distributional shape of each variable using what is known as a *density plot* (this can be consider a more-modern, and less subjective, histogram).
-
 The `ggscatmat` function builds off a function known as `ggplot()` from the `ggplot2` package (included in `tidyverse`).
 
-```{r ch1-18, fig.align='center', fig.cap='Density plot showing left-skewed distribution for the `gpa.endyr1` variable'}
+We can build density plots directly using the `geom_density()` function as seen in the code below. The resulting density plot is in Figure \@ref(fig:ch1-18).
+
+```{r ch1-18, fig.align='center', fig.cap='Density plot showing left-skewed distribution for the `gpa.endyr1` variable', out.width='70%', fig.asp=0.55}
 ggplot(uadata) + 
   geom_density(aes(x=gpa.endyr1))
 ```
@@ -504,13 +482,14 @@ ggplot(uadata) +
 You should note the code is similar to the `%>%` operator but with a `+`. The trick to working with plotting on the computer is to think in terms of *layers*. The first line `ggplot(uadata)` sets up a plot object based on the existing dataset `uadata`. The `+` says to add a layer, this layer is a density plot (`geom_density`) where the aesthetic values include an $x$-axis variable matching that of `gpa.endyr`.
 
 To generate even more complex distributional plots first we need to perform some data processing. 
-In `tidyverse` there is package called `tidyr` which is comprised of two main functions: `gather()` and `spread()`. 
-The purpose of the `gather()` function is to collect variables in a dataset and create a *tall* (or *long*) dataset (this is typically known as going from wide-to-tall format). 
-The `spread()` function does the opposite.
+In `tidyverse` there is package called `tidyr` which is mainly comprised of two main functions: `pivot_longer()` and `pivot_wider()`. 
+The purpose of the `pivot_longer()` function is to collect variables in a dataset and create a *tall* (or *longer*) dataset (this is typically known as going from wide-to-tall or wide-to-long format). 
+We specify the variables (or columns) we want to pivot (here the `c(gpa.endyr1, hs.pct, act)` part of the code), the name of the new variable (here called `variables`) storing the column names, and the variable name that will store the values (here called `value`).
+The `pivot_wider()` function essentially does the opposite, turning a tall data frame into a wide format.
 
 ```{r ch1-19}
 uadata.tall <- uadata %>%
-  gather(key=variable, value=value, gpa.endyr1, hs.pct, act)
+  pivot_longer(c(gpa.endyr1, hs.pct, act), names_to="var_names", values_to="value" )
 head(uadata)
 head(uadata.tall)
 dim(uadata)
@@ -520,23 +499,25 @@ dim(uadata.tall)
 Take a minute and step through the above code and output to understand what the code did.
 The data is now in a *tall* format.
 We can now utilize the `ggplot` package for more advanced plotting. 
-We want to draw a density plot for each `variable` in the dataset `uadata` but we want a different plot for each $variable$ (act, gpa.endyr1, hs.pct).
+Here we want to draw a density plot for each `var_names` in the dataset `uadata` but we want a different plot for each $variable$ (act, gpa.endyr1, hs.pct).
+Figure \@ref(fig:ch1-20) provides the result for the below code.
 
-```{r ch1-20, fig.align='center', fig.cap='Side-by-side density plots showing the relative distributions of `act`, `gpa.endyr1` and `hs.pct`.'}
+```{r ch1-20, fig.align='center', fig.cap='Side-by-side density plots showing the relative distributions of `act`, `gpa.endyr1` and `hs.pct`.', , out.width='70%', fig.asp=0.55}
 ggplot(uadata.tall) +
   geom_density(aes(x=value)) + 
-  facet_grid(.~variable, scales="free_x") + 
+  facet_grid(.~var_names, scales="free_x") + 
   theme_bw()
 ```
 
-**Notes**: The `facet_grid` option tells the plot to draw each density plot for each observed value in `variable`. The `theme_bw()` specifies the plotting style (there are many others!). The `free_x` option tells the plot that each $x$-axis is on a different scale. Feel free to modify the code to see how the plot changes!
+**Notes**: The `facet_grid` option tells the plot to draw each density plot for each observed value in `var_names`. The `theme_bw()` specifies the plotting style (there are many others! We will typically use `theme_bw()`, `theme_classic()` or the default behavior which corresponds to `theme_grey()`). The `free_x` option tells the plot that each $x$-axis is on a different scale. Feel free to modify the code to see how the plot changes!
 
 We can see that GPA and high school percentile rankings are skewed left, and that ACT scores are reasonably symmetrically distributed. 
 
 
-The best visual tool for simple counts is the Bar Graph (**note:** you should never use a pie chart, see http://www.businessinsider.com/pie-charts-are-the-worst-2013-6).
+The best visual tool for simple counts is the Bar Graph (**note:** you should never use a pie chart, see http://www.businessinsider.com/pie-charts-are-the-worst-2013-6). 
+The below code generates a simple (and fairly boring) bar graph (Figure \@ref(fig:ch1-21)) displaying the number of observations for each year in the `uadata`.
 
-```{r ch1-21, fig.align='center', fig.cap='Bar graph displaying the number of observations in the `uadata` per `year`.'}
+```{r ch1-21, fig.align='center', fig.cap='Bar graph displaying the number of observations in the `uadata` per `year`.', out.width='70%', fig.asp=0.55}
 ggplot(uadata) + 
   geom_bar(aes(x=year) )
 ```
@@ -551,9 +532,9 @@ We see here that nothing too interesting is happening. A fairly uniform distribu
 While the above summaries are informative, they overlook the fact that we have several years of data and that it may be more interesting to see how things might be changing year to year.
 This is why treating `year` as a factor is important, because it enables us to split out descriptions of the numeric variables by levels of the factor. 
 
-One of the simplest and best visualization tool for comparing distributions is the side-by-side boxplot, which displays information about quartiles and potential outliers. 
+One of the simplest and best visualization tool for comparing distributions is the side-by-side boxplot, which displays information about quartiles and potential outliers. The below code generates Figure \@ref(fig:ch1-22).
 
-```{r ch1-22, fig.align='center', fig.cap='Side-by-side Box-whiskers plots showing the distribution of ACT scores in the `uadata` per year.'}
+```{r ch1-22, fig.align='center', fig.cap='Side-by-side Box-whiskers plots showing the distribution of ACT scores in the `uadata` per year.', out.width='70%', fig.asp=0.55}
 ggplot(uadata) +
   geom_boxplot(aes(x=year, y=act) ) +
   xlab("Year") + ylab("Composite ACT Score") +
@@ -563,16 +544,16 @@ ggplot(uadata) +
 
 We see here the code is similar to the examples above except now we call the `geom_boxplot` function. Also note we are using `theme_classic()` which has some subtle differences compared to `theme_bw()` used above. Lastly, we include proper labels and titles on our plot here for a more professional appearance.
 
-Here we construct side-by-side boxplots by year for each of the three numeric variables in the data frame
+Here we construct side-by-side boxplots by year for each of the three numeric variables in the data frame. We utilize the taller or longer format of the admissions data in `uadata.tall` and the resulting plot is in Figure \@ref(fig:ch1-23).
 
-```{r ch1-23, fig.align='center', fig.cap='Side-by-side Box-whiskers plots showing the distributinos of the variables `act`, `gpa.endyr1` and `hs.pct` for each year in the `uadata` dataset.'}
+```{r ch1-23, fig.align='center', fig.cap='Side-by-side Box-whiskers plots showing the distributinos of the variables `act`, `gpa.endyr1` and `hs.pct` for each year in the `uadata` dataset.', out.width='75%'}
 ggplot(uadata.tall) + 
   geom_boxplot(aes(x=year, y=value) ) +
-  facet_grid(variable~., scales="free_y") + 
+  facet_grid(var_names~., scales="free_y") + 
   theme_dark()
 ```
 
-Note here that the order of the `variable` statement in the `facet_grid` statement has changed compared to the previous side-by-side density plots (now the plots are stacked). Also note another theme option (obviously you generally will NOT want to use this theme if planning to print the document).
+Note here that the order of the `var_names` statement in the `facet_grid` statement has changed compared to the previous side-by-side density plots (code used to generate Figure \@ref(fig:ch1-20)) now the plots are stacked). Also note another theme option, `theme_dark()` (obviously you generally will NOT want to use this theme if planning to print the document).
 
 This is a nice compact visual description of the changes in patterns of response of these three variables over time.  All three variables appear pretty stable over the years; the left skews in GPA and high school percentile rankings are still evident here (note the detection of some low outliers for year on these two variables).
 
@@ -583,7 +564,7 @@ The below example is a more detailed version of the summary table from above.
 
 ```{r ch1-24}
 summary.table <- uadata.tall %>% 
-  group_by(variable) %>%
+  group_by(var_names) %>%
   summarize(Mean=mean(value),
             StDev=sd(value),
             Min=min(value),
@@ -594,13 +575,13 @@ summary.table <- uadata.tall %>%
 kable(summary.table)
 ```
 
-Here, we first pipe the `uadata.long` into a `group_by()` function grouping by the `variable` variable. Then we take that output and pipe it to the `summarize` function which allows us to calculate various summary statistics for each of the groups. In the above we calculate the mean and standard deviation of each group, along with the 5-number summary. Lastly, we wrap the constructed table (its technically a data frame) in the `kable()` function from the `knitr` package (literally means `knitr` `table`) for a nice display.
+Here, we first pipe the `uadata.tall` into a `group_by()` function grouping by the `var_names` variable. Then we take that output and pipe it to the `summarize` function which allows us to calculate various summary statistics for each of the groups. In the above we calculate the mean and standard deviation of each group, along with the 5-number summary. Lastly, we wrap the constructed table (its technically a data frame) in the `kable()` function from the `knitr` package (literally means `knitr` `table`) for a nice display.
 
 In the next example we group by both the `year` and the variables of interest.
 
 ```{r ch1-25, results=TRUE}
 summary.table2 <- uadata.tall %>%
-  group_by(variable, year) %>%
+  group_by(var_names, year) %>%
   summarize(Mean=mean(value),
             StDev=sd(value))
 kable(summary.table2)
@@ -635,9 +616,9 @@ $$t_0 = \frac{\bar{x}-\mu}{{SE}_{\bar{x}}}$$
  
 counts up the number of standard error units between the true value of $\mu$ and its sample estimate $\bar{x}$; it can be thought of as the standardized distance between a true mean value and its sample mean estimate. If the original population was normally distributed, then the quantity $t_0$ will possess the $t$-distribution with $n - 1$ degrees of freedom. Degrees of freedom is the only parameter of a $t$-distribution.  Notationally, we indicate this by writing $t_0 \sim t(df)$.
 
-$t$-distributions look a lot like the standard normal distribution, $N(0, 1)$: they both center at 0 and are symmetric and bell-shaped (see below).  The key difference is due to the fact that the quantity $t$ includes two sample summaries in its construction: the sample mean $\bar{x}$, and $SE_{\bar{x}}$, which incorporates the sample standard deviation $s$.  Because of this, $t$ is more variable than $N(0, 1)$.  However, as $n$ (and hence degrees of freedom) increases, $s$ becomes a better estimate of the true population standard deviation, so the distinction ultimately vanishes with larger samples. This can all be vizualized in the below plot
+$t$-distributions look a lot like the standard normal distribution, $N(0, 1)$: they both center at 0 and are symmetric and bell-shaped (see below).  The key difference is due to the fact that the quantity $t$ includes two sample summaries in its construction: the sample mean $\bar{x}$, and $SE_{\bar{x}}$, which incorporates the sample standard deviation $s$.  Because of this, $t$ is more variable than $N(0, 1)$.  However, as $n$ (and hence degrees of freedom) increases, $s$ becomes a better estimate of the true population standard deviation, so the distinction ultimately vanishes with larger samples. This can all be vizualized in Figure \@ref(fig:ch1-26).
 
-```{r ch1-26, echo=FALSE, fig.align='center', fig.cap='Overlayed distribution functions showing the relationship between a standard normal distribution and that of a $t$ distribution with 3, 5 and 10 degrees of freedom. As the degrees of freedom increases, the $t$ distribution becomes more *normal*'}
+```{r ch1-26, echo=FALSE, fig.align='center', fig.cap='Overlayed distribution functions showing the relationship between a standard normal distribution and that of a $t$ distribution with 3, 5 and 10 degrees of freedom. As the degrees of freedom increases, the $t$ distribution becomes more *normal*', out.width='70%', fig.asp=0.55}
 x.val <- seq(-4, 4, 0.01)
 y.norm <- dnorm(x.val)
 y.t3 <- dt(x.val, df=3)
