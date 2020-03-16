@@ -2,7 +2,7 @@
 
 # Introductory Statistics in R
 
-We begin our dive into Statistical Modeling by first reviewing content from your introductory statistics course. The learning objective of this unit include:
+Before we begin our dive into Statistical Modeling we first review content from your introductory statistics course. The learning objective of this unit include:
 
 * Review of the fundamental concepts of *populations*, *samples*, *parameters* and *statistics*.
 * Review of exploratory and descriptive statistics: numerical quantities and graphics.

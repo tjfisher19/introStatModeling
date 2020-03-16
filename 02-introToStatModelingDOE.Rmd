@@ -1,7 +1,7 @@
 
 # Introduction to Statistical Modeling and Designed Experiments
 
-We begin our dive into Statistical Modeling by first reviewing content from your introductory statistics course. The learning objective of this unit unclude:
+We begin our dive into Statistical Modeling by building from some introductory statistics material, namely two-sample inference and analysis of variance. The learning objective of this unit unclude:
 
 * Understanding the basic structure of statistical model
 * Understanding that statistical inference can be formulated as the comparison of models
@@ -429,7 +429,7 @@ Consider the baseline model \@ref(eq:baseModel). We can estimate $\mu$ with $\ba
 
 A residuals versus fitted plot is provided to the right. If all is well, you should see fairly uniform (“constant”) spread of the points in the vertical direction and the scatter should be symmetric vertically around zero. The vertical spread here looks like it might be expanding as the fitted values increase (fanning effect), suggesting that there may be subtle non-constant error variance.  
 
-An attempt at refining the residuals vs fitted plot is given in the second of the four plot display, called the Scale-Location plot. The difference now is that instead of plotting the raw residuals ei on the vertical axis, R first standardizes them (so you can better check for extreme cases), takes their absolute value (to double the resolution in the plot) and then takes their square root (to remove skew that sometimes affects these plots).  R then adds a trend line through the points: if the constant variance assumption is OK, this trend line should be roughly horizontal. Here, you can see it trending upward, so we may have a constant variance problem. 
+An attempt at refining the residuals vs fitted plot is given in the plot on the right in Figure \@ref(fig:ch2-10), called the Scale-Location plot. The difference now is that instead of plotting the raw residuals $e_i$ on the vertical axis, R first standardizes them (so you can better check for extreme cases), takes their absolute value (to double the resolution in the plot) and then takes their square root (to remove skew that sometimes affects these plots).  R then adds a trend line through the points: if the constant variance assumption is OK, this trend line should be roughly horizontal. Here, you can see it trending upward, so we may have a constant variance problem. 
 
 Using the absolute values of the residuals is a good refinement.  The reason is because we really don’t care if a residual is positive or negative: all we are looking for is if the scatter is uniform across the plot.  Thus, by looking at the magnitude of the residuals only (and not their direction) by taking absolute values, we are actually improving the resolution of the information that the plot contains in addressing constant variance.
 
