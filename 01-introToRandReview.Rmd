@@ -144,7 +144,7 @@ head(uadata)
 ```
 
 ```{r, echo=FALSE, ch1-6}
-uadata <- read.table("data/univadmissions.txt", header=TRUE)
+uadata <- read.table("docs/data/univadmissions.txt", header=TRUE)
 head(uadata)
 ```
 
@@ -172,11 +172,13 @@ The function `read.table()` automatically converts a space (or tab) delimited te
 #### `read.csv()` -- for Comma Separated Value files
 
 Similar to the above examples, reading in a Comma Separated Value (CSV) file is very similar.
-This is becoming the standard format for transferring files. An example of some non-executed code is provided below:
+This is becoming the standard format for transferring files. An example of some **non-executed code** is provided below:
 
 ```{r, eval=FALSE}
-used.car <- read.csv("c:/My Documents/My STA363 Files/univadmissions.csv", header=TRUE)
+uadata_csv <- read.csv("c:/My Documents/My STA363 Files/univadmissions.csv", header=TRUE)
 ```
+
+**Note:** the file `univadmissions.csv` does not exist but this code has been included for example purposes. 
 
 #### `load()` -- Loading an existing R `data.frame`
 

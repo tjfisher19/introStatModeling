@@ -6,8 +6,8 @@ site: bookdown::bookdown_site
 output: bookdown::html_book
 documentclass: book
 bibliography: [book.bib, packages.bib]
-biblio-style: apalike
 link-citations: yes
+csl: begell-house-chicago-author-date.csl
 github-repo: tjfisher19/introStatModeling
 description: "Covers Regression and elements of Design of Experiments in R using the tidyverse."
 ---
