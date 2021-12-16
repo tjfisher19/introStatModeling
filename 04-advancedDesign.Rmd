@@ -1,7 +1,7 @@
 
 # Advanced Designs
 
-The previous chapters have established the groundwork of experimental designed. We discussed the key elements of experimental units, factors, response variables, treatments, confounding influences and the purpose of replication and randomization. This former work just scratches the surface of the field of experimental design and the analyses assocated with those designs. The objective of this chapter includes:
+The previous chapters have established the groundwork of experimental designed. We discussed the key elements of experimental units, factors, response variables, treatments, confounding influences and the purpose of replication and randomization. This former work just scratches the surface of the field of experimental design and the analyses associated with those designs. The objective of this chapter includes:
 
 * Understanding the basic structure of factorial designs
 * Understanding the basic structure of within-subject designs
@@ -44,7 +44,7 @@ kable(tab) %>% kable_styling(full_width=FALSE) %>%
   add_header_above(c(" " = 1, "Supervision" = 4))
 ```
 
-Recall the main idea from two-factor experiments, the interaction terms are typically very important. In this three factor design we have the three main effects (Fee level, Scope and Supervision) but then we also have pairwise interactions between these variables and an interaction amongst all three. From a statistical modeling perspective, we are now essentially fitting the model 
+Recall the main idea from two-factor experiments, the interaction terms are typically very important. In this three factor design we have the three main effects (Fee level, Scope and Supervision) but then we also have pairwise interactions between these variables and an interaction among all three. From a statistical modeling perspective, we are now essentially fitting the model 
 
 $$Y_{ijkm} = \mu + \alpha_i + \beta_j + \gamma_k + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk} + (\alpha\beta\gamma)_{ijk} + \varepsilon_{ijkm}$$
 
@@ -65,7 +65,7 @@ As you can see this model has grown greater compare to to the two-way ANOVA exam
 
 **What will happen if there are four factors?**
 
-In general, if an experiment consisted of $n$ factors, we would potentially have $2^n - 1$ terms in our model, thus with four factors you are looking at 15 terms in your ANOVA decomposion. With five factors, 31 terms. This will quickly grow out of control.
+In general, if an experiment consisted of $n$ factors, we would potentially have $2^n - 1$ terms in our model, thus with four factors you are looking at 15 terms in your ANOVA decomposition. With five factors, 31 terms. This will quickly grow out of control.
 
 Fortunately, for higher order factor problems there are statisticians available to help formulate a better design and potentially *optimize* some of the variables of study. We leave out the details of these topics in this Introductory text but want to provide insight that these advanced designs and analyses can be done. Please consult a statistician before your experiment if you are planning a complex design!!
 
@@ -101,20 +101,20 @@ In the previous two chapters, you have seen different experimental designs where
 
 *Why is that important to note?*  Because, as you should realize by now, that assures that the observations in the data are all independent.  It will be elaborated upon later in this course how crucial this assumption is to the validity of any statistical inferences we draw from the tests/CIs we derive.  In fact, independence is more important to inference validity than either normality or constant variance assumptions.
 
-Now, contrast this with the **paired $t$-test** (see section 2.4).  The example we saw there involved giving a sample of 10 mice a dietary treatment drug in order to study its effect on the weight of the mice. Let’s think of that problem from a design of experiments point of view: what was/were the factor(s) that were manipulated by the researcher?
+Now, contrast this with the **paired $t$-test** (see section 2.4).  The example we saw there involved giving a sample of 10 mice a dietary treatment drug in order to study its effect on the weight of the mice. Let us think of that problem from a design of experiments point of view: what was/were the factor(s) that were manipulated by the researcher?
 
-* It wasn’t the diet!  Why? Because in the experiment, only one diet was studied: there was no “comparison” diet or placebo used to form a basis for comparison.  As such, the dietary treatment in that problem was not a variable at all: it was a constant.
+* It was not the diet!  Why? Because in the experiment, only one diet was studied: there was no “comparison” diet or placebo used to form a basis for comparison.  As such, the dietary treatment in that problem was not a variable at all: it was a constant.
 * So what is left? The answer is TIME. The researcher measured weight at two time points on each mouse (experimental unit): [1] just before the start of the diet, and [2] three months later.  The factor here is time, and it has two levels. Time is a **within-subject factor**.
 
 In a designed experiment that involves several measurements made on the same experimental unit over time, the design is called a **repeated measures design**.
 
-The important thing to recognize here is that each mouse provided two observations, not one.  It stands to reason that *what a particular subject’s weight is after three months might have something to do with (i.e. be related to) what their starting weight was before the diet*.   That’s the layman’s way of saying that the measurements within a subject are **not independent** (i.e. the observations are correlated).  If in any analysis we ignored this basic truth, that analysis would be seriously flawed.
+The important thing to recognize here is that each mouse provided two observations, not one.  It stands to reason that *what a particular subject’s weight is after three months might have something to do with (i.e. be related to) what their starting weight was before the diet*.   That is the layman’s way of saying that the measurements within a subject are **not independent** (i.e. the observations are correlated).  If in any analysis we ignored this basic truth, that analysis would be seriously flawed.
 
 So how did we handle this before?  A simple strategy which is common with paired data comparisons is to calculate each subject’s difference score (yielding a single difference measurement per subject) and then performing a one-sample $t$-test on the differences.  Each difference score is independent, because each came from a different randomly chosen subject.  This is what was done in the paired $t$-test analysis in section 2.4.  Check back and remind yourself of this.
 
 ### Blocks revisited: an approach to handling within-subjects factors
 
-The notion and purpose of blocking in an experimental design was introduced in section 3.1.  If you recall that witty definition of blocks as relatively homogenously sets of experimental material, it may occur to you that subjects can serve as blocks.  In fact, this was already stated in section 3.1.  What this means for us now is that using a block design approach in analysis is a way to handle correlated (non-independent) observations such as in the paired $t$-test problem above.  We illustrate that here.
+The notion and purpose of blocking in an experimental design was introduced in section 3.1.  If you recall that witty definition of blocks as relatively homogeneously sets of experimental material, it may occur to you that subjects can serve as blocks.  In fact, this was already stated in section 3.1.  What this means for us now is that using a block design approach in analysis is a way to handle correlated (non-independent) observations such as in the paired $t$-test problem above.  We illustrate that here.
 
 **Example.** 10 mice received a dietary treatment during 3 months. We want to know whether the dietary treatment has an impact on the weight of the mice. To answer to this question, the weight of the 20 mice has been measured before and after the treatment and is in the file `mice.csv`. Below is some code to quickly look at the data:
 
@@ -128,7 +128,7 @@ mice <- read.csv("miceWeighttallform.csv")
 head(mice)
 ```
 
-Note the difference in the layout of the data here as compared to the file miceWeightwideform.csv used in the paired $t$-test in section 2.4.  The data here is in what is called “tall mode”: each observation occupies a single row of the data file now, and there is a new variable (id) that identifies which subject every observation belongs to. The variable group refers to the time factor.
+Note the difference in the layout of the data here as compared to the file `miceWeightwideform.csv` used in the paired $t$-test in section 2.4.  The data here is in what is called “tall mode”: each observation occupies a single row of the data file now, and there is a new variable (id) that identifies which subject every observation belongs to. The variable group refers to the time factor.
 
 We will analyze this same data (addressing the same research question) by using a **block design approach**:
 
@@ -137,12 +137,12 @@ mice.block.aov <- aov(weight ~ factor(id) + group, data=mice)
 summary(mice.block.aov)
 ```
 
-Look at the F-test for the time factor (labeled group here).  This is identical to the result of the paired t-test in section 2.4 (F = 436.11, df1 = 1, df2 = 9, p-value = 6.2$\times 10^{-9}$).  
+Look at the $F$-test for the time factor (labeled group here).  This is identical to the result of the paired t-test in section 2.4 ($F$ = 436.11, $\textrm{df}_1$ = 1, $\textrm{df}_2$ = 9, $p$-value $\approx 6.2\times 10^{-9}$).  
 
-*How does the block approach work here?*  You’ll note that the test of group (the within subjects effect) uses the residual effect as the error term.  Because the blocks are accounted for in the model (and here, the blocks constitutes the overall between-mice variability source), the only variation left over for the “residuals” is the variability due to the within-mouse differences.  In essence, there are **two components** to the random error now:
+*How does the block approach work here?*  You will note that the test of group (the within subjects effect) uses the residual effect as the error term.  Because the blocks are accounted for in the model (and here, the blocks constitutes the overall between-mice variability source), the only variation left over for the “residuals” is the variability due to the within-mouse differences.  In essence, there are **two components** to the random error now:
 
 * Aggregated variability between mice (block effect)
-* Remaining unexplained (random) variability after accounting for aggregate mouse-to-mouse differences and aggregated time-to-time differences.  We’ll call this leftover stuff “pure” error.
+* Remaining unexplained (random) variability after accounting for aggregate mouse-to-mouse differences and aggregated time-to-time differences.  We will call this leftover stuff “pure” error.
 
 For a correct analysis, it is important that each factor of interest in the study be tested against the proper component of the error.  Here, **we test a within-subjects effect against the random error component dealing with “pure” random error**.
 
@@ -219,7 +219,7 @@ chol.summary <- chol_tall %>%
 kable(chol.summary)
 ```
 
-We generally observe that cholesterol levels with margarine A appear lower than with margarine B.  Also, there does appear to be some reduction in cholesterol level using both products: however, there also appears to be more unexplained variability (“noise”) in the cholesterol measurements under margarine A.  We can further check this using some data visualizations.  First let’s try boxplots as seen in Figure \@ref{fig:ch4-7}.
+We generally observe that cholesterol levels with margarine A appear lower than with margarine B.  Also, there does appear to be some reduction in cholesterol level using both products: however, there also appears to be more unexplained variability (“noise”) in the cholesterol measurements under margarine A.  We can further check this using some data visualizations.  First let us try boxplots as seen in Figure \@ref(fig:ch4-7).
 
 ```{r ch4-7, fig.align='center', fig.cap='Boxplot distribution of the Cholesterol level as a function of Treatment and Time of measurement.',out.width='100%', fig.asp=0.55}
 ggplot(chol_tall) +
@@ -229,7 +229,7 @@ ggplot(chol_tall) +
   ylab("Cholesterol level (mmol/L)")
 ```
 
-We see in Figure \@ref{fig:ch4-7} that perhaps cholesterol levels are generally more consistent under margarine B, and that it is just some outlier(s) that are the issue.  However, this plot does not reveal a crucial piece of information: **the responses are correlated over time**.  A better depiction would allow us to see how each individual subject’s cholesterol changed over the span of the experiment as seen in Figure \@ref{fig:ch4-8}.
+We see in Figure \@ref(fig:ch4-7) that perhaps cholesterol levels are generally more consistent under margarine B, and that it is just some outlier(s) that are the issue.  However, this plot does not reveal a crucial piece of information: **the responses are correlated over time**.  A better depiction would allow us to see how each individual subject’s cholesterol changed over the span of the experiment as seen in Figure \@ref(fig:ch4-8).
 
 ```{r ch4-8, fig.align='center', fig.cap='Profile plots of the Cholesterol level as a function of Treatment and Time of measurement.',out.width='100%', fig.asp=0.55}
 # Plot the individual-level cholesterol profiles
@@ -241,10 +241,10 @@ ggplot(chol_tall, aes(x=time.pt, y=chol.level, colour=Margarine, group=ID)) +
   ggtitle("Subject-level cholesterol profiles by Margarine group")
 ```
 
-In Figure \@ref{fig:ch4-8} we see some things more clearly.  The general pattern over time appears to be pretty consistent for every experimental unit (visually, each “line” in the plot).  There are two individuals in margarine B whose cholesterol level seems unusually higher than the others: this might warrant further investigation. Now we provide an summary profile of the two treatments in \@ref(fig:ch4-9).
+In Figure \@ref(fig:ch4-8) we see some things more clearly.  The general pattern over time appears to be pretty consistent for every experimental unit (visually, each “line” in the plot).  There are two individuals in margarine B whose cholesterol level seems unusually higher than the others: this might warrant further investigation. Now we provide an summary profile of the two treatments in \@ref(fig:ch4-9).
 
 ```{r ch4-9, fig.align='center', fig.cap='Average Profile of Cholesterol level by Treatment in Time.', out.width='70%', fig.asp=0.55}
-# we inlude a position_dodge elements to avoid overlap
+# we include a position_dodge elements to avoid overlap
 ggplot(chol.summary, aes(x=time.pt, y=Mean, colour=Margarine)) + 
   geom_errorbar(aes(ymin=Mean-SE, ymax=Mean+SE), width=.1, position=position_dodge(0.3)) +
   geom_line(aes(group=Margarine), position=position_dodge(0.3)) +
@@ -256,7 +256,7 @@ ggplot(chol.summary, aes(x=time.pt, y=Mean, colour=Margarine)) +
 
 
 
-In the summary version (\@ref(fig:ch4-9)) we see that margarine A Cholesterol levels appear lower than margaine B. It is worth noting that the group assigned to margarine level A had lower cholesterol "before" the study began. 
+In the summary version (\@ref(fig:ch4-9)) we see that margarine A Cholesterol levels appear lower than margarine B. It is worth noting that the group assigned to margarine level A had lower cholesterol "before" the study began. 
 
 #### Preliminary inferential analysis
 
@@ -268,11 +268,11 @@ BeforeDataOnly <- chol_tall %>%
 t.test(chol.level ~ Margarine, data=BeforeDataOnly, var.equal=TRUE)
 ```
 
-The result is not statistically significant (p-value = 0.1932).  That is actually good news here! Although visually it appears different it is not statistically different. 
+The result is not statistically significant ($p$-value = 0.1932).  That is actually good news here! Although visually it appears different it is not statistically different. 
 
 #### A conditional repeated measures analysis
 
-To get started, let’s do a within-subjects (repeated measures) ANOVA on the Margarine A data only.  The goal here would be to see if there is an effective reduction in mean cholesterol over the eight-week trial by using margarine A.  Here goes: follow the code!
+To get started, lets do a within-subjects (repeated measures) ANOVA on the Margarine A data only.  The goal here would be to see if there is an effective reduction in mean cholesterol over the eight-week trial by using margarine A.  Here goes: follow the code!
 
 ```{r ch4-11}
 MargarineA <- chol_tall %>% 
@@ -281,7 +281,7 @@ RMaov_MargA <- aov(chol.level ~ time.pt + Error(factor(ID)/time.pt), data=Margar
 summary(RMaov_MargA)
 ```
 
-The test of interest is labeled time.pt.  It is significant (F = 106.3, df1 = 2, df2 = 16, p-value = 5.7 × 10-10).  What this means is that, using Margarine A, there is significant evidence to conclude that the *true mean cholesterol level differs between at least two of the time points*.  Of course, that result doesn’t mean that the margarine is effective at reducing cholesterol levels.  All it means is that the mean cholesterol level is changing at some point over the experiment.  Since there are three time points, a multiple comparison procedure is warranted with the output below and in Figure \@ref(fig:ch4-12).
+The test of interest is labeled time.pt.  It is significant ($F$ = 106.3, $\textrm{df}_1$ = 2, $\textrm{df}_2$ = 16, $p$-value = $5.7 \times 10^{-10}$).  What this means is that, using Margarine A, there is significant evidence to conclude that the *true mean cholesterol level differs between at least two of the time points*.  Of course, that result does not mean that the margarine is effective at reducing cholesterol levels.  All it means is that the mean cholesterol level is changing at some point over the experiment.  Since there are three time points, a multiple comparison procedure is warranted with the output below and in Figure \@ref(fig:ch4-12).
 
 ```{r ch4-12, fig.align='center', fig.cap='Comparing the effects of time within the Margarine A treatment groupu. We see there is no statistical difference between 4 and 8 weeks after treatment begins.', out.width='70%', fig.asp=0.55}
 MargA.mc <- emmeans(RMaov_MargA, ~ time.pt)
@@ -289,7 +289,7 @@ contrast(MargA.mc, "pairwise")
 plot(contrast(MargA.mc, "pairwise"))
 ```
 
-The significant reductions in mean cholesterol level under Margarine A occurs right after the start of the experiment.  The mean cholesterol level is reduced by 0.485 (SE = 0.041) by week 4 (p-value < 0.0001); and by 0.546 (SE = 0.041) by week 8 (p-value < 0.0001).  There is no appreciable change in mean cholesterol level between weeks 4 and 8 (p-value = 0.3229).
+The significant reductions in mean cholesterol level under Margarine A occurs right after the start of the experiment.  The mean cholesterol level is reduced by 0.485 (SE = 0.041) by week 4 ($p$-value < 0.0001); and by 0.546 (SE = 0.041) by week 8 ($p$-value < 0.0001).  There is no appreciable change in mean cholesterol level between weeks 4 and 8 ($p$-value = 0.3229).
 
 #### Full analysis: Formal Comparison of Margarines
 
@@ -301,7 +301,7 @@ RMaov_all <- aov(chol.level ~ Margarine + time.pt + Margarine:time.pt +
 summary(RMaov_all)
 ```
 
-As with the factorials models before, the first thing we must check is the significance of the interaction term.  If this is significant, it means that the effect of time on the mean cholesterol is different between the two margarines.  That is the case here (F = 4.777, df1 = 2, df2 = 32, $p$-value = 0.0153).  As a result, we should do our multiple comparisons **by conditioning on one of the two factors**.  Experimental context will dictate which of the two factors is the more reasonable to condition on.  Here, I choose to condition on Margarine group, so I will get a time-based comparison of mean cholesterol level, but specific to each Margarine group:
+As with the factorials models before, the first thing we must check is the significance of the interaction term.  If this is significant, it means that the effect of time on the mean cholesterol is different between the two margarines.  That is the case here ($F$ = 4.777, $\textrm{df}_1$ = 2, $\textrm{df}_2$ = 32, $p$-value = 0.0153).  As a result, we should do our multiple comparisons **by conditioning on one of the two factors**.  Experimental context will dictate which of the two factors is the more reasonable to condition on.  Here, I choose to condition on Margarine group, so I will get a time-based comparison of mean cholesterol level, but specific to each Margarine group:
 
 ```{r ch4-14, fig.align='center', fig.cap='Graphical exploration of all treatments noting that there is no statistical difference between 4 and 8 weeks after the study has began regardless of Margarine treatment.', out.width='70%', fig.asp=0.75}
 RMall.mc <- emmeans(RMaov_all, ~ time.pt | Margarine)

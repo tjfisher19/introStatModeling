@@ -57,9 +57,9 @@ knitr::include_graphics(c('author_Hughes.jpg', 'author_Fisher.jpg') )
 ```
 
 
-**Michael R. Hughes** is an instructor and manager of the statistical consulting center at Miami University. He has an M.S. in Statistics from Miami University and typically teaches the nonparametric, statistical modeling and data practicum courses. He spends his free time snuggling up to a roaring fireplace with the most recent texts, and loves long walks on the beach thinking about the latest modeling techniques and applications. He seeks a ambitous group of students who wish to be taught the subject of statistical modeling. 
+**Michael R. Hughes** is an instructor and manager of the statistical consulting center at Miami University. He has a B.S.\ in Mathematics and Statistics ('85) and an M.S.\ in Statistics ('87) from Miami University and typically teaches the nonparametric, statistical modeling and data practicum courses. He spends his free time snuggling up to a roaring fireplace with the most recent texts, and loves long walks on the beach thinking about the latest modeling techniques and applications. He seeks a ambitous group of students who wish to be taught the subject of statistical modeling. 
 
-**Thomas J. Fisher** is a Pisces who enjoys hockey and hiking. He has a PhD in Mathematical Sciences from Clemson University and a B.S. in Computer Science from the University of Maryland, Baltimore County. He has taught a wide-range of courses from *intro stat* to graduate-level probability and inference. When not teaching Statistical modeling, you'll most likely find him teaching one of the coding courses or skating in the Goggin Ice Center. 
+**Thomas J. Fisher** is a Pisces who enjoys hockey and hiking. He has a PhD in Mathematical Sciences ('09) from Clemson University and a B.S. in Computer Science ('03) from the University of Maryland, Baltimore County. He has taught a wide-range of courses from *intro stat* to graduate-level probability and inference. When not teaching Statistical modeling, you'll most likely find him teaching one of the coding courses or skating in the Goggin Ice Center. 
 
 # Important Preliminary Review{-}
 
@@ -133,7 +133,7 @@ library(lindia)
 library(car)
 library(leaps)
 library(caret)
-options(digits=6)
+options(digits=6, dplyr.summarise.inform = FALSE)
 ```
 
 ## Help with RMarkdown{-}

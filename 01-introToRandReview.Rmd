@@ -20,7 +20,7 @@ Good statistical practice demands that we collect **sample** data from the **pop
 
 There are two issues that arise with respect to variation in such data:
 
-1. Measurements of the same attribute will vary from sample member to sample member. This is natural and is to be expected. This *random* (or *stochastic*) component of a sample is typically modeled through probabilitistic assumptions (think the *Normal* distribution from your Intro Stat course).
+1. Measurements of the same attribute will vary from sample member to sample member. This is natural and is to be expected. This *random* (or *stochastic*) component of a sample is typically modeled through probabilistic assumptions (think the *Normal* distribution from your Intro Stat course).
 
 2. Any summary characteristic computed from the sample (known as a sample **statistic**) will only be an estimate of the corresponding summary characteristic for the population as a whole (known as a population **parameter**), since only a small subset of the population is used in its calculation. Thus, *sample statistics will vary from their corresponding population parameters*. In fact, different samples from the same population will produce different estimates of the same parameter, so sample statistics also vary from sample to sample.
 
@@ -43,7 +43,7 @@ Look before you leap!
 
 **Problem formulation** - To attack a problem correctly, you should:
 
-1. **Understand the background**. Statisticians often work in collaboration with researchers in other disciplines and need to understand something about the subject area. You should regard this as an opportunity to learn something new. In essense, a Statistician must be a renaissance (wo)man. Some level of *elementary* expertises is needed in the subject area of study.
+1. **Understand the background**. Statisticians often work in collaboration with researchers in other disciplines and need to understand something about the subject area. You should regard this as an opportunity to learn something new. In essence, a Statistician must be a renaissance (wo)man. Some level of *elementary* expertise is needed in the subject area of study.
 
 2. **Understand the objectives**. Again, often you will be working with a collaborator who may not be clear about what the objectives are. Beware of conducting "fishing expeditions": if you look hard enough, you'll almost always find something, but that something may just be a coincidence of no consequence. Also, sometimes an analysis far more complicated than what is really needed is performed. You may find sometimes that simple descriptive statistics are all that are really required. Even if a more complex analysis is necessary, simple descriptive statistics can provide a valuable supplement.
 
@@ -336,7 +336,7 @@ Because everything varies, determining that things vary is simply not very inter
 Knowing the amount of variation that we would expect to occur just by chance alone when nothing scientifically interesting is going on is key. 
 If we then observe bigger differences than we would expect by chance alone, we say the result is statistically significant. If instead we observe differences no larger than we would expect by chance alone, we say the result is not statistically significant.  
 
-Although covered in your introductory statistics course, due to importance we review measuing the variance of a sample.
+Although covered in your introductory statistics course, due to importance we review measuring the variance of a sample.
 
 
 **Variance**
@@ -392,7 +392,7 @@ In this class we will be using `dplyr` for data handling. We can pipe (`%>%`) ou
 uadata %>% 
   pivot_longer(everything()) %>% 
   group_by(name) %>%
-  summarize_all(funs(mean, sd, min, median, max))
+  summarize_all(list(mean, sd, min, median, max))
 ```
 
 For now ignore the code that is used, we will describe the `pivot_longer()` and `group_by()` functions below.
@@ -403,7 +403,7 @@ The median ACT score for entering freshman was 25, and and the range of ACT scor
 
 This display introduces a few keys points you need to be aware of:
 
-* We have the code spread across 4 lines with most lines ending with the piping operator `%>%`. This is done (and recommended) for readability. When performing an analysis, you often will revist the code at a later time. Readable code is paramount to reproducibility.
+* We have the code spread across 4 lines with most lines ending with the piping operator `%>%`. This is done (and recommended) for readability. When performing an analysis, you often will revisit the code at a later time. Readable code is paramount to reproducibility.
 * Since we applied the command to the entire data frame (`everything()`), we also see numeric summaries of the variable `id`, even though it is meaningless to do so. (note: just because a computer outputs it, that doesn't mean it's useful)
 * If you look carefully, you'll see that `year` is treated as a number (e.g. 1996, 1997, etc.).
 However, that doesn't necessarily mean it should be treated as a numeric variable! 
@@ -436,7 +436,7 @@ uadata %>%
   select_if(is.numeric) %>%
   pivot_longer(everything()) %>% 
   group_by(name) %>%
-  summarize_all(funs(mean, sd, min, median, max))
+  summarize_all(list(mean, sd, min, median, max))
 ```
 
 For the categorical variables, the main numeric measure we can consider is the count (or proportions) of each category. To do this in R, we want to tell us to treat each category as a *group* and then count within the group. We will `group_by` the `year` and then within that year, count the number of observations. We also add a new variable (using `mutate`) that is the proportion.
@@ -499,7 +499,7 @@ dim(uadata.tall)
 Take a minute and step through the above code and output to understand what the code did.
 The data is now in a *tall* format.
 We can now utilize the `ggplot` package for more advanced plotting. 
-Here we want to draw a density plot for each `var_names` in the dataset `uadata` but we want a different plot for each $variable$ (act, gpa.endyr1, hs.pct).
+Here we want to draw a density plot for each `var_names` in the dataset `uadata` but we want a different plot for each $variable$ (`act`, `gpa.endyr1`, and `hs.pct`).
 Figure \@ref(fig:ch1-20) provides the result for the below code.
 
 ```{r ch1-20, fig.align='center', fig.cap='Side-by-side density plots showing the relative distributions of `act`, `gpa.endyr1` and `hs.pct`.', , out.width='70%', fig.asp=0.55}
@@ -546,7 +546,7 @@ We see here the code is similar to the examples above except now we call the `ge
 
 Here we construct side-by-side boxplots by year for each of the three numeric variables in the data frame. We utilize the taller or longer format of the admissions data in `uadata.tall` and the resulting plot is in Figure \@ref(fig:ch1-23).
 
-```{r ch1-23, fig.align='center', fig.cap='Side-by-side Box-whiskers plots showing the distributinos of the variables `act`, `gpa.endyr1` and `hs.pct` for each year in the `uadata` dataset.', out.width='75%'}
+```{r ch1-23, fig.align='center', fig.cap='Side-by-side Box-whiskers plots showing the distributions of the variables `act`, `gpa.endyr1` and `hs.pct` for each year in the `uadata` dataset.', out.width='75%'}
 ggplot(uadata.tall) + 
   geom_boxplot(aes(x=year, y=value) ) +
   facet_grid(var_names~., scales="free_y") + 
@@ -616,7 +616,7 @@ $$t_0 = \frac{\bar{x}-\mu}{{SE}_{\bar{x}}}$$
  
 counts up the number of standard error units between the true value of $\mu$ and its sample estimate $\bar{x}$; it can be thought of as the standardized distance between a true mean value and its sample mean estimate. If the original population was normally distributed, then the quantity $t_0$ will possess the $t$-distribution with $n - 1$ degrees of freedom. Degrees of freedom is the only parameter of a $t$-distribution.  Notationally, we indicate this by writing $t_0 \sim t(df)$.
 
-$t$-distributions look a lot like the standard normal distribution, $N(0, 1)$: they both center at 0 and are symmetric and bell-shaped (see below).  The key difference is due to the fact that the quantity $t$ includes two sample summaries in its construction: the sample mean $\bar{x}$, and $SE_{\bar{x}}$, which incorporates the sample standard deviation $s$.  Because of this, $t$ is more variable than $N(0, 1)$.  However, as $n$ (and hence degrees of freedom) increases, $s$ becomes a better estimate of the true population standard deviation, so the distinction ultimately vanishes with larger samples. This can all be vizualized in Figure \@ref(fig:ch1-26).
+$t$-distributions look a lot like the standard normal distribution, $N(0, 1)$: they both center at 0 and are symmetric and bell-shaped (see below).  The key difference is due to the fact that the quantity $t$ includes two sample summaries in its construction: the sample mean $\bar{x}$, and $SE_{\bar{x}}$, which incorporates the sample standard deviation $s$.  Because of this, $t$ is more variable than $N(0, 1)$.  However, as $n$ (and hence degrees of freedom) increases, $s$ becomes a better estimate of the true population standard deviation, so the distinction ultimately vanishes with larger samples. This can all be visualized in Figure \@ref(fig:ch1-26).
 
 ```{r ch1-26, echo=FALSE, fig.align='center', fig.cap='Overlayed distribution functions showing the relationship between a standard normal distribution and that of a $t$ distribution with 3, 5 and 10 degrees of freedom. As the degrees of freedom increases, the $t$ distribution becomes more *normal*', out.width='70%', fig.asp=0.55}
 x.val <- seq(-4, 4, 0.01)
@@ -644,7 +644,7 @@ The $t$-distribution is usually the relevant sampling distribution when we use a
 
 A key concept from your introductory statistics course that builds off sampling distribution theory is the comparison of the mean from two populations based on the sample means using a two-sample *t*-test. Consider testing
 $$H_0:\ \mu_A = \mu_B ~~~\textrm{versus}~~~ H_A:\ \mu_A <\neq> \mu_B$$
-where the notation $<\neq>$ represents one of the common alternative hypotheses from your introdoctory statistics course and $\mu_A$ is the population mean from population $A$ and $\mu_B$ is the population mean from population $B$. We statistically test this hypothesis via
+where the notation $<\neq>$ represents one of the common alternative hypotheses from your introductory statistics course and $\mu_A$ is the population mean from population $A$ and $\mu_B$ is the population mean from population $B$. We statistically test this hypothesis via
 $$t_0 = \frac{\bar{x}_A - \bar{x}_B}{{SE}_{\bar{x}_A-\bar{x}_B}}$$
 
 where ${SE}_{\bar{x}_A-\bar{x}_B}$ is the standard error of the difference of sample means $\bar{x}_A$ and $\bar{x}_B$. It can be estimated in one of two ways (depending if we assume the population variances are equal or not) and we reference your intro stat class for details (pooled versus non-pooled variance). In R, we can perform this test, and construct the associated $(1-\alpha)100\%$ confidence interval for $\mu_A-\mu_B$,
@@ -661,7 +661,7 @@ uadata.trim <- uadata %>%
   filter(year %in% c(1996, 2000) )
 ```
 
-Here we filter the `uadata` so that only years in the vector 1998, 2000 are included. Now that we have a proper subset of the data, we can compare the ACT scores between the two years and build a 98\% confidence interval for the mean difference.
+Here we filter the `uadata` so that only years in the vector 1996, 2000 are included. Now that we have a proper subset of the data, we can compare the ACT scores between the two years and build a 98\% confidence interval for the mean difference.
 
 ```{r ch1-28}
 t.test(act ~ year, data=uadata.trim, conf.level=0.98, 
@@ -673,7 +673,7 @@ We are 98\% confident that the mean difference between 1996 ACT scores and 2000 
 A few things to note about the code above. 
 We use the notation `act ~ year`, this tells R that the `act` scores are a function of `year`. 
 We specify the data set to be used to perform the test (`data=uadata.trim`). 
-We specify the confidence level (by detault it is 0.95) and the alternative hypothesis (by default it is a not-equal test). 
+We specify the confidence level (by default it is 0.95) and the alternative hypothesis (by default it is a not-equal test). 
 Lastly, we set `var.equal=TRUE` so the standard error (and degrees of freedom) are calculated under the assumption that the variance of the two populations is equal (pooled variance). 
 
 

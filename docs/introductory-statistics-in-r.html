@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 1 Introductory Statistics in R | Introduction to Statistical Modeling</title>
+  <meta name="description" content="Covers Regression and elements of Design of Experiments in R using the tidyverse." />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 1 Introductory Statistics in R | Introduction to Statistical Modeling" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Covers Regression and elements of Design of Experiments in R using the tidyverse." />
+  <meta name="github-repo" content="tjfisher19/introStatModeling" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 1 Introductory Statistics in R | Introduction to Statistical Modeling" />
+  
+  <meta name="twitter:description" content="Covers Regression and elements of Design of Experiments in R using the tidyverse." />
+  
+
+<meta name="author" content="Michael Hughes and Thomas Fisher" />
+
+
+<meta name="date" content="2021-12-16" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="important-preliminary-review.html"/>
+<link rel="next" href="introduction-to-statistical-modeling-and-designed-experiments.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Inroduction to Statistical Modeling</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="" data-path="about-the-authors.html"><a href="about-the-authors.html"><i class="fa fa-check"></i>About the Authors</a></li>
+<li class="chapter" data-level="" data-path="important-preliminary-review.html"><a href="important-preliminary-review.html"><i class="fa fa-check"></i>Important Preliminary Review</a>
+<ul>
+<li class="chapter" data-level="" data-path="important-preliminary-review.html"><a href="important-preliminary-review.html#statistics-background"><i class="fa fa-check"></i>Statistics background</a></li>
+<li class="chapter" data-level="" data-path="important-preliminary-review.html"><a href="important-preliminary-review.html#software"><i class="fa fa-check"></i>Software</a></li>
+<li class="chapter" data-level="" data-path="important-preliminary-review.html"><a href="important-preliminary-review.html#add-on-packages"><i class="fa fa-check"></i>Add-on packages</a></li>
+<li class="chapter" data-level="" data-path="important-preliminary-review.html"><a href="important-preliminary-review.html#help-with-rmarkdown"><i class="fa fa-check"></i>Help with RMarkdown</a></li>
+<li class="chapter" data-level="" data-path="important-preliminary-review.html"><a href="important-preliminary-review.html#managing-your-work-in-r"><i class="fa fa-check"></i>Managing your work in R</a></li>
+<li class="chapter" data-level="" data-path="important-preliminary-review.html"><a href="important-preliminary-review.html#data-in-this-text"><i class="fa fa-check"></i>Data in this text</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html"><i class="fa fa-check"></i><b>1</b> Introductory Statistics in R</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#goals-of-a-statistical-analysis"><i class="fa fa-check"></i><b>1.1</b> Goals of a statistical analysis</a></li>
+<li class="chapter" data-level="1.2" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#before-you-begin-an-analysis"><i class="fa fa-check"></i><b>1.2</b> Before you begin an analysis</a></li>
+<li class="chapter" data-level="1.3" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#data-frames"><i class="fa fa-check"></i><b>1.3</b> Data frames</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#built-in-data"><i class="fa fa-check"></i><b>1.3.1</b> Built-in data</a></li>
+<li class="chapter" data-level="1.3.2" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#types-of-data"><i class="fa fa-check"></i><b>1.3.2</b> Types of Data</a></li>
+<li class="chapter" data-level="1.3.3" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#importing-datasets-into-r"><i class="fa fa-check"></i><b>1.3.3</b> Importing datasets into R</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#referencing-data-from-inside-a-data-frame"><i class="fa fa-check"></i><b>1.4</b> Referencing data from inside a data frame</a></li>
+<li class="chapter" data-level="1.5" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#missing-values-and-computer-arithmetic-in-r"><i class="fa fa-check"></i><b>1.5</b> Missing values and computer arithmetic in R</a></li>
+<li class="chapter" data-level="1.6" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#exploratory-data-analysis-eda"><i class="fa fa-check"></i><b>1.6</b> Exploratory Data Analysis (EDA)</a>
+<ul>
+<li class="chapter" data-level="1.6.1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#numeric-summaries"><i class="fa fa-check"></i><b>1.6.1</b> Numeric Summaries</a></li>
+<li class="chapter" data-level="1.6.2" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#numeric-summaries-in-r"><i class="fa fa-check"></i><b>1.6.2</b> Numeric Summaries in R</a></li>
+<li class="chapter" data-level="1.6.3" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#graphical-summaries"><i class="fa fa-check"></i><b>1.6.3</b> Graphical Summaries</a></li>
+<li class="chapter" data-level="1.6.4" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#descriptive-statistics-and-visualizations-by-levels-of-a-factor-variable"><i class="fa fa-check"></i><b>1.6.4</b> Descriptive statistics and visualizations by levels of a factor variable</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#sampling-distributions-describing-how-a-statistic-varies"><i class="fa fa-check"></i><b>1.7</b> Sampling distributions: describing how a statistic varies</a></li>
+<li class="chapter" data-level="1.8" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#two-sample-inference"><i class="fa fa-check"></i><b>1.8</b> Two-sample inference</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html"><i class="fa fa-check"></i><b>2</b> Introduction to Statistical Modeling and Designed Experiments</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#statistical-analyses-is-modeling"><i class="fa fa-check"></i><b>2.1</b> Statistical Analyses is Modeling</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#observational-studies-versus-designed-experiments"><i class="fa fa-check"></i><b>2.2</b> Observational Studies versus designed experiments</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#observational-studies"><i class="fa fa-check"></i><b>2.2.1</b> Observational Studies</a></li>
+<li class="chapter" data-level="2.2.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#designed-experiments"><i class="fa fa-check"></i><b>2.2.2</b> Designed experiments</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#designed-experiement-vocabulary"><i class="fa fa-check"></i><b>2.3</b> Designed experiement vocabulary</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#what-is-an-experiment"><i class="fa fa-check"></i><b>2.3.1</b> What is an experiment?</a></li>
+<li class="chapter" data-level="2.3.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#analysis-of-variance"><i class="fa fa-check"></i><b>2.3.2</b> Analysis of variance</a></li>
+<li class="chapter" data-level="2.3.3" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#elements-of-a-designed-experiment"><i class="fa fa-check"></i><b>2.3.3</b> Elements of a designed experiment</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#paired-t-test"><i class="fa fa-check"></i><b>2.4</b> Paired <em>t</em>-test</a></li>
+<li class="chapter" data-level="2.5" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#one-way-anova"><i class="fa fa-check"></i><b>2.5</b> One-Way ANOVA</a></li>
+<li class="chapter" data-level="2.6" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#assumption-checking"><i class="fa fa-check"></i><b>2.6</b> Assumption Checking</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#independence"><i class="fa fa-check"></i><b>2.6.1</b> Independence</a></li>
+<li class="chapter" data-level="2.6.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#constant-variance"><i class="fa fa-check"></i><b>2.6.2</b> Constant Variance</a></li>
+<li class="chapter" data-level="2.6.3" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#checking-normality"><i class="fa fa-check"></i><b>2.6.3</b> Checking Normality</a></li>
+<li class="chapter" data-level="2.6.4" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#code-to-check-assumption"><i class="fa fa-check"></i><b>2.6.4</b> Code to check assumption</a></li>
+<li class="chapter" data-level="2.6.5" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#transforming-your-response"><i class="fa fa-check"></i><b>2.6.5</b> Transforming your response</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#follow-up-procedures-multiple-comparisons"><i class="fa fa-check"></i><b>2.7</b> Follow-up procedures – Multiple Comparisons</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#tukeys-hsd-method"><i class="fa fa-check"></i><b>2.7.1</b> Tukey’s HSD method</a></li>
+<li class="chapter" data-level="2.7.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#dunnett-multiple-comparisons"><i class="fa fa-check"></i><b>2.7.2</b> Dunnett multiple comparisons</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="multiple-factor-designed-experiments.html"><a href="multiple-factor-designed-experiments.html"><i class="fa fa-check"></i><b>3</b> Multiple Factor Designed Experiments</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="multiple-factor-designed-experiments.html"><a href="multiple-factor-designed-experiments.html#blocking"><i class="fa fa-check"></i><b>3.1</b> Blocking</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="multiple-factor-designed-experiments.html"><a href="multiple-factor-designed-experiments.html#data-structure-model-form-and-analysis-of-variance-of-a-randomized-block-design"><i class="fa fa-check"></i><b>3.1.1</b> Data structure, model form and analysis of variance of a Randomized Block Design</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="multiple-factor-designed-experiments.html"><a href="multiple-factor-designed-experiments.html#two-factor-designs"><i class="fa fa-check"></i><b>3.2</b> Two-factor Designs</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="multiple-factor-designed-experiments.html"><a href="multiple-factor-designed-experiments.html#analysis"><i class="fa fa-check"></i><b>3.2.1</b> Analysis</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="advanced-designs.html"><a href="advanced-designs.html"><i class="fa fa-check"></i><b>4</b> Advanced Designs</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="advanced-designs.html"><a href="advanced-designs.html#higher-order-factor-models"><i class="fa fa-check"></i><b>4.1</b> Higher order factor models</a></li>
+<li class="chapter" data-level="4.2" data-path="advanced-designs.html"><a href="advanced-designs.html#within-subject-designs"><i class="fa fa-check"></i><b>4.2</b> Within-subject designs</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="advanced-designs.html"><a href="advanced-designs.html#blocks-revisited-an-approach-to-handling-within-subjects-factors"><i class="fa fa-check"></i><b>4.2.1</b> Blocks revisited: an approach to handling within-subjects factors</a></li>
+<li class="chapter" data-level="4.2.2" data-path="advanced-designs.html"><a href="advanced-designs.html#a-more-involved-repeated-measures-case-study"><i class="fa fa-check"></i><b>4.2.2</b> A more involved repeated measures case study</a></li>
+<li class="chapter" data-level="4.2.3" data-path="advanced-designs.html"><a href="advanced-designs.html#further-study"><i class="fa fa-check"></i><b>4.2.3</b> Further study</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html"><i class="fa fa-check"></i><b>5</b> Introduction to Multiple Regression</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#regression-model"><i class="fa fa-check"></i><b>5.1</b> Regression Model</a></li>
+<li class="chapter" data-level="5.2" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#fitting-a-regression-model"><i class="fa fa-check"></i><b>5.2</b> Fitting a regression model</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#why-should-we-use-more-than-one-predictor"><i class="fa fa-check"></i><b>5.2.1</b> Why should we use more than one predictor?</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#interpreting-beta-parameter-estimates-in-mlr"><i class="fa fa-check"></i><b>5.3</b> Interpreting <span class="math inline">\(\beta\)</span>-parameter estimates in MLR</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#designed-experiments-1"><i class="fa fa-check"></i><b>5.3.1</b> Designed experiments</a></li>
+<li class="chapter" data-level="5.3.2" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#observational-studies-1"><i class="fa fa-check"></i><b>5.3.2</b> Observational studies</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html"><i class="fa fa-check"></i><b>6</b> Inference regarding Multiple Regression</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#assumption-checking-1"><i class="fa fa-check"></i><b>6.1</b> Assumption checking</a></li>
+<li class="chapter" data-level="6.2" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#overall-f-test-for-model-signifance"><i class="fa fa-check"></i><b>6.2</b> Overall <span class="math inline">\(F\)</span>-test for model signifance</a></li>
+<li class="chapter" data-level="6.3" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#individual-parameter-inference"><i class="fa fa-check"></i><b>6.3</b> Individual parameter inference</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#t-tests"><i class="fa fa-check"></i><b>6.3.1</b> <span class="math inline">\(t\)</span>-tests</a></li>
+<li class="chapter" data-level="6.3.2" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#confidence-intervals"><i class="fa fa-check"></i><b>6.3.2</b> Confidence Intervals</a></li>
+<li class="chapter" data-level="6.3.3" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#confidence-and-prediction-bands"><i class="fa fa-check"></i><b>6.3.3</b> Confidence and prediction bands</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#goodness-of-fit"><i class="fa fa-check"></i><b>6.4</b> Goodness-of-fit</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#coefficient-of-determination"><i class="fa fa-check"></i><b>6.4.1</b> Coefficient of determination</a></li>
+<li class="chapter" data-level="6.4.2" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#akaikes-information-criterion"><i class="fa fa-check"></i><b>6.4.2</b> Akaike’s Information Criterion</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html"><i class="fa fa-check"></i><b>7</b> More on multiple linear regression</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html#model-comparision-reduced-f-tests"><i class="fa fa-check"></i><b>7.1</b> Model comparision – Reduced <span class="math inline">\(F\)</span>-tests</a></li>
+<li class="chapter" data-level="7.2" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html#categorical-predictor-variables"><i class="fa fa-check"></i><b>7.2</b> Categorical Predictor Variables</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html#a-qualitative-predictor-with-two-levels"><i class="fa fa-check"></i><b>7.2.1</b> A qualitative predictor with two levels</a></li>
+<li class="chapter" data-level="7.2.2" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html#a-qualitative-predictor-with-more-than-two-levels"><i class="fa fa-check"></i><b>7.2.2</b> A qualitative predictor with more than two levels</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html#bridging-regression-and-designed-experiments-ancova"><i class="fa fa-check"></i><b>7.3</b> Bridging Regression and Designed Experiments – ANCOVA</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html#an-ancova-example-with-a-two-level-factor"><i class="fa fa-check"></i><b>7.3.1</b> An ANCOVA example with a two-level factor</a></li>
+<li class="chapter" data-level="7.3.2" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html#ancova-with-a-multi-level-factor"><i class="fa fa-check"></i><b>7.3.2</b> ANCOVA with a multi-level factor</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="model-building-considerations.html"><a href="model-building-considerations.html"><i class="fa fa-check"></i><b>8</b> Model Building Considerations</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="model-building-considerations.html"><a href="model-building-considerations.html#regression-assumptions-revisited"><i class="fa fa-check"></i><b>8.1</b> Regression assumptions revisited</a></li>
+<li class="chapter" data-level="8.2" data-path="model-building-considerations.html"><a href="model-building-considerations.html#violations-of-the-independence-assumption"><i class="fa fa-check"></i><b>8.2</b> Violations of the independence assumption</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="model-building-considerations.html"><a href="model-building-considerations.html#collecting-data-that-are-temporal-or-spatial-in-nature"><i class="fa fa-check"></i><b>8.2.1</b> Collecting data that are temporal or spatial in nature</a></li>
+<li class="chapter" data-level="8.2.2" data-path="model-building-considerations.html"><a href="model-building-considerations.html#pseudoreplication"><i class="fa fa-check"></i><b>8.2.2</b> Pseudoreplication</a></li>
+<li class="chapter" data-level="8.2.3" data-path="model-building-considerations.html"><a href="model-building-considerations.html#what-if-we-have-non-independent-errors"><i class="fa fa-check"></i><b>8.2.3</b> What if we have non-independent errors?</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="model-building-considerations.html"><a href="model-building-considerations.html#constant-variance-violations"><i class="fa fa-check"></i><b>8.3</b> Constant Variance Violations</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="model-building-considerations.html"><a href="model-building-considerations.html#box-cox-power-tranformations"><i class="fa fa-check"></i><b>8.3.1</b> Box-Cox Power Tranformations</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="model-building-considerations.html"><a href="model-building-considerations.html#normality-violations"><i class="fa fa-check"></i><b>8.4</b> Normality violations</a></li>
+<li class="chapter" data-level="8.5" data-path="model-building-considerations.html"><a href="model-building-considerations.html#violations-of-the-linearity-assumption"><i class="fa fa-check"></i><b>8.5</b> Violations of the linearity assumption</a></li>
+<li class="chapter" data-level="8.6" data-path="model-building-considerations.html"><a href="model-building-considerations.html#detecting-and-dealing-with-unusual-observations"><i class="fa fa-check"></i><b>8.6</b> Detecting and dealing with unusual observations</a></li>
+<li class="chapter" data-level="8.7" data-path="model-building-considerations.html"><a href="model-building-considerations.html#multicollinearity"><i class="fa fa-check"></i><b>8.7</b> Multicollinearity</a></li>
+<li class="chapter" data-level="8.8" data-path="model-building-considerations.html"><a href="model-building-considerations.html#standardizingPredictors"><i class="fa fa-check"></i><b>8.8</b> Scale changes</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="model-selection.html"><a href="model-selection.html"><i class="fa fa-check"></i><b>9</b> Model Selection</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="model-selection.html"><a href="model-selection.html#stepwise-procedures"><i class="fa fa-check"></i><b>9.1</b> Stepwise Procedures</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="model-selection.html"><a href="model-selection.html#backward-selection"><i class="fa fa-check"></i><b>9.1.1</b> Backward Selection</a></li>
+<li class="chapter" data-level="9.1.2" data-path="model-selection.html"><a href="model-selection.html#forward-selection"><i class="fa fa-check"></i><b>9.1.2</b> Forward selection</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="model-selection.html"><a href="model-selection.html#best-subsets"><i class="fa fa-check"></i><b>9.2</b> Best subsets</a></li>
+<li class="chapter" data-level="9.3" data-path="model-selection.html"><a href="model-selection.html#shrinkage-methods"><i class="fa fa-check"></i><b>9.3</b> Shrinkage Methods</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i><b>10</b> Model Validation</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="model-validation.html"><a href="model-validation.html#underfitting-vs.-overfitting-models"><i class="fa fa-check"></i><b>10.1</b> Underfitting vs. Overfitting Models</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="model-validation.html"><a href="model-validation.html#the-bias-variance-trade-off"><i class="fa fa-check"></i><b>10.1.1</b> The Bias-Variance Trade-off</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="model-validation.html"><a href="model-validation.html#validation-techniques"><i class="fa fa-check"></i><b>10.2</b> Validation Techniques</a></li>
+<li class="chapter" data-level="10.3" data-path="model-validation.html"><a href="model-validation.html#basic-validation-with-a-single-holdout-sample"><i class="fa fa-check"></i><b>10.3</b> Basic Validation with a single holdout sample</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="model-validation.html"><a href="model-validation.html#use-the-training-data-to-fit-and-select-models"><i class="fa fa-check"></i><b>10.3.1</b> Use the training data to fit and select models</a></li>
+<li class="chapter" data-level="10.3.2" data-path="model-validation.html"><a href="model-validation.html#model-training"><i class="fa fa-check"></i><b>10.3.2</b> Model training:</a></li>
+<li class="chapter" data-level="10.3.3" data-path="model-validation.html"><a href="model-validation.html#model-validation-step"><i class="fa fa-check"></i><b>10.3.3</b> Model validation step:</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="model-validation.html"><a href="model-validation.html#hold-out-sample-validation-using-caret"><i class="fa fa-check"></i><b>10.4</b> Hold-out sample validation using <code>caret</code></a></li>
+<li class="chapter" data-level="10.5" data-path="model-validation.html"><a href="model-validation.html#leave-one-out-cross-validation-loocv"><i class="fa fa-check"></i><b>10.5</b> “Leave one out” Cross-Validation (LOOCV)</a></li>
+<li class="chapter" data-level="10.6" data-path="model-validation.html"><a href="model-validation.html#k-fold-cross-validation"><i class="fa fa-check"></i><b>10.6</b> <span class="math inline">\(k\)</span>-fold Cross-Validation</a></li>
+<li class="chapter" data-level="10.7" data-path="model-validation.html"><a href="model-validation.html#a-final-note"><i class="fa fa-check"></i><b>10.7</b> A final note</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="statistical-odds.html"><a href="statistical-odds.html"><i class="fa fa-check"></i><b>11</b> Statistical Odds</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="statistical-odds.html"><a href="statistical-odds.html#probability-versus-odds"><i class="fa fa-check"></i><b>11.1</b> Probability versus Odds</a></li>
+<li class="chapter" data-level="11.2" data-path="statistical-odds.html"><a href="statistical-odds.html#odds-ratios"><i class="fa fa-check"></i><b>11.2</b> Odds ratios</a></li>
+<li class="chapter" data-level="11.3" data-path="statistical-odds.html"><a href="statistical-odds.html#ideas-of-modeling-odds"><i class="fa fa-check"></i><b>11.3</b> Ideas of modeling odds</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>12</b> Logistic Regression</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="logistic-regression.html"><a href="logistic-regression.html#logistic-model"><i class="fa fa-check"></i><b>12.1</b> Logistic Model</a></li>
+<li class="chapter" data-level="12.2" data-path="logistic-regression.html"><a href="logistic-regression.html#fitting-interpreting-and-assessing-a-logistic-model"><i class="fa fa-check"></i><b>12.2</b> Fitting, Interpreting and assessing a logistic model</a></li>
+<li class="chapter" data-level="12.3" data-path="logistic-regression.html"><a href="logistic-regression.html#case-study---titanic-dataset"><i class="fa fa-check"></i><b>12.3</b> Case Study - Titanic Dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>13</b> Generalized Linear Models</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#poisson-regression"><i class="fa fa-check"></i><b>13.1</b> Poisson Regression</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#poisson-distribution"><i class="fa fa-check"></i><b>13.1.1</b> Poisson distribution</a></li>
+<li class="chapter" data-level="13.1.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#poisson-regression-development"><i class="fa fa-check"></i><b>13.1.2</b> Poisson Regression Development</a></li>
+<li class="chapter" data-level="13.1.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#example---tropical-cyclone-counts-in-the-north-atlantic"><i class="fa fa-check"></i><b>13.1.3</b> Example - Tropical Cyclone Counts in the North Atlantic</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#handling-overdispersion"><i class="fa fa-check"></i><b>13.2</b> Handling overdispersion</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#example-attendnace-records"><i class="fa fa-check"></i><b>13.2.1</b> Example – Attendnace Records</a></li>
+<li class="chapter" data-level="13.2.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#incorrect-poisson-model"><i class="fa fa-check"></i><b>13.2.2</b> Incorrect Poisson Model</a></li>
+<li class="chapter" data-level="13.2.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#a-quasi-poisson-approach"><i class="fa fa-check"></i><b>13.2.3</b> A quasi-Poisson approach</a></li>
+<li class="chapter" data-level="13.2.4" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#fitting-a-negative-binomial-regression"><i class="fa fa-check"></i><b>13.2.4</b> Fitting a Negative Binomial regression</a></li>
+<li class="chapter" data-level="13.2.5" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#picking-between-quasi-poisson-and-negative-binomial"><i class="fa fa-check"></i><b>13.2.5</b> Picking between Quasi-Poisson and Negative Binomial</a></li>
+<li class="chapter" data-level="13.2.6" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#infererence-on-predictor-variables"><i class="fa fa-check"></i><b>13.2.6</b> Infererence on predictor variables</a></li>
+<li class="chapter" data-level="13.2.7" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#plotting-fitted-model"><i class="fa fa-check"></i><b>13.2.7</b> Plotting fitted model</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to Statistical Modeling</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="introductory-statistics-in-r" class="section level1" number="1">
+<h1><span class="header-section-number">Chapter 1</span> Introductory Statistics in R</h1>
+<p>Before we begin our dive into Statistical Modeling we first review content from your introductory statistics course. The learning objective of this unit include:</p>
+<ul>
+<li>Review of the fundamental concepts of <em>populations</em>, <em>samples</em>, <em>parameters</em> and <em>statistics</em>.</li>
+<li>Review of exploratory and descriptive statistics: numerical quantities and graphics.</li>
+<li>An introduction and overview of the R software for statistical computing.</li>
+<li>Basic statistical inference through a two-sample <em>t</em>-test and confidence interval.</li>
+</ul>
+<div id="goals-of-a-statistical-analysis" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> Goals of a statistical analysis</h2>
+<p>The language R is our tool to facilitate investigations into data and the process of making sense of it.
+This is what the science of statistics is all about.</p>
+<p><strong>Statistics</strong> can be broadly defined as the study of variation.
+We collect <strong>sample</strong> data from a parent <strong>population</strong> of interest typically because, even though we are ultimately interested in characteristics about the <strong>population</strong>, it is unfeasible to collect data from every member of a <strong>population</strong>.
+Good statistical practice demands that we collect <strong>sample</strong> data from the <strong>population</strong> in such a manner so as to ensure that the <strong>sample</strong> is representative; i.e., it is not presenting a systematic bias in its representation.</p>
+<p>There are two issues that arise with respect to variation in such data:</p>
+<ol style="list-style-type: decimal">
+<li><p>Measurements of the same attribute will vary from sample member to sample member. This is natural and is to be expected. This <em>random</em> (or <em>stochastic</em>) component of a sample is typically modeled through probabilistic assumptions (think the <em>Normal</em> distribution from your Intro Stat course).</p></li>
+<li><p>Any summary characteristic computed from the sample (known as a sample <strong>statistic</strong>) will only be an estimate of the corresponding summary characteristic for the population as a whole (known as a population <strong>parameter</strong>), since only a small subset of the population is used in its calculation. Thus, <em>sample statistics will vary from their corresponding population parameters</em>. In fact, different samples from the same population will produce different estimates of the same parameter, so sample statistics also vary from sample to sample.</p></li>
+</ol>
+<p>This variation gives rise to the concept of uncertainty in any findings that we make about a population based on sample data.
+A meaningful statistical analysis helps us quantify this uncertainty.</p>
+<p>The <strong>goals</strong> of a statistical analysis typically are</p>
+<ul>
+<li>to make sense of data in the face of uncertainty.</li>
+<li>to meaningfully describe the patterns of variation in collected sample data, and use this information to make reliable inferences/generalizations about the parent population.</li>
+</ul>
+</div>
+<div id="before-you-begin-an-analysis" class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> Before you begin an analysis</h2>
+<p>Statistics starts with a problem, continues with the collection of data, proceeds with a data analysis, and then finishes with conclusions.
+It is a common mistake of inexperienced statisticians to plunge into a complex analysis without paying attention to what the objectives are, or even whether the data are appropriate for the proposed analysis.
+Look before you leap!</p>
+<p><strong>Problem formulation</strong> - To attack a problem correctly, you should:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Understand the background</strong>. Statisticians often work in collaboration with researchers in other disciplines and need to understand something about the subject area. You should regard this as an opportunity to learn something new. In essence, a Statistician must be a renaissance (wo)man. Some level of <em>elementary</em> expertise is needed in the subject area of study.</p></li>
+<li><p><strong>Understand the objectives</strong>. Again, often you will be working with a collaborator who may not be clear about what the objectives are. Beware of conducting “fishing expeditions”: if you look hard enough, you’ll almost always find something, but that something may just be a coincidence of no consequence. Also, sometimes an analysis far more complicated than what is really needed is performed. You may find sometimes that simple descriptive statistics are all that are really required. Even if a more complex analysis is necessary, simple descriptive statistics can provide a valuable supplement.</p></li>
+<li><p><strong>Translate the problem into statistical terms</strong>. This can be a challenging step and oftentimes requires creativity on the part of the statistician (in other words, not every problem fits into a neat little box like in an intro stats course!). Care must be taken at this step.</p></li>
+</ol>
+<p><strong>Data Collection</strong> - It is also vitally important to understand how the data was collected. Consider:</p>
+<ul>
+<li>Are the data observational or experimental? Are the data a “sample of convenience,” or were they obtained via a designed experiment or random sampling? How the data were collected has a crucial impact on what conclusions can be meaningfully made.</li>
+<li>Is there “non-response?” The data you don’t see may be just as important as the data you do see! This gets to the issue of a sample being representative of the intended target population.</li>
+<li>Are there missing values? This is a common problem that is troublesome and time consuming to deal with. Data that are “missing” according to some pattern are particularly troublesome.</li>
+<li>How are the data coded? In particular, how are the qualitative or categorical variables represented? This has important impact on the implementation of statistical methods in R.</li>
+<li>What are the units of measurement? Sometimes data is collected or represented using far more digits than are necessary. Consider rounding if this will help with the interpretation. For example, starting an R session with the command <code>options(digits=4)</code> will round all output to four digits.</li>
+<li>Beware of data entry errors. This problem is all too common, and is almost a certainty in any real dataset of at least moderate size. Perform some data sanity checks.</li>
+</ul>
+</div>
+<div id="data-frames" class="section level2" number="1.3">
+<h2><span class="header-section-number">1.3</span> Data frames</h2>
+<p>A statistical dataset in R is known as a data frame, or <code>data.frame</code>, and is a rectangular array of information (essentially a table or matrix).
+Rows of a data frame constitute different observations in the data, and the columns constitute different variables measured.</p>
+<p>Imagine we record the name, height and age of all the students in the class:
+the first column will record each students’ name, with the second column their height and third column their age.
+Each row corresponds to a particular student and each column a variable.</p>
+<div id="built-in-data" class="section level3" number="1.3.1">
+<h3><span class="header-section-number">1.3.1</span> Built-in data</h3>
+<p>R packages come bundled with many pre-entered datasets for exploration purposes.
+For example, here is the data frame <code>stackloss</code> from the <code>datasets</code> package (which loads automatically upon starting R):</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="introductory-statistics-in-r.html#cb2-1" aria-hidden="true" tabindex="-1"></a>stackloss</span></code></pre></div>
+<pre><code>##    Air.Flow Water.Temp Acid.Conc. stack.loss
+## 1        80         27         89         42
+## 2        80         27         88         37
+## 3        75         25         90         37
+## 4        62         24         87         28
+## 5        62         22         87         18
+## 6        62         23         87         18
+## 7        62         24         93         19
+## 8        62         24         93         20
+## 9        58         23         87         15
+## 10       58         18         80         14
+## 11       58         18         89         14
+## 12       58         17         88         13
+## 13       58         18         82         11
+## 14       58         19         93         12
+## 15       50         18         89          8
+## 16       50         18         86          7
+## 17       50         19         72          8
+## 18       50         19         79          8
+## 19       50         20         80          9
+## 20       56         20         82         15
+## 21       70         20         91         15</code></pre>
+<p>This data frame contains 21 observations on 4 different variables. Note the listing of the variable names, this is known as the <em>header</em>.</p>
+<p>Another famous dataset is the Edgar Anderson’s Iris data</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="introductory-statistics-in-r.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris, <span class="at">n=</span><span class="dv">10</span>)</span></code></pre></div>
+<pre><code>##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+## 1           5.1         3.5          1.4         0.2  setosa
+## 2           4.9         3.0          1.4         0.2  setosa
+## 3           4.7         3.2          1.3         0.2  setosa
+## 4           4.6         3.1          1.5         0.2  setosa
+## 5           5.0         3.6          1.4         0.2  setosa
+## 6           5.4         3.9          1.7         0.4  setosa
+## 7           4.6         3.4          1.4         0.3  setosa
+## 8           5.0         3.4          1.5         0.2  setosa
+## 9           4.4         2.9          1.4         0.2  setosa
+## 10          4.9         3.1          1.5         0.1  setosa</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="introductory-statistics-in-r.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(iris, <span class="at">n=</span><span class="dv">7</span>)</span></code></pre></div>
+<pre><code>##     Sepal.Length Sepal.Width Petal.Length Petal.Width   Species
+## 144          6.8         3.2          5.9         2.3 virginica
+## 145          6.7         3.3          5.7         2.5 virginica
+## 146          6.7         3.0          5.2         2.3 virginica
+## 147          6.3         2.5          5.0         1.9 virginica
+## 148          6.5         3.0          5.2         2.0 virginica
+## 149          6.2         3.4          5.4         2.3 virginica
+## 150          5.9         3.0          5.1         1.8 virginica</code></pre>
+<p>Note the <code>head()</code> function prints the first handful of observations of the dataset, here consisting of the first 10 rows.
+The <code>tail()</code> functions prints out the last <span class="math inline">\(n\)</span> rows (here specified to be 7). The dataset is actually much bigger which can be determined with the <code>dim</code> function,</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="introductory-statistics-in-r.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(iris)</span></code></pre></div>
+<pre><code>## [1] 150   5</code></pre>
+<p>There are 150 observations on 5 variables (<code>Sepal.Length</code>, <code>Sepal.Width</code>, <code>Petal.Length</code>, <code>Petal.Width</code>, and <code>Species</code>).</p>
+</div>
+<div id="types-of-data" class="section level3" number="1.3.2">
+<h3><span class="header-section-number">1.3.2</span> Types of Data</h3>
+<p>You’ll notice in the above examples we see a mix of numeric and character values in the data frames.
+In R, every object has a type, or <em>class</em>. To discover the type for a specific variable use the <code>class</code> function,</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="introductory-statistics-in-r.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(iris)</span></code></pre></div>
+<pre><code>## [1] &quot;data.frame&quot;</code></pre>
+<p>We see that the class of the object <code>iris</code> is a <code>data.frame</code> consisting of 150 rows and 5 columns.
+You should also note that the first four columns are numeric while the last column appears to be characters.
+We can explore the class of each variable by specifying the name of the column of the dataset using the <code>$</code> notation.
+First, let’s get the list of variables in the dataset using the <code>names()</code> function.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="introductory-statistics-in-r.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(iris)</span></code></pre></div>
+<pre><code>## [1] &quot;Sepal.Length&quot; &quot;Sepal.Width&quot;  &quot;Petal.Length&quot; &quot;Petal.Width&quot;  &quot;Species&quot;</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="introductory-statistics-in-r.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(iris<span class="sc">$</span>Sepal.Length)</span></code></pre></div>
+<pre><code>## [1] &quot;numeric&quot;</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="introductory-statistics-in-r.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(iris<span class="sc">$</span>Species)</span></code></pre></div>
+<pre><code>## [1] &quot;factor&quot;</code></pre>
+<p>The <code>class</code> of <code>Sepal.Length</code> is numeric, which should not be too surprising given the value is a number.
+The <code>class</code> of <code>Species</code> on the other hand is a <code>factor</code>. In R, a <code>factor</code> is a categorical variable, here it happens to be labeled with the scientific species name, but R treats it as a <code>category</code>.</p>
+<p><strong>Note</strong>: The <code>factor</code> class can be quite important when performing Statistics. Depending if a variable is of class <code>factor</code> or <code>numeric</code> it can cause different statistical methods to perform differently.</p>
+</div>
+<div id="importing-datasets-into-r" class="section level3" number="1.3.3">
+<h3><span class="header-section-number">1.3.3</span> Importing datasets into R</h3>
+<p>In practice you will often encounter datasets from other external sources.
+These are most commonly created or provided in formats that can be read in Excel.
+The best formats for importing dataset files into R is space-delimited, tab-delimited text (both typically have the file extension .txt) or comma-separated values (file extension .csv). R can handle other formats, but these are the easiest with which to work.</p>
+<div id="read.table-for-space-tab-delimited-files" class="section level4" number="1.3.3.1">
+<h4><span class="header-section-number">1.3.3.1</span> <code>read.table()</code> – for Space &amp; Tab delimited files</h4>
+<p>There are multiple functions to import a data file in R. One common tool is using the <code>read.table()</code> command. Below are two examples:</p>
+<ol style="list-style-type: decimal">
+<li>Read a file directly from the web. The below code imports the file <code>univadmissions.txt</code> (details about the data are below) from a data repository into the current R session, and assigns the name <code>uadata</code> to the data frame object:</li>
+</ol>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="introductory-statistics-in-r.html#cb18-1" aria-hidden="true" tabindex="-1"></a>site <span class="ot">&lt;-</span> <span class="st">&quot;http://www.users.miamioh.edu/hughesmr/sta363/univadmissions.txt&quot;</span></span>
+<span id="cb18-2"><a href="introductory-statistics-in-r.html#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(site)</span>
+<span id="cb18-3"><a href="introductory-statistics-in-r.html#cb18-3" aria-hidden="true" tabindex="-1"></a>uadata <span class="ot">&lt;-</span> <span class="fu">read.table</span>(site, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
+<span id="cb18-4"><a href="introductory-statistics-in-r.html#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(uadata)</span></code></pre></div>
+<pre><code>##   id gpa.endyr1 hs.pct act year
+## 1  1       0.98     61  20 1996
+## 2  2       1.13     84  20 1996
+## 3  3       1.25     74  19 1996
+## 4  4       1.32     95  23 1996
+## 5  5       1.48     77  28 1996
+## 6  6       1.57     47  23 1996</code></pre>
+<p>A few notes on the above code. In the first line, we are creating a string of characters (that happens to be a web address) and <em>assigning</em> it to the R object <code>site</code> using the <code>&lt;-</code> notation. You should note the <code>class</code> of the object <code>site</code> is <code>character</code>. In the third line, we are applying the function <code>read.table()</code> with the file specified in the <code>site</code> variable, with the option <code>header=TRUE</code>, the output of the function is being assigned to <code>uadata</code>, again using the <code>&lt;-</code> notation. We will be using this same data again below.</p>
+<ol start="2" style="list-style-type: decimal">
+<li>Another option is to download the file to your computer, then read it.
+This is typically what you will do for homework and class examples.
+You could go to the URL above and save the data file to your default working directory on your computer.
+After saving it into a folder (or directory), you can read the file with code similar to:</li>
+</ol>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="introductory-statistics-in-r.html#cb20-1" aria-hidden="true" tabindex="-1"></a>uadata <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;univadmissions.txt&quot;</span>, <span class="at">header=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<p>If you save the file to a directory on your computer other than the local directory (where your R code is stored), you must provide the path in the <code>read.table()</code> command:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="introductory-statistics-in-r.html#cb21-1" aria-hidden="true" tabindex="-1"></a>uadata <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;c:/My Documents/My STA363 Files/univadmissions.txt&quot;</span>, <span class="at">header=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<p>The function <code>read.table()</code> automatically converts a space (or tab) delimited text file to a data frame in R. The <code>header=TRUE</code> option tells R that the top line in the text file contains the variable names rather than data values.</p>
+</div>
+<div id="read.csv-for-comma-separated-value-files" class="section level4" number="1.3.3.2">
+<h4><span class="header-section-number">1.3.3.2</span> <code>read.csv()</code> – for Comma Separated Value files</h4>
+<p>Similar to the above examples, reading in a Comma Separated Value (CSV) file is very similar.
+This is becoming the standard format for transferring files. An example of some non-executed code is provided below:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="introductory-statistics-in-r.html#cb22-1" aria-hidden="true" tabindex="-1"></a>used.car <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;c:/My Documents/My STA363 Files/kuiperCars.csv&quot;</span>, <span class="at">header=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+</div>
+<div id="load-loading-an-existing-r-data.frame" class="section level4" number="1.3.3.3">
+<h4><span class="header-section-number">1.3.3.3</span> <code>load()</code> – Loading an existing R <code>data.frame</code></h4>
+<p>If data has already been input and processed into R as a <code>data.frame</code>, it can be saved in a format designed for R using the <code>save()</code> function and then can be reloaded using <code>load()</code>.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="introductory-statistics-in-r.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;someData.RData&quot;</span>)</span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="referencing-data-from-inside-a-data-frame" class="section level2" number="1.4">
+<h2><span class="header-section-number">1.4</span> Referencing data from inside a data frame</h2>
+<p>We saw above that we can access a specific variable within a dataset using the <code>$</code> notation.
+We can also access specific observations in the dataset based on rules we may wish to implement.
+As a working example we will consider the university admissions data we read in above.</p>
+<p><strong>Example:</strong> (originally in <span class="citation"><a href="#ref-KutnerText" role="doc-biblioref">Kutner et al.</a> (<a href="#ref-KutnerText" role="doc-biblioref">2004</a>)</span>) University admissions. The director of admissions at a state university wanted to determine how accurately students’ grade point averages at the end of their freshman year could be predicted by entrance test scores and high school class rank. The academic years covered 1996 through 2000. This example uses the <code>univadmissions.txt</code> dataset in the repository. The variables are as follows:</p>
+<ul>
+<li><p><code>id</code> – Identification number</p></li>
+<li><p><code>gpa.endyr1</code> – Grade point average following freshman year</p></li>
+<li><p><code>hs.pct</code> – High school class rank (as a percentile)</p></li>
+<li><p><code>act</code> – ACT entrance exam score</p></li>
+<li><p><code>year</code> – Calendar year the freshman entered university</p></li>
+</ul>
+<p>This is the first dataset we input above, in the <code>uadata</code> data frame.</p>
+<p>The <code>tidyverse</code> package is actually a wrapper for many R packages.
+One of the key packages we use for data processing is the <code>dplyr</code> package.
+It includes many functions that are similar to SQL (for those who know it).
+These tools tend to be easy to understand with syntax similar to that in SQL. First we will load the package and then take a <em>glimpse</em> of the dataset with which we are working</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="introductory-statistics-in-r.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)   <span class="co"># Load the necessary package</span></span>
+<span id="cb24-2"><a href="introductory-statistics-in-r.html#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(uadata)      <span class="co"># Take a glimpse at the data</span></span></code></pre></div>
+<pre><code>## Rows: 705
+## Columns: 5
+## $ id         &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, ~
+## $ gpa.endyr1 &lt;dbl&gt; 0.98, 1.13, 1.25, 1.32, 1.48, 1.57, 1.67, 1.73, 1.75, 1.76,~
+## $ hs.pct     &lt;int&gt; 61, 84, 74, 95, 77, 47, 67, 69, 83, 72, 83, 66, 76, 88, 46,~
+## $ act        &lt;int&gt; 20, 20, 19, 23, 28, 23, 28, 20, 22, 24, 27, 21, 23, 27, 21,~
+## $ year       &lt;int&gt; 1996, 1996, 1996, 1996, 1996, 1996, 1996, 1996, 1996, 1996,~</code></pre>
+<p>A key feature of the tidyverse is the pipe command, <code>%&gt;%</code>.
+As an example, consider the case of extracting students with a GPA greater than 3.9:</p>
+<ul>
+<li>Take the data frame <code>uadata</code> (read in above) and pipe it (send it) to a function that will <em>filter</em></li>
+<li>Then <code>filter</code> it based on some criteria, say <code>gpa.endyr1 &gt; 3.9</code>.</li>
+</ul>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="introductory-statistics-in-r.html#cb26-1" aria-hidden="true" tabindex="-1"></a>uadata <span class="sc">%&gt;%</span> </span>
+<span id="cb26-2"><a href="introductory-statistics-in-r.html#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(gpa.endyr1 <span class="sc">&gt;</span> <span class="fl">3.9</span>)</span></code></pre></div>
+<pre><code>##     id gpa.endyr1 hs.pct act year
+## 1  138      3.910     99  28 1996
+## 2  139      3.920     93  28 1996
+## 3  140      4.000     99  25 1996
+## 4  141      4.000     92  28 1996
+## 5  142      4.000     99  33 1996
+## 6  266      3.920     85  15 1997
+## 7  267      3.920     63  23 1997
+## 8  268      3.920     98  23 1997
+## 9  269      3.930     99  29 1997
+## 10 270      3.960     99  29 1997
+## 11 271      3.970     92  26 1997
+## 12 272      4.000     99  20 1997
+## 13 273      4.000     92  29 1997
+## 14 422      3.920     77  28 1998
+## 15 423      3.920     97  31 1998
+## 16 424      3.930     82  31 1998
+## 17 425      3.960     69  21 1998
+## 18 426      4.000     97  27 1998
+## 19 427      4.000     99  32 1998
+## 20 565      3.913     45  23 1999
+## 21 566      3.933     99  30 1999
+## 22 567      3.948     91  29 1999
+## 23 568      4.000     99  30 1999
+## 24 700      3.933     97  27 2000
+## 25 701      3.956     97  29 2000
+## 26 702      4.000     98  26 2000
+## 27 703      4.000     97  29 2000
+## 28 704      4.000     97  29 2000
+## 29 705      4.000     99  32 2000</code></pre>
+<p>We can also use <code>dplyr</code> commands for selecting specific variables using the <code>select</code> function.
+Below we select the ACT scores for students who have a first year GPA greater than 3.9 and with a graduating year of 1998.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="introductory-statistics-in-r.html#cb28-1" aria-hidden="true" tabindex="-1"></a>uadata <span class="sc">%&gt;%</span> </span>
+<span id="cb28-2"><a href="introductory-statistics-in-r.html#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(gpa.endyr1 <span class="sc">&gt;</span> <span class="fl">3.9</span>, year<span class="sc">==</span><span class="dv">1998</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb28-3"><a href="introductory-statistics-in-r.html#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(act)</span></code></pre></div>
+<pre><code>##   act
+## 1  28
+## 2  31
+## 3  31
+## 4  21
+## 5  27
+## 6  32</code></pre>
+<p>Note in the above, we take the <code>uadata</code> and pipe it to a <code>filter</code>, which selects only those observations with <code>gpa.endyr1</code> greater than 3.9 and <code>year</code> equal (==) to 1998, then we pipe that subset to the <code>select</code> function that only returns the variable <code>act</code>.</p>
+<p><strong>IMPORTANT NOTE</strong> - R is an evolving language and as such has some wonky behavior. In fact, there are multiple versions of both the <code>filter</code> and <code>select</code> functions in R. If you ever use one and receive a strange error, first check for a typo. If the error still occurs it is likely the case that R is trying to use a different version of the filter. You can always force R to use the <code>dplyr</code> version as in the below example:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="introductory-statistics-in-r.html#cb30-1" aria-hidden="true" tabindex="-1"></a>uadata <span class="sc">%&gt;%</span> </span>
+<span id="cb30-2"><a href="introductory-statistics-in-r.html#cb30-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(gpa.endyr1 <span class="sc">&gt;</span> <span class="fl">3.9</span>, year<span class="sc">==</span><span class="dv">1998</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb30-3"><a href="introductory-statistics-in-r.html#cb30-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(act)</span></code></pre></div>
+</div>
+<div id="missing-values-and-computer-arithmetic-in-r" class="section level2" number="1.5">
+<h2><span class="header-section-number">1.5</span> Missing values and computer arithmetic in R</h2>
+<p>Sometimes data from an individual is lost or not available. R indicates such occurrences using the value <code>NA</code>.
+Missing values are important to account for, because we cannot simply ignore them when performing functions that involve all values.
+For example, we cannot find the mean of the elements of a data vector when some are set to <code>NA</code>.
+Consider the simple case of a vector of 6 values with one <code>NA</code>.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="introductory-statistics-in-r.html#cb31-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">14</span>, <span class="dv">18</span>, <span class="dv">12</span>, <span class="cn">NA</span>, <span class="dv">22</span>, <span class="dv">16</span>)</span>
+<span id="cb31-2"><a href="introductory-statistics-in-r.html#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(x)</span></code></pre></div>
+<pre><code>## [1] &quot;numeric&quot;</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="introductory-statistics-in-r.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x)</span></code></pre></div>
+<pre><code>## [1] NA</code></pre>
+<p>Here, the object <code>x</code> is a <em>vector</em> of class <code>numeric</code>. We will not be working with vectors much in this class (a column within a data frame can be considered a vector) but we do so here to demonstrate functionality.</p>
+<p><strong>Many R functions have a <code>na.rm=</code> logical argument</strong>, which is set to <code>FALSE</code> by default.
+It basically asks if you want to remove the missing values before applying the function.
+It can be set to <code>TRUE</code> in order to remove the <code>NA</code> terms. For example,</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="introductory-statistics-in-r.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x, <span class="at">na.rm=</span><span class="cn">TRUE</span>)    <span class="co"># mean of the non-missing elements</span></span></code></pre></div>
+<pre><code>## [1] 16.4</code></pre>
+<p>The number system used by R has the following ways of accommodating results of calculations on missing values or extreme values:</p>
+<ul>
+<li><p><code>NA</code>: <strong>Not Available</strong>. Any data value, numeric or not, can be <code>NA</code>. This is what you use for missing data. Always use <code>NA</code> for this purpose.</p></li>
+<li><p><code>NaN</code>: <strong>Not a Number</strong>. This is a special value that only numeric variables can take. It is the result of an undefined operation like 0/0.</p></li>
+<li><p><code>Inf</code>: <strong>Infinity</strong>. Numeric variables can also take the values <code>-Inf</code> and <code>Inf</code>.
+These are produced by the low level arithmetic of all modern computers by operations such as 1/0. (You shouldn’t think of these as real infinities, but rather the result of the the correct calculation if the computer could handle extremely large (or extremely small, near 0) numbers, larger than the largest numbers the computer can hold (about <span class="math inline">\(10^{300}\)</span>)).</p></li>
+</ul>
+<p><strong>Scientific notation</strong>.
+This is a shorthand way of displaying very small or very large numbers.
+For example, if R displays <code>3e-8</code> as a value, it really means <span class="math inline">\(3\times 10^{-8} = 0.00000003\)</span>.</p>
+<p>In general, you should convert numbers from scientific notation into decimal notation when writing findings in your reports.
+For a really small number (like 0.00000003), it will suffice to write “&lt; 0.0001” instead.</p>
+</div>
+<div id="exploratory-data-analysis-eda" class="section level2" number="1.6">
+<h2><span class="header-section-number">1.6</span> Exploratory Data Analysis (EDA)</h2>
+<p>The material presented in this section is typically called <em>descriptive statistics</em> in Intro Statistics books. This is an important step that should always be performed prior to a formal analysis. It looks simple but it is vital to conducting a meaningful analysis. EDA is comprised of:</p>
+<ul>
+<li>Numerical summaries (means, standard deviations, five-number summaries, correlations)</li>
+<li>Graphical summaries
+<ul>
+<li>One variable: boxplots, histograms, density plots, etc.</li>
+<li>Two variables: scatterplots, side-by-side boxplots, overlaid density plots</li>
+<li>Many variables: scatterplot matrices, interactive graphics</li>
+</ul></li>
+</ul>
+<p>We look for outliers, data-entry errors and skewness or unusual distributions using EDA.
+Are the data distributed as you expect?
+Getting data into a form suitable for analysis by cleaning out mistakes and aberrations is often time consuming.
+It often takes more time than the data analysis itself!
+In this course, data will usually be ready to analyze but we will occasionally intermix messy data.
+You should realize that in practice it is rarely the case to receive <em>clean</em> data.</p>
+<div id="numeric-summaries" class="section level3" number="1.6.1">
+<h3><span class="header-section-number">1.6.1</span> Numeric Summaries</h3>
+<div id="measures-of-centrality-and-quantiles" class="section level4" number="1.6.1.1">
+<h4><span class="header-section-number">1.6.1.1</span> Measures of centrality and quantiles</h4>
+<p>Common descriptive measures of centrality and quantiles from a sample include</p>
+<ul>
+<li>Sample mean – typically denoted by <span class="math inline">\(\bar{x}\)</span>, this is implemented in the function <code>mean()</code></li>
+<li>Sample median – this is implemented in the function <code>median()</code></li>
+<li>Quantiles – Quantiles, or sample percentiles, can be found using the <code>quantile()</code> function. Three common values are <span class="math inline">\(Q_1\)</span> (the sample <span class="math inline">\(25^\mathrm{th}\)</span> percentile, or first quartile), <span class="math inline">\(Q_2\)</span> (the <span class="math inline">\(50^\mathrm{th}\)</span> percentile, second quartile or <em>median</em>) and <span class="math inline">\(Q_3\)</span> (the sample <span class="math inline">\(75^\mathrm{th}\)</span> percentile or third quartile).</li>
+<li>Min and Max – the Minimum and Maximum values of a sample can be found using the <code>min()</code> or <code>max()</code> functions.</li>
+</ul>
+<p>Each of these were covered in your introductory statistics course. We refer you to that material for more details.</p>
+</div>
+<div id="measuring-variance-and-variability" class="section level4" number="1.6.1.2">
+<h4><span class="header-section-number">1.6.1.2</span> Measuring variance and variability</h4>
+<p>Earlier we defined statistics as the study of variation in data. The truth is that everything naturally varies:</p>
+<ul>
+<li>If you measure the same characteristic on two different individuals, you would potentially get two different answers (subject variability).</li>
+<li>If you measure the same characteristic twice on the same individual, you would potentially get two different answers (measurement error).</li>
+<li>If you measure the same characteristic on the same individual but at different times, you would potentially get two different answers (temporal variability).</li>
+</ul>
+<p>Because everything varies, determining that things vary is simply not very interesting. What we need is a way of discriminating between variation that is scientifically interesting and variation that just reflects the natural background fluctuations that are always there. This is what the science of statistics is for.</p>
+<p>Knowing the amount of variation that we would expect to occur just by chance alone when nothing scientifically interesting is going on is key.
+If we then observe bigger differences than we would expect by chance alone, we say the result is statistically significant. If instead we observe differences no larger than we would expect by chance alone, we say the result is not statistically significant.</p>
+<p>Although covered in your introductory statistics course, due to importance we review measuring the variance of a sample.</p>
+<p><strong>Variance</strong></p>
+<p>A variance is a numeric descriptor of the variation of a quantity. Variances will serve as the foundation for much of what we use in making statistical inferences in this course. In fact, a standard method of data analysis for many of the problems we will encounter is known as analysis of variance (shorthanded ANOVA).</p>
+<p>You were (or should have been) exposed to variance in your introductory statistics course. What is crucial now is that you know what you are finding the variance of; i.e., what is the “quantity” I was referring to in the preceding paragraph? Consider this:</p>
+<ul>
+<li><p><em>Example</em>. Suppose you collect a simple random sample of <em>n</em> fasting blood glucose measurements from a population of diabetic patients. The measurements are denoted <span class="math inline">\(x_1\)</span>, <span class="math inline">\(x_2\)</span>, <span class="math inline">\(\ldots\)</span>, <span class="math inline">\(x_n\)</span>. What are some of the different “variances” that one might encounter in this scenario?</p>
+<ol style="list-style-type: decimal">
+<li>The <span class="math inline">\(n\)</span> sampled measurements vary around their sample mean <span class="math inline">\(\bar{x}\)</span>. This is called the sample variance (traditionally denoted <span class="math inline">\(s^2\)</span>). In R, the function is <code>var()</code>.</li>
+<li>All fasting blood glucose values in the population vary around the true mean of the population <span class="math inline">\(\mu\)</span>. This is called the population variance (usually denoted <span class="math inline">\(\sigma^2\)</span>). Note that <span class="math inline">\(\sigma^2\)</span> cannot be calculated without a census of the entire population, so <span class="math inline">\(s^2\)</span> serves as an estimate of <span class="math inline">\(\sigma^2\)</span>.</li>
+<li><span class="math inline">\(\bar{x}\)</span> is only a sample estimate of <span class="math inline">\(\mu\)</span>, so we should expect that will vary depending on which <span class="math inline">\(n\)</span> individual diabetic patients get randomly chosen into our sample. This is called the variance of <span class="math inline">\(\bar{x}\)</span>, and is denoted <span class="math inline">\(\sigma_{\bar{x}}^2\)</span>. This variance, unlike the sample or population variance, describes how sample estimates of <span class="math inline">\(\mu\)</span> vary around <span class="math inline">\(\mu\)</span> itself. We will need to estimate <span class="math inline">\(\sigma_{\bar{x}}^2\)</span>, since it cannot be determined without a full survey of the population. The estimate of <span class="math inline">\(\sigma_{\bar{x}}^2\)</span> is denoted <span class="math inline">\(s_{\bar{x}}^2\)</span>.</li>
+</ol></li>
+</ul>
+<p>The variances cited above are each very different things. We could dream up even more if we wanted to: for example, each different possible random sample of <span class="math inline">\(n\)</span> patients will produce a different sample variance <span class="math inline">\(s^2\)</span>. Since these would all be estimates of the population variance <span class="math inline">\(\sigma^2\)</span>, we could even find the variance of the sample variances!</p>
+<p>Some formulas:</p>
+<p><span class="math display">\[\textbf{Sample Variance: } s^2 = \frac{1}{n-1}\sum_{i=1}^n (x_i - \bar{x})^2, \textrm{ for sample size } n\]</span></p>
+<p><span class="math display">\[\textbf{Estimated Variance of } \bar{x}: s^2_{\bar{x}} = \frac{s^2}{n}\]</span></p>
+<p>Three important notes:</p>
+<ol style="list-style-type: decimal">
+<li>The general form of any variance is a sum of squared deviations, divided by a quantity related to the number of independent elements in the sum known as <strong>degrees of freedom</strong>. So in general,</li>
+</ol>
+<p><span class="math display">\[\textrm{Variance} = \frac{\textrm{sum of squares}}{\textrm{degrees of freedom}} = \frac{SS}{df}\]</span></p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>The formula for the population variance <span class="math inline">\(\sigma^2\)</span> is only given for completeness. You will never use it, since <span class="math inline">\(\sigma^2\)</span> cannot be calculated without a population census.</p></li>
+<li><p>When considering how a statistic (like <span class="math inline">\(\bar{x}\)</span>) varies around the parameter it is estimating (<span class="math inline">\(\mu\)</span>), it makes sense that the more data you build the statistic with, the better it should perform as an estimator. This is precisely why the variance of <span class="math inline">\(\bar{x}\)</span> is inversely related to the sample size. <strong>As <span class="math inline">\(n\)</span> increases, the variance of the estimate decreases</strong>; i.e. the estimate will be closer to the thing it is estimating. This phenomenon is known as the law of large numbers.</p></li>
+</ol>
+<p><strong>Standard deviations and standard errors</strong></p>
+<p>While variances are the usual items of interest for statistical testing, often we will find that we would like a description of variation that is in the original units of the quantity being studied.
+Variances are always in units squared, so if we take their square roots, we are back to the original units.
+The square root of a variance is called a standard deviation (SD).
+The square root of the variance of an estimate is called the standard error (SE) of the estimate:</p>
+<p><span class="math display">\[\textbf{Sample Standard Deviation: } s = \sqrt{s^2} = \sqrt{\frac{1}{n-1}\sum_{i=1}^n (x_i - \bar{x})^2}, \textrm{ for sample size } n\]</span></p>
+<p><span class="math display">\[\textbf{Standard error of } \bar{x}: s_{\bar{x}} = \sqrt{s^2_{\bar{x}}} = \sqrt{\frac{s^2}{n}} = \frac{s}{\sqrt{n}}\]</span></p>
+</div>
+</div>
+<div id="numeric-summaries-in-r" class="section level3" number="1.6.2">
+<h3><span class="header-section-number">1.6.2</span> Numeric Summaries in R</h3>
+<p>In this class we will be using <code>dplyr</code> for data handling. We can pipe (<code>%&gt;%</code>) our data frame into a summarize function to calculate numeric summaries.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="introductory-statistics-in-r.html#cb37-1" aria-hidden="true" tabindex="-1"></a>uadata <span class="sc">%&gt;%</span> </span>
+<span id="cb37-2"><a href="introductory-statistics-in-r.html#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">everything</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb37-3"><a href="introductory-statistics-in-r.html#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(name) <span class="sc">%&gt;%</span></span>
+<span id="cb37-4"><a href="introductory-statistics-in-r.html#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize_all</span>(<span class="fu">list</span>(mean, sd, min, median, max))</span></code></pre></div>
+<pre><code>## # A tibble: 5 x 6
+##   name           fn1     fn2     fn3     fn4   fn5
+##   &lt;chr&gt;        &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+## 1 act          24.5    4.01    13      25       35
+## 2 gpa.endyr1    2.98   0.635    0.51    3.05     4
+## 3 hs.pct       77.0   18.6      4      81       99
+## 4 id          353    204.       1     353      705
+## 5 year       1998      1.40  1996    1998     2000</code></pre>
+<p>For now ignore the code that is used, we will describe the <code>pivot_longer()</code> and <code>group_by()</code> functions below.
+Presented here are the mean, standard deviation, the minimum, median and maximum of each numeric variable in the data frame.
+For example, the mean freshman year-end GPA over the period 1996-2000 was 2.98; the median over the same period was 3.05, suggesting the GPA distribution is slightly skewed left (not surprising).
+The range of the GPA distribution is from 0.51 to 4.
+The median ACT score for entering freshman was 25, and and the range of ACT scores was from 13 to 35.</p>
+<p>This display introduces a few keys points you need to be aware of:</p>
+<ul>
+<li>We have the code spread across 4 lines with most lines ending with the piping operator <code>%&gt;%</code>. This is done (and recommended) for readability. When performing an analysis, you often will revisit the code at a later time. Readable code is paramount to reproducibility.</li>
+<li>Since we applied the command to the entire data frame (<code>everything()</code>), we also see numeric summaries of the variable <code>id</code>, even though it is meaningless to do so. (note: just because a computer outputs it, that doesn’t mean it’s useful)</li>
+<li>If you look carefully, you’ll see that <code>year</code> is treated as a number (e.g. 1996, 1997, etc.).
+However, that doesn’t necessarily mean it should be treated as a numeric variable!
+It is meaningless to find numeric summaries like means or medians for the <code>year</code>, because it is really a qualitative (categorical) variable in the context of these data (again, just because a computer outputs it, that doesn’t mean it is contextually correct).
+This is a common mistake to make.
+It is as simple as this: when R encounters a variable whose values are entered as numbers in a data frame, R will treat the variable as if it were a numeric variable (whether it is contextually or not).
+If R encounters a variable whose values are character strings, R will treat the variable as a categorical <code>factor</code>.
+But, in a case like <code>year</code> above, you have to explicitly tell R that the variable is really a <code>factor</code> since it was coded with numbers.
+To do this, we will <code>mutate</code> the variables <code>id</code> and <code>year</code>.</li>
+</ul>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="introductory-statistics-in-r.html#cb39-1" aria-hidden="true" tabindex="-1"></a>uadata <span class="ot">&lt;-</span> uadata <span class="sc">%&gt;%</span></span>
+<span id="cb39-2"><a href="introductory-statistics-in-r.html#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id=</span><span class="fu">as.factor</span>(id),</span>
+<span id="cb39-3"><a href="introductory-statistics-in-r.html#cb39-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">year=</span><span class="fu">as.factor</span>(year))</span></code></pre></div>
+<p>Here we tell R to take the <code>uadata</code> data, pipe it to the <code>mutate</code> function (which allows us to create and/or replace variables by changing/mutating them). We then assign the variables <code>id</code> and <code>year</code> as versions of themselves that are being treated <em>as factors</em>.</p>
+<p>We can then check the type of each variable by <em>summarizing</em> over <em>all</em> the variables using the <code>class</code> function.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="introductory-statistics-in-r.html#cb40-1" aria-hidden="true" tabindex="-1"></a>uadata <span class="sc">%&gt;%</span> </span>
+<span id="cb40-2"><a href="introductory-statistics-in-r.html#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize_all</span>(class)</span></code></pre></div>
+<pre><code>##       id gpa.endyr1  hs.pct     act   year
+## 1 factor    numeric integer integer factor</code></pre>
+<p>No we can check the summary values again for only numeric values (i.e., the use of the <code>select_if(is.numeric)</code> function).</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="introductory-statistics-in-r.html#cb42-1" aria-hidden="true" tabindex="-1"></a>uadata <span class="sc">%&gt;%</span> </span>
+<span id="cb42-2"><a href="introductory-statistics-in-r.html#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select_if</span>(is.numeric) <span class="sc">%&gt;%</span></span>
+<span id="cb42-3"><a href="introductory-statistics-in-r.html#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">everything</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb42-4"><a href="introductory-statistics-in-r.html#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(name) <span class="sc">%&gt;%</span></span>
+<span id="cb42-5"><a href="introductory-statistics-in-r.html#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize_all</span>(<span class="fu">list</span>(mean, sd, min, median, max))</span></code></pre></div>
+<pre><code>## # A tibble: 3 x 6
+##   name         fn1    fn2   fn3   fn4   fn5
+##   &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 act        24.5   4.01  13    25       35
+## 2 gpa.endyr1  2.98  0.635  0.51  3.05     4
+## 3 hs.pct     77.0  18.6    4    81       99</code></pre>
+<p>For the categorical variables, the main numeric measure we can consider is the count (or proportions) of each category. To do this in R, we want to tell us to treat each category as a <em>group</em> and then count within the group. We will <code>group_by</code> the <code>year</code> and then within that year, count the number of observations. We also add a new variable (using <code>mutate</code>) that is the proportion.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="introductory-statistics-in-r.html#cb44-1" aria-hidden="true" tabindex="-1"></a>uadata <span class="sc">%&gt;%</span></span>
+<span id="cb44-2"><a href="introductory-statistics-in-r.html#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year) <span class="sc">%&gt;%</span></span>
+<span id="cb44-3"><a href="introductory-statistics-in-r.html#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Count=</span><span class="fu">n</span>() ) <span class="sc">%&gt;%</span></span>
+<span id="cb44-4"><a href="introductory-statistics-in-r.html#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Prop =</span> Count<span class="sc">/</span><span class="fu">sum</span>(Count))</span></code></pre></div>
+<pre><code>## # A tibble: 5 x 3
+##   year  Count  Prop
+##   &lt;fct&gt; &lt;int&gt; &lt;dbl&gt;
+## 1 1996    142 0.201
+## 2 1997    131 0.186
+## 3 1998    154 0.218
+## 4 1999    141 0.2  
+## 5 2000    137 0.194</code></pre>
+</div>
+<div id="graphical-summaries" class="section level3" number="1.6.3">
+<h3><span class="header-section-number">1.6.3</span> Graphical Summaries</h3>
+<p>We begin a graphical summary with a scatterplot matrix.
+Here we use the <code>ggscatmat</code> function in the <code>GGally</code> package.
+This results in the scatterplot matrix seen in Figure <a href="introductory-statistics-in-r.html#fig:ch1-17">1.1</a>.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="introductory-statistics-in-r.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)</span>
+<span id="cb46-2"><a href="introductory-statistics-in-r.html#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggscatmat</span>(uadata)</span></code></pre></div>
+<pre><code>## Warning in ggscatmat(uadata): Factor variables are omitted in plot</code></pre>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch1-17"></span>
+<img src="introStatModeling_files/figure-html/ch1-17-1.png" alt="Scatterplot matrix showing the relationship between the variables `gpa.endy1`, `hs.pct`, and `act`." width="80%" />
+<p class="caption">
+Figure 1.1: Scatterplot matrix showing the relationship between the variables <code>gpa.endy1</code>, <code>hs.pct</code>, and <code>act</code>.
+</p>
+</div>
+<p>You will note that by default the function provides a scatterplot (Figure <a href="introductory-statistics-in-r.html#fig:ch1-17">1.1</a>) of each variable along with the Pearson correlation of each numeric variable (it warns us that <code>factor</code> variables are not included).
+The Pearson correlations assesses the strength of any linear relationship existing between the GPA, ACT and HS rank variables.</p>
+<p>Recall from introductory statistics that the Pearson correlation <span class="math inline">\(r\)</span> between two variables <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> is given by the formula
+<span class="math display">\[r = \frac{1}{n-1}\sum_{i=1}^n\left(\frac{x_i - \bar{x}}{s_x}\right)\left(\frac{y_i - \bar{y}}{s_y}\right)\]</span>
+<span class="math inline">\(r\)</span> is a unitless measure with the property that <span class="math inline">\(-1 \leq r \leq 1\)</span>. Values of <span class="math inline">\(r\)</span> near <span class="math inline">\(\pm 1\)</span> indicate a near perfect (positive or negative) linear relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>. A frequently used rule of thumb is that <span class="math inline">\(|r| &gt; 0.80\)</span> or so qualifies as a strong linear relationship.</p>
+<p>All pairwise correlations in this example are of modest magnitude (<span class="math inline">\(r \approx 0.4\)</span>).</p>
+<p>You will also note that the function provides a look at the distributional shape of each variable using what is known as a <em>density plot</em> (this can be consider a more-modern, and less subjective, histogram).
+The <code>ggscatmat</code> function builds off a function known as <code>ggplot()</code> from the <code>ggplot2</code> package (included in <code>tidyverse</code>).</p>
+<p>We can build density plots directly using the <code>geom_density()</code> function as seen in the code below. The resulting density plot is in Figure <a href="introductory-statistics-in-r.html#fig:ch1-18">1.2</a>.</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="introductory-statistics-in-r.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(uadata) <span class="sc">+</span> </span>
+<span id="cb48-2"><a href="introductory-statistics-in-r.html#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x=</span>gpa.endyr1))</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch1-18"></span>
+<img src="introStatModeling_files/figure-html/ch1-18-1.png" alt="Density plot showing left-skewed distribution for the `gpa.endyr1` variable" width="70%" />
+<p class="caption">
+Figure 1.2: Density plot showing left-skewed distribution for the <code>gpa.endyr1</code> variable
+</p>
+</div>
+<p>You should note the code is similar to the <code>%&gt;%</code> operator but with a <code>+</code>. The trick to working with plotting on the computer is to think in terms of <em>layers</em>. The first line <code>ggplot(uadata)</code> sets up a plot object based on the existing dataset <code>uadata</code>. The <code>+</code> says to add a layer, this layer is a density plot (<code>geom_density</code>) where the aesthetic values include an <span class="math inline">\(x\)</span>-axis variable matching that of <code>gpa.endyr</code>.</p>
+<p>To generate even more complex distributional plots first we need to perform some data processing.
+In <code>tidyverse</code> there is package called <code>tidyr</code> which is mainly comprised of two main functions: <code>pivot_longer()</code> and <code>pivot_wider()</code>.
+The purpose of the <code>pivot_longer()</code> function is to collect variables in a dataset and create a <em>tall</em> (or <em>longer</em>) dataset (this is typically known as going from wide-to-tall or wide-to-long format).
+We specify the variables (or columns) we want to pivot (here the <code>c(gpa.endyr1, hs.pct, act)</code> part of the code), the name of the new variable (here called <code>variables</code>) storing the column names, and the variable name that will store the values (here called <code>value</code>).
+The <code>pivot_wider()</code> function essentially does the opposite, turning a tall data frame into a wide format.</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="introductory-statistics-in-r.html#cb49-1" aria-hidden="true" tabindex="-1"></a>uadata.tall <span class="ot">&lt;-</span> uadata <span class="sc">%&gt;%</span></span>
+<span id="cb49-2"><a href="introductory-statistics-in-r.html#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">c</span>(gpa.endyr1, hs.pct, act), <span class="at">names_to=</span><span class="st">&quot;var_names&quot;</span>, <span class="at">values_to=</span><span class="st">&quot;value&quot;</span> )</span>
+<span id="cb49-3"><a href="introductory-statistics-in-r.html#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(uadata)</span></code></pre></div>
+<pre><code>##   id gpa.endyr1 hs.pct act year
+## 1  1       0.98     61  20 1996
+## 2  2       1.13     84  20 1996
+## 3  3       1.25     74  19 1996
+## 4  4       1.32     95  23 1996
+## 5  5       1.48     77  28 1996
+## 6  6       1.57     47  23 1996</code></pre>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="introductory-statistics-in-r.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(uadata.tall)</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 4
+##   id    year  var_names  value
+##   &lt;fct&gt; &lt;fct&gt; &lt;chr&gt;      &lt;dbl&gt;
+## 1 1     1996  gpa.endyr1  0.98
+## 2 1     1996  hs.pct     61   
+## 3 1     1996  act        20   
+## 4 2     1996  gpa.endyr1  1.13
+## 5 2     1996  hs.pct     84   
+## 6 2     1996  act        20</code></pre>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="introductory-statistics-in-r.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(uadata)</span></code></pre></div>
+<pre><code>## [1] 705   5</code></pre>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="introductory-statistics-in-r.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(uadata.tall)</span></code></pre></div>
+<pre><code>## [1] 2115    4</code></pre>
+<p>Take a minute and step through the above code and output to understand what the code did.
+The data is now in a <em>tall</em> format.
+We can now utilize the <code>ggplot</code> package for more advanced plotting.
+Here we want to draw a density plot for each <code>var_names</code> in the dataset <code>uadata</code> but we want a different plot for each <span class="math inline">\(variable\)</span> (<code>act</code>, <code>gpa.endyr1</code>, and <code>hs.pct</code>).
+Figure <a href="introductory-statistics-in-r.html#fig:ch1-20">1.3</a> provides the result for the below code.</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="introductory-statistics-in-r.html#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(uadata.tall) <span class="sc">+</span></span>
+<span id="cb57-2"><a href="introductory-statistics-in-r.html#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x=</span>value)) <span class="sc">+</span> </span>
+<span id="cb57-3"><a href="introductory-statistics-in-r.html#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(.<span class="sc">~</span>var_names, <span class="at">scales=</span><span class="st">&quot;free_x&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb57-4"><a href="introductory-statistics-in-r.html#cb57-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch1-20"></span>
+<img src="introStatModeling_files/figure-html/ch1-20-1.png" alt="Side-by-side density plots showing the relative distributions of `act`, `gpa.endyr1` and `hs.pct`." width="70%" />
+<p class="caption">
+Figure 1.3: Side-by-side density plots showing the relative distributions of <code>act</code>, <code>gpa.endyr1</code> and <code>hs.pct</code>.
+</p>
+</div>
+<p><strong>Notes</strong>: The <code>facet_grid</code> option tells the plot to draw each density plot for each observed value in <code>var_names</code>. The <code>theme_bw()</code> specifies the plotting style (there are many others! We will typically use <code>theme_bw()</code>, <code>theme_classic()</code> or the default behavior which corresponds to <code>theme_grey()</code>). The <code>free_x</code> option tells the plot that each <span class="math inline">\(x\)</span>-axis is on a different scale. Feel free to modify the code to see how the plot changes!</p>
+<p>We can see that GPA and high school percentile rankings are skewed left, and that ACT scores are reasonably symmetrically distributed.</p>
+<p>The best visual tool for simple counts is the Bar Graph (<strong>note:</strong> you should never use a pie chart, see <a href="http://www.businessinsider.com/pie-charts-are-the-worst-2013-6" class="uri">http://www.businessinsider.com/pie-charts-are-the-worst-2013-6</a>).
+The below code generates a simple (and fairly boring) bar graph (Figure <a href="introductory-statistics-in-r.html#fig:ch1-21">1.4</a>) displaying the number of observations for each year in the <code>uadata</code>.</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="introductory-statistics-in-r.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(uadata) <span class="sc">+</span> </span>
+<span id="cb58-2"><a href="introductory-statistics-in-r.html#cb58-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x=</span>year) )</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch1-21"></span>
+<img src="introStatModeling_files/figure-html/ch1-21-1.png" alt="Bar graph displaying the number of observations in the `uadata` per `year`." width="70%" />
+<p class="caption">
+Figure 1.4: Bar graph displaying the number of observations in the <code>uadata</code> per <code>year</code>.
+</p>
+</div>
+<p>We see here that nothing too interesting is happening. A fairly uniform distribution of counts is seen across years.</p>
+</div>
+<div id="descriptive-statistics-and-visualizations-by-levels-of-a-factor-variable" class="section level3" number="1.6.4">
+<h3><span class="header-section-number">1.6.4</span> Descriptive statistics and visualizations by levels of a factor variable</h3>
+<p>While the above summaries are informative, they overlook the fact that we have several years of data and that it may be more interesting to see how things might be changing year to year.
+This is why treating <code>year</code> as a factor is important, because it enables us to split out descriptions of the numeric variables by levels of the factor.</p>
+<p>One of the simplest and best visualization tool for comparing distributions is the side-by-side boxplot, which displays information about quartiles and potential outliers. The below code generates Figure <a href="introductory-statistics-in-r.html#fig:ch1-22">1.5</a>.</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="introductory-statistics-in-r.html#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(uadata) <span class="sc">+</span></span>
+<span id="cb59-2"><a href="introductory-statistics-in-r.html#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>year, <span class="at">y=</span>act) ) <span class="sc">+</span></span>
+<span id="cb59-3"><a href="introductory-statistics-in-r.html#cb59-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Year&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;Composite ACT Score&quot;</span>) <span class="sc">+</span></span>
+<span id="cb59-4"><a href="introductory-statistics-in-r.html#cb59-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;ACT scores of Incoming Freshmen&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb59-5"><a href="introductory-statistics-in-r.html#cb59-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch1-22"></span>
+<img src="introStatModeling_files/figure-html/ch1-22-1.png" alt="Side-by-side Box-whiskers plots showing the distribution of ACT scores in the `uadata` per year." width="70%" />
+<p class="caption">
+Figure 1.5: Side-by-side Box-whiskers plots showing the distribution of ACT scores in the <code>uadata</code> per year.
+</p>
+</div>
+<p>We see here the code is similar to the examples above except now we call the <code>geom_boxplot</code> function. Also note we are using <code>theme_classic()</code> which has some subtle differences compared to <code>theme_bw()</code> used above. Lastly, we include proper labels and titles on our plot here for a more professional appearance.</p>
+<p>Here we construct side-by-side boxplots by year for each of the three numeric variables in the data frame. We utilize the taller or longer format of the admissions data in <code>uadata.tall</code> and the resulting plot is in Figure <a href="introductory-statistics-in-r.html#fig:ch1-23">1.6</a>.</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="introductory-statistics-in-r.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(uadata.tall) <span class="sc">+</span> </span>
+<span id="cb60-2"><a href="introductory-statistics-in-r.html#cb60-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>year, <span class="at">y=</span>value) ) <span class="sc">+</span></span>
+<span id="cb60-3"><a href="introductory-statistics-in-r.html#cb60-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(var_names<span class="sc">~</span>., <span class="at">scales=</span><span class="st">&quot;free_y&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb60-4"><a href="introductory-statistics-in-r.html#cb60-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_dark</span>()</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch1-23"></span>
+<img src="introStatModeling_files/figure-html/ch1-23-1.png" alt="Side-by-side Box-whiskers plots showing the distributions of the variables `act`, `gpa.endyr1` and `hs.pct` for each year in the `uadata` dataset." width="75%" />
+<p class="caption">
+Figure 1.6: Side-by-side Box-whiskers plots showing the distributions of the variables <code>act</code>, <code>gpa.endyr1</code> and <code>hs.pct</code> for each year in the <code>uadata</code> dataset.
+</p>
+</div>
+<p>Note here that the order of the <code>var_names</code> statement in the <code>facet_grid</code> statement has changed compared to the previous side-by-side density plots (code used to generate Figure <a href="introductory-statistics-in-r.html#fig:ch1-20">1.3</a>) now the plots are stacked). Also note another theme option, <code>theme_dark()</code> (obviously you generally will NOT want to use this theme if planning to print the document).</p>
+<p>This is a nice compact visual description of the changes in patterns of response of these three variables over time. All three variables appear pretty stable over the years; the left skews in GPA and high school percentile rankings are still evident here (note the detection of some low outliers for year on these two variables).</p>
+<p>We now revisit calculating summary statistics.
+Extensive grouped numeric summary statistics are available by using the <code>group_by()</code> and <code>summarize()</code> functions in <code>tidyverse</code>.
+The <code>group_by</code> function tells R to treat each value of the specified variable (in this case, literally called <code>variable</code>) as a collection of similar options, then to perform the <code>summarize</code> function on each value in the grouped variables.
+The below example is a more detailed version of the summary table from above.</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="introductory-statistics-in-r.html#cb61-1" aria-hidden="true" tabindex="-1"></a>summary.table <span class="ot">&lt;-</span> uadata.tall <span class="sc">%&gt;%</span> </span>
+<span id="cb61-2"><a href="introductory-statistics-in-r.html#cb61-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(var_names) <span class="sc">%&gt;%</span></span>
+<span id="cb61-3"><a href="introductory-statistics-in-r.html#cb61-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Mean=</span><span class="fu">mean</span>(value),</span>
+<span id="cb61-4"><a href="introductory-statistics-in-r.html#cb61-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">StDev=</span><span class="fu">sd</span>(value),</span>
+<span id="cb61-5"><a href="introductory-statistics-in-r.html#cb61-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">Min=</span><span class="fu">min</span>(value),</span>
+<span id="cb61-6"><a href="introductory-statistics-in-r.html#cb61-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">Q2=</span><span class="fu">quantile</span>(value, <span class="at">prob=</span><span class="fl">0.25</span>),</span>
+<span id="cb61-7"><a href="introductory-statistics-in-r.html#cb61-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">Median=</span><span class="fu">median</span>(value),</span>
+<span id="cb61-8"><a href="introductory-statistics-in-r.html#cb61-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">Q3=</span><span class="fu">quantile</span>(value, <span class="at">prob=</span><span class="fl">0.75</span>),</span>
+<span id="cb61-9"><a href="introductory-statistics-in-r.html#cb61-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">Max=</span><span class="fu">max</span>(value) )</span>
+<span id="cb61-10"><a href="introductory-statistics-in-r.html#cb61-10" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(summary.table)</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+var_names
+</th>
+<th style="text-align:right;">
+Mean
+</th>
+<th style="text-align:right;">
+StDev
+</th>
+<th style="text-align:right;">
+Min
+</th>
+<th style="text-align:right;">
+Q2
+</th>
+<th style="text-align:right;">
+Median
+</th>
+<th style="text-align:right;">
+Q3
+</th>
+<th style="text-align:right;">
+Max
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+act
+</td>
+<td style="text-align:right;">
+24.54326
+</td>
+<td style="text-align:right;">
+4.013636
+</td>
+<td style="text-align:right;">
+13.00
+</td>
+<td style="text-align:right;">
+22.000
+</td>
+<td style="text-align:right;">
+25.00
+</td>
+<td style="text-align:right;">
+28.00
+</td>
+<td style="text-align:right;">
+35
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+gpa.endyr1
+</td>
+<td style="text-align:right;">
+2.97731
+</td>
+<td style="text-align:right;">
+0.634528
+</td>
+<td style="text-align:right;">
+0.51
+</td>
+<td style="text-align:right;">
+2.609
+</td>
+<td style="text-align:right;">
+3.05
+</td>
+<td style="text-align:right;">
+3.47
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+hs.pct
+</td>
+<td style="text-align:right;">
+76.95319
+</td>
+<td style="text-align:right;">
+18.633938
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:right;">
+68.000
+</td>
+<td style="text-align:right;">
+81.00
+</td>
+<td style="text-align:right;">
+92.00
+</td>
+<td style="text-align:right;">
+99
+</td>
+</tr>
+</tbody>
+</table>
+<p>Here, we first pipe the <code>uadata.tall</code> into a <code>group_by()</code> function grouping by the <code>var_names</code> variable. Then we take that output and pipe it to the <code>summarize</code> function which allows us to calculate various summary statistics for each of the groups. In the above we calculate the mean and standard deviation of each group, along with the 5-number summary. Lastly, we wrap the constructed table (its technically a data frame) in the <code>kable()</code> function from the <code>knitr</code> package (literally means <code>knitr</code> <code>table</code>) for a nice display.</p>
+<p>In the next example we group by both the <code>year</code> and the variables of interest.</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="introductory-statistics-in-r.html#cb62-1" aria-hidden="true" tabindex="-1"></a>summary.table2 <span class="ot">&lt;-</span> uadata.tall <span class="sc">%&gt;%</span></span>
+<span id="cb62-2"><a href="introductory-statistics-in-r.html#cb62-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(var_names, year) <span class="sc">%&gt;%</span></span>
+<span id="cb62-3"><a href="introductory-statistics-in-r.html#cb62-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Mean=</span><span class="fu">mean</span>(value),</span>
+<span id="cb62-4"><a href="introductory-statistics-in-r.html#cb62-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">StDev=</span><span class="fu">sd</span>(value))</span>
+<span id="cb62-5"><a href="introductory-statistics-in-r.html#cb62-5" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(summary.table2)</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+var_names
+</th>
+<th style="text-align:left;">
+year
+</th>
+<th style="text-align:right;">
+Mean
+</th>
+<th style="text-align:right;">
+StDev
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+act
+</td>
+<td style="text-align:left;">
+1996
+</td>
+<td style="text-align:right;">
+24.69014
+</td>
+<td style="text-align:right;">
+3.885202
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+act
+</td>
+<td style="text-align:left;">
+1997
+</td>
+<td style="text-align:right;">
+24.09924
+</td>
+<td style="text-align:right;">
+3.818689
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+act
+</td>
+<td style="text-align:left;">
+1998
+</td>
+<td style="text-align:right;">
+24.50649
+</td>
+<td style="text-align:right;">
+4.276775
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+act
+</td>
+<td style="text-align:left;">
+1999
+</td>
+<td style="text-align:right;">
+24.83688
+</td>
+<td style="text-align:right;">
+4.395816
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+act
+</td>
+<td style="text-align:left;">
+2000
+</td>
+<td style="text-align:right;">
+24.55475
+</td>
+<td style="text-align:right;">
+3.609464
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+gpa.endyr1
+</td>
+<td style="text-align:left;">
+1996
+</td>
+<td style="text-align:right;">
+2.92873
+</td>
+<td style="text-align:right;">
+0.652700
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+gpa.endyr1
+</td>
+<td style="text-align:left;">
+1997
+</td>
+<td style="text-align:right;">
+2.97366
+</td>
+<td style="text-align:right;">
+0.633515
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+gpa.endyr1
+</td>
+<td style="text-align:left;">
+1998
+</td>
+<td style="text-align:right;">
+3.00033
+</td>
+<td style="text-align:right;">
+0.654368
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+gpa.endyr1
+</td>
+<td style="text-align:left;">
+1999
+</td>
+<td style="text-align:right;">
+3.02599
+</td>
+<td style="text-align:right;">
+0.600662
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+gpa.endyr1
+</td>
+<td style="text-align:left;">
+2000
+</td>
+<td style="text-align:right;">
+2.95520
+</td>
+<td style="text-align:right;">
+0.632227
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+hs.pct
+</td>
+<td style="text-align:left;">
+1996
+</td>
+<td style="text-align:right;">
+78.29578
+</td>
+<td style="text-align:right;">
+15.894059
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+hs.pct
+</td>
+<td style="text-align:left;">
+1997
+</td>
+<td style="text-align:right;">
+76.64122
+</td>
+<td style="text-align:right;">
+20.196751
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+hs.pct
+</td>
+<td style="text-align:left;">
+1998
+</td>
+<td style="text-align:right;">
+74.64935
+</td>
+<td style="text-align:right;">
+19.983173
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+hs.pct
+</td>
+<td style="text-align:left;">
+1999
+</td>
+<td style="text-align:right;">
+79.45390
+</td>
+<td style="text-align:right;">
+17.045098
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+hs.pct
+</td>
+<td style="text-align:left;">
+2000
+</td>
+<td style="text-align:right;">
+75.87591
+</td>
+<td style="text-align:right;">
+19.534828
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="sampling-distributions-describing-how-a-statistic-varies" class="section level2" number="1.7">
+<h2><span class="header-section-number">1.7</span> Sampling distributions: describing how a statistic varies</h2>
+<p>As described in the discussion on variability above, each of the numeric quantities calculated has some associated uncertainty. It is not enough to know just the variance or standard deviation of an estimate. Those are just ways to get a measure of the inconsistency in an estimate’s value from sample to sample of a given size <span class="math inline">\(n\)</span>.</p>
+<p>If we wish to make a confident conclusion about an unknown population parameter using a sample statistic (e.g. <span class="math inline">\(\bar{x}\)</span>), we also need to know something about the general pattern of behavior that statistic would take if we had observed it over many, many different potential random samples.</p>
+<p>This long-run behavior pattern is described via the probability distribution of the statistic, also known as the <strong>sampling distribution</strong> of the statistic.</p>
+<p>It is important to remember that we usually only collect one sample, so only one sample mean will be available in practice.
+However, knowledge of the sampling distribution of our statistic or estimate is important because it will enable us to assess the reliability or confidence we can place in any generalizations we make about the population using our estimate.</p>
+<p><strong>Two useful sampling distributions: Normal and <span class="math inline">\(t\)</span></strong></p>
+<p>You should be very familiar with normal distributions and <span class="math inline">\(t\)</span>-distributions from your introductory statistics course. In particular, both serve as useful sampling distributions to describe the behavior of the sample mean <span class="math inline">\(\bar{x}\)</span> as an estimator for a population mean <span class="math inline">\(\mu\)</span>. We briefly review them here.</p>
+<p><strong>Normal distributions.</strong> A variable <span class="math inline">\(X\)</span> that is normally distributed is one that has a symmetric bell-shaped density curve. A normal density curve has two parameters: its mean <span class="math inline">\(\mu\)</span> and its variance <span class="math inline">\(\sigma^2\)</span>. Notationally, we indicate that <span class="math inline">\(X\)</span> is normal by writing <span class="math inline">\(X \sim N(\mu, \sigma^2)\)</span>.</p>
+<p>The normal distribution serves as a good sampling distribution model for the sample mean <span class="math inline">\(\bar{x}\)</span> because of the powerful Central Limit Theorem, which states that if <span class="math inline">\(n\)</span> is sufficiently large, the sampling distribution of <span class="math inline">\(\bar{x}\)</span> will be approximately normal, regardless of the shape of the distribution of the original parent population from which you collect your sample.</p>
+<p><strong>t distributions.</strong> The formula given by
+<span class="math display">\[t_0 = \frac{\bar{x}-\mu}{{SE}_{\bar{x}}}\]</span></p>
+<p>counts up the number of standard error units between the true value of <span class="math inline">\(\mu\)</span> and its sample estimate <span class="math inline">\(\bar{x}\)</span>; it can be thought of as the standardized distance between a true mean value and its sample mean estimate. If the original population was normally distributed, then the quantity <span class="math inline">\(t_0\)</span> will possess the <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(n - 1\)</span> degrees of freedom. Degrees of freedom is the only parameter of a <span class="math inline">\(t\)</span>-distribution. Notationally, we indicate this by writing <span class="math inline">\(t_0 \sim t(df)\)</span>.</p>
+<p><span class="math inline">\(t\)</span>-distributions look a lot like the standard normal distribution, <span class="math inline">\(N(0, 1)\)</span>: they both center at 0 and are symmetric and bell-shaped (see below). The key difference is due to the fact that the quantity <span class="math inline">\(t\)</span> includes two sample summaries in its construction: the sample mean <span class="math inline">\(\bar{x}\)</span>, and <span class="math inline">\(SE_{\bar{x}}\)</span>, which incorporates the sample standard deviation <span class="math inline">\(s\)</span>. Because of this, <span class="math inline">\(t\)</span> is more variable than <span class="math inline">\(N(0, 1)\)</span>. However, as <span class="math inline">\(n\)</span> (and hence degrees of freedom) increases, <span class="math inline">\(s\)</span> becomes a better estimate of the true population standard deviation, so the distinction ultimately vanishes with larger samples. This can all be visualized in Figure <a href="introductory-statistics-in-r.html#fig:ch1-26">1.7</a>.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch1-26"></span>
+<img src="introStatModeling_files/figure-html/ch1-26-1.png" alt="Overlayed distribution functions showing the relationship between a standard normal distribution and that of a $t$ distribution with 3, 5 and 10 degrees of freedom. As the degrees of freedom increases, the $t$ distribution becomes more *normal*" width="70%" />
+<p class="caption">
+Figure 1.7: Overlayed distribution functions showing the relationship between a standard normal distribution and that of a <span class="math inline">\(t\)</span> distribution with 3, 5 and 10 degrees of freedom. As the degrees of freedom increases, the <span class="math inline">\(t\)</span> distribution becomes more <em>normal</em>
+</p>
+</div>
+<p>The <span class="math inline">\(t\)</span>-distribution is usually the relevant sampling distribution when we use a sample mean <span class="math inline">\(\bar{x}\)</span> to make inferences about the corresponding population mean <span class="math inline">\(\mu\)</span>. Later in the course, the need to make more complicated inferences will require us to develop different sampling distribution models to facilitate the statistics involved. These will be presented as needed.</p>
+</div>
+<div id="two-sample-inference" class="section level2" number="1.8">
+<h2><span class="header-section-number">1.8</span> Two-sample inference</h2>
+<p>A key concept from your introductory statistics course that builds off sampling distribution theory is the comparison of the mean from two populations based on the sample means using a two-sample <em>t</em>-test. Consider testing
+<span class="math display">\[H_0:\ \mu_A = \mu_B ~~~\textrm{versus}~~~ H_A:\ \mu_A &lt;\neq&gt; \mu_B\]</span>
+where the notation <span class="math inline">\(&lt;\neq&gt;\)</span> represents one of the common alternative hypotheses from your introductory statistics course and <span class="math inline">\(\mu_A\)</span> is the population mean from population <span class="math inline">\(A\)</span> and <span class="math inline">\(\mu_B\)</span> is the population mean from population <span class="math inline">\(B\)</span>. We statistically test this hypothesis via
+<span class="math display">\[t_0 = \frac{\bar{x}_A - \bar{x}_B}{{SE}_{\bar{x}_A-\bar{x}_B}}\]</span></p>
+<p>where <span class="math inline">\({SE}_{\bar{x}_A-\bar{x}_B}\)</span> is the standard error of the difference of sample means <span class="math inline">\(\bar{x}_A\)</span> and <span class="math inline">\(\bar{x}_B\)</span>. It can be estimated in one of two ways (depending if we assume the population variances are equal or not) and we reference your intro stat class for details (pooled versus non-pooled variance). In R, we can perform this test, and construct the associated <span class="math inline">\((1-\alpha)100\%\)</span> confidence interval for <span class="math inline">\(\mu_A-\mu_B\)</span>,
+<span class="math display">\[\bar{x}_A - \bar{x}_B \pm t_{\alpha/2} {SE}_{\bar{x}_A-\bar{x}_B}\]</span>
+using the function <code>t.test()</code>. Here <span class="math inline">\(t_{\alpha/2}\)</span> is the <span class="math inline">\(1-\alpha/2\)</span> quantile from the <em>t</em>-distribution (the degrees of freedom depend on your assumption about equal variance).</p>
+<p>Consider comparing the ACT scores for incoming freshmen in 1996 to 2000 using the university admission data. Perhaps we have a theory that ACT scores were higher in 1996 than 2000. That is, we are formally testing
+<span class="math display">\[H_0:\ \mu_{1996} = \mu_{2000} ~~~\textrm{versus}~~~ \mu_{1996} &gt; \mu_{2000}\]</span></p>
+<p>First we need to select a subset of the data.</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="introductory-statistics-in-r.html#cb63-1" aria-hidden="true" tabindex="-1"></a>uadata.trim <span class="ot">&lt;-</span> uadata <span class="sc">%&gt;%</span></span>
+<span id="cb63-2"><a href="introductory-statistics-in-r.html#cb63-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1996</span>, <span class="dv">2000</span>) )</span></code></pre></div>
+<p>Here we filter the <code>uadata</code> so that only years in the vector 1996, 2000 are included. Now that we have a proper subset of the data, we can compare the ACT scores between the two years and build a 98% confidence interval for the mean difference.</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="introductory-statistics-in-r.html#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(act <span class="sc">~</span> year, <span class="at">data=</span>uadata.trim, <span class="at">conf.level=</span><span class="fl">0.98</span>, </span>
+<span id="cb64-2"><a href="introductory-statistics-in-r.html#cb64-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">alternative=</span><span class="st">&quot;greater&quot;</span>, <span class="at">var.equal=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## 
+##  Two Sample t-test
+## 
+## data:  act by year
+## t = 0.3013, df = 277, p-value = 0.382
+## alternative hypothesis: true difference in means between group 1996 and group 2000 is greater than 0
+## 98 percent confidence interval:
+##  -0.791858       Inf
+## sample estimates:
+## mean in group 1996 mean in group 2000 
+##            24.6901            24.5547</code></pre>
+<p>We are 98% confident that the mean difference between 1996 ACT scores and 2000 ACT scores is in the interval (-0.792, <span class="math inline">\(\infty\)</span>). Further, we lack significant evidence (<em>p</em>-value<span class="math inline">\(\approx 0.3817\)</span>) to conclude that the average ACT score in 1996 is greater than that in 2000 for incoming freshmen (also note that the value 0 is included in the confidence interval).</p>
+<p>A few things to note about the code above.
+We use the notation <code>act ~ year</code>, this tells R that the <code>act</code> scores are a function of <code>year</code>.
+We specify the data set to be used to perform the test (<code>data=uadata.trim</code>).
+We specify the confidence level (by default it is 0.95) and the alternative hypothesis (by default it is a not-equal test).
+Lastly, we set <code>var.equal=TRUE</code> so the standard error (and degrees of freedom) are calculated under the assumption that the variance of the two populations is equal (pooled variance).</p>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-KutnerText" class="csl-entry">
+Kutner, Michael H., Chris Nachtsheim, John Neter, and William Li. 2004. <em>Applied Linear Statistical Models</em>. 4th edition. McGraw-Hill Irwin. New York, NY: McGraw-Hill Irwin.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="important-preliminary-review.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="introduction-to-statistical-modeling-and-designed-experiments.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["introStatModeling.pdf", "introStatModeling.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

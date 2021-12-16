@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 13 Generalized Linear Models | Introduction to Statistical Modeling</title>
+  <meta name="description" content="Covers Regression and elements of Design of Experiments in R using the tidyverse." />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 13 Generalized Linear Models | Introduction to Statistical Modeling" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Covers Regression and elements of Design of Experiments in R using the tidyverse." />
+  <meta name="github-repo" content="tjfisher19/introStatModeling" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 13 Generalized Linear Models | Introduction to Statistical Modeling" />
+  
+  <meta name="twitter:description" content="Covers Regression and elements of Design of Experiments in R using the tidyverse." />
+  
+
+<meta name="author" content="Michael Hughes and Thomas Fisher" />
+
+
+<meta name="date" content="2021-12-16" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="logistic-regression.html"/>
+<link rel="next" href="references.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Inroduction to Statistical Modeling</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="" data-path="about-the-authors.html"><a href="about-the-authors.html"><i class="fa fa-check"></i>About the Authors</a></li>
+<li class="chapter" data-level="" data-path="important-preliminary-review.html"><a href="important-preliminary-review.html"><i class="fa fa-check"></i>Important Preliminary Review</a>
+<ul>
+<li class="chapter" data-level="" data-path="important-preliminary-review.html"><a href="important-preliminary-review.html#statistics-background"><i class="fa fa-check"></i>Statistics background</a></li>
+<li class="chapter" data-level="" data-path="important-preliminary-review.html"><a href="important-preliminary-review.html#software"><i class="fa fa-check"></i>Software</a></li>
+<li class="chapter" data-level="" data-path="important-preliminary-review.html"><a href="important-preliminary-review.html#add-on-packages"><i class="fa fa-check"></i>Add-on packages</a></li>
+<li class="chapter" data-level="" data-path="important-preliminary-review.html"><a href="important-preliminary-review.html#help-with-rmarkdown"><i class="fa fa-check"></i>Help with RMarkdown</a></li>
+<li class="chapter" data-level="" data-path="important-preliminary-review.html"><a href="important-preliminary-review.html#managing-your-work-in-r"><i class="fa fa-check"></i>Managing your work in R</a></li>
+<li class="chapter" data-level="" data-path="important-preliminary-review.html"><a href="important-preliminary-review.html#data-in-this-text"><i class="fa fa-check"></i>Data in this text</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html"><i class="fa fa-check"></i><b>1</b> Introductory Statistics in R</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#goals-of-a-statistical-analysis"><i class="fa fa-check"></i><b>1.1</b> Goals of a statistical analysis</a></li>
+<li class="chapter" data-level="1.2" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#before-you-begin-an-analysis"><i class="fa fa-check"></i><b>1.2</b> Before you begin an analysis</a></li>
+<li class="chapter" data-level="1.3" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#data-frames"><i class="fa fa-check"></i><b>1.3</b> Data frames</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#built-in-data"><i class="fa fa-check"></i><b>1.3.1</b> Built-in data</a></li>
+<li class="chapter" data-level="1.3.2" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#types-of-data"><i class="fa fa-check"></i><b>1.3.2</b> Types of Data</a></li>
+<li class="chapter" data-level="1.3.3" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#importing-datasets-into-r"><i class="fa fa-check"></i><b>1.3.3</b> Importing datasets into R</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#referencing-data-from-inside-a-data-frame"><i class="fa fa-check"></i><b>1.4</b> Referencing data from inside a data frame</a></li>
+<li class="chapter" data-level="1.5" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#missing-values-and-computer-arithmetic-in-r"><i class="fa fa-check"></i><b>1.5</b> Missing values and computer arithmetic in R</a></li>
+<li class="chapter" data-level="1.6" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#exploratory-data-analysis-eda"><i class="fa fa-check"></i><b>1.6</b> Exploratory Data Analysis (EDA)</a>
+<ul>
+<li class="chapter" data-level="1.6.1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#numeric-summaries"><i class="fa fa-check"></i><b>1.6.1</b> Numeric Summaries</a></li>
+<li class="chapter" data-level="1.6.2" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#numeric-summaries-in-r"><i class="fa fa-check"></i><b>1.6.2</b> Numeric Summaries in R</a></li>
+<li class="chapter" data-level="1.6.3" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#graphical-summaries"><i class="fa fa-check"></i><b>1.6.3</b> Graphical Summaries</a></li>
+<li class="chapter" data-level="1.6.4" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#descriptive-statistics-and-visualizations-by-levels-of-a-factor-variable"><i class="fa fa-check"></i><b>1.6.4</b> Descriptive statistics and visualizations by levels of a factor variable</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#sampling-distributions-describing-how-a-statistic-varies"><i class="fa fa-check"></i><b>1.7</b> Sampling distributions: describing how a statistic varies</a></li>
+<li class="chapter" data-level="1.8" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#two-sample-inference"><i class="fa fa-check"></i><b>1.8</b> Two-sample inference</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html"><i class="fa fa-check"></i><b>2</b> Introduction to Statistical Modeling and Designed Experiments</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#statistical-analyses-is-modeling"><i class="fa fa-check"></i><b>2.1</b> Statistical Analyses is Modeling</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#observational-studies-versus-designed-experiments"><i class="fa fa-check"></i><b>2.2</b> Observational Studies versus designed experiments</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#observational-studies"><i class="fa fa-check"></i><b>2.2.1</b> Observational Studies</a></li>
+<li class="chapter" data-level="2.2.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#designed-experiments"><i class="fa fa-check"></i><b>2.2.2</b> Designed experiments</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#designed-experiement-vocabulary"><i class="fa fa-check"></i><b>2.3</b> Designed experiement vocabulary</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#what-is-an-experiment"><i class="fa fa-check"></i><b>2.3.1</b> What is an experiment?</a></li>
+<li class="chapter" data-level="2.3.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#analysis-of-variance"><i class="fa fa-check"></i><b>2.3.2</b> Analysis of variance</a></li>
+<li class="chapter" data-level="2.3.3" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#elements-of-a-designed-experiment"><i class="fa fa-check"></i><b>2.3.3</b> Elements of a designed experiment</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#paired-t-test"><i class="fa fa-check"></i><b>2.4</b> Paired <em>t</em>-test</a></li>
+<li class="chapter" data-level="2.5" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#one-way-anova"><i class="fa fa-check"></i><b>2.5</b> One-Way ANOVA</a></li>
+<li class="chapter" data-level="2.6" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#assumption-checking"><i class="fa fa-check"></i><b>2.6</b> Assumption Checking</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#independence"><i class="fa fa-check"></i><b>2.6.1</b> Independence</a></li>
+<li class="chapter" data-level="2.6.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#constant-variance"><i class="fa fa-check"></i><b>2.6.2</b> Constant Variance</a></li>
+<li class="chapter" data-level="2.6.3" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#checking-normality"><i class="fa fa-check"></i><b>2.6.3</b> Checking Normality</a></li>
+<li class="chapter" data-level="2.6.4" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#code-to-check-assumption"><i class="fa fa-check"></i><b>2.6.4</b> Code to check assumption</a></li>
+<li class="chapter" data-level="2.6.5" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#transforming-your-response"><i class="fa fa-check"></i><b>2.6.5</b> Transforming your response</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#follow-up-procedures-multiple-comparisons"><i class="fa fa-check"></i><b>2.7</b> Follow-up procedures – Multiple Comparisons</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#tukeys-hsd-method"><i class="fa fa-check"></i><b>2.7.1</b> Tukey’s HSD method</a></li>
+<li class="chapter" data-level="2.7.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#dunnett-multiple-comparisons"><i class="fa fa-check"></i><b>2.7.2</b> Dunnett multiple comparisons</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="multiple-factor-designed-experiments.html"><a href="multiple-factor-designed-experiments.html"><i class="fa fa-check"></i><b>3</b> Multiple Factor Designed Experiments</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="multiple-factor-designed-experiments.html"><a href="multiple-factor-designed-experiments.html#blocking"><i class="fa fa-check"></i><b>3.1</b> Blocking</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="multiple-factor-designed-experiments.html"><a href="multiple-factor-designed-experiments.html#data-structure-model-form-and-analysis-of-variance-of-a-randomized-block-design"><i class="fa fa-check"></i><b>3.1.1</b> Data structure, model form and analysis of variance of a Randomized Block Design</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="multiple-factor-designed-experiments.html"><a href="multiple-factor-designed-experiments.html#two-factor-designs"><i class="fa fa-check"></i><b>3.2</b> Two-factor Designs</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="multiple-factor-designed-experiments.html"><a href="multiple-factor-designed-experiments.html#analysis"><i class="fa fa-check"></i><b>3.2.1</b> Analysis</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="advanced-designs.html"><a href="advanced-designs.html"><i class="fa fa-check"></i><b>4</b> Advanced Designs</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="advanced-designs.html"><a href="advanced-designs.html#higher-order-factor-models"><i class="fa fa-check"></i><b>4.1</b> Higher order factor models</a></li>
+<li class="chapter" data-level="4.2" data-path="advanced-designs.html"><a href="advanced-designs.html#within-subject-designs"><i class="fa fa-check"></i><b>4.2</b> Within-subject designs</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="advanced-designs.html"><a href="advanced-designs.html#blocks-revisited-an-approach-to-handling-within-subjects-factors"><i class="fa fa-check"></i><b>4.2.1</b> Blocks revisited: an approach to handling within-subjects factors</a></li>
+<li class="chapter" data-level="4.2.2" data-path="advanced-designs.html"><a href="advanced-designs.html#a-more-involved-repeated-measures-case-study"><i class="fa fa-check"></i><b>4.2.2</b> A more involved repeated measures case study</a></li>
+<li class="chapter" data-level="4.2.3" data-path="advanced-designs.html"><a href="advanced-designs.html#further-study"><i class="fa fa-check"></i><b>4.2.3</b> Further study</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html"><i class="fa fa-check"></i><b>5</b> Introduction to Multiple Regression</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#regression-model"><i class="fa fa-check"></i><b>5.1</b> Regression Model</a></li>
+<li class="chapter" data-level="5.2" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#fitting-a-regression-model"><i class="fa fa-check"></i><b>5.2</b> Fitting a regression model</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#why-should-we-use-more-than-one-predictor"><i class="fa fa-check"></i><b>5.2.1</b> Why should we use more than one predictor?</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#interpreting-beta-parameter-estimates-in-mlr"><i class="fa fa-check"></i><b>5.3</b> Interpreting <span class="math inline">\(\beta\)</span>-parameter estimates in MLR</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#designed-experiments-1"><i class="fa fa-check"></i><b>5.3.1</b> Designed experiments</a></li>
+<li class="chapter" data-level="5.3.2" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#observational-studies-1"><i class="fa fa-check"></i><b>5.3.2</b> Observational studies</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html"><i class="fa fa-check"></i><b>6</b> Inference regarding Multiple Regression</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#assumption-checking-1"><i class="fa fa-check"></i><b>6.1</b> Assumption checking</a></li>
+<li class="chapter" data-level="6.2" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#overall-f-test-for-model-signifance"><i class="fa fa-check"></i><b>6.2</b> Overall <span class="math inline">\(F\)</span>-test for model signifance</a></li>
+<li class="chapter" data-level="6.3" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#individual-parameter-inference"><i class="fa fa-check"></i><b>6.3</b> Individual parameter inference</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#t-tests"><i class="fa fa-check"></i><b>6.3.1</b> <span class="math inline">\(t\)</span>-tests</a></li>
+<li class="chapter" data-level="6.3.2" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#confidence-intervals"><i class="fa fa-check"></i><b>6.3.2</b> Confidence Intervals</a></li>
+<li class="chapter" data-level="6.3.3" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#confidence-and-prediction-bands"><i class="fa fa-check"></i><b>6.3.3</b> Confidence and prediction bands</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#goodness-of-fit"><i class="fa fa-check"></i><b>6.4</b> Goodness-of-fit</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#coefficient-of-determination"><i class="fa fa-check"></i><b>6.4.1</b> Coefficient of determination</a></li>
+<li class="chapter" data-level="6.4.2" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#akaikes-information-criterion"><i class="fa fa-check"></i><b>6.4.2</b> Akaike’s Information Criterion</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html"><i class="fa fa-check"></i><b>7</b> More on multiple linear regression</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html#model-comparision-reduced-f-tests"><i class="fa fa-check"></i><b>7.1</b> Model comparision – Reduced <span class="math inline">\(F\)</span>-tests</a></li>
+<li class="chapter" data-level="7.2" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html#categorical-predictor-variables"><i class="fa fa-check"></i><b>7.2</b> Categorical Predictor Variables</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html#a-qualitative-predictor-with-two-levels"><i class="fa fa-check"></i><b>7.2.1</b> A qualitative predictor with two levels</a></li>
+<li class="chapter" data-level="7.2.2" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html#a-qualitative-predictor-with-more-than-two-levels"><i class="fa fa-check"></i><b>7.2.2</b> A qualitative predictor with more than two levels</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html#bridging-regression-and-designed-experiments-ancova"><i class="fa fa-check"></i><b>7.3</b> Bridging Regression and Designed Experiments – ANCOVA</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html#an-ancova-example-with-a-two-level-factor"><i class="fa fa-check"></i><b>7.3.1</b> An ANCOVA example with a two-level factor</a></li>
+<li class="chapter" data-level="7.3.2" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html#ancova-with-a-multi-level-factor"><i class="fa fa-check"></i><b>7.3.2</b> ANCOVA with a multi-level factor</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="model-building-considerations.html"><a href="model-building-considerations.html"><i class="fa fa-check"></i><b>8</b> Model Building Considerations</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="model-building-considerations.html"><a href="model-building-considerations.html#regression-assumptions-revisited"><i class="fa fa-check"></i><b>8.1</b> Regression assumptions revisited</a></li>
+<li class="chapter" data-level="8.2" data-path="model-building-considerations.html"><a href="model-building-considerations.html#violations-of-the-independence-assumption"><i class="fa fa-check"></i><b>8.2</b> Violations of the independence assumption</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="model-building-considerations.html"><a href="model-building-considerations.html#collecting-data-that-are-temporal-or-spatial-in-nature"><i class="fa fa-check"></i><b>8.2.1</b> Collecting data that are temporal or spatial in nature</a></li>
+<li class="chapter" data-level="8.2.2" data-path="model-building-considerations.html"><a href="model-building-considerations.html#pseudoreplication"><i class="fa fa-check"></i><b>8.2.2</b> Pseudoreplication</a></li>
+<li class="chapter" data-level="8.2.3" data-path="model-building-considerations.html"><a href="model-building-considerations.html#what-if-we-have-non-independent-errors"><i class="fa fa-check"></i><b>8.2.3</b> What if we have non-independent errors?</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="model-building-considerations.html"><a href="model-building-considerations.html#constant-variance-violations"><i class="fa fa-check"></i><b>8.3</b> Constant Variance Violations</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="model-building-considerations.html"><a href="model-building-considerations.html#box-cox-power-tranformations"><i class="fa fa-check"></i><b>8.3.1</b> Box-Cox Power Tranformations</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="model-building-considerations.html"><a href="model-building-considerations.html#normality-violations"><i class="fa fa-check"></i><b>8.4</b> Normality violations</a></li>
+<li class="chapter" data-level="8.5" data-path="model-building-considerations.html"><a href="model-building-considerations.html#violations-of-the-linearity-assumption"><i class="fa fa-check"></i><b>8.5</b> Violations of the linearity assumption</a></li>
+<li class="chapter" data-level="8.6" data-path="model-building-considerations.html"><a href="model-building-considerations.html#detecting-and-dealing-with-unusual-observations"><i class="fa fa-check"></i><b>8.6</b> Detecting and dealing with unusual observations</a></li>
+<li class="chapter" data-level="8.7" data-path="model-building-considerations.html"><a href="model-building-considerations.html#multicollinearity"><i class="fa fa-check"></i><b>8.7</b> Multicollinearity</a></li>
+<li class="chapter" data-level="8.8" data-path="model-building-considerations.html"><a href="model-building-considerations.html#standardizingPredictors"><i class="fa fa-check"></i><b>8.8</b> Scale changes</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="model-selection.html"><a href="model-selection.html"><i class="fa fa-check"></i><b>9</b> Model Selection</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="model-selection.html"><a href="model-selection.html#stepwise-procedures"><i class="fa fa-check"></i><b>9.1</b> Stepwise Procedures</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="model-selection.html"><a href="model-selection.html#backward-selection"><i class="fa fa-check"></i><b>9.1.1</b> Backward Selection</a></li>
+<li class="chapter" data-level="9.1.2" data-path="model-selection.html"><a href="model-selection.html#forward-selection"><i class="fa fa-check"></i><b>9.1.2</b> Forward selection</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="model-selection.html"><a href="model-selection.html#best-subsets"><i class="fa fa-check"></i><b>9.2</b> Best subsets</a></li>
+<li class="chapter" data-level="9.3" data-path="model-selection.html"><a href="model-selection.html#shrinkage-methods"><i class="fa fa-check"></i><b>9.3</b> Shrinkage Methods</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i><b>10</b> Model Validation</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="model-validation.html"><a href="model-validation.html#underfitting-vs.-overfitting-models"><i class="fa fa-check"></i><b>10.1</b> Underfitting vs. Overfitting Models</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="model-validation.html"><a href="model-validation.html#the-bias-variance-trade-off"><i class="fa fa-check"></i><b>10.1.1</b> The Bias-Variance Trade-off</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="model-validation.html"><a href="model-validation.html#validation-techniques"><i class="fa fa-check"></i><b>10.2</b> Validation Techniques</a></li>
+<li class="chapter" data-level="10.3" data-path="model-validation.html"><a href="model-validation.html#basic-validation-with-a-single-holdout-sample"><i class="fa fa-check"></i><b>10.3</b> Basic Validation with a single holdout sample</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="model-validation.html"><a href="model-validation.html#use-the-training-data-to-fit-and-select-models"><i class="fa fa-check"></i><b>10.3.1</b> Use the training data to fit and select models</a></li>
+<li class="chapter" data-level="10.3.2" data-path="model-validation.html"><a href="model-validation.html#model-training"><i class="fa fa-check"></i><b>10.3.2</b> Model training:</a></li>
+<li class="chapter" data-level="10.3.3" data-path="model-validation.html"><a href="model-validation.html#model-validation-step"><i class="fa fa-check"></i><b>10.3.3</b> Model validation step:</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="model-validation.html"><a href="model-validation.html#hold-out-sample-validation-using-caret"><i class="fa fa-check"></i><b>10.4</b> Hold-out sample validation using <code>caret</code></a></li>
+<li class="chapter" data-level="10.5" data-path="model-validation.html"><a href="model-validation.html#leave-one-out-cross-validation-loocv"><i class="fa fa-check"></i><b>10.5</b> “Leave one out” Cross-Validation (LOOCV)</a></li>
+<li class="chapter" data-level="10.6" data-path="model-validation.html"><a href="model-validation.html#k-fold-cross-validation"><i class="fa fa-check"></i><b>10.6</b> <span class="math inline">\(k\)</span>-fold Cross-Validation</a></li>
+<li class="chapter" data-level="10.7" data-path="model-validation.html"><a href="model-validation.html#a-final-note"><i class="fa fa-check"></i><b>10.7</b> A final note</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="statistical-odds.html"><a href="statistical-odds.html"><i class="fa fa-check"></i><b>11</b> Statistical Odds</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="statistical-odds.html"><a href="statistical-odds.html#probability-versus-odds"><i class="fa fa-check"></i><b>11.1</b> Probability versus Odds</a></li>
+<li class="chapter" data-level="11.2" data-path="statistical-odds.html"><a href="statistical-odds.html#odds-ratios"><i class="fa fa-check"></i><b>11.2</b> Odds ratios</a></li>
+<li class="chapter" data-level="11.3" data-path="statistical-odds.html"><a href="statistical-odds.html#ideas-of-modeling-odds"><i class="fa fa-check"></i><b>11.3</b> Ideas of modeling odds</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>12</b> Logistic Regression</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="logistic-regression.html"><a href="logistic-regression.html#logistic-model"><i class="fa fa-check"></i><b>12.1</b> Logistic Model</a></li>
+<li class="chapter" data-level="12.2" data-path="logistic-regression.html"><a href="logistic-regression.html#fitting-interpreting-and-assessing-a-logistic-model"><i class="fa fa-check"></i><b>12.2</b> Fitting, Interpreting and assessing a logistic model</a></li>
+<li class="chapter" data-level="12.3" data-path="logistic-regression.html"><a href="logistic-regression.html#case-study---titanic-dataset"><i class="fa fa-check"></i><b>12.3</b> Case Study - Titanic Dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>13</b> Generalized Linear Models</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#poisson-regression"><i class="fa fa-check"></i><b>13.1</b> Poisson Regression</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#poisson-distribution"><i class="fa fa-check"></i><b>13.1.1</b> Poisson distribution</a></li>
+<li class="chapter" data-level="13.1.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#poisson-regression-development"><i class="fa fa-check"></i><b>13.1.2</b> Poisson Regression Development</a></li>
+<li class="chapter" data-level="13.1.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#example---tropical-cyclone-counts-in-the-north-atlantic"><i class="fa fa-check"></i><b>13.1.3</b> Example - Tropical Cyclone Counts in the North Atlantic</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#handling-overdispersion"><i class="fa fa-check"></i><b>13.2</b> Handling overdispersion</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#example-attendnace-records"><i class="fa fa-check"></i><b>13.2.1</b> Example – Attendnace Records</a></li>
+<li class="chapter" data-level="13.2.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#incorrect-poisson-model"><i class="fa fa-check"></i><b>13.2.2</b> Incorrect Poisson Model</a></li>
+<li class="chapter" data-level="13.2.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#a-quasi-poisson-approach"><i class="fa fa-check"></i><b>13.2.3</b> A quasi-Poisson approach</a></li>
+<li class="chapter" data-level="13.2.4" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#fitting-a-negative-binomial-regression"><i class="fa fa-check"></i><b>13.2.4</b> Fitting a Negative Binomial regression</a></li>
+<li class="chapter" data-level="13.2.5" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#picking-between-quasi-poisson-and-negative-binomial"><i class="fa fa-check"></i><b>13.2.5</b> Picking between Quasi-Poisson and Negative Binomial</a></li>
+<li class="chapter" data-level="13.2.6" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#infererence-on-predictor-variables"><i class="fa fa-check"></i><b>13.2.6</b> Infererence on predictor variables</a></li>
+<li class="chapter" data-level="13.2.7" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#plotting-fitted-model"><i class="fa fa-check"></i><b>13.2.7</b> Plotting fitted model</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to Statistical Modeling</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="generalized-linear-models" class="section level1" number="13">
+<h1><span class="header-section-number">Chapter 13</span> Generalized Linear Models</h1>
+<p>In the previous chapter we introduced the idea of a <strong>Generalized Linear Model</strong>, where we fit a linear regression model to a response variable via a link function. Logistic regression highlights the case of a binary outcome (TRUE/FALSE, Success/Failure, Alive/Dead, 1/0). The ideas expressed in that chapter can be extended to a multitude of situations. This chapter offers an overview of the topic concentrating on <em>count</em> responses.</p>
+<p><strong>Example: Prevalence of salamanders.</strong> An observational field study is conducted in which the number of salamanders in different locations is counted. For this dataset, salamander count (the response variable) takes on non-negative integer values. This response is to be modeled as a function of two quantitative predictor variables: forest age and percentage of canopy cover.</p>
+<p>What makes this problem different from problems we saw in the previous chapters? Since the response variable <span class="math inline">\(Y\)</span> is a count (integers 0, 1, 2, <span class="math inline">\(\ldots\)</span>), it is discrete and bounded below by 0. A common characteristic of counts is that the variability in the count increases with the mean. For example:</p>
+<ul>
+<li>If we had sampled sites with field conditions that produced low salamander counts, the counts would tend to be very similar because of the physical count boundary of 0.</li>
+<li>Conversely, sampled sites with field conditions that produce higher salamander counts would tend to be less similar (i.e. more variable).</li>
+</ul>
+<p>Count variables by their very nature violate the usual constant variance assumption from regression. Furthermore, if the response <span class="math inline">\(Y\)</span> is a count, then it must be greater than or equal to 0 to be valid. A standard regression method may not ensure this will happen either. Using an appropriate link function will ensure valid predictions.</p>
+<p>For count data such as this, it is often more appropriate to assume the response variable <span class="math inline">\(Y\)</span> follows a Poisson or Negative Binomial distribution, as compared to a Normal distribution utilized in standard regression.</p>
+<div id="poisson-regression" class="section level2" number="13.1">
+<h2><span class="header-section-number">13.1</span> Poisson Regression</h2>
+<p>Before getting into the details of Poisson regression we will briefly introduce the Poisson distribution. This is a common distribution that is covered in many Introductory Statistics books (although the topic tends to be omitted from many Intro Stat classes).</p>
+<div id="poisson-distribution" class="section level3" number="13.1.1">
+<h3><span class="header-section-number">13.1.1</span> Poisson distribution</h3>
+<p>Suppose you had a binomial random variable <span class="math inline">\(X\)</span>. A common example is a coin flip where you observed the number of heads (<span class="math inline">\(X\)</span>) out of <span class="math inline">\(n\)</span> trials. Here we would say
+<span class="math display">\[X \sim \textrm{Binomial}(n, p=0.5)\]</span>
+where <span class="math inline">\(p=P(Heads)\)</span> on any given coin flip.</p>
+<p>Now, suppose that the number of trials <span class="math inline">\(n\)</span> is very large (say, <span class="math inline">\(n\to\infty\)</span>) and the probability of success is relatively small such that as <span class="math inline">\(n\)</span> grows large, <span class="math inline">\(np\to c\)</span>, where <span class="math inline">\(c\)</span> is some constant. In situations such as this, the observed value of <span class="math inline">\(X\)</span> can be considered a count, 0, 1, 2, 3, <span class="math inline">\(\ldots\)</span> and is unbounded as <span class="math inline">\(n\)</span> grows.</p>
+<p>Mathematics can show that in this situation <span class="math inline">\(X\)</span> follows the following distribution</p>
+<p><span class="math display">\[P(X=k) = \frac{\lambda^k e^{-\lambda}}{k!}, ~~k=0,1,2,\ldots\]</span></p>
+<p>which is known as the Poisson distribution with rate parameter <span class="math inline">\(\lambda\)</span>. The rate parameter corresponds to <span class="math inline">\(\lambda=np\)</span> in the aforementioned binomial situation and it can be shown that the theoretical mean of a Poisson random variable <span class="math inline">\(X\)</span> is <span class="math inline">\(E[X]=\lambda\)</span>. Not only that, but <span class="math inline">\(\mu=E[X]=\lambda = Var(X)\)</span>. That is, for a Poisson random variable, its mean and its variance are the same - this fact is important later.</p>
+<p><strong>Simplified.</strong> A Poisson distribution is appropriate in some applications when the variable of interest is a count. Examples may include the number of customers who enter a bank in a given hour, the number of earthquakes observed along a fault line, and as we’ll see later, the number of tropical cyclones that develop in the Atlantic Ocean.</p>
+</div>
+<div id="poisson-regression-development" class="section level3" number="13.1.2">
+<h3><span class="header-section-number">13.1.2</span> Poisson Regression Development</h3>
+<p>The basic construct of the Poisson Regression model is to use a <span class="math inline">\(\log\)</span> link function. Namely, we are interested in modeling <span class="math inline">\(E[Y] = \mu = \lambda\)</span> and that is acheived via
+<span class="math display">\[\log(\mu) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_k X_k\]</span>
+Where <span class="math inline">\(\beta_j\)</span> is the coefficient on the <span class="math inline">\(j^\mathrm{th}\)</span> predictor variable <span class="math inline">\(X_j\)</span>. It is easy to “untransform” this model with an exponenent. Namely</p>
+<p><span class="math display" id="eq:poissonModel">\[\begin{equation}
+E[Y] = \mu = \lambda = e^{\beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_k X_k}
+\tag{13.1}
+\end{equation}\]</span></p>
+<p><strong>Important Notes.</strong> We have already established that for Poisson data <span class="math inline">\(\lambda = E[Y] = Var(Y)\)</span>; i.e., the mean and the variance are equal. In many applications it may be the case that the observed variance is greater than the mean; this phenonemon is known as <em>overdispersion</em> and can be an indication a Poisson regression is not appropriate (more on that later).</p>
+</div>
+<div id="example---tropical-cyclone-counts-in-the-north-atlantic" class="section level3" number="13.1.3">
+<h3><span class="header-section-number">13.1.3</span> Example - Tropical Cyclone Counts in the North Atlantic</h3>
+<p>A tropical cyclone is a rapidly rotating storm system characterized by a low-pressure center, a closed low-level atmospheric circulation, strong winds, and a spiral arrangement of thunderstorms that produce heavy rain. Depending on its location and strength, a tropical cyclone is referred to by different names, including hurricane, typhoon, tropical storm, cyclonic storm, tropical depression, and simply cyclone. A hurricane or tropical storm is a tropical cyclone that occurs in the Atlantic Ocean and northeastern Pacific Ocean, and a typhoon occurs in the northwestern Pacific Ocean; while in the south Pacific or Indian Ocean, comparable storms are referred to simply as “tropical cyclones” or “severe cyclonic storms.” We will consider the tropical cyclone record for the North Atlantic Basin.</p>
+<div class="sourceCode" id="cb418"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb418-1"><a href="generalized-linear-models.html#cb418-1" aria-hidden="true" tabindex="-1"></a>atlantic <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;atlanticCycloneRecord.csv&quot;</span>)</span>
+<span id="cb418-2"><a href="generalized-linear-models.html#cb418-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(atlantic)</span></code></pre></div>
+<pre><code>##   Year TS H1 H2 H3 H4 H5
+## 1 1851  3  2  0  1  0  0
+## 2 1852  0  3  1  1  0  0
+## 3 1853  4  1  1  1  1  0
+## 4 1854  2  1  1  1  0  0
+## 5 1855  1  1  2  1  0  0
+## 6 1856  2  2  0  1  1  0</code></pre>
+<div class="sourceCode" id="cb420"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb420-1"><a href="generalized-linear-models.html#cb420-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(atlantic)</span></code></pre></div>
+<pre><code>##     Year TS H1 H2 H3 H4 H5
+## 162 2012  9  5  3  2  0  0
+## 163 2013 12  2  0  0  0  0
+## 164 2014  2  3  1  1  1  0
+## 165 2015  7  2  0  1  1  0
+## 166 2016  8  3  0  2  1  1
+## 167 2017  7  2  2  2  2  2</code></pre>
+<p>Consider 2017, news of hurricanes could not be missed (Harvey in Houston, Irma in Florida and Maria in Puerto Rico). In terms of impact on the United States, 2017 seemed extreme. But in a broader sense, one may ask, was 2017 that abnormal?</p>
+<p>The answer to this question is a complex problem that cannot but tackled in a single textbook example but we will look at the simple case of modeling the number of storms (we are not concentrating on storm intensity or accumulated cyclone energy) and determined if 2017 seemed abnormal. In particular, we will consider the Southern Oscillation Index (SOI) as a predictor variable on trypical cyclone counts. The SOI is a standardized index based on the observed sea level pressure differences between Tahiti and Darwin, Australia. The SOI is one measure of the large-scale fluctuations in air pressure occurring between the western and eastern tropical Pacific (i.e., the state of the Southern Oscillation) during El Niño and La Niña episodes. In general, smoothed time series of the SOI correspond very well with changes in ocean temperatures across the eastern tropical Pacific. The negative phase of the SOI represents below-normal air pressure at Tahiti and above-normal air pressure at Darwin. Prolonged periods of negative (positive) SOI values coincide with abnormally warm (cold) ocean waters across the eastern tropical Pacific typical of El Niño (La Niña) episodes.</p>
+<p>We will attempt to tackle the question of whether the SOI predict cyclone counts.</p>
+<p>We begin by creating a total storm count variable</p>
+<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb422-1"><a href="generalized-linear-models.html#cb422-1" aria-hidden="true" tabindex="-1"></a>atlantic <span class="ot">&lt;-</span> atlantic <span class="sc">%&gt;%</span></span>
+<span id="cb422-2"><a href="generalized-linear-models.html#cb422-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Storms=</span>TS<span class="sc">+</span>H1<span class="sc">+</span>H2<span class="sc">+</span>H3<span class="sc">+</span>H4<span class="sc">+</span>H5)</span>
+<span id="cb422-3"><a href="generalized-linear-models.html#cb422-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(atlantic)</span></code></pre></div>
+<pre><code>##     Year TS H1 H2 H3 H4 H5 Storms
+## 162 2012  9  5  3  2  0  0     19
+## 163 2013 12  2  0  0  0  0     14
+## 164 2014  2  3  1  1  1  0      8
+## 165 2015  7  2  0  1  1  0     11
+## 166 2016  8  3  0  2  1  1     15
+## 167 2017  7  2  2  2  2  2     17</code></pre>
+<p>The variable <code>Storms</code> is the total number of tropical storms and hurricanes in a given year.
+Let’s plot the storm counts in time to look at the historic record.</p>
+<div class="sourceCode" id="cb424"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb424-1"><a href="generalized-linear-models.html#cb424-1" aria-hidden="true" tabindex="-1"></a>df.annotate <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Year=</span><span class="fu">c</span>(<span class="dv">1930</span>,<span class="dv">1960</span>),</span>
+<span id="cb424-2"><a href="generalized-linear-models.html#cb424-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">y=</span><span class="fu">rep</span>(<span class="dv">23</span>,<span class="dv">2</span>),</span>
+<span id="cb424-3"><a href="generalized-linear-models.html#cb424-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">labs=</span><span class="fu">c</span>(<span class="st">&quot;1930&quot;</span>, <span class="st">&quot;1960&quot;</span>))</span>
+<span id="cb424-4"><a href="generalized-linear-models.html#cb424-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(atlantic) <span class="sc">+</span></span>
+<span id="cb424-5"><a href="generalized-linear-models.html#cb424-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="fu">c</span>(<span class="dv">1930</span>,<span class="dv">1960</span>), <span class="at">col=</span><span class="st">&quot;royalblue&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb424-6"><a href="generalized-linear-models.html#cb424-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data=</span>df.annotate, <span class="fu">aes</span>(<span class="at">x=</span>Year, <span class="at">y=</span>y, <span class="at">label=</span>labs), <span class="at">angle=</span><span class="dv">90</span>, <span class="at">nudge_x=</span><span class="sc">-</span><span class="fl">2.5</span>, <span class="at">col=</span><span class="st">&quot;royalblue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb424-7"><a href="generalized-linear-models.html#cb424-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span>Year, <span class="at">y=</span>Storms), <span class="at">col=</span><span class="st">&quot;gray50&quot;</span>) <span class="sc">+</span></span>
+<span id="cb424-8"><a href="generalized-linear-models.html#cb424-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>Year, <span class="at">y=</span>Storms) ) <span class="sc">+</span></span>
+<span id="cb424-9"><a href="generalized-linear-models.html#cb424-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;North Atlantic Tropical Cyclone Storm Counts&quot;</span>) <span class="sc">+</span></span>
+<span id="cb424-10"><a href="generalized-linear-models.html#cb424-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<p><img src="introStatModeling_files/figure-html/13.3-1.png" width="672" /></p>
+<p>In our plot we have the number of tropical cyclones per year with 1930 and 1960 highlighted for the following reasons:
+Overall we see some distinct change in the record (highlighted by blue vertical lines).</p>
+<ul>
+<li>Circa 1930 - Aircraft reconnaissance! Before this we only knew of a storm if it made land fall or a ship saw it.</li>
+<li>Circa 1960 - Satellites! Since the early 1960s we have eyes on the ocean all the time. Counts after 1960 are considered much more reliable.</li>
+</ul>
+<p>Thus we remove all data before 1961 and calculate some summary statistics</p>
+<div class="sourceCode" id="cb425"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb425-1"><a href="generalized-linear-models.html#cb425-1" aria-hidden="true" tabindex="-1"></a>atlantic <span class="ot">&lt;-</span> atlantic <span class="sc">%&gt;%</span> </span>
+<span id="cb425-2"><a href="generalized-linear-models.html#cb425-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Year<span class="sc">&gt;</span><span class="dv">1960</span>)</span>
+<span id="cb425-3"><a href="generalized-linear-models.html#cb425-3" aria-hidden="true" tabindex="-1"></a>atlantic <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">Avg.Storm =</span> <span class="fu">mean</span>(Storms),</span>
+<span id="cb425-4"><a href="generalized-linear-models.html#cb425-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">Var.Storm =</span> <span class="fu">var</span>(Storms))</span></code></pre></div>
+<pre><code>##   Avg.Storm Var.Storm
+## 1    11.614   19.9555</code></pre>
+<p>We note that on average there are 11.6 storms per year with a variance of near 20. We have some indication that maybe our response variable suffers from overdispersion, we will revisit that a little later.</p>
+<p>Now we load in the SOI data.</p>
+<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="generalized-linear-models.html#cb427-1" aria-hidden="true" tabindex="-1"></a>soi <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;soi.txt&quot;</span>, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
+<span id="cb427-2"><a href="generalized-linear-models.html#cb427-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(soi)</span></code></pre></div>
+<pre><code>##   YEAR  JAN  FEB  MAR  APR  MAY JUN  JUL  AUG  SEP  OCT  NOV  DEC
+## 1 1951  1.5  0.9 -0.1 -0.3 -0.7 0.2 -1.0 -0.2 -1.1 -1.0 -0.8 -0.7
+## 2 1952 -0.9 -0.6  0.5 -0.2  0.8 0.7  0.5  0.1 -0.2  0.4  0.0 -1.2
+## 3 1953  0.3 -0.5 -0.2  0.2 -1.7 0.1  0.0 -1.2 -1.2  0.1 -0.3 -0.5
+## 4 1954  0.7 -0.3  0.3  0.6  0.5 0.1  0.4  1.1  0.2  0.3  0.1  1.4
+## 5 1955 -0.5  1.9  0.6 -0.1  1.0 1.3  1.6  1.5  1.3  1.5  1.2  1.0
+## 6 1956  1.3  1.6  1.3  0.9  1.4 1.1  1.1  1.2  0.1  1.8  0.2  1.1</code></pre>
+<p>Since our storm counts are by year we need a single SOI value per year. The North Atlantic “Hurricane Season” is June through November, so we will consider the mean SOI value in those months. We will create the new variable using material from Chapter 1.</p>
+<p>We take the SOI data and <code>group_by</code> <code>YEAR</code>. Then within a given year we calculate the mean SOI level for June, July, August, September, October and November. Lastly we select the variables of interest for our analysis and rename <code>YEAR</code> to <code>Year</code> (thus matching the cyclone counts).</p>
+<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="generalized-linear-models.html#cb429-1" aria-hidden="true" tabindex="-1"></a>soi <span class="ot">&lt;-</span> soi <span class="sc">%&gt;%</span></span>
+<span id="cb429-2"><a href="generalized-linear-models.html#cb429-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(YEAR) <span class="sc">%&gt;%</span></span>
+<span id="cb429-3"><a href="generalized-linear-models.html#cb429-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SOI =</span> <span class="fu">mean</span>(<span class="fu">c</span>(JUN,JUL,AUG,SEP,OCT,NOV)) ) <span class="sc">%&gt;%</span></span>
+<span id="cb429-4"><a href="generalized-linear-models.html#cb429-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(YEAR, SOI) <span class="sc">%&gt;%</span></span>
+<span id="cb429-5"><a href="generalized-linear-models.html#cb429-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Year=</span>YEAR)</span>
+<span id="cb429-6"><a href="generalized-linear-models.html#cb429-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(soi)</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 2
+## # Groups:   Year [6]
+##    Year     SOI
+##   &lt;int&gt;   &lt;dbl&gt;
+## 1  2012  0.0333
+## 2  2013  0.517 
+## 3  2014 -0.483 
+## 4  2015 -1.15  
+## 5  2016  0.417 
+## 6  2017  0.55</code></pre>
+<p>Now we need to combine our Atlantic Hurricane data with the SOI measures. Essentially we want to <em>join</em> or <em>merge</em> the two datasets linking observations by Year. For those who know SQL, this is a common operation known as a <code>join</code>. R includes several functions to do this. Today we will use an <code>inner_join</code> so only rows with a common year between the two datasets will be included.</p>
+<p>First we select the necessary variables form the <code>atlantic</code> dataset and then <code>inner_join</code> it with the SOI.</p>
+<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb431-1"><a href="generalized-linear-models.html#cb431-1" aria-hidden="true" tabindex="-1"></a>atlantic <span class="ot">&lt;-</span> atlantic <span class="sc">%&gt;%</span></span>
+<span id="cb431-2"><a href="generalized-linear-models.html#cb431-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Year, Storms)</span>
+<span id="cb431-3"><a href="generalized-linear-models.html#cb431-3" aria-hidden="true" tabindex="-1"></a>combine <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(atlantic, soi, <span class="at">by=</span><span class="st">&quot;Year&quot;</span>)</span>
+<span id="cb431-4"><a href="generalized-linear-models.html#cb431-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(combine)</span></code></pre></div>
+<pre><code>##   Year Storms       SOI
+## 1 1961     11  0.133333
+## 2 1962      5  0.516667
+## 3 1963      9 -0.533333
+## 4 1964     12  0.950000
+## 5 1965      6 -1.133333
+## 6 1966     11  0.116667</code></pre>
+<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb433-1"><a href="generalized-linear-models.html#cb433-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(combine)</span></code></pre></div>
+<pre><code>##    Year Storms        SOI
+## 52 2012     19  0.0333333
+## 53 2013     14  0.5166667
+## 54 2014      8 -0.4833333
+## 55 2015     11 -1.1500000
+## 56 2016     15  0.4166667
+## 57 2017     17  0.5500000</code></pre>
+<p>Let’s plot our response variable <code>Storms</code> against our predictor variable <code>Yearly.SOI</code>. Here we use some extra features in <code>ggplot</code> to highlight 2017</p>
+<p>First we create a variable called <code>Highlight</code> if the year is 2017. Then we save another dataset with just that observation so we can annotate the point with text. We use the aesthetic option <code>color</code> to highlight 2017 as a different color.</p>
+<div class="sourceCode" id="cb435"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb435-1"><a href="generalized-linear-models.html#cb435-1" aria-hidden="true" tabindex="-1"></a>combine <span class="ot">&lt;-</span> combine <span class="sc">%&gt;%</span></span>
+<span id="cb435-2"><a href="generalized-linear-models.html#cb435-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Highlight =</span> <span class="fu">ifelse</span>(Year<span class="sc">==</span><span class="dv">2017</span>, <span class="st">&quot;highlight&quot;</span>, <span class="st">&quot;normal&quot;</span>))</span>
+<span id="cb435-3"><a href="generalized-linear-models.html#cb435-3" aria-hidden="true" tabindex="-1"></a>recent<span class="fl">.2017</span> <span class="ot">&lt;-</span> combine <span class="sc">%&gt;%</span></span>
+<span id="cb435-4"><a href="generalized-linear-models.html#cb435-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Year<span class="sc">==</span><span class="dv">2017</span>)</span>
+<span id="cb435-5"><a href="generalized-linear-models.html#cb435-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(combine) <span class="sc">+</span> </span>
+<span id="cb435-6"><a href="generalized-linear-models.html#cb435-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>SOI, <span class="at">y=</span>Storms, <span class="at">color=</span>Highlight)) <span class="sc">+</span> </span>
+<span id="cb435-7"><a href="generalized-linear-models.html#cb435-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="st">&quot;Status&quot;</span>, <span class="at">values=</span><span class="fu">c</span>(<span class="st">&quot;highlight&quot;</span><span class="ot">=</span><span class="st">&quot;red&quot;</span>, <span class="st">&quot;normal&quot;</span><span class="ot">=</span><span class="st">&quot;black&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb435-8"><a href="generalized-linear-models.html#cb435-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data=</span>recent<span class="fl">.2017</span>, <span class="fu">aes</span>(<span class="at">x=</span>SOI<span class="sc">*</span><span class="fl">1.05</span>, <span class="at">y=</span>Storms<span class="sc">*</span><span class="fl">1.05</span>, <span class="at">label=</span><span class="st">&quot;2017&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb435-9"><a href="generalized-linear-models.html#cb435-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb435-10"><a href="generalized-linear-models.html#cb435-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<p><img src="introStatModeling_files/figure-html/13.8-1.png" width="672" /></p>
+<p>Visually we see that 2017 does not appear to be all that different compared to the other observations (think back to the ideas of leverage and influence – 2017 is in the middle of the pattern, not an outlier in any real way). We also see that the <code>Storms</code> appear to increase with a positive SOI value. Let’s test this with a poisson model; we use the <code>glm</code> function as before with logistic regression, but here we specify the family to be <code>poisson</code>.</p>
+<div class="sourceCode" id="cb436"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb436-1"><a href="generalized-linear-models.html#cb436-1" aria-hidden="true" tabindex="-1"></a>storm.fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(Storms <span class="sc">~</span> SOI, <span class="at">data=</span>combine, <span class="at">family=</span>poisson)</span>
+<span id="cb436-2"><a href="generalized-linear-models.html#cb436-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(storm.fit)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = Storms ~ SOI, family = poisson, data = combine)
+## 
+## Deviance Residuals: 
+##    Min      1Q  Median      3Q     Max  
+## -2.578  -0.739  -0.181   0.597   3.939  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)   2.4247     0.0402   60.37  &lt; 2e-16 ***
+## SOI           0.2050     0.0541    3.79  0.00015 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for poisson family taken to be 1)
+## 
+##     Null deviance: 92.187  on 56  degrees of freedom
+## Residual deviance: 77.728  on 55  degrees of freedom
+## AIC: 323.1
+## 
+## Number of Fisher Scoring iterations: 4</code></pre>
+<p>To interpret the model I need to recognize that our model is</p>
+<p><span class="math display">\[\log(\lambda) = 2.42473 + 0.20502\times SOI\]</span></p>
+<p>So we must “un”-log.</p>
+<p>The intercept of 2.42473 corresponds to <span class="math inline">\(\exp(2.42473)\)</span> = 11.299178 storms when the SOI value is 0.</p>
+<p>The slope term must be interpretation on a log scale. That is, <span class="math inline">\(2.42473+0.20502\times\)</span>(one unit of SOI) is a mean number of storm of 13.870302.</p>
+<p>We also note that the covariate predictor variable <code>SOI</code> is significant according to the Wald test (<span class="math inline">\(p\)</span>-value=0.000152). So we have evidence that SOI does in fact explain storm counts. Let’s look at the predictive ability of the model. First we will plot the fitted model against the data.</p>
+<div class="sourceCode" id="cb438"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb438-1"><a href="generalized-linear-models.html#cb438-1" aria-hidden="true" tabindex="-1"></a>combine <span class="ot">&lt;-</span> combine <span class="sc">%&gt;%</span></span>
+<span id="cb438-2"><a href="generalized-linear-models.html#cb438-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Fitted =</span> <span class="fu">predict</span>(storm.fit, <span class="at">type=</span><span class="st">&quot;response&quot;</span>))</span>
+<span id="cb438-3"><a href="generalized-linear-models.html#cb438-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(combine) <span class="sc">+</span> </span>
+<span id="cb438-4"><a href="generalized-linear-models.html#cb438-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>SOI, <span class="at">y=</span>Storms)) <span class="sc">+</span> </span>
+<span id="cb438-5"><a href="generalized-linear-models.html#cb438-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span>SOI, <span class="at">y=</span>Fitted), <span class="at">col=</span><span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb438-6"><a href="generalized-linear-models.html#cb438-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<p><img src="introStatModeling_files/figure-html/13.10-1.png" width="672" /></p>
+<p>Note the slight curvature in the fitted “line” (recall the model is <span class="math inline">\(e^{\beta_0 + \beta_1 X_1}\)</span>). Using the model what doe we predict of 2017?</p>
+<div class="sourceCode" id="cb439"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb439-1"><a href="generalized-linear-models.html#cb439-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(storm.fit, <span class="at">newdata=</span>recent<span class="fl">.2017</span>, <span class="at">type=</span><span class="st">&quot;response&quot;</span>)</span></code></pre></div>
+<pre><code>##       1 
+## 12.6479</code></pre>
+<p>Compared to the observed value of 17 we see that 2017 does appear to deviate from the predicted value. We may want to consider building an interval around this predicted value. To do this, we can tell the <code>predict</code> function to calculate a standard error for hte predicted value:</p>
+<div class="sourceCode" id="cb441"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb441-1"><a href="generalized-linear-models.html#cb441-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(storm.fit, <span class="at">newdata=</span>recent<span class="fl">.2017</span>, <span class="at">type=</span><span class="st">&quot;response&quot;</span>, <span class="at">se.fit=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## $fit
+##       1 
+## 12.6479 
+## 
+## $se.fit
+##        1 
+## 0.550723 
+## 
+## $residual.scale
+## [1] 1</code></pre>
+<p>Now, using <em>empirical rule</em> type arguments from your Intro Statistics class (<span class="math inline">\(\pm 2\)</span> standard errors is approximately 95%), we see that the predicted number of storms is between 11.546433 and 13.749327, so 2017 is still outside the predicted value.</p>
+<p><strong>Note:</strong> We want to remind the reader that we are performing a <em>simple</em> regression model here. Modeling complicated systems such as tropical cyclones is not a trivial exercise and would require greater expertise and (likely) more predictor variables than included here. However, we include this example as it is a practical example of Poisson regression, is scientifically interesting and relevant to modern society.</p>
+<div id="overdispersion" class="section level4" number="13.1.3.1">
+<h4><span class="header-section-number">13.1.3.1</span> Overdispersion</h4>
+<p>Let’s revisit the issue of overdispersion. Early we saw some indication of potential overdispersion in our data</p>
+<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="generalized-linear-models.html#cb443-1" aria-hidden="true" tabindex="-1"></a>atlantic <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">Avg.Storm =</span> <span class="fu">mean</span>(Storms),</span>
+<span id="cb443-2"><a href="generalized-linear-models.html#cb443-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">Var.Storm =</span> <span class="fu">var</span>(Storms))</span></code></pre></div>
+<pre><code>##   Avg.Storm Var.Storm
+## 1    11.614   19.9555</code></pre>
+<p>Here the variance appears to be nearly twice as big as the mean. However we must step back and realize this is BEFORE we fit our model. It is possible the covariate information (that is, the SOI variable) will explain some of this variability. A quick check for overdispersion in Poisson models is to compare the <code>Residual deviance</code> to its degrees of freedom. In the ideal situation, the ratio should be 1. In cases when it is much greater than 1 (typically a value of 2 or more is considered a problem), we have indication of overdispersion. Here we have the following output</p>
+<pre><code>Residual deviance: 77.728  on 55  degrees of freedom</code></pre>
+<p>and note $77.728/55 = $ 1.413236 which is not that much greater than 1. In fact, a formal hypothesis test confirms we do not have overdispersion, but we exclude formal hypothesis testing of overdispersion from this introductory text.</p>
+</div>
+</div>
+</div>
+<div id="handling-overdispersion" class="section level2" number="13.2">
+<h2><span class="header-section-number">13.2</span> Handling overdispersion</h2>
+<p>Although Poisson regression can be appropriate for <em>count</em> data, there are many cases when the highly restrictive property <span class="math inline">\(\lambda = E[Y] = Var(Y)\)</span> is violated. In such situations, a different modeling approach is necessary. Two common approaches are to use a “Quasi-Poisson”" model or a Negative Binomial Regression.</p>
+<p>In the former, a Poisson model is fit with an added variable such that <span class="math inline">\(Var(Y) = c \lambda\)</span>. That is, we let the variance be a scalar multiple of the mean. This value <span class="math inline">\(c\)</span> is known as the <em>dispersion</em> parameter (in regular Poisson regression, <span class="math inline">\(c=1\)</span>). This slight modification adds flexibility to Poisson regression model. To fit this sort of model in R, we simple state <code>family=quasipoisson</code> in the <code>glm</code> function. One thing to note is that the mean response (i.e., the fitted model) is the same for Poisson and Quasi-Poisson models. The only difference is in the calculation of standard errors and prediction intervals.</p>
+<p>Another approach to handle overdispersion is known as Negative Binomial regression. It is based on properties of the Negative Binomial distribution that is typically covered in a formal Probability course. However, here we do not need all those details for our discussion. The key element for our understanding is that the Negative Binomial distribution allows for a second parameter, and thus loosens the restriction that <span class="math inline">\(E[Y]=Var(Y)\)</span>. Unlike Quasi-Poisson, it does not use a linear relationship between mean and variance, but rather a quadratic relationship. Formulaically the negative binomial model is the same equation as <a href="generalized-linear-models.html#eq:poissonModel">(13.1)</a> except an additional <em>dispersion</em> parameter is estimated. We walk through an example.</p>
+<div id="example-attendnace-records" class="section level3" number="13.2.1">
+<h3><span class="header-section-number">13.2.1</span> Example – Attendnace Records</h3>
+<p>School administrators study the attendance behavior of high school juniors at two schools. Predictors of the number of days of absence include the type of program in which the student is enrolled and a standardized test in math. Attendance data on 314 high school juniors from two urban high schools in the file <code>attendance.RData</code>. The response variable of interest is days absent, <code>daysabs</code>. The variable <code>math</code> is the standardized math score for each student. The variable <code>prog</code> is a three-level nominal variable indicating the type of instructional program in which the student is enrolled (it is a factor but coded as a numeric).</p>
+<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb446-1"><a href="generalized-linear-models.html#cb446-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;attendance.RData&quot;</span>)</span>
+<span id="cb446-2"><a href="generalized-linear-models.html#cb446-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(attendance)</span></code></pre></div>
+<pre><code>## Rows: 314
+## Columns: 5
+## $ id      &lt;dbl&gt; 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 10~
+## $ gender  &lt;fct&gt; male, male, female, female, female, female, female, male, male~
+## $ math    &lt;dbl&gt; 63, 27, 20, 16, 2, 71, 63, 3, 51, 49, 31, 22, 73, 77, 10, 89, ~
+## $ daysabs &lt;dbl&gt; 4, 4, 2, 3, 3, 13, 11, 7, 10, 9, 4, 5, 5, 6, 1, 0, 1, 0, 5, 24~
+## $ prog    &lt;dbl&gt; 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 2, 2, 1, 3, 2, 2, 2, 1, 2, 2,~</code></pre>
+<p>As a first step we want to do a little data cleaning (making sure R properly handles the categorical variables). We add <code>labels</code> to the three <code>prog</code> levels and make <code>id</code> a factor.</p>
+<div class="sourceCode" id="cb448"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb448-1"><a href="generalized-linear-models.html#cb448-1" aria-hidden="true" tabindex="-1"></a>attendance <span class="ot">&lt;-</span> attendance <span class="sc">%&gt;%</span></span>
+<span id="cb448-2"><a href="generalized-linear-models.html#cb448-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prog =</span> <span class="fu">factor</span>(prog, <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, </span>
+<span id="cb448-3"><a href="generalized-linear-models.html#cb448-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;General&quot;</span>, <span class="st">&quot;Academic&quot;</span>, <span class="st">&quot;Vocational&quot;</span>)),</span>
+<span id="cb448-4"><a href="generalized-linear-models.html#cb448-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">id =</span> <span class="fu">factor</span>(id) )</span>
+<span id="cb448-5"><a href="generalized-linear-models.html#cb448-5" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(attendance)</span></code></pre></div>
+<pre><code>## Rows: 314
+## Columns: 5
+## $ id      &lt;fct&gt; 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 10~
+## $ gender  &lt;fct&gt; male, male, female, female, female, female, female, male, male~
+## $ math    &lt;dbl&gt; 63, 27, 20, 16, 2, 71, 63, 3, 51, 49, 31, 22, 73, 77, 10, 89, ~
+## $ daysabs &lt;dbl&gt; 4, 4, 2, 3, 3, 13, 11, 7, 10, 9, 4, 5, 5, 6, 1, 0, 1, 0, 5, 24~
+## $ prog    &lt;fct&gt; Academic, Academic, Academic, Academic, Academic, Academic, Ac~</code></pre>
+<p>Now we graphically explore the data graphically. We build an advanced scatterplot where the shape of the points is determined by the gender and the color of the points is determined by the program.</p>
+<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb450-1"><a href="generalized-linear-models.html#cb450-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(attendance) <span class="sc">+</span> </span>
+<span id="cb450-2"><a href="generalized-linear-models.html#cb450-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>math, <span class="at">y=</span>daysabs, <span class="at">color=</span>prog, <span class="at">shape=</span>gender)) <span class="sc">+</span> </span>
+<span id="cb450-3"><a href="generalized-linear-models.html#cb450-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb450-4"><a href="generalized-linear-models.html#cb450-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Standardized Math Score&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;Number of Days Absent&quot;</span>)</span></code></pre></div>
+<p><img src="introStatModeling_files/figure-html/ch13.15-1.png" width="672" /></p>
+<p>It takes a minute to comprehend everything in this plot. Visually it is difficult to distinguish any differences in gender (shapes of the point). There does appear to be a relationship between attendance and the program (visually speaking “Vocational” and “Academic” appear to be lower on the days missed compared to “Gender”). We take a deeper dive at looking at these two categorical variables by comparing histograms.</p>
+<div class="sourceCode" id="cb451"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb451-1"><a href="generalized-linear-models.html#cb451-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(attendance) <span class="sc">+</span> </span>
+<span id="cb451-2"><a href="generalized-linear-models.html#cb451-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x=</span>daysabs), <span class="at">binwidth =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb451-3"><a href="generalized-linear-models.html#cb451-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(gender<span class="sc">~</span>.) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;Days Absent&quot;</span>)</span></code></pre></div>
+<p><img src="introStatModeling_files/figure-html/ch13.16-1.png" width="672" /></p>
+<p>Here we see little difference between the number of days absent and gender (coincides with the scatterplot). Next we explore the relationship with the respective program.</p>
+<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="generalized-linear-models.html#cb452-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(attendance) <span class="sc">+</span> </span>
+<span id="cb452-2"><a href="generalized-linear-models.html#cb452-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x=</span>daysabs, <span class="at">fill=</span>prog), <span class="at">binwidth=</span><span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb452-3"><a href="generalized-linear-models.html#cb452-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(prog<span class="sc">~</span>., <span class="at">scales=</span><span class="st">&quot;free&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb452-4"><a href="generalized-linear-models.html#cb452-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Days Absent&quot;</span>)</span></code></pre></div>
+<p><img src="introStatModeling_files/figure-html/ch13.17-1.png" width="672" /></p>
+<p>Here we see three distinct shapes in the historgrams. For the “General” program it is fairly uniformly distributed (compared to the other two) with all recorded students having several days abseent. For “Academic” and “Vocational” we see more a decay type shape (also sometimes known as a Pareto shape). The “Academic” program definitely has more days absent compare to the “Vocational” program.</p>
+</div>
+<div id="incorrect-poisson-model" class="section level3" number="13.2.2">
+<h3><span class="header-section-number">13.2.2</span> Incorrect Poisson Model</h3>
+<p>We have a count response variable and previously we learned about Poisson regression so let’s attempt to fit that model.</p>
+<div class="sourceCode" id="cb453"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb453-1"><a href="generalized-linear-models.html#cb453-1" aria-hidden="true" tabindex="-1"></a>attend.pois <span class="ot">&lt;-</span> <span class="fu">glm</span>(daysabs <span class="sc">~</span> math <span class="sc">+</span> gender <span class="sc">+</span> prog, <span class="at">data=</span>attendance, <span class="at">family=</span>poisson)</span>
+<span id="cb453-2"><a href="generalized-linear-models.html#cb453-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(attend.pois)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = daysabs ~ math + gender + prog, family = poisson, 
+##     data = attendance)
+## 
+## Deviance Residuals: 
+##    Min      1Q  Median      3Q     Max  
+## -4.222  -2.189  -0.924   0.722   7.005  
+## 
+## Coefficients:
+##                 Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)     2.759479   0.063773   43.27  &lt; 2e-16 ***
+## math           -0.006956   0.000935   -7.44  1.0e-13 ***
+## gendermale     -0.242476   0.046777   -5.18  2.2e-07 ***
+## progAcademic   -0.426033   0.056731   -7.51  5.9e-14 ***
+## progVocational -1.270720   0.077914  -16.31  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for poisson family taken to be 1)
+## 
+##     Null deviance: 2217.7  on 313  degrees of freedom
+## Residual deviance: 1746.8  on 309  degrees of freedom
+## AIC: 2640
+## 
+## Number of Fisher Scoring iterations: 5</code></pre>
+<p>In the response we see that all the predictor variables are significant (all <em>p</em>-values are less than <span class="math inline">\(10^{-6}\)</span>) but there is a glaring problem. The <code>Residual deviance</code> is recorded as 1746.8 on 309 degrees of freedom. This is a ratio value of 5.653074 which is much greater than 1. There are some major concerns about overdispersion. We could see this visually as well. Revisit the scatter plot of the data, with lower math scores, the range of the days absent looks larger than with higher math scores (an indication the variance changes given the mean response).</p>
+<p>So in this case, a Poisson regression model is not appropriate.</p>
+</div>
+<div id="a-quasi-poisson-approach" class="section level3" number="13.2.3">
+<h3><span class="header-section-number">13.2.3</span> A quasi-Poisson approach</h3>
+<p>We now fit a Quasi-Poisson model to the data.</p>
+<div class="sourceCode" id="cb455"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb455-1"><a href="generalized-linear-models.html#cb455-1" aria-hidden="true" tabindex="-1"></a>attend.qpois <span class="ot">&lt;-</span> <span class="fu">glm</span>(daysabs <span class="sc">~</span> math <span class="sc">+</span> gender <span class="sc">+</span> prog, <span class="at">data=</span>attendance, <span class="at">family=</span>quasipoisson)</span>
+<span id="cb455-2"><a href="generalized-linear-models.html#cb455-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(attend.qpois)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = daysabs ~ math + gender + prog, family = quasipoisson, 
+##     data = attendance)
+## 
+## Deviance Residuals: 
+##    Min      1Q  Median      3Q     Max  
+## -4.222  -2.189  -0.924   0.722   7.005  
+## 
+## Coefficients:
+##                Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)     2.75948    0.16282   16.95  &lt; 2e-16 ***
+## math           -0.00696    0.00239   -2.91   0.0038 ** 
+## gendermale     -0.24248    0.11942   -2.03   0.0432 *  
+## progAcademic   -0.42603    0.14484   -2.94   0.0035 ** 
+## progVocational -1.27072    0.19892   -6.39  6.2e-10 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for quasipoisson family taken to be 6.51816)
+## 
+##     Null deviance: 2217.7  on 313  degrees of freedom
+## Residual deviance: 1746.8  on 309  degrees of freedom
+## AIC: NA
+## 
+## Number of Fisher Scoring iterations: 5</code></pre>
+<p>Note, the estimated model is the same as the Poisson! Intercept of 2.759479, <code>math</code> slope of -0.006956 and so on. However, the standard errors are now different, along with the associated <span class="math inline">\(p\)</span>-values. In fact, now we see that the <code>gendermale</code> variable is borderline significant with a <span class="math inline">\(p\)</span>-value of 0.043.</p>
+<p>Unfortunately, assessing the goodness-of-fit for a Quasi-Poisson regression is a difficult task. It is considered more of a “band-aid” type fix to Poisson regression, although there are practical applications where it is better than Negative Binomial regression.</p>
+</div>
+<div id="fitting-a-negative-binomial-regression" class="section level3" number="13.2.4">
+<h3><span class="header-section-number">13.2.4</span> Fitting a Negative Binomial regression</h3>
+<p>The negative binomial model is sometimes considered to be more of a <em>direct</em> model for overdispersed data. That is, the Negative Binomial distribution allows for a larger variance than the mean whereas Quasi-Poisson is a fix to Poisson regression.
+To fit a negative binomial model we use the <code>glm.nb()</code> function in the <code>MASS</code> package. The function largely works the same as <code>lm</code> and <code>glm</code>. Below we fit the full model</p>
+<div class="sourceCode" id="cb457"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb457-1"><a href="generalized-linear-models.html#cb457-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb457-2"><a href="generalized-linear-models.html#cb457-2" aria-hidden="true" tabindex="-1"></a>attend.negbin1 <span class="ot">&lt;-</span> <span class="fu">glm.nb</span>(daysabs <span class="sc">~</span> math <span class="sc">+</span> gender <span class="sc">+</span> prog, <span class="at">data=</span>attendance)</span>
+<span id="cb457-3"><a href="generalized-linear-models.html#cb457-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(attend.negbin1)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## glm.nb(formula = daysabs ~ math + gender + prog, data = attendance, 
+##     init.theta = 1.047288915, link = log)
+## 
+## Deviance Residuals: 
+##    Min      1Q  Median      3Q     Max  
+## -2.157  -1.076  -0.381   0.286   2.724  
+## 
+## Coefficients:
+##                Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)     2.70748    0.20427   13.25  &lt; 2e-16 ***
+## math           -0.00624    0.00249   -2.50    0.012 *  
+## gendermale     -0.21109    0.12199   -1.73    0.084 .  
+## progAcademic   -0.42454    0.18173   -2.34    0.019 *  
+## progVocational -1.25262    0.19970   -6.27  3.6e-10 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for Negative Binomial(1.0473) family taken to be 1)
+## 
+##     Null deviance: 431.67  on 313  degrees of freedom
+## Residual deviance: 358.87  on 309  degrees of freedom
+## AIC: 1740
+## 
+## Number of Fisher Scoring iterations: 1
+## 
+## 
+##               Theta:  1.047 
+##           Std. Err.:  0.108 
+## 
+##  2 x log-likelihood:  -1728.307</code></pre>
+<p>In the summary output, we now see that the <code>gender</code> variable does not appear significant (this matches our visual plots). Just as important, we see a <code>Residual deviance</code> of 358.87 with 309 degrees of freedom, a ratio of 1.161392 much closer to the value of 1 we hope to see. Based on a quick glance this model seems more appropriate. Recapping why</p>
+<ul>
+<li>The model output now more closely matches our exploratory data analysis (gender not important)</li>
+<li>A quick check of the residual deviance suggest a better fit</li>
+</ul>
+</div>
+<div id="picking-between-quasi-poisson-and-negative-binomial" class="section level3" number="13.2.5">
+<h3><span class="header-section-number">13.2.5</span> Picking between Quasi-Poisson and Negative Binomial</h3>
+<p>There is no general or clear answer on which model is preferred, it all depends on the application. There are datasets that are overdispersed but in such a way that a Quasi-Poisson approach is more appropriate than a negative binomial. However, in other cases, the Negative Binomial is better and more natural. A non-technical comparison between the two approaches (with an application to counting the number of harbor seals) is available here: <a href="https://doi.org/10.1890/07-0043.1" class="uri">https://doi.org/10.1890/07-0043.1</a></p>
+</div>
+<div id="infererence-on-predictor-variables" class="section level3" number="13.2.6">
+<h3><span class="header-section-number">13.2.6</span> Infererence on predictor variables</h3>
+<p>Using the negative binomial regression model, we see that the <code>gender</code> variable does not appear significant. Let’s fit a reduced model:</p>
+<div class="sourceCode" id="cb459"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb459-1"><a href="generalized-linear-models.html#cb459-1" aria-hidden="true" tabindex="-1"></a>attend.negbin2 <span class="ot">&lt;-</span> <span class="fu">glm.nb</span>(daysabs <span class="sc">~</span> math <span class="sc">+</span> prog, <span class="at">data=</span>attendance)</span>
+<span id="cb459-2"><a href="generalized-linear-models.html#cb459-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(attend.negbin2)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## glm.nb(formula = daysabs ~ math + prog, data = attendance, init.theta = 1.032713156, 
+##     link = log)
+## 
+## Deviance Residuals: 
+##    Min      1Q  Median      3Q     Max  
+## -2.155  -1.019  -0.369   0.229   2.527  
+## 
+## Coefficients:
+##                Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)     2.61527    0.19746   13.24  &lt; 2e-16 ***
+## math           -0.00599    0.00251   -2.39    0.017 *  
+## progAcademic   -0.44076    0.18261   -2.41    0.016 *  
+## progVocational -1.27865    0.20072   -6.37  1.9e-10 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for Negative Binomial(1.0327) family taken to be 1)
+## 
+##     Null deviance: 427.54  on 313  degrees of freedom
+## Residual deviance: 358.52  on 310  degrees of freedom
+## AIC: 1741
+## 
+## Number of Fisher Scoring iterations: 1
+## 
+## 
+##               Theta:  1.033 
+##           Std. Err.:  0.106 
+## 
+##  2 x log-likelihood:  -1731.258</code></pre>
+<p>We note that residual deviance has actually decreased in this reduced model! The other variables are still significant. We can formally test for significance with the <code>anova</code> function as we have before:</p>
+<div class="sourceCode" id="cb461"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb461-1"><a href="generalized-linear-models.html#cb461-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(attend.negbin1, attend.negbin2, <span class="at">test=</span><span class="st">&quot;Chisq&quot;</span>)</span></code></pre></div>
+<pre><code>## Likelihood ratio tests of Negative Binomial Models
+## 
+## Response: daysabs
+##                  Model   theta Resid. df    2 x log-lik.   Test    df LR stat.
+## 1          math + prog 1.03271       310        -1731.26                      
+## 2 math + gender + prog 1.04729       309        -1728.31 1 vs 2     1   2.9507
+##     Pr(Chi)
+## 1          
+## 2 0.0858406</code></pre>
+<p>We see that the <code>math</code> variable does <strong>not</strong> significantly improve the model (<em>p</em>-value=0.0858). Arguably, its inclusion in the model was making things worse!</p>
+</div>
+<div id="plotting-fitted-model" class="section level3" number="13.2.7">
+<h3><span class="header-section-number">13.2.7</span> Plotting fitted model</h3>
+<p>Lastly, we will plot the fitted model. Even though the data used to fit the model is technically 5 dimensional (days absent, math score, and 3 factor values), since we only have two numeric terms, we can use aesthetic opions in <code>ggplot</code> to plot the chosen fitted model. We begin by creating some <em>fake</em> data that will results in a smooth fitted line:</p>
+<div class="sourceCode" id="cb463"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb463-1"><a href="generalized-linear-models.html#cb463-1" aria-hidden="true" tabindex="-1"></a>newdata2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb463-2"><a href="generalized-linear-models.html#cb463-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">math =</span> <span class="fu">rep</span>(<span class="fu">seq</span>(<span class="at">from =</span> <span class="fu">min</span>(attendance<span class="sc">$</span>math), </span>
+<span id="cb463-3"><a href="generalized-linear-models.html#cb463-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">to =</span> <span class="fu">max</span>(attendance<span class="sc">$</span>math), </span>
+<span id="cb463-4"><a href="generalized-linear-models.html#cb463-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">length.out =</span> <span class="dv">100</span>), <span class="dv">3</span>),</span>
+<span id="cb463-5"><a href="generalized-linear-models.html#cb463-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">prog =</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">each =</span> <span class="dv">100</span>), <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">labels =</span></span>
+<span id="cb463-6"><a href="generalized-linear-models.html#cb463-6" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">levels</span>(attendance<span class="sc">$</span>prog)))</span>
+<span id="cb463-7"><a href="generalized-linear-models.html#cb463-7" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(newdata2)</span></code></pre></div>
+<pre><code>## Rows: 300
+## Columns: 2
+## $ math &lt;dbl&gt; 1.00000, 1.98990, 2.97980, 3.96970, 4.95960, 5.94949, 6.93939, 7.~
+## $ prog &lt;fct&gt; General, General, General, General, General, General, General, Ge~</code></pre>
+<p>You’ll note this dataset has 300 observations and the math scores range from 1 to 99 in small incremenets, repeating for each of the three factor levels in <code>prog</code>. We then use this data in the <code>predict</code> function. Here we specify the <code>type="resoibse"</code> so that output is in the original units.</p>
+<div class="sourceCode" id="cb465"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb465-1"><a href="generalized-linear-models.html#cb465-1" aria-hidden="true" tabindex="-1"></a>newdata3 <span class="ot">&lt;-</span> <span class="fu">predict</span>(attend.negbin2, newdata2, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>, <span class="at">se.fit=</span><span class="cn">TRUE</span>)</span>
+<span id="cb465-2"><a href="generalized-linear-models.html#cb465-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(newdata3)</span></code></pre></div>
+<pre><code>## List of 3
+##  $ fit           : Named num [1:300] 13.6 13.5 13.4 13.3 13.3 ...
+##   ..- attr(*, &quot;names&quot;)= chr [1:300] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; ...
+##  $ se.fit        : Named num [1:300] 2.66 2.63 2.6 2.56 2.53 ...
+##   ..- attr(*, &quot;names&quot;)= chr [1:300] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; ...
+##  $ residual.scale: num 1</code></pre>
+<p>For each predicted response value (called <code>fit</code>) we have a standard error estimate (called <code>se.fit</code>). Using a standard empirical rule <span class="math inline">\(Z\)</span>-based confidence interval from your Intro Statistics course (<span class="math inline">\(\pm 2\)</span> standard errors), we can build a confidence band around the fitted line.</p>
+<div class="sourceCode" id="cb467"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb467-1"><a href="generalized-linear-models.html#cb467-1" aria-hidden="true" tabindex="-1"></a>newdata2 <span class="ot">&lt;-</span> newdata2 <span class="sc">%&gt;%</span></span>
+<span id="cb467-2"><a href="generalized-linear-models.html#cb467-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">DaysAbsent.Fitted =</span> newdata3<span class="sc">$</span>fit,</span>
+<span id="cb467-3"><a href="generalized-linear-models.html#cb467-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">lo =</span> (newdata3<span class="sc">$</span>fit <span class="sc">-</span> <span class="fl">1.96</span><span class="sc">*</span>newdata3<span class="sc">$</span>se.fit),</span>
+<span id="cb467-4"><a href="generalized-linear-models.html#cb467-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">up =</span> (newdata3<span class="sc">$</span>fit <span class="sc">+</span> <span class="fl">1.96</span><span class="sc">*</span>newdata3<span class="sc">$</span>se.fit))</span>
+<span id="cb467-5"><a href="generalized-linear-models.html#cb467-5" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(newdata2)</span></code></pre></div>
+<pre><code>## Rows: 300
+## Columns: 5
+## $ math              &lt;dbl&gt; 1.00000, 1.98990, 2.97980, 3.96970, 4.95960, 5.94949~
+## $ prog              &lt;fct&gt; General, General, General, General, General, General~
+## $ DaysAbsent.Fitted &lt;dbl&gt; 13.5892, 13.5088, 13.4289, 13.3494, 13.2705, 13.1920~
+## $ lo                &lt;dbl&gt; 8.36713, 8.35375, 8.33964, 8.32482, 8.30928, 8.29302~
+## $ up                &lt;dbl&gt; 18.8112, 18.6638, 18.5181, 18.3741, 18.2317, 18.0910~</code></pre>
+<p>Note the code specifying <code>lo</code> and <code>up</code>, it follows standard confidence intervals from your Intro Statistics course.
+Lastly, we can plot the fitted model with some aesthetic options.</p>
+<div class="sourceCode" id="cb469"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb469-1"><a href="generalized-linear-models.html#cb469-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(newdata2) <span class="sc">+</span></span>
+<span id="cb469-2"><a href="generalized-linear-models.html#cb469-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">x=</span>math, <span class="at">ymin=</span>lo, <span class="at">max=</span>up, <span class="at">fill=</span>prog), <span class="at">alpha=</span><span class="fl">0.3</span>)<span class="sc">+</span></span>
+<span id="cb469-3"><a href="generalized-linear-models.html#cb469-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span>math, <span class="at">y=</span>DaysAbsent.Fitted, <span class="at">color=</span>prog), <span class="at">size=</span><span class="fl">1.5</span>) <span class="sc">+</span> </span>
+<span id="cb469-4"><a href="generalized-linear-models.html#cb469-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill=</span><span class="st">&quot;Program type&quot;</span>, <span class="at">color=</span><span class="st">&quot;Program type&quot;</span>, <span class="at">x=</span><span class="st">&quot;Standardized Math Score&quot;</span>, <span class="at">y=</span><span class="st">&quot;Number of Days Absent&quot;</span>)</span></code></pre></div>
+<p><img src="introStatModeling_files/figure-html/ch13.25-1.png" width="672" /></p>
+<p>Thus, we have plotted our fitted model. The final plot helps tell the underlying story with this data</p>
+<ul>
+<li>Program type has an effect on the number of days absent (vocational is less than academic which is less than general).</li>
+<li>Number of days absent decreases with higher standardized math scores.</li>
+</ul>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="logistic-regression.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["introStatModeling.pdf", "introStatModeling.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

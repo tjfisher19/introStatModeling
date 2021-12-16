@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 10 Model Validation | Introduction to Statistical Modeling</title>
+  <meta name="description" content="Covers Regression and elements of Design of Experiments in R using the tidyverse." />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 10 Model Validation | Introduction to Statistical Modeling" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Covers Regression and elements of Design of Experiments in R using the tidyverse." />
+  <meta name="github-repo" content="tjfisher19/introStatModeling" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 10 Model Validation | Introduction to Statistical Modeling" />
+  
+  <meta name="twitter:description" content="Covers Regression and elements of Design of Experiments in R using the tidyverse." />
+  
+
+<meta name="author" content="Michael Hughes and Thomas Fisher" />
+
+
+<meta name="date" content="2021-12-16" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="model-selection.html"/>
+<link rel="next" href="statistical-odds.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Inroduction to Statistical Modeling</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="" data-path="about-the-authors.html"><a href="about-the-authors.html"><i class="fa fa-check"></i>About the Authors</a></li>
+<li class="chapter" data-level="" data-path="important-preliminary-review.html"><a href="important-preliminary-review.html"><i class="fa fa-check"></i>Important Preliminary Review</a>
+<ul>
+<li class="chapter" data-level="" data-path="important-preliminary-review.html"><a href="important-preliminary-review.html#statistics-background"><i class="fa fa-check"></i>Statistics background</a></li>
+<li class="chapter" data-level="" data-path="important-preliminary-review.html"><a href="important-preliminary-review.html#software"><i class="fa fa-check"></i>Software</a></li>
+<li class="chapter" data-level="" data-path="important-preliminary-review.html"><a href="important-preliminary-review.html#add-on-packages"><i class="fa fa-check"></i>Add-on packages</a></li>
+<li class="chapter" data-level="" data-path="important-preliminary-review.html"><a href="important-preliminary-review.html#help-with-rmarkdown"><i class="fa fa-check"></i>Help with RMarkdown</a></li>
+<li class="chapter" data-level="" data-path="important-preliminary-review.html"><a href="important-preliminary-review.html#managing-your-work-in-r"><i class="fa fa-check"></i>Managing your work in R</a></li>
+<li class="chapter" data-level="" data-path="important-preliminary-review.html"><a href="important-preliminary-review.html#data-in-this-text"><i class="fa fa-check"></i>Data in this text</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html"><i class="fa fa-check"></i><b>1</b> Introductory Statistics in R</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#goals-of-a-statistical-analysis"><i class="fa fa-check"></i><b>1.1</b> Goals of a statistical analysis</a></li>
+<li class="chapter" data-level="1.2" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#before-you-begin-an-analysis"><i class="fa fa-check"></i><b>1.2</b> Before you begin an analysis</a></li>
+<li class="chapter" data-level="1.3" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#data-frames"><i class="fa fa-check"></i><b>1.3</b> Data frames</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#built-in-data"><i class="fa fa-check"></i><b>1.3.1</b> Built-in data</a></li>
+<li class="chapter" data-level="1.3.2" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#types-of-data"><i class="fa fa-check"></i><b>1.3.2</b> Types of Data</a></li>
+<li class="chapter" data-level="1.3.3" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#importing-datasets-into-r"><i class="fa fa-check"></i><b>1.3.3</b> Importing datasets into R</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#referencing-data-from-inside-a-data-frame"><i class="fa fa-check"></i><b>1.4</b> Referencing data from inside a data frame</a></li>
+<li class="chapter" data-level="1.5" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#missing-values-and-computer-arithmetic-in-r"><i class="fa fa-check"></i><b>1.5</b> Missing values and computer arithmetic in R</a></li>
+<li class="chapter" data-level="1.6" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#exploratory-data-analysis-eda"><i class="fa fa-check"></i><b>1.6</b> Exploratory Data Analysis (EDA)</a>
+<ul>
+<li class="chapter" data-level="1.6.1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#numeric-summaries"><i class="fa fa-check"></i><b>1.6.1</b> Numeric Summaries</a></li>
+<li class="chapter" data-level="1.6.2" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#numeric-summaries-in-r"><i class="fa fa-check"></i><b>1.6.2</b> Numeric Summaries in R</a></li>
+<li class="chapter" data-level="1.6.3" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#graphical-summaries"><i class="fa fa-check"></i><b>1.6.3</b> Graphical Summaries</a></li>
+<li class="chapter" data-level="1.6.4" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#descriptive-statistics-and-visualizations-by-levels-of-a-factor-variable"><i class="fa fa-check"></i><b>1.6.4</b> Descriptive statistics and visualizations by levels of a factor variable</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#sampling-distributions-describing-how-a-statistic-varies"><i class="fa fa-check"></i><b>1.7</b> Sampling distributions: describing how a statistic varies</a></li>
+<li class="chapter" data-level="1.8" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#two-sample-inference"><i class="fa fa-check"></i><b>1.8</b> Two-sample inference</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html"><i class="fa fa-check"></i><b>2</b> Introduction to Statistical Modeling and Designed Experiments</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#statistical-analyses-is-modeling"><i class="fa fa-check"></i><b>2.1</b> Statistical Analyses is Modeling</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#observational-studies-versus-designed-experiments"><i class="fa fa-check"></i><b>2.2</b> Observational Studies versus designed experiments</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#observational-studies"><i class="fa fa-check"></i><b>2.2.1</b> Observational Studies</a></li>
+<li class="chapter" data-level="2.2.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#designed-experiments"><i class="fa fa-check"></i><b>2.2.2</b> Designed experiments</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#designed-experiement-vocabulary"><i class="fa fa-check"></i><b>2.3</b> Designed experiement vocabulary</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#what-is-an-experiment"><i class="fa fa-check"></i><b>2.3.1</b> What is an experiment?</a></li>
+<li class="chapter" data-level="2.3.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#analysis-of-variance"><i class="fa fa-check"></i><b>2.3.2</b> Analysis of variance</a></li>
+<li class="chapter" data-level="2.3.3" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#elements-of-a-designed-experiment"><i class="fa fa-check"></i><b>2.3.3</b> Elements of a designed experiment</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#paired-t-test"><i class="fa fa-check"></i><b>2.4</b> Paired <em>t</em>-test</a></li>
+<li class="chapter" data-level="2.5" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#one-way-anova"><i class="fa fa-check"></i><b>2.5</b> One-Way ANOVA</a></li>
+<li class="chapter" data-level="2.6" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#assumption-checking"><i class="fa fa-check"></i><b>2.6</b> Assumption Checking</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#independence"><i class="fa fa-check"></i><b>2.6.1</b> Independence</a></li>
+<li class="chapter" data-level="2.6.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#constant-variance"><i class="fa fa-check"></i><b>2.6.2</b> Constant Variance</a></li>
+<li class="chapter" data-level="2.6.3" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#checking-normality"><i class="fa fa-check"></i><b>2.6.3</b> Checking Normality</a></li>
+<li class="chapter" data-level="2.6.4" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#code-to-check-assumption"><i class="fa fa-check"></i><b>2.6.4</b> Code to check assumption</a></li>
+<li class="chapter" data-level="2.6.5" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#transforming-your-response"><i class="fa fa-check"></i><b>2.6.5</b> Transforming your response</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#follow-up-procedures-multiple-comparisons"><i class="fa fa-check"></i><b>2.7</b> Follow-up procedures – Multiple Comparisons</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#tukeys-hsd-method"><i class="fa fa-check"></i><b>2.7.1</b> Tukey’s HSD method</a></li>
+<li class="chapter" data-level="2.7.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#dunnett-multiple-comparisons"><i class="fa fa-check"></i><b>2.7.2</b> Dunnett multiple comparisons</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="multiple-factor-designed-experiments.html"><a href="multiple-factor-designed-experiments.html"><i class="fa fa-check"></i><b>3</b> Multiple Factor Designed Experiments</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="multiple-factor-designed-experiments.html"><a href="multiple-factor-designed-experiments.html#blocking"><i class="fa fa-check"></i><b>3.1</b> Blocking</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="multiple-factor-designed-experiments.html"><a href="multiple-factor-designed-experiments.html#data-structure-model-form-and-analysis-of-variance-of-a-randomized-block-design"><i class="fa fa-check"></i><b>3.1.1</b> Data structure, model form and analysis of variance of a Randomized Block Design</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="multiple-factor-designed-experiments.html"><a href="multiple-factor-designed-experiments.html#two-factor-designs"><i class="fa fa-check"></i><b>3.2</b> Two-factor Designs</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="multiple-factor-designed-experiments.html"><a href="multiple-factor-designed-experiments.html#analysis"><i class="fa fa-check"></i><b>3.2.1</b> Analysis</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="advanced-designs.html"><a href="advanced-designs.html"><i class="fa fa-check"></i><b>4</b> Advanced Designs</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="advanced-designs.html"><a href="advanced-designs.html#higher-order-factor-models"><i class="fa fa-check"></i><b>4.1</b> Higher order factor models</a></li>
+<li class="chapter" data-level="4.2" data-path="advanced-designs.html"><a href="advanced-designs.html#within-subject-designs"><i class="fa fa-check"></i><b>4.2</b> Within-subject designs</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="advanced-designs.html"><a href="advanced-designs.html#blocks-revisited-an-approach-to-handling-within-subjects-factors"><i class="fa fa-check"></i><b>4.2.1</b> Blocks revisited: an approach to handling within-subjects factors</a></li>
+<li class="chapter" data-level="4.2.2" data-path="advanced-designs.html"><a href="advanced-designs.html#a-more-involved-repeated-measures-case-study"><i class="fa fa-check"></i><b>4.2.2</b> A more involved repeated measures case study</a></li>
+<li class="chapter" data-level="4.2.3" data-path="advanced-designs.html"><a href="advanced-designs.html#further-study"><i class="fa fa-check"></i><b>4.2.3</b> Further study</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html"><i class="fa fa-check"></i><b>5</b> Introduction to Multiple Regression</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#regression-model"><i class="fa fa-check"></i><b>5.1</b> Regression Model</a></li>
+<li class="chapter" data-level="5.2" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#fitting-a-regression-model"><i class="fa fa-check"></i><b>5.2</b> Fitting a regression model</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#why-should-we-use-more-than-one-predictor"><i class="fa fa-check"></i><b>5.2.1</b> Why should we use more than one predictor?</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#interpreting-beta-parameter-estimates-in-mlr"><i class="fa fa-check"></i><b>5.3</b> Interpreting <span class="math inline">\(\beta\)</span>-parameter estimates in MLR</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#designed-experiments-1"><i class="fa fa-check"></i><b>5.3.1</b> Designed experiments</a></li>
+<li class="chapter" data-level="5.3.2" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#observational-studies-1"><i class="fa fa-check"></i><b>5.3.2</b> Observational studies</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html"><i class="fa fa-check"></i><b>6</b> Inference regarding Multiple Regression</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#assumption-checking-1"><i class="fa fa-check"></i><b>6.1</b> Assumption checking</a></li>
+<li class="chapter" data-level="6.2" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#overall-f-test-for-model-signifance"><i class="fa fa-check"></i><b>6.2</b> Overall <span class="math inline">\(F\)</span>-test for model signifance</a></li>
+<li class="chapter" data-level="6.3" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#individual-parameter-inference"><i class="fa fa-check"></i><b>6.3</b> Individual parameter inference</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#t-tests"><i class="fa fa-check"></i><b>6.3.1</b> <span class="math inline">\(t\)</span>-tests</a></li>
+<li class="chapter" data-level="6.3.2" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#confidence-intervals"><i class="fa fa-check"></i><b>6.3.2</b> Confidence Intervals</a></li>
+<li class="chapter" data-level="6.3.3" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#confidence-and-prediction-bands"><i class="fa fa-check"></i><b>6.3.3</b> Confidence and prediction bands</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#goodness-of-fit"><i class="fa fa-check"></i><b>6.4</b> Goodness-of-fit</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#coefficient-of-determination"><i class="fa fa-check"></i><b>6.4.1</b> Coefficient of determination</a></li>
+<li class="chapter" data-level="6.4.2" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#akaikes-information-criterion"><i class="fa fa-check"></i><b>6.4.2</b> Akaike’s Information Criterion</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html"><i class="fa fa-check"></i><b>7</b> More on multiple linear regression</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html#model-comparision-reduced-f-tests"><i class="fa fa-check"></i><b>7.1</b> Model comparision – Reduced <span class="math inline">\(F\)</span>-tests</a></li>
+<li class="chapter" data-level="7.2" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html#categorical-predictor-variables"><i class="fa fa-check"></i><b>7.2</b> Categorical Predictor Variables</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html#a-qualitative-predictor-with-two-levels"><i class="fa fa-check"></i><b>7.2.1</b> A qualitative predictor with two levels</a></li>
+<li class="chapter" data-level="7.2.2" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html#a-qualitative-predictor-with-more-than-two-levels"><i class="fa fa-check"></i><b>7.2.2</b> A qualitative predictor with more than two levels</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html#bridging-regression-and-designed-experiments-ancova"><i class="fa fa-check"></i><b>7.3</b> Bridging Regression and Designed Experiments – ANCOVA</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html#an-ancova-example-with-a-two-level-factor"><i class="fa fa-check"></i><b>7.3.1</b> An ANCOVA example with a two-level factor</a></li>
+<li class="chapter" data-level="7.3.2" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html#ancova-with-a-multi-level-factor"><i class="fa fa-check"></i><b>7.3.2</b> ANCOVA with a multi-level factor</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="model-building-considerations.html"><a href="model-building-considerations.html"><i class="fa fa-check"></i><b>8</b> Model Building Considerations</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="model-building-considerations.html"><a href="model-building-considerations.html#regression-assumptions-revisited"><i class="fa fa-check"></i><b>8.1</b> Regression assumptions revisited</a></li>
+<li class="chapter" data-level="8.2" data-path="model-building-considerations.html"><a href="model-building-considerations.html#violations-of-the-independence-assumption"><i class="fa fa-check"></i><b>8.2</b> Violations of the independence assumption</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="model-building-considerations.html"><a href="model-building-considerations.html#collecting-data-that-are-temporal-or-spatial-in-nature"><i class="fa fa-check"></i><b>8.2.1</b> Collecting data that are temporal or spatial in nature</a></li>
+<li class="chapter" data-level="8.2.2" data-path="model-building-considerations.html"><a href="model-building-considerations.html#pseudoreplication"><i class="fa fa-check"></i><b>8.2.2</b> Pseudoreplication</a></li>
+<li class="chapter" data-level="8.2.3" data-path="model-building-considerations.html"><a href="model-building-considerations.html#what-if-we-have-non-independent-errors"><i class="fa fa-check"></i><b>8.2.3</b> What if we have non-independent errors?</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="model-building-considerations.html"><a href="model-building-considerations.html#constant-variance-violations"><i class="fa fa-check"></i><b>8.3</b> Constant Variance Violations</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="model-building-considerations.html"><a href="model-building-considerations.html#box-cox-power-tranformations"><i class="fa fa-check"></i><b>8.3.1</b> Box-Cox Power Tranformations</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="model-building-considerations.html"><a href="model-building-considerations.html#normality-violations"><i class="fa fa-check"></i><b>8.4</b> Normality violations</a></li>
+<li class="chapter" data-level="8.5" data-path="model-building-considerations.html"><a href="model-building-considerations.html#violations-of-the-linearity-assumption"><i class="fa fa-check"></i><b>8.5</b> Violations of the linearity assumption</a></li>
+<li class="chapter" data-level="8.6" data-path="model-building-considerations.html"><a href="model-building-considerations.html#detecting-and-dealing-with-unusual-observations"><i class="fa fa-check"></i><b>8.6</b> Detecting and dealing with unusual observations</a></li>
+<li class="chapter" data-level="8.7" data-path="model-building-considerations.html"><a href="model-building-considerations.html#multicollinearity"><i class="fa fa-check"></i><b>8.7</b> Multicollinearity</a></li>
+<li class="chapter" data-level="8.8" data-path="model-building-considerations.html"><a href="model-building-considerations.html#standardizingPredictors"><i class="fa fa-check"></i><b>8.8</b> Scale changes</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="model-selection.html"><a href="model-selection.html"><i class="fa fa-check"></i><b>9</b> Model Selection</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="model-selection.html"><a href="model-selection.html#stepwise-procedures"><i class="fa fa-check"></i><b>9.1</b> Stepwise Procedures</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="model-selection.html"><a href="model-selection.html#backward-selection"><i class="fa fa-check"></i><b>9.1.1</b> Backward Selection</a></li>
+<li class="chapter" data-level="9.1.2" data-path="model-selection.html"><a href="model-selection.html#forward-selection"><i class="fa fa-check"></i><b>9.1.2</b> Forward selection</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="model-selection.html"><a href="model-selection.html#best-subsets"><i class="fa fa-check"></i><b>9.2</b> Best subsets</a></li>
+<li class="chapter" data-level="9.3" data-path="model-selection.html"><a href="model-selection.html#shrinkage-methods"><i class="fa fa-check"></i><b>9.3</b> Shrinkage Methods</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i><b>10</b> Model Validation</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="model-validation.html"><a href="model-validation.html#underfitting-vs.-overfitting-models"><i class="fa fa-check"></i><b>10.1</b> Underfitting vs. Overfitting Models</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="model-validation.html"><a href="model-validation.html#the-bias-variance-trade-off"><i class="fa fa-check"></i><b>10.1.1</b> The Bias-Variance Trade-off</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="model-validation.html"><a href="model-validation.html#validation-techniques"><i class="fa fa-check"></i><b>10.2</b> Validation Techniques</a></li>
+<li class="chapter" data-level="10.3" data-path="model-validation.html"><a href="model-validation.html#basic-validation-with-a-single-holdout-sample"><i class="fa fa-check"></i><b>10.3</b> Basic Validation with a single holdout sample</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="model-validation.html"><a href="model-validation.html#use-the-training-data-to-fit-and-select-models"><i class="fa fa-check"></i><b>10.3.1</b> Use the training data to fit and select models</a></li>
+<li class="chapter" data-level="10.3.2" data-path="model-validation.html"><a href="model-validation.html#model-training"><i class="fa fa-check"></i><b>10.3.2</b> Model training:</a></li>
+<li class="chapter" data-level="10.3.3" data-path="model-validation.html"><a href="model-validation.html#model-validation-step"><i class="fa fa-check"></i><b>10.3.3</b> Model validation step:</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="model-validation.html"><a href="model-validation.html#hold-out-sample-validation-using-caret"><i class="fa fa-check"></i><b>10.4</b> Hold-out sample validation using <code>caret</code></a></li>
+<li class="chapter" data-level="10.5" data-path="model-validation.html"><a href="model-validation.html#leave-one-out-cross-validation-loocv"><i class="fa fa-check"></i><b>10.5</b> “Leave one out” Cross-Validation (LOOCV)</a></li>
+<li class="chapter" data-level="10.6" data-path="model-validation.html"><a href="model-validation.html#k-fold-cross-validation"><i class="fa fa-check"></i><b>10.6</b> <span class="math inline">\(k\)</span>-fold Cross-Validation</a></li>
+<li class="chapter" data-level="10.7" data-path="model-validation.html"><a href="model-validation.html#a-final-note"><i class="fa fa-check"></i><b>10.7</b> A final note</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="statistical-odds.html"><a href="statistical-odds.html"><i class="fa fa-check"></i><b>11</b> Statistical Odds</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="statistical-odds.html"><a href="statistical-odds.html#probability-versus-odds"><i class="fa fa-check"></i><b>11.1</b> Probability versus Odds</a></li>
+<li class="chapter" data-level="11.2" data-path="statistical-odds.html"><a href="statistical-odds.html#odds-ratios"><i class="fa fa-check"></i><b>11.2</b> Odds ratios</a></li>
+<li class="chapter" data-level="11.3" data-path="statistical-odds.html"><a href="statistical-odds.html#ideas-of-modeling-odds"><i class="fa fa-check"></i><b>11.3</b> Ideas of modeling odds</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>12</b> Logistic Regression</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="logistic-regression.html"><a href="logistic-regression.html#logistic-model"><i class="fa fa-check"></i><b>12.1</b> Logistic Model</a></li>
+<li class="chapter" data-level="12.2" data-path="logistic-regression.html"><a href="logistic-regression.html#fitting-interpreting-and-assessing-a-logistic-model"><i class="fa fa-check"></i><b>12.2</b> Fitting, Interpreting and assessing a logistic model</a></li>
+<li class="chapter" data-level="12.3" data-path="logistic-regression.html"><a href="logistic-regression.html#case-study---titanic-dataset"><i class="fa fa-check"></i><b>12.3</b> Case Study - Titanic Dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>13</b> Generalized Linear Models</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#poisson-regression"><i class="fa fa-check"></i><b>13.1</b> Poisson Regression</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#poisson-distribution"><i class="fa fa-check"></i><b>13.1.1</b> Poisson distribution</a></li>
+<li class="chapter" data-level="13.1.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#poisson-regression-development"><i class="fa fa-check"></i><b>13.1.2</b> Poisson Regression Development</a></li>
+<li class="chapter" data-level="13.1.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#example---tropical-cyclone-counts-in-the-north-atlantic"><i class="fa fa-check"></i><b>13.1.3</b> Example - Tropical Cyclone Counts in the North Atlantic</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#handling-overdispersion"><i class="fa fa-check"></i><b>13.2</b> Handling overdispersion</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#example-attendnace-records"><i class="fa fa-check"></i><b>13.2.1</b> Example – Attendnace Records</a></li>
+<li class="chapter" data-level="13.2.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#incorrect-poisson-model"><i class="fa fa-check"></i><b>13.2.2</b> Incorrect Poisson Model</a></li>
+<li class="chapter" data-level="13.2.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#a-quasi-poisson-approach"><i class="fa fa-check"></i><b>13.2.3</b> A quasi-Poisson approach</a></li>
+<li class="chapter" data-level="13.2.4" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#fitting-a-negative-binomial-regression"><i class="fa fa-check"></i><b>13.2.4</b> Fitting a Negative Binomial regression</a></li>
+<li class="chapter" data-level="13.2.5" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#picking-between-quasi-poisson-and-negative-binomial"><i class="fa fa-check"></i><b>13.2.5</b> Picking between Quasi-Poisson and Negative Binomial</a></li>
+<li class="chapter" data-level="13.2.6" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#infererence-on-predictor-variables"><i class="fa fa-check"></i><b>13.2.6</b> Infererence on predictor variables</a></li>
+<li class="chapter" data-level="13.2.7" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#plotting-fitted-model"><i class="fa fa-check"></i><b>13.2.7</b> Plotting fitted model</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to Statistical Modeling</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="model-validation" class="section level1" number="10">
+<h1><span class="header-section-number">Chapter 10</span> Model Validation</h1>
+<p>At this point we have covered various concepts of statistical modeling but one fundamental question remains, “Is my model any good?”
+Answering this question is of fundamental importance and there is no single way to determine the appropriateness of a model.
+We have covered techniques such as <span class="math inline">\(R^2\)</span>, <span class="math inline">\(R^2_{adj}\)</span> and AIC but all three of those measures essentially measure how well the fitted model <em>fits</em> the data you used to make the fit.
+Generally speaking, we should consider other measures to validate our models as well.</p>
+<div id="underfitting-vs.-overfitting-models" class="section level2" number="10.1">
+<h2><span class="header-section-number">10.1</span> Underfitting vs. Overfitting Models</h2>
+<p>We have seen that increasing the complexity of a statistical model will always imporove the explanatory power on a response variable. This is seen by the fact that <span class="math inline">\(R^2\)</span> will always imporve as the number of predictors increases. In fact, you can show that if a regression model has <span class="math inline">\(k = n\)</span> parameters (i.e., if the number of <span class="math inline">\(\beta\)</span>-coefficients in the model is the same as the sample size of the data it is being fit to), then you guarantee <span class="math inline">\(R^2\)</span> = 100%!</p>
+<p>Of course, all this means is that such a model perfectly fits the data <em>it was built with</em>. At the same time, this model may be a very poor predictor of new (unobserved) individuals. So, using the <em>same</em> data to assess the quality of a model is not exactly a great way to assess its predictive performance.</p>
+<p>Consider the following three models fit to the same data points:</p>
+<p><img src="introStatModeling_files/figure-html/ch10-1-1.png" width="960" /></p>
+<p><strong>The model on the left is underfit:</strong> it misses the clear curvature in the relationship between the predictor and response. So, from a trend perspective, it would systematically mispredict future observations that are produced by the same process.</p>
+<p><strong>The model on the right, however, is overfit:</strong> if you look closely, you’ll see that it falls much closer to the observed data values than either of the other two models. So this overly complicated model can predict its OWN data very well – but that is because the model you see is catching a lot of the specific random behavior in this particular data set. It isn’t hard to imagine that a <em>new</em> data set, generated by the same process but exhibiting different random behavior, would be poorly predicted by even this complicated model!</p>
+<p><strong>The model in the middle appears to be the preferred one to generalize and make predictions from</strong>. This is because it captures the systemic trend in the predictor/response relationship, but <em>that’s all</em>. It strikes a happy medium between two situations that can lead to poor predictive performance of a model on future observations.</p>
+<div id="the-bias-variance-trade-off" class="section level3" number="10.1.1">
+<h3><span class="header-section-number">10.1.1</span> The Bias-Variance Trade-off</h3>
+<p>So here is the dilemma:</p>
+<ul>
+<li>We want to avoid overfitting because it gives too much predictive power to specific quirks in our data.</li>
+<li>We want to avoid underfitting because we will ignore important general features in our data.</li>
+</ul>
+<p><strong>How do we balance the two?</strong> This is known as the bias-variance trade-off. <em>Bias</em> corresponds to underfitting (our predictions are too vague to account for general pattern that do exist in the sample) and <em>variance</em> corresponds to overfitting (our predictions as so specific that they only reflect our specific sample).</p>
+</div>
+</div>
+<div id="validation-techniques" class="section level2" number="10.2">
+<h2><span class="header-section-number">10.2</span> Validation Techniques</h2>
+<p>Overfitting results in low prediction error on the observed data but high prediction error on new (unobserved) data, while underfitting results in the opposite. Measuring these type of errors can be accomodated using a process called <strong>cross-validation</strong> (CV). CV comprises a set of techniques that enable us to measure the performance of a statistical model with regard to how well it can predict results in new datasets.</p>
+<p>There are three general approaches to this, which are detailed below. They all involve splitting your data into partitions, and using some part(s) of the the data to build models and the remaining part(s) to test your model’s predictive performance. It should go without saying that the methods we discuss here require that you have fairly large data sets (many cases, large <span class="math inline">\(n\)</span>) so that we have ample information with which to build models.</p>
+</div>
+<div id="basic-validation-with-a-single-holdout-sample" class="section level2" number="10.3">
+<h2><span class="header-section-number">10.3</span> Basic Validation with a single holdout sample</h2>
+<p>The most basic idea behind CV involves dividing your data into two partitions, or subsets:</p>
+<ul>
+<li>A <strong>training set</strong> on which we build our model. It is called a <em>training</em> set because we use this data partition to <em>train</em> the model for prediction.</li>
+<li>A <strong>test set</strong> (or validation set) which is used to test our model by estimating the prediction error resulting from predicting new observations.</li>
+</ul>
+<p>Commonly used split proportions in practice are 80% for training data and 20% for test data, though this can be altered. To assess model predictive performance, a good choice is to look at the model’s <strong>residual standard error</strong> as calculated on the <strong>test data</strong>. Formulaically, the residual standard error is the square root of the mean squared prediction error values.</p>
+<p><strong>Example: Estimating Bodyfat Percentage.</strong> Let’s revisit the bodyfat percentage problem from Chapter 9 in the textbook. Recall that the goal was to develop a model that would do well at predicting a man’s bodyfat percentage by simply taking some selected circumference measurements around their body. Let’s use this data to do some model validation.</p>
+<p>The first thing we need to do is split the data set consisting of <span class="math inline">\(n\)</span> = 252 men into a training set and a test set. This is done using the code below, creating a random 80/20 training/test split using R’s <code>sample</code> function:</p>
+<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="model-validation.html#cb342-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">54321</span>)   <span class="co"># Set a seed value for reproducability purposes in this document</span></span>
+<span id="cb342-2"><a href="model-validation.html#cb342-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb342-3"><a href="model-validation.html#cb342-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Randomly select 80% of the data (rows)</span></span>
+<span id="cb342-4"><a href="model-validation.html#cb342-4" aria-hidden="true" tabindex="-1"></a>index <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(bodyfat), <span class="at">size=</span><span class="fu">floor</span>(.<span class="dv">80</span><span class="sc">*</span><span class="fu">nrow</span>(bodyfat)))</span>
+<span id="cb342-5"><a href="model-validation.html#cb342-5" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> bodyfat <span class="sc">%&gt;%</span> </span>
+<span id="cb342-6"><a href="model-validation.html#cb342-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">row_number</span>() <span class="sc">%in%</span> index)</span>
+<span id="cb342-7"><a href="model-validation.html#cb342-7" aria-hidden="true" tabindex="-1"></a>test  <span class="ot">&lt;-</span> bodyfat <span class="sc">%&gt;%</span> </span>
+<span id="cb342-8"><a href="model-validation.html#cb342-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">row_number</span>() <span class="sc">%in%</span> index)</span></code></pre></div>
+<p>The vector <code>index</code> consists of randomly selecting row numbers (cases) from the <code>bodyfat</code> dataset. The size of the selection is set to be 80% of the number of rows in the datset itself. Below we check to see how many cases landed in each of the training and test data sets:</p>
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="model-validation.html#cb343-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(bodyfat)</span></code></pre></div>
+<pre><code>## [1] 252</code></pre>
+<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="model-validation.html#cb345-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(train)</span></code></pre></div>
+<pre><code>## [1] 201</code></pre>
+<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="model-validation.html#cb347-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(test)</span></code></pre></div>
+<pre><code>## [1] 51</code></pre>
+<p>We have split the original sample of <span class="math inline">\(n\)</span> = 252 men into a training set of 201 men and a test (validation) set of 51 men.</p>
+<div id="use-the-training-data-to-fit-and-select-models" class="section level3" number="10.3.1">
+<h3><span class="header-section-number">10.3.1</span> Use the training data to fit and select models</h3>
+<p>We now use the training data (named <code>train</code> by us above) to build our model. We can use any or all of the techniques we have already covered to this point to build (“train”) our model: stepwise regression, variable deletion, transformations, etc. We use a best-subsets approach below, much like we did back in Chapter 9. <strong>It is critical to remember that everything we do in the model fitting stage is done on the training data only.</strong></p>
+</div>
+<div id="model-training" class="section level3" number="10.3.2">
+<h3><span class="header-section-number">10.3.2</span> Model training:</h3>
+<p>Check various models’ performance based on <span class="math inline">\(R^2_{adj}\)</span> and BIC:</p>
+<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="model-validation.html#cb349-1" aria-hidden="true" tabindex="-1"></a>bodyfat.gsub <span class="ot">&lt;-</span> <span class="fu">regsubsets</span>(bodyfat.pct <span class="sc">~</span> ., <span class="at">data=</span>train, <span class="at">nbest=</span><span class="dv">4</span>, <span class="at">nvmax=</span><span class="dv">13</span>)</span>
+<span id="cb349-2"><a href="model-validation.html#cb349-2" aria-hidden="true" tabindex="-1"></a>stats <span class="ot">&lt;-</span> <span class="fu">summary</span>(bodyfat.gsub)</span>
+<span id="cb349-3"><a href="model-validation.html#cb349-3" aria-hidden="true" tabindex="-1"></a>gsub.df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Model.Number=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(stats<span class="sc">$</span>adjr2), <span class="at">Adjusted.R2=</span>stats<span class="sc">$</span>adjr2, <span class="at">BIC=</span>stats<span class="sc">$</span>bic)</span>
+<span id="cb349-4"><a href="model-validation.html#cb349-4" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(gsub.df, <span class="fu">aes</span>(<span class="at">x=</span>Model.Number, <span class="at">y=</span>Adjusted.R2)) <span class="sc">+</span> </span>
+<span id="cb349-5"><a href="model-validation.html#cb349-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb349-6"><a href="model-validation.html#cb349-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color=</span><span class="st">&quot;red&quot;</span>, <span class="at">size=</span><span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb349-7"><a href="model-validation.html#cb349-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb349-8"><a href="model-validation.html#cb349-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Adjusted R-squared&quot;</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;Model Number&quot;</span>)</span>
+<span id="cb349-9"><a href="model-validation.html#cb349-9" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(gsub.df, <span class="fu">aes</span>(<span class="at">x=</span>Model.Number, <span class="at">y=</span>BIC)) <span class="sc">+</span> </span>
+<span id="cb349-10"><a href="model-validation.html#cb349-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb349-11"><a href="model-validation.html#cb349-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color=</span><span class="st">&quot;red&quot;</span>, <span class="at">size=</span><span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb349-12"><a href="model-validation.html#cb349-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb349-13"><a href="model-validation.html#cb349-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;BIC&quot;</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;Model Number&quot;</span>)</span>
+<span id="cb349-14"><a href="model-validation.html#cb349-14" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(p1,p2, <span class="at">nrow=</span><span class="dv">2</span>)</span></code></pre></div>
+<p><img src="introStatModeling_files/figure-html/ch10-4-1.png" width="672" /></p>
+<p>The estimated <span class="math inline">\(\beta\)</span>-coefficients for the predictors of the best fitting model based on maximizing <span class="math inline">\(R^2_{adj}\)</span> are as follows:</p>
+<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="model-validation.html#cb350-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(bodyfat.gsub, <span class="fu">which.max</span>(gsub.df<span class="sc">$</span>Adjusted.R2))</span></code></pre></div>
+<pre><code>## (Intercept)      weight        neck     abdomen       ankle      biceps 
+##  -36.886823   -0.151137   -0.370366    1.005815    0.360620    0.371678 
+##     forearm       wrist 
+##    0.464346   -1.609547</code></pre>
+<p>We see that this criterion selects a 10-predictor model. While this is OK, it would involve a lot of body measuring in practice, and so might not be the best choice from an implementation prespective. Its adjusted <span class="math inline">\(R^2_{adj}\)</span> is found as follows:</p>
+<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="model-validation.html#cb352-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(gsub.df<span class="sc">$</span>Adjusted.R2)</span></code></pre></div>
+<pre><code>## [1] 0.731449</code></pre>
+<p>Now, let’s look at what model is selected as optimal when minimizing BIC:</p>
+<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb354-1"><a href="model-validation.html#cb354-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(bodyfat.gsub, <span class="fu">which.min</span>(gsub.df<span class="sc">$</span>BIC))</span></code></pre></div>
+<pre><code>## (Intercept)      weight     abdomen     forearm       wrist 
+##  -32.562236   -0.122294    0.969583    0.539201   -1.721664</code></pre>
+<p>The best fitting model based on BIC has four predictors: <code>weight</code>, <code>abdomen</code>, <code>biceps</code>, and <code>wrist</code>. As a corrolary assessment, we can check the value of <span class="math inline">\(R^2_{adj}\)</span> for this 4-predictor model:</p>
+<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb356-1"><a href="model-validation.html#cb356-1" aria-hidden="true" tabindex="-1"></a>gsub.df<span class="sc">$</span>Adjusted.R2[<span class="fu">which.min</span>(gsub.df<span class="sc">$</span>BIC)]</span></code></pre></div>
+<pre><code>## [1] 0.725006</code></pre>
+<p>The best fitting model based on BIC is much simpler (4 predictors instead of 10), and its adjusted <span class="math inline">\(R^2_{adj}\)</span> is not noticeably lower than the 10-predictor model (0.7427 vs. 0.7549). <strong>So, let’s choose to use the four predictor model.</strong></p>
+</div>
+<div id="model-validation-step" class="section level3" number="10.3.3">
+<h3><span class="header-section-number">10.3.3</span> Model validation step:</h3>
+<p>Now, let’s use this model to predict bodyfat percentages for the men in the holdout (test) dataset. First we fit the chosen model on the training dataset. Then we use that model to predict the holdout values in the testing set.</p>
+<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb358-1"><a href="model-validation.html#cb358-1" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(bodyfat.pct <span class="sc">~</span> weight <span class="sc">+</span> abdomen <span class="sc">+</span> biceps <span class="sc">+</span> wrist, <span class="at">data=</span>train)</span>
+<span id="cb358-2"><a href="model-validation.html#cb358-2" aria-hidden="true" tabindex="-1"></a>test.predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit1, <span class="at">newdata=</span>test)</span></code></pre></div>
+<p>The residual standard error (or equivalently, the square root of the mean squared residuals – or <strong>root mean squared error</strong>) can be calculated on the test data to see how well our model predicts future observations. Below we manually calculate this value for explanation.</p>
+<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="model-validation.html#cb359-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate observed - predicted bodyfat for test data</span></span>
+<span id="cb359-2"><a href="model-validation.html#cb359-2" aria-hidden="true" tabindex="-1"></a>residuals <span class="ot">&lt;-</span> test<span class="sc">$</span>bodyfat.pct <span class="sc">-</span> test.predictions          </span>
+<span id="cb359-3"><a href="model-validation.html#cb359-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb359-4"><a href="model-validation.html#cb359-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate and display the residual std error</span></span>
+<span id="cb359-5"><a href="model-validation.html#cb359-5" aria-hidden="true" tabindex="-1"></a>test.rse <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(residuals<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb359-6"><a href="model-validation.html#cb359-6" aria-hidden="true" tabindex="-1"></a>test.rse</span></code></pre></div>
+<pre><code>## [1] 4.48002</code></pre>
+<p>This is an estimate of the average residual (prediction error) size for individuals in an independent sample of men. Using an Empirical Rule-style argument, we can be about 95% confident that our model will produce a predicted male bodyfat percentage that is within about <span class="math inline">\(2\times 4.68 = 9.36\%\)</span> of the actual value.</p>
+<p>Compare this result to the artificially optimistic residual standard error we get by naively predicting the results for the <em>same men</em> we used to fit the model, using all the original data:</p>
+<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb361-1"><a href="model-validation.html#cb361-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit model to all the data</span></span>
+<span id="cb361-2"><a href="model-validation.html#cb361-2" aria-hidden="true" tabindex="-1"></a>full.sample.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(bodyfat.pct <span class="sc">~</span> weight <span class="sc">+</span> abdomen <span class="sc">+</span> biceps <span class="sc">+</span> wrist, <span class="at">data=</span>bodyfat)  </span>
+<span id="cb361-3"><a href="model-validation.html#cb361-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb361-4"><a href="model-validation.html#cb361-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict all men in the same sample, </span></span>
+<span id="cb361-5"><a href="model-validation.html#cb361-5" aria-hidden="true" tabindex="-1"></a><span class="co"># and calculate their residuals and residual std error</span></span>
+<span id="cb361-6"><a href="model-validation.html#cb361-6" aria-hidden="true" tabindex="-1"></a>full.predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(full.sample.fit, <span class="at">newdata=</span>bodyfat)</span>
+<span id="cb361-7"><a href="model-validation.html#cb361-7" aria-hidden="true" tabindex="-1"></a>residuals <span class="ot">&lt;-</span> bodyfat<span class="sc">$</span>bodyfat.pct <span class="sc">-</span> full.predictions     </span>
+<span id="cb361-8"><a href="model-validation.html#cb361-8" aria-hidden="true" tabindex="-1"></a>full.rse <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(residuals<span class="sc">^</span><span class="dv">2</span>)) </span>
+<span id="cb361-9"><a href="model-validation.html#cb361-9" aria-hidden="true" tabindex="-1"></a>full.rse</span></code></pre></div>
+<pre><code>## [1] 4.31743</code></pre>
+<p>The result might look better, but it is biased toward the sample it came from!</p>
+</div>
+</div>
+<div id="hold-out-sample-validation-using-caret" class="section level2" number="10.4">
+<h2><span class="header-section-number">10.4</span> Hold-out sample validation using <code>caret</code></h2>
+<p>The above example was quite involved and done so for the sake of explanation. We can instead use some features in the <code>tidyverse</code> and the add-on <code>caret</code> library to effectively do the same thing.</p>
+<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb363-1"><a href="model-validation.html#cb363-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a balanced 80/20 split of the sample based on the response variable</span></span>
+<span id="cb363-2"><a href="model-validation.html#cb363-2" aria-hidden="true" tabindex="-1"></a>train.index <span class="ot">&lt;-</span> bodyfat<span class="sc">$</span>bodyfat.pct <span class="sc">%&gt;%</span></span>
+<span id="cb363-3"><a href="model-validation.html#cb363-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">createDataPartition</span>(<span class="at">p =</span> <span class="fl">0.8</span>, <span class="at">list =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb363-4"><a href="model-validation.html#cb363-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb363-5"><a href="model-validation.html#cb363-5" aria-hidden="true" tabindex="-1"></a>train.data <span class="ot">&lt;-</span> bodyfat <span class="sc">%&gt;%</span></span>
+<span id="cb363-6"><a href="model-validation.html#cb363-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">row_number</span>() <span class="sc">%in%</span> train.index)   <span class="co"># 80% goes into training data</span></span>
+<span id="cb363-7"><a href="model-validation.html#cb363-7" aria-hidden="true" tabindex="-1"></a>test.data <span class="ot">&lt;-</span> bodyfat <span class="sc">%&gt;%</span></span>
+<span id="cb363-8"><a href="model-validation.html#cb363-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">row_number</span>() <span class="sc">%in%</span> train.index)  <span class="co"># The rest goes into test data</span></span>
+<span id="cb363-9"><a href="model-validation.html#cb363-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb363-10"><a href="model-validation.html#cb363-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Verify balance between training and test data on the response variable:</span></span>
+<span id="cb363-11"><a href="model-validation.html#cb363-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb363-12"><a href="model-validation.html#cb363-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">data=</span>train.data, <span class="fu">aes</span>(<span class="at">x =</span> bodyfat.pct), </span>
+<span id="cb363-13"><a href="model-validation.html#cb363-13" aria-hidden="true" tabindex="-1"></a>               <span class="at">fill =</span> <span class="st">&quot;#00BCD8&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span> </span>
+<span id="cb363-14"><a href="model-validation.html#cb363-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">data=</span>test.data, <span class="fu">aes</span>(<span class="at">x =</span> bodyfat.pct),</span>
+<span id="cb363-15"><a href="model-validation.html#cb363-15" aria-hidden="true" tabindex="-1"></a>               <span class="at">fill =</span> <span class="st">&quot;#F8766D&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.3</span>)</span></code></pre></div>
+<p><img src="introStatModeling_files/figure-html/ch10-12-1.png" width="672" /></p>
+<div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb364-1"><a href="model-validation.html#cb364-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Build/fit our model</span></span>
+<span id="cb364-2"><a href="model-validation.html#cb364-2" aria-hidden="true" tabindex="-1"></a>fitted.model <span class="ot">&lt;-</span> <span class="fu">lm</span>(bodyfat.pct <span class="sc">~</span> weight <span class="sc">+</span> abdomen <span class="sc">+</span> biceps <span class="sc">+</span> wrist, <span class="at">data=</span>train.data)</span>
+<span id="cb364-3"><a href="model-validation.html#cb364-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb364-4"><a href="model-validation.html#cb364-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Make predictions and compute RMSE and MAE</span></span>
+<span id="cb364-5"><a href="model-validation.html#cb364-5" aria-hidden="true" tabindex="-1"></a>predictions <span class="ot">&lt;-</span> fitted.model <span class="sc">%&gt;%</span> </span>
+<span id="cb364-6"><a href="model-validation.html#cb364-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(test.data)</span>
+<span id="cb364-7"><a href="model-validation.html#cb364-7" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">RMSE =</span> <span class="fu">RMSE</span>(predictions, test.data<span class="sc">$</span>bodyfat.pct),</span>
+<span id="cb364-8"><a href="model-validation.html#cb364-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">MAE =</span> <span class="fu">MAE</span>(predictions, test.data<span class="sc">$</span>bodyfat.pct))</span></code></pre></div>
+<pre><code>##      RMSE     MAE
+## 1 4.32594 3.58625</code></pre>
+<p>The <code>caret</code> package can easily provide us with the root mean squared error RMSE (residual standard error) like before, but can also provide other measures of model performance. Two measures are typically employed:</p>
+<ul>
+<li><strong>Root Mean Squared Error</strong> (RMSE), which measures the average prediction error made by the model when predicting the outcome for a future observation. This is what we have already calculated. Lower values of RMSE are better.</li>
+<li><strong>Mean Absolute Error</strong> (MAE). This is an alternative to RMSE that is less sensitive to outliers in your data. It corresponds to the average <em>absolute</em> difference between observed and predicted outcomes. Lower values of MAE are also better.</li>
+</ul>
+<p>Both of these are meassured in the same units as the response variable. In the above example, the mean absolute error in bodyfat prediction is 3.265% and the root means squared error is 3.9% (note this is different than our previous derivation because a different training and testing set were declared).</p>
+<p><strong>Disadvantages.</strong> The single holdout sample method is only useful when you have a large data set that can be partitioned. The key disadvantage, however, is that we build a model only using a fraction of the available data, which may possibly leave out some interesting information, leading to higher bias. We try to mitigate this by ensuring the training and test data sets are balanced with respect to the response variable (using <code>createDataPartition</code> from the <code>caret</code> package), but the potential for bias still exists as it could come from imbalance among the predictors, etc.</p>
+<p>As a result, test error rates using a single holdout sample can be highly unstable depending on which observations are included in the training set. So, we’d like to consider using more comprehensive approaches.</p>
+<hr />
+</div>
+<div id="leave-one-out-cross-validation-loocv" class="section level2" number="10.5">
+<h2><span class="header-section-number">10.5</span> “Leave one out” Cross-Validation (LOOCV)</h2>
+<p>More comprehensive methods <strong>involve doing the training/testsing in multiple stages across many partitions in the data.</strong> One such method that admittedly takes the proces to an extreme is called “leave-one-out” cross-validation. This method is as follows:</p>
+<ol style="list-style-type: decimal">
+<li>Leave out one data point (observation) and build the model on the remaining <span class="math inline">\(n-1\)</span> data points.</li>
+<li>Use the model from step 1 to predict the single data point that was left out. Record the test error associated with this prediction.</li>
+<li>Repeat the process above for <strong>all</strong> <span class="math inline">\(n\)</span> data points. This means you will fit <span class="math inline">\(n\)</span> models!</li>
+<li>Calculate the overall prediction error by averaging all the test errors recorded for the individual points through the process. We can still use RMSE or MAE for this.</li>
+</ol>
+<p>This is a very intensive process as you might imagine, but it is actually very easy to do in <code>caret</code>:</p>
+<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb366-1"><a href="model-validation.html#cb366-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set training control method as LOOCV</span></span>
+<span id="cb366-2"><a href="model-validation.html#cb366-2" aria-hidden="true" tabindex="-1"></a>train.control <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;LOOCV&quot;</span>)</span>
+<span id="cb366-3"><a href="model-validation.html#cb366-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb366-4"><a href="model-validation.html#cb366-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Train the model</span></span>
+<span id="cb366-5"><a href="model-validation.html#cb366-5" aria-hidden="true" tabindex="-1"></a>LOOCV.model <span class="ot">&lt;-</span> <span class="fu">train</span>(bodyfat.pct <span class="sc">~</span> weight <span class="sc">+</span> abdomen <span class="sc">+</span> biceps <span class="sc">+</span> wrist, </span>
+<span id="cb366-6"><a href="model-validation.html#cb366-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> bodyfat, </span>
+<span id="cb366-7"><a href="model-validation.html#cb366-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>,</span>
+<span id="cb366-8"><a href="model-validation.html#cb366-8" aria-hidden="true" tabindex="-1"></a>                     <span class="at">trControl =</span> train.control)</span>
+<span id="cb366-9"><a href="model-validation.html#cb366-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb366-10"><a href="model-validation.html#cb366-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Display results</span></span>
+<span id="cb366-11"><a href="model-validation.html#cb366-11" aria-hidden="true" tabindex="-1"></a>LOOCV.model</span></code></pre></div>
+<pre><code>## Linear Regression 
+## 
+## 252 samples
+##   4 predictor
+## 
+## No pre-processing
+## Resampling: Leave-One-Out Cross-Validation 
+## Summary of sample sizes: 251, 251, 251, 251, 251, 251, ... 
+## Resampling results:
+## 
+##   RMSE     Rsquared  MAE    
+##   4.43271  0.718507  3.65969
+## 
+## Tuning parameter &#39;intercept&#39; was held constant at a value of TRUE</code></pre>
+<p>The function <code>trainControl()</code> defines the partitioning method for the coming validation step. Then we use the <code>train()</code> function in <code>caret</code> to execute the process. We first specify the model form (we are still choosing to use the 4-predictor model here), run the process on the master data set (here, <code>bodyfat</code>), use linear regression (<code>method="lm"</code>), and specify the partitioning method to use.</p>
+<p>The resulting output list the RMSE and MAE, along with a pseudo R-squared type measure (looking at predictor error compared to variance in the response).</p>
+<p><strong>LOOCV Disadvantages.</strong> On the surface, LOOCV seems like it might be the preferred approach since we use almost all the data (<span class="math inline">\(n-1\)</span> data points) to independently predict every possible holdout. However, it can be computationally intensive, and might result in higher variation in the prediction error if some data points are outliers. So, ideally we will use a good ratio of testing data points … a solution provided by the next method, which is a sort of compromise between a single holdout sample and LOOCV.</p>
+<hr />
+</div>
+<div id="k-fold-cross-validation" class="section level2" number="10.6">
+<h2><span class="header-section-number">10.6</span> <span class="math inline">\(k\)</span>-fold Cross-Validation</h2>
+<p>The <span class="math inline">\(k\)</span>-fold cross-validation method evaluates model performance on different subsets of the training data and then calculates the average prediction error rate across all the different subsets. We purposefully choose a number of subsets, known as <strong>folds</strong> of the data, into which we partition the data. The process is as follow:</p>
+<ol style="list-style-type: decimal">
+<li>Randomly split the data into <span class="math inline">\(k\)</span> subsets, or <strong>folds</strong>. Note that <span class="math inline">\(k\)</span> is determined by the user; typically a value of 5 or 10 is used.</li>
+<li>Hold out one fold, and train the model on all other folds combined</li>
+<li>Test the model on the held-out fold and record the prediction errors</li>
+<li>Repeat this process until each of the <span class="math inline">\(k\)</span> folds has served as a test set</li>
+<li>Calculate the average of the <span class="math inline">\(k\)</span> recorded errors. This is will be the performance measure for the model.</li>
+</ol>
+<p>Visually, the folds can be thought of as something like the below example, a <span class="math inline">\(k=10\)</span> fold segmentation.</p>
+<p><img src="CVfolds.png" width="100%" /></p>
+<p>The most obvious advantage of <span class="math inline">\(k\)</span>-fold CV compared to LOOCV is computational. The question is: <em>what is a good value for <span class="math inline">\(k\)</span>?</em> Consider the following:</p>
+<ul>
+<li><strong>A low value of <span class="math inline">\(k\)</span> (few folds) leads to more bias potential.</strong> It is not hard to see that using a small value of <span class="math inline">\(k\)</span> is not that much different than just using the first method described, a single holdout sample.</li>
+<li><strong>A high value of <em>k</em> (many folds) leads to more variance in the prediction error.</strong> In fact, if <span class="math inline">\(k=n\)</span>, then you are doing LOOCV.</li>
+</ul>
+<p>It has been shown in practice that using <span class="math inline">\(k\)</span> = 5 or 10 yields test error rates that do not appreciably suffer from excessive bias nor high prediction error variance.</p>
+<p>The following example uses <code>caret</code> to perform a 5-fold cross validation to estimate the prediction error for predicting bodyfat percentage in men from the <code>weight</code>, <code>abdomen</code>, <code>biceps</code>, and <code>wrist</code> measurement predictors.</p>
+<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb368-1"><a href="model-validation.html#cb368-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set training control method as 5-fold CV</span></span>
+<span id="cb368-2"><a href="model-validation.html#cb368-2" aria-hidden="true" tabindex="-1"></a>train.control <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>)</span>
+<span id="cb368-3"><a href="model-validation.html#cb368-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb368-4"><a href="model-validation.html#cb368-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Train the model</span></span>
+<span id="cb368-5"><a href="model-validation.html#cb368-5" aria-hidden="true" tabindex="-1"></a>kfoldCV.model <span class="ot">&lt;-</span> <span class="fu">train</span>(bodyfat.pct <span class="sc">~</span> weight <span class="sc">+</span> abdomen <span class="sc">+</span> biceps <span class="sc">+</span> wrist, </span>
+<span id="cb368-6"><a href="model-validation.html#cb368-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> bodyfat, </span>
+<span id="cb368-7"><a href="model-validation.html#cb368-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>,</span>
+<span id="cb368-8"><a href="model-validation.html#cb368-8" aria-hidden="true" tabindex="-1"></a>                       <span class="at">trControl =</span> train.control)</span>
+<span id="cb368-9"><a href="model-validation.html#cb368-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb368-10"><a href="model-validation.html#cb368-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Display results</span></span>
+<span id="cb368-11"><a href="model-validation.html#cb368-11" aria-hidden="true" tabindex="-1"></a>kfoldCV.model</span></code></pre></div>
+<pre><code>## Linear Regression 
+## 
+## 252 samples
+##   4 predictor
+## 
+## No pre-processing
+## Resampling: Cross-Validated (5 fold) 
+## Summary of sample sizes: 202, 202, 202, 202, 200 
+## Resampling results:
+## 
+##   RMSE     Rsquared  MAE    
+##   4.41851  0.731733  3.64661
+## 
+## Tuning parameter &#39;intercept&#39; was held constant at a value of TRUE</code></pre>
+<p>Here we see similar output as the LOOCV but the procedure runs substantially quicker. <span class="math inline">\(k\)</span>-fold cross-validation is generally recommended over the other two methods in practice due to its balance between variability, bias and computational run-time.</p>
+</div>
+<div id="a-final-note" class="section level2" number="10.7">
+<h2><span class="header-section-number">10.7</span> A final note</h2>
+<p>As with many topics in this text, we are merely <em>scratching the surface</em> on this topic. However, we have outlined the basic building blocks on modern model validation. Several variants exist including</p>
+<ul>
+<li>Segmenting your data into <em>training</em>, <em>tuning</em> and <em>testing</em> sets. Cconsider the brief discussion on selecting a <em>tuning</em> parameter for LASSO and Ridge regression in the previous chapter. The tuning set can be used to select that parameter, then the final model can be validated with the testing set.</li>
+<li>Repeating <span class="math inline">\(k\)</span>-fold CV multiple times. Performing <span class="math inline">\(k\)</span>-fold CV one time is not too different than the single training and testing set approach, data is segmented randomly into sets. A different random permutation will result in a different RMSE (we saw this above!). It is possible to repeat the <span class="math inline">\(k\)</span>-fold CV multiple times and aggregate all the results. If computational power allows, this is typically done in practice.</li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="model-selection.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="statistical-odds.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["introStatModeling.pdf", "introStatModeling.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

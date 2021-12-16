@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 3 Multiple Factor Designed Experiments | Introduction to Statistical Modeling</title>
+  <meta name="description" content="Covers Regression and elements of Design of Experiments in R using the tidyverse." />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 3 Multiple Factor Designed Experiments | Introduction to Statistical Modeling" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Covers Regression and elements of Design of Experiments in R using the tidyverse." />
+  <meta name="github-repo" content="tjfisher19/introStatModeling" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 Multiple Factor Designed Experiments | Introduction to Statistical Modeling" />
+  
+  <meta name="twitter:description" content="Covers Regression and elements of Design of Experiments in R using the tidyverse." />
+  
+
+<meta name="author" content="Michael Hughes and Thomas Fisher" />
+
+
+<meta name="date" content="2021-12-16" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="introduction-to-statistical-modeling-and-designed-experiments.html"/>
+<link rel="next" href="advanced-designs.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Inroduction to Statistical Modeling</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="" data-path="about-the-authors.html"><a href="about-the-authors.html"><i class="fa fa-check"></i>About the Authors</a></li>
+<li class="chapter" data-level="" data-path="important-preliminary-review.html"><a href="important-preliminary-review.html"><i class="fa fa-check"></i>Important Preliminary Review</a>
+<ul>
+<li class="chapter" data-level="" data-path="important-preliminary-review.html"><a href="important-preliminary-review.html#statistics-background"><i class="fa fa-check"></i>Statistics background</a></li>
+<li class="chapter" data-level="" data-path="important-preliminary-review.html"><a href="important-preliminary-review.html#software"><i class="fa fa-check"></i>Software</a></li>
+<li class="chapter" data-level="" data-path="important-preliminary-review.html"><a href="important-preliminary-review.html#add-on-packages"><i class="fa fa-check"></i>Add-on packages</a></li>
+<li class="chapter" data-level="" data-path="important-preliminary-review.html"><a href="important-preliminary-review.html#help-with-rmarkdown"><i class="fa fa-check"></i>Help with RMarkdown</a></li>
+<li class="chapter" data-level="" data-path="important-preliminary-review.html"><a href="important-preliminary-review.html#managing-your-work-in-r"><i class="fa fa-check"></i>Managing your work in R</a></li>
+<li class="chapter" data-level="" data-path="important-preliminary-review.html"><a href="important-preliminary-review.html#data-in-this-text"><i class="fa fa-check"></i>Data in this text</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html"><i class="fa fa-check"></i><b>1</b> Introductory Statistics in R</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#goals-of-a-statistical-analysis"><i class="fa fa-check"></i><b>1.1</b> Goals of a statistical analysis</a></li>
+<li class="chapter" data-level="1.2" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#before-you-begin-an-analysis"><i class="fa fa-check"></i><b>1.2</b> Before you begin an analysis</a></li>
+<li class="chapter" data-level="1.3" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#data-frames"><i class="fa fa-check"></i><b>1.3</b> Data frames</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#built-in-data"><i class="fa fa-check"></i><b>1.3.1</b> Built-in data</a></li>
+<li class="chapter" data-level="1.3.2" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#types-of-data"><i class="fa fa-check"></i><b>1.3.2</b> Types of Data</a></li>
+<li class="chapter" data-level="1.3.3" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#importing-datasets-into-r"><i class="fa fa-check"></i><b>1.3.3</b> Importing datasets into R</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#referencing-data-from-inside-a-data-frame"><i class="fa fa-check"></i><b>1.4</b> Referencing data from inside a data frame</a></li>
+<li class="chapter" data-level="1.5" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#missing-values-and-computer-arithmetic-in-r"><i class="fa fa-check"></i><b>1.5</b> Missing values and computer arithmetic in R</a></li>
+<li class="chapter" data-level="1.6" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#exploratory-data-analysis-eda"><i class="fa fa-check"></i><b>1.6</b> Exploratory Data Analysis (EDA)</a>
+<ul>
+<li class="chapter" data-level="1.6.1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#numeric-summaries"><i class="fa fa-check"></i><b>1.6.1</b> Numeric Summaries</a></li>
+<li class="chapter" data-level="1.6.2" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#numeric-summaries-in-r"><i class="fa fa-check"></i><b>1.6.2</b> Numeric Summaries in R</a></li>
+<li class="chapter" data-level="1.6.3" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#graphical-summaries"><i class="fa fa-check"></i><b>1.6.3</b> Graphical Summaries</a></li>
+<li class="chapter" data-level="1.6.4" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#descriptive-statistics-and-visualizations-by-levels-of-a-factor-variable"><i class="fa fa-check"></i><b>1.6.4</b> Descriptive statistics and visualizations by levels of a factor variable</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#sampling-distributions-describing-how-a-statistic-varies"><i class="fa fa-check"></i><b>1.7</b> Sampling distributions: describing how a statistic varies</a></li>
+<li class="chapter" data-level="1.8" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#two-sample-inference"><i class="fa fa-check"></i><b>1.8</b> Two-sample inference</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html"><i class="fa fa-check"></i><b>2</b> Introduction to Statistical Modeling and Designed Experiments</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#statistical-analyses-is-modeling"><i class="fa fa-check"></i><b>2.1</b> Statistical Analyses is Modeling</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#observational-studies-versus-designed-experiments"><i class="fa fa-check"></i><b>2.2</b> Observational Studies versus designed experiments</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#observational-studies"><i class="fa fa-check"></i><b>2.2.1</b> Observational Studies</a></li>
+<li class="chapter" data-level="2.2.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#designed-experiments"><i class="fa fa-check"></i><b>2.2.2</b> Designed experiments</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#designed-experiement-vocabulary"><i class="fa fa-check"></i><b>2.3</b> Designed experiement vocabulary</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#what-is-an-experiment"><i class="fa fa-check"></i><b>2.3.1</b> What is an experiment?</a></li>
+<li class="chapter" data-level="2.3.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#analysis-of-variance"><i class="fa fa-check"></i><b>2.3.2</b> Analysis of variance</a></li>
+<li class="chapter" data-level="2.3.3" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#elements-of-a-designed-experiment"><i class="fa fa-check"></i><b>2.3.3</b> Elements of a designed experiment</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#paired-t-test"><i class="fa fa-check"></i><b>2.4</b> Paired <em>t</em>-test</a></li>
+<li class="chapter" data-level="2.5" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#one-way-anova"><i class="fa fa-check"></i><b>2.5</b> One-Way ANOVA</a></li>
+<li class="chapter" data-level="2.6" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#assumption-checking"><i class="fa fa-check"></i><b>2.6</b> Assumption Checking</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#independence"><i class="fa fa-check"></i><b>2.6.1</b> Independence</a></li>
+<li class="chapter" data-level="2.6.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#constant-variance"><i class="fa fa-check"></i><b>2.6.2</b> Constant Variance</a></li>
+<li class="chapter" data-level="2.6.3" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#checking-normality"><i class="fa fa-check"></i><b>2.6.3</b> Checking Normality</a></li>
+<li class="chapter" data-level="2.6.4" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#code-to-check-assumption"><i class="fa fa-check"></i><b>2.6.4</b> Code to check assumption</a></li>
+<li class="chapter" data-level="2.6.5" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#transforming-your-response"><i class="fa fa-check"></i><b>2.6.5</b> Transforming your response</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#follow-up-procedures-multiple-comparisons"><i class="fa fa-check"></i><b>2.7</b> Follow-up procedures – Multiple Comparisons</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#tukeys-hsd-method"><i class="fa fa-check"></i><b>2.7.1</b> Tukey’s HSD method</a></li>
+<li class="chapter" data-level="2.7.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#dunnett-multiple-comparisons"><i class="fa fa-check"></i><b>2.7.2</b> Dunnett multiple comparisons</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="multiple-factor-designed-experiments.html"><a href="multiple-factor-designed-experiments.html"><i class="fa fa-check"></i><b>3</b> Multiple Factor Designed Experiments</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="multiple-factor-designed-experiments.html"><a href="multiple-factor-designed-experiments.html#blocking"><i class="fa fa-check"></i><b>3.1</b> Blocking</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="multiple-factor-designed-experiments.html"><a href="multiple-factor-designed-experiments.html#data-structure-model-form-and-analysis-of-variance-of-a-randomized-block-design"><i class="fa fa-check"></i><b>3.1.1</b> Data structure, model form and analysis of variance of a Randomized Block Design</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="multiple-factor-designed-experiments.html"><a href="multiple-factor-designed-experiments.html#two-factor-designs"><i class="fa fa-check"></i><b>3.2</b> Two-factor Designs</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="multiple-factor-designed-experiments.html"><a href="multiple-factor-designed-experiments.html#analysis"><i class="fa fa-check"></i><b>3.2.1</b> Analysis</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="advanced-designs.html"><a href="advanced-designs.html"><i class="fa fa-check"></i><b>4</b> Advanced Designs</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="advanced-designs.html"><a href="advanced-designs.html#higher-order-factor-models"><i class="fa fa-check"></i><b>4.1</b> Higher order factor models</a></li>
+<li class="chapter" data-level="4.2" data-path="advanced-designs.html"><a href="advanced-designs.html#within-subject-designs"><i class="fa fa-check"></i><b>4.2</b> Within-subject designs</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="advanced-designs.html"><a href="advanced-designs.html#blocks-revisited-an-approach-to-handling-within-subjects-factors"><i class="fa fa-check"></i><b>4.2.1</b> Blocks revisited: an approach to handling within-subjects factors</a></li>
+<li class="chapter" data-level="4.2.2" data-path="advanced-designs.html"><a href="advanced-designs.html#a-more-involved-repeated-measures-case-study"><i class="fa fa-check"></i><b>4.2.2</b> A more involved repeated measures case study</a></li>
+<li class="chapter" data-level="4.2.3" data-path="advanced-designs.html"><a href="advanced-designs.html#further-study"><i class="fa fa-check"></i><b>4.2.3</b> Further study</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html"><i class="fa fa-check"></i><b>5</b> Introduction to Multiple Regression</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#regression-model"><i class="fa fa-check"></i><b>5.1</b> Regression Model</a></li>
+<li class="chapter" data-level="5.2" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#fitting-a-regression-model"><i class="fa fa-check"></i><b>5.2</b> Fitting a regression model</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#why-should-we-use-more-than-one-predictor"><i class="fa fa-check"></i><b>5.2.1</b> Why should we use more than one predictor?</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#interpreting-beta-parameter-estimates-in-mlr"><i class="fa fa-check"></i><b>5.3</b> Interpreting <span class="math inline">\(\beta\)</span>-parameter estimates in MLR</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#designed-experiments-1"><i class="fa fa-check"></i><b>5.3.1</b> Designed experiments</a></li>
+<li class="chapter" data-level="5.3.2" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#observational-studies-1"><i class="fa fa-check"></i><b>5.3.2</b> Observational studies</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html"><i class="fa fa-check"></i><b>6</b> Inference regarding Multiple Regression</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#assumption-checking-1"><i class="fa fa-check"></i><b>6.1</b> Assumption checking</a></li>
+<li class="chapter" data-level="6.2" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#overall-f-test-for-model-signifance"><i class="fa fa-check"></i><b>6.2</b> Overall <span class="math inline">\(F\)</span>-test for model signifance</a></li>
+<li class="chapter" data-level="6.3" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#individual-parameter-inference"><i class="fa fa-check"></i><b>6.3</b> Individual parameter inference</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#t-tests"><i class="fa fa-check"></i><b>6.3.1</b> <span class="math inline">\(t\)</span>-tests</a></li>
+<li class="chapter" data-level="6.3.2" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#confidence-intervals"><i class="fa fa-check"></i><b>6.3.2</b> Confidence Intervals</a></li>
+<li class="chapter" data-level="6.3.3" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#confidence-and-prediction-bands"><i class="fa fa-check"></i><b>6.3.3</b> Confidence and prediction bands</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#goodness-of-fit"><i class="fa fa-check"></i><b>6.4</b> Goodness-of-fit</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#coefficient-of-determination"><i class="fa fa-check"></i><b>6.4.1</b> Coefficient of determination</a></li>
+<li class="chapter" data-level="6.4.2" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#akaikes-information-criterion"><i class="fa fa-check"></i><b>6.4.2</b> Akaike’s Information Criterion</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html"><i class="fa fa-check"></i><b>7</b> More on multiple linear regression</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html#model-comparision-reduced-f-tests"><i class="fa fa-check"></i><b>7.1</b> Model comparision – Reduced <span class="math inline">\(F\)</span>-tests</a></li>
+<li class="chapter" data-level="7.2" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html#categorical-predictor-variables"><i class="fa fa-check"></i><b>7.2</b> Categorical Predictor Variables</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html#a-qualitative-predictor-with-two-levels"><i class="fa fa-check"></i><b>7.2.1</b> A qualitative predictor with two levels</a></li>
+<li class="chapter" data-level="7.2.2" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html#a-qualitative-predictor-with-more-than-two-levels"><i class="fa fa-check"></i><b>7.2.2</b> A qualitative predictor with more than two levels</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html#bridging-regression-and-designed-experiments-ancova"><i class="fa fa-check"></i><b>7.3</b> Bridging Regression and Designed Experiments – ANCOVA</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html#an-ancova-example-with-a-two-level-factor"><i class="fa fa-check"></i><b>7.3.1</b> An ANCOVA example with a two-level factor</a></li>
+<li class="chapter" data-level="7.3.2" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html#ancova-with-a-multi-level-factor"><i class="fa fa-check"></i><b>7.3.2</b> ANCOVA with a multi-level factor</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="model-building-considerations.html"><a href="model-building-considerations.html"><i class="fa fa-check"></i><b>8</b> Model Building Considerations</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="model-building-considerations.html"><a href="model-building-considerations.html#regression-assumptions-revisited"><i class="fa fa-check"></i><b>8.1</b> Regression assumptions revisited</a></li>
+<li class="chapter" data-level="8.2" data-path="model-building-considerations.html"><a href="model-building-considerations.html#violations-of-the-independence-assumption"><i class="fa fa-check"></i><b>8.2</b> Violations of the independence assumption</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="model-building-considerations.html"><a href="model-building-considerations.html#collecting-data-that-are-temporal-or-spatial-in-nature"><i class="fa fa-check"></i><b>8.2.1</b> Collecting data that are temporal or spatial in nature</a></li>
+<li class="chapter" data-level="8.2.2" data-path="model-building-considerations.html"><a href="model-building-considerations.html#pseudoreplication"><i class="fa fa-check"></i><b>8.2.2</b> Pseudoreplication</a></li>
+<li class="chapter" data-level="8.2.3" data-path="model-building-considerations.html"><a href="model-building-considerations.html#what-if-we-have-non-independent-errors"><i class="fa fa-check"></i><b>8.2.3</b> What if we have non-independent errors?</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="model-building-considerations.html"><a href="model-building-considerations.html#constant-variance-violations"><i class="fa fa-check"></i><b>8.3</b> Constant Variance Violations</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="model-building-considerations.html"><a href="model-building-considerations.html#box-cox-power-tranformations"><i class="fa fa-check"></i><b>8.3.1</b> Box-Cox Power Tranformations</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="model-building-considerations.html"><a href="model-building-considerations.html#normality-violations"><i class="fa fa-check"></i><b>8.4</b> Normality violations</a></li>
+<li class="chapter" data-level="8.5" data-path="model-building-considerations.html"><a href="model-building-considerations.html#violations-of-the-linearity-assumption"><i class="fa fa-check"></i><b>8.5</b> Violations of the linearity assumption</a></li>
+<li class="chapter" data-level="8.6" data-path="model-building-considerations.html"><a href="model-building-considerations.html#detecting-and-dealing-with-unusual-observations"><i class="fa fa-check"></i><b>8.6</b> Detecting and dealing with unusual observations</a></li>
+<li class="chapter" data-level="8.7" data-path="model-building-considerations.html"><a href="model-building-considerations.html#multicollinearity"><i class="fa fa-check"></i><b>8.7</b> Multicollinearity</a></li>
+<li class="chapter" data-level="8.8" data-path="model-building-considerations.html"><a href="model-building-considerations.html#standardizingPredictors"><i class="fa fa-check"></i><b>8.8</b> Scale changes</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="model-selection.html"><a href="model-selection.html"><i class="fa fa-check"></i><b>9</b> Model Selection</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="model-selection.html"><a href="model-selection.html#stepwise-procedures"><i class="fa fa-check"></i><b>9.1</b> Stepwise Procedures</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="model-selection.html"><a href="model-selection.html#backward-selection"><i class="fa fa-check"></i><b>9.1.1</b> Backward Selection</a></li>
+<li class="chapter" data-level="9.1.2" data-path="model-selection.html"><a href="model-selection.html#forward-selection"><i class="fa fa-check"></i><b>9.1.2</b> Forward selection</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="model-selection.html"><a href="model-selection.html#best-subsets"><i class="fa fa-check"></i><b>9.2</b> Best subsets</a></li>
+<li class="chapter" data-level="9.3" data-path="model-selection.html"><a href="model-selection.html#shrinkage-methods"><i class="fa fa-check"></i><b>9.3</b> Shrinkage Methods</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i><b>10</b> Model Validation</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="model-validation.html"><a href="model-validation.html#underfitting-vs.-overfitting-models"><i class="fa fa-check"></i><b>10.1</b> Underfitting vs. Overfitting Models</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="model-validation.html"><a href="model-validation.html#the-bias-variance-trade-off"><i class="fa fa-check"></i><b>10.1.1</b> The Bias-Variance Trade-off</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="model-validation.html"><a href="model-validation.html#validation-techniques"><i class="fa fa-check"></i><b>10.2</b> Validation Techniques</a></li>
+<li class="chapter" data-level="10.3" data-path="model-validation.html"><a href="model-validation.html#basic-validation-with-a-single-holdout-sample"><i class="fa fa-check"></i><b>10.3</b> Basic Validation with a single holdout sample</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="model-validation.html"><a href="model-validation.html#use-the-training-data-to-fit-and-select-models"><i class="fa fa-check"></i><b>10.3.1</b> Use the training data to fit and select models</a></li>
+<li class="chapter" data-level="10.3.2" data-path="model-validation.html"><a href="model-validation.html#model-training"><i class="fa fa-check"></i><b>10.3.2</b> Model training:</a></li>
+<li class="chapter" data-level="10.3.3" data-path="model-validation.html"><a href="model-validation.html#model-validation-step"><i class="fa fa-check"></i><b>10.3.3</b> Model validation step:</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="model-validation.html"><a href="model-validation.html#hold-out-sample-validation-using-caret"><i class="fa fa-check"></i><b>10.4</b> Hold-out sample validation using <code>caret</code></a></li>
+<li class="chapter" data-level="10.5" data-path="model-validation.html"><a href="model-validation.html#leave-one-out-cross-validation-loocv"><i class="fa fa-check"></i><b>10.5</b> “Leave one out” Cross-Validation (LOOCV)</a></li>
+<li class="chapter" data-level="10.6" data-path="model-validation.html"><a href="model-validation.html#k-fold-cross-validation"><i class="fa fa-check"></i><b>10.6</b> <span class="math inline">\(k\)</span>-fold Cross-Validation</a></li>
+<li class="chapter" data-level="10.7" data-path="model-validation.html"><a href="model-validation.html#a-final-note"><i class="fa fa-check"></i><b>10.7</b> A final note</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="statistical-odds.html"><a href="statistical-odds.html"><i class="fa fa-check"></i><b>11</b> Statistical Odds</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="statistical-odds.html"><a href="statistical-odds.html#probability-versus-odds"><i class="fa fa-check"></i><b>11.1</b> Probability versus Odds</a></li>
+<li class="chapter" data-level="11.2" data-path="statistical-odds.html"><a href="statistical-odds.html#odds-ratios"><i class="fa fa-check"></i><b>11.2</b> Odds ratios</a></li>
+<li class="chapter" data-level="11.3" data-path="statistical-odds.html"><a href="statistical-odds.html#ideas-of-modeling-odds"><i class="fa fa-check"></i><b>11.3</b> Ideas of modeling odds</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>12</b> Logistic Regression</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="logistic-regression.html"><a href="logistic-regression.html#logistic-model"><i class="fa fa-check"></i><b>12.1</b> Logistic Model</a></li>
+<li class="chapter" data-level="12.2" data-path="logistic-regression.html"><a href="logistic-regression.html#fitting-interpreting-and-assessing-a-logistic-model"><i class="fa fa-check"></i><b>12.2</b> Fitting, Interpreting and assessing a logistic model</a></li>
+<li class="chapter" data-level="12.3" data-path="logistic-regression.html"><a href="logistic-regression.html#case-study---titanic-dataset"><i class="fa fa-check"></i><b>12.3</b> Case Study - Titanic Dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>13</b> Generalized Linear Models</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#poisson-regression"><i class="fa fa-check"></i><b>13.1</b> Poisson Regression</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#poisson-distribution"><i class="fa fa-check"></i><b>13.1.1</b> Poisson distribution</a></li>
+<li class="chapter" data-level="13.1.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#poisson-regression-development"><i class="fa fa-check"></i><b>13.1.2</b> Poisson Regression Development</a></li>
+<li class="chapter" data-level="13.1.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#example---tropical-cyclone-counts-in-the-north-atlantic"><i class="fa fa-check"></i><b>13.1.3</b> Example - Tropical Cyclone Counts in the North Atlantic</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#handling-overdispersion"><i class="fa fa-check"></i><b>13.2</b> Handling overdispersion</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#example-attendnace-records"><i class="fa fa-check"></i><b>13.2.1</b> Example – Attendnace Records</a></li>
+<li class="chapter" data-level="13.2.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#incorrect-poisson-model"><i class="fa fa-check"></i><b>13.2.2</b> Incorrect Poisson Model</a></li>
+<li class="chapter" data-level="13.2.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#a-quasi-poisson-approach"><i class="fa fa-check"></i><b>13.2.3</b> A quasi-Poisson approach</a></li>
+<li class="chapter" data-level="13.2.4" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#fitting-a-negative-binomial-regression"><i class="fa fa-check"></i><b>13.2.4</b> Fitting a Negative Binomial regression</a></li>
+<li class="chapter" data-level="13.2.5" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#picking-between-quasi-poisson-and-negative-binomial"><i class="fa fa-check"></i><b>13.2.5</b> Picking between Quasi-Poisson and Negative Binomial</a></li>
+<li class="chapter" data-level="13.2.6" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#infererence-on-predictor-variables"><i class="fa fa-check"></i><b>13.2.6</b> Infererence on predictor variables</a></li>
+<li class="chapter" data-level="13.2.7" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#plotting-fitted-model"><i class="fa fa-check"></i><b>13.2.7</b> Plotting fitted model</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to Statistical Modeling</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="multiple-factor-designed-experiments" class="section level1" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Multiple Factor Designed Experiments</h1>
+<p>In the previous chapters we have seen how one variable (perhaps a factor with multiple treatments) can influence the response variable. It should not be much of a stretch to consider the case of multiple predictor variables influencing the response.</p>
+<p><strong>Example.</strong> Consider the admissions dataset with ACT scores as a response, besides the year of entry maybe a student’s home neighborhood or state could also be a predictor?</p>
+<p>In this chapter we will explore two key analyses for designed experiments – a Block design and Two-factor experiment. The learning objectives of this unit include:</p>
+<ul>
+<li>Understanding the structure of a multi-factor model</li>
+<li>Understanding the rationale of a block design</li>
+<li>Understanding the rationale and structure of a two-factor design</li>
+<li>Performing a full analysis involving multiple predictor variables</li>
+</ul>
+<div id="blocking" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Blocking</h2>
+<p>Randomized Complete Block Designs are a bit of an odd duck. The type of design itself is straightforward, but the analysis might seem a bit unusual.</p>
+<p>The design is best described in terms of the agricultural field trials that gave birth to it. When conducting field trials to compare plant varieties, there is concern that some areas of a field may be more fertile than others (e.g., soil nutrients, access to water, shade versus sun, etc…). So, if one were comparing three plant varieties, it would not be a good idea to use one variety in one location, another variety in a different location, and the third variety way out back in another part of the field because the effects of the varieties would be confounded with the natural fertility of the land.</p>
+<p>The natural fertility in this situation is a <strong>confounding factor</strong>, something we are not necessarily interested in, but that none the less will have an impact on our assessment of the factor of interest (e.g., plant variety).</p>
+<p>A <strong>block</strong> is defined to be “a relatively homogeneous set of experimental material.” This essentially means that we would like to be able to assess the treatment effects without undue influence from a contaminating or confounding factor, such as land fertility. One way to do this would be to apply all the treatments (e.g., plant varieties) to the same area of the field. Within one area, we should see consistency in natural fertility levels. Thus differences observed in a measured response (such as crop yield) between plant varieties will not be due to variation in fertility levels, but rather due to the different plant varieties themselves.</p>
+<p>A bock design is one that attempts to reduce the noise in the measured response in order to “clarify” the effect due to the treatments under study.</p>
+<p>A <strong>randomized block design</strong> in the field study would be conducted in the following way:</p>
+<ul>
+<li>The field is divided into blocks.</li>
+<li>Each block is divided into a number of units equal to the number of treatments.</li>
+<li>Within each block, the treatments are assigned at random so that a different treatment is applied to each unit. That is, all treatments are observed within each block. <strong>The defining feature of the Randomized (Complete) Block Design is that each block sees each treatment exactly once.</strong></li>
+</ul>
+<p>A good experimental design will be able to “parse out” the variability due to potential confounding factors, and thus give clarity to our assessment of the factor of interest. A block design can accomplish this task.</p>
+<p><strong>What can serve as a block?</strong> It is important to note that subjects (i.e., experimental units) themselves may form blocks in a block design. It is also possible that different experimental units may collectively form a “block.” It depends on the circumstances. All that is needed is that a block, however, formed, creates a “relatively homogeneous set of experimental material.”</p>
+<p><strong>An example.</strong> You’ve already seen the concept of a block design! Consider the paired <em>t</em>-test included in Section <a href="introduction-to-statistical-modeling-and-designed-experiments.html#paired-t-test">2.4</a>. There, the individual vehicles are essentially treated as blocks. We observe two responses within each block (or vehicle).</p>
+<div id="data-structure-model-form-and-analysis-of-variance-of-a-randomized-block-design" class="section level3" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> Data structure, model form and analysis of variance of a Randomized Block Design</h3>
+<p>Here is the general data structure for a randomized block design (RBD):</p>
+<p><span class="math display">\[\begin{array}{c|cccc}
+\hline
+         &amp; \textbf{Treatment 1} &amp; \textbf{Treatment 2} &amp; \ldots &amp; \textbf{Treatment } k \\
+\hline
+\textbf{Block 1} &amp; Y_{11} &amp; Y_{21} &amp; \ldots &amp; Y_{k1} \\
+\textbf{Block 2} &amp; Y_{12} &amp; Y_{22} &amp; \ldots &amp; Y_{k2} \\
+\vdots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \vdots \\
+\textbf{Block } b &amp; Y_{1b} &amp; Y_{2b} &amp; \ldots &amp; Y_{kb} \\
+\hline
+\end{array}\]</span></p>
+<p>The model for such data has the form</p>
+<p><span class="math display">\[Y_{ij} = \mu + \tau_i + \beta_j + \varepsilon_{ij}\]</span></p>
+<p>where</p>
+<ul>
+<li><span class="math inline">\(Y_{ij}\)</span> is the observation for treatment <span class="math inline">\(i\)</span> within block <span class="math inline">\(j\)</span></li>
+<li><span class="math inline">\(\mu\)</span> is the overall mean</li>
+<li><span class="math inline">\(\tau_i\)</span> is the effect of the <span class="math inline">\(i^\mathrm{th}\)</span> treatment on the mean response</li>
+<li><span class="math inline">\(\beta_j\)</span> is the effect of the <span class="math inline">\(j^\mathrm{th}\)</span> block on the mean response</li>
+<li><span class="math inline">\(\varepsilon_{ij}\)</span> is the random error term</li>
+</ul>
+<p>The usual test of interest is the same as in a one-way analysis of variance: to compare the population means due to the different treatments. The null and alternative hypotheses are given by:
+<span class="math display">\[H_0: \tau_1 = \tau_2 = \ldots = \tau_k = 0 ~~\textrm{versus}~~ H_a: \textrm{at least one } \tau_i \neq 0\]</span>
+We may also test for differences between blocks, but this is usually of secondary interest at best.</p>
+<p>Here is an example in R.</p>
+<p><strong>Example:</strong> Word recall study. Five subjects are asked to memorize a list of words. The words on this list are of three types: positive words, negative words and neutral words. The response variable is the number of words recalled by word type (Negative (Neg), Neutral (Neu) and Positive (Pos)), with a goal of determining if the ability to recall words is affected by the word type. Each subject provides the number of recalled words of each type. Here are the data:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+subject
+</th>
+<th style="text-align:right;">
+Neg
+</th>
+<th style="text-align:right;">
+Neu
+</th>
+<th style="text-align:right;">
+Pos
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Faye
+</td>
+<td style="text-align:right;">
+26
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+42
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Jason
+</td>
+<td style="text-align:right;">
+29
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+35
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Jim
+</td>
+<td style="text-align:right;">
+32
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+45
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Ron
+</td>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+38
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Victor
+</td>
+<td style="text-align:right;">
+30
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+40
+</td>
+</tr>
+</tbody>
+</table>
+<p>There data are available in the R dataframe <code>wordrecall.RData</code> on the class repository. Below is an analysis of this data.</p>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="multiple-factor-designed-experiments.html#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;wordrecall.RData&quot;</span>)</span>
+<span id="cb102-2"><a href="multiple-factor-designed-experiments.html#cb102-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(wordrecall)</span></code></pre></div>
+<pre><code>## Rows: 15
+## Columns: 4
+## $ obs       &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+## $ subject   &lt;fct&gt; Jim, Jim, Jim, Victor, Victor, Victor, Faye, Faye, Faye, Ron~
+## $ word.type &lt;fct&gt; Neg, Neu, Pos, Neg, Neu, Pos, Neg, Neu, Pos, Neg, Neu, Pos, ~
+## $ recall    &lt;int&gt; 32, 15, 45, 30, 13, 40, 26, 12, 42, 22, 10, 38, 29, 8, 35</code></pre>
+<p>Each subject gives three responses instead of one as in a usual one-way design. In this manner, each subject (or person) forms a block. The design is a randomized block design, because the experimenter randomly determines the order of word type for recalling for each subject.</p>
+<p>Before doing a formal analysis, here are some descriptive looks at word type and subject factors. First we perform a little data cleaning so the <code>word.type</code> variable is displayed in a complete word.</p>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="multiple-factor-designed-experiments.html#cb104-1" aria-hidden="true" tabindex="-1"></a>wordrecall <span class="ot">&lt;-</span> wordrecall <span class="sc">%&gt;%</span></span>
+<span id="cb104-2"><a href="multiple-factor-designed-experiments.html#cb104-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">word.type =</span> <span class="fu">factor</span>(word.type, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;Negative&quot;</span>, <span class="st">&quot;Neutral&quot;</span>, <span class="st">&quot;Positive&quot;</span>)))</span></code></pre></div>
+<p>Now we can look at some plots of the data.</p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="multiple-factor-designed-experiments.html#cb105-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(wordrecall) <span class="sc">+</span> </span>
+<span id="cb105-2"><a href="multiple-factor-designed-experiments.html#cb105-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>subject, <span class="at">y=</span>recall) ) <span class="sc">+</span></span>
+<span id="cb105-3"><a href="multiple-factor-designed-experiments.html#cb105-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Subject&quot;</span>, <span class="at">y=</span><span class="st">&quot;Words Recalled&quot;</span>)</span>
+<span id="cb105-4"><a href="multiple-factor-designed-experiments.html#cb105-4" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(wordrecall) <span class="sc">+</span> </span>
+<span id="cb105-5"><a href="multiple-factor-designed-experiments.html#cb105-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>word.type, <span class="at">y=</span>recall)) <span class="sc">+</span></span>
+<span id="cb105-6"><a href="multiple-factor-designed-experiments.html#cb105-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Word Type&quot;</span>, <span class="at">y=</span><span class="st">&quot;Words Recalled&quot;</span>)</span>
+<span id="cb105-7"><a href="multiple-factor-designed-experiments.html#cb105-7" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(p1, p2, <span class="at">nrow=</span><span class="dv">1</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch3-3"></span>
+<img src="introStatModeling_files/figure-html/ch3-3-1.png" alt="Boxplot distribution of the number of Word recalls as a function of Subject and Word Types." width="100%" />
+<p class="caption">
+Figure 3.1: Boxplot distribution of the number of Word recalls as a function of Subject and Word Types.
+</p>
+</div>
+<p>In the above code, we build a simple boxplot of the words recalled by subject and call it <code>p1</code>. Similarly we build a boxplot of words recalled by word type, called <code>p2</code>. We then use the <code>grid.arrange()</code> function in the <code>gridExtra</code> package to put the two plots side-by-side. The results are in Figure <a href="multiple-factor-designed-experiments.html#fig:ch3-3">3.1</a>.</p>
+<p>The effect of word type appears quite stark, with positive word recalls being higher than the other two types. There is also a bit of subject-to-subject variability, but not much.</p>
+<p>Here is how to do a formal analysis in a call of <code>aov()</code> – making sure to check underlying assumptions in Figure <a href="multiple-factor-designed-experiments.html#fig:ch3-4">3.2</a>.</p>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="multiple-factor-designed-experiments.html#cb106-1" aria-hidden="true" tabindex="-1"></a>word.fit <span class="ot">&lt;-</span> <span class="fu">aov</span>(recall <span class="sc">~</span> subject <span class="sc">+</span> word.type, <span class="at">data=</span>wordrecall)</span>
+<span id="cb106-2"><a href="multiple-factor-designed-experiments.html#cb106-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(word.fit)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch3-4"></span>
+<img src="introStatModeling_files/figure-html/ch3-4-1.png" alt="Residual diagnostic plots when the response variable is the number of words recalled as  a function of subject (block) and word type. Here, the residuals appear fairly homoskedastic based on the Residuals vs Fitted and Scale-Location plots. The normality assumption is satisfied based on the Normal Q-Q plot." width="80%" />
+<p class="caption">
+Figure 3.2: Residual diagnostic plots when the response variable is the number of words recalled as a function of subject (block) and word type. Here, the residuals appear fairly homoskedastic based on the Residuals vs Fitted and Scale-Location plots. The normality assumption is satisfied based on the Normal Q-Q plot.
+</p>
+</div>
+<p>The assumptions look generally fine here (nothing too concerning about constant variance or normality). So, on to the analysis:</p>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="multiple-factor-designed-experiments.html#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(word.fit)</span></code></pre></div>
+<pre><code>##             Df Sum Sq Mean Sq F value  Pr(&gt;F)    
+## subject      4    105      26    4.89   0.027 *  
+## word.type    2   2030    1015  189.11 1.8e-07 ***
+## Residuals    8     43       5                    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>We see that there is a significant difference in the mean recall between the three word types (<span class="math inline">\(F\)</span> = 189.11, <span class="math inline">\(\textrm{df}_1\)</span> = 2, <span class="math inline">\(\textrm{df}_2\)</span> = 8, <span class="math inline">\(p\)</span>-value = 0.0000001841)</p>
+<p>You can also see how the total variation was partitioned into three components:</p>
+<ol style="list-style-type: decimal">
+<li>Within-subject (i.e. block) sum of squares (105.067)</li>
+<li>Between word type (i.e. treatment) sum of squares (2029.73)</li>
+<li>Residual sum of squares (42.93).</li>
+</ol>
+<p>We see that R also reports an <span class="math inline">\(F\)</span>-statistic and associated <span class="math inline">\(p\)</span>-value for the <code>subject</code>. This is the block term and is not of concern to our analysis. So we ignore that <span class="math inline">\(p\)</span>-value!</p>
+<p>We can investigate the differences in mean recall between the three word types using a multiple comparison procedure.</p>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="multiple-factor-designed-experiments.html#cb109-1" aria-hidden="true" tabindex="-1"></a>word.mc <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(word.fit, <span class="st">&quot;word.type&quot;</span>)</span>
+<span id="cb109-2"><a href="multiple-factor-designed-experiments.html#cb109-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">contrast</span>(word.mc, <span class="st">&quot;pairwise&quot;</span>) )</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch3-5a"></span>
+<img src="introStatModeling_files/figure-html/ch3-5a-1.png" alt="Tukey adjusted confidence interval plots comparing the three word types (treatments). Here, we see that Positive words are recalled at a greater rate than Neutral or Negative words and that Negative words are recalled at a greater rate than Neutral words." width="70%" />
+<p class="caption">
+Figure 3.3: Tukey adjusted confidence interval plots comparing the three word types (treatments). Here, we see that Positive words are recalled at a greater rate than Neutral or Negative words and that Negative words are recalled at a greater rate than Neutral words.
+</p>
+</div>
+<p>None of the Confidence Intervals in Figure <a href="multiple-factor-designed-experiments.html#fig:ch3-5a">3.3</a> contain the value zero, so all word types are significantly different from each other. Negative word types have significantly more recalls than neutral types; positive word types have significantly more recalls on average than either negative or neutral word types.</p>
+</div>
+</div>
+<div id="two-factor-designs" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Two-factor Designs</h2>
+<p>A <strong>factorial</strong> structure in an experimental design is one in which there are two or more factors, and the levels of the factors are all observed in combination. For example, suppose you are testing for the effectiveness of three drugs (A, B, C) at three different dosages (5 mg, 10 mg, 25 mg). In a factorial design, you would observed a total of nine treatments, each of which consists of a combination of drug and dose (e.g. treatment 1 is drug A administered at 5 mg, treatment 2 is drug A administered at 10 mg, etc). Note how quickly things will grow if you have more than two factors!</p>
+<p>In this design, the data are usually obtained by collecting a random sample of individuals to participate in the study, and then randomly allocating a single treatment to each of the study participants as in a one-way design structure. The only difference now is that a “treatment” consists of a combination of different factors. If there are two factors, the data may be analyzed using a two-way ANOVA.</p>
+<p>The two-way data structure with two factors <span class="math inline">\(\mathbf{A}\)</span> and <span class="math inline">\(\mathbf{B}\)</span> looks like the following:</p>
+<p><span class="math display">\[\begin{array}{c|cccc}
+\hline
+ &amp; \mathbf{A_1} &amp; \mathbf{A_2} &amp; \mathbf{\ldots} &amp; \mathbf{A_a} \\
+\hline
+\mathbf{B_1} &amp; Y_{111}, Y_{112}, \ldots &amp; Y_{211}, Y_{212}, \ldots, &amp; \ldots &amp; Y_{a11}, Y_{a12}, \ldots \\
+\mathbf{B_2} &amp; Y_{121}, Y_{122}, \ldots &amp; Y_{221}, Y_{222}, \ldots, &amp; \ldots &amp; Y_{a21}, Y_{a22}, \ldots \\
+\mathbf{B_3} &amp; Y_{131}, Y_{132}, \ldots &amp; Y_{231}, Y_{232}, \ldots, &amp; \ldots &amp; Y_{a31}, Y_{a32}, \ldots \\
+\vdots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \vdots \\
+\mathbf{B_b} &amp; Y_{1b1}, Y_{1b2}, \ldots &amp; Y_{2b1}, Y_{2b2}, \ldots, &amp; \ldots &amp; Y_{ab1}, Y_{ab2}, \ldots \\
+\hline
+\end{array}\]</span></p>
+<p>Note there is replication (i.e. multiple independent observations) in each treatment (combination of factors <span class="math inline">\(\mathbf{A}\)</span> and <span class="math inline">\(\mathbf{B}\)</span>.</p>
+<p>The general model for such data has the form</p>
+<p><span class="math display">\[Y_{ijk} = \mu + \alpha_i + \beta_j + \alpha\beta_{ij} + \varepsilon_{ijk}\]</span>
+where</p>
+<ul>
+<li><span class="math inline">\(Y_{ijk}\)</span> is the <span class="math inline">\(k^\mathrm{th}\)</span> observation in the <span class="math inline">\(i^\mathrm{th}\)</span> level of factor <span class="math inline">\(A\)</span> and the <span class="math inline">\(j^\mathrm{th}\)</span> level of factor <span class="math inline">\(B\)</span>.</li>
+<li><span class="math inline">\(\mu\)</span> is the overall mean</li>
+<li><span class="math inline">\(\alpha_i\)</span> is the “main effect” of the <span class="math inline">\(i^\mathrm{th}\)</span> level of factor <span class="math inline">\(A\)</span> on the mean response</li>
+<li><span class="math inline">\(\beta_j\)</span> is the “main effect” of the <span class="math inline">\(j^\mathrm{th}\)</span> level of factor <span class="math inline">\(B\)</span> on the mean response</li>
+<li><span class="math inline">\(\alpha\beta_{ij}\)</span> is the “interaction effect” of the <span class="math inline">\(i^\mathrm{th}\)</span> level of factor <span class="math inline">\(A\)</span> and the <span class="math inline">\(j^\mathrm{th}\)</span> level of factor <span class="math inline">\(B\)</span> on the mean response</li>
+<li><span class="math inline">\(\varepsilon_{ijk}\)</span> is the random error term</li>
+</ul>
+<div id="analysis" class="section level3" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> Analysis</h3>
+<p>First recall an important feature of designed experiments – the analysis is determined by the experiment! In most cases of factorial design, the primary interest is to determine if some interaction between the two factors influences the response. Therefore it is crucial to test the interaction term before assessing the effects of factor <span class="math inline">\(A\)</span> alone on the response, because if <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> interact, then we cannot separate their effects. In other words, if the interaction between <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> significantly influences the response, then the effect that factor <span class="math inline">\(A\)</span> has on the response changes depending on the level of factor <span class="math inline">\(B\)</span>.</p>
+<p>The usual testing strategy is as follows:</p>
+<ol style="list-style-type: decimal">
+<li>Fit a full interaction model.</li>
+<li>Test for significant interaction between <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>:
+<ol style="list-style-type: lower-alpha">
+<li>If the interaction term is significant, you must look at comparisons in terms of treatment combination; i.e., you cannot separate the effects of <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>.</li>
+<li>If the interaction term is non-significant, you can look into deleting the interaction term from your model, fitting a reduced <strong>main-effects model</strong>. Then (and only then) may you look at the effects of <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> separately.</li>
+</ol></li>
+</ol>
+<p>We consider two examples below.</p>
+<div id="example-an-alertness-study-with-two-factors." class="section level4" number="3.2.1.1">
+<h4><span class="header-section-number">3.2.1.1</span> Example: An alertness study with two factors.</h4>
+<p>An experimental medication is tested on a sample of 16 individuals at two dosage levels (10 mg, 25 mg) to see how it impacts alertness. It is also of interest to investigate the effect of gender, and to see if the effect of a particular dosage on alertness depends on gender. Thus, this is a two-factor factorial design: factor A is dosage (two levels) and factor B is gender (two levels). Sometimes this is referred to as a 2×2 factorial design. Each subject is randomly assigned one drug, the drug is administered. After 60 minutes, a test is administered that scores the alertness level of each subject (a higher score means higher alertness). The data appear in the R dataframe <code>twowaydrug.Rdata</code> in our repository.</p>
+<p>First take a look at the alertness scores by treatment (note that we need to coerce dosage to be an R factor since it is coded numerically and add labels on the gender variable) in Figure <a href="multiple-factor-designed-experiments.html#fig:ch3-6">3.4</a>:</p>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="multiple-factor-designed-experiments.html#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;twowaydrug.RData&quot;</span>)</span>
+<span id="cb110-2"><a href="multiple-factor-designed-experiments.html#cb110-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(twowaydrug)</span></code></pre></div>
+<pre><code>## Rows: 16
+## Columns: 4
+## $ obs       &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16
+## $ gender    &lt;fct&gt; m, m, m, m, m, m, m, m, f, f, f, f, f, f, f, f
+## $ dosage    &lt;int&gt; 10, 10, 10, 10, 25, 25, 25, 25, 10, 10, 10, 10, 25, 25, 25, ~
+## $ alertness &lt;int&gt; 8, 12, 13, 12, 6, 7, 23, 14, 15, 12, 22, 14, 15, 12, 18, 22</code></pre>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="multiple-factor-designed-experiments.html#cb112-1" aria-hidden="true" tabindex="-1"></a>twowaydrug <span class="ot">&lt;-</span> twowaydrug <span class="sc">%&gt;%</span></span>
+<span id="cb112-2"><a href="multiple-factor-designed-experiments.html#cb112-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dosage =</span> <span class="fu">factor</span>(dosage),</span>
+<span id="cb112-3"><a href="multiple-factor-designed-experiments.html#cb112-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">gender =</span> <span class="fu">factor</span>(gender, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;Female&quot;</span>, <span class="st">&quot;Male&quot;</span>)) )</span>
+<span id="cb112-4"><a href="multiple-factor-designed-experiments.html#cb112-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(twowaydrug) <span class="sc">+</span> </span>
+<span id="cb112-5"><a href="multiple-factor-designed-experiments.html#cb112-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>dosage, <span class="at">y=</span>alertness) ) <span class="sc">+</span> </span>
+<span id="cb112-6"><a href="multiple-factor-designed-experiments.html#cb112-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(.<span class="sc">~</span>gender) <span class="sc">+</span> </span>
+<span id="cb112-7"><a href="multiple-factor-designed-experiments.html#cb112-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch3-6"></span>
+<img src="introStatModeling_files/figure-html/ch3-6-1.png" alt="Boxplot distribution of the number of the alertness level as a function of dosage and gender." width="100%" />
+<p class="caption">
+Figure 3.4: Boxplot distribution of the number of the alertness level as a function of dosage and gender.
+</p>
+</div>
+<p>There may be a gender effect: it appears that male responses are graphically lower than females. However, the large spread in the 25 mg dosage
+group for males may mask this effect.</p>
+<p>We fit the interaction model in <code>aov()</code> by telling R to include an interaction term with the notation <code>factor1:factor2</code>. Below is the specific example for our study but first run a check on the residuals in Figure <a href="multiple-factor-designed-experiments.html#fig:ch3-7">3.5</a>.</p>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="multiple-factor-designed-experiments.html#cb113-1" aria-hidden="true" tabindex="-1"></a>twoway.fit <span class="ot">&lt;-</span> <span class="fu">aov</span>(alertness <span class="sc">~</span> dosage <span class="sc">+</span> gender <span class="sc">+</span> dosage<span class="sc">:</span>gender, <span class="at">data=</span>twowaydrug)</span>
+<span id="cb113-2"><a href="multiple-factor-designed-experiments.html#cb113-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(twoway.fit)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch3-7"></span>
+<img src="introStatModeling_files/figure-html/ch3-7-1.png" alt="Residual diagnostic plots when the response variable is the alertness as a function of gender and dosage. Here, the residuals appear fairly homoskedastic based on the Residuals vs Fitted and Scale-Location plots. The normality assumption is satisfied based on the Normal Q-Q plot." width="80%" />
+<p class="caption">
+Figure 3.5: Residual diagnostic plots when the response variable is the alertness as a function of gender and dosage. Here, the residuals appear fairly homoskedastic based on the Residuals vs Fitted and Scale-Location plots. The normality assumption is satisfied based on the Normal Q-Q plot.
+</p>
+</div>
+<p>The assumptions look to be reasonably met. While there may be some issue with constant variance, it does not appear to be systemically related to the predicted (fitted) values, so transformations will not be helpful.</p>
+<p>At this point, we can also generate tables of response means after we fit the interaction model.
+These consist of:</p>
+<ul>
+<li>The “grand mean” (overall mean, all data pooled together and estimate <span class="math inline">\(\mu\)</span>)</li>
+<li>Main effect means (i.e. means for each factor level, taken one factor at a time)</li>
+<li>Interaction means (i.e. treatment means for all factor combinations)</li>
+</ul>
+<p>These means are estimates from the data and are purely descriptive (like the boxplots were), but informative nonetheless. We could calculate each one of the above using a series of <code>tidyverse</code> commands or using the R function <code>model.tables()</code>:</p>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="multiple-factor-designed-experiments.html#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model.tables</span>(twoway.fit, <span class="st">&quot;means&quot;</span>)</span></code></pre></div>
+<pre><code>## Tables of means
+## Grand mean
+##         
+## 14.0625 
+## 
+##  dosage 
+## dosage
+##     10     25 
+## 13.500 14.625 
+## 
+##  gender 
+## gender
+## Female   Male 
+## 16.250 11.875 
+## 
+##  dosage:gender 
+##       gender
+## dosage Female Male 
+##     10 15.75  11.25
+##     25 16.75  12.50</code></pre>
+<p>We proceed to the hypothesis tests:</p>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="multiple-factor-designed-experiments.html#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(twoway.fit)</span></code></pre></div>
+<pre><code>##               Df Sum Sq Mean Sq F value Pr(&gt;F)
+## dosage         1    5.1     5.1    0.20   0.67
+## gender         1   76.6    76.6    2.95   0.11
+## dosage:gender  1    0.1     0.1    0.00   0.96
+## Residuals     12  311.3    25.9</code></pre>
+<p><strong>The first test to inspect is the interaction test.</strong> The interaction is insignificant (<span class="math inline">\(F\)</span> = 0.0024, <span class="math inline">\(\textrm{df}_1\)</span> = 1, <span class="math inline">\(\textrm{df}_2\)</span> = 12, <span class="math inline">\(p\)</span>-value = 0.9617). Thus, we could conclude the effect that dosage has on the mean alertness level does not depend on gender.</p>
+<p>A visualization of the interaction effect may be obtained using an interactions plot. An interaction plot is basically a plot of treatment means, whereby the means for all treatments having a given fixed level of one of the factors are visually “connected.” We can build the interaction plot seen in Figure <a href="multiple-factor-designed-experiments.html#fig:ch3-10">3.6</a> using aesthetic options in <code>ggplot()</code> and with the <code>stat_summary</code> functions. Note both <code>color</code> and <code>group</code> are determined based on the <code>gender</code> variable.</p>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="multiple-factor-designed-experiments.html#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(twowaydrug, <span class="fu">aes</span>(<span class="at">x=</span>dosage, <span class="at">y=</span>alertness, <span class="at">color=</span>gender, <span class="at">group=</span>gender) ) <span class="sc">+</span>  </span>
+<span id="cb118-2"><a href="multiple-factor-designed-experiments.html#cb118-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.y=</span>mean, <span class="at">geom=</span><span class="st">&quot;point&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb118-3"><a href="multiple-factor-designed-experiments.html#cb118-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.y=</span>mean, <span class="at">geom=</span><span class="st">&quot;line&quot;</span>)</span></code></pre></div>
+<pre><code>## Warning: `fun.y` is deprecated. Use `fun` instead.
+
+## Warning: `fun.y` is deprecated. Use `fun` instead.</code></pre>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch3-10"></span>
+<img src="introStatModeling_files/figure-html/ch3-10-1.png" alt="Interaction plot demonstrating that the gender and dosage factors do not interact." width="70%" />
+<p class="caption">
+Figure 3.6: Interaction plot demonstrating that the gender and dosage factors do not interact.
+</p>
+</div>
+<p>There are two treatment mean traces, one for each gender. Each trace connects the mean alertness level of the dosage within each gender level.</p>
+<p><strong>The lack of significant interaction is evidenced by the parallelism of these traces:</strong> the gender effect for 10mg dosage is depicted by the “gap” between the traces on the left. Similarly, the gender effect for the 25mg dosage is depicted by the gap between the traces at the far right. Note that these two “gaps” are of roughly the same size (which happens when the traces are parallel): this means that the effect of dose within females is about the same as the effect of dose within males.</p>
+<p>In other words, the effect of dose does not depend on gender. This is the textbook definition of non-interaction between dose and gender in determining mean alertness.</p>
+<p>Since the interaction term was non-significant and we have visual support that the two factors do not interact, we may look at a reduced model that eliminates the interaction term and includes only main effects:</p>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="multiple-factor-designed-experiments.html#cb120-1" aria-hidden="true" tabindex="-1"></a>twoway.main.fit <span class="ot">&lt;-</span> <span class="fu">aov</span>(alertness <span class="sc">~</span> gender <span class="sc">+</span> dosage, <span class="at">data=</span>twowaydrug)</span>
+<span id="cb120-2"><a href="multiple-factor-designed-experiments.html#cb120-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(twoway.main.fit)</span></code></pre></div>
+<pre><code>##             Df Sum Sq Mean Sq F value Pr(&gt;F)  
+## gender       1   76.6    76.6    3.20  0.097 .
+## dosage       1    5.1     5.1    0.21  0.653  
+## Residuals   13  311.3    23.9                 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>The only thing happening here is a very marginal effect of gender. Dosage level does not appear to make a significant difference in terms of mean alertness level, regardless of gender.</p>
+<p>At this point, the follow-up work would involve multiple comparisons among the levels of the significant main effect factors (here that would be only gender). However, since there are only two levels of gender, multiple comparisons are not necessary except perhaps to construct a confidence interval for the mean alertness level difference between males and females, regardless of dosage.</p>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="multiple-factor-designed-experiments.html#cb122-1" aria-hidden="true" tabindex="-1"></a>twoway.mc <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(twoway.main.fit, <span class="st">&quot;gender&quot;</span>)</span>
+<span id="cb122-2"><a href="multiple-factor-designed-experiments.html#cb122-2" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(<span class="fu">contrast</span>(twoway.mc, <span class="st">&quot;pairwise&quot;</span>))</span></code></pre></div>
+<pre><code>##  contrast      estimate   SE df lower.CL upper.CL
+##  Female - Male     4.38 2.45 13   -0.911     9.66
+## 
+## Results are averaged over the levels of: dosage 
+## Confidence level used: 0.95</code></pre>
+<p>We note that the adjusted 95% confidence includes the value 0, this should not be surprising given we only had marginal (<span class="math inline">\(p\)</span>-value <span class="math inline">\(\approx\)</span> 0.097) evidence that alertness was different between genders.</p>
+</div>
+<div id="example-tooth-growth-in-guinea-pigs." class="section level4" number="3.2.1.2">
+<h4><span class="header-section-number">3.2.1.2</span> Example: Tooth growth in guinea pigs.</h4>
+<p>Let us consider an example that investigates the effects of ascorbic acid and delivery method on tooth growth in guinea pigs, <span class="citation"><a href="#ref-Crampton-1947" role="doc-biblioref">Crampton</a> (<a href="#ref-Crampton-1947" role="doc-biblioref">1947</a>)</span>. Sixty guinea pigs are randomly assigned to receive one of three levels of ascorbic acid (0.5, 1.0 or 2.0 mg) via one of two delivery methods (orange juice or Vitamin C), under the restriction that each treatment combination has an equal number of guinea pigs. The response variable <code>len</code> is tooth length. The two-way data structure here looks like this:</p>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Dose
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+Supplement
+</th>
+<th style="text-align:left;">
+0.5 mg
+</th>
+<th style="text-align:left;">
+1.0 mg
+</th>
+<th style="text-align:left;">
+2.0 mg
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Orange Juice
+</td>
+<td style="text-align:left;">
+Treatment 1
+</td>
+<td style="text-align:left;">
+Treatment 2
+</td>
+<td style="text-align:left;">
+Treatment 3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Vitamin C
+</td>
+<td style="text-align:left;">
+Treatment 4
+</td>
+<td style="text-align:left;">
+Treatment 5
+</td>
+<td style="text-align:left;">
+Treatment 6
+</td>
+</tr>
+</tbody>
+</table>
+<p>As alluded to before, there are ten replicate guinea pigs per treatment. The data appear in the R workspace <code>ToothGrowth</code> included in the <code>datasets</code> package <span class="citation">(<a href="#ref-R-base" role="doc-biblioref">R Core Team 2019</a>)</span>. Here is the head of the dataframe:</p>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="multiple-factor-designed-experiments.html#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;ToothGrowth&quot;</span>)</span>
+<span id="cb124-2"><a href="multiple-factor-designed-experiments.html#cb124-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ToothGrowth)</span></code></pre></div>
+<pre><code>##    len supp dose
+## 1  4.2   VC  0.5
+## 2 11.5   VC  0.5
+## 3  7.3   VC  0.5
+## 4  5.8   VC  0.5
+## 5  6.4   VC  0.5
+## 6 10.0   VC  0.5</code></pre>
+<p>Let us bypass generating numeric descriptive statistics for the moment, and instead jump to an interaction plot of the length response in Figure <a href="multiple-factor-designed-experiments.html#fig:ch3-15">3.7</a>.</p>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="multiple-factor-designed-experiments.html#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ToothGrowth, <span class="fu">aes</span>(<span class="at">x=</span>dose, <span class="at">y=</span>len, <span class="at">group=</span>supp, <span class="at">color=</span>supp) ) <span class="sc">+</span>  </span>
+<span id="cb126-2"><a href="multiple-factor-designed-experiments.html#cb126-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.y=</span>mean, <span class="at">geom=</span><span class="st">&quot;point&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb126-3"><a href="multiple-factor-designed-experiments.html#cb126-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.y=</span>mean, <span class="at">geom=</span><span class="st">&quot;line&quot;</span>)</span></code></pre></div>
+<pre><code>## Warning: `fun.y` is deprecated. Use `fun` instead.
+
+## Warning: `fun.y` is deprecated. Use `fun` instead.</code></pre>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch3-15"></span>
+<img src="introStatModeling_files/figure-html/ch3-15-1.png" alt="Interaction plot demonstrating that the dose and supplement may interact." width="70%" />
+<p class="caption">
+Figure 3.7: Interaction plot demonstrating that the dose and supplement may interact.
+</p>
+</div>
+<p>There are a couple of things to note here:</p>
+<ol style="list-style-type: decimal">
+<li>There appears to be a substantial dose effect, in that higher doses of ascorbic acid generally result in higher mean length.</li>
+<li><strong>However, there may be a substantial interaction effect between the type of supplement and dose in determining mean tooth length.</strong> In particular, orange juice appears to be more effective than Vitamin C as a delivery method (longer tooth length), but only at lower dose levels. At the high dose level, there appears to be no difference between the supplements.</li>
+</ol>
+<p>Once again, non-parallel traces may be the red flag. But, we need to run the ANOVA test for interaction to confirm if this is a significant effect. First, check assumptions in Figure <a href="multiple-factor-designed-experiments.html#fig:ch3-16">3.8</a>.</p>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="multiple-factor-designed-experiments.html#cb128-1" aria-hidden="true" tabindex="-1"></a>tooth.fit <span class="ot">&lt;-</span> <span class="fu">aov</span>(len <span class="sc">~</span> <span class="fu">factor</span>(dose) <span class="sc">+</span> supp <span class="sc">+</span> <span class="fu">factor</span>(dose)<span class="sc">:</span>supp, <span class="at">data=</span>ToothGrowth)</span>
+<span id="cb128-2"><a href="multiple-factor-designed-experiments.html#cb128-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(tooth.fit)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch3-16"></span>
+<img src="introStatModeling_files/figure-html/ch3-16-1.png" alt="Residual diagnostic plots when the response variable is the tooth length as a function of supplement and dosage. Here, the residuals appear fairly homoskedastic based on the Residuals vs Fitted and Scale-Location plots. The normality assumption is satisfied based on the Normal Q-Q plot." width="80%" />
+<p class="caption">
+Figure 3.8: Residual diagnostic plots when the response variable is the tooth length as a function of supplement and dosage. Here, the residuals appear fairly homoskedastic based on the Residuals vs Fitted and Scale-Location plots. The normality assumption is satisfied based on the Normal Q-Q plot.
+</p>
+</div>
+<p>All assumptions look fine here. So, proceed to the ANOVA tests:</p>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="multiple-factor-designed-experiments.html#cb129-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(tooth.fit)</span></code></pre></div>
+<pre><code>##                   Df Sum Sq Mean Sq F value  Pr(&gt;F)    
+## factor(dose)       2   2426    1213   92.00 &lt; 2e-16 ***
+## supp               1    205     205   15.57 0.00023 ***
+## factor(dose):supp  2    108      54    4.11 0.02186 *  
+## Residuals         54    712      13                    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>The test for interaction is significant (<span class="math inline">\(F\)</span> = 4.107, <span class="math inline">\(\textrm{df}_1\)</span> = 2, <span class="math inline">\(\textrm{df}_2\)</span> = 54, <span class="math inline">\(p\)</span>-value = 0.0218). Thus, we conclude the effect that supplement has on the mean tooth growth does depend on the dosage level. <strong>Ignore the main effects tests if the interaction is significant.</strong></p>
+<p>Remember the strategy we introduced earlier:</p>
+<ol style="list-style-type: decimal">
+<li>Fit a full interaction model.</li>
+<li>Test for significant interaction between <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>:
+<ol style="list-style-type: lower-alpha">
+<li><strong>If interaction is significant, you must look at comparisons in terms of treatment combinations; i.e., you cannot separate the effects of <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span></strong>.</li>
+<li>If interaction is non-significant, you may delete the interaction term from the model, fitting a reduced main-effects model. Then (and only then) may you look at the effects of <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> separately.</li>
+</ol></li>
+</ol>
+<p><strong>Performing multiple comparisons. </strong>In the case of a significant interaction effect in a two-factor ANOVA model, we typically follow up by performing multiple comparisons for the levels of one of the factors while holding the other factor fixed (the “conditioning” factor). So for example, in the present problem we could either</p>
+<ul>
+<li>Compare the supplements at each of the dose levels (3 tests total), or</li>
+<li>Compare the dose levels within each of the supplement types (3 × 2 = 6 tests total)</li>
+</ul>
+<p>Frequently in practice, the context of the problem will dictate to the researcher which way makes the most sense. We’ll provide code that performs both cases using the <code>emmeans</code> package.</p>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="multiple-factor-designed-experiments.html#cb131-1" aria-hidden="true" tabindex="-1"></a>tooth.mc1 <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(tooth.fit, pairwise <span class="sc">~</span> <span class="fu">factor</span>(dose) <span class="sc">|</span> supp)</span>
+<span id="cb131-2"><a href="multiple-factor-designed-experiments.html#cb131-2" aria-hidden="true" tabindex="-1"></a>tooth.mc2 <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(tooth.fit, pairwise <span class="sc">~</span> supp <span class="sc">|</span> <span class="fu">factor</span>(dose) )</span>
+<span id="cb131-3"><a href="multiple-factor-designed-experiments.html#cb131-3" aria-hidden="true" tabindex="-1"></a>tooth.mc1</span></code></pre></div>
+<pre><code>## $emmeans
+## supp = OJ:
+##  dose emmean   SE df lower.CL upper.CL
+##   0.5  13.23 1.15 54    10.93     15.5
+##   1.0  22.70 1.15 54    20.40     25.0
+##   2.0  26.06 1.15 54    23.76     28.4
+## 
+## supp = VC:
+##  dose emmean   SE df lower.CL upper.CL
+##   0.5   7.98 1.15 54     5.68     10.3
+##   1.0  16.77 1.15 54    14.47     19.1
+##   2.0  26.14 1.15 54    23.84     28.4
+## 
+## Confidence level used: 0.95 
+## 
+## $contrasts
+## supp = OJ:
+##  contrast estimate   SE df t.ratio p.value
+##  0.5 - 1     -9.47 1.62 54  -5.831  &lt;.0001
+##  0.5 - 2    -12.83 1.62 54  -7.900  &lt;.0001
+##  1 - 2       -3.36 1.62 54  -2.069  0.1060
+## 
+## supp = VC:
+##  contrast estimate   SE df t.ratio p.value
+##  0.5 - 1     -8.79 1.62 54  -5.413  &lt;.0001
+##  0.5 - 2    -18.16 1.62 54 -11.182  &lt;.0001
+##  1 - 2       -9.37 1.62 54  -5.770  &lt;.0001
+## 
+## P value adjustment: tukey method for comparing a family of 3 estimates</code></pre>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="multiple-factor-designed-experiments.html#cb133-1" aria-hidden="true" tabindex="-1"></a>tooth.mc2</span></code></pre></div>
+<pre><code>## $emmeans
+## dose = 0.5:
+##  supp emmean   SE df lower.CL upper.CL
+##  OJ    13.23 1.15 54    10.93     15.5
+##  VC     7.98 1.15 54     5.68     10.3
+## 
+## dose = 1.0:
+##  supp emmean   SE df lower.CL upper.CL
+##  OJ    22.70 1.15 54    20.40     25.0
+##  VC    16.77 1.15 54    14.47     19.1
+## 
+## dose = 2.0:
+##  supp emmean   SE df lower.CL upper.CL
+##  OJ    26.06 1.15 54    23.76     28.4
+##  VC    26.14 1.15 54    23.84     28.4
+## 
+## Confidence level used: 0.95 
+## 
+## $contrasts
+## dose = 0.5:
+##  contrast estimate   SE df t.ratio p.value
+##  OJ - VC      5.25 1.62 54   3.233  0.0021
+## 
+## dose = 1.0:
+##  contrast estimate   SE df t.ratio p.value
+##  OJ - VC      5.93 1.62 54   3.651  0.0006
+## 
+## dose = 2.0:
+##  contrast estimate   SE df t.ratio p.value
+##  OJ - VC     -0.08 1.62 54  -0.049  0.9609</code></pre>
+<p>Here we see the output includes the estimates and confidence intervals for the means (while holding one factor fixed) and also includes the contrasts (comparisons) of one factor while holding the second factor constant.</p>
+<p>At a dose level of 0.5 mg, ascorbic acid delivery via orange juice produces significantly larger mean tooth growth than does delivery via Vitamin C. We determined this based on the the second set of output, where we see an adjusted <span class="math inline">\(p\)</span>-value of 0.0021 comparing orange juice with Vitamin C. Similarly, at <code>dose=1.0</code>, there is still a difference but not at <code>dose=2.0</code>.</p>
+<p>We can also use plotting features to graphically explore the factors while holding another factor constant.</p>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="multiple-factor-designed-experiments.html#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tooth.mc1)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch3-19"></span>
+<img src="introStatModeling_files/figure-html/ch3-19-1.png" alt="Graphical exploration of all treatments noting that the OJ supplement tends to result in higher tooth lengths than Vitamin C." width="70%" />
+<p class="caption">
+Figure 3.9: Graphical exploration of all treatments noting that the OJ supplement tends to result in higher tooth lengths than Vitamin C.
+</p>
+</div>
+<p>Here we explore the performance of the dosage amounts conditioning (essentially faceting) on the delivery type. Graphically we can see that the OJ method tends to have higher tooth lengths than Vitamin C for the low dosage levels of ascorbic acid.</p>
+
+</div>
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Crampton-1947" class="csl-entry">
+Crampton, E. W. 1947. <span>“<span class="nocase">The Growth of the Odontoblasts of the Incisor Tooth as a Criterion of the Vitamin C Intake of the Guinea Pig: Five Figures</span>.”</span> <em>The Journal of Nutrition</em> 33 (5): 491–504. <a href="https://doi.org/10.1093/jn/33.5.491">https://doi.org/10.1093/jn/33.5.491</a>.
+</div>
+<div id="ref-R-base" class="csl-entry">
+R Core Team. 2019. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="introduction-to-statistical-modeling-and-designed-experiments.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="advanced-designs.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["introStatModeling.pdf", "introStatModeling.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

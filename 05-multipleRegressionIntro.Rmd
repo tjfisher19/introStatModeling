@@ -1,17 +1,24 @@
 
 # Introduction to Multiple Regression
 
-In the early chapters of our text we observed that everything varies.  In a statistical model, the goal is to identify structure in the variation that the data possess.  This means that we must partition the variation in the data into (1) a systematic component, and (2) a non-systematic or random component. After this unit, you should be able to
+In the early chapters of our text we observed that everything varies.  
+In a statistical model, the goal is to identify structure in the variation that the data possess.  
+This means that we must partition the variation in the data into (1) a systematic component, and (2) a non-systematic, or random, component. 
+After this unit, you should be able to
 
 * Recognize the structure of a multiple regression model
 * Fit a regression model in R
 * Interpret the coefficients in a regression model
-* Distinguishing between the model constructed in design of experiments (ANOVA) and that in regression.
+* Distinguish between the model constructed in design of experiments (ANOVA) and that in regression.
 
 
-In ANOVA testing, the systematic component is comprised of measured factors of research interest that may relate to the response variable.  The random component is usually a catch-all for everything else: if the model is built well, there should be no systematic information left in the random component: rather, it should only contain random fluctuations due to the natural inherent variability in the measurements.
+In ANOVA testing, the systematic component is comprised of measured factors of research interest that may or may not relate to the response variable.  
+The random component is usually a catch-all for everything else: if the model is built well, there should be no systematic information left in the random component: rather, it should only contain random fluctuations due to the natural inherent variability in the measurements.
 
-Suppose instead of factors (categorical inputs) we have measured predictor variables. For example, consider the admissions data from Chapter 1 of this text; there may be a systematic tendency to see higher freshman GPAs from students with higher ACT scores. Both variables are measured numeric values (compared to pre-determined treatments). This leads to the idea of regression modeling.
+Suppose instead of factors (categorical inputs) we have measured predictor variables. 
+For example, consider the admissions data from Chapter 1 of this text; there may be a systematic tendency to see higher freshman GPAs from students with higher ACT scores. 
+Both variables are measured numeric values (compared to pre-determined treatments). 
+This leads to the idea of regression modeling.
 
 ## Regression Model
 
@@ -96,7 +103,7 @@ ggplot(muscle) +
 
 It makes some logical sense to use a criterion that somehow collectively minimizes these residuals, since the best fitting line should be the one that most closely passes through the observed data.  We need to estimate $\beta_0$ and $\beta_1$ for this “best” line.
 
-Also note in the figure above that any reasonable candidate model must pass through the data, producing both positive residuals (actual response values > fitted response values) and negative residuals (actual response values < fitted response values).   When we collectively assess the residuals, we don’t want the positive ones to cancel out or offset the negative ones, so our criterion will be to minimize the sum of squared residuals.  This brings us to what is known as the method of least squares (LS), which is outlined below in the context of simple linear regression.
+Also note in the figure above that any reasonable candidate model must pass through the data, producing both positive residuals (actual response values > fitted response values) and negative residuals (actual response values < fitted response values).   When we collectively assess the residuals, we do not want the positive ones to cancel out or offset the negative ones, so our criterion will be to minimize the sum of squared residuals.  This brings us to what is known as the method of least squares (LS), which is outlined below in the context of simple linear regression.
 
 **Method of Least Squares**
 
@@ -136,7 +143,7 @@ Minimizing RSS is a calculus exercise, so we will skip the details there.  The r
 * $b_0$ and $b_1$ are called the least squares estimates of $\beta_0$ and $\beta_1$.
 * The line given by $\hat{Y} = b_0 + b_1 X$ is called the simple linear regression equation.
 
-We use R to fit such models and estimate $\beta_0$ and $\beta_1$ using the `lm()` function (lm=linear model). No hand calculations required! Linear models are fit using the R function `lm()`, and the basic format for a formula is given by `response ~ predictor`.
+We use R to fit such models and estimate $\beta_0$ and $\beta_1$ using the `lm()` function (`lm`=linear model). No hand calculations required! Linear models are fit using the R function `lm()`, and the basic format for a formula is given by `response ~ predictor`.
 
 
 The `~` (“tilde”) here is read "is modeled as a linear function of" and is used to separate the response variable from the predictor variable(s).  For simple linear regression, the form is `lm(y ~ x)`.  In other words, `lm(y ~ x)` fits the regression model $Y = \beta_0 + \beta_1 + \varepsilon$.
@@ -158,7 +165,7 @@ To fit a multiple regression, the code is essentially the same. Consider another
 * `impvalue` - Appraised value of improvements to the property (in $)
 * `area` - Area of living space on the property (in sq ft)
 
-The data are in the R workspace `appraisal.RData` in our repository.  Let’s use R to fit what is known as a “main effects” multiple regression model.  The form of this model is given by:
+The data are in the R workspace `appraisal.RData` in our repository.  Lets use R to fit what is known as a “main effects” multiple regression model.  The form of this model is given by:
 
 $$\textrm{Sale Price} = \beta_0 + \beta_1(\textrm{Land Area}) + \beta_2(\textrm{Improvement Value}) + \beta_3(\textrm{Area}) + \varepsilon$$
 
@@ -203,7 +210,7 @@ $$\hat{Y} = 1384.197 + 0.818(\textrm{Land value}) + 0.819(\textrm{Improvement va
 
 That is, the least squares estimates of the four $\beta$-parameters in the model are $b_0 = 1384.2$, $b_1 = 0.817$, $b_2 = 0.819$, and $b_3 = 13.605$.  We will discuss their interpretation later.
 
-**Residual standard error.** In regression, the error variance $\sigma^2$ is a measure of the variability of all possible population response $Y$-values around their corresponding predicted values as obtained by the true population regression equation.   It’s called “error” variance because it deals with the difference between true values vs. model-predicted values, and hence can be thought of as measuring the “error” one would incur by making predictions using the model.
+**Residual standard error.** In regression, the error variance $\sigma^2$ is a measure of the variability of all possible population response $Y$-values around their corresponding predicted values as obtained by the true population regression equation.   It is called “error” variance because it deals with the difference between true values vs. model-predicted values, and hence can be thought of as measuring the “error” one would incur by making predictions using the model.
 
 Since a variance is always a sum of squares divided by degrees of freedom (SS/df), we can estimate $\sigma^2$ for a simple linear regression model using the following:
  

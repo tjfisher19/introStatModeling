@@ -1,7 +1,8 @@
 
 # Introduction to Statistical Modeling and Designed Experiments
 
-We begin our dive into Statistical Modeling by building from some introductory statistics material, namely two-sample inference and analysis of variance. The learning objective of this unit unclude:
+We begin our dive into Statistical Modeling by building from some introductory statistics material, namely two-sample inference and analysis of variance. 
+The learning objective of this unit include:
 
 * Understanding the basic structure of statistical model
 * Understanding that statistical inference can be formulated as the comparison of models
@@ -10,17 +11,23 @@ We begin our dive into Statistical Modeling by building from some introductory s
 
 ## Statistical Analyses is Modeling
 
-Think of a model airplane.  It is just a simplified representation of the real thing.  
+Think of a model airplane.  
+It is just a simplified representation of the real thing.  
 
-In many statistical problems (and all the problems we will encounter in this course), we are interested in describing the relationship that may exist among several different measured variables.  For example, your current GPA could be impacted by how much you study.  Or there may be several contributing factors – your credit hour load, your ACT score, whether or not you have a part-time job, etc.  
+In many statistical problems (and all the problems we will encounter in this course), we are interested in describing the relationship that may exist among several different measured variables.  
+For example, your current GPA could be impacted by how much you study.  
+Or there may be several contributing factors – your credit hour load, your ACT score, whether or not you have a part-time job, etc.  
 
 Of course, what makes your GPA is the result of a very highly complex combination of factors, some important and others not so important.
 
 A **statistical model** is a mechanism we will use to try to describe the structural relationship between some measured outcome (called the response variable) and one or more impacting variables (called predictor variables or factors, depending on the contextual circumstance) in a simplified mathematical way.
 
-It is in this sense that you can think of a statistical model as a “simplification” in much the same way as the model airplane: we know that the true relationship between response and predictor variables is very detailed and complex, but the goal of the model isn’t to capture all the intricacies of the complexity.  Rather, the model only seeks to describe the essential features of any relationships that exist. 
+It is in this sense that you can think of a statistical model as a “simplification” in much the same way as the model airplane: we know that the true relationship between response and predictor variables is very detailed and complex. 
+The goal of the model is not to capture all the intricacies of the complexity but rather, the model only seeks to describe the essential features of any relationships that exist. 
 
-It turns out, we've already fit a statistical model. Consider a variation of the two-sample $t$-test we performed in the previous chapter. For cohesiveness we input the data again.
+It turns out, we have already fit a statistical model. 
+Consider a variation of the two-sample $t$-test we performed in the previous chapter. 
+For cohesiveness we input the data again.
 
 ```{r ch2-1web, eval=FALSE}
 uadata <- read.table("http://www.users.miamioh.edu/hughesmr/sta363/univadmissions.txt", 
@@ -34,7 +41,7 @@ t.test(act ~ year, data=uadata.trim, conf.level=0.98,
        alternative="two.sided", var.equal=TRUE)
 ```
 
-Looking at the code you'll note here we are performing a `two.sided` or "not equal to" test. More importantly note the `act ~ year` notation -- this is known as a **formula** in R. In particular, we are telling R that the ACT scores are a function of the student's incoming Year. This concept should be famliar as it is similar to the regression ideas from your Intro Statistics course. 
+Looking at the code you'll note here we are performing a `two.sided` or "not equal to" test. More importantly note the `act ~ year` notation -- this is known as a **formula** in R. In particular, we are telling R that the ACT scores are a function of the student's incoming Year. This concept should be familiar as it is similar to the regression ideas from your Intro Statistics course. 
 
 It turns out that nearly all statistical inference can be framed in terms of modeling. To see this we first much cover some light *math*.
 
@@ -95,7 +102,7 @@ It is important to recognize that there are two primary methods for obtaining da
 
 ### Observational Studies
 
-In many situations a practioner (perhaps you, or a client) simply collect measurements on predictor and response variables as they naturally occur, without intervention from the data collector. Such data is called **observational data**.
+In many situations a practitioner (perhaps you, or a client) simply collect measurements on predictor and response variables as they naturally occur, without intervention from the data collector. Such data is called **observational data**.
 
 Interpreting models built on observational data can be challenging.
 There are many opportunities for error and any conclusions will carry with them substantial unquantifiable uncertainty.
@@ -107,7 +114,7 @@ It may be impossible to design experiments to investigate these, so we must make
 In observational studies, establishing causal connections between response and predictor variables is nearly impossible.
 In the limited scope of a single study, the best one can hope for is to establish associations between predictor variables and response variables.
 But even this can be difficult due to the uncontrolled nature of observational data.  Why?
-It’s because unmeasured and possibly unsuspected “lurking” variables may be the real cause of an observed relationship between $Y$ and some predictor $X$.
+It is because unmeasured and possibly unsuspected “lurking” variables may be the real cause of an observed relationship between $Y$ and some predictor $X$.
 
 In observational studies, it is important to adjust for the effects of possible confounding variables. Unfortunately, one can never be sure that the all relevant confounding variables have been identified.  As a result, one must take care in interpreting estimated models involving observational data.
 
@@ -135,7 +142,7 @@ One of the most important things to keep in mind with analyzing designed experim
 
 Consider, for example, these four scenarios:
 
-1. Suppose a study is conducted on the effects a new drug has on patient blood pressure. At the start of the study the blood pressure of all participants is measured. After receiving the drug for two months the blood pressure of each patient is measured again. The anlaysis to determine the effect of the drug on blood pressure is the **Paired $t$-test** from your Intro stat class. Here the *pairing* of each observation is the difference between the before and after blood pressure.
+1. Suppose a study is conducted on the effects a new drug has on patient blood pressure. At the start of the study the blood pressure of all participants is measured. After receiving the drug for two months the blood pressure of each patient is measured again. The analysis to determine the effect of the drug on blood pressure is the **Paired $t$-test** from your Intro stat class. Here the *pairing* of each observation is the difference between the before and after blood pressure.
 
 2. We may have a simple design with only one factor, where each subject (experimental unit) is measured only under one of the factor levels. For example, suppose three different drugs are administered to 18 subjects.  Each person is randomly assigned to receive only one of the three drugs.  A response is measured after drug administration. The analysis we use for such data is known as a **one-way analysis of variance**.
 
@@ -193,11 +200,17 @@ CRD
 ```
 Such a design is known as a **completely randomized design** (or CRD).
 
+Randomization is arguably one of the most important pieces of any well-designed experiment. Failure to randomize can lead to confounded conclusions (see discussion below) and biased results! 
+
+**Example:** Consider a contrived, but simple, experiment where you might be comparing a new heart disease drug to a placebo. Suppose your sample consists of one-hundred adults with with diagnosed heart disease. Further, suppose the ages of the adults are uniformly distributed across the range 20 to 90. Out of convenience suppose the new drug is administered to the youngest fifty volunteers and the placebo to the oldest 50 volunteers. Would you trust the results of this experiment?
+
+However, if the drug/placebo assignment was randomly assigned to different patients of different ages and backgrounds, the randomization would help eliminate any bias age.
+
 * **Replication**: Replication refers to the practice of assigning each treatment to many experimental units.  The purpose of replication is as follows:
 
     + Estimate the noise in the system.  Recall early in the text when we discussed sources of variation in data. What do I mean by that? Well, think of this: if you were to apply precisely the same treatment to a set of different individuals, the response would naturally vary  due to myriad reasons of little to no interest to the researcher.  So, responses vary to some degree due to simple random chance fluctuations, or “noise.”  For our purposes, this constitutes a single source of variation. 
-    + Now, let’s apply different treatments to a set of individuals.  The responses would still vary, but now there are two sources of variation: the random chance element from above (because we still have different individuals), but now we add in the effect that the different treatments have on the response.  So, one purpose of replication is so that **we can estimate how much noise is naturally in the system, so that we can see if the variability in response introduced by changing the treatment rises above the noise**.  The more replication in an experiment, the better you can estimate the noise. However, this comes at an expense!
-    + Help wash out the effect of lurking variables.  Now, I know this was mentioned as a reason for randomization, but replication provides the “opportunity” to your experiment to have a mix of all those lurkers appear under each treatment.
+    + Now, lets apply different treatments to a set of individuals.  The responses would still vary, but now there are two sources of variation: the random chance element from above (because we still have different individuals), but now we add in the effect that the different treatments have on the response.  So, one purpose of replication is so that **we can estimate how much noise is naturally in the system, so that we can see if the variability in response introduced by changing the treatment rises above the noise**.  The more replication in an experiment, the better you can estimate the noise. However, this comes at an expense!
+    + Help wash out the effect of lurking variables.  This was also mentioned as a reason for randomization. When coupled with randomization, replication provides the “opportunity” for your experiment to have a mix of all those lurkers appear under each treatment, thus mitigating their effects from biasing your results.
 
 #### Confounding
 
@@ -207,7 +220,7 @@ This sounds serious.  What is it?
 
 **Example.**  A drug manufacturer tests a new cold medicine with 200 participants: 100 men and 100 women. The men receive the drug, and the women do not. At the end of the test period, the men report fewer colds.
 
-*What’s the problem?* This experiment implements no controls!  As a result, many variables are confounded, and it is impossible to say whether the drug was effective. For example:
+*What is the problem?* This experiment implements no controls!  As a result, many variables are confounded, and it is impossible to say whether the drug was effective. For example:
 
 * Gender is confounded with drug use. Perhaps, men are less vulnerable to the particular cold virus circulating during the experiment, and the new medicine had no effect at all. Or perhaps the men experienced a placebo effect.
 
@@ -219,7 +232,7 @@ This experiment could be strengthened with a few controls.  Women and men could 
 
 Now that the framework for experimental design is complete let's consider our first example, the paired *t*-test (also known as the matched pairs design). Arguably the simplest example of such a design is a before and after study.
 
-**Example.** In an effort to student the effectiveness of a new cholesterol drug 20 patients with high cholesterol are selected and their cholesterol is meaured at the beginning of the study. The patients then take the new drug for 45 days. At the conclusion of the 45 days their cholesterol is measured and compared to that at the beginning of the study.
+**Example.** In an effort to student the effectiveness of a new cholesterol drug 20 patients with high cholesterol are selected and their cholesterol is measured at the beginning of the study. The patients then take the new drug for 45 days. At the conclusion of the 45 days their cholesterol is measured and compared to that at the beginning of the study.
 
 The above is an example of a designed experiment. The experimental units are the 20 individuals, the response is the difference in cholesterol (before and after) and the pairing attempts to control for confounding variability (variability within an individual is somewhat controlled via the pairing mechanism).
 
@@ -229,9 +242,9 @@ The use of the paired *t*-test is not limited to experimental designs, it also a
 
 To demonstrates its implementation in R we consider another example. 
 
-**Example.** (originally in @WeissText) The makers of the MAGNETIZER Engine Energizer System (EES) claim that it improves the gas mileage and reduces emissions in automobiles by using magnetic free energy to increase the amount of oxygen in the fuel for greater combustion efficiency. Test results for 14 vehicles that underwent testing is availble in the file `carCOemissions.csv`. The data includes the emitted carbon monoxide (CO) levels, in parts per million, of each of the 14 vehicles tested before and after installation of the EES.
+**Example.** (originally in @WeissText) The makers of the MAGNETIZER Engine Energizer System (EES) claim that it improves the gas mileage and reduces emissions in automobiles by using magnetic free energy to increase the amount of oxygen in the fuel for greater combustion efficiency. Test results for 14 vehicles that underwent testing is available in the file `carCOemissions.csv`. The data includes the emitted carbon monoxide (CO) levels, in parts per million, of each of the 14 vehicles tested before and after installation of the EES.
 
-This is a classic before-after (Paired designe) study. Below is some code to implement the test.
+This is a classic before-after (Paired design) study. Below is some code to implement the test.
 
 ```{r, eval=FALSE}
 www <- "http://users.miamioh.edu/hughesmr/sta363/carCOemissions.csv"
@@ -244,7 +257,7 @@ vehicleCO <- read.csv("carCOemissions.csv")
 vehicleCO
 ```
 
-First we note each row of the data consist of an `id` with a `before` and `after` measurement. In the paired *t*-test, we are comparing the differences between the before and after measuremements. We perform this test in two different ways: (1) we explicitly calculuate the difference and (2) we use features in the `t.test` function.
+First we note each row of the data consist of an `id` with a `before` and `after` measurement. In the paired *t*-test, we are comparing the differences between the before and after measurements. We perform this test in two different ways: (1) we explicitly calculate the difference and (2) we use features in the `t.test` function.
 
 **Method 1**
 ```{r ch2-5a}
@@ -341,7 +354,7 @@ The model for such data has the form $Y_{ij} = \mu_i + \varepsilon_{ij}$, or mor
 $$Y_{ij} = \mu + \tau_i + \varepsilon_{ij}$$
 where 
 
-* $Y_{ij}$ is the jth observation in the ith treatment
+* $Y_{ij}$ is the $j^\mathrm{th}$ observation in the $i^\mathrm{th}$ treatment
 * $\mu$ is the overall mean of all the populations combined
 * $\tau_i$ is the deviation of the mean by the $i^\mathrm{th}$ treatment population from the overall mean $\mu$
 * $\varepsilon_{ij}$ is the random error term
@@ -431,7 +444,7 @@ A residuals versus fitted plot is provided to the right. If all is well, you sho
 
 An attempt at refining the residuals vs fitted plot is given in the plot on the right in Figure \@ref(fig:ch2-10), called the Scale-Location plot. The difference now is that instead of plotting the raw residuals $e_i$ on the vertical axis, R first standardizes them (so you can better check for extreme cases), takes their absolute value (to double the resolution in the plot) and then takes their square root (to remove skew that sometimes affects these plots).  R then adds a trend line through the points: if the constant variance assumption is OK, this trend line should be roughly horizontal. Here, you can see it trending upward, so we may have a constant variance problem. 
 
-Using the absolute values of the residuals is a good refinement.  The reason is because we really don’t care if a residual is positive or negative: all we are looking for is if the scatter is uniform across the plot.  Thus, by looking at the magnitude of the residuals only (and not their direction) by taking absolute values, we are actually improving the resolution of the information that the plot contains in addressing constant variance.
+Using the absolute values of the residuals is a good refinement.  The reason is because we really do not care if a residual is positive or negative: all we are looking for is if the scatter is uniform across the plot.  Thus, by looking at the magnitude of the residuals only (and not their direction) by taking absolute values, we are actually improving the resolution of the information that the plot contains in addressing constant variance.
 
 ### Checking Normality
 
@@ -457,7 +470,7 @@ autoplot(fit.drug)
 
 ### Transforming your response
 
-We have evidence from the above plots that the variance appears to be increasing with the response (determined by assessing the constant variance assumption). One way to typically address this issue is to transform the response variable. We will go into more details later but common transformations include $Y^*=log(Y)$, $Y^*=\sqrt{Y}$ and $Y^*=1/Y$. Here we will use a logarithmic as it is fairly common. Later in the class we will describe the other transformations in more detail. We can acheive this in R with the following which provides the residuals plots in Figure \@ref(fig:ch2-13).
+We have evidence from the above plots that the variance appears to be increasing with the response (determined by assessing the constant variance assumption). One way to typically address this issue is to transform the response variable. We will go into more details later but common transformations include $Y^*=log(Y)$, $Y^*=\sqrt{Y}$ and $Y^*=1/Y$. Here we will use a logarithmic as it is fairly common. Later in the class we will describe the other transformations in more detail. We can achieve this in R with the following which provides the residuals plots in Figure \@ref(fig:ch2-13).
 
 ```{r ch2-13, fig.width=7, fig.height=7, fig.align='center', fig.cap='Residual diagnostic plots when the response variable is the logarithm of the alertness. Here the heteroskedasticity in the original model has been improved, albeit not entirely mitigated, with some minor indication of increasing variability with the mean.', fig.asp=1, out.width='80%'}
 fit.log.drug <- aov(log(alertness) ~ drug, data=onewaydrug)
@@ -472,7 +485,7 @@ The test comparing the three drug population means (on a log scale) is given via
 summary(fit.log.drug)
 ```
 
-The result is significant ($F$ = 14.167, $df_1$ = 2, $df_2$ = 15, $p$-value = 0.00035). Thus, we could conclude that at least two of the drugs produce significantly different mean alertness responses.
+The result is significant ($F$ = 14.167, $\textrm{df}_1$ = 2, $\textrm{df}_2$ = 15, $p$-value = 0.00035). Thus, we could conclude that at least two of the drugs produce significantly different mean alertness responses.
 
 Of course, what remains to be seen is which pairs of drugs produce different mean alertness levels.  For that, we will need to look at techniques known as multiple comparison procedures.
 
@@ -506,7 +519,7 @@ A~\textrm{vs.}~D  \\
 A~\textrm{vs.}~E  \\
 \end{array}$$
 
-So what’s the big deal? Well, if you find yourself in a multiple comparison situation, it’s because you have declared that at least two groups differ based on the result of a single hypothesis test (the $F$-test). For that test, you used a specific criterion to make the decision (probably p-value < 0.05).
+So what is the big deal? Well, if you find yourself in a multiple comparison situation, it is because you have declared that at least two groups differ based on the result of a single hypothesis test (the $F$-test). For that test, you used a specific criterion to make the decision (probably $p$-value < 0.05).
 
 But to tease out where the differences are, you now need to run multiple tests under the same “umbrella”. That gives rise to something known as the multiple testing problem. The problem is an increase in the false positive rate (also known as Type I error rate) that occurs when statistical tests are used repeatedly.
 
@@ -530,7 +543,7 @@ drug.mc <- emmeans(fit.log.drug, "drug")
 contrast(drug.mc, "pairwise")
 ```
 
-The significant differences are what we expected based on our earlier EDA: drug *C* is significantly different in terms of mean alertness as compared to the other two drugs. This is borne out from the Tukey-adjusted p-values of 0.0003 (when comparing drugs *A* and *C*) and 0.0027 (when comparing drugs *B* and *C*). *B* and *A* are not significantly different. The $p$-values in this output have been adjusted, so we can just compare them to our usual 0.05.
+The significant differences are what we expected based on our earlier EDA: drug *C* is significantly different in terms of mean alertness as compared to the other two drugs. This is borne out from the Tukey-adjusted $p$-values of 0.0003 (when comparing drugs *A* and *C*) and 0.0027 (when comparing drugs *B* and *C*). *B* and *A* are not significantly different. The $p$-values in this output have been adjusted, so we can just compare them to our usual 0.05.
 
 We can also obtain simultaneous 95% confidence intervals for the true mean differences due to
 each drug pairing using the `confint()` function on our `contrast` of an `emmeans` object:
@@ -543,7 +556,7 @@ These may be interpreted as follows:
 
 95\% CI for $\mu_A - \mu_B$ = (-0.1203, 0.355788).  This interval contains 0, so we cannot conclude that the true log-mean alertness scores significantly differ between drugs *A* and *B*.
 
-95\% CI for $\mu_A - \mu_C$ = (0.2521, 0.7702). We can be 95\% confident that drug *A* procudes a true log-mean alertness score that is between 0.2521 to 0.7702 higher than drug *C*.
+95\% CI for $\mu_A - \mu_C$ = (0.2521, 0.7702). We can be 95\% confident that drug *A* produces a true log-mean alertness score that is between 0.2521 to 0.7702 higher than drug *C*.
 
 95\% CI for $\mu_B - \mu_C$ = (0.1429, 0.6439). We can be 95\% confident that drug *B* produces a true log-mean alertness score that is between 0.1429 and 0.6439 higher than drug *C*.
 
@@ -565,7 +578,7 @@ The Dunnett method is applicable when one of your experimental groups serves as 
 contrast(drug.mc, "trt.vs.ctrl")
 ```
 
-The two comparisons provided are *A* vs. *B* and *A* vs. *C*. The only significant difference is between *A* and *C* (p-value = 0.0002). As before, here are simultaneous CIs and plots:
+The two comparisons provided are *A* vs. *B* and *A* vs. *C*. The only significant difference is between *A* and *C* ($p$-value = 0.0002). As before, here are simultaneous CIs and plots:
 
 ```{r ch2-19, fig.align='center', fig.cap='Dunnett adjusted confidence interval plots demonstrating that treatment `c` is significantly different than control group `a`, while treatment `b` is not significantly different than control group `a`.', out.width='70%', fig.asp=0.55}
 confint(contrast(drug.mc, "trt.vs.ctrl"))

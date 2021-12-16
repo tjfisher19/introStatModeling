@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 6 Inference regarding Multiple Regression | Introduction to Statistical Modeling</title>
+  <meta name="description" content="Covers Regression and elements of Design of Experiments in R using the tidyverse." />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 6 Inference regarding Multiple Regression | Introduction to Statistical Modeling" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Covers Regression and elements of Design of Experiments in R using the tidyverse." />
+  <meta name="github-repo" content="tjfisher19/introStatModeling" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 6 Inference regarding Multiple Regression | Introduction to Statistical Modeling" />
+  
+  <meta name="twitter:description" content="Covers Regression and elements of Design of Experiments in R using the tidyverse." />
+  
+
+<meta name="author" content="Michael Hughes and Thomas Fisher" />
+
+
+<meta name="date" content="2021-12-16" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="introduction-to-multiple-regression.html"/>
+<link rel="next" href="more-on-multiple-linear-regression.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Inroduction to Statistical Modeling</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="" data-path="about-the-authors.html"><a href="about-the-authors.html"><i class="fa fa-check"></i>About the Authors</a></li>
+<li class="chapter" data-level="" data-path="important-preliminary-review.html"><a href="important-preliminary-review.html"><i class="fa fa-check"></i>Important Preliminary Review</a>
+<ul>
+<li class="chapter" data-level="" data-path="important-preliminary-review.html"><a href="important-preliminary-review.html#statistics-background"><i class="fa fa-check"></i>Statistics background</a></li>
+<li class="chapter" data-level="" data-path="important-preliminary-review.html"><a href="important-preliminary-review.html#software"><i class="fa fa-check"></i>Software</a></li>
+<li class="chapter" data-level="" data-path="important-preliminary-review.html"><a href="important-preliminary-review.html#add-on-packages"><i class="fa fa-check"></i>Add-on packages</a></li>
+<li class="chapter" data-level="" data-path="important-preliminary-review.html"><a href="important-preliminary-review.html#help-with-rmarkdown"><i class="fa fa-check"></i>Help with RMarkdown</a></li>
+<li class="chapter" data-level="" data-path="important-preliminary-review.html"><a href="important-preliminary-review.html#managing-your-work-in-r"><i class="fa fa-check"></i>Managing your work in R</a></li>
+<li class="chapter" data-level="" data-path="important-preliminary-review.html"><a href="important-preliminary-review.html#data-in-this-text"><i class="fa fa-check"></i>Data in this text</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html"><i class="fa fa-check"></i><b>1</b> Introductory Statistics in R</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#goals-of-a-statistical-analysis"><i class="fa fa-check"></i><b>1.1</b> Goals of a statistical analysis</a></li>
+<li class="chapter" data-level="1.2" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#before-you-begin-an-analysis"><i class="fa fa-check"></i><b>1.2</b> Before you begin an analysis</a></li>
+<li class="chapter" data-level="1.3" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#data-frames"><i class="fa fa-check"></i><b>1.3</b> Data frames</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#built-in-data"><i class="fa fa-check"></i><b>1.3.1</b> Built-in data</a></li>
+<li class="chapter" data-level="1.3.2" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#types-of-data"><i class="fa fa-check"></i><b>1.3.2</b> Types of Data</a></li>
+<li class="chapter" data-level="1.3.3" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#importing-datasets-into-r"><i class="fa fa-check"></i><b>1.3.3</b> Importing datasets into R</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#referencing-data-from-inside-a-data-frame"><i class="fa fa-check"></i><b>1.4</b> Referencing data from inside a data frame</a></li>
+<li class="chapter" data-level="1.5" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#missing-values-and-computer-arithmetic-in-r"><i class="fa fa-check"></i><b>1.5</b> Missing values and computer arithmetic in R</a></li>
+<li class="chapter" data-level="1.6" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#exploratory-data-analysis-eda"><i class="fa fa-check"></i><b>1.6</b> Exploratory Data Analysis (EDA)</a>
+<ul>
+<li class="chapter" data-level="1.6.1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#numeric-summaries"><i class="fa fa-check"></i><b>1.6.1</b> Numeric Summaries</a></li>
+<li class="chapter" data-level="1.6.2" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#numeric-summaries-in-r"><i class="fa fa-check"></i><b>1.6.2</b> Numeric Summaries in R</a></li>
+<li class="chapter" data-level="1.6.3" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#graphical-summaries"><i class="fa fa-check"></i><b>1.6.3</b> Graphical Summaries</a></li>
+<li class="chapter" data-level="1.6.4" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#descriptive-statistics-and-visualizations-by-levels-of-a-factor-variable"><i class="fa fa-check"></i><b>1.6.4</b> Descriptive statistics and visualizations by levels of a factor variable</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#sampling-distributions-describing-how-a-statistic-varies"><i class="fa fa-check"></i><b>1.7</b> Sampling distributions: describing how a statistic varies</a></li>
+<li class="chapter" data-level="1.8" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#two-sample-inference"><i class="fa fa-check"></i><b>1.8</b> Two-sample inference</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html"><i class="fa fa-check"></i><b>2</b> Introduction to Statistical Modeling and Designed Experiments</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#statistical-analyses-is-modeling"><i class="fa fa-check"></i><b>2.1</b> Statistical Analyses is Modeling</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#observational-studies-versus-designed-experiments"><i class="fa fa-check"></i><b>2.2</b> Observational Studies versus designed experiments</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#observational-studies"><i class="fa fa-check"></i><b>2.2.1</b> Observational Studies</a></li>
+<li class="chapter" data-level="2.2.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#designed-experiments"><i class="fa fa-check"></i><b>2.2.2</b> Designed experiments</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#designed-experiement-vocabulary"><i class="fa fa-check"></i><b>2.3</b> Designed experiement vocabulary</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#what-is-an-experiment"><i class="fa fa-check"></i><b>2.3.1</b> What is an experiment?</a></li>
+<li class="chapter" data-level="2.3.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#analysis-of-variance"><i class="fa fa-check"></i><b>2.3.2</b> Analysis of variance</a></li>
+<li class="chapter" data-level="2.3.3" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#elements-of-a-designed-experiment"><i class="fa fa-check"></i><b>2.3.3</b> Elements of a designed experiment</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#paired-t-test"><i class="fa fa-check"></i><b>2.4</b> Paired <em>t</em>-test</a></li>
+<li class="chapter" data-level="2.5" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#one-way-anova"><i class="fa fa-check"></i><b>2.5</b> One-Way ANOVA</a></li>
+<li class="chapter" data-level="2.6" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#assumption-checking"><i class="fa fa-check"></i><b>2.6</b> Assumption Checking</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#independence"><i class="fa fa-check"></i><b>2.6.1</b> Independence</a></li>
+<li class="chapter" data-level="2.6.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#constant-variance"><i class="fa fa-check"></i><b>2.6.2</b> Constant Variance</a></li>
+<li class="chapter" data-level="2.6.3" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#checking-normality"><i class="fa fa-check"></i><b>2.6.3</b> Checking Normality</a></li>
+<li class="chapter" data-level="2.6.4" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#code-to-check-assumption"><i class="fa fa-check"></i><b>2.6.4</b> Code to check assumption</a></li>
+<li class="chapter" data-level="2.6.5" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#transforming-your-response"><i class="fa fa-check"></i><b>2.6.5</b> Transforming your response</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#follow-up-procedures-multiple-comparisons"><i class="fa fa-check"></i><b>2.7</b> Follow-up procedures – Multiple Comparisons</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#tukeys-hsd-method"><i class="fa fa-check"></i><b>2.7.1</b> Tukey’s HSD method</a></li>
+<li class="chapter" data-level="2.7.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#dunnett-multiple-comparisons"><i class="fa fa-check"></i><b>2.7.2</b> Dunnett multiple comparisons</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="multiple-factor-designed-experiments.html"><a href="multiple-factor-designed-experiments.html"><i class="fa fa-check"></i><b>3</b> Multiple Factor Designed Experiments</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="multiple-factor-designed-experiments.html"><a href="multiple-factor-designed-experiments.html#blocking"><i class="fa fa-check"></i><b>3.1</b> Blocking</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="multiple-factor-designed-experiments.html"><a href="multiple-factor-designed-experiments.html#data-structure-model-form-and-analysis-of-variance-of-a-randomized-block-design"><i class="fa fa-check"></i><b>3.1.1</b> Data structure, model form and analysis of variance of a Randomized Block Design</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="multiple-factor-designed-experiments.html"><a href="multiple-factor-designed-experiments.html#two-factor-designs"><i class="fa fa-check"></i><b>3.2</b> Two-factor Designs</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="multiple-factor-designed-experiments.html"><a href="multiple-factor-designed-experiments.html#analysis"><i class="fa fa-check"></i><b>3.2.1</b> Analysis</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="advanced-designs.html"><a href="advanced-designs.html"><i class="fa fa-check"></i><b>4</b> Advanced Designs</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="advanced-designs.html"><a href="advanced-designs.html#higher-order-factor-models"><i class="fa fa-check"></i><b>4.1</b> Higher order factor models</a></li>
+<li class="chapter" data-level="4.2" data-path="advanced-designs.html"><a href="advanced-designs.html#within-subject-designs"><i class="fa fa-check"></i><b>4.2</b> Within-subject designs</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="advanced-designs.html"><a href="advanced-designs.html#blocks-revisited-an-approach-to-handling-within-subjects-factors"><i class="fa fa-check"></i><b>4.2.1</b> Blocks revisited: an approach to handling within-subjects factors</a></li>
+<li class="chapter" data-level="4.2.2" data-path="advanced-designs.html"><a href="advanced-designs.html#a-more-involved-repeated-measures-case-study"><i class="fa fa-check"></i><b>4.2.2</b> A more involved repeated measures case study</a></li>
+<li class="chapter" data-level="4.2.3" data-path="advanced-designs.html"><a href="advanced-designs.html#further-study"><i class="fa fa-check"></i><b>4.2.3</b> Further study</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html"><i class="fa fa-check"></i><b>5</b> Introduction to Multiple Regression</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#regression-model"><i class="fa fa-check"></i><b>5.1</b> Regression Model</a></li>
+<li class="chapter" data-level="5.2" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#fitting-a-regression-model"><i class="fa fa-check"></i><b>5.2</b> Fitting a regression model</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#why-should-we-use-more-than-one-predictor"><i class="fa fa-check"></i><b>5.2.1</b> Why should we use more than one predictor?</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#interpreting-beta-parameter-estimates-in-mlr"><i class="fa fa-check"></i><b>5.3</b> Interpreting <span class="math inline">\(\beta\)</span>-parameter estimates in MLR</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#designed-experiments-1"><i class="fa fa-check"></i><b>5.3.1</b> Designed experiments</a></li>
+<li class="chapter" data-level="5.3.2" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#observational-studies-1"><i class="fa fa-check"></i><b>5.3.2</b> Observational studies</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html"><i class="fa fa-check"></i><b>6</b> Inference regarding Multiple Regression</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#assumption-checking-1"><i class="fa fa-check"></i><b>6.1</b> Assumption checking</a></li>
+<li class="chapter" data-level="6.2" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#overall-f-test-for-model-signifance"><i class="fa fa-check"></i><b>6.2</b> Overall <span class="math inline">\(F\)</span>-test for model signifance</a></li>
+<li class="chapter" data-level="6.3" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#individual-parameter-inference"><i class="fa fa-check"></i><b>6.3</b> Individual parameter inference</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#t-tests"><i class="fa fa-check"></i><b>6.3.1</b> <span class="math inline">\(t\)</span>-tests</a></li>
+<li class="chapter" data-level="6.3.2" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#confidence-intervals"><i class="fa fa-check"></i><b>6.3.2</b> Confidence Intervals</a></li>
+<li class="chapter" data-level="6.3.3" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#confidence-and-prediction-bands"><i class="fa fa-check"></i><b>6.3.3</b> Confidence and prediction bands</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#goodness-of-fit"><i class="fa fa-check"></i><b>6.4</b> Goodness-of-fit</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#coefficient-of-determination"><i class="fa fa-check"></i><b>6.4.1</b> Coefficient of determination</a></li>
+<li class="chapter" data-level="6.4.2" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#akaikes-information-criterion"><i class="fa fa-check"></i><b>6.4.2</b> Akaike’s Information Criterion</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html"><i class="fa fa-check"></i><b>7</b> More on multiple linear regression</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html#model-comparision-reduced-f-tests"><i class="fa fa-check"></i><b>7.1</b> Model comparision – Reduced <span class="math inline">\(F\)</span>-tests</a></li>
+<li class="chapter" data-level="7.2" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html#categorical-predictor-variables"><i class="fa fa-check"></i><b>7.2</b> Categorical Predictor Variables</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html#a-qualitative-predictor-with-two-levels"><i class="fa fa-check"></i><b>7.2.1</b> A qualitative predictor with two levels</a></li>
+<li class="chapter" data-level="7.2.2" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html#a-qualitative-predictor-with-more-than-two-levels"><i class="fa fa-check"></i><b>7.2.2</b> A qualitative predictor with more than two levels</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html#bridging-regression-and-designed-experiments-ancova"><i class="fa fa-check"></i><b>7.3</b> Bridging Regression and Designed Experiments – ANCOVA</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html#an-ancova-example-with-a-two-level-factor"><i class="fa fa-check"></i><b>7.3.1</b> An ANCOVA example with a two-level factor</a></li>
+<li class="chapter" data-level="7.3.2" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html#ancova-with-a-multi-level-factor"><i class="fa fa-check"></i><b>7.3.2</b> ANCOVA with a multi-level factor</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="model-building-considerations.html"><a href="model-building-considerations.html"><i class="fa fa-check"></i><b>8</b> Model Building Considerations</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="model-building-considerations.html"><a href="model-building-considerations.html#regression-assumptions-revisited"><i class="fa fa-check"></i><b>8.1</b> Regression assumptions revisited</a></li>
+<li class="chapter" data-level="8.2" data-path="model-building-considerations.html"><a href="model-building-considerations.html#violations-of-the-independence-assumption"><i class="fa fa-check"></i><b>8.2</b> Violations of the independence assumption</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="model-building-considerations.html"><a href="model-building-considerations.html#collecting-data-that-are-temporal-or-spatial-in-nature"><i class="fa fa-check"></i><b>8.2.1</b> Collecting data that are temporal or spatial in nature</a></li>
+<li class="chapter" data-level="8.2.2" data-path="model-building-considerations.html"><a href="model-building-considerations.html#pseudoreplication"><i class="fa fa-check"></i><b>8.2.2</b> Pseudoreplication</a></li>
+<li class="chapter" data-level="8.2.3" data-path="model-building-considerations.html"><a href="model-building-considerations.html#what-if-we-have-non-independent-errors"><i class="fa fa-check"></i><b>8.2.3</b> What if we have non-independent errors?</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="model-building-considerations.html"><a href="model-building-considerations.html#constant-variance-violations"><i class="fa fa-check"></i><b>8.3</b> Constant Variance Violations</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="model-building-considerations.html"><a href="model-building-considerations.html#box-cox-power-tranformations"><i class="fa fa-check"></i><b>8.3.1</b> Box-Cox Power Tranformations</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="model-building-considerations.html"><a href="model-building-considerations.html#normality-violations"><i class="fa fa-check"></i><b>8.4</b> Normality violations</a></li>
+<li class="chapter" data-level="8.5" data-path="model-building-considerations.html"><a href="model-building-considerations.html#violations-of-the-linearity-assumption"><i class="fa fa-check"></i><b>8.5</b> Violations of the linearity assumption</a></li>
+<li class="chapter" data-level="8.6" data-path="model-building-considerations.html"><a href="model-building-considerations.html#detecting-and-dealing-with-unusual-observations"><i class="fa fa-check"></i><b>8.6</b> Detecting and dealing with unusual observations</a></li>
+<li class="chapter" data-level="8.7" data-path="model-building-considerations.html"><a href="model-building-considerations.html#multicollinearity"><i class="fa fa-check"></i><b>8.7</b> Multicollinearity</a></li>
+<li class="chapter" data-level="8.8" data-path="model-building-considerations.html"><a href="model-building-considerations.html#standardizingPredictors"><i class="fa fa-check"></i><b>8.8</b> Scale changes</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="model-selection.html"><a href="model-selection.html"><i class="fa fa-check"></i><b>9</b> Model Selection</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="model-selection.html"><a href="model-selection.html#stepwise-procedures"><i class="fa fa-check"></i><b>9.1</b> Stepwise Procedures</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="model-selection.html"><a href="model-selection.html#backward-selection"><i class="fa fa-check"></i><b>9.1.1</b> Backward Selection</a></li>
+<li class="chapter" data-level="9.1.2" data-path="model-selection.html"><a href="model-selection.html#forward-selection"><i class="fa fa-check"></i><b>9.1.2</b> Forward selection</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="model-selection.html"><a href="model-selection.html#best-subsets"><i class="fa fa-check"></i><b>9.2</b> Best subsets</a></li>
+<li class="chapter" data-level="9.3" data-path="model-selection.html"><a href="model-selection.html#shrinkage-methods"><i class="fa fa-check"></i><b>9.3</b> Shrinkage Methods</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i><b>10</b> Model Validation</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="model-validation.html"><a href="model-validation.html#underfitting-vs.-overfitting-models"><i class="fa fa-check"></i><b>10.1</b> Underfitting vs. Overfitting Models</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="model-validation.html"><a href="model-validation.html#the-bias-variance-trade-off"><i class="fa fa-check"></i><b>10.1.1</b> The Bias-Variance Trade-off</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="model-validation.html"><a href="model-validation.html#validation-techniques"><i class="fa fa-check"></i><b>10.2</b> Validation Techniques</a></li>
+<li class="chapter" data-level="10.3" data-path="model-validation.html"><a href="model-validation.html#basic-validation-with-a-single-holdout-sample"><i class="fa fa-check"></i><b>10.3</b> Basic Validation with a single holdout sample</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="model-validation.html"><a href="model-validation.html#use-the-training-data-to-fit-and-select-models"><i class="fa fa-check"></i><b>10.3.1</b> Use the training data to fit and select models</a></li>
+<li class="chapter" data-level="10.3.2" data-path="model-validation.html"><a href="model-validation.html#model-training"><i class="fa fa-check"></i><b>10.3.2</b> Model training:</a></li>
+<li class="chapter" data-level="10.3.3" data-path="model-validation.html"><a href="model-validation.html#model-validation-step"><i class="fa fa-check"></i><b>10.3.3</b> Model validation step:</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="model-validation.html"><a href="model-validation.html#hold-out-sample-validation-using-caret"><i class="fa fa-check"></i><b>10.4</b> Hold-out sample validation using <code>caret</code></a></li>
+<li class="chapter" data-level="10.5" data-path="model-validation.html"><a href="model-validation.html#leave-one-out-cross-validation-loocv"><i class="fa fa-check"></i><b>10.5</b> “Leave one out” Cross-Validation (LOOCV)</a></li>
+<li class="chapter" data-level="10.6" data-path="model-validation.html"><a href="model-validation.html#k-fold-cross-validation"><i class="fa fa-check"></i><b>10.6</b> <span class="math inline">\(k\)</span>-fold Cross-Validation</a></li>
+<li class="chapter" data-level="10.7" data-path="model-validation.html"><a href="model-validation.html#a-final-note"><i class="fa fa-check"></i><b>10.7</b> A final note</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="statistical-odds.html"><a href="statistical-odds.html"><i class="fa fa-check"></i><b>11</b> Statistical Odds</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="statistical-odds.html"><a href="statistical-odds.html#probability-versus-odds"><i class="fa fa-check"></i><b>11.1</b> Probability versus Odds</a></li>
+<li class="chapter" data-level="11.2" data-path="statistical-odds.html"><a href="statistical-odds.html#odds-ratios"><i class="fa fa-check"></i><b>11.2</b> Odds ratios</a></li>
+<li class="chapter" data-level="11.3" data-path="statistical-odds.html"><a href="statistical-odds.html#ideas-of-modeling-odds"><i class="fa fa-check"></i><b>11.3</b> Ideas of modeling odds</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>12</b> Logistic Regression</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="logistic-regression.html"><a href="logistic-regression.html#logistic-model"><i class="fa fa-check"></i><b>12.1</b> Logistic Model</a></li>
+<li class="chapter" data-level="12.2" data-path="logistic-regression.html"><a href="logistic-regression.html#fitting-interpreting-and-assessing-a-logistic-model"><i class="fa fa-check"></i><b>12.2</b> Fitting, Interpreting and assessing a logistic model</a></li>
+<li class="chapter" data-level="12.3" data-path="logistic-regression.html"><a href="logistic-regression.html#case-study---titanic-dataset"><i class="fa fa-check"></i><b>12.3</b> Case Study - Titanic Dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>13</b> Generalized Linear Models</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#poisson-regression"><i class="fa fa-check"></i><b>13.1</b> Poisson Regression</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#poisson-distribution"><i class="fa fa-check"></i><b>13.1.1</b> Poisson distribution</a></li>
+<li class="chapter" data-level="13.1.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#poisson-regression-development"><i class="fa fa-check"></i><b>13.1.2</b> Poisson Regression Development</a></li>
+<li class="chapter" data-level="13.1.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#example---tropical-cyclone-counts-in-the-north-atlantic"><i class="fa fa-check"></i><b>13.1.3</b> Example - Tropical Cyclone Counts in the North Atlantic</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#handling-overdispersion"><i class="fa fa-check"></i><b>13.2</b> Handling overdispersion</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#example-attendnace-records"><i class="fa fa-check"></i><b>13.2.1</b> Example – Attendnace Records</a></li>
+<li class="chapter" data-level="13.2.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#incorrect-poisson-model"><i class="fa fa-check"></i><b>13.2.2</b> Incorrect Poisson Model</a></li>
+<li class="chapter" data-level="13.2.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#a-quasi-poisson-approach"><i class="fa fa-check"></i><b>13.2.3</b> A quasi-Poisson approach</a></li>
+<li class="chapter" data-level="13.2.4" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#fitting-a-negative-binomial-regression"><i class="fa fa-check"></i><b>13.2.4</b> Fitting a Negative Binomial regression</a></li>
+<li class="chapter" data-level="13.2.5" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#picking-between-quasi-poisson-and-negative-binomial"><i class="fa fa-check"></i><b>13.2.5</b> Picking between Quasi-Poisson and Negative Binomial</a></li>
+<li class="chapter" data-level="13.2.6" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#infererence-on-predictor-variables"><i class="fa fa-check"></i><b>13.2.6</b> Infererence on predictor variables</a></li>
+<li class="chapter" data-level="13.2.7" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#plotting-fitted-model"><i class="fa fa-check"></i><b>13.2.7</b> Plotting fitted model</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to Statistical Modeling</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="inference-regarding-multiple-regression" class="section level1" number="6">
+<h1><span class="header-section-number">Chapter 6</span> Inference regarding Multiple Regression</h1>
+<p>We now start the discussion of using the least squares simple linear regression model for the purpose of statistical inference about the parent population from which the sample was drawn. Remember that by “inference,” we mean finding relevant confidence intervals or running hypothesis tests about various aspects of the modeled relationship. After this unit, you should be able to</p>
+<ul>
+<li>Statistically determine if a model significantly predicts a response variable</li>
+<li>Test each predictor variable’s ability to significantly predict the response and measure its impact with a confidence interval</li>
+<li>Determine the amount of variation in the response variable explained by the model</li>
+</ul>
+<div id="assumption-checking-1" class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span> Assumption checking</h2>
+<p>Any time we run a hypothesis test or build a confidence interval in the context of a regression analysis, the validity of the findings depends on several assumptions being met. These assumptions need to be checked <strong>in advance</strong> using regression diagnostics. Think of diagnostics as preventative medicine for your data.</p>
+<p>The five collective assumptions for a standard regression models are as follows:</p>
+<ul>
+<li><strong>Error assumptions</strong>:
+<ol style="list-style-type: decimal">
+<li>The errors are independent (the independence assumption)</li>
+<li>The errors have homogeneous variance (the constant variance assumption)</li>
+<li>The errors are normally distributed (the normality assumption)</li>
+</ol></li>
+<li><strong>Linearity assumption</strong>: We assume that the structural part of the linear regression model is correctly specified.</li>
+<li><strong>Unusual observations</strong>: Occasionally, a few observations may not fit the model well. These have the potential to dramatically alter the results, so we should check for them and investigate their validity.</li>
+</ul>
+<p>You’ll note these assumptions are nearly identical to those we discussed in experimental design. We will diagnose the assumptions in a similar fashion.</p>
+<p>Recall from earlier that the general form of a model is</p>
+<p><span class="math display">\[\textbf{Data} = \textbf{Systematic Structure} + \textbf{Random Variation}\]</span></p>
+<p>Since modeling seeks to identify structure in the data, the goal of a good model is to capture most (if not all) of the structure in the first partition, leaving nothing but random noise in the “leftovers.” <em>All of our assumptions deal, in one way or another, with studying the random variation component via inspection of the residuals from a fitted model.</em> The motivation is that if all things are satisfactory, there should be no structure, pattern or systematic behavior remaining in the errors.</p>
+<p>Diagnostic techniques can be either graphical or numerical, but <strong>we will focus on graphical diagnostics of the assumptions</strong>. <em>The important thing to keep in mind when you fit a regression model is that the first model you try might prove to be inadequate. Regression diagnostics often suggest improvements or remedies, which means that model building is an iterative and interactive process.</em> It is quite common to repeat diagnostics on a succession of models fit to the same data.</p>
+<p>This section is only meant to provide you with the means to run a cursory check of the assumptions in a simple linear regression problem. We will deal with specific issues and remedies for addressing assumption violations in more detail later in the book.</p>
+<p><strong>Example</strong> Muscle mass. Consider the age and muscle mass dataset from earlier. Before using the muscle mass regression model to perform tests/CIs about the mass vs. age relationship, check the regression assumptions. This can be achieved by using the <code>autoplot()</code> function on the fitted <code>lm</code> object.</p>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="inference-regarding-multiple-regression.html#cb197-1" aria-hidden="true" tabindex="-1"></a>muscle.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(mass <span class="sc">~</span> age, <span class="at">data=</span>muscle)</span>
+<span id="cb197-2"><a href="inference-regarding-multiple-regression.html#cb197-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(muscle.fit)</span></code></pre></div>
+<p><img src="introStatModeling_files/figure-html/ch6.1-1.png" width="672" /></p>
+<p>The QQ-Plot assesses normality of the <span class="math inline">\(\varepsilon\)</span> terms (we wish for the empirical quantiles to closely match the theoretical, resulting in a fairly straight line). Constant variance is assessed based on the other three plots (should see no systematic patterns in the residuals) and independence is determined based on the design of our experiment or data collection procedure.</p>
+<p><strong>Linearity assumption</strong></p>
+<p>We have fit a straight-line model to the data. If the actual trend that relates muscle mass to age is linear, then this way of defining the structural part of the model should adequately explain all the systemic trends in the data. If it is not adequate, then we would still be observing trend in the residuals.</p>
+<p>To check, we return to the Residuals vs Fitted plot, specifically, the trend line in this plot. If the linearity assumption were being met, the residuals should bounce randomly around the <span class="math inline">\(e_i = 0\)</span> line, resulting in a roughly flat (horizontal) smoother. The subtle curvature in this line here suggests that we might need to fit a model that accommodates curvature in the response/predictor relationship. That is, the linearity assumption here seems to be mildly violated.</p>
+<p><strong>Unusual observations</strong></p>
+<p>In regression, there are two basic classifications of unusual observations:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Outliers.</strong> These are relatively isolated observations that are poorly predicted by the fitted model, i.e. observations that are “extreme” in the <span class="math inline">\(Y\)</span>s. Outliers can inflate the SE of the residuals, resulting in the potential masking of truly significant effects and confidence intervals that are too wide. Outliers are determined by looking at each point’s standardized residual value, denoted <span class="math inline">\(r_i\)</span>, and is considered high if <span class="math inline">\(r_i &gt; |3|\)</span>.</p></li>
+<li><p><strong>High-leverage points.</strong> These are observations whose predictor values are far from the center of the predictor space, i.e. observations that are unusually “extreme” in <span class="math inline">\(X\)</span>. High-leverage points have the potential to exert greater influence on the estimation of the <span class="math inline">\(\beta\)</span>-coefficients in our model. Leverage is measured by something known as a hat value, denoted <span class="math inline">\(h_i\)</span>, and is considered high if <span class="math inline">\(h_i &gt; 2p/n\)</span>.</p></li>
+</ol>
+<p>The plot labeled Residuals vs Leverage (in the lower right hand corner of the diagnostic plot quartet) provides a nice visualization of both the standardized residuals and hat values. Suspect points are flagged in R by their observation number. Observation 53 appears to be a potential outlier. Since none of the leverage values appear to be above <span class="math inline">\(2p/n = 4/60 = 0.0667\)</span>, we do not have any high leverage points.</p>
+<p>We will discuss this phenomenon later when we learn about Cook’s Distance.</p>
+</div>
+<div id="overall-f-test-for-model-signifance" class="section level2" number="6.2">
+<h2><span class="header-section-number">6.2</span> Overall <span class="math inline">\(F\)</span>-test for model signifance</h2>
+<p>Before proceeding to investigating the effects of the individual predictors one at a time, we usually perform a “whole-model” test to first confirm that there is merit (i.e. “utility”) to the model. This is in essence testing the following hypotheses:</p>
+<p><span class="math inline">\(H_0:\)</span> none of the predictor variables (<span class="math inline">\(X_i\)</span>’s) are useful in determining the response</p>
+<p><span class="math inline">\(H_a:\)</span> at least one of the predictor variables is useful in determining the response</p>
+<p>Since the general form of the model is <span class="math inline">\(Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_k X_k + \varepsilon\)</span>, these hypotheses can be equivalently written in terms of the model’s <span class="math inline">\(\beta\)</span>-parameters as follows:</p>
+<p><span class="math display">\[H_0: \beta_1 = \beta_2 = \ldots = \beta_k = 0 ~~~~\textrm{vs.}~~~~ H_a: \textrm{at least one} \beta_i \neq 0\]</span></p>
+<p>One way of thinking about testing this null hypothesis is to think about fitting two models to the data, one using all the predictors (the ‘full” model), and the other using none of the predictors (a “reduced” null model), and seeing if there is a significant difference between them. Thinking this way, the hypotheses may be rewritten again as:</p>
+<p><span class="math display">\[H_0: \textrm{the model is } Y = \beta_0 + \varepsilon ~~\textrm{vs.}~~ H_a: \textrm{the model is } Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_k X_k + \varepsilon\]</span></p>
+<p>We now construct a test statistic that compares the residual variance of the two models. We fit both the full <span class="math inline">\(H_a\)</span> model and the reduced <span class="math inline">\(H_0\)</span> model and obtain their respective residual sums of squares values. It is a mathematical fact that <span class="math inline">\(RSS_{H_a} \geq RSS_{H_0}\)</span> (thought exercise: why?), so if the difference <span class="math inline">\(RSS_{H_a}-RSS_{H_0}\)</span> is small, then the fit of the reduced <span class="math inline">\(H_0\)</span> model is almost as good as the full <span class="math inline">\(H_a\)</span> model, so we would prefer the reduced model on the basis of simplicity. On the other hand, if the difference is large, then the superior fit of the full <span class="math inline">\(H_a\)</span> model would be preferred. If we scale this difference by how much error variation was in the full model in the first place, then this suggests that something like</p>
+<p><span class="math display">\[\frac{\textrm{Reduction in error variance, }H_0 \textrm{ model} \rightarrow H_a\textrm{ model}}{\textrm{Error variance in }H_a \textrm{ model}} \leftrightarrow \frac{RSS_{H_a}-RSS_{H_0}}{RSS_{H_a}}\]</span></p>
+<p>would potentially be a good test statistic.</p>
+<p>In practice, we will use what is known as <strong>ANOVA F-statistic</strong> to compare the numerator variance to the denominator variance:</p>
+<p><span class="math display">\[F = \frac{\left(RSS_{H_a}-RSS_{H_0}\right)/\left(\textrm{error }df_{H_a} - \textrm{error } df_{H_0}\right)}{RSS_{H_a}/\textrm{error } df_{H_a}}\]</span></p>
+<p>Under the usual regression assumptions, this <span class="math inline">\(F\)</span>-ratio follows a sampling distribution known as an <span class="math inline">\(F\)</span>-distribution. <span class="math inline">\(F\)</span>-distributions have two parameters: the degrees of freedom for the numerator, and the degrees of freedom for the denominator. Yes, it is the same underlying test as that in ANOVA from experimental design!</p>
+<p><span class="math inline">\(F\)</span>-statistics are the standard method for comparing two variances. Here’s what could happen:</p>
+<ul>
+<li><p>If <span class="math inline">\(F\)</span> is too large, we reject <span class="math inline">\(H_0\)</span> in favor of <span class="math inline">\(H_a\)</span> and conclude that at least one of the predictor variables is useful in determining the response (i.e. at least one <span class="math inline">\(\beta_i \neq 0\)</span>).</p></li>
+<li><p>If <span class="math inline">\(F\)</span> is small, fail to reject <span class="math inline">\(H_0\)</span> in favor of <span class="math inline">\(H_a\)</span> and conclude that there is insignificant evidence to conclude that at least one of the predictor variables is useful in determining the response.</p></li>
+</ul>
+<p>The “whole-model” F-test for model utility is generally assessed first when fitting a model.</p>
+<p><strong>Example. Property Appraisals.</strong></p>
+<p>Recall the property appraisal dataset from chapter 5.</p>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="inference-regarding-multiple-regression.html#cb198-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;appraisal.RData&quot;</span>)</span>
+<span id="cb198-2"><a href="inference-regarding-multiple-regression.html#cb198-2" aria-hidden="true" tabindex="-1"></a>appraisal.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(saleprice <span class="sc">~</span> landvalue <span class="sc">+</span> impvalue <span class="sc">+</span> area, <span class="at">data=</span>appraisal)</span>
+<span id="cb198-3"><a href="inference-regarding-multiple-regression.html#cb198-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(appraisal.fit)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = saleprice ~ landvalue + impvalue + area, data = appraisal)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -14688  -2026   1025   2717  15967 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)   
+## (Intercept) 1384.197   5744.100    0.24   0.8126   
+## landvalue      0.818      0.512    1.60   0.1294   
+## impvalue       0.819      0.211    3.89   0.0013 **
+## area          13.605      6.569    2.07   0.0549 . 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 7920 on 16 degrees of freedom
+## Multiple R-squared:  0.898,  Adjusted R-squared:  0.878 
+## F-statistic: 46.7 on 3 and 16 DF,  p-value: 3.87e-08</code></pre>
+<p>The <span class="math inline">\(F\)</span>-statistic on 3 and 16 degrees of freedom is 46.72, with <em>p</em>-value &lt; 0.0001. We reject <span class="math inline">\(H_0\)</span> and conclude at least one predictor is useful for predicting sales price.</p>
+<p>Two things to be aware of:</p>
+<ol style="list-style-type: decimal">
+<li><p>What if we fail to reject <span class="math inline">\(H_0\)</span>? Does that mean that none of the predictors matter? No. A failure to reject the null hypothesis is not the end of the game — you may just have insufficient data to detect any real effects, which is why we must be careful to say “fail to reject” the null rather than “accept” the null. It would be a mistake to conclude that no real relationships exist. We may have misspecified the structural form of the model or there may be unusual observations obscuring a real effect.</p></li>
+<li><p>What if we reject <span class="math inline">\(H_0\)</span>? By the same token, when <span class="math inline">\(H_0\)</span> is rejected, this does not mean that we have found the best model. All we can say if that at least one of the predictors is useful. We don’t know whether all the predictors are required to predict the response, or just some of them. Other predictors might also be added. Either way, the omnibus <span class="math inline">\(F\)</span>-test is just the beginning of an inferential analysis, not the end. What follows next are the more detailed assessments of the individual predictors.</p></li>
+</ol>
+</div>
+<div id="individual-parameter-inference" class="section level2" number="6.3">
+<h2><span class="header-section-number">6.3</span> Individual parameter inference</h2>
+<p>After running a whole-model <span class="math inline">\(F\)</span>-test and determining that the fitted model has utility (i.e. if we rejected <span class="math inline">\(H_0: \beta_1 = \beta_2 = \ldots = \beta_k = 0\)</span>), we may proceed to running tests or finding confidence intervals for the individual <span class="math inline">\(\beta_i\)</span> parameters. These inferences may be used to</p>
+<ul>
+<li>Determine which predictors are significant predictors of the mean response</li>
+<li>Estimate the size of the partial effect of each predictor on the response</li>
+<li>“Streamline” the model through the removal of insignificant predictors</li>
+</ul>
+<p>The last point above will serve as our first taste of model building, i.e. the “arts and crafts” aspect of tweaking a model so that it best explains the observed patterns and trends in the data. There will be much more on this later, but for now we can at least see a bit of it in action.</p>
+<p>The calculated values of <span class="math inline">\(b_i\)</span> are just point estimates of the true values <span class="math inline">\(\beta_i\)</span> for the population relationship. <span class="math inline">\(\beta_i\)</span> is an unknown parameter, so we use our estimate <span class="math inline">\(b_i\)</span> to build confidence intervals or run hypothesis tests about <span class="math inline">\(\beta_i\)</span> (much like in Intro stat when you used <span class="math inline">\(\bar{x}\)</span> as a proxy for <span class="math inline">\(\mu\)</span>). While <span class="math inline">\(\beta_0\)</span> is usually of limited interest (and only in specific circumstances), the remaining <span class="math inline">\(\beta_i\)</span> terms are critical parameters because it measures the “true” linear rate of change in <span class="math inline">\(Y\)</span> as <span class="math inline">\(X_i\)</span> is increased by one unit.</p>
+<div id="t-tests" class="section level3" number="6.3.1">
+<h3><span class="header-section-number">6.3.1</span> <span class="math inline">\(t\)</span>-tests</h3>
+<p>The usual parameter test of interest in regression deals with the slope on term <span class="math inline">\(X_i\)</span>:</p>
+<p><span class="math display">\[H_0: \beta_i = 0~~~~\textrm{versus}~~~~ H_a: \beta_1 \neq 0\]</span></p>
+<p>This null hypothesis basically states that <span class="math inline">\(X_i\)</span> and <span class="math inline">\(Y\)</span> have no linear relationship. Rejection of this null hypothesis offers statistical confirmation that there is a significant linear relationship between <span class="math inline">\(X_i\)</span> and <span class="math inline">\(Y\)</span>. The test statistic for this is a <span class="math inline">\(t\)</span>-statistic, and is given by</p>
+<p><span class="math display">\[t=\frac{\textrm{point estimate}-\textrm{hypothesized value}}{\textrm{standard error of point estimate}} = \frac{b_i - 0}{SE_{b_i}}\]</span></p>
+<p>and is provided in the <code>summary()</code> output in R.</p>
+<p><strong>Example. Property Appraisals</strong> Consider individual test from the Property Appraisal data.</p>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="inference-regarding-multiple-regression.html#cb200-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(appraisal.fit)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = saleprice ~ landvalue + impvalue + area, data = appraisal)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -14688  -2026   1025   2717  15967 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)   
+## (Intercept) 1384.197   5744.100    0.24   0.8126   
+## landvalue      0.818      0.512    1.60   0.1294   
+## impvalue       0.819      0.211    3.89   0.0013 **
+## area          13.605      6.569    2.07   0.0549 . 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 7920 on 16 degrees of freedom
+## Multiple R-squared:  0.898,  Adjusted R-squared:  0.878 
+## F-statistic: 46.7 on 3 and 16 DF,  p-value: 3.87e-08</code></pre>
+<blockquote>
+<p><span class="math inline">\(H_0: \beta_1 = 0\)</span> (appraised land value has no effect on sales price, after adjusting for appraised value of improvements and area of living space)</p>
+</blockquote>
+<blockquote>
+<p><span class="math inline">\(H_a: \beta_1 \neq 0\)</span> (appraised land value has an effect on sales price, after adjusting for appraised value of improvements and area of living space)</p>
+</blockquote>
+<p>The test statistic is <span class="math inline">\(t = 1.599\)</span> (with df=16), and <em>p</em>-value = 0.1294. We fail to reject <span class="math inline">\(H_0\)</span> and conclude that appraised land value has no significant effect on sales price, after adjusting for appraised value of improvements and area of living space.</p>
+<blockquote>
+<p><span class="math inline">\(H_0: \beta_2 = 0\)</span> (appraised value of improvements has no effect on sales price, after adjusting for appraised land value and area of living space)</p>
+</blockquote>
+<blockquote>
+<p><span class="math inline">\(H_a: \beta_2 \neq 0\)</span> (appraised value of improvements has an effect on sales price, after adjusting for appraised land value and area of living space)</p>
+</blockquote>
+<p>The test statistic is <span class="math inline">\(t = 3.889\)</span> (with df=16), and <em>p</em>-value = 0.0013. We reject <span class="math inline">\(H_0\)</span> and conclude that appraised value of improvements has a significant effect on sales price, after adjusting for appraised land value and area of living space.</p>
+<blockquote>
+<p><span class="math inline">\(H_0: \beta_3 = 0\)</span> (area of living space has no effect on sales price, after adjusting for appraised value of land and improvements)</p>
+</blockquote>
+<blockquote>
+<p><span class="math inline">\(H_a: \beta_3 \neq 0\)</span> (area of living space has an effect on sales price, after adjusting for appraised value of land and improvements)</p>
+</blockquote>
+<p>The test statistic is <span class="math inline">\(t = 2.071\)</span> (with df=16), and <em>p</em>-value = 0.0549. We reject <span class="math inline">\(H_0\)</span> and conclude that the area of living space has a marginally significant effect on sales price, after adjusting for appraised value of improvements and area of living space.</p>
+<p><strong>Summary:</strong> The appraised value of improvements is the most significant predictor of sales price. Area of living space is marginally significant and appraised land value is not significant.</p>
+<div id="modeling-trimming" class="section level4" number="6.3.1.1">
+<h4><span class="header-section-number">6.3.1.1</span> Modeling trimming</h4>
+<p>What about insignificant predictors? At this point, one might wonder about the need for retaining appraised land value (landvalue) as a predictor due to its insignificance. In fact, we may delete insignificant predictors (one at a time) to see the effect on the quality of the fit. Remember: a simple model that does essentially as well as a more complex model is preferred.</p>
+<p>So, here’s what happens by deleting landvalue as a predictor (we actually did this in the last lecture to see the effect on the <span class="math inline">\(\beta\)</span> parameters):</p>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="inference-regarding-multiple-regression.html#cb202-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(saleprice <span class="sc">~</span> impvalue <span class="sc">+</span> area, <span class="at">data=</span>appraisal))</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = saleprice ~ impvalue + area, data = appraisal)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -15832  -5200   1260   4642  13836 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  -10.191   5931.634    0.00  0.99865    
+## impvalue       0.959      0.200    4.79  0.00017 ***
+## area          16.492      6.599    2.50  0.02299 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 8270 on 17 degrees of freedom
+## Multiple R-squared:  0.881,  Adjusted R-squared:  0.867 
+## F-statistic:   63 on 2 and 17 DF,  p-value: 1.37e-08</code></pre>
+<p>The quality of the fit of this model is comparable, albeit a bit worse, to the model containing all three predictors. Consider:</p>
+<ul>
+<li>The residual SE has increased from <span class="math inline">\(s\)</span> = 7915 to <span class="math inline">\(s\)</span> = 8269. In other words, the quality of <code>saleprice</code> predictions suffers somewhat by deleting <code>landvalue</code> as a predictor, even though it is statistically insignificant. For this reason, we may wish to retain it.</li>
+</ul>
+<p>This is actually a wise method of determining the “value” of a predictor to the model. Another (equivalent) way is to look at the adjusted <span class="math inline">\(R^2\)</span> values for the two models. We will cover that aspect shortly.</p>
+</div>
+</div>
+<div id="confidence-intervals" class="section level3" number="6.3.2">
+<h3><span class="header-section-number">6.3.2</span> Confidence Intervals</h3>
+<p>As stated before, confidence intervals are usually more informative than tests. The form of these intervals is no different than for t-based CIs you’ve seen previously:</p>
+<p><span class="math display">\[b_i + t_{0.025}\times SE_{b_i}\]</span></p>
+<p>The point estimates and their SEs were provided in the R output from <code>summary()</code>.</p>
+<p>After fitting the linear model, getting 95% CIs for <span class="math inline">\(\beta_i\)</span> is a snap with the <code>confint()</code> function:</p>
+<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="inference-regarding-multiple-regression.html#cb204-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(appraisal.fit)</span></code></pre></div>
+<pre><code>##                    2.5 %      97.5 %
+## (Intercept) -1.07928e+04 13561.14546
+## landvalue   -2.66591e-01     1.90219
+## impvalue     3.72807e-01     1.26608
+## area        -3.21529e-01    27.53168</code></pre>
+<p>We focus only on interpretation of the significant predictors:</p>
+<ul>
+<li>After adjusting for appraised land value and area of living space of a given property, we can be 95% confident that each additional dollar of appraised value of improvements is worth, on average, an additional $0.37 to $1.26 to the sale price.</li>
+<li>We could make a statement about the CI for the adjusted effect of area of living space (95% CI for area is essentially (0, 27.53)). This interval skirts the value of 0 because of the marginal significance of the partial effect. So, we could say that after adjusting for appraised land and improvements values of a given property, we can be 95% confident that each square foot of living space is worth, on average, no more than $27.53 to the sale price.</li>
+</ul>
+</div>
+<div id="confidence-and-prediction-bands" class="section level3" number="6.3.3">
+<h3><span class="header-section-number">6.3.3</span> Confidence and prediction bands</h3>
+<p>If we are satisfied with the quality of the fit of a multiple linear regression model (i.e. if we feel the residual SE is low enough to facilitate decent predictions), we may use the model to generate CIs or PIs for the response variable <span class="math inline">\(Y\)</span> given some settings for the predictor variables <span class="math inline">\(X_1\)</span>, <span class="math inline">\(X_2\)</span>, <span class="math inline">\(\ldots\)</span>, <span class="math inline">\(X_k\)</span>. The only caveat to keep in mind when finding such CIs/PIs is the issue of extrapolation outside the region of the observed values of the predictors (called the predictor space). You should stay inside the observed joint region of the predictors when making such predictions. We begin with a look at our simple linear regression example, the muslce mass dataset, for visualization and explanation.</p>
+<p>One of the great uses of regression models is to generate useful predictions of the response variable <span class="math inline">\(Y\)</span> given some setting for the predictor variable <span class="math inline">\(X\)</span>.</p>
+<p>Given a hypothetical value of <span class="math inline">\(X\)</span> (call it <span class="math inline">\(x_0\)</span>), what is the predicted response value? For example, what is the predicted mean muscle mass for a 65 year old woman? Easy:</p>
+<p><span class="math display">\[\hat{Y} = 156.35 - 1.19(65) = 79.0\]</span></p>
+<p>However, as good statisticians we know that the above result is not sufficient. Remember: it’s only an estimate of <span class="math inline">\(\mu_{Y|X=65}\)</span>, the true mean muscle mass of women age 65. We would like to construct confidence limits around this estimate to get an idea of its precision.</p>
+<p>There are actually two kinds of “prediction” that can be made using <span class="math inline">\(\hat{Y}\)</span> as our point estimate. The distinction is between</p>
+<ul>
+<li>prediction of the mean response value at a given <span class="math inline">\(X\)</span> value</li>
+<li>prediction of a future individual response at a given <span class="math inline">\(X\)</span> value</li>
+</ul>
+<p>For example,</p>
+<ul>
+<li>We could obtain an interval estimate for the true mean muscle mass of all 65 year old women; or,</li>
+<li>We could obtain an interval estimate for the muscle mass of an individual unobserved 65 year old woman.</li>
+</ul>
+<p>Why would these be different? It is because if we are estimating the true mean response at a given <span class="math inline">\(X\)</span> value, the only contributor to the uncertainty of the prediction is the uncertainty in the line (i.e. uncertainty due to the slope and intercept estimates). On the other hand, if we are estimating a future individual response value at a given <span class="math inline">\(X\)</span> value, the contributors to the uncertainty of the prediction are both the uncertainty in the line and the variation in the individual points about the line. Thus, the <span class="math inline">\(SE\)</span> for the prediction of a single future response value will be larger than the SE for predicting a mean response value.</p>
+<p>To help distinguish between the two kinds of intervals, we will call an interval estimate for the true mean response a confidence interval (CI) (also known as a confidence band) for the mean response, and an interval estimate for an individual future response value a prediction interval (PI) (also known as prediction bands) for an individual response. Which one is more appropriate depends on context, but confidence intervals are used more frequently in practice.</p>
+<p>The <code>predict()</code> extractor function in R will generate CIs and PIs from a linear model object according to your specifications for values of <span class="math inline">\(X\)</span>:</p>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="inference-regarding-multiple-regression.html#cb206-1" aria-hidden="true" tabindex="-1"></a>muscle.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(mass<span class="sc">~</span>age,<span class="at">data=</span>muscle)</span>
+<span id="cb206-2"><a href="inference-regarding-multiple-regression.html#cb206-2" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(muscle.fit, <span class="at">newdata=</span><span class="fu">data.frame</span>(<span class="at">age=</span><span class="dv">65</span>), <span class="at">int=</span><span class="st">&quot;conf&quot;</span>)</span></code></pre></div>
+<pre><code>##       fit     lwr    upr
+## 1 78.9969 76.6987 81.295</code></pre>
+<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="inference-regarding-multiple-regression.html#cb208-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(muscle.fit, <span class="at">newdata=</span><span class="fu">data.frame</span>(<span class="at">age=</span><span class="dv">65</span>), <span class="at">int=</span><span class="st">&quot;pred&quot;</span>)</span></code></pre></div>
+<pre><code>##       fit     lwr     upr
+## 1 78.9969 62.4758 95.5179</code></pre>
+<p>Note that the fitted value (labeled fit) is the same for both (78.996). However, the 95% PI for muscle mass of an unobserved 65 year old woman is 62.5 to 95.5, whereas the 95% CI for the mean muscle mass of all 65 year old women is 76.7 to 81.3. Thus, we can formally interpret the intervals as follows:</p>
+<ul>
+<li>We can be 95% confident that the true mean muscle mass for the entire population of women aged 65 years is between 76.7 to 81.3.</li>
+<li>We can be 95% confident that the true muscle mass for a single random selected female aged 65 will be between 62.5 to 95.5.</li>
+</ul>
+<p>If we had deleted <code>newdata=data.frame(age=65)</code> from the <code>predict()</code> function call, we would get PIs (or CIs) for every age value that occurred in the original data set. However, since the values of age appear in random order, it might be a bit nicer to first sort them, and then generate the intervals:</p>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="inference-regarding-multiple-regression.html#cb210-1" aria-hidden="true" tabindex="-1"></a>muscle.trim <span class="ot">&lt;-</span> muscle <span class="sc">%&gt;%</span></span>
+<span id="cb210-2"><a href="inference-regarding-multiple-regression.html#cb210-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(age) <span class="sc">%&gt;%</span></span>
+<span id="cb210-3"><a href="inference-regarding-multiple-regression.html#cb210-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(age)</span>
+<span id="cb210-4"><a href="inference-regarding-multiple-regression.html#cb210-4" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(muscle.fit, <span class="at">newdata=</span>muscle.trim, <span class="at">int=</span><span class="st">&quot;pred&quot;</span>)</span></code></pre></div>
+<pre><code>##         fit     lwr      upr
+## 1  107.5567 90.7083 124.4052
+## 2  106.3668 89.5541 123.1794
+## 3  105.1768 88.3980 121.9555
+## 4  103.9868 87.2401 120.7334
+## 5  102.7968 86.0803 119.5133
+## 6  101.6068 84.9185 118.2950
+## 7  100.4168 83.7549 117.0787
+## 8   99.2268 82.5893 115.8642
+## 9   95.6568 79.0811 112.2325
+## 10  94.4668 77.9078 111.0258
+## 11  93.2768 76.7325 109.8211
+## 12  92.0868 75.5553 108.6183
+## 13  90.8968 74.3761 107.4175
+## 14  89.7068 73.1950 106.2186
+## 15  88.5168 72.0119 105.0218
+## 16  86.1368 69.6397 102.6339
+## 17  84.9468 68.4507 101.4430
+## 18  83.7568 67.2597 100.2540
+## 19  81.3768 64.8717  97.8820
+## 20  80.1869 63.6748  96.6989
+## 21  78.9969 62.4758  95.5179
+## 22  77.8069 61.2750  94.3388
+## 23  75.4269 58.8673  91.9864
+## 24  74.2369 57.6606  90.8132
+## 25  73.0469 56.4519  89.6419
+## 26  71.8569 55.2412  88.4725
+## 27  70.6669 54.0287  87.3051
+## 28  69.4769 52.8142  86.1396
+## 29  67.0969 50.3794  83.8144
+## 30  65.9069 49.1592  82.6546
+## 31  64.7169 47.9371  81.4967
+## 32  63.5269 46.7131  80.3407</code></pre>
+<p>So, for example, we can be 95% confident that the muscle mass of an unobserved 52 year old woman will be between 77.9 to 111.0. (Note that these are PIs for future observations, not the current observations!)</p>
+<p>Since we have a two-dimensional problem here, it is instructive to graphically take a look at the confidence limits and prediction limits across the entire span of the predictor space (called confidence bands and prediction bands). The display of the confidence and prediction bands for the muscle mass model fit appears below.</p>
+<p>Two things you should notice:</p>
+<ol style="list-style-type: decimal">
+<li>The prediction bands are wider than the confidence bands (as we have already established).</li>
+<li>The width of the confidence bands (and prediction bands) is not uniform over the entire predictor space. It is subtle in this particular example, but a close look will reveal that as you move away from the center of the data, the intervals get wider.</li>
+</ol>
+<p>The below code will plot the fitted line with the confidence and prediction bands.</p>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="inference-regarding-multiple-regression.html#cb212-1" aria-hidden="true" tabindex="-1"></a>muscle.bands <span class="ot">&lt;-</span> muscle.trim <span class="sc">%&gt;%</span></span>
+<span id="cb212-2"><a href="inference-regarding-multiple-regression.html#cb212-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ci.lo =</span> <span class="fu">predict</span>(muscle.fit, <span class="at">newdata=</span>muscle.trim, <span class="at">int=</span><span class="st">&quot;conf&quot;</span>)[,<span class="dv">2</span>],</span>
+<span id="cb212-3"><a href="inference-regarding-multiple-regression.html#cb212-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">ci.hi =</span> <span class="fu">predict</span>(muscle.fit, <span class="at">newdata=</span>muscle.trim, <span class="at">int=</span><span class="st">&quot;conf&quot;</span>)[,<span class="dv">3</span>],</span>
+<span id="cb212-4"><a href="inference-regarding-multiple-regression.html#cb212-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">pi.lo =</span> <span class="fu">predict</span>(muscle.fit, <span class="at">newdata=</span>muscle.trim, <span class="at">int=</span><span class="st">&quot;pred&quot;</span>)[,<span class="dv">2</span>],</span>
+<span id="cb212-5"><a href="inference-regarding-multiple-regression.html#cb212-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">pi.hi =</span> <span class="fu">predict</span>(muscle.fit, <span class="at">newdata=</span>muscle.trim, <span class="at">int=</span><span class="st">&quot;pred&quot;</span>)[,<span class="dv">3</span>] )</span>
+<span id="cb212-6"><a href="inference-regarding-multiple-regression.html#cb212-6" aria-hidden="true" tabindex="-1"></a>muscle.with.fit <span class="ot">&lt;-</span> muscle <span class="sc">%&gt;%</span></span>
+<span id="cb212-7"><a href="inference-regarding-multiple-regression.html#cb212-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Fitted=</span><span class="fu">fitted</span>(muscle.fit))</span>
+<span id="cb212-8"><a href="inference-regarding-multiple-regression.html#cb212-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb212-9"><a href="inference-regarding-multiple-regression.html#cb212-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">data=</span>muscle.bands, <span class="fu">aes</span>(<span class="at">x=</span>age, <span class="at">ymin=</span>pi.lo, <span class="at">ymax=</span>pi.hi), <span class="at">fill=</span><span class="st">&quot;gray80&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb212-10"><a href="inference-regarding-multiple-regression.html#cb212-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">data=</span>muscle.bands, <span class="fu">aes</span>(<span class="at">x=</span>age, <span class="at">ymin=</span>ci.lo, <span class="at">ymax=</span>ci.hi), <span class="at">fill=</span><span class="st">&quot;gray60&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb212-11"><a href="inference-regarding-multiple-regression.html#cb212-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>muscle.with.fit, <span class="fu">aes</span>(<span class="at">x=</span>age, <span class="at">y=</span>Fitted), <span class="at">size=</span><span class="fl">1.25</span>, <span class="at">color=</span><span class="st">&quot;blue&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb212-12"><a href="inference-regarding-multiple-regression.html#cb212-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>muscle.with.fit, <span class="fu">aes</span>(<span class="at">x=</span>age, <span class="at">y=</span>mass) ) <span class="sc">+</span> </span>
+<span id="cb212-13"><a href="inference-regarding-multiple-regression.html#cb212-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="introStatModeling_files/figure-html/ch6.9-1.png" width="672" /></p>
+<p><strong>Notes about the code.</strong> We are using the layering features in <code>ggplot()</code>. First we plot the prediction interval as a <code>geom_ribbon</code> type with a lighter colored gray. Then the confidence band (since we know it will be narrower) on the next layer. Then the fitted line and original data points.</p>
+<p><strong>Extrapolation warning.</strong> It might be tempting to use your model to make predictions outside the observed range of your predictor variable (e.g., what is the predicted muscle mass of a 90 year old woman?). The best advice: DON’T!</p>
+<p>Regression isn’t some magic pill that will get you reliable predictions of what’s going on out in some region where you have no information. You may have a model that fits the observed data well, but the model may be completely different when you move outside this range. For instance, perhaps muscle mass reaches a point of stabilization near age 80, resulting in a plot that levels off. If you used the model we fitted above to make a prediction for a geriatric female above age 80, you may vastly underpredict her true muscle mass. A relationship that looks linear on a small scale might be completely different on a larger scale.</p>
+<p>That is why when you conduct your own investigations, you should collect data from the entire region of predictor values of research interest.</p>
+<p>In summary, don’t extrapolate because:</p>
+<ul>
+<li>confidence and prediction intervals for the response get wider the farther away from the center of the data you move; and</li>
+<li>the structural form of the relationship may not be the same as you move away from the observed predictor space.
+The two plots below illustrate these points. Suppose you only observe the data in the narrow range around <span class="math inline">\(X = 0\)</span> as shown in the left hand plot. If you fit a line to these data, you get the observed trend (and confidence bands). However, if the true nature of the relationship outside this narrow range were radically different (and you don’t know this because you collected no data outside your “narrow” range), then extrapolating beyond your limited view of the relationship may produce wildly inaccurate predictions (see the right side plot).</li>
+</ul>
+<p><img src="introStatModeling_files/figure-html/ch6.10-1.png" width="672" /></p>
+<p><strong>Back to multiple regression.</strong> We can do the same sort of thing with a multiple regression dataset, unfortunately it is not as easy to plot.</p>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="inference-regarding-multiple-regression.html#cb213-1" aria-hidden="true" tabindex="-1"></a>x.pred <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">landvalue=</span><span class="dv">11000</span>, <span class="at">impvalue=</span><span class="dv">43500</span>, <span class="at">area=</span><span class="dv">2000</span>)</span>
+<span id="cb213-2"><a href="inference-regarding-multiple-regression.html#cb213-2" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(appraisal.fit, x.pred, <span class="at">int=</span><span class="st">&quot;pred&quot;</span>)</span></code></pre></div>
+<pre><code>##       fit     lwr     upr
+## 1 73235.9 54922.7 91549.1</code></pre>
+<p>We are 95% confident that this property will sell for between $54,922 and $91,549.</p>
+</div>
+</div>
+<div id="goodness-of-fit" class="section level2" number="6.4">
+<h2><span class="header-section-number">6.4</span> Goodness-of-fit</h2>
+<p>We seek a descriptive measure of how well the fitted model explains the observed response values. One way of doing this is to again consider the general model form</p>
+<p><span class="math display">\[\mathbf{Data} = \mathbf{Systematic Structure} + \mathbf{Random Variation}\]</span></p>
+<p>and thinking of partitioning the variation in the response values data (i.e. the <span class="math inline">\(y\)</span>-values) into the two corresponding components:</p>
+<ul>
+<li>Variation explained by the structural relationship between <span class="math inline">\(y\)</span> and the predictor(s);</li>
+<li>Variation left unexplained by the model (i.e. variation due to “error”).</li>
+</ul>
+<p>We use sums of squares as the basis of the partitioning of variability. The idea is that if the model explains the response variation well, then there should be relatively little error variation left over, that is, RSS should be relatively small.
+We start as follows:</p>
+<ul>
+<li>TSS is the total sum of squares, and here serves as our measure of variability of response values around their mean. This requires no knowledge of the predictors.</li>
+<li>RSS is the residual sum of squares (or deviance), and here serves as our measure of variability of response values around their model predictions. This obviously requires knowledge of the predictors.</li>
+</ul>
+<p>Formulaically, <span class="math inline">\(TSS = \sum_{i=1}^n (y_i - \bar{y})^2\)</span> and <span class="math inline">\(RSS = \sum_{i=1}^n (y_i - \hat{y}_i)^2\)</span>.</p>
+<p>Below is a graphic illustrating how one may think of “sizing” these two quantities. The picture shows a simulated data example where there is a clearly strong linear trend. You can see that once you account for the linear trend element (which explains a lot of what you see in the plot), the relative size of the leftover residual variation is low, i.e. RSS is the much smaller partition of the total sums of squares.</p>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="introStatModeling_files/figure-html/ch6.12-1.png" width="672" /></p>
+<p>The difference between TSS and RSS is the sum of squares due to the model (let’s call it SS(model)). One can show that</p>
+<p><span class="math display">\[TSS = SS(model) + RSS\]</span></p>
+<div id="coefficient-of-determination" class="section level3" number="6.4.1">
+<h3><span class="header-section-number">6.4.1</span> Coefficient of determination</h3>
+<p>A basic descriptor of the “goodness of fit” for our model is the given by the ratio of the model sums of squares to the total sums of squares, commonly referred to as <span class="math inline">\(R^2\)</span>:</p>
+<p><span class="math display">\[R^2 = \frac{TSS - RSS}{TSS} = 1 - \frac{RSS}{TSS}\]</span></p>
+<p>This is valuable because it has a nice clean interpretation as the proportion of total variation in the response that is explained by the model. Since it is a proportion, it is always true that <span class="math inline">\(0 \leq R^2 \leq 1\)</span>. In R, it is provided in the <code>summary()</code> function for a linear model object, labeled <code>Multiple R-squared</code>. It is also known as the coefficient of determination.</p>
+<p><strong>Adjusted <span class="math inline">\(R^2\)</span></strong>, or <span class="math inline">\(R_{adj}^2\)</span>, takes into account the degrees of freedom for both total variation and error variation, and is generally preferable to <span class="math inline">\(R^2\)</span>:</p>
+<p><span class="math display">\[R_{adj}^2 = 1 - \frac{RSS/df_{error}}{TSS/df_{total}} = 1 - \frac{RSS/(n-p)}{TSS/(n-1)} = 1 - (1-R^2)\frac{n-1}{n-p-1}\]</span></p>
+<p><span class="math inline">\(R_{adj}^2\)</span> is not technically a proportion like <span class="math inline">\(R^2\)</span>, but it is more useful than <span class="math inline">\(R^2\)</span> when comparing different models for the same data. It should also be said that, although informative, these measures do not give any direct indication of how well the regression equation will predict when applied to a new data set. Like <span class="math inline">\(R^2\)</span>, <span class="math inline">\(R_{adj}^2\)</span> is supplied with the <code>summary()</code> function and is labeled <code>Adjusted R-squared</code>. We show the output below for the appraisal model.</p>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="inference-regarding-multiple-regression.html#cb216-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(appraisal.fit)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = saleprice ~ landvalue + impvalue + area, data = appraisal)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -14688  -2026   1025   2717  15967 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)   
+## (Intercept) 1384.197   5744.100    0.24   0.8126   
+## landvalue      0.818      0.512    1.60   0.1294   
+## impvalue       0.819      0.211    3.89   0.0013 **
+## area          13.605      6.569    2.07   0.0549 . 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 7920 on 16 degrees of freedom
+## Multiple R-squared:  0.898,  Adjusted R-squared:  0.878 
+## F-statistic: 46.7 on 3 and 16 DF,  p-value: 3.87e-08</code></pre>
+<p>Using Adjusted <span class="math inline">\(R^2\)</span> since it is preferred in multiple regression, we see that a combination of appraised land value, appraised value of improvements and area explains about 87.8% of the variation in sale price.</p>
+</div>
+<div id="akaikes-information-criterion" class="section level3" number="6.4.2">
+<h3><span class="header-section-number">6.4.2</span> Akaike’s Information Criterion</h3>
+<p>At this point, we will introduce what might at first seem like a completely off-the-wall measure of model fit attributable to Japanese statistician Hirotugu Akaike, known as the Akaike Information Criterion, or AIC. The AIC is derived from information theory methods developed in the 1970s, and provides a powerful tool for the comparison of different models with respect to the quality of fit.</p>
+<p>For models based on normal theory and using least squares estimation, the AIC is defined as follows:</p>
+<p><span class="math display">\[AIC = n\log(RSS/n) + 2p\]</span></p>
+<p>where <span class="math inline">\(n\)</span> = sample size, <span class="math inline">\(RSS\)</span> is the model residual sum of squares, and <span class="math inline">\(p\)</span> = number of model parameters (i.e. number of <span class="math inline">\(\beta\)</span> parameters in the model). In R we can calculate the AIC value for a fit using the <code>AIC()</code> function.</p>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="inference-regarding-multiple-regression.html#cb218-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(appraisal.fit)</span></code></pre></div>
+<pre><code>## [1] 421.356</code></pre>
+<p>It should be noted that, in itself, the value of AIC for a given date set and model has no meaning. Its utility comes when we compare AIC values of different candidate models for the same data. Later on, as regression models become more complex with the inclusion of potentially many predictor variables, we will revisit AIC to help us in the selection of the “best” model among many choices.</p>
+<p>A similar measure is known as the Bayesian Schwarz Information Criteria, or BIC. It is calculated with the formula</p>
+<p><span class="math display">\[BIC = n\log(RSS/n) + \log(n)p\]</span></p>
+<p>and is calculated in R with the <code>BIC()</code> function.</p>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="inference-regarding-multiple-regression.html#cb220-1" aria-hidden="true" tabindex="-1"></a><span class="fu">BIC</span>(appraisal.fit)</span></code></pre></div>
+<pre><code>## [1] 426.334</code></pre>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="introduction-to-multiple-regression.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="more-on-multiple-linear-regression.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["introStatModeling.pdf", "introStatModeling.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
