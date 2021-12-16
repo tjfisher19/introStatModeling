@@ -137,14 +137,14 @@ There are multiple functions to import a data file in R. One common tool is usin
 1. Read a file directly from the web. The below code imports the file `univadmissions.txt` (details about the data are below) from a data repository into the current R session, and assigns the name `uadata` to the data frame object:
 
 ```{r, eval=FALSE}
-site <- "http://www.users.miamioh.edu/hughesmr/sta363/univadmissions.txt"
+site <- "https://tjfisher19.github.io/introStatModeling/data/univadmissions.txt"
 class(site)
 uadata <- read.table(site, header=TRUE)
 head(uadata)
 ```
 
 ```{r, echo=FALSE, ch1-6}
-uadata <- read.table("univadmissions.txt", header=TRUE)
+uadata <- read.table("data/univadmissions.txt", header=TRUE)
 head(uadata)
 ```
 
@@ -175,7 +175,7 @@ Similar to the above examples, reading in a Comma Separated Value (CSV) file is 
 This is becoming the standard format for transferring files. An example of some non-executed code is provided below:
 
 ```{r, eval=FALSE}
-used.car <- read.csv("c:/My Documents/My STA363 Files/kuiperCars.csv", header=TRUE)
+used.car <- read.csv("c:/My Documents/My STA363 Files/univadmissions.csv", header=TRUE)
 ```
 
 #### `load()` -- Loading an existing R `data.frame`
