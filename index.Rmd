@@ -38,7 +38,10 @@ ggplot(dino_data) +
 ```
 
 
-This online text has been designed for **STA 363 - Introduction to Statistical Modeling** at Miami University. What is now this text was originally a set of notes written by Mr. Mike Hughes and has since been reformulated into this bookdown version. The original version of this document was not intended for publication but, as is common, has evolved into an online text. Future iterations will improve some coding examples and provide more references.
+This online text has been designed for **STA 363 - Introduction to Statistical Modeling** at Miami University. 
+What is now this text was originally a set of notes written by Mr. Mike Hughes and has since been reformulated into this bookdown version. 
+The original version of this document was not intended for publication but, as is common, has evolved into an textbook of sorts. 
+Future iterations will improve some coding examples and provide more references.
 
 The bulletin description for the course states:
 
@@ -48,16 +51,32 @@ The book and course have been designed to be a follow-up to a standard introduct
 
 The book mixes statistical background with applications using the R Project for Statistical Computing [@R-base]. We have attempted to perform all data processing and analysis in this text using the *tidyverse*; thus all plots and functionality should follow the new grammar in R (*ggplot* and `%>%` type code).
 
-The book was designed with 13 chapters with the intent to be used during the 14-week semester at Miami University (one week reserved for midterm examination and end-of-semester review). The first chapter reviews introductory statistics material and provides a crash course in the basics of R and making plots with `ggplot2`. Chatpers 2, 3 and 4 extend the idea of two-sample inference into the design setting, presenting all inference in the form of a linear model. Chapters 5--10 cover the *classic* topics around multiple linear regression. Chapters 11 and 12 provides an overview of statistical odds and logistic regression. Chapter 13 provides an overview of Generalized Linear Modeling with examples of both Poisson and Negative Binomial regression.
+The book was designed with 13 chapters with the intent to be used during the 14-week semester at Miami University (one week reserved for midterm examination and end-of-semester review). 
+The first chapter reviews introductory statistics material and provides a crash course in the basics of R and making plots with `ggplot2`. 
+Chapters 2, 3 and 4 extend the idea of two-sample inference into the design setting, presenting all inference in the form of a linear model. 
+Chapters 5--10 cover the *classic* topics around multiple linear regression. 
+Chapters 11 and 12 provides an overview of statistical odds and logistic regression. 
+Chapter 13 provides an overview of Generalized Linear Modeling with examples of both Poisson and Negative Binomial regression.
 
 # About the Authors{-}
 
-```{r author-pic, echo=FALSE, fig.show = 'hold', fig.cap='Photographs of the authors: Michael R. Hughes (left) and Thomas J. Fisher (right)', out.width='30%', fig.align='center'}
-knitr::include_graphics(c('author_Hughes.jpg', 'author_Fisher.jpg') )
+```{r author-pic, echo=FALSE, warning=FALSE, message=FALSE, fig.show = 'hold', fig.cap='Photographs of the authors: Michael R. Hughes (left) and Thomas J. Fisher (right)', out.width='30%', fig.align='center'}
+
+library(magick)
+
+hughes <- image_read("author_Hughes.jpg")
+fisher <- image_read("author_Fisher.jpg")
+
+hughes_with_border <- image_border(hughes, "gray85", "50x20")
+fisher_with_border <- image_border(fisher, "gray85", "50x20")
+
+image_write(hughes_with_border, "hughes_with_border.png")
+image_write(fisher_with_border, "fisher_with_border.png")
+knitr::include_graphics(c('hughes_with_border.png', 'fisher_with_border.png') )
 ```
 
 
-**Michael R. Hughes** is an instructor and manager of the statistical consulting center at Miami University. He has a B.S.\ in Mathematics and Statistics ('85) and an M.S.\ in Statistics ('87) from Miami University and typically teaches the nonparametric, statistical modeling and data practicum courses. He spends his free time snuggling up to a roaring fireplace with the most recent texts, and loves long walks on the beach thinking about the latest modeling techniques and applications. He seeks a ambitous group of students who wish to be taught the subject of statistical modeling. 
+**Michael R. Hughes** is an instructor and manager of the statistical consulting center at Miami University. He has a B.S.\ in Mathematics and Statistics ('85) and an M.S.\ in Statistics ('87) from Miami University and typically teaches the nonparametric, statistical modeling and data practicum courses. He spends his free time snuggling up to a roaring fireplace with the most recent texts, and loves long walks on the beach thinking about the latest modeling techniques and applications. He seeks a ambitious group of students who wish to be taught the subject of statistical modeling. 
 
 **Thomas J. Fisher** is a Pisces who enjoys hockey and hiking. He has a PhD in Mathematical Sciences ('09) from Clemson University and a B.S. in Computer Science ('03) from the University of Maryland, Baltimore County. He has taught a wide-range of courses from *intro stat* to graduate-level probability and inference. When not teaching Statistical modeling, you'll most likely find him teaching one of the coding courses or skating in the Goggin Ice Center. 
 
@@ -148,5 +167,9 @@ RStudio provides tutorials as well: https://rmarkdown.rstudio.com/lesson-1.html
 https://www.youtube.com/watch?v=pyJMWlDptYw
 * Folders, directories, Projects (to be complete)
 
+## Data in this text{-}
 
+The data in the text is available here:
+ and can be downloaded as a single zip file.
+ 
 
