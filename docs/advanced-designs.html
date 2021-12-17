@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Hughes and Thomas Fisher" />
 
 
-<meta name="date" content="2021-12-16" />
+<meta name="date" content="2021-12-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -188,7 +188,9 @@ div.csl-indent {
 <li class="chapter" data-level="1.6.1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#numeric-summaries"><i class="fa fa-check"></i><b>1.6.1</b> Numeric Summaries</a></li>
 <li class="chapter" data-level="1.6.2" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#numeric-summaries-in-r"><i class="fa fa-check"></i><b>1.6.2</b> Numeric Summaries in R</a></li>
 <li class="chapter" data-level="1.6.3" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#graphical-summaries"><i class="fa fa-check"></i><b>1.6.3</b> Graphical Summaries</a></li>
-<li class="chapter" data-level="1.6.4" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#descriptive-statistics-and-visualizations-by-levels-of-a-factor-variable"><i class="fa fa-check"></i><b>1.6.4</b> Descriptive statistics and visualizations by levels of a factor variable</a></li>
+<li class="chapter" data-level="1.6.4" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#distribution-of-univariate-variables"><i class="fa fa-check"></i><b>1.6.4</b> Distribution of Univariate Variables</a></li>
+<li class="chapter" data-level="1.6.5" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#descriptive-statistics-and-visualizations-by-levels-of-a-factor-variable"><i class="fa fa-check"></i><b>1.6.5</b> Descriptive statistics and visualizations by levels of a factor variable</a></li>
+<li class="chapter" data-level="1.6.6" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#descriptive-statistics-and-visualizations-for-two-numeric-variables"><i class="fa fa-check"></i><b>1.6.6</b> Descriptive statistics and visualizations for two numeric variables</a></li>
 </ul></li>
 <li class="chapter" data-level="1.7" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#sampling-distributions-describing-how-a-statistic-varies"><i class="fa fa-check"></i><b>1.7</b> Sampling distributions: describing how a statistic varies</a></li>
 <li class="chapter" data-level="1.8" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#two-sample-inference"><i class="fa fa-check"></i><b>1.8</b> Two-sample inference</a></li>
@@ -528,15 +530,15 @@ Treatment 12
 <p>Fortunately, for higher order factor problems there are statisticians available to help formulate a better design and potentially <em>optimize</em> some of the variables of study. We leave out the details of these topics in this Introductory text but want to provide insight that these advanced designs and analyses can be done. Please consult a statistician before your experiment if you are planning a complex design!!</p>
 <p><strong>Example continued.</strong> Below we complete the example involving the marketing research contractors.</p>
 <p>First we read in the data and make sure R properly treats the factors.</p>
-<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="advanced-designs.html#cb136-1" aria-hidden="true" tabindex="-1"></a>marketing <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;marketingResearch.txt&quot;</span>, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
-<span id="cb136-2"><a href="advanced-designs.html#cb136-2" aria-hidden="true" tabindex="-1"></a>marketing <span class="ot">&lt;-</span> marketing <span class="sc">%&gt;%</span></span>
-<span id="cb136-3"><a href="advanced-designs.html#cb136-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Fee =</span> <span class="fu">as.factor</span>(Fee),</span>
-<span id="cb136-4"><a href="advanced-designs.html#cb136-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">Scope =</span> <span class="fu">as.factor</span>(Scope),</span>
-<span id="cb136-5"><a href="advanced-designs.html#cb136-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">Supervision =</span> <span class="fu">as.factor</span>(Supervision))</span></code></pre></div>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="advanced-designs.html#cb139-1" aria-hidden="true" tabindex="-1"></a>marketing <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;marketingResearch.txt&quot;</span>, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
+<span id="cb139-2"><a href="advanced-designs.html#cb139-2" aria-hidden="true" tabindex="-1"></a>marketing <span class="ot">&lt;-</span> marketing <span class="sc">%&gt;%</span></span>
+<span id="cb139-3"><a href="advanced-designs.html#cb139-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Fee =</span> <span class="fu">as.factor</span>(Fee),</span>
+<span id="cb139-4"><a href="advanced-designs.html#cb139-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">Scope =</span> <span class="fu">as.factor</span>(Scope),</span>
+<span id="cb139-5"><a href="advanced-designs.html#cb139-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">Supervision =</span> <span class="fu">as.factor</span>(Supervision))</span></code></pre></div>
 <p>We leave out EDA and residual analysis from this example for brevity. We fit the ANOVA model.</p>
-<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="advanced-designs.html#cb137-1" aria-hidden="true" tabindex="-1"></a>marketing.anova <span class="ot">&lt;-</span> <span class="fu">aov</span>(Quality <span class="sc">~</span> Fee<span class="sc">*</span>Scope<span class="sc">*</span>Supervision, <span class="at">data=</span>marketing)</span></code></pre></div>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="advanced-designs.html#cb140-1" aria-hidden="true" tabindex="-1"></a>marketing.anova <span class="ot">&lt;-</span> <span class="fu">aov</span>(Quality <span class="sc">~</span> Fee<span class="sc">*</span>Scope<span class="sc">*</span>Supervision, <span class="at">data=</span>marketing)</span></code></pre></div>
 <p>Here we used the notation <code>Fee*Scope*Supervision</code> so R will fit a full factorial model (that is, all main effects and interaction terms). Now look at the ANOVA output.</p>
-<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="advanced-designs.html#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(marketing.anova)</span></code></pre></div>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="advanced-designs.html#cb141-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(marketing.anova)</span></code></pre></div>
 <pre><code>##                       Df Sum Sq Mean Sq F value  Pr(&gt;F)    
 ## Fee                    2  10044    5022  679.34 &lt; 2e-16 ***
 ## Scope                  1   1834    1834  248.08 &lt; 2e-16 ***
@@ -566,8 +568,8 @@ Treatment 12
 <h3><span class="header-section-number">4.2.1</span> Blocks revisited: an approach to handling within-subjects factors</h3>
 <p>The notion and purpose of blocking in an experimental design was introduced in section 3.1. If you recall that witty definition of blocks as relatively homogeneously sets of experimental material, it may occur to you that subjects can serve as blocks. In fact, this was already stated in section 3.1. What this means for us now is that using a block design approach in analysis is a way to handle correlated (non-independent) observations such as in the paired <span class="math inline">\(t\)</span>-test problem above. We illustrate that here.</p>
 <p><strong>Example.</strong> 10 mice received a dietary treatment during 3 months. We want to know whether the dietary treatment has an impact on the weight of the mice. To answer to this question, the weight of the 20 mice has been measured before and after the treatment and is in the file <code>mice.csv</code>. Below is some code to quickly look at the data:</p>
-<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="advanced-designs.html#cb140-1" aria-hidden="true" tabindex="-1"></a>mice <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;http://www.users.miamioh.edu/hughesmr/sta363/miceWeighttallform.csv&quot;</span>)</span>
-<span id="cb140-2"><a href="advanced-designs.html#cb140-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mice)</span></code></pre></div>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="advanced-designs.html#cb143-1" aria-hidden="true" tabindex="-1"></a>mice <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;http://www.users.miamioh.edu/hughesmr/sta363/miceWeighttallform.csv&quot;</span>)</span>
+<span id="cb143-2"><a href="advanced-designs.html#cb143-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mice)</span></code></pre></div>
 <pre><code>##   id  group weight
 ## 1  1 before  200.1
 ## 2  2 before  190.9
@@ -577,8 +579,8 @@ Treatment 12
 ## 6  6 before  196.9</code></pre>
 <p>Note the difference in the layout of the data here as compared to the file <code>miceWeightwideform.csv</code> used in the paired <span class="math inline">\(t\)</span>-test in section 2.4. The data here is in what is called “tall mode”: each observation occupies a single row of the data file now, and there is a new variable (id) that identifies which subject every observation belongs to. The variable group refers to the time factor.</p>
 <p>We will analyze this same data (addressing the same research question) by using a <strong>block design approach</strong>:</p>
-<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="advanced-designs.html#cb142-1" aria-hidden="true" tabindex="-1"></a>mice.block.aov <span class="ot">&lt;-</span> <span class="fu">aov</span>(weight <span class="sc">~</span> <span class="fu">factor</span>(id) <span class="sc">+</span> group, <span class="at">data=</span>mice)</span>
-<span id="cb142-2"><a href="advanced-designs.html#cb142-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mice.block.aov)</span></code></pre></div>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="advanced-designs.html#cb145-1" aria-hidden="true" tabindex="-1"></a>mice.block.aov <span class="ot">&lt;-</span> <span class="fu">aov</span>(weight <span class="sc">~</span> <span class="fu">factor</span>(id) <span class="sc">+</span> group, <span class="at">data=</span>mice)</span>
+<span id="cb145-2"><a href="advanced-designs.html#cb145-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mice.block.aov)</span></code></pre></div>
 <pre><code>##             Df Sum Sq Mean Sq F value  Pr(&gt;F)    
 ## factor(id)   9   6946     772    1.78     0.2    
 ## group        1 189132  189132  436.11 6.2e-09 ***
@@ -595,8 +597,8 @@ Treatment 12
 <p>Perhaps <strong>a more general approach</strong> to within-subjects analysis is to specify to R the fact that there are layers of random variability in the data introduced by the fact that we have more than one measurement per experimental unit. This can be done using an <code>aov</code> model specification that explicitly cites these layers with an Error option. The model specification in R is generally</p>
 <pre><code>aov(response ~ between-subjects factor structure + Error(EU variable/WS factor)</code></pre>
 <p>In the present example, this would be as follows:</p>
-<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="advanced-designs.html#cb145-1" aria-hidden="true" tabindex="-1"></a>WS_aov <span class="ot">&lt;-</span> <span class="fu">aov</span>(weight <span class="sc">~</span> group <span class="sc">+</span> <span class="fu">Error</span>(<span class="fu">factor</span>(id)<span class="sc">/</span>group), <span class="at">data=</span>mice)</span>
-<span id="cb145-2"><a href="advanced-designs.html#cb145-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(WS_aov)</span></code></pre></div>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="advanced-designs.html#cb148-1" aria-hidden="true" tabindex="-1"></a>WS_aov <span class="ot">&lt;-</span> <span class="fu">aov</span>(weight <span class="sc">~</span> group <span class="sc">+</span> <span class="fu">Error</span>(<span class="fu">factor</span>(id)<span class="sc">/</span>group), <span class="at">data=</span>mice)</span>
+<span id="cb148-2"><a href="advanced-designs.html#cb148-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(WS_aov)</span></code></pre></div>
 <pre><code>## 
 ## Error: factor(id)
 ##           Df Sum Sq Mean Sq F value Pr(&gt;F)
@@ -686,8 +688,8 @@ Binary
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="advanced-designs.html#cb147-1" aria-hidden="true" tabindex="-1"></a>chol <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;http://www.users.miamioh.edu/hughesmr/sta363/cholesterolreduction.csv&quot;</span>)</span>
-<span id="cb147-2"><a href="advanced-designs.html#cb147-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(chol)</span></code></pre></div>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="advanced-designs.html#cb150-1" aria-hidden="true" tabindex="-1"></a>chol <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;http://www.users.miamioh.edu/hughesmr/sta363/cholesterolreduction.csv&quot;</span>)</span>
+<span id="cb150-2"><a href="advanced-designs.html#cb150-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(chol)</span></code></pre></div>
 <pre><code>## Rows: 18
 ## Columns: 5
 ## $ ID          &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,~
@@ -701,10 +703,10 @@ Binary
 <li><code>Margarine</code> (2 level between-subjects: A or B)</li>
 </ul>
 <p>Note that the data is currently in wide form. We need to convert it to tall form:</p>
-<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="advanced-designs.html#cb149-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb149-2"><a href="advanced-designs.html#cb149-2" aria-hidden="true" tabindex="-1"></a>chol_tall <span class="ot">&lt;-</span> chol <span class="sc">%&gt;%</span> </span>
-<span id="cb149-3"><a href="advanced-designs.html#cb149-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span>Before<span class="sc">:</span>After8weeks, <span class="at">names_to=</span><span class="st">&quot;time.pt&quot;</span>, <span class="at">values_to=</span><span class="st">&quot;chol.level&quot;</span>)</span>
-<span id="cb149-4"><a href="advanced-designs.html#cb149-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(chol_tall)</span></code></pre></div>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="advanced-designs.html#cb152-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb152-2"><a href="advanced-designs.html#cb152-2" aria-hidden="true" tabindex="-1"></a>chol_tall <span class="ot">&lt;-</span> chol <span class="sc">%&gt;%</span> </span>
+<span id="cb152-3"><a href="advanced-designs.html#cb152-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span>Before<span class="sc">:</span>After8weeks, <span class="at">names_to=</span><span class="st">&quot;time.pt&quot;</span>, <span class="at">values_to=</span><span class="st">&quot;chol.level&quot;</span>)</span>
+<span id="cb152-4"><a href="advanced-designs.html#cb152-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(chol_tall)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 4
 ##      ID Margarine time.pt     chol.level
 ##   &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;            &lt;dbl&gt;
@@ -714,20 +716,20 @@ Binary
 ## 4     2 A         Before            6.76
 ## 5     2 A         After4weeks       6.2 
 ## 6     2 A         After8weeks       6.13</code></pre>
-<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="advanced-designs.html#cb151-1" aria-hidden="true" tabindex="-1"></a>chol_tall <span class="ot">&lt;-</span> chol_tall <span class="sc">%&gt;%</span></span>
-<span id="cb151-2"><a href="advanced-designs.html#cb151-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">time.pt =</span> <span class="fu">factor</span>(time.pt, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Before&quot;</span>, <span class="st">&quot;After4weeks&quot;</span>, <span class="st">&quot;After8weeks&quot;</span>),</span>
-<span id="cb151-3"><a href="advanced-designs.html#cb151-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;Before&quot;</span>, <span class="st">&quot;After 4 weeks&quot;</span>, <span class="st">&quot;After 8 weeks&quot;</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="advanced-designs.html#cb154-1" aria-hidden="true" tabindex="-1"></a>chol_tall <span class="ot">&lt;-</span> chol_tall <span class="sc">%&gt;%</span></span>
+<span id="cb154-2"><a href="advanced-designs.html#cb154-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">time.pt =</span> <span class="fu">factor</span>(time.pt, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Before&quot;</span>, <span class="st">&quot;After4weeks&quot;</span>, <span class="st">&quot;After8weeks&quot;</span>),</span>
+<span id="cb154-3"><a href="advanced-designs.html#cb154-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;Before&quot;</span>, <span class="st">&quot;After 4 weeks&quot;</span>, <span class="st">&quot;After 8 weeks&quot;</span>)))</span></code></pre></div>
 <p>Note here change the variable <code>time.pt</code> to be a factor and we order the factors levels so they are sequential (in context)..</p>
 <div id="exploratory-data-analysis" class="section level4" number="4.2.2.1">
 <h4><span class="header-section-number">4.2.2.1</span> Exploratory Data Analysis</h4>
 <p>We are now ready for some EDA. A table of descriptive statistics by combinations of time and margarine group is our first cut:</p>
-<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="advanced-designs.html#cb152-1" aria-hidden="true" tabindex="-1"></a>chol.summary <span class="ot">&lt;-</span> chol_tall <span class="sc">%&gt;%</span></span>
-<span id="cb152-2"><a href="advanced-designs.html#cb152-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Margarine, time.pt) <span class="sc">%&gt;%</span></span>
-<span id="cb152-3"><a href="advanced-designs.html#cb152-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Mean =</span> <span class="fu">mean</span>(chol.level),</span>
-<span id="cb152-4"><a href="advanced-designs.html#cb152-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">SD =</span> <span class="fu">sd</span>(chol.level),</span>
-<span id="cb152-5"><a href="advanced-designs.html#cb152-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">SE =</span> <span class="fu">sd</span>(chol.level)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(chol.level)),</span>
-<span id="cb152-6"><a href="advanced-designs.html#cb152-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">n =</span> <span class="fu">length</span>(chol.level))</span>
-<span id="cb152-7"><a href="advanced-designs.html#cb152-7" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(chol.summary)</span></code></pre></div>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="advanced-designs.html#cb155-1" aria-hidden="true" tabindex="-1"></a>chol.summary <span class="ot">&lt;-</span> chol_tall <span class="sc">%&gt;%</span></span>
+<span id="cb155-2"><a href="advanced-designs.html#cb155-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Margarine, time.pt) <span class="sc">%&gt;%</span></span>
+<span id="cb155-3"><a href="advanced-designs.html#cb155-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Mean =</span> <span class="fu">mean</span>(chol.level),</span>
+<span id="cb155-4"><a href="advanced-designs.html#cb155-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">SD =</span> <span class="fu">sd</span>(chol.level),</span>
+<span id="cb155-5"><a href="advanced-designs.html#cb155-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">SE =</span> <span class="fu">sd</span>(chol.level)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(chol.level)),</span>
+<span id="cb155-6"><a href="advanced-designs.html#cb155-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">n =</span> <span class="fu">length</span>(chol.level))</span>
+<span id="cb155-7"><a href="advanced-designs.html#cb155-7" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(chol.summary)</span></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -875,11 +877,11 @@ After 8 weeks
 </tbody>
 </table>
 <p>We generally observe that cholesterol levels with margarine A appear lower than with margarine B. Also, there does appear to be some reduction in cholesterol level using both products: however, there also appears to be more unexplained variability (“noise”) in the cholesterol measurements under margarine A. We can further check this using some data visualizations. First let us try boxplots as seen in Figure <a href="advanced-designs.html#fig:ch4-7">4.1</a>.</p>
-<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="advanced-designs.html#cb153-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(chol_tall) <span class="sc">+</span></span>
-<span id="cb153-2"><a href="advanced-designs.html#cb153-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>time.pt, <span class="at">y=</span>chol.level)) <span class="sc">+</span></span>
-<span id="cb153-3"><a href="advanced-designs.html#cb153-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Margarine) <span class="sc">+</span></span>
-<span id="cb153-4"><a href="advanced-designs.html#cb153-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Time Point of Measurement&quot;</span>) <span class="sc">+</span></span>
-<span id="cb153-5"><a href="advanced-designs.html#cb153-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Cholesterol level (mmol/L)&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="advanced-designs.html#cb156-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(chol_tall) <span class="sc">+</span></span>
+<span id="cb156-2"><a href="advanced-designs.html#cb156-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>time.pt, <span class="at">y=</span>chol.level)) <span class="sc">+</span></span>
+<span id="cb156-3"><a href="advanced-designs.html#cb156-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Margarine) <span class="sc">+</span></span>
+<span id="cb156-4"><a href="advanced-designs.html#cb156-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Time Point of Measurement&quot;</span>) <span class="sc">+</span></span>
+<span id="cb156-5"><a href="advanced-designs.html#cb156-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Cholesterol level (mmol/L)&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch4-7"></span>
 <img src="introStatModeling_files/figure-html/ch4-7-1.png" alt="Boxplot distribution of the Cholesterol level as a function of Treatment and Time of measurement." width="100%" />
 <p class="caption">
@@ -887,13 +889,13 @@ Figure 4.1: Boxplot distribution of the Cholesterol level as a function of Treat
 </p>
 </div>
 <p>We see in Figure <a href="advanced-designs.html#fig:ch4-7">4.1</a> that perhaps cholesterol levels are generally more consistent under margarine B, and that it is just some outlier(s) that are the issue. However, this plot does not reveal a crucial piece of information: <strong>the responses are correlated over time</strong>. A better depiction would allow us to see how each individual subject’s cholesterol changed over the span of the experiment as seen in Figure <a href="advanced-designs.html#fig:ch4-8">4.2</a>.</p>
-<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="advanced-designs.html#cb154-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the individual-level cholesterol profiles</span></span>
-<span id="cb154-2"><a href="advanced-designs.html#cb154-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(chol_tall, <span class="fu">aes</span>(<span class="at">x=</span>time.pt, <span class="at">y=</span>chol.level, <span class="at">colour=</span>Margarine, <span class="at">group=</span>ID)) <span class="sc">+</span></span>
-<span id="cb154-3"><a href="advanced-designs.html#cb154-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">shape=</span><span class="dv">21</span>, <span class="at">fill=</span><span class="st">&quot;white&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb154-4"><a href="advanced-designs.html#cb154-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Margarine) <span class="sc">+</span></span>
-<span id="cb154-5"><a href="advanced-designs.html#cb154-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Time Point of Measurement&quot;</span>) <span class="sc">+</span></span>
-<span id="cb154-6"><a href="advanced-designs.html#cb154-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Cholesterol level (mmol/L)&quot;</span>) <span class="sc">+</span></span>
-<span id="cb154-7"><a href="advanced-designs.html#cb154-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Subject-level cholesterol profiles by Margarine group&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="advanced-designs.html#cb157-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the individual-level cholesterol profiles</span></span>
+<span id="cb157-2"><a href="advanced-designs.html#cb157-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(chol_tall, <span class="fu">aes</span>(<span class="at">x=</span>time.pt, <span class="at">y=</span>chol.level, <span class="at">colour=</span>Margarine, <span class="at">group=</span>ID)) <span class="sc">+</span></span>
+<span id="cb157-3"><a href="advanced-designs.html#cb157-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">shape=</span><span class="dv">21</span>, <span class="at">fill=</span><span class="st">&quot;white&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb157-4"><a href="advanced-designs.html#cb157-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Margarine) <span class="sc">+</span></span>
+<span id="cb157-5"><a href="advanced-designs.html#cb157-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Time Point of Measurement&quot;</span>) <span class="sc">+</span></span>
+<span id="cb157-6"><a href="advanced-designs.html#cb157-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Cholesterol level (mmol/L)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb157-7"><a href="advanced-designs.html#cb157-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Subject-level cholesterol profiles by Margarine group&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch4-8"></span>
 <img src="introStatModeling_files/figure-html/ch4-8-1.png" alt="Profile plots of the Cholesterol level as a function of Treatment and Time of measurement." width="100%" />
 <p class="caption">
@@ -901,14 +903,14 @@ Figure 4.2: Profile plots of the Cholesterol level as a function of Treatment an
 </p>
 </div>
 <p>In Figure <a href="advanced-designs.html#fig:ch4-8">4.2</a> we see some things more clearly. The general pattern over time appears to be pretty consistent for every experimental unit (visually, each “line” in the plot). There are two individuals in margarine B whose cholesterol level seems unusually higher than the others: this might warrant further investigation. Now we provide an summary profile of the two treatments in <a href="advanced-designs.html#fig:ch4-9">4.3</a>.</p>
-<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="advanced-designs.html#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="co"># we include a position_dodge elements to avoid overlap</span></span>
-<span id="cb155-2"><a href="advanced-designs.html#cb155-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(chol.summary, <span class="fu">aes</span>(<span class="at">x=</span>time.pt, <span class="at">y=</span>Mean, <span class="at">colour=</span>Margarine)) <span class="sc">+</span> </span>
-<span id="cb155-3"><a href="advanced-designs.html#cb155-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>Mean<span class="sc">-</span>SE, <span class="at">ymax=</span>Mean<span class="sc">+</span>SE), <span class="at">width=</span>.<span class="dv">1</span>, <span class="at">position=</span><span class="fu">position_dodge</span>(<span class="fl">0.3</span>)) <span class="sc">+</span></span>
-<span id="cb155-4"><a href="advanced-designs.html#cb155-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group=</span>Margarine), <span class="at">position=</span><span class="fu">position_dodge</span>(<span class="fl">0.3</span>)) <span class="sc">+</span></span>
-<span id="cb155-5"><a href="advanced-designs.html#cb155-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">position=</span><span class="fu">position_dodge</span>(<span class="fl">0.3</span>)) <span class="sc">+</span></span>
-<span id="cb155-6"><a href="advanced-designs.html#cb155-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Time Point of Measurement&quot;</span>) <span class="sc">+</span></span>
-<span id="cb155-7"><a href="advanced-designs.html#cb155-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Cholesterol level (mmol/L)&quot;</span>) <span class="sc">+</span></span>
-<span id="cb155-8"><a href="advanced-designs.html#cb155-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Mean Cholesterol level (with Standard Error bars)&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="advanced-designs.html#cb158-1" aria-hidden="true" tabindex="-1"></a><span class="co"># we include a position_dodge elements to avoid overlap</span></span>
+<span id="cb158-2"><a href="advanced-designs.html#cb158-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(chol.summary, <span class="fu">aes</span>(<span class="at">x=</span>time.pt, <span class="at">y=</span>Mean, <span class="at">colour=</span>Margarine)) <span class="sc">+</span> </span>
+<span id="cb158-3"><a href="advanced-designs.html#cb158-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>Mean<span class="sc">-</span>SE, <span class="at">ymax=</span>Mean<span class="sc">+</span>SE), <span class="at">width=</span>.<span class="dv">1</span>, <span class="at">position=</span><span class="fu">position_dodge</span>(<span class="fl">0.3</span>)) <span class="sc">+</span></span>
+<span id="cb158-4"><a href="advanced-designs.html#cb158-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group=</span>Margarine), <span class="at">position=</span><span class="fu">position_dodge</span>(<span class="fl">0.3</span>)) <span class="sc">+</span></span>
+<span id="cb158-5"><a href="advanced-designs.html#cb158-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">position=</span><span class="fu">position_dodge</span>(<span class="fl">0.3</span>)) <span class="sc">+</span></span>
+<span id="cb158-6"><a href="advanced-designs.html#cb158-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Time Point of Measurement&quot;</span>) <span class="sc">+</span></span>
+<span id="cb158-7"><a href="advanced-designs.html#cb158-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Cholesterol level (mmol/L)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb158-8"><a href="advanced-designs.html#cb158-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Mean Cholesterol level (with Standard Error bars)&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch4-9"></span>
 <img src="introStatModeling_files/figure-html/ch4-9-1.png" alt="Average Profile of Cholesterol level by Treatment in Time." width="70%" />
 <p class="caption">
@@ -920,9 +922,9 @@ Figure 4.3: Average Profile of Cholesterol level by Treatment in Time.
 <div id="preliminary-inferential-analysis" class="section level4" number="4.2.2.2">
 <h4><span class="header-section-number">4.2.2.2</span> Preliminary inferential analysis</h4>
 <p>Of more concern to a fully correct analysis is addressing why there appears to be a difference between the margarine groups at the “Before” stage. At that point, no margarines had been administered, so if the subjects had been truly randomly assigned to the margarine groups (as they should be in a properly designed experiment!), we would have expected consistent cholesterol readings between the groups at that point. This can be formally tested as follows, with a simple independent samples <span class="math inline">\(t\)</span>-test comparing the mean cholesterol levels of the A and B groups at the “Before” stage:</p>
-<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="advanced-designs.html#cb156-1" aria-hidden="true" tabindex="-1"></a>BeforeDataOnly <span class="ot">&lt;-</span> chol_tall <span class="sc">%&gt;%</span></span>
-<span id="cb156-2"><a href="advanced-designs.html#cb156-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(time.pt <span class="sc">==</span> <span class="st">&quot;Before&quot;</span>)</span>
-<span id="cb156-3"><a href="advanced-designs.html#cb156-3" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(chol.level <span class="sc">~</span> Margarine, <span class="at">data=</span>BeforeDataOnly, <span class="at">var.equal=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="advanced-designs.html#cb159-1" aria-hidden="true" tabindex="-1"></a>BeforeDataOnly <span class="ot">&lt;-</span> chol_tall <span class="sc">%&gt;%</span></span>
+<span id="cb159-2"><a href="advanced-designs.html#cb159-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(time.pt <span class="sc">==</span> <span class="st">&quot;Before&quot;</span>)</span>
+<span id="cb159-3"><a href="advanced-designs.html#cb159-3" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(chol.level <span class="sc">~</span> Margarine, <span class="at">data=</span>BeforeDataOnly, <span class="at">var.equal=</span><span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## 
 ##  Two Sample t-test
 ## 
@@ -939,10 +941,10 @@ Figure 4.3: Average Profile of Cholesterol level by Treatment in Time.
 <div id="a-conditional-repeated-measures-analysis" class="section level4" number="4.2.2.3">
 <h4><span class="header-section-number">4.2.2.3</span> A conditional repeated measures analysis</h4>
 <p>To get started, lets do a within-subjects (repeated measures) ANOVA on the Margarine A data only. The goal here would be to see if there is an effective reduction in mean cholesterol over the eight-week trial by using margarine A. Here goes: follow the code!</p>
-<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="advanced-designs.html#cb158-1" aria-hidden="true" tabindex="-1"></a>MargarineA <span class="ot">&lt;-</span> chol_tall <span class="sc">%&gt;%</span> </span>
-<span id="cb158-2"><a href="advanced-designs.html#cb158-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Margarine <span class="sc">==</span> <span class="st">&quot;A&quot;</span>)</span>
-<span id="cb158-3"><a href="advanced-designs.html#cb158-3" aria-hidden="true" tabindex="-1"></a>RMaov_MargA <span class="ot">&lt;-</span> <span class="fu">aov</span>(chol.level <span class="sc">~</span> time.pt <span class="sc">+</span> <span class="fu">Error</span>(<span class="fu">factor</span>(ID)<span class="sc">/</span>time.pt), <span class="at">data=</span>MargarineA)</span>
-<span id="cb158-4"><a href="advanced-designs.html#cb158-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(RMaov_MargA)</span></code></pre></div>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="advanced-designs.html#cb161-1" aria-hidden="true" tabindex="-1"></a>MargarineA <span class="ot">&lt;-</span> chol_tall <span class="sc">%&gt;%</span> </span>
+<span id="cb161-2"><a href="advanced-designs.html#cb161-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Margarine <span class="sc">==</span> <span class="st">&quot;A&quot;</span>)</span>
+<span id="cb161-3"><a href="advanced-designs.html#cb161-3" aria-hidden="true" tabindex="-1"></a>RMaov_MargA <span class="ot">&lt;-</span> <span class="fu">aov</span>(chol.level <span class="sc">~</span> time.pt <span class="sc">+</span> <span class="fu">Error</span>(<span class="fu">factor</span>(ID)<span class="sc">/</span>time.pt), <span class="at">data=</span>MargarineA)</span>
+<span id="cb161-4"><a href="advanced-designs.html#cb161-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(RMaov_MargA)</span></code></pre></div>
 <pre><code>## 
 ## Error: factor(ID)
 ##           Df Sum Sq Mean Sq F value Pr(&gt;F)
@@ -955,16 +957,16 @@ Figure 4.3: Average Profile of Cholesterol level by Treatment in Time.
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>The test of interest is labeled time.pt. It is significant (<span class="math inline">\(F\)</span> = 106.3, <span class="math inline">\(\textrm{df}_1\)</span> = 2, <span class="math inline">\(\textrm{df}_2\)</span> = 16, <span class="math inline">\(p\)</span>-value = <span class="math inline">\(5.7 \times 10^{-10}\)</span>). What this means is that, using Margarine A, there is significant evidence to conclude that the <em>true mean cholesterol level differs between at least two of the time points</em>. Of course, that result does not mean that the margarine is effective at reducing cholesterol levels. All it means is that the mean cholesterol level is changing at some point over the experiment. Since there are three time points, a multiple comparison procedure is warranted with the output below and in Figure <a href="advanced-designs.html#fig:ch4-12">4.4</a>.</p>
-<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="advanced-designs.html#cb160-1" aria-hidden="true" tabindex="-1"></a>MargA.mc <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(RMaov_MargA, <span class="sc">~</span> time.pt)</span></code></pre></div>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="advanced-designs.html#cb163-1" aria-hidden="true" tabindex="-1"></a>MargA.mc <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(RMaov_MargA, <span class="sc">~</span> time.pt)</span></code></pre></div>
 <pre><code>## Note: re-fitting model with sum-to-zero contrasts</code></pre>
-<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="advanced-designs.html#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contrast</span>(MargA.mc, <span class="st">&quot;pairwise&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="advanced-designs.html#cb165-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contrast</span>(MargA.mc, <span class="st">&quot;pairwise&quot;</span>)</span></code></pre></div>
 <pre><code>##  contrast                      estimate     SE df t.ratio p.value
 ##  Before - After 4 weeks          0.4856 0.0411 16  11.817  &lt;.0001
 ##  Before - After 8 weeks          0.5467 0.0411 16  13.304  &lt;.0001
 ##  After 4 weeks - After 8 weeks   0.0611 0.0411 16   1.487  0.3229
 ## 
 ## P value adjustment: tukey method for comparing a family of 3 estimates</code></pre>
-<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="advanced-designs.html#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">contrast</span>(MargA.mc, <span class="st">&quot;pairwise&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="advanced-designs.html#cb167-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">contrast</span>(MargA.mc, <span class="st">&quot;pairwise&quot;</span>))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch4-12"></span>
 <img src="introStatModeling_files/figure-html/ch4-12-1.png" alt="Comparing the effects of time within the Margarine A treatment groupu. We see there is no statistical difference between 4 and 8 weeks after treatment begins." width="70%" />
 <p class="caption">
@@ -976,9 +978,9 @@ Figure 4.4: Comparing the effects of time within the Margarine A treatment group
 <div id="full-analysis-formal-comparison-of-margarines" class="section level4" number="4.2.2.4">
 <h4><span class="header-section-number">4.2.2.4</span> Full analysis: Formal Comparison of Margarines</h4>
 <p>It is always critically important to know the structure of the data, which here stems from the design of the experiment. In this case, we cannot just “compared the margarines” because there is a subject-level time profile under each margarine. Since the same time points are observed under each margarine group, the factors margarine and <code>time.pt</code> are crossed effects, which means we have a <em>factorial data structure</em> (see section 3.2). The “wrinkle” here is that one of the two factors is a between-subjects factor (Margarine) and the other is within-subjects (<code>time.pt</code>). But, we can handle this in <code>aov</code>:</p>
-<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="advanced-designs.html#cb165-1" aria-hidden="true" tabindex="-1"></a>RMaov_all <span class="ot">&lt;-</span> <span class="fu">aov</span>(chol.level <span class="sc">~</span> Margarine <span class="sc">+</span> time.pt <span class="sc">+</span> Margarine<span class="sc">:</span>time.pt <span class="sc">+</span> </span>
-<span id="cb165-2"><a href="advanced-designs.html#cb165-2" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">Error</span>(<span class="fu">factor</span>(ID)<span class="sc">/</span>time.pt), <span class="at">data=</span>chol_tall)</span>
-<span id="cb165-3"><a href="advanced-designs.html#cb165-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(RMaov_all)</span></code></pre></div>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="advanced-designs.html#cb168-1" aria-hidden="true" tabindex="-1"></a>RMaov_all <span class="ot">&lt;-</span> <span class="fu">aov</span>(chol.level <span class="sc">~</span> Margarine <span class="sc">+</span> time.pt <span class="sc">+</span> Margarine<span class="sc">:</span>time.pt <span class="sc">+</span> </span>
+<span id="cb168-2"><a href="advanced-designs.html#cb168-2" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">Error</span>(<span class="fu">factor</span>(ID)<span class="sc">/</span>time.pt), <span class="at">data=</span>chol_tall)</span>
+<span id="cb168-3"><a href="advanced-designs.html#cb168-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(RMaov_all)</span></code></pre></div>
 <pre><code>## 
 ## Error: factor(ID)
 ##           Df Sum Sq Mean Sq F value Pr(&gt;F)
@@ -993,9 +995,9 @@ Figure 4.4: Comparing the effects of time within the Margarine A treatment group
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>As with the factorials models before, the first thing we must check is the significance of the interaction term. If this is significant, it means that the effect of time on the mean cholesterol is different between the two margarines. That is the case here (<span class="math inline">\(F\)</span> = 4.777, <span class="math inline">\(\textrm{df}_1\)</span> = 2, <span class="math inline">\(\textrm{df}_2\)</span> = 32, <span class="math inline">\(p\)</span>-value = 0.0153). As a result, we should do our multiple comparisons <strong>by conditioning on one of the two factors</strong>. Experimental context will dictate which of the two factors is the more reasonable to condition on. Here, I choose to condition on Margarine group, so I will get a time-based comparison of mean cholesterol level, but specific to each Margarine group:</p>
-<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="advanced-designs.html#cb167-1" aria-hidden="true" tabindex="-1"></a>RMall.mc <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(RMaov_all, <span class="sc">~</span> time.pt <span class="sc">|</span> Margarine)</span></code></pre></div>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="advanced-designs.html#cb170-1" aria-hidden="true" tabindex="-1"></a>RMall.mc <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(RMaov_all, <span class="sc">~</span> time.pt <span class="sc">|</span> Margarine)</span></code></pre></div>
 <pre><code>## Note: re-fitting model with sum-to-zero contrasts</code></pre>
-<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="advanced-designs.html#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contrast</span>(RMall.mc, <span class="st">&quot;pairwise&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="advanced-designs.html#cb172-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contrast</span>(RMall.mc, <span class="st">&quot;pairwise&quot;</span>)</span></code></pre></div>
 <pre><code>## Margarine = A:
 ##  contrast                      estimate    SE df t.ratio p.value
 ##  Before - After 4 weeks          0.4856 0.043 32  11.290  &lt;.0001
@@ -1009,7 +1011,7 @@ Figure 4.4: Comparing the effects of time within the Margarine A treatment group
 ##  After 4 weeks - After 8 weeks   0.0644 0.043 32   1.498  0.3051
 ## 
 ## P value adjustment: tukey method for comparing a family of 3 estimates</code></pre>
-<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="advanced-designs.html#cb171-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">contrast</span>(RMall.mc, <span class="st">&quot;pairwise&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="advanced-designs.html#cb174-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">contrast</span>(RMall.mc, <span class="st">&quot;pairwise&quot;</span>))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch4-14"></span>
 <img src="introStatModeling_files/figure-html/ch4-14-1.png" alt="Graphical exploration of all treatments noting that there is no statistical difference between 4 and 8 weeks after the study has began regardless of Margarine treatment." width="70%" />
 <p class="caption">

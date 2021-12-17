@@ -2,7 +2,8 @@
 
 # Introductory Statistics in R
 
-Before we begin our dive into Statistical Modeling we first review content from your introductory statistics course. The learning objective of this unit include:
+Before we begin our dive into Statistical Modeling we first review content from your introductory statistics course and introduce fundamental elements of the R programming language [@R-base]. 
+The learning objective of this unit include:
 
 * Review of the fundamental concepts of *populations*, *samples*, *parameters* and *statistics*.
 * Review of exploratory and descriptive statistics: numerical quantities and graphics.
@@ -20,9 +21,13 @@ Good statistical practice demands that we collect **sample** data from the **pop
 
 There are two issues that arise with respect to variation in such data:
 
-1. Measurements of the same attribute will vary from sample member to sample member. This is natural and is to be expected. This *random* (or *stochastic*) component of a sample is typically modeled through probabilistic assumptions (think the *Normal* distribution from your Intro Stat course).
+1. Measurements of the same attribute will vary from sample member to sample member. 
+This is natural and is to be expected. 
+This *random* (or *stochastic*) component of a sample is typically modeled through probabilistic assumptions (think the *Normal* distribution from your Intro Stat course).
 
-2. Any summary characteristic computed from the sample (known as a sample **statistic**) will only be an estimate of the corresponding summary characteristic for the population as a whole (known as a population **parameter**), since only a small subset of the population is used in its calculation. Thus, *sample statistics will vary from their corresponding population parameters*. In fact, different samples from the same population will produce different estimates of the same parameter, so sample statistics also vary from sample to sample.
+2. Any summary characteristic computed from the sample (known as a sample **statistic**) will only be an estimate of the corresponding summary characteristic for the population as a whole (known as a population **parameter**), since only a small subset of the population is used in its calculation. 
+Thus, *sample statistics will vary from their corresponding population parameters*. 
+In fact, different samples from the same population will produce different estimates of the same parameter, so sample statistics also vary from sample to sample.
 
 This variation gives rise to the concept of uncertainty in any findings that we make about a population based on sample data. 
 A meaningful statistical analysis helps us quantify this uncertainty.
@@ -43,11 +48,18 @@ Look before you leap!
 
 **Problem formulation** - To attack a problem correctly, you should:
 
-1. **Understand the background**. Statisticians often work in collaboration with researchers in other disciplines and need to understand something about the subject area. You should regard this as an opportunity to learn something new. In essence, a Statistician must be a renaissance (wo)man. Some level of *elementary* expertise is needed in the subject area of study.
+1. **Understand the background**. Statisticians often work in collaboration with researchers in other disciplines and need to understand something about the subject area. 
+You should regard this as an opportunity to learn something new. 
+In essence, a Statistician must be a renaissance (wo)man. 
+Some level of *elementary* expertise is needed in the subject area of study.
 
-2. **Understand the objectives**. Again, often you will be working with a collaborator who may not be clear about what the objectives are. Beware of conducting "fishing expeditions": if you look hard enough, you'll almost always find something, but that something may just be a coincidence of no consequence. Also, sometimes an analysis far more complicated than what is really needed is performed. You may find sometimes that simple descriptive statistics are all that are really required. Even if a more complex analysis is necessary, simple descriptive statistics can provide a valuable supplement.
+2. **Understand the objectives**. Again, often you will be working with a collaborator who may not be clear about what the objectives are. Beware of conducting "fishing expeditions": if you look hard enough, you'll almost always find something, but that something may just be a coincidence of no consequence. 
+Also, sometimes an analysis far more complicated than what is really needed is performed. 
+You may find sometimes that simple descriptive statistics are all that are really required. 
+Even if a more complex analysis is necessary, simple descriptive statistics can provide a valuable supplement.
 
-3. **Translate the problem into statistical terms**.  This can be a challenging step and oftentimes requires creativity on the part of the statistician (in other words, not every problem fits into a neat little box like in an intro stats course!). Care must be taken at this step.
+3. **Translate the problem into statistical terms**.  This can be a challenging step and oftentimes requires creativity on the part of the statistician (in other words, not every problem fits into a neat little box like in an intro stats course!). 
+Care must be taken at this step.
 
 
 
@@ -212,10 +224,11 @@ This is the first dataset we input above, in the `uadata` data frame.
 
 
 
-The `tidyverse` package is actually a wrapper for many R packages. 
-One of the key packages we use for data processing is the `dplyr` package. 
-It includes many functions that are similar to SQL (for those who know it). 
-These tools tend to be easy to understand with syntax similar to that in SQL. First we will load the package and then take a *glimpse* of the dataset with which we are working
+The `tidyverse` package [@R-tidyverse] is actually a wrapper for many R packages. 
+One of the key packages we use for data processing is the `dplyr` package [@R-dplyr]. 
+It includes many functions that are similar to [SQL](https://www.tutorialspoint.com/sql/sql-overview.htm) (for those who know it). 
+These tools tend to be very readable and easy to understand. 
+First we will load the package and then take a *glimpse* of the dataset with which we are working
 
 ```{r ch1-7, message=FALSE}
 library(tidyverse)   # Load the necessary package
@@ -238,23 +251,30 @@ Below we select the ACT scores for students who have a first year GPA greater th
 
 ```{r ch1-9}
 uadata %>% 
-  filter(gpa.endyr1 > 3.9, year==1998) %>%
+  filter(gpa.endyr1 > 3.9, 
+         year==1998) %>%
   select(act)
 ```
 
-Note in the above, we take the `uadata` and pipe it to a `filter`, which selects only those observations with `gpa.endyr1` greater than 3.9 and `year` equal (==) to 1998, then we pipe that subset to the `select` function that only returns the variable `act`.
+Note in the above, we take the `uadata` and pipe it to a `filter`, which selects only those observations with `gpa.endyr1` greater than 3.9 and `year` equal (`==`) to 1998, then we pipe that subset to the `select` function that only returns the variable `act`.
 
-**IMPORTANT NOTE** - R is an evolving language and as such has some wonky behavior. In fact, there are multiple versions of both the `filter` and `select` functions in R. If you ever use one and receive a strange error, first check for a typo. If the error still occurs it is likely the case that R is trying to use a different version of the filter. You can always force R to use the `dplyr` version as in the below example:
+**IMPORTANT NOTE** - R is **an *evolving* language** and as such occasionally has some wonky behavior. 
+In fact, there are multiple versions of both the `filter` and `select` functions in R. 
+If you ever use one and receive a strange error, first check for a typo. 
+If the error still occurs it is likely the case that R is trying to use a different version of the `filter` or `select`. 
+You can always force R to use the `dplyr` version by specifying the pacakge as in the below example:
 
 ```{r eval=FALSE}
 uadata %>% 
-  dplyr::filter(gpa.endyr1 > 3.9, year==1998) %>%
+  dplyr::filter(gpa.endyr1 > 3.9, 
+                year==1998) %>%
   dplyr::select(act)
 ```
 
 ##  Missing values and computer arithmetic in R
 
-Sometimes data from an individual is lost or not available. R indicates such occurrences using the value `NA`.
+Sometimes data from an individual is lost or not available. 
+R indicates such occurrences using the value `NA`.
 Missing values are important to account for, because we cannot simply ignore them when performing functions that involve all values. 
 For example, we cannot find the mean of the elements of a data vector when some are set to `NA`.
 Consider the simple case of a vector of 6 values with one `NA`.
@@ -265,7 +285,12 @@ class(x)
 mean(x)
 ```
 
-Here, the object `x` is a *vector* of class `numeric`. We will not be working with vectors much in this class (a column within a data frame can be considered a vector) but we do so here to demonstrate functionality.
+Here, the object `x` is a *vector* of class `numeric`. 
+We will not be working with vectors much in this class (a column within a data frame can be considered a vector) but we do so here to demonstrate functionality.
+
+Since one of the observations is missing, `NA`, the mean of the vector is also "not available" or `NA`.  
+This is not incorrect: logically speaking there is no way to know the mean of these observations when one of them is missing.
+However, in many cases we may still wish to calculate the mean of the non-missing observations.
 
 **Many R functions have a `na.rm=` logical argument**, which is set to `FALSE` by default. 
 It basically asks if you want to remove the missing values before applying the function.
@@ -279,23 +304,25 @@ The number system used by R has the following ways of accommodating results of c
 
 * `NA`: **Not Available**. Any data value, numeric or not, can be `NA`. This is what you use for missing data. Always use `NA` for this purpose.
 
-* `NaN`: **Not a Number**. This is a special value that only numeric variables can take. It is the result of an undefined operation like 0/0.
+* `NaN`: **Not a Number**. This is a special value that only numeric variables can take. It is the result of an undefined operation such as 0/0.
 
-* `Inf`: **Infinity**. Numeric variables can also take the values `-Inf` and `Inf`. 
-These are produced by the low level arithmetic of all modern computers by operations such as 1/0. (You shouldn't think of these as real infinities, but rather the result of the the correct calculation if the computer could handle extremely large (or extremely small, near 0) numbers, larger than the largest numbers the computer can hold (about $10^{300}$)).
+* `Inf`: **Infinity**. Numeric variables can also take the values `-Inf` and `Inf`. These are produced by the low level arithmetic of all modern computers by operations such as 1/0. (You should not think of these as values as real infinities, but rather the result of the correct calculation if the computer could handle extremely large (or extremely small, near 0) numbers; that is, results that are larger than the largest numbers the computer can hold (about $10^{300}$)).
 
 **Scientific notation**.
 This is a shorthand way of displaying very small or very large numbers. 
 For example, if R displays `3e-8` as a value, it really means $3\times 10^{-8} = 0.00000003$.  
 
 In general, you should convert numbers from scientific notation into decimal notation when writing findings in your reports. 
-For a really small number (like 0.00000003), it will suffice to write "< 0.0001" instead.
+For a really small numbers (like 0.00000003), typically it will suffice to write "< 0.0001" instead.
 
 
 
 ## Exploratory Data Analysis (EDA)
 
-The material presented in this section is typically called *descriptive statistics* in Intro Statistics books. This is an important step that should always be performed prior to a formal analysis. It looks simple but it is vital to conducting a meaningful analysis. EDA is comprised of:
+The material presented in this section is typically called *descriptive statistics* in Intro Statistics books. 
+This is an important step that should always be performed prior to a formal analysis. 
+It looks simple but it is vital to conducting a meaningful analysis. 
+EDA is comprised of:
 
 *	Numerical summaries (means, standard deviations, five-number summaries, correlations)
 *	Graphical summaries
@@ -323,7 +350,8 @@ Common descriptive measures of centrality and quantiles from a sample include
 * Quantiles -- Quantiles, or sample percentiles, can be found using the `quantile()` function. Three common values are $Q_1$ (the sample $25^\mathrm{th}$ percentile, or first quartile), $Q_2$ (the $50^\mathrm{th}$ percentile, second quartile or *median*) and $Q_3$ (the sample $75^\mathrm{th}$ percentile or third quartile).
 * Min and Max -- the Minimum and Maximum values of a sample can be found using the `min()` or `max()` functions.
 
-Each of these were covered in your introductory statistics course. We refer you to that material for more details.
+Each of these were covered in your introductory statistics course. 
+We refer you to that material for more details.
 
 #### Measuring variance and variability
 
@@ -333,10 +361,13 @@ Earlier we defined statistics as the study of variation in data. The truth is th
 * If you measure the same characteristic twice on the same individual, you would potentially get two different answers (measurement error). 
 * If you measure the same characteristic on the same individual but at different times, you would potentially get two different answers (temporal variability). 
 
-Because everything varies, determining that things vary is simply not very interesting. What we need is a way of discriminating between variation that is scientifically interesting and variation that just reflects the natural background fluctuations that are always there. This is what the science of statistics is for.
+Because everything varies, determining that things vary is simply not very interesting (what a tongue twister!). 
+What we need is a way of discriminating between variation that is scientifically interesting and variation that just reflects the natural background fluctuations that are always there. 
+This is what the science of statistics is for.
 
 Knowing the amount of variation that we would expect to occur just by chance alone when nothing scientifically interesting is going on is key. 
-If we then observe bigger differences than we would expect by chance alone, we say the result is statistically significant. If instead we observe differences no larger than we would expect by chance alone, we say the result is not statistically significant.  
+If we then observe bigger differences than we would expect by chance alone, we say the result is statistically significant. 
+If instead we observe differences no larger than we would expect by chance alone, we say the result is not statistically significant.  
 
 Although covered in your introductory statistics course, due to importance we review measuring the variance of a sample.
 
@@ -344,18 +375,23 @@ Although covered in your introductory statistics course, due to importance we re
 **Variance**
 
 
-A variance is a numeric descriptor of the variation of a quantity. Variances will serve as the foundation for much of what we use in making statistical inferences in this course. In fact, a standard method of data analysis for many of the problems we will encounter is known as analysis of variance (shorthanded ANOVA).
+A *variance* is a numeric descriptor of the variation of a quantity. 
+Variances will serve as the foundation for much of what we use in making statistical inferences in this course. 
+In fact, a standard method of data analysis for many of the problems we will encounter is known as analysis of variance (shorthanded ANOVA).
 
-You were (or should have been) exposed to variance in your introductory statistics course. What is crucial now is that you know what you are finding the variance of; i.e., what is the "quantity" I was referring to in the preceding paragraph? Consider this:
+You were (or should have been) exposed to variance in your introductory statistics course. 
+What is crucial now is that you know what you are finding the variance of; i.e., what is the "quantity" we referred to in the preceding paragraph? Consider the following example:
 
 * *Example*. Suppose you collect a simple random sample of *n* fasting blood glucose measurements from a population of diabetic patients. The measurements are denoted $x_1$, $x_2$, $\ldots$, $x_n$. What are some of the different "variances" that one might encounter in this scenario?
 
     1. The $n$ sampled measurements vary around their sample mean $\bar{x}$. This is called the sample variance (traditionally denoted $s^2$). In R, the function is `var()`.
     2. All fasting blood glucose values in the population vary around the true mean of the population $\mu$. This is called the population variance (usually denoted $\sigma^2$). Note that $\sigma^2$ cannot be calculated without a census of the entire population, so $s^2$ serves as an estimate of $\sigma^2$.
-    3. $\bar{x}$ is only a sample estimate of $\mu$, so we should expect that will vary depending on which $n$ individual diabetic patients get randomly chosen into our sample. This is called the variance of $\bar{x}$, and is denoted $\sigma_{\bar{x}}^2$. This variance, unlike the sample or population variance, describes how sample estimates of $\mu$ vary around $\mu$ itself. We will need to estimate $\sigma_{\bar{x}}^2$, since it cannot be determined without a full survey of the population. The estimate of $\sigma_{\bar{x}}^2$ is denoted $s_{\bar{x}}^2$.
+    3. $\bar{x}$ is only a sample estimate of $\mu$, so we should expect that will vary depending on which $n$ individual diabetic patients get randomly chosen into our sample (*i.e.*, with a different sample we will calculate a different sample mean). This is called the variance of $\bar{x}$, and is denoted $\sigma_{\bar{x}}^2$. This variance, unlike the sample or population variance, describes how sample estimates of $\mu$ vary around $\mu$ itself. We will need to estimate $\sigma_{\bar{x}}^2$, since it cannot be determined without a full survey of the population. The estimate of $\sigma_{\bar{x}}^2$ is denoted $s_{\bar{x}}^2$.
 
 
-The variances cited above are each very different things. We could dream up even more if we wanted to: for example, each different possible random sample of $n$ patients will produce a different sample variance $s^2$. Since these would all be estimates of the population variance $\sigma^2$, we could even find the variance of the sample variances!
+The variances cited above are each very different things. 
+We could dream up even more if we wanted to: for example, each different possible random sample of $n$ patients will produce a different sample variance $s^2$. 
+Since these would all be estimates of the population variance $\sigma^2$, we could even find the variance of the sample variances!
 
 Some formulas:
 
@@ -367,11 +403,11 @@ Three important notes:
 
 1. The general form of any variance is a sum of squared deviations, divided by a quantity related to the number of independent elements in the sum known as **degrees of freedom**. So in general,
 
-$$\textrm{Variance} = \frac{\textrm{sum of squares}}{\textrm{degrees of freedom}} = \frac{SS}{df}$$
+$$\textrm{Variance} = \frac{\textrm{sum of squares}}{\textrm{degrees of freedom}} = \frac{SS}{\textrm{df}}$$
 
-2. The formula for the population variance $\sigma^2$ is only given for completeness. You will never use it, since $\sigma^2$ cannot be calculated without a population census.
+2. The formula for the population variance $\sigma^2$ is only given for completeness. We will never use it, since $\sigma^2$ cannot be calculated without a population census.
 
-3. When considering how a statistic (like $\bar{x}$) varies around the parameter it is estimating ($\mu$), it makes sense that the more data you build the statistic with, the better it should perform as an estimator. This is precisely why the variance of $\bar{x}$ is inversely related to the sample size. **As $n$ increases, the variance of the estimate decreases**; i.e. the estimate will be closer to the thing it is estimating. This phenomenon is known as the law of large numbers.
+3. When considering how a statistic (like $\bar{x}$) varies around the parameter it is estimating ($\mu$), it makes sense that the more data you have, the better it should perform as an estimator. This is precisely why the variance of $\bar{x}$ is inversely related to the sample size. **As $n$ increases, the variance of the estimate decreases**; i.e. the estimate will be closer to the thing it is estimating. This phenomenon is known as the law of large numbers.
 
 
 **Standard deviations and standard errors**
@@ -388,13 +424,15 @@ $$\textbf{Standard error of } \bar{x}: s_{\bar{x}} = \sqrt{s^2_{\bar{x}}} = \sqr
 
 ### Numeric Summaries in R
 
-In this class we will be using `dplyr` for data handling. We can pipe (`%>%`) our data frame into a summarize function to calculate numeric summaries.
+In this class we will be using `dplyr` for data handling. 
+We can pipe (`%>%`) our data frame into a summarize function to calculate numeric summaries.
 
 ```{r ch1-12}
 uadata %>% 
   pivot_longer(everything()) %>% 
   group_by(name) %>%
-  summarize_all(list(mean, sd, min, median, max))
+  summarize(across(everything(), 
+                   list(Mean=mean, SD=sd, Min=min, Median=median, Max=max) ) )
 ```
 
 For now ignore the code that is used, we will describe the `pivot_longer()` and `group_by()` functions below.
@@ -405,12 +443,11 @@ The median ACT score for entering freshman was 25, and and the range of ACT scor
 
 This display introduces a few keys points you need to be aware of:
 
-* We have the code spread across 4 lines with most lines ending with the piping operator `%>%`. This is done (and recommended) for readability. When performing an analysis, you often will revisit the code at a later time. Readable code is paramount to reproducibility.
+* We have the code spread across multiple lines with most lines ending with the piping operator `%>%`. This is done (and recommended) for readability. When performing an analysis, you often will revisit the code at a later time. Readable code is paramount to reproducibility.
 * Since we applied the command to the entire data frame (`everything()`), we also see numeric summaries of the variable `id`, even though it is meaningless to do so. (note: just because a computer outputs it, that doesn't mean it's useful)
-* If you look carefully, you'll see that `year` is treated as a number (e.g. 1996, 1997, etc.).
-However, that doesn't necessarily mean it should be treated as a numeric variable! 
-It is meaningless to find numeric summaries like means or medians for the `year`, because it is really a qualitative (categorical) variable in the context of these data (again, just because a computer outputs it, that doesn't mean it is contextually correct).
-This is a common mistake to make.
+* If you look carefully, you'll see that `year` is treated as a number (e.g. 1996, 1997, etc.). However, that doesn't necessarily mean it should be treated as a numeric variable! It is meaningless to find numeric summaries like means or medians for the `year`, because it is really a qualitative (categorical) variable in the context of these data (again, just because a computer outputs it, that doesn't mean it is contextually correct). 
+
+These are common mistake to make.
 It is as simple as this: when R encounters a variable whose values are entered as numbers in a data frame, R will treat the variable as if it were a numeric variable (whether it is contextually or not).
 If R encounters a variable whose values are character strings, R will treat the variable as a categorical `factor`. 
 But, in a case like `year` above, you have to explicitly tell R that the variable is really a `factor` since it was coded with numbers.
@@ -422,26 +459,31 @@ uadata <- uadata %>%
          year=as.factor(year))
 ```
 
-Here we tell R to take the `uadata` data, pipe it to the `mutate` function (which allows us to create and/or replace variables by changing/mutating them). We then assign the variables `id` and `year` as versions of themselves that are being treated *as factors*. 
+Here we tell R to take the `uadata` data, pipe it to the `mutate` function (which allows us to create and/or replace variables by changing/mutating them). 
+We then assign the variables `id` and `year` as versions of themselves that are being treated *as factors* (or categories). 
 
 We can then check the type of each variable by *summarizing* over *all* the variables using the `class` function.
 
 ```{r ch1-14}
 uadata %>% 
-  summarize_all(class)
+  summarize(across(everything(), class))
 ```
 
-No we can check the summary values again for only numeric values (i.e., the use of the `select_if(is.numeric)` function).
+No we can check the summary values again for only numeric values (i.e., the use of the `select(where(is.numeric))` function).
 
 ```{r ch1-15}
 uadata %>% 
-  select_if(is.numeric) %>%
+  select(where(is.numeric)) %>%
   pivot_longer(everything()) %>% 
   group_by(name) %>%
-  summarize_all(list(mean, sd, min, median, max))
+  summarize(across(everything(), 
+                   list(Mean=mean, SD=sd, Min=min, Median=median, Max=max) ) )
 ```
 
-For the categorical variables, the main numeric measure we can consider is the count (or proportions) of each category. To do this in R, we want to tell us to treat each category as a *group* and then count within the group. We will `group_by` the `year` and then within that year, count the number of observations. We also add a new variable (using `mutate`) that is the proportion.
+For the categorical variables, the main numeric measure we can consider is the count (or proportions) of each category. 
+To do this in R, we tell it to treat each category as a *group* and then count within the group. 
+We will `group_by` the `year` and then within that year, count the number of observations. 
+We also add a new variable (using `mutate`) that is the proportion.
 
 ```{r ch1-16}
 uadata %>%
@@ -450,41 +492,50 @@ uadata %>%
   mutate(Prop = Count/sum(Count))
 ```
 
+Note the power of using the `tidyverse` tools [@R-tidyverse]. 
+We are only *scratching the surface* of what can be done here.
+For more information, we recommend looking into the *Wrangling* chapters in the book [R for Data Science](https://r4ds.had.co.nz/index.html) [@Wickham2017R].
 
 ### Graphical Summaries
 
-We begin a graphical summary with a scatterplot matrix.
-Here we use the `ggscatmat` function in the `GGally` package.
-This results in the scatterplot matrix seen in Figure \@ref(fig:ch1-17).
+We begin a graphical summary with a matrix of univariate and bivariate plots using the `ggpairs()` function in the `GGally` package [@R-GGally].
+This results can be seen in Figure \@ref(fig:ch1-17).
 
-```{r ch1-17, message=FALSE, fig.align='center', fig.cap='Scatterplot matrix showing the relationship between the variables `gpa.endy1`, `hs.pct`, and `act`.', fig.asp=1, out.width='80%'}
+```{r ch1-17, message=FALSE, fig.align='center', fig.cap='Pairs plot showing the relationship between the variables `gpa.endy1`, `hs.pct`, `act` and `year`.', fig.asp=1, out.width='80%'}
 library(GGally)
-ggscatmat(uadata)
+ggpairs(uadata, columns=2:5)
 ```
 
-You will note that by default the function provides a scatterplot (Figure \@ref(fig:ch1-17)) of each variable along with the Pearson correlation of each numeric variable (it warns us that `factor` variables are not included).
-The Pearson correlations assesses the strength of any linear relationship existing between the GPA, ACT and HS rank variables. 
+**Coding note:** Here we specify to only plot using the variables in columns 2, 3, 4 and 5 (the `2:5`). 
+We do this because the `id` variable in `uadata` is an identifier and unique identifies each observations -- it is not a variable of interest -- we do not want to try and plot it.
 
-Recall from introductory statistics that the Pearson correlation $r$ between two variables $x$ and $y$ is given by the formula
-$$r = \frac{1}{n-1}\sum_{i=1}^n\left(\frac{x_i - \bar{x}}{s_x}\right)\left(\frac{y_i - \bar{y}}{s_y}\right)$$
-$r$ is a unitless measure with the property that  $-1 \leq r \leq 1$.  Values of $r$ near $\pm 1$ indicate a near perfect (positive or negative) linear relationship between $x$ and $y$. A frequently used rule of thumb is that $|r| > 0.80$ or so qualifies as a strong linear relationship.
+You will note that by default the function provides a collection of univariate and bivariate plots (Figure \@ref(fig:ch1-17)). We recap each of the plots provided (details on each is provided below).
 
-All pairwise correlations in this example are of modest magnitude ($r \approx 0.4$).
+* On the diagonal of the matrix we see univariate plots -- density plots for the numeric variables and a bargraph of frequencies for categorical variables.
+* In the upper right triangle of the matrix we see numeric measures for the amount of correlation between each of the numeric variables (Pearson Correlation). In the case of a numeric variable with a categorical variable, side-by-side boxplots are provided.
+* In the bottom left triangle of the matrix scatterplots are provided to show the relationship between numeric variables. We also see histograms for each of the numerical variable stratified by categories. 
+Now we will discuss each of the elements in more detail.
 
-You will also note that the function provides a look at the distributional shape of each variable using what is known as a *density plot* (this can be consider a more-modern, and less subjective, histogram).
-The `ggscatmat` function builds off a function known as `ggplot()` from the `ggplot2` package (included in `tidyverse`).
+### Distribution of Univariate Variables
 
-We can build density plots directly using the `geom_density()` function as seen in the code below. The resulting density plot is in Figure \@ref(fig:ch1-18).
+The `ggpairs` function provides a look at the distributional shape of each variable using what is known as a *density plot* (this can be consider a more-modern, and less subjective, histogram).
+The `ggpairs` function builds off a function known as `ggplot()` from the `ggplot2` package [@R-ggplot2] (included in `tidyverse`).
+
+We can build density plots directly using the `geom_density()` function as seen in the code below. 
+The resulting density plot is in Figure \@ref(fig:ch1-18).
 
 ```{r ch1-18, fig.align='center', fig.cap='Density plot showing left-skewed distribution for the `gpa.endyr1` variable', out.width='70%', fig.asp=0.55}
 ggplot(uadata) + 
   geom_density(aes(x=gpa.endyr1))
 ```
 
-You should note the code is similar to the `%>%` operator but with a `+`. The trick to working with plotting on the computer is to think in terms of *layers*. The first line `ggplot(uadata)` sets up a plot object based on the existing dataset `uadata`. The `+` says to add a layer, this layer is a density plot (`geom_density`) where the aesthetic values include an $x$-axis variable matching that of `gpa.endyr`.
+You should note the code is similar to the `%>%` operator but with a `+`. 
+The trick to working with plotting on the computer is to think in terms of *layers*. 
+The first line `ggplot(uadata)` sets up a plot object based on the existing dataset `uadata`. 
+The `+` says to add a layer, this layer is a density plot (`geom_density`) where the aesthetic values include an $x$-axis variable matching that of `gpa.endyr`.
 
 To generate even more complex distributional plots first we need to perform some data processing. 
-In `tidyverse` there is package called `tidyr` which is mainly comprised of two main functions: `pivot_longer()` and `pivot_wider()`. 
+In `tidyverse` there is package called `tidyr` [@R-tidyr] which is mainly comprised of two main functions: `pivot_longer()` and `pivot_wider()`. 
 The purpose of the `pivot_longer()` function is to collect variables in a dataset and create a *tall* (or *longer*) dataset (this is typically known as going from wide-to-tall or wide-to-long format). 
 We specify the variables (or columns) we want to pivot (here the `c(gpa.endyr1, hs.pct, act)` part of the code), the name of the new variable (here called `variables`) storing the column names, and the variable name that will store the values (here called `value`).
 The `pivot_wider()` function essentially does the opposite, turning a tall data frame into a wide format.
@@ -499,8 +550,8 @@ dim(uadata.tall)
 ```
 
 Take a minute and step through the above code and output to understand what the code did.
-The data is now in a *tall* format.
-We can now utilize the `ggplot` package for more advanced plotting. 
+The data is now in a *tall*, or *long*, format.
+We can now utilize the `ggplot2` package for more advanced plotting. 
 Here we want to draw a density plot for each `var_names` in the dataset `uadata` but we want a different plot for each $variable$ (`act`, `gpa.endyr1`, and `hs.pct`).
 Figure \@ref(fig:ch1-20) provides the result for the below code.
 
@@ -511,12 +562,27 @@ ggplot(uadata.tall) +
   theme_bw()
 ```
 
-**Notes**: The `facet_grid` option tells the plot to draw each density plot for each observed value in `var_names`. The `theme_bw()` specifies the plotting style (there are many others! We will typically use `theme_bw()`, `theme_classic()` or the default behavior which corresponds to `theme_grey()`). The `free_x` option tells the plot that each $x$-axis is on a different scale. Feel free to modify the code to see how the plot changes!
+**Notes**: The `facet_grid` option tells the plot to draw each density plot for each observed value in `var_names`. 
+The `theme_bw()` specifies the plotting style (there are many others! We will typically use `theme_bw()`, `theme_classic()` or the default behavior which corresponds to `theme_grey()`). 
+The `free_x` option tells the plot that each $x$-axis is on a different scale. Feel free to modify the code to see how the plot changes!
 
 We can see that GPA and high school percentile rankings are skewed left, and that ACT scores are reasonably symmetrically distributed. 
 
+Alternatively, we could build histograms to make the comparison.
 
-The best visual tool for simple counts is the Bar Graph (**note:** you should never use a pie chart, see http://www.businessinsider.com/pie-charts-are-the-worst-2013-6). 
+```{r ch1-20_2, fig.align='center', fig.cap='Stacked histogram showing the relative distributions of `act`, `gpa.endyr1` and `hs.pct`.', , out.width='70%', fig.asp=0.55}
+ggplot(uadata.tall) +
+  geom_histogram(aes(x=value), binwidth = 2.5) + 
+  facet_grid(var_names~., scales="free_y") + 
+  theme_bw()
+```
+
+Note the similarities and difference in Figures \@ref(fig:ch1-20) and \@ref(fig:ch1-20_2).
+Depending on whether we facet on the $y$-axis or $x$-axis we can get different appearances.
+
+**Bar Graphs**
+
+The best visual tool for simple counts is the Bar Graph (**note:** you should never use a pie chart, see [here for an explanation](http://www.businessinsider.com/pie-charts-are-the-worst-2013-6) ). 
 The below code generates a simple (and fairly boring) bar graph (Figure \@ref(fig:ch1-21)) displaying the number of observations for each year in the `uadata`.
 
 ```{r ch1-21, fig.align='center', fig.cap='Bar graph displaying the number of observations in the `uadata` per `year`.', out.width='70%', fig.asp=0.55}
@@ -524,29 +590,32 @@ ggplot(uadata) +
   geom_bar(aes(x=year) )
 ```
 
-We see here that nothing too interesting is happening. A fairly uniform distribution of counts is seen across years.
+We see here that nothing too interesting is happening. 
+A fairly uniform distribution of counts is seen across years.
 
 
 ###  Descriptive statistics and visualizations by levels of a factor variable
 
-
-
 While the above summaries are informative, they overlook the fact that we have several years of data and that it may be more interesting to see how things might be changing year to year.
 This is why treating `year` as a factor is important, because it enables us to split out descriptions of the numeric variables by levels of the factor. 
 
-One of the simplest and best visualization tool for comparing distributions is the side-by-side boxplot, which displays information about quartiles and potential outliers. The below code generates Figure \@ref(fig:ch1-22).
+One of the simplest and best visualization tool for comparing distributions is the side-by-side boxplot, which displays information about quartiles and potential outliers. 
+The below code generates Figure \@ref(fig:ch1-22).
 
 ```{r ch1-22, fig.align='center', fig.cap='Side-by-side Box-whiskers plots showing the distribution of ACT scores in the `uadata` per year.', out.width='70%', fig.asp=0.55}
 ggplot(uadata) +
   geom_boxplot(aes(x=year, y=act) ) +
-  xlab("Year") + ylab("Composite ACT Score") +
-  ggtitle("ACT scores of Incoming Freshmen") + 
+  labs(title="ACT scores of Incoming Freshmen",
+       x="Year",
+       y="Composite ACT Score") + 
   theme_classic()
 ```
 
-We see here the code is similar to the examples above except now we call the `geom_boxplot` function. Also note we are using `theme_classic()` which has some subtle differences compared to `theme_bw()` used above. Lastly, we include proper labels and titles on our plot here for a more professional appearance.
+We see here the code is similar to the examples above except now we call the `geom_boxplot` function. 
+Also note we are using `theme_classic()` which has some subtle differences compared to `theme_bw()` used above. 
+Lastly, we include proper labels and titles on our plot here for a more professional appearance.
 
-Here we construct side-by-side boxplots by year for each of the three numeric variables in the data frame. We utilize the taller or longer format of the admissions data in `uadata.tall` and the resulting plot is in Figure \@ref(fig:ch1-23).
+Next we construct side-by-side boxplots by year for each of the three numeric variables in the data frame. We utilize the taller or longer format of the admissions data in `uadata.tall` and the resulting plot is in Figure \@ref(fig:ch1-23).
 
 ```{r ch1-23, fig.align='center', fig.cap='Side-by-side Box-whiskers plots showing the distributions of the variables `act`, `gpa.endyr1` and `hs.pct` for each year in the `uadata` dataset.', out.width='75%'}
 ggplot(uadata.tall) + 
@@ -555,9 +624,11 @@ ggplot(uadata.tall) +
   theme_dark()
 ```
 
-Note here that the order of the `var_names` statement in the `facet_grid` statement has changed compared to the previous side-by-side density plots (code used to generate Figure \@ref(fig:ch1-20)) now the plots are stacked). Also note another theme option, `theme_dark()` (obviously you generally will NOT want to use this theme if planning to print the document).
+Note here that the order of the `var_names` statement in the `facet_grid` statement has changed compared to the previous side-by-side density plots (code used to generate Figure \@ref(fig:ch1-20)) now the plots are stacked). 
+Also note another theme option, `theme_dark()` (obviously you will NOT want to use this theme if planning to print the document).
 
-This is a nice compact visual description of the changes in patterns of response of these three variables over time.  All three variables appear pretty stable over the years; the left skews in GPA and high school percentile rankings are still evident here (note the detection of some low outliers for year on these two variables).
+This is a nice compact visual description of the changes in patterns of response of these three variables over time.  
+All three variables appear pretty stable over the years; the left skews in GPA and high school percentile rankings are still evident here (note the detection of some low outliers for year on these two variables).
 
 We now revisit calculating summary statistics. 
 Extensive grouped numeric summary statistics are available by using the `group_by()` and `summarize()` functions in `tidyverse`.
@@ -589,36 +660,78 @@ summary.table2 <- uadata.tall %>%
 kable(summary.table2)
 ```
 
+### Descriptive statistics and visualizations for two numeric variables
 
+For a pair of numeric variables the amount of linear association between the variables can be measured with the Pearson correlation.
+The Pearson correlation assesses the *strength* and *direction* of any linear relationship existing between the GPA, ACT and HS rank variables (Figure \@ref(fig:ch1-17)). 
 
+Recall from introductory statistics that the Pearson correlation $r$ between two variables $x$ and $y$ is given by the formula
+$$r = \frac{1}{n-1}\sum_{i=1}^n\left(\frac{x_i - \bar{x}}{s_x}\right)\left(\frac{y_i - \bar{y}}{s_y}\right)$$
+$r$ is a unitless measure with the property that  $-1 \leq r \leq 1$.  
+Values of $r$ near $\pm 1$ indicate a near perfect (positive or negative) linear relationship between $x$ and $y$. 
+A frequently used rule of thumb is that $|r| > 0.80$ or so qualifies as a strong linear relationship.
+We can calculate the Pearson correlation with the `cor` function.
+When applied to a `data.frame`, or `matrix`, it displays a correlation matrix. 
+In the below code we specify to only calculate the correlation based on the 3 numeric variables.
+
+```{r ch1-25_cor}
+cor(uadata[,c("gpa.endyr1", "hs.pct", "act")])
+```
+
+All pairwise correlations in this example are of modest magnitude ($r \approx 0.4$) (see Figure \@ref(fig:ch1-17) or the above correlation matrix).
+
+To visualize the relationship between numeric variables, we typically use a scatterplot.
+
+```{r ch1-25_scatter, fig.align='center', fig.cap='Scatterplot showing the relationship between the variables `act` and `gpa.endyr1` in the `uadata` dataset.', out.width='75%'}
+ggplot(uadata) + 
+  geom_point(aes(x=act, y=gpa.endyr1) ) +
+  labs(x="Composite ACT Score",
+       y="Grade point average following freshman year") +
+  theme_minimal()
+```
+
+You should note in Figure \@ref(ch1-25_scatter) the overall positive relationship (higher ACT scores tend to correspond to higher GPAs). 
+We also note the rounding of the ACT scores (always a whole number) resulting in these vertical striations in the plot. 
 
 ## Sampling distributions: describing how a statistic varies
 
-As described in the discussion on variability above, each of the numeric quantities calculated has some associated uncertainty. It is not enough to know just the variance or standard deviation of an estimate. Those are just ways to get a measure of the inconsistency in an estimate's value from sample to sample of a given size $n$.  
+As described in the discussion on variability above, each of the numeric quantities calculated has some associated uncertainty. 
+It is not enough to know just the variance or standard deviation of an estimate. 
+Those are just ways to get a measure of the inconsistency in an estimate's value from sample to sample of a given size $n$.  
 
 If we wish to make a confident conclusion about an unknown population parameter using a sample statistic (e.g. $\bar{x}$), we also need to know something about the general pattern of behavior that statistic would take if we had observed it over many, many different potential random samples. 
 
 This long-run behavior pattern is described via the probability distribution of the statistic, also known as the **sampling distribution** of the statistic.  
 
-It is important to remember that we usually only collect one sample, so only one sample mean will be available in practice.
+It is important to remember that we usually only collect one sample, so only one sample estimate will be available in practice.
 However, knowledge of the sampling distribution of our statistic or estimate is important because it will enable us to assess the reliability or confidence we can place in any generalizations we make about the population using our estimate.
 
 
 **Two useful sampling distributions: Normal and $t$**
 
 
-You should be very familiar with normal distributions and $t$-distributions from your introductory statistics course. In particular, both serve as useful sampling distributions to describe the behavior of the sample mean $\bar{x}$ as an estimator for a population mean $\mu$. We briefly review them here.
+You should be very familiar with normal distributions and $t$-distributions from your introductory statistics course. 
+In particular, both serve as useful sampling distributions to describe the behavior of the sample mean $\bar{x}$ as an estimator for a population mean $\mu$. 
+We briefly review them here.
 
-**Normal distributions.** A variable $X$ that is normally distributed is one that has a symmetric bell-shaped density curve. A normal density curve has two parameters: its mean $\mu$ and its variance $\sigma^2$. Notationally, we indicate that $X$ is normal by writing $X \sim N(\mu, \sigma^2)$.
+**Normal distributions.** A variable $X$ that is normally distributed is one that has a symmetric bell-shaped density curve. 
+A normal density curve has two parameters: its mean $\mu$ and its variance $\sigma^2$. 
+Notationally, we indicate that $X$ is normal by writing $X \sim N(\mu, \sigma^2)$.
 
-The normal distribution serves as a good sampling distribution model for the sample mean $\bar{x}$ because of the powerful Central Limit Theorem, which states that if $n$ is sufficiently large, the sampling distribution of $\bar{x}$ will be approximately normal, regardless of the shape of the distribution of the original parent population from which you collect your sample.
+The normal distribution serves as a good sampling distribution model for the sample mean $\bar{x}$ because of the powerful Central Limit Theorem, which states that if $n$ is sufficiently large, the sampling distribution of $\bar{x}$ will be approximately normal, regardless of the shape of the distribution of the original parent population from which you collect your sample (when making a few assumptions).
 
 **t distributions.** The formula given by 
 $$t_0 = \frac{\bar{x}-\mu}{{SE}_{\bar{x}}}$$
  
-counts up the number of standard error units between the true value of $\mu$ and its sample estimate $\bar{x}$; it can be thought of as the standardized distance between a true mean value and its sample mean estimate. If the original population was normally distributed, then the quantity $t_0$ will possess the $t$-distribution with $n - 1$ degrees of freedom. Degrees of freedom is the only parameter of a $t$-distribution.  Notationally, we indicate this by writing $t_0 \sim t(df)$.
+counts up the number of standard error units between the true value of $\mu$ and its sample estimate $\bar{x}$; it can be thought of as the standardized distance between a true mean value and its sample mean estimate. 
+If the original population was normally distributed, then the quantity $t_0$ will possess the $t$-distribution with $n - 1$ degrees of freedom. 
+Degrees of freedom is the only parameter of a $t$-distribution.  Notationally, we indicate this by writing $t_0 \sim t(\textrm{df})$.
 
-$t$-distributions look a lot like the standard normal distribution, $N(0, 1)$: they both center at 0 and are symmetric and bell-shaped (see below).  The key difference is due to the fact that the quantity $t$ includes two sample summaries in its construction: the sample mean $\bar{x}$, and $SE_{\bar{x}}$, which incorporates the sample standard deviation $s$.  Because of this, $t$ is more variable than $N(0, 1)$.  However, as $n$ (and hence degrees of freedom) increases, $s$ becomes a better estimate of the true population standard deviation, so the distinction ultimately vanishes with larger samples. This can all be visualized in Figure \@ref(fig:ch1-26).
+$t$-distributions look a lot like the standard normal distribution, $N(0, 1)$: they both center at 0 and are symmetric and bell-shaped (see below).  
+The key difference is due to the fact that the quantity $t$ includes two sample summaries in its construction: the sample mean $\bar{x}$, and $SE_{\bar{x}}$, which incorporates the sample standard deviation $s$.  
+Because of this, $t$ is more variable than $N(0, 1)$.  
+However, as $n$ (and hence degrees of freedom) increases, $s$ becomes a better estimate of the true population standard deviation, so the distinction ultimately vanishes with larger samples. 
+This can all be visualized in Figure \@ref(fig:ch1-26).
 
 ```{r ch1-26, echo=FALSE, fig.align='center', fig.cap='Overlayed distribution functions showing the relationship between a standard normal distribution and that of a $t$ distribution with 3, 5 and 10 degrees of freedom. As the degrees of freedom increases, the $t$ distribution becomes more *normal*', out.width='70%', fig.asp=0.55}
 x.val <- seq(-4, 4, 0.01)
@@ -632,28 +745,35 @@ my.data.tall <- my.data %>%
   mutate(key=factor(key, levels=c("Normal", "t3", "t5", "t10")))
 ggplot(my.data.tall) +
   geom_line(aes(x=x.val, y=value, col=key, linetype=key)) +
-  scale_colour_manual(labels=c("Normal", "t(t=3)", "t(df=5)", "t(df=10)"), values=c("black", "darkblue", "green4",  "cyan")) + 
-  scale_linetype_manual(labels=c("Normal", "t(t=3)", "t(df=5)", "t(df=10)"), values=c(1,3,4,2)) + 
+  scale_colour_manual(labels=c("Normal", "t(df=3)", "t(df=5)", "t(df=10)"), values=c("black", "darkblue", "green4",  "cyan")) + 
+  scale_linetype_manual(labels=c("Normal", "t(df=3)", "t(df=5)", "t(df=10)"), values=c(1,3,4,2)) + 
   labs(x="", y="Density Function value") + 
   theme_classic()
 ```
 
 
 
-The $t$-distribution is usually the relevant sampling distribution when we use a sample mean $\bar{x}$ to make inferences about the corresponding population mean $\mu$. Later in the course, the need to make more complicated inferences will require us to develop different sampling distribution models to facilitate the statistics involved. These will be presented as needed. 
+The $t$-distribution is usually the relevant sampling distribution when we use a sample mean $\bar{x}$ to make inferences about the corresponding population mean $\mu$. 
+Later in the course, the need to make more complicated inferences will require us to develop different sampling distribution models to facilitate the statistics involved. 
+These will be presented as needed. 
 
 ## Two-sample inference
 
-A key concept from your introductory statistics course that builds off sampling distribution theory is the comparison of the mean from two populations based on the sample means using a two-sample *t*-test. Consider testing
+A key concept from your introductory statistics course that builds off sampling distribution theory is the comparison of the mean from two populations based on the sample means using a two-sample *t*-test. 
+Consider testing
 $$H_0:\ \mu_A = \mu_B ~~~\textrm{versus}~~~ H_A:\ \mu_A <\neq> \mu_B$$
-where the notation $<\neq>$ represents one of the common alternative hypotheses from your introductory statistics course and $\mu_A$ is the population mean from population $A$ and $\mu_B$ is the population mean from population $B$. We statistically test this hypothesis via
+where the notation $<\neq>$ represents one of the common alternative hypotheses from your introductory statistics course (less than, not equal to, or greater than) and, $\mu_A$ is the population mean from population $A$ and $\mu_B$ is the population mean from population $B$. We statistically test this hypothesis via
 $$t_0 = \frac{\bar{x}_A - \bar{x}_B}{{SE}_{\bar{x}_A-\bar{x}_B}}$$
 
-where ${SE}_{\bar{x}_A-\bar{x}_B}$ is the standard error of the difference of sample means $\bar{x}_A$ and $\bar{x}_B$. It can be estimated in one of two ways (depending if we assume the population variances are equal or not) and we reference your intro stat class for details (pooled versus non-pooled variance). In R, we can perform this test, and construct the associated $(1-\alpha)100\%$ confidence interval for $\mu_A-\mu_B$,
+where ${SE}_{\bar{x}_A-\bar{x}_B}$ is the standard error of the difference of sample means $\bar{x}_A$ and $\bar{x}_B$. 
+It can be estimated in one of two ways (depending if we assume the population variances are equal or not) and we reference your intro stat class for details (pooled versus non-pooled variance). 
+In R, we can perform this test, and construct the associated $(1-\alpha)100\%$ confidence interval for $\mu_A-\mu_B$,
 $$\bar{x}_A - \bar{x}_B \pm t_{\alpha/2} {SE}_{\bar{x}_A-\bar{x}_B}$$
-using the function `t.test()`. Here $t_{\alpha/2}$ is the $1-\alpha/2$ quantile from the *t*-distribution (the degrees of freedom depend on your assumption about equal variance).
+using the function `t.test()`. 
+Here $t_{\alpha/2}$ is the $1-\alpha/2$ quantile from the *t*-distribution (the degrees of freedom depend on your assumption about equal variance).
 
-Consider comparing the ACT scores for incoming freshmen in 1996 to 2000 using the university admission data. Perhaps we have a theory that ACT scores were higher in 1996 than 2000. That is, we are formally testing
+Consider comparing the ACT scores for incoming freshmen in 1996 to 2000 using the university admission data. 
+Perhaps we have a theory that ACT scores were higher in 1996 than 2000. That is, we are formally testing
 $$H_0:\ \mu_{1996} = \mu_{2000} ~~~\textrm{versus}~~~ \mu_{1996} > \mu_{2000}$$
 
 First we need to select a subset of the data.
@@ -663,20 +783,23 @@ uadata.trim <- uadata %>%
   filter(year %in% c(1996, 2000) )
 ```
 
-Here we filter the `uadata` so that only years in the vector 1996, 2000 are included. Now that we have a proper subset of the data, we can compare the ACT scores between the two years and build a 98\% confidence interval for the mean difference.
+Here we filter the `uadata` so that only years in the vector 1996, 2000 are included. 
+Now that we have a proper subset of the data, we can compare the ACT scores between the two years and build a 98\% confidence interval for the mean difference.
 
 ```{r ch1-28}
 t.test(act ~ year, data=uadata.trim, conf.level=0.98, 
        alternative="greater", var.equal=TRUE)
 ```
 
-We are 98\% confident that the mean difference between 1996 ACT scores and 2000 ACT scores is in the interval (-0.792, $\infty$). Further, we lack significant evidence (*p*-value$\approx 0.3817$) to conclude that the average ACT score in 1996 is greater than that in 2000 for incoming freshmen (also note that the value 0 is included in the confidence interval).
+We are 98\% confident that the mean difference between 1996 ACT scores and 2000 ACT scores is in the interval (-0.792, $\infty$). 
+Further, we lack significant evidence ($p$-value $\approx 0.3817$) to conclude that the average ACT score in 1996 is greater than that in 2000 for incoming freshmen (also note that the value 0 is included in the confidence interval).
 
 A few things to note about the code above. 
-We use the notation `act ~ year`, this tells R that the `act` scores are a function of `year`. 
-We specify the data set to be used to perform the test (`data=uadata.trim`). 
-We specify the confidence level (by default it is 0.95) and the alternative hypothesis (by default it is a not-equal test). 
-Lastly, we set `var.equal=TRUE` so the standard error (and degrees of freedom) are calculated under the assumption that the variance of the two populations is equal (pooled variance). 
+
+* We use the notation `act ~ year`, this tells R that the `act` scores are a function of `year`. 
+* We specify the data set to be used to perform the test (`data=uadata.trim`). 
+* We specify the confidence level (by default it is 0.95) and the alternative hypothesis (by default it is a not-equal test). 
+* Lastly, we set `var.equal=TRUE` so the standard error (and degrees of freedom) are calculated under the assumption that the variance of the two populations is equal (pooled variance). 
 
 
 

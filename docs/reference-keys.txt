@@ -53,7 +53,9 @@ measures-of-centrality-and-quantiles
 measuring-variance-and-variability
 numeric-summaries-in-r
 graphical-summaries
+distribution-of-univariate-variables
 descriptive-statistics-and-visualizations-by-levels-of-a-factor-variable
+descriptive-statistics-and-visualizations-for-two-numeric-variables
 sampling-distributions-describing-how-a-statistic-varies
 two-sample-inference
 introduction-to-statistical-modeling-and-designed-experiments

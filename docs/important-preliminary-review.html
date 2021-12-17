@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Hughes and Thomas Fisher" />
 
 
-<meta name="date" content="2021-12-16" />
+<meta name="date" content="2021-12-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -188,7 +188,9 @@ div.csl-indent {
 <li class="chapter" data-level="1.6.1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#numeric-summaries"><i class="fa fa-check"></i><b>1.6.1</b> Numeric Summaries</a></li>
 <li class="chapter" data-level="1.6.2" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#numeric-summaries-in-r"><i class="fa fa-check"></i><b>1.6.2</b> Numeric Summaries in R</a></li>
 <li class="chapter" data-level="1.6.3" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#graphical-summaries"><i class="fa fa-check"></i><b>1.6.3</b> Graphical Summaries</a></li>
-<li class="chapter" data-level="1.6.4" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#descriptive-statistics-and-visualizations-by-levels-of-a-factor-variable"><i class="fa fa-check"></i><b>1.6.4</b> Descriptive statistics and visualizations by levels of a factor variable</a></li>
+<li class="chapter" data-level="1.6.4" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#distribution-of-univariate-variables"><i class="fa fa-check"></i><b>1.6.4</b> Distribution of Univariate Variables</a></li>
+<li class="chapter" data-level="1.6.5" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#descriptive-statistics-and-visualizations-by-levels-of-a-factor-variable"><i class="fa fa-check"></i><b>1.6.5</b> Descriptive statistics and visualizations by levels of a factor variable</a></li>
+<li class="chapter" data-level="1.6.6" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#descriptive-statistics-and-visualizations-for-two-numeric-variables"><i class="fa fa-check"></i><b>1.6.6</b> Descriptive statistics and visualizations for two numeric variables</a></li>
 </ul></li>
 <li class="chapter" data-level="1.7" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#sampling-distributions-describing-how-a-statistic-varies"><i class="fa fa-check"></i><b>1.7</b> Sampling distributions: describing how a statistic varies</a></li>
 <li class="chapter" data-level="1.8" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#two-sample-inference"><i class="fa fa-check"></i><b>1.8</b> Two-sample inference</a></li>
@@ -387,7 +389,8 @@ div.csl-indent {
 <h1>Important Preliminary Review</h1>
 <div id="statistics-background" class="section level2 unnumbered">
 <h2>Statistics background</h2>
-<p>This text assumes the reader has completed an introductory statistics course. For those needing a refresher, two links are provided below.</p>
+<p>This text assumes the reader has completed an introductory statistics course.
+For those needing a refresher, two links are provided below.</p>
 <p><a href="https://bookdown.org/chesterismay/rbasics/" class="uri">https://bookdown.org/chesterismay/rbasics/</a></p>
 <p><a href="http://moderndive.com/index.html" class="uri">http://moderndive.com/index.html</a></p>
 </div>
@@ -428,22 +431,25 @@ div.csl-indent {
 <span id="cb1-9"><a href="important-preliminary-review.html#cb1-9" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;car&quot;</span>,</span>
 <span id="cb1-10"><a href="important-preliminary-review.html#cb1-10" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;leaps&quot;</span>,</span>
 <span id="cb1-11"><a href="important-preliminary-review.html#cb1-11" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;caret&quot;</span>))</span></code></pre></div>
-<p><strong>IMPORTANT NOTE:</strong> If running on a Mac, when asked, “Do you want to install from source?” In general it is better to select “No.”</p>
+<p><strong>IMPORTANT NOTE:</strong> If running on a Mac, when asked, “Do you want to install from source?”
+In general it is better to select “No.”</p>
 </div>
 <div id="help-with-rmarkdown" class="section level2 unnumbered">
 <h2>Help with RMarkdown</h2>
-<p>Throughout the STA 363 course, Rmarkdown is utilized. In fact, this textbook was written using RMarkdown. You can find a tutorial of RMarkdown here: <a href="https://www.youtube.com/watch?v=tKUufzpoHDE" class="uri">https://www.youtube.com/watch?v=tKUufzpoHDE</a></p>
+<p>Throughout the STA 363 course, Rmarkdown is utilized.
+In fact, this textbook was written using RMarkdown.
+You can find a tutorial of RMarkdown here: <a href="https://www.youtube.com/watch?v=tKUufzpoHDE" class="uri">https://www.youtube.com/watch?v=tKUufzpoHDE</a></p>
 <p>RStudio provides tutorials as well: <a href="https://rmarkdown.rstudio.com/lesson-1.html" class="uri">https://rmarkdown.rstudio.com/lesson-1.html</a></p>
 </div>
 <div id="managing-your-work-in-r" class="section level2 unnumbered">
 <h2>Managing your work in R</h2>
-<p><a href="https://www.youtube.com/watch?v=pyJMWlDptYw" class="uri">https://www.youtube.com/watch?v=pyJMWlDptYw</a>
-* Folders, directories, Projects (to be complete)</p>
+<p>We recommend using ‘Projects’ in RStudio, which links all code and data to a folder in your computer: <a href="https://www.youtube.com/watch?v=pyJMWlDptYw" class="uri">https://www.youtube.com/watch?v=pyJMWlDptYw</a></p>
+<p>Better yet, create a Github account, and github repository to manage your code and analysis: <a href="https://www.youtube.com/watch?v=kL6L2MNqPHg&amp;ab_channel=IDGTECHtalk" class="uri">https://www.youtube.com/watch?v=kL6L2MNqPHg&amp;ab_channel=IDGTECHtalk</a></p>
 </div>
 <div id="data-in-this-text" class="section level2 unnumbered">
 <h2>Data in this text</h2>
-<p>The data in the text is available here:
-and can be downloaded as a single zip file.</p>
+<p>The data used in this text is available on the hosting website and links are provided throughout the text.
+Alternatively, all data used in the text can be downloaded as a single zip file: zipFileLinkHere</p>
 
 </div>
 </div>

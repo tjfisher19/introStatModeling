@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Hughes and Thomas Fisher" />
 
 
-<meta name="date" content="2021-12-16" />
+<meta name="date" content="2021-12-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -188,7 +188,9 @@ div.csl-indent {
 <li class="chapter" data-level="1.6.1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#numeric-summaries"><i class="fa fa-check"></i><b>1.6.1</b> Numeric Summaries</a></li>
 <li class="chapter" data-level="1.6.2" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#numeric-summaries-in-r"><i class="fa fa-check"></i><b>1.6.2</b> Numeric Summaries in R</a></li>
 <li class="chapter" data-level="1.6.3" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#graphical-summaries"><i class="fa fa-check"></i><b>1.6.3</b> Graphical Summaries</a></li>
-<li class="chapter" data-level="1.6.4" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#descriptive-statistics-and-visualizations-by-levels-of-a-factor-variable"><i class="fa fa-check"></i><b>1.6.4</b> Descriptive statistics and visualizations by levels of a factor variable</a></li>
+<li class="chapter" data-level="1.6.4" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#distribution-of-univariate-variables"><i class="fa fa-check"></i><b>1.6.4</b> Distribution of Univariate Variables</a></li>
+<li class="chapter" data-level="1.6.5" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#descriptive-statistics-and-visualizations-by-levels-of-a-factor-variable"><i class="fa fa-check"></i><b>1.6.5</b> Descriptive statistics and visualizations by levels of a factor variable</a></li>
+<li class="chapter" data-level="1.6.6" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#descriptive-statistics-and-visualizations-for-two-numeric-variables"><i class="fa fa-check"></i><b>1.6.6</b> Descriptive statistics and visualizations for two numeric variables</a></li>
 </ul></li>
 <li class="chapter" data-level="1.7" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#sampling-distributions-describing-how-a-statistic-varies"><i class="fa fa-check"></i><b>1.7</b> Sampling distributions: describing how a statistic varies</a></li>
 <li class="chapter" data-level="1.8" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#two-sample-inference"><i class="fa fa-check"></i><b>1.8</b> Two-sample inference</a></li>
@@ -385,7 +387,8 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="introductory-statistics-in-r" class="section level1" number="1">
 <h1><span class="header-section-number">Chapter 1</span> Introductory Statistics in R</h1>
-<p>Before we begin our dive into Statistical Modeling we first review content from your introductory statistics course. The learning objective of this unit include:</p>
+<p>Before we begin our dive into Statistical Modeling we first review content from your introductory statistics course and introduce fundamental elements of the R programming language <span class="citation">(<a href="#ref-R-base" role="doc-biblioref">R Core Team, 2019</a>)</span>.
+The learning objective of this unit include:</p>
 <ul>
 <li>Review of the fundamental concepts of <em>populations</em>, <em>samples</em>, <em>parameters</em> and <em>statistics</em>.</li>
 <li>Review of exploratory and descriptive statistics: numerical quantities and graphics.</li>
@@ -401,8 +404,12 @@ We collect <strong>sample</strong> data from a parent <strong>population</strong
 Good statistical practice demands that we collect <strong>sample</strong> data from the <strong>population</strong> in such a manner so as to ensure that the <strong>sample</strong> is representative; i.e., it is not presenting a systematic bias in its representation.</p>
 <p>There are two issues that arise with respect to variation in such data:</p>
 <ol style="list-style-type: decimal">
-<li><p>Measurements of the same attribute will vary from sample member to sample member. This is natural and is to be expected. This <em>random</em> (or <em>stochastic</em>) component of a sample is typically modeled through probabilistic assumptions (think the <em>Normal</em> distribution from your Intro Stat course).</p></li>
-<li><p>Any summary characteristic computed from the sample (known as a sample <strong>statistic</strong>) will only be an estimate of the corresponding summary characteristic for the population as a whole (known as a population <strong>parameter</strong>), since only a small subset of the population is used in its calculation. Thus, <em>sample statistics will vary from their corresponding population parameters</em>. In fact, different samples from the same population will produce different estimates of the same parameter, so sample statistics also vary from sample to sample.</p></li>
+<li><p>Measurements of the same attribute will vary from sample member to sample member.
+This is natural and is to be expected.
+This <em>random</em> (or <em>stochastic</em>) component of a sample is typically modeled through probabilistic assumptions (think the <em>Normal</em> distribution from your Intro Stat course).</p></li>
+<li><p>Any summary characteristic computed from the sample (known as a sample <strong>statistic</strong>) will only be an estimate of the corresponding summary characteristic for the population as a whole (known as a population <strong>parameter</strong>), since only a small subset of the population is used in its calculation.
+Thus, <em>sample statistics will vary from their corresponding population parameters</em>.
+In fact, different samples from the same population will produce different estimates of the same parameter, so sample statistics also vary from sample to sample.</p></li>
 </ol>
 <p>This variation gives rise to the concept of uncertainty in any findings that we make about a population based on sample data.
 A meaningful statistical analysis helps us quantify this uncertainty.</p>
@@ -419,9 +426,16 @@ It is a common mistake of inexperienced statisticians to plunge into a complex a
 Look before you leap!</p>
 <p><strong>Problem formulation</strong> - To attack a problem correctly, you should:</p>
 <ol style="list-style-type: decimal">
-<li><p><strong>Understand the background</strong>. Statisticians often work in collaboration with researchers in other disciplines and need to understand something about the subject area. You should regard this as an opportunity to learn something new. In essence, a Statistician must be a renaissance (wo)man. Some level of <em>elementary</em> expertise is needed in the subject area of study.</p></li>
-<li><p><strong>Understand the objectives</strong>. Again, often you will be working with a collaborator who may not be clear about what the objectives are. Beware of conducting “fishing expeditions”: if you look hard enough, you’ll almost always find something, but that something may just be a coincidence of no consequence. Also, sometimes an analysis far more complicated than what is really needed is performed. You may find sometimes that simple descriptive statistics are all that are really required. Even if a more complex analysis is necessary, simple descriptive statistics can provide a valuable supplement.</p></li>
-<li><p><strong>Translate the problem into statistical terms</strong>. This can be a challenging step and oftentimes requires creativity on the part of the statistician (in other words, not every problem fits into a neat little box like in an intro stats course!). Care must be taken at this step.</p></li>
+<li><p><strong>Understand the background</strong>. Statisticians often work in collaboration with researchers in other disciplines and need to understand something about the subject area.
+You should regard this as an opportunity to learn something new.
+In essence, a Statistician must be a renaissance (wo)man.
+Some level of <em>elementary</em> expertise is needed in the subject area of study.</p></li>
+<li><p><strong>Understand the objectives</strong>. Again, often you will be working with a collaborator who may not be clear about what the objectives are. Beware of conducting “fishing expeditions”: if you look hard enough, you’ll almost always find something, but that something may just be a coincidence of no consequence.
+Also, sometimes an analysis far more complicated than what is really needed is performed.
+You may find sometimes that simple descriptive statistics are all that are really required.
+Even if a more complex analysis is necessary, simple descriptive statistics can provide a valuable supplement.</p></li>
+<li><p><strong>Translate the problem into statistical terms</strong>. This can be a challenging step and oftentimes requires creativity on the part of the statistician (in other words, not every problem fits into a neat little box like in an intro stats course!).
+Care must be taken at this step.</p></li>
 </ol>
 <p><strong>Data Collection</strong> - It is also vitally important to understand how the data was collected. Consider:</p>
 <ul>
@@ -578,10 +592,11 @@ As a working example we will consider the university admissions data we read in 
 <li><p><code>year</code> – Calendar year the freshman entered university</p></li>
 </ul>
 <p>This is the first dataset we input above, in the <code>uadata</code> data frame.</p>
-<p>The <code>tidyverse</code> package is actually a wrapper for many R packages.
-One of the key packages we use for data processing is the <code>dplyr</code> package.
-It includes many functions that are similar to SQL (for those who know it).
-These tools tend to be easy to understand with syntax similar to that in SQL. First we will load the package and then take a <em>glimpse</em> of the dataset with which we are working</p>
+<p>The <code>tidyverse</code> package <span class="citation">(<a href="#ref-R-tidyverse" role="doc-biblioref">Wickham, 2017</a>)</span> is actually a wrapper for many R packages.
+One of the key packages we use for data processing is the <code>dplyr</code> package <span class="citation">(<a href="#ref-R-dplyr" role="doc-biblioref">Wickham et al., 2021</a>)</span>.
+It includes many functions that are similar to <a href="https://www.tutorialspoint.com/sql/sql-overview.htm">SQL</a> (for those who know it).
+These tools tend to be very readable and easy to understand.
+First we will load the package and then take a <em>glimpse</em> of the dataset with which we are working</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="introductory-statistics-in-r.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)   <span class="co"># Load the necessary package</span></span>
 <span id="cb24-2"><a href="introductory-statistics-in-r.html#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(uadata)      <span class="co"># Take a glimpse at the data</span></span></code></pre></div>
 <pre><code>## Rows: 705
@@ -632,8 +647,9 @@ As an example, consider the case of extracting students with a GPA greater than 
 <p>We can also use <code>dplyr</code> commands for selecting specific variables using the <code>select</code> function.
 Below we select the ACT scores for students who have a first year GPA greater than 3.9 and with a graduating year of 1998.</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="introductory-statistics-in-r.html#cb28-1" aria-hidden="true" tabindex="-1"></a>uadata <span class="sc">%&gt;%</span> </span>
-<span id="cb28-2"><a href="introductory-statistics-in-r.html#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(gpa.endyr1 <span class="sc">&gt;</span> <span class="fl">3.9</span>, year<span class="sc">==</span><span class="dv">1998</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb28-3"><a href="introductory-statistics-in-r.html#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(act)</span></code></pre></div>
+<span id="cb28-2"><a href="introductory-statistics-in-r.html#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(gpa.endyr1 <span class="sc">&gt;</span> <span class="fl">3.9</span>, </span>
+<span id="cb28-3"><a href="introductory-statistics-in-r.html#cb28-3" aria-hidden="true" tabindex="-1"></a>         year<span class="sc">==</span><span class="dv">1998</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb28-4"><a href="introductory-statistics-in-r.html#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(act)</span></code></pre></div>
 <pre><code>##   act
 ## 1  28
 ## 2  31
@@ -641,15 +657,21 @@ Below we select the ACT scores for students who have a first year GPA greater th
 ## 4  21
 ## 5  27
 ## 6  32</code></pre>
-<p>Note in the above, we take the <code>uadata</code> and pipe it to a <code>filter</code>, which selects only those observations with <code>gpa.endyr1</code> greater than 3.9 and <code>year</code> equal (==) to 1998, then we pipe that subset to the <code>select</code> function that only returns the variable <code>act</code>.</p>
-<p><strong>IMPORTANT NOTE</strong> - R is an evolving language and as such has some wonky behavior. In fact, there are multiple versions of both the <code>filter</code> and <code>select</code> functions in R. If you ever use one and receive a strange error, first check for a typo. If the error still occurs it is likely the case that R is trying to use a different version of the filter. You can always force R to use the <code>dplyr</code> version as in the below example:</p>
+<p>Note in the above, we take the <code>uadata</code> and pipe it to a <code>filter</code>, which selects only those observations with <code>gpa.endyr1</code> greater than 3.9 and <code>year</code> equal (<code>==</code>) to 1998, then we pipe that subset to the <code>select</code> function that only returns the variable <code>act</code>.</p>
+<p><strong>IMPORTANT NOTE</strong> - R is <strong>an <em>evolving</em> language</strong> and as such occasionally has some wonky behavior.
+In fact, there are multiple versions of both the <code>filter</code> and <code>select</code> functions in R.
+If you ever use one and receive a strange error, first check for a typo.
+If the error still occurs it is likely the case that R is trying to use a different version of the <code>filter</code> or <code>select</code>.
+You can always force R to use the <code>dplyr</code> version by specifying the pacakge as in the below example:</p>
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="introductory-statistics-in-r.html#cb30-1" aria-hidden="true" tabindex="-1"></a>uadata <span class="sc">%&gt;%</span> </span>
-<span id="cb30-2"><a href="introductory-statistics-in-r.html#cb30-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(gpa.endyr1 <span class="sc">&gt;</span> <span class="fl">3.9</span>, year<span class="sc">==</span><span class="dv">1998</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb30-3"><a href="introductory-statistics-in-r.html#cb30-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(act)</span></code></pre></div>
+<span id="cb30-2"><a href="introductory-statistics-in-r.html#cb30-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(gpa.endyr1 <span class="sc">&gt;</span> <span class="fl">3.9</span>, </span>
+<span id="cb30-3"><a href="introductory-statistics-in-r.html#cb30-3" aria-hidden="true" tabindex="-1"></a>                year<span class="sc">==</span><span class="dv">1998</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb30-4"><a href="introductory-statistics-in-r.html#cb30-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(act)</span></code></pre></div>
 </div>
 <div id="missing-values-and-computer-arithmetic-in-r" class="section level2" number="1.5">
 <h2><span class="header-section-number">1.5</span> Missing values and computer arithmetic in R</h2>
-<p>Sometimes data from an individual is lost or not available. R indicates such occurrences using the value <code>NA</code>.
+<p>Sometimes data from an individual is lost or not available.
+R indicates such occurrences using the value <code>NA</code>.
 Missing values are important to account for, because we cannot simply ignore them when performing functions that involve all values.
 For example, we cannot find the mean of the elements of a data vector when some are set to <code>NA</code>.
 Consider the simple case of a vector of 6 values with one <code>NA</code>.</p>
@@ -658,7 +680,11 @@ Consider the simple case of a vector of 6 values with one <code>NA</code>.</p>
 <pre><code>## [1] &quot;numeric&quot;</code></pre>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="introductory-statistics-in-r.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x)</span></code></pre></div>
 <pre><code>## [1] NA</code></pre>
-<p>Here, the object <code>x</code> is a <em>vector</em> of class <code>numeric</code>. We will not be working with vectors much in this class (a column within a data frame can be considered a vector) but we do so here to demonstrate functionality.</p>
+<p>Here, the object <code>x</code> is a <em>vector</em> of class <code>numeric</code>.
+We will not be working with vectors much in this class (a column within a data frame can be considered a vector) but we do so here to demonstrate functionality.</p>
+<p>Since one of the observations is missing, <code>NA</code>, the mean of the vector is also “not available” or <code>NA</code>.<br />
+This is not incorrect: logically speaking there is no way to know the mean of these observations when one of them is missing.
+However, in many cases we may still wish to calculate the mean of the non-missing observations.</p>
 <p><strong>Many R functions have a <code>na.rm=</code> logical argument</strong>, which is set to <code>FALSE</code> by default.
 It basically asks if you want to remove the missing values before applying the function.
 It can be set to <code>TRUE</code> in order to remove the <code>NA</code> terms. For example,</p>
@@ -667,19 +693,21 @@ It can be set to <code>TRUE</code> in order to remove the <code>NA</code> terms.
 <p>The number system used by R has the following ways of accommodating results of calculations on missing values or extreme values:</p>
 <ul>
 <li><p><code>NA</code>: <strong>Not Available</strong>. Any data value, numeric or not, can be <code>NA</code>. This is what you use for missing data. Always use <code>NA</code> for this purpose.</p></li>
-<li><p><code>NaN</code>: <strong>Not a Number</strong>. This is a special value that only numeric variables can take. It is the result of an undefined operation like 0/0.</p></li>
-<li><p><code>Inf</code>: <strong>Infinity</strong>. Numeric variables can also take the values <code>-Inf</code> and <code>Inf</code>.
-These are produced by the low level arithmetic of all modern computers by operations such as 1/0. (You shouldn’t think of these as real infinities, but rather the result of the the correct calculation if the computer could handle extremely large (or extremely small, near 0) numbers, larger than the largest numbers the computer can hold (about <span class="math inline">\(10^{300}\)</span>)).</p></li>
+<li><p><code>NaN</code>: <strong>Not a Number</strong>. This is a special value that only numeric variables can take. It is the result of an undefined operation such as 0/0.</p></li>
+<li><p><code>Inf</code>: <strong>Infinity</strong>. Numeric variables can also take the values <code>-Inf</code> and <code>Inf</code>. These are produced by the low level arithmetic of all modern computers by operations such as 1/0. (You should not think of these as values as real infinities, but rather the result of the correct calculation if the computer could handle extremely large (or extremely small, near 0) numbers; that is, results that are larger than the largest numbers the computer can hold (about <span class="math inline">\(10^{300}\)</span>)).</p></li>
 </ul>
 <p><strong>Scientific notation</strong>.
 This is a shorthand way of displaying very small or very large numbers.
 For example, if R displays <code>3e-8</code> as a value, it really means <span class="math inline">\(3\times 10^{-8} = 0.00000003\)</span>.</p>
 <p>In general, you should convert numbers from scientific notation into decimal notation when writing findings in your reports.
-For a really small number (like 0.00000003), it will suffice to write “&lt; 0.0001” instead.</p>
+For a really small numbers (like 0.00000003), typically it will suffice to write “&lt; 0.0001” instead.</p>
 </div>
 <div id="exploratory-data-analysis-eda" class="section level2" number="1.6">
 <h2><span class="header-section-number">1.6</span> Exploratory Data Analysis (EDA)</h2>
-<p>The material presented in this section is typically called <em>descriptive statistics</em> in Intro Statistics books. This is an important step that should always be performed prior to a formal analysis. It looks simple but it is vital to conducting a meaningful analysis. EDA is comprised of:</p>
+<p>The material presented in this section is typically called <em>descriptive statistics</em> in Intro Statistics books.
+This is an important step that should always be performed prior to a formal analysis.
+It looks simple but it is vital to conducting a meaningful analysis.
+EDA is comprised of:</p>
 <ul>
 <li>Numerical summaries (means, standard deviations, five-number summaries, correlations)</li>
 <li>Graphical summaries
@@ -706,7 +734,8 @@ You should realize that in practice it is rarely the case to receive <em>clean</
 <li>Quantiles – Quantiles, or sample percentiles, can be found using the <code>quantile()</code> function. Three common values are <span class="math inline">\(Q_1\)</span> (the sample <span class="math inline">\(25^\mathrm{th}\)</span> percentile, or first quartile), <span class="math inline">\(Q_2\)</span> (the <span class="math inline">\(50^\mathrm{th}\)</span> percentile, second quartile or <em>median</em>) and <span class="math inline">\(Q_3\)</span> (the sample <span class="math inline">\(75^\mathrm{th}\)</span> percentile or third quartile).</li>
 <li>Min and Max – the Minimum and Maximum values of a sample can be found using the <code>min()</code> or <code>max()</code> functions.</li>
 </ul>
-<p>Each of these were covered in your introductory statistics course. We refer you to that material for more details.</p>
+<p>Each of these were covered in your introductory statistics course.
+We refer you to that material for more details.</p>
 </div>
 <div id="measuring-variance-and-variability" class="section level4" number="1.6.1.2">
 <h4><span class="header-section-number">1.6.1.2</span> Measuring variance and variability</h4>
@@ -716,22 +745,30 @@ You should realize that in practice it is rarely the case to receive <em>clean</
 <li>If you measure the same characteristic twice on the same individual, you would potentially get two different answers (measurement error).</li>
 <li>If you measure the same characteristic on the same individual but at different times, you would potentially get two different answers (temporal variability).</li>
 </ul>
-<p>Because everything varies, determining that things vary is simply not very interesting. What we need is a way of discriminating between variation that is scientifically interesting and variation that just reflects the natural background fluctuations that are always there. This is what the science of statistics is for.</p>
+<p>Because everything varies, determining that things vary is simply not very interesting (what a tongue twister!).
+What we need is a way of discriminating between variation that is scientifically interesting and variation that just reflects the natural background fluctuations that are always there.
+This is what the science of statistics is for.</p>
 <p>Knowing the amount of variation that we would expect to occur just by chance alone when nothing scientifically interesting is going on is key.
-If we then observe bigger differences than we would expect by chance alone, we say the result is statistically significant. If instead we observe differences no larger than we would expect by chance alone, we say the result is not statistically significant.</p>
+If we then observe bigger differences than we would expect by chance alone, we say the result is statistically significant.
+If instead we observe differences no larger than we would expect by chance alone, we say the result is not statistically significant.</p>
 <p>Although covered in your introductory statistics course, due to importance we review measuring the variance of a sample.</p>
 <p><strong>Variance</strong></p>
-<p>A variance is a numeric descriptor of the variation of a quantity. Variances will serve as the foundation for much of what we use in making statistical inferences in this course. In fact, a standard method of data analysis for many of the problems we will encounter is known as analysis of variance (shorthanded ANOVA).</p>
-<p>You were (or should have been) exposed to variance in your introductory statistics course. What is crucial now is that you know what you are finding the variance of; i.e., what is the “quantity” I was referring to in the preceding paragraph? Consider this:</p>
+<p>A <em>variance</em> is a numeric descriptor of the variation of a quantity.
+Variances will serve as the foundation for much of what we use in making statistical inferences in this course.
+In fact, a standard method of data analysis for many of the problems we will encounter is known as analysis of variance (shorthanded ANOVA).</p>
+<p>You were (or should have been) exposed to variance in your introductory statistics course.
+What is crucial now is that you know what you are finding the variance of; i.e., what is the “quantity” we referred to in the preceding paragraph? Consider the following example:</p>
 <ul>
 <li><p><em>Example</em>. Suppose you collect a simple random sample of <em>n</em> fasting blood glucose measurements from a population of diabetic patients. The measurements are denoted <span class="math inline">\(x_1\)</span>, <span class="math inline">\(x_2\)</span>, <span class="math inline">\(\ldots\)</span>, <span class="math inline">\(x_n\)</span>. What are some of the different “variances” that one might encounter in this scenario?</p>
 <ol style="list-style-type: decimal">
 <li>The <span class="math inline">\(n\)</span> sampled measurements vary around their sample mean <span class="math inline">\(\bar{x}\)</span>. This is called the sample variance (traditionally denoted <span class="math inline">\(s^2\)</span>). In R, the function is <code>var()</code>.</li>
 <li>All fasting blood glucose values in the population vary around the true mean of the population <span class="math inline">\(\mu\)</span>. This is called the population variance (usually denoted <span class="math inline">\(\sigma^2\)</span>). Note that <span class="math inline">\(\sigma^2\)</span> cannot be calculated without a census of the entire population, so <span class="math inline">\(s^2\)</span> serves as an estimate of <span class="math inline">\(\sigma^2\)</span>.</li>
-<li><span class="math inline">\(\bar{x}\)</span> is only a sample estimate of <span class="math inline">\(\mu\)</span>, so we should expect that will vary depending on which <span class="math inline">\(n\)</span> individual diabetic patients get randomly chosen into our sample. This is called the variance of <span class="math inline">\(\bar{x}\)</span>, and is denoted <span class="math inline">\(\sigma_{\bar{x}}^2\)</span>. This variance, unlike the sample or population variance, describes how sample estimates of <span class="math inline">\(\mu\)</span> vary around <span class="math inline">\(\mu\)</span> itself. We will need to estimate <span class="math inline">\(\sigma_{\bar{x}}^2\)</span>, since it cannot be determined without a full survey of the population. The estimate of <span class="math inline">\(\sigma_{\bar{x}}^2\)</span> is denoted <span class="math inline">\(s_{\bar{x}}^2\)</span>.</li>
+<li><span class="math inline">\(\bar{x}\)</span> is only a sample estimate of <span class="math inline">\(\mu\)</span>, so we should expect that will vary depending on which <span class="math inline">\(n\)</span> individual diabetic patients get randomly chosen into our sample (<em>i.e.</em>, with a different sample we will calculate a different sample mean). This is called the variance of <span class="math inline">\(\bar{x}\)</span>, and is denoted <span class="math inline">\(\sigma_{\bar{x}}^2\)</span>. This variance, unlike the sample or population variance, describes how sample estimates of <span class="math inline">\(\mu\)</span> vary around <span class="math inline">\(\mu\)</span> itself. We will need to estimate <span class="math inline">\(\sigma_{\bar{x}}^2\)</span>, since it cannot be determined without a full survey of the population. The estimate of <span class="math inline">\(\sigma_{\bar{x}}^2\)</span> is denoted <span class="math inline">\(s_{\bar{x}}^2\)</span>.</li>
 </ol></li>
 </ul>
-<p>The variances cited above are each very different things. We could dream up even more if we wanted to: for example, each different possible random sample of <span class="math inline">\(n\)</span> patients will produce a different sample variance <span class="math inline">\(s^2\)</span>. Since these would all be estimates of the population variance <span class="math inline">\(\sigma^2\)</span>, we could even find the variance of the sample variances!</p>
+<p>The variances cited above are each very different things.
+We could dream up even more if we wanted to: for example, each different possible random sample of <span class="math inline">\(n\)</span> patients will produce a different sample variance <span class="math inline">\(s^2\)</span>.
+Since these would all be estimates of the population variance <span class="math inline">\(\sigma^2\)</span>, we could even find the variance of the sample variances!</p>
 <p>Some formulas:</p>
 <p><span class="math display">\[\textbf{Sample Variance: } s^2 = \frac{1}{n-1}\sum_{i=1}^n (x_i - \bar{x})^2, \textrm{ for sample size } n\]</span></p>
 <p><span class="math display">\[\textbf{Estimated Variance of } \bar{x}: s^2_{\bar{x}} = \frac{s^2}{n}\]</span></p>
@@ -739,10 +776,10 @@ If we then observe bigger differences than we would expect by chance alone, we s
 <ol style="list-style-type: decimal">
 <li>The general form of any variance is a sum of squared deviations, divided by a quantity related to the number of independent elements in the sum known as <strong>degrees of freedom</strong>. So in general,</li>
 </ol>
-<p><span class="math display">\[\textrm{Variance} = \frac{\textrm{sum of squares}}{\textrm{degrees of freedom}} = \frac{SS}{df}\]</span></p>
+<p><span class="math display">\[\textrm{Variance} = \frac{\textrm{sum of squares}}{\textrm{degrees of freedom}} = \frac{SS}{\textrm{df}}\]</span></p>
 <ol start="2" style="list-style-type: decimal">
-<li><p>The formula for the population variance <span class="math inline">\(\sigma^2\)</span> is only given for completeness. You will never use it, since <span class="math inline">\(\sigma^2\)</span> cannot be calculated without a population census.</p></li>
-<li><p>When considering how a statistic (like <span class="math inline">\(\bar{x}\)</span>) varies around the parameter it is estimating (<span class="math inline">\(\mu\)</span>), it makes sense that the more data you build the statistic with, the better it should perform as an estimator. This is precisely why the variance of <span class="math inline">\(\bar{x}\)</span> is inversely related to the sample size. <strong>As <span class="math inline">\(n\)</span> increases, the variance of the estimate decreases</strong>; i.e. the estimate will be closer to the thing it is estimating. This phenomenon is known as the law of large numbers.</p></li>
+<li><p>The formula for the population variance <span class="math inline">\(\sigma^2\)</span> is only given for completeness. We will never use it, since <span class="math inline">\(\sigma^2\)</span> cannot be calculated without a population census.</p></li>
+<li><p>When considering how a statistic (like <span class="math inline">\(\bar{x}\)</span>) varies around the parameter it is estimating (<span class="math inline">\(\mu\)</span>), it makes sense that the more data you have, the better it should perform as an estimator. This is precisely why the variance of <span class="math inline">\(\bar{x}\)</span> is inversely related to the sample size. <strong>As <span class="math inline">\(n\)</span> increases, the variance of the estimate decreases</strong>; i.e. the estimate will be closer to the thing it is estimating. This phenomenon is known as the law of large numbers.</p></li>
 </ol>
 <p><strong>Standard deviations and standard errors</strong></p>
 <p>While variances are the usual items of interest for statistical testing, often we will find that we would like a description of variation that is in the original units of the quantity being studied.
@@ -755,19 +792,21 @@ The square root of the variance of an estimate is called the standard error (SE)
 </div>
 <div id="numeric-summaries-in-r" class="section level3" number="1.6.2">
 <h3><span class="header-section-number">1.6.2</span> Numeric Summaries in R</h3>
-<p>In this class we will be using <code>dplyr</code> for data handling. We can pipe (<code>%&gt;%</code>) our data frame into a summarize function to calculate numeric summaries.</p>
+<p>In this class we will be using <code>dplyr</code> for data handling.
+We can pipe (<code>%&gt;%</code>) our data frame into a summarize function to calculate numeric summaries.</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="introductory-statistics-in-r.html#cb37-1" aria-hidden="true" tabindex="-1"></a>uadata <span class="sc">%&gt;%</span> </span>
 <span id="cb37-2"><a href="introductory-statistics-in-r.html#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">everything</span>()) <span class="sc">%&gt;%</span> </span>
 <span id="cb37-3"><a href="introductory-statistics-in-r.html#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(name) <span class="sc">%&gt;%</span></span>
-<span id="cb37-4"><a href="introductory-statistics-in-r.html#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize_all</span>(<span class="fu">list</span>(mean, sd, min, median, max))</span></code></pre></div>
+<span id="cb37-4"><a href="introductory-statistics-in-r.html#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), </span>
+<span id="cb37-5"><a href="introductory-statistics-in-r.html#cb37-5" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">list</span>(<span class="at">Mean=</span>mean, <span class="at">SD=</span>sd, <span class="at">Min=</span>min, <span class="at">Median=</span>median, <span class="at">Max=</span>max) ) )</span></code></pre></div>
 <pre><code>## # A tibble: 5 x 6
-##   name           fn1     fn2     fn3     fn4   fn5
-##   &lt;chr&gt;        &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
-## 1 act          24.5    4.01    13      25       35
-## 2 gpa.endyr1    2.98   0.635    0.51    3.05     4
-## 3 hs.pct       77.0   18.6      4      81       99
-## 4 id          353    204.       1     353      705
-## 5 year       1998      1.40  1996    1998     2000</code></pre>
+##   name       value_Mean value_SD value_Min value_Median value_Max
+##   &lt;chr&gt;           &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;     &lt;dbl&gt;
+## 1 act             24.5     4.01      13           25           35
+## 2 gpa.endyr1       2.98    0.635      0.51         3.05         4
+## 3 hs.pct          77.0    18.6        4           81           99
+## 4 id             353     204.         1          353          705
+## 5 year          1998       1.40    1996         1998         2000</code></pre>
 <p>For now ignore the code that is used, we will describe the <code>pivot_longer()</code> and <code>group_by()</code> functions below.
 Presented here are the mean, standard deviation, the minimum, median and maximum of each numeric variable in the data frame.
 For example, the mean freshman year-end GPA over the period 1996-2000 was 2.98; the median over the same period was 3.05, suggesting the GPA distribution is slightly skewed left (not surprising).
@@ -775,39 +814,42 @@ The range of the GPA distribution is from 0.51 to 4.
 The median ACT score for entering freshman was 25, and and the range of ACT scores was from 13 to 35.</p>
 <p>This display introduces a few keys points you need to be aware of:</p>
 <ul>
-<li>We have the code spread across 4 lines with most lines ending with the piping operator <code>%&gt;%</code>. This is done (and recommended) for readability. When performing an analysis, you often will revisit the code at a later time. Readable code is paramount to reproducibility.</li>
+<li>We have the code spread across multiple lines with most lines ending with the piping operator <code>%&gt;%</code>. This is done (and recommended) for readability. When performing an analysis, you often will revisit the code at a later time. Readable code is paramount to reproducibility.</li>
 <li>Since we applied the command to the entire data frame (<code>everything()</code>), we also see numeric summaries of the variable <code>id</code>, even though it is meaningless to do so. (note: just because a computer outputs it, that doesn’t mean it’s useful)</li>
-<li>If you look carefully, you’ll see that <code>year</code> is treated as a number (e.g. 1996, 1997, etc.).
-However, that doesn’t necessarily mean it should be treated as a numeric variable!
-It is meaningless to find numeric summaries like means or medians for the <code>year</code>, because it is really a qualitative (categorical) variable in the context of these data (again, just because a computer outputs it, that doesn’t mean it is contextually correct).
-This is a common mistake to make.
+<li>If you look carefully, you’ll see that <code>year</code> is treated as a number (e.g. 1996, 1997, etc.). However, that doesn’t necessarily mean it should be treated as a numeric variable! It is meaningless to find numeric summaries like means or medians for the <code>year</code>, because it is really a qualitative (categorical) variable in the context of these data (again, just because a computer outputs it, that doesn’t mean it is contextually correct).</li>
+</ul>
+<p>These are common mistake to make.
 It is as simple as this: when R encounters a variable whose values are entered as numbers in a data frame, R will treat the variable as if it were a numeric variable (whether it is contextually or not).
 If R encounters a variable whose values are character strings, R will treat the variable as a categorical <code>factor</code>.
 But, in a case like <code>year</code> above, you have to explicitly tell R that the variable is really a <code>factor</code> since it was coded with numbers.
-To do this, we will <code>mutate</code> the variables <code>id</code> and <code>year</code>.</li>
-</ul>
+To do this, we will <code>mutate</code> the variables <code>id</code> and <code>year</code>.</p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="introductory-statistics-in-r.html#cb39-1" aria-hidden="true" tabindex="-1"></a>uadata <span class="ot">&lt;-</span> uadata <span class="sc">%&gt;%</span></span>
 <span id="cb39-2"><a href="introductory-statistics-in-r.html#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id=</span><span class="fu">as.factor</span>(id),</span>
 <span id="cb39-3"><a href="introductory-statistics-in-r.html#cb39-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">year=</span><span class="fu">as.factor</span>(year))</span></code></pre></div>
-<p>Here we tell R to take the <code>uadata</code> data, pipe it to the <code>mutate</code> function (which allows us to create and/or replace variables by changing/mutating them). We then assign the variables <code>id</code> and <code>year</code> as versions of themselves that are being treated <em>as factors</em>.</p>
+<p>Here we tell R to take the <code>uadata</code> data, pipe it to the <code>mutate</code> function (which allows us to create and/or replace variables by changing/mutating them).
+We then assign the variables <code>id</code> and <code>year</code> as versions of themselves that are being treated <em>as factors</em> (or categories).</p>
 <p>We can then check the type of each variable by <em>summarizing</em> over <em>all</em> the variables using the <code>class</code> function.</p>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="introductory-statistics-in-r.html#cb40-1" aria-hidden="true" tabindex="-1"></a>uadata <span class="sc">%&gt;%</span> </span>
-<span id="cb40-2"><a href="introductory-statistics-in-r.html#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize_all</span>(class)</span></code></pre></div>
+<span id="cb40-2"><a href="introductory-statistics-in-r.html#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), class))</span></code></pre></div>
 <pre><code>##       id gpa.endyr1  hs.pct     act   year
 ## 1 factor    numeric integer integer factor</code></pre>
-<p>No we can check the summary values again for only numeric values (i.e., the use of the <code>select_if(is.numeric)</code> function).</p>
+<p>No we can check the summary values again for only numeric values (i.e., the use of the <code>select(where(is.numeric))</code> function).</p>
 <div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="introductory-statistics-in-r.html#cb42-1" aria-hidden="true" tabindex="-1"></a>uadata <span class="sc">%&gt;%</span> </span>
-<span id="cb42-2"><a href="introductory-statistics-in-r.html#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select_if</span>(is.numeric) <span class="sc">%&gt;%</span></span>
+<span id="cb42-2"><a href="introductory-statistics-in-r.html#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">where</span>(is.numeric)) <span class="sc">%&gt;%</span></span>
 <span id="cb42-3"><a href="introductory-statistics-in-r.html#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">everything</span>()) <span class="sc">%&gt;%</span> </span>
 <span id="cb42-4"><a href="introductory-statistics-in-r.html#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(name) <span class="sc">%&gt;%</span></span>
-<span id="cb42-5"><a href="introductory-statistics-in-r.html#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize_all</span>(<span class="fu">list</span>(mean, sd, min, median, max))</span></code></pre></div>
+<span id="cb42-5"><a href="introductory-statistics-in-r.html#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), </span>
+<span id="cb42-6"><a href="introductory-statistics-in-r.html#cb42-6" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">list</span>(<span class="at">Mean=</span>mean, <span class="at">SD=</span>sd, <span class="at">Min=</span>min, <span class="at">Median=</span>median, <span class="at">Max=</span>max) ) )</span></code></pre></div>
 <pre><code>## # A tibble: 3 x 6
-##   name         fn1    fn2   fn3   fn4   fn5
-##   &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1 act        24.5   4.01  13    25       35
-## 2 gpa.endyr1  2.98  0.635  0.51  3.05     4
-## 3 hs.pct     77.0  18.6    4    81       99</code></pre>
-<p>For the categorical variables, the main numeric measure we can consider is the count (or proportions) of each category. To do this in R, we want to tell us to treat each category as a <em>group</em> and then count within the group. We will <code>group_by</code> the <code>year</code> and then within that year, count the number of observations. We also add a new variable (using <code>mutate</code>) that is the proportion.</p>
+##   name       value_Mean value_SD value_Min value_Median value_Max
+##   &lt;chr&gt;           &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;     &lt;dbl&gt;
+## 1 act             24.5     4.01      13           25           35
+## 2 gpa.endyr1       2.98    0.635      0.51         3.05         4
+## 3 hs.pct          77.0    18.6        4           81           99</code></pre>
+<p>For the categorical variables, the main numeric measure we can consider is the count (or proportions) of each category.
+To do this in R, we tell it to treat each category as a <em>group</em> and then count within the group.
+We will <code>group_by</code> the <code>year</code> and then within that year, count the number of observations.
+We also add a new variable (using <code>mutate</code>) that is the proportion.</p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="introductory-statistics-in-r.html#cb44-1" aria-hidden="true" tabindex="-1"></a>uadata <span class="sc">%&gt;%</span></span>
 <span id="cb44-2"><a href="introductory-statistics-in-r.html#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year) <span class="sc">%&gt;%</span></span>
 <span id="cb44-3"><a href="introductory-statistics-in-r.html#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Count=</span><span class="fu">n</span>() ) <span class="sc">%&gt;%</span></span>
@@ -820,47 +862,58 @@ To do this, we will <code>mutate</code> the variables <code>id</code> and <code>
 ## 3 1998    154 0.218
 ## 4 1999    141 0.2  
 ## 5 2000    137 0.194</code></pre>
+<p>Note the power of using the <code>tidyverse</code> tools <span class="citation">(<a href="#ref-R-tidyverse" role="doc-biblioref">Wickham, 2017</a>)</span>.
+We are only <em>scratching the surface</em> of what can be done here.
+For more information, we recommend looking into the <em>Wrangling</em> chapters in the book <a href="https://r4ds.had.co.nz/index.html">R for Data Science</a> <span class="citation">(<a href="#ref-Wickham2017R" role="doc-biblioref">Wickham et al., 2017</a>)</span>.</p>
 </div>
 <div id="graphical-summaries" class="section level3" number="1.6.3">
 <h3><span class="header-section-number">1.6.3</span> Graphical Summaries</h3>
-<p>We begin a graphical summary with a scatterplot matrix.
-Here we use the <code>ggscatmat</code> function in the <code>GGally</code> package.
-This results in the scatterplot matrix seen in Figure <a href="introductory-statistics-in-r.html#fig:ch1-17">1.1</a>.</p>
+<p>We begin a graphical summary with a matrix of univariate and bivariate plots using the <code>ggpairs()</code> function in the <code>GGally</code> package <span class="citation">(<a href="#ref-R-GGally" role="doc-biblioref">Schloerke et al., 2018</a>)</span>.
+This results can be seen in Figure <a href="introductory-statistics-in-r.html#fig:ch1-17">1.1</a>.</p>
 <div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="introductory-statistics-in-r.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)</span>
-<span id="cb46-2"><a href="introductory-statistics-in-r.html#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggscatmat</span>(uadata)</span></code></pre></div>
-<pre><code>## Warning in ggscatmat(uadata): Factor variables are omitted in plot</code></pre>
+<span id="cb46-2"><a href="introductory-statistics-in-r.html#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpairs</span>(uadata, <span class="at">columns=</span><span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch1-17"></span>
-<img src="introStatModeling_files/figure-html/ch1-17-1.png" alt="Scatterplot matrix showing the relationship between the variables `gpa.endy1`, `hs.pct`, and `act`." width="80%" />
+<img src="introStatModeling_files/figure-html/ch1-17-1.png" alt="Pairs plot showing the relationship between the variables `gpa.endy1`, `hs.pct`, `act` and `year`." width="80%" />
 <p class="caption">
-Figure 1.1: Scatterplot matrix showing the relationship between the variables <code>gpa.endy1</code>, <code>hs.pct</code>, and <code>act</code>.
+Figure 1.1: Pairs plot showing the relationship between the variables <code>gpa.endy1</code>, <code>hs.pct</code>, <code>act</code> and <code>year</code>.
 </p>
 </div>
-<p>You will note that by default the function provides a scatterplot (Figure <a href="introductory-statistics-in-r.html#fig:ch1-17">1.1</a>) of each variable along with the Pearson correlation of each numeric variable (it warns us that <code>factor</code> variables are not included).
-The Pearson correlations assesses the strength of any linear relationship existing between the GPA, ACT and HS rank variables.</p>
-<p>Recall from introductory statistics that the Pearson correlation <span class="math inline">\(r\)</span> between two variables <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> is given by the formula
-<span class="math display">\[r = \frac{1}{n-1}\sum_{i=1}^n\left(\frac{x_i - \bar{x}}{s_x}\right)\left(\frac{y_i - \bar{y}}{s_y}\right)\]</span>
-<span class="math inline">\(r\)</span> is a unitless measure with the property that <span class="math inline">\(-1 \leq r \leq 1\)</span>. Values of <span class="math inline">\(r\)</span> near <span class="math inline">\(\pm 1\)</span> indicate a near perfect (positive or negative) linear relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>. A frequently used rule of thumb is that <span class="math inline">\(|r| &gt; 0.80\)</span> or so qualifies as a strong linear relationship.</p>
-<p>All pairwise correlations in this example are of modest magnitude (<span class="math inline">\(r \approx 0.4\)</span>).</p>
-<p>You will also note that the function provides a look at the distributional shape of each variable using what is known as a <em>density plot</em> (this can be consider a more-modern, and less subjective, histogram).
-The <code>ggscatmat</code> function builds off a function known as <code>ggplot()</code> from the <code>ggplot2</code> package (included in <code>tidyverse</code>).</p>
-<p>We can build density plots directly using the <code>geom_density()</code> function as seen in the code below. The resulting density plot is in Figure <a href="introductory-statistics-in-r.html#fig:ch1-18">1.2</a>.</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="introductory-statistics-in-r.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(uadata) <span class="sc">+</span> </span>
-<span id="cb48-2"><a href="introductory-statistics-in-r.html#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x=</span>gpa.endyr1))</span></code></pre></div>
+<p><strong>Coding note:</strong> Here we specify to only plot using the variables in columns 2, 3, 4 and 5 (the <code>2:5</code>).
+We do this because the <code>id</code> variable in <code>uadata</code> is an identifier and unique identifies each observations – it is not a variable of interest – we do not want to try and plot it.</p>
+<p>You will note that by default the function provides a collection of univariate and bivariate plots (Figure <a href="introductory-statistics-in-r.html#fig:ch1-17">1.1</a>). We recap each of the plots provided (details on each is provided below).</p>
+<ul>
+<li>On the diagonal of the matrix we see univariate plots – density plots for the numeric variables and a bargraph of frequencies for categorical variables.</li>
+<li>In the upper right triangle of the matrix we see numeric measures for the amount of correlation between each of the numeric variables (Pearson Correlation). In the case of a numeric variable with a categorical variable, side-by-side boxplots are provided.</li>
+<li>In the bottom left triangle of the matrix scatterplots are provided to show the relationship between numeric variables. We also see histograms for each of the numerical variable stratified by categories.
+Now we will discuss each of the elements in more detail.</li>
+</ul>
+</div>
+<div id="distribution-of-univariate-variables" class="section level3" number="1.6.4">
+<h3><span class="header-section-number">1.6.4</span> Distribution of Univariate Variables</h3>
+<p>The <code>ggpairs</code> function provides a look at the distributional shape of each variable using what is known as a <em>density plot</em> (this can be consider a more-modern, and less subjective, histogram).
+The <code>ggpairs</code> function builds off a function known as <code>ggplot()</code> from the <code>ggplot2</code> package <span class="citation">(<a href="#ref-R-ggplot2" role="doc-biblioref">Wickham, 2016</a>)</span> (included in <code>tidyverse</code>).</p>
+<p>We can build density plots directly using the <code>geom_density()</code> function as seen in the code below.
+The resulting density plot is in Figure <a href="introductory-statistics-in-r.html#fig:ch1-18">1.2</a>.</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="introductory-statistics-in-r.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(uadata) <span class="sc">+</span> </span>
+<span id="cb47-2"><a href="introductory-statistics-in-r.html#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x=</span>gpa.endyr1))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch1-18"></span>
 <img src="introStatModeling_files/figure-html/ch1-18-1.png" alt="Density plot showing left-skewed distribution for the `gpa.endyr1` variable" width="70%" />
 <p class="caption">
 Figure 1.2: Density plot showing left-skewed distribution for the <code>gpa.endyr1</code> variable
 </p>
 </div>
-<p>You should note the code is similar to the <code>%&gt;%</code> operator but with a <code>+</code>. The trick to working with plotting on the computer is to think in terms of <em>layers</em>. The first line <code>ggplot(uadata)</code> sets up a plot object based on the existing dataset <code>uadata</code>. The <code>+</code> says to add a layer, this layer is a density plot (<code>geom_density</code>) where the aesthetic values include an <span class="math inline">\(x\)</span>-axis variable matching that of <code>gpa.endyr</code>.</p>
+<p>You should note the code is similar to the <code>%&gt;%</code> operator but with a <code>+</code>.
+The trick to working with plotting on the computer is to think in terms of <em>layers</em>.
+The first line <code>ggplot(uadata)</code> sets up a plot object based on the existing dataset <code>uadata</code>.
+The <code>+</code> says to add a layer, this layer is a density plot (<code>geom_density</code>) where the aesthetic values include an <span class="math inline">\(x\)</span>-axis variable matching that of <code>gpa.endyr</code>.</p>
 <p>To generate even more complex distributional plots first we need to perform some data processing.
-In <code>tidyverse</code> there is package called <code>tidyr</code> which is mainly comprised of two main functions: <code>pivot_longer()</code> and <code>pivot_wider()</code>.
+In <code>tidyverse</code> there is package called <code>tidyr</code> <span class="citation">(<a href="#ref-R-tidyr" role="doc-biblioref">Wickham, 2021</a>)</span> which is mainly comprised of two main functions: <code>pivot_longer()</code> and <code>pivot_wider()</code>.
 The purpose of the <code>pivot_longer()</code> function is to collect variables in a dataset and create a <em>tall</em> (or <em>longer</em>) dataset (this is typically known as going from wide-to-tall or wide-to-long format).
 We specify the variables (or columns) we want to pivot (here the <code>c(gpa.endyr1, hs.pct, act)</code> part of the code), the name of the new variable (here called <code>variables</code>) storing the column names, and the variable name that will store the values (here called <code>value</code>).
 The <code>pivot_wider()</code> function essentially does the opposite, turning a tall data frame into a wide format.</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="introductory-statistics-in-r.html#cb49-1" aria-hidden="true" tabindex="-1"></a>uadata.tall <span class="ot">&lt;-</span> uadata <span class="sc">%&gt;%</span></span>
-<span id="cb49-2"><a href="introductory-statistics-in-r.html#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">c</span>(gpa.endyr1, hs.pct, act), <span class="at">names_to=</span><span class="st">&quot;var_names&quot;</span>, <span class="at">values_to=</span><span class="st">&quot;value&quot;</span> )</span>
-<span id="cb49-3"><a href="introductory-statistics-in-r.html#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(uadata)</span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="introductory-statistics-in-r.html#cb48-1" aria-hidden="true" tabindex="-1"></a>uadata.tall <span class="ot">&lt;-</span> uadata <span class="sc">%&gt;%</span></span>
+<span id="cb48-2"><a href="introductory-statistics-in-r.html#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">c</span>(gpa.endyr1, hs.pct, act), <span class="at">names_to=</span><span class="st">&quot;var_names&quot;</span>, <span class="at">values_to=</span><span class="st">&quot;value&quot;</span> )</span>
+<span id="cb48-3"><a href="introductory-statistics-in-r.html#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(uadata)</span></code></pre></div>
 <pre><code>##   id gpa.endyr1 hs.pct act year
 ## 1  1       0.98     61  20 1996
 ## 2  2       1.13     84  20 1996
@@ -868,7 +921,7 @@ The <code>pivot_wider()</code> function essentially does the opposite, turning a
 ## 4  4       1.32     95  23 1996
 ## 5  5       1.48     77  28 1996
 ## 6  6       1.57     47  23 1996</code></pre>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="introductory-statistics-in-r.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(uadata.tall)</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="introductory-statistics-in-r.html#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(uadata.tall)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 4
 ##   id    year  var_names  value
 ##   &lt;fct&gt; &lt;fct&gt; &lt;chr&gt;      &lt;dbl&gt;
@@ -878,28 +931,44 @@ The <code>pivot_wider()</code> function essentially does the opposite, turning a
 ## 4 2     1996  gpa.endyr1  1.13
 ## 5 2     1996  hs.pct     84   
 ## 6 2     1996  act        20</code></pre>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="introductory-statistics-in-r.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(uadata)</span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="introductory-statistics-in-r.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(uadata)</span></code></pre></div>
 <pre><code>## [1] 705   5</code></pre>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="introductory-statistics-in-r.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(uadata.tall)</span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="introductory-statistics-in-r.html#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(uadata.tall)</span></code></pre></div>
 <pre><code>## [1] 2115    4</code></pre>
 <p>Take a minute and step through the above code and output to understand what the code did.
-The data is now in a <em>tall</em> format.
-We can now utilize the <code>ggplot</code> package for more advanced plotting.
+The data is now in a <em>tall</em>, or <em>long</em>, format.
+We can now utilize the <code>ggplot2</code> package for more advanced plotting.
 Here we want to draw a density plot for each <code>var_names</code> in the dataset <code>uadata</code> but we want a different plot for each <span class="math inline">\(variable\)</span> (<code>act</code>, <code>gpa.endyr1</code>, and <code>hs.pct</code>).
 Figure <a href="introductory-statistics-in-r.html#fig:ch1-20">1.3</a> provides the result for the below code.</p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="introductory-statistics-in-r.html#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(uadata.tall) <span class="sc">+</span></span>
-<span id="cb57-2"><a href="introductory-statistics-in-r.html#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x=</span>value)) <span class="sc">+</span> </span>
-<span id="cb57-3"><a href="introductory-statistics-in-r.html#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(.<span class="sc">~</span>var_names, <span class="at">scales=</span><span class="st">&quot;free_x&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb57-4"><a href="introductory-statistics-in-r.html#cb57-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="introductory-statistics-in-r.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(uadata.tall) <span class="sc">+</span></span>
+<span id="cb56-2"><a href="introductory-statistics-in-r.html#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x=</span>value)) <span class="sc">+</span> </span>
+<span id="cb56-3"><a href="introductory-statistics-in-r.html#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(.<span class="sc">~</span>var_names, <span class="at">scales=</span><span class="st">&quot;free_x&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb56-4"><a href="introductory-statistics-in-r.html#cb56-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch1-20"></span>
 <img src="introStatModeling_files/figure-html/ch1-20-1.png" alt="Side-by-side density plots showing the relative distributions of `act`, `gpa.endyr1` and `hs.pct`." width="70%" />
 <p class="caption">
 Figure 1.3: Side-by-side density plots showing the relative distributions of <code>act</code>, <code>gpa.endyr1</code> and <code>hs.pct</code>.
 </p>
 </div>
-<p><strong>Notes</strong>: The <code>facet_grid</code> option tells the plot to draw each density plot for each observed value in <code>var_names</code>. The <code>theme_bw()</code> specifies the plotting style (there are many others! We will typically use <code>theme_bw()</code>, <code>theme_classic()</code> or the default behavior which corresponds to <code>theme_grey()</code>). The <code>free_x</code> option tells the plot that each <span class="math inline">\(x\)</span>-axis is on a different scale. Feel free to modify the code to see how the plot changes!</p>
+<p><strong>Notes</strong>: The <code>facet_grid</code> option tells the plot to draw each density plot for each observed value in <code>var_names</code>.
+The <code>theme_bw()</code> specifies the plotting style (there are many others! We will typically use <code>theme_bw()</code>, <code>theme_classic()</code> or the default behavior which corresponds to <code>theme_grey()</code>).
+The <code>free_x</code> option tells the plot that each <span class="math inline">\(x\)</span>-axis is on a different scale. Feel free to modify the code to see how the plot changes!</p>
 <p>We can see that GPA and high school percentile rankings are skewed left, and that ACT scores are reasonably symmetrically distributed.</p>
-<p>The best visual tool for simple counts is the Bar Graph (<strong>note:</strong> you should never use a pie chart, see <a href="http://www.businessinsider.com/pie-charts-are-the-worst-2013-6" class="uri">http://www.businessinsider.com/pie-charts-are-the-worst-2013-6</a>).
+<p>Alternatively, we could build histograms to make the comparison.</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="introductory-statistics-in-r.html#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(uadata.tall) <span class="sc">+</span></span>
+<span id="cb57-2"><a href="introductory-statistics-in-r.html#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x=</span>value), <span class="at">binwidth =</span> <span class="fl">2.5</span>) <span class="sc">+</span> </span>
+<span id="cb57-3"><a href="introductory-statistics-in-r.html#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(var_names<span class="sc">~</span>., <span class="at">scales=</span><span class="st">&quot;free_y&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb57-4"><a href="introductory-statistics-in-r.html#cb57-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="figure" style="text-align: center">
+<img src="introStatModeling_files/figure-html/ch1-20_2-1.png" alt="Stacked histogram showing the relative distributions of `act`, `gpa.endyr1` and `hs.pct`." width="70%" />
+<p class="caption">
+(#fig:ch1-20_2)Stacked histogram showing the relative distributions of <code>act</code>, <code>gpa.endyr1</code> and <code>hs.pct</code>.
+</p>
+</div>
+<p>Note the similarities and difference in Figures <a href="introductory-statistics-in-r.html#fig:ch1-20">1.3</a> and @ref(fig:ch1-20_2).
+Depending on whether we facet on the <span class="math inline">\(y\)</span>-axis or <span class="math inline">\(x\)</span>-axis we can get different appearances.</p>
+<p><strong>Bar Graphs</strong></p>
+<p>The best visual tool for simple counts is the Bar Graph (<strong>note:</strong> you should never use a pie chart, see <a href="http://www.businessinsider.com/pie-charts-are-the-worst-2013-6">here for an explanation</a> ).
 The below code generates a simple (and fairly boring) bar graph (Figure <a href="introductory-statistics-in-r.html#fig:ch1-21">1.4</a>) displaying the number of observations for each year in the <code>uadata</code>.</p>
 <div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="introductory-statistics-in-r.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(uadata) <span class="sc">+</span> </span>
 <span id="cb58-2"><a href="introductory-statistics-in-r.html#cb58-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x=</span>year) )</span></code></pre></div>
@@ -909,26 +978,31 @@ The below code generates a simple (and fairly boring) bar graph (Figure <a href=
 Figure 1.4: Bar graph displaying the number of observations in the <code>uadata</code> per <code>year</code>.
 </p>
 </div>
-<p>We see here that nothing too interesting is happening. A fairly uniform distribution of counts is seen across years.</p>
+<p>We see here that nothing too interesting is happening.
+A fairly uniform distribution of counts is seen across years.</p>
 </div>
-<div id="descriptive-statistics-and-visualizations-by-levels-of-a-factor-variable" class="section level3" number="1.6.4">
-<h3><span class="header-section-number">1.6.4</span> Descriptive statistics and visualizations by levels of a factor variable</h3>
+<div id="descriptive-statistics-and-visualizations-by-levels-of-a-factor-variable" class="section level3" number="1.6.5">
+<h3><span class="header-section-number">1.6.5</span> Descriptive statistics and visualizations by levels of a factor variable</h3>
 <p>While the above summaries are informative, they overlook the fact that we have several years of data and that it may be more interesting to see how things might be changing year to year.
 This is why treating <code>year</code> as a factor is important, because it enables us to split out descriptions of the numeric variables by levels of the factor.</p>
-<p>One of the simplest and best visualization tool for comparing distributions is the side-by-side boxplot, which displays information about quartiles and potential outliers. The below code generates Figure <a href="introductory-statistics-in-r.html#fig:ch1-22">1.5</a>.</p>
+<p>One of the simplest and best visualization tool for comparing distributions is the side-by-side boxplot, which displays information about quartiles and potential outliers.
+The below code generates Figure <a href="introductory-statistics-in-r.html#fig:ch1-22">1.5</a>.</p>
 <div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="introductory-statistics-in-r.html#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(uadata) <span class="sc">+</span></span>
 <span id="cb59-2"><a href="introductory-statistics-in-r.html#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>year, <span class="at">y=</span>act) ) <span class="sc">+</span></span>
-<span id="cb59-3"><a href="introductory-statistics-in-r.html#cb59-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Year&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;Composite ACT Score&quot;</span>) <span class="sc">+</span></span>
-<span id="cb59-4"><a href="introductory-statistics-in-r.html#cb59-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;ACT scores of Incoming Freshmen&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb59-5"><a href="introductory-statistics-in-r.html#cb59-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
+<span id="cb59-3"><a href="introductory-statistics-in-r.html#cb59-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;ACT scores of Incoming Freshmen&quot;</span>,</span>
+<span id="cb59-4"><a href="introductory-statistics-in-r.html#cb59-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">x=</span><span class="st">&quot;Year&quot;</span>,</span>
+<span id="cb59-5"><a href="introductory-statistics-in-r.html#cb59-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">&quot;Composite ACT Score&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb59-6"><a href="introductory-statistics-in-r.html#cb59-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch1-22"></span>
 <img src="introStatModeling_files/figure-html/ch1-22-1.png" alt="Side-by-side Box-whiskers plots showing the distribution of ACT scores in the `uadata` per year." width="70%" />
 <p class="caption">
 Figure 1.5: Side-by-side Box-whiskers plots showing the distribution of ACT scores in the <code>uadata</code> per year.
 </p>
 </div>
-<p>We see here the code is similar to the examples above except now we call the <code>geom_boxplot</code> function. Also note we are using <code>theme_classic()</code> which has some subtle differences compared to <code>theme_bw()</code> used above. Lastly, we include proper labels and titles on our plot here for a more professional appearance.</p>
-<p>Here we construct side-by-side boxplots by year for each of the three numeric variables in the data frame. We utilize the taller or longer format of the admissions data in <code>uadata.tall</code> and the resulting plot is in Figure <a href="introductory-statistics-in-r.html#fig:ch1-23">1.6</a>.</p>
+<p>We see here the code is similar to the examples above except now we call the <code>geom_boxplot</code> function.
+Also note we are using <code>theme_classic()</code> which has some subtle differences compared to <code>theme_bw()</code> used above.
+Lastly, we include proper labels and titles on our plot here for a more professional appearance.</p>
+<p>Next we construct side-by-side boxplots by year for each of the three numeric variables in the data frame. We utilize the taller or longer format of the admissions data in <code>uadata.tall</code> and the resulting plot is in Figure <a href="introductory-statistics-in-r.html#fig:ch1-23">1.6</a>.</p>
 <div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="introductory-statistics-in-r.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(uadata.tall) <span class="sc">+</span> </span>
 <span id="cb60-2"><a href="introductory-statistics-in-r.html#cb60-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>year, <span class="at">y=</span>value) ) <span class="sc">+</span></span>
 <span id="cb60-3"><a href="introductory-statistics-in-r.html#cb60-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(var_names<span class="sc">~</span>., <span class="at">scales=</span><span class="st">&quot;free_y&quot;</span>) <span class="sc">+</span> </span>
@@ -939,8 +1013,10 @@ Figure 1.5: Side-by-side Box-whiskers plots showing the distribution of ACT scor
 Figure 1.6: Side-by-side Box-whiskers plots showing the distributions of the variables <code>act</code>, <code>gpa.endyr1</code> and <code>hs.pct</code> for each year in the <code>uadata</code> dataset.
 </p>
 </div>
-<p>Note here that the order of the <code>var_names</code> statement in the <code>facet_grid</code> statement has changed compared to the previous side-by-side density plots (code used to generate Figure <a href="introductory-statistics-in-r.html#fig:ch1-20">1.3</a>) now the plots are stacked). Also note another theme option, <code>theme_dark()</code> (obviously you generally will NOT want to use this theme if planning to print the document).</p>
-<p>This is a nice compact visual description of the changes in patterns of response of these three variables over time. All three variables appear pretty stable over the years; the left skews in GPA and high school percentile rankings are still evident here (note the detection of some low outliers for year on these two variables).</p>
+<p>Note here that the order of the <code>var_names</code> statement in the <code>facet_grid</code> statement has changed compared to the previous side-by-side density plots (code used to generate Figure <a href="introductory-statistics-in-r.html#fig:ch1-20">1.3</a>) now the plots are stacked).
+Also note another theme option, <code>theme_dark()</code> (obviously you will NOT want to use this theme if planning to print the document).</p>
+<p>This is a nice compact visual description of the changes in patterns of response of these three variables over time.<br />
+All three variables appear pretty stable over the years; the left skews in GPA and high school percentile rankings are still evident here (note the detection of some low outliers for year on these two variables).</p>
 <p>We now revisit calculating summary statistics.
 Extensive grouped numeric summary statistics are available by using the <code>group_by()</code> and <code>summarize()</code> functions in <code>tidyverse</code>.
 The <code>group_by</code> function tells R to treat each value of the specified variable (in this case, literally called <code>variable</code>) as a collection of similar options, then to perform the <code>summarize</code> function on each value in the grouped variables.
@@ -1303,47 +1379,100 @@ hs.pct
 </tbody>
 </table>
 </div>
+<div id="descriptive-statistics-and-visualizations-for-two-numeric-variables" class="section level3" number="1.6.6">
+<h3><span class="header-section-number">1.6.6</span> Descriptive statistics and visualizations for two numeric variables</h3>
+<p>For a pair of numeric variables the amount of linear association between the variables can be measured with the Pearson correlation.
+The Pearson correlation assesses the <em>strength</em> and <em>direction</em> of any linear relationship existing between the GPA, ACT and HS rank variables (Figure <a href="introductory-statistics-in-r.html#fig:ch1-17">1.1</a>).</p>
+<p>Recall from introductory statistics that the Pearson correlation <span class="math inline">\(r\)</span> between two variables <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> is given by the formula
+<span class="math display">\[r = \frac{1}{n-1}\sum_{i=1}^n\left(\frac{x_i - \bar{x}}{s_x}\right)\left(\frac{y_i - \bar{y}}{s_y}\right)\]</span>
+<span class="math inline">\(r\)</span> is a unitless measure with the property that <span class="math inline">\(-1 \leq r \leq 1\)</span>.<br />
+Values of <span class="math inline">\(r\)</span> near <span class="math inline">\(\pm 1\)</span> indicate a near perfect (positive or negative) linear relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>.
+A frequently used rule of thumb is that <span class="math inline">\(|r| &gt; 0.80\)</span> or so qualifies as a strong linear relationship.
+We can calculate the Pearson correlation with the <code>cor</code> function.
+When applied to a <code>data.frame</code>, or <code>matrix</code>, it displays a correlation matrix.
+In the below code we specify to only calculate the correlation based on the 3 numeric variables.</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="introductory-statistics-in-r.html#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(uadata[,<span class="fu">c</span>(<span class="st">&quot;gpa.endyr1&quot;</span>, <span class="st">&quot;hs.pct&quot;</span>, <span class="st">&quot;act&quot;</span>)])</span></code></pre></div>
+<pre><code>##            gpa.endyr1   hs.pct      act
+## gpa.endyr1   1.000000 0.398479 0.365611
+## hs.pct       0.398479 1.000000 0.442507
+## act          0.365611 0.442507 1.000000</code></pre>
+<p>All pairwise correlations in this example are of modest magnitude (<span class="math inline">\(r \approx 0.4\)</span>) (see Figure <a href="introductory-statistics-in-r.html#fig:ch1-17">1.1</a> or the above correlation matrix).</p>
+<p>To visualize the relationship between numeric variables, we typically use a scatterplot.</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="introductory-statistics-in-r.html#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(uadata) <span class="sc">+</span> </span>
+<span id="cb65-2"><a href="introductory-statistics-in-r.html#cb65-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>act, <span class="at">y=</span>gpa.endyr1) ) <span class="sc">+</span></span>
+<span id="cb65-3"><a href="introductory-statistics-in-r.html#cb65-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Composite ACT Score&quot;</span>,</span>
+<span id="cb65-4"><a href="introductory-statistics-in-r.html#cb65-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">&quot;Grade point average following freshman year&quot;</span>) <span class="sc">+</span></span>
+<span id="cb65-5"><a href="introductory-statistics-in-r.html#cb65-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<div class="figure" style="text-align: center">
+<img src="introStatModeling_files/figure-html/ch1-25_scatter-1.png" alt="Scatterplot showing the relationship between the variables `act` and `gpa.endyr1` in the `uadata` dataset." width="75%" />
+<p class="caption">
+(#fig:ch1-25_scatter)Scatterplot showing the relationship between the variables <code>act</code> and <code>gpa.endyr1</code> in the <code>uadata</code> dataset.
+</p>
+</div>
+<p>You should note in Figure @ref(ch1-25_scatter) the overall positive relationship (higher ACT scores tend to correspond to higher GPAs).
+We also note the rounding of the ACT scores (always a whole number) resulting in these vertical striations in the plot.</p>
+</div>
 </div>
 <div id="sampling-distributions-describing-how-a-statistic-varies" class="section level2" number="1.7">
 <h2><span class="header-section-number">1.7</span> Sampling distributions: describing how a statistic varies</h2>
-<p>As described in the discussion on variability above, each of the numeric quantities calculated has some associated uncertainty. It is not enough to know just the variance or standard deviation of an estimate. Those are just ways to get a measure of the inconsistency in an estimate’s value from sample to sample of a given size <span class="math inline">\(n\)</span>.</p>
+<p>As described in the discussion on variability above, each of the numeric quantities calculated has some associated uncertainty.
+It is not enough to know just the variance or standard deviation of an estimate.
+Those are just ways to get a measure of the inconsistency in an estimate’s value from sample to sample of a given size <span class="math inline">\(n\)</span>.</p>
 <p>If we wish to make a confident conclusion about an unknown population parameter using a sample statistic (e.g. <span class="math inline">\(\bar{x}\)</span>), we also need to know something about the general pattern of behavior that statistic would take if we had observed it over many, many different potential random samples.</p>
 <p>This long-run behavior pattern is described via the probability distribution of the statistic, also known as the <strong>sampling distribution</strong> of the statistic.</p>
-<p>It is important to remember that we usually only collect one sample, so only one sample mean will be available in practice.
+<p>It is important to remember that we usually only collect one sample, so only one sample estimate will be available in practice.
 However, knowledge of the sampling distribution of our statistic or estimate is important because it will enable us to assess the reliability or confidence we can place in any generalizations we make about the population using our estimate.</p>
 <p><strong>Two useful sampling distributions: Normal and <span class="math inline">\(t\)</span></strong></p>
-<p>You should be very familiar with normal distributions and <span class="math inline">\(t\)</span>-distributions from your introductory statistics course. In particular, both serve as useful sampling distributions to describe the behavior of the sample mean <span class="math inline">\(\bar{x}\)</span> as an estimator for a population mean <span class="math inline">\(\mu\)</span>. We briefly review them here.</p>
-<p><strong>Normal distributions.</strong> A variable <span class="math inline">\(X\)</span> that is normally distributed is one that has a symmetric bell-shaped density curve. A normal density curve has two parameters: its mean <span class="math inline">\(\mu\)</span> and its variance <span class="math inline">\(\sigma^2\)</span>. Notationally, we indicate that <span class="math inline">\(X\)</span> is normal by writing <span class="math inline">\(X \sim N(\mu, \sigma^2)\)</span>.</p>
-<p>The normal distribution serves as a good sampling distribution model for the sample mean <span class="math inline">\(\bar{x}\)</span> because of the powerful Central Limit Theorem, which states that if <span class="math inline">\(n\)</span> is sufficiently large, the sampling distribution of <span class="math inline">\(\bar{x}\)</span> will be approximately normal, regardless of the shape of the distribution of the original parent population from which you collect your sample.</p>
+<p>You should be very familiar with normal distributions and <span class="math inline">\(t\)</span>-distributions from your introductory statistics course.
+In particular, both serve as useful sampling distributions to describe the behavior of the sample mean <span class="math inline">\(\bar{x}\)</span> as an estimator for a population mean <span class="math inline">\(\mu\)</span>.
+We briefly review them here.</p>
+<p><strong>Normal distributions.</strong> A variable <span class="math inline">\(X\)</span> that is normally distributed is one that has a symmetric bell-shaped density curve.
+A normal density curve has two parameters: its mean <span class="math inline">\(\mu\)</span> and its variance <span class="math inline">\(\sigma^2\)</span>.
+Notationally, we indicate that <span class="math inline">\(X\)</span> is normal by writing <span class="math inline">\(X \sim N(\mu, \sigma^2)\)</span>.</p>
+<p>The normal distribution serves as a good sampling distribution model for the sample mean <span class="math inline">\(\bar{x}\)</span> because of the powerful Central Limit Theorem, which states that if <span class="math inline">\(n\)</span> is sufficiently large, the sampling distribution of <span class="math inline">\(\bar{x}\)</span> will be approximately normal, regardless of the shape of the distribution of the original parent population from which you collect your sample (when making a few assumptions).</p>
 <p><strong>t distributions.</strong> The formula given by
 <span class="math display">\[t_0 = \frac{\bar{x}-\mu}{{SE}_{\bar{x}}}\]</span></p>
-<p>counts up the number of standard error units between the true value of <span class="math inline">\(\mu\)</span> and its sample estimate <span class="math inline">\(\bar{x}\)</span>; it can be thought of as the standardized distance between a true mean value and its sample mean estimate. If the original population was normally distributed, then the quantity <span class="math inline">\(t_0\)</span> will possess the <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(n - 1\)</span> degrees of freedom. Degrees of freedom is the only parameter of a <span class="math inline">\(t\)</span>-distribution. Notationally, we indicate this by writing <span class="math inline">\(t_0 \sim t(df)\)</span>.</p>
-<p><span class="math inline">\(t\)</span>-distributions look a lot like the standard normal distribution, <span class="math inline">\(N(0, 1)\)</span>: they both center at 0 and are symmetric and bell-shaped (see below). The key difference is due to the fact that the quantity <span class="math inline">\(t\)</span> includes two sample summaries in its construction: the sample mean <span class="math inline">\(\bar{x}\)</span>, and <span class="math inline">\(SE_{\bar{x}}\)</span>, which incorporates the sample standard deviation <span class="math inline">\(s\)</span>. Because of this, <span class="math inline">\(t\)</span> is more variable than <span class="math inline">\(N(0, 1)\)</span>. However, as <span class="math inline">\(n\)</span> (and hence degrees of freedom) increases, <span class="math inline">\(s\)</span> becomes a better estimate of the true population standard deviation, so the distinction ultimately vanishes with larger samples. This can all be visualized in Figure <a href="introductory-statistics-in-r.html#fig:ch1-26">1.7</a>.</p>
+<p>counts up the number of standard error units between the true value of <span class="math inline">\(\mu\)</span> and its sample estimate <span class="math inline">\(\bar{x}\)</span>; it can be thought of as the standardized distance between a true mean value and its sample mean estimate.
+If the original population was normally distributed, then the quantity <span class="math inline">\(t_0\)</span> will possess the <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(n - 1\)</span> degrees of freedom.
+Degrees of freedom is the only parameter of a <span class="math inline">\(t\)</span>-distribution. Notationally, we indicate this by writing <span class="math inline">\(t_0 \sim t(\textrm{df})\)</span>.</p>
+<p><span class="math inline">\(t\)</span>-distributions look a lot like the standard normal distribution, <span class="math inline">\(N(0, 1)\)</span>: they both center at 0 and are symmetric and bell-shaped (see below).<br />
+The key difference is due to the fact that the quantity <span class="math inline">\(t\)</span> includes two sample summaries in its construction: the sample mean <span class="math inline">\(\bar{x}\)</span>, and <span class="math inline">\(SE_{\bar{x}}\)</span>, which incorporates the sample standard deviation <span class="math inline">\(s\)</span>.<br />
+Because of this, <span class="math inline">\(t\)</span> is more variable than <span class="math inline">\(N(0, 1)\)</span>.<br />
+However, as <span class="math inline">\(n\)</span> (and hence degrees of freedom) increases, <span class="math inline">\(s\)</span> becomes a better estimate of the true population standard deviation, so the distinction ultimately vanishes with larger samples.
+This can all be visualized in Figure <a href="introductory-statistics-in-r.html#fig:ch1-26">1.7</a>.</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch1-26"></span>
 <img src="introStatModeling_files/figure-html/ch1-26-1.png" alt="Overlayed distribution functions showing the relationship between a standard normal distribution and that of a $t$ distribution with 3, 5 and 10 degrees of freedom. As the degrees of freedom increases, the $t$ distribution becomes more *normal*" width="70%" />
 <p class="caption">
 Figure 1.7: Overlayed distribution functions showing the relationship between a standard normal distribution and that of a <span class="math inline">\(t\)</span> distribution with 3, 5 and 10 degrees of freedom. As the degrees of freedom increases, the <span class="math inline">\(t\)</span> distribution becomes more <em>normal</em>
 </p>
 </div>
-<p>The <span class="math inline">\(t\)</span>-distribution is usually the relevant sampling distribution when we use a sample mean <span class="math inline">\(\bar{x}\)</span> to make inferences about the corresponding population mean <span class="math inline">\(\mu\)</span>. Later in the course, the need to make more complicated inferences will require us to develop different sampling distribution models to facilitate the statistics involved. These will be presented as needed.</p>
+<p>The <span class="math inline">\(t\)</span>-distribution is usually the relevant sampling distribution when we use a sample mean <span class="math inline">\(\bar{x}\)</span> to make inferences about the corresponding population mean <span class="math inline">\(\mu\)</span>.
+Later in the course, the need to make more complicated inferences will require us to develop different sampling distribution models to facilitate the statistics involved.
+These will be presented as needed.</p>
 </div>
 <div id="two-sample-inference" class="section level2" number="1.8">
 <h2><span class="header-section-number">1.8</span> Two-sample inference</h2>
-<p>A key concept from your introductory statistics course that builds off sampling distribution theory is the comparison of the mean from two populations based on the sample means using a two-sample <em>t</em>-test. Consider testing
+<p>A key concept from your introductory statistics course that builds off sampling distribution theory is the comparison of the mean from two populations based on the sample means using a two-sample <em>t</em>-test.
+Consider testing
 <span class="math display">\[H_0:\ \mu_A = \mu_B ~~~\textrm{versus}~~~ H_A:\ \mu_A &lt;\neq&gt; \mu_B\]</span>
-where the notation <span class="math inline">\(&lt;\neq&gt;\)</span> represents one of the common alternative hypotheses from your introductory statistics course and <span class="math inline">\(\mu_A\)</span> is the population mean from population <span class="math inline">\(A\)</span> and <span class="math inline">\(\mu_B\)</span> is the population mean from population <span class="math inline">\(B\)</span>. We statistically test this hypothesis via
+where the notation <span class="math inline">\(&lt;\neq&gt;\)</span> represents one of the common alternative hypotheses from your introductory statistics course (less than, not equal to, or greater than) and, <span class="math inline">\(\mu_A\)</span> is the population mean from population <span class="math inline">\(A\)</span> and <span class="math inline">\(\mu_B\)</span> is the population mean from population <span class="math inline">\(B\)</span>. We statistically test this hypothesis via
 <span class="math display">\[t_0 = \frac{\bar{x}_A - \bar{x}_B}{{SE}_{\bar{x}_A-\bar{x}_B}}\]</span></p>
-<p>where <span class="math inline">\({SE}_{\bar{x}_A-\bar{x}_B}\)</span> is the standard error of the difference of sample means <span class="math inline">\(\bar{x}_A\)</span> and <span class="math inline">\(\bar{x}_B\)</span>. It can be estimated in one of two ways (depending if we assume the population variances are equal or not) and we reference your intro stat class for details (pooled versus non-pooled variance). In R, we can perform this test, and construct the associated <span class="math inline">\((1-\alpha)100\%\)</span> confidence interval for <span class="math inline">\(\mu_A-\mu_B\)</span>,
+<p>where <span class="math inline">\({SE}_{\bar{x}_A-\bar{x}_B}\)</span> is the standard error of the difference of sample means <span class="math inline">\(\bar{x}_A\)</span> and <span class="math inline">\(\bar{x}_B\)</span>.
+It can be estimated in one of two ways (depending if we assume the population variances are equal or not) and we reference your intro stat class for details (pooled versus non-pooled variance).
+In R, we can perform this test, and construct the associated <span class="math inline">\((1-\alpha)100\%\)</span> confidence interval for <span class="math inline">\(\mu_A-\mu_B\)</span>,
 <span class="math display">\[\bar{x}_A - \bar{x}_B \pm t_{\alpha/2} {SE}_{\bar{x}_A-\bar{x}_B}\]</span>
-using the function <code>t.test()</code>. Here <span class="math inline">\(t_{\alpha/2}\)</span> is the <span class="math inline">\(1-\alpha/2\)</span> quantile from the <em>t</em>-distribution (the degrees of freedom depend on your assumption about equal variance).</p>
-<p>Consider comparing the ACT scores for incoming freshmen in 1996 to 2000 using the university admission data. Perhaps we have a theory that ACT scores were higher in 1996 than 2000. That is, we are formally testing
+using the function <code>t.test()</code>.
+Here <span class="math inline">\(t_{\alpha/2}\)</span> is the <span class="math inline">\(1-\alpha/2\)</span> quantile from the <em>t</em>-distribution (the degrees of freedom depend on your assumption about equal variance).</p>
+<p>Consider comparing the ACT scores for incoming freshmen in 1996 to 2000 using the university admission data.
+Perhaps we have a theory that ACT scores were higher in 1996 than 2000. That is, we are formally testing
 <span class="math display">\[H_0:\ \mu_{1996} = \mu_{2000} ~~~\textrm{versus}~~~ \mu_{1996} &gt; \mu_{2000}\]</span></p>
 <p>First we need to select a subset of the data.</p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="introductory-statistics-in-r.html#cb63-1" aria-hidden="true" tabindex="-1"></a>uadata.trim <span class="ot">&lt;-</span> uadata <span class="sc">%&gt;%</span></span>
-<span id="cb63-2"><a href="introductory-statistics-in-r.html#cb63-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1996</span>, <span class="dv">2000</span>) )</span></code></pre></div>
-<p>Here we filter the <code>uadata</code> so that only years in the vector 1996, 2000 are included. Now that we have a proper subset of the data, we can compare the ACT scores between the two years and build a 98% confidence interval for the mean difference.</p>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="introductory-statistics-in-r.html#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(act <span class="sc">~</span> year, <span class="at">data=</span>uadata.trim, <span class="at">conf.level=</span><span class="fl">0.98</span>, </span>
-<span id="cb64-2"><a href="introductory-statistics-in-r.html#cb64-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">alternative=</span><span class="st">&quot;greater&quot;</span>, <span class="at">var.equal=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="introductory-statistics-in-r.html#cb66-1" aria-hidden="true" tabindex="-1"></a>uadata.trim <span class="ot">&lt;-</span> uadata <span class="sc">%&gt;%</span></span>
+<span id="cb66-2"><a href="introductory-statistics-in-r.html#cb66-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1996</span>, <span class="dv">2000</span>) )</span></code></pre></div>
+<p>Here we filter the <code>uadata</code> so that only years in the vector 1996, 2000 are included.
+Now that we have a proper subset of the data, we can compare the ACT scores between the two years and build a 98% confidence interval for the mean difference.</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="introductory-statistics-in-r.html#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(act <span class="sc">~</span> year, <span class="at">data=</span>uadata.trim, <span class="at">conf.level=</span><span class="fl">0.98</span>, </span>
+<span id="cb67-2"><a href="introductory-statistics-in-r.html#cb67-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">alternative=</span><span class="st">&quot;greater&quot;</span>, <span class="at">var.equal=</span><span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## 
 ##  Two Sample t-test
 ## 
@@ -1355,12 +1484,15 @@ using the function <code>t.test()</code>. Here <span class="math inline">\(t_{\a
 ## sample estimates:
 ## mean in group 1996 mean in group 2000 
 ##            24.6901            24.5547</code></pre>
-<p>We are 98% confident that the mean difference between 1996 ACT scores and 2000 ACT scores is in the interval (-0.792, <span class="math inline">\(\infty\)</span>). Further, we lack significant evidence (<em>p</em>-value<span class="math inline">\(\approx 0.3817\)</span>) to conclude that the average ACT score in 1996 is greater than that in 2000 for incoming freshmen (also note that the value 0 is included in the confidence interval).</p>
-<p>A few things to note about the code above.
-We use the notation <code>act ~ year</code>, this tells R that the <code>act</code> scores are a function of <code>year</code>.
-We specify the data set to be used to perform the test (<code>data=uadata.trim</code>).
-We specify the confidence level (by default it is 0.95) and the alternative hypothesis (by default it is a not-equal test).
-Lastly, we set <code>var.equal=TRUE</code> so the standard error (and degrees of freedom) are calculated under the assumption that the variance of the two populations is equal (pooled variance).</p>
+<p>We are 98% confident that the mean difference between 1996 ACT scores and 2000 ACT scores is in the interval (-0.792, <span class="math inline">\(\infty\)</span>).
+Further, we lack significant evidence (<span class="math inline">\(p\)</span>-value <span class="math inline">\(\approx 0.3817\)</span>) to conclude that the average ACT score in 1996 is greater than that in 2000 for incoming freshmen (also note that the value 0 is included in the confidence interval).</p>
+<p>A few things to note about the code above.</p>
+<ul>
+<li>We use the notation <code>act ~ year</code>, this tells R that the <code>act</code> scores are a function of <code>year</code>.</li>
+<li>We specify the data set to be used to perform the test (<code>data=uadata.trim</code>).</li>
+<li>We specify the confidence level (by default it is 0.95) and the alternative hypothesis (by default it is a not-equal test).</li>
+<li>Lastly, we set <code>var.equal=TRUE</code> so the standard error (and degrees of freedom) are calculated under the assumption that the variance of the two populations is equal (pooled variance).</li>
+</ul>
 
 </div>
 </div>
@@ -1368,6 +1500,27 @@ Lastly, we set <code>var.equal=TRUE</code> so the standard error (and degrees of
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-KutnerText" class="csl-entry">
 Kutner, M. H., Nachtsheim, C., Neter, J. and Li, W., <em>Applied Linear Statistical Models</em>, New York, NY: McGraw-Hill Irwin, 2004.
+</div>
+<div id="ref-R-base" class="csl-entry">
+R Core Team, <em>R: A Language and Environment for Statistical Computing</em>, Vienna, Austria: R Foundation for Statistical Computing, from <a href="https://www.R-project.org/">https://www.R-project.org/</a>, 2019.
+</div>
+<div id="ref-R-GGally" class="csl-entry">
+Schloerke, B., Crowley, J., Cook, D., Briatte, F., Marbach, M., Thoen, E., Elberg, A. and Larmarange, J., <em>GGally: Extension to ’Ggplot2’</em>, from <a href="https://CRAN.R-project.org/package=GGally">https://CRAN.R-project.org/package=GGally</a>, 2018.
+</div>
+<div id="ref-R-ggplot2" class="csl-entry">
+Wickham, H., <em>Ggplot2: Elegant Graphics for Data Analysis</em>, Springer-Verlag New York, from <a href="https://ggplot2.tidyverse.org">https://ggplot2.tidyverse.org</a>, 2016.
+</div>
+<div id="ref-R-tidyr" class="csl-entry">
+Wickham, H., <em>Tidyr: Tidy Messy Data</em>, from <a href="https://CRAN.R-project.org/package=tidyr">https://CRAN.R-project.org/package=tidyr</a>, 2021.
+</div>
+<div id="ref-R-tidyverse" class="csl-entry">
+Wickham, H., <em>Tidyverse: Easily Install and Load the ’Tidyverse’</em>, from <a href="https://CRAN.R-project.org/package=tidyverse">https://CRAN.R-project.org/package=tidyverse</a>, 2017.
+</div>
+<div id="ref-R-dplyr" class="csl-entry">
+Wickham, H., François, R., Henry, L. and Müller, K., <em>Dplyr: A Grammar of Data Manipulation</em>, from <a href="https://CRAN.R-project.org/package=dplyr">https://CRAN.R-project.org/package=dplyr</a>, 2021.
+</div>
+<div id="ref-Wickham2017R" class="csl-entry">
+Wickham, H. and Grolemund, G., <em>R for Data Science: Import, Tidy, Transform, Visualize, and Model Data</em>, O’Reilly Media, from <a href="http://r4ds.had.co.nz/">http://r4ds.had.co.nz/</a>, 2017.
 </div>
 </div>
             </section>

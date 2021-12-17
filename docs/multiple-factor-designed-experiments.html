@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Hughes and Thomas Fisher" />
 
 
-<meta name="date" content="2021-12-16" />
+<meta name="date" content="2021-12-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -188,7 +188,9 @@ div.csl-indent {
 <li class="chapter" data-level="1.6.1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#numeric-summaries"><i class="fa fa-check"></i><b>1.6.1</b> Numeric Summaries</a></li>
 <li class="chapter" data-level="1.6.2" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#numeric-summaries-in-r"><i class="fa fa-check"></i><b>1.6.2</b> Numeric Summaries in R</a></li>
 <li class="chapter" data-level="1.6.3" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#graphical-summaries"><i class="fa fa-check"></i><b>1.6.3</b> Graphical Summaries</a></li>
-<li class="chapter" data-level="1.6.4" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#descriptive-statistics-and-visualizations-by-levels-of-a-factor-variable"><i class="fa fa-check"></i><b>1.6.4</b> Descriptive statistics and visualizations by levels of a factor variable</a></li>
+<li class="chapter" data-level="1.6.4" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#distribution-of-univariate-variables"><i class="fa fa-check"></i><b>1.6.4</b> Distribution of Univariate Variables</a></li>
+<li class="chapter" data-level="1.6.5" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#descriptive-statistics-and-visualizations-by-levels-of-a-factor-variable"><i class="fa fa-check"></i><b>1.6.5</b> Descriptive statistics and visualizations by levels of a factor variable</a></li>
+<li class="chapter" data-level="1.6.6" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#descriptive-statistics-and-visualizations-for-two-numeric-variables"><i class="fa fa-check"></i><b>1.6.6</b> Descriptive statistics and visualizations for two numeric variables</a></li>
 </ul></li>
 <li class="chapter" data-level="1.7" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#sampling-distributions-describing-how-a-statistic-varies"><i class="fa fa-check"></i><b>1.7</b> Sampling distributions: describing how a statistic varies</a></li>
 <li class="chapter" data-level="1.8" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#two-sample-inference"><i class="fa fa-check"></i><b>1.8</b> Two-sample inference</a></li>
@@ -529,8 +531,8 @@ Victor
 </tbody>
 </table>
 <p>There data are available in the R dataframe <code>wordrecall.RData</code> on the class repository. Below is an analysis of this data.</p>
-<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="multiple-factor-designed-experiments.html#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;wordrecall.RData&quot;</span>)</span>
-<span id="cb102-2"><a href="multiple-factor-designed-experiments.html#cb102-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(wordrecall)</span></code></pre></div>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="multiple-factor-designed-experiments.html#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;wordrecall.RData&quot;</span>)</span>
+<span id="cb105-2"><a href="multiple-factor-designed-experiments.html#cb105-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(wordrecall)</span></code></pre></div>
 <pre><code>## Rows: 15
 ## Columns: 4
 ## $ obs       &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
@@ -539,16 +541,16 @@ Victor
 ## $ recall    &lt;int&gt; 32, 15, 45, 30, 13, 40, 26, 12, 42, 22, 10, 38, 29, 8, 35</code></pre>
 <p>Each subject gives three responses instead of one as in a usual one-way design. In this manner, each subject (or person) forms a block. The design is a randomized block design, because the experimenter randomly determines the order of word type for recalling for each subject.</p>
 <p>Before doing a formal analysis, here are some descriptive looks at word type and subject factors. First we perform a little data cleaning so the <code>word.type</code> variable is displayed in a complete word.</p>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="multiple-factor-designed-experiments.html#cb104-1" aria-hidden="true" tabindex="-1"></a>wordrecall <span class="ot">&lt;-</span> wordrecall <span class="sc">%&gt;%</span></span>
-<span id="cb104-2"><a href="multiple-factor-designed-experiments.html#cb104-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">word.type =</span> <span class="fu">factor</span>(word.type, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;Negative&quot;</span>, <span class="st">&quot;Neutral&quot;</span>, <span class="st">&quot;Positive&quot;</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="multiple-factor-designed-experiments.html#cb107-1" aria-hidden="true" tabindex="-1"></a>wordrecall <span class="ot">&lt;-</span> wordrecall <span class="sc">%&gt;%</span></span>
+<span id="cb107-2"><a href="multiple-factor-designed-experiments.html#cb107-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">word.type =</span> <span class="fu">factor</span>(word.type, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;Negative&quot;</span>, <span class="st">&quot;Neutral&quot;</span>, <span class="st">&quot;Positive&quot;</span>)))</span></code></pre></div>
 <p>Now we can look at some plots of the data.</p>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="multiple-factor-designed-experiments.html#cb105-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(wordrecall) <span class="sc">+</span> </span>
-<span id="cb105-2"><a href="multiple-factor-designed-experiments.html#cb105-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>subject, <span class="at">y=</span>recall) ) <span class="sc">+</span></span>
-<span id="cb105-3"><a href="multiple-factor-designed-experiments.html#cb105-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Subject&quot;</span>, <span class="at">y=</span><span class="st">&quot;Words Recalled&quot;</span>)</span>
-<span id="cb105-4"><a href="multiple-factor-designed-experiments.html#cb105-4" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(wordrecall) <span class="sc">+</span> </span>
-<span id="cb105-5"><a href="multiple-factor-designed-experiments.html#cb105-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>word.type, <span class="at">y=</span>recall)) <span class="sc">+</span></span>
-<span id="cb105-6"><a href="multiple-factor-designed-experiments.html#cb105-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Word Type&quot;</span>, <span class="at">y=</span><span class="st">&quot;Words Recalled&quot;</span>)</span>
-<span id="cb105-7"><a href="multiple-factor-designed-experiments.html#cb105-7" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(p1, p2, <span class="at">nrow=</span><span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="multiple-factor-designed-experiments.html#cb108-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(wordrecall) <span class="sc">+</span> </span>
+<span id="cb108-2"><a href="multiple-factor-designed-experiments.html#cb108-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>subject, <span class="at">y=</span>recall) ) <span class="sc">+</span></span>
+<span id="cb108-3"><a href="multiple-factor-designed-experiments.html#cb108-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Subject&quot;</span>, <span class="at">y=</span><span class="st">&quot;Words Recalled&quot;</span>)</span>
+<span id="cb108-4"><a href="multiple-factor-designed-experiments.html#cb108-4" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(wordrecall) <span class="sc">+</span> </span>
+<span id="cb108-5"><a href="multiple-factor-designed-experiments.html#cb108-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>word.type, <span class="at">y=</span>recall)) <span class="sc">+</span></span>
+<span id="cb108-6"><a href="multiple-factor-designed-experiments.html#cb108-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Word Type&quot;</span>, <span class="at">y=</span><span class="st">&quot;Words Recalled&quot;</span>)</span>
+<span id="cb108-7"><a href="multiple-factor-designed-experiments.html#cb108-7" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(p1, p2, <span class="at">nrow=</span><span class="dv">1</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch3-3"></span>
 <img src="introStatModeling_files/figure-html/ch3-3-1.png" alt="Boxplot distribution of the number of Word recalls as a function of Subject and Word Types." width="100%" />
 <p class="caption">
@@ -558,8 +560,8 @@ Figure 3.1: Boxplot distribution of the number of Word recalls as a function of 
 <p>In the above code, we build a simple boxplot of the words recalled by subject and call it <code>p1</code>. Similarly we build a boxplot of words recalled by word type, called <code>p2</code>. We then use the <code>grid.arrange()</code> function in the <code>gridExtra</code> package to put the two plots side-by-side. The results are in Figure <a href="multiple-factor-designed-experiments.html#fig:ch3-3">3.1</a>.</p>
 <p>The effect of word type appears quite stark, with positive word recalls being higher than the other two types. There is also a bit of subject-to-subject variability, but not much.</p>
 <p>Here is how to do a formal analysis in a call of <code>aov()</code> – making sure to check underlying assumptions in Figure <a href="multiple-factor-designed-experiments.html#fig:ch3-4">3.2</a>.</p>
-<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="multiple-factor-designed-experiments.html#cb106-1" aria-hidden="true" tabindex="-1"></a>word.fit <span class="ot">&lt;-</span> <span class="fu">aov</span>(recall <span class="sc">~</span> subject <span class="sc">+</span> word.type, <span class="at">data=</span>wordrecall)</span>
-<span id="cb106-2"><a href="multiple-factor-designed-experiments.html#cb106-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(word.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="multiple-factor-designed-experiments.html#cb109-1" aria-hidden="true" tabindex="-1"></a>word.fit <span class="ot">&lt;-</span> <span class="fu">aov</span>(recall <span class="sc">~</span> subject <span class="sc">+</span> word.type, <span class="at">data=</span>wordrecall)</span>
+<span id="cb109-2"><a href="multiple-factor-designed-experiments.html#cb109-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(word.fit)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch3-4"></span>
 <img src="introStatModeling_files/figure-html/ch3-4-1.png" alt="Residual diagnostic plots when the response variable is the number of words recalled as  a function of subject (block) and word type. Here, the residuals appear fairly homoskedastic based on the Residuals vs Fitted and Scale-Location plots. The normality assumption is satisfied based on the Normal Q-Q plot." width="80%" />
 <p class="caption">
@@ -567,7 +569,7 @@ Figure 3.2: Residual diagnostic plots when the response variable is the number o
 </p>
 </div>
 <p>The assumptions look generally fine here (nothing too concerning about constant variance or normality). So, on to the analysis:</p>
-<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="multiple-factor-designed-experiments.html#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(word.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="multiple-factor-designed-experiments.html#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(word.fit)</span></code></pre></div>
 <pre><code>##             Df Sum Sq Mean Sq F value  Pr(&gt;F)    
 ## subject      4    105      26    4.89   0.027 *  
 ## word.type    2   2030    1015  189.11 1.8e-07 ***
@@ -583,8 +585,8 @@ Figure 3.2: Residual diagnostic plots when the response variable is the number o
 </ol>
 <p>We see that R also reports an <span class="math inline">\(F\)</span>-statistic and associated <span class="math inline">\(p\)</span>-value for the <code>subject</code>. This is the block term and is not of concern to our analysis. So we ignore that <span class="math inline">\(p\)</span>-value!</p>
 <p>We can investigate the differences in mean recall between the three word types using a multiple comparison procedure.</p>
-<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="multiple-factor-designed-experiments.html#cb109-1" aria-hidden="true" tabindex="-1"></a>word.mc <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(word.fit, <span class="st">&quot;word.type&quot;</span>)</span>
-<span id="cb109-2"><a href="multiple-factor-designed-experiments.html#cb109-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">contrast</span>(word.mc, <span class="st">&quot;pairwise&quot;</span>) )</span></code></pre></div>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="multiple-factor-designed-experiments.html#cb112-1" aria-hidden="true" tabindex="-1"></a>word.mc <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(word.fit, <span class="st">&quot;word.type&quot;</span>)</span>
+<span id="cb112-2"><a href="multiple-factor-designed-experiments.html#cb112-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">contrast</span>(word.mc, <span class="st">&quot;pairwise&quot;</span>) )</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch3-5a"></span>
 <img src="introStatModeling_files/figure-html/ch3-5a-1.png" alt="Tukey adjusted confidence interval plots comparing the three word types (treatments). Here, we see that Positive words are recalled at a greater rate than Neutral or Negative words and that Negative words are recalled at a greater rate than Neutral words." width="70%" />
 <p class="caption">
@@ -639,21 +641,21 @@ where</p>
 <h4><span class="header-section-number">3.2.1.1</span> Example: An alertness study with two factors.</h4>
 <p>An experimental medication is tested on a sample of 16 individuals at two dosage levels (10 mg, 25 mg) to see how it impacts alertness. It is also of interest to investigate the effect of gender, and to see if the effect of a particular dosage on alertness depends on gender. Thus, this is a two-factor factorial design: factor A is dosage (two levels) and factor B is gender (two levels). Sometimes this is referred to as a 2×2 factorial design. Each subject is randomly assigned one drug, the drug is administered. After 60 minutes, a test is administered that scores the alertness level of each subject (a higher score means higher alertness). The data appear in the R dataframe <code>twowaydrug.Rdata</code> in our repository.</p>
 <p>First take a look at the alertness scores by treatment (note that we need to coerce dosage to be an R factor since it is coded numerically and add labels on the gender variable) in Figure <a href="multiple-factor-designed-experiments.html#fig:ch3-6">3.4</a>:</p>
-<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="multiple-factor-designed-experiments.html#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;twowaydrug.RData&quot;</span>)</span>
-<span id="cb110-2"><a href="multiple-factor-designed-experiments.html#cb110-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(twowaydrug)</span></code></pre></div>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="multiple-factor-designed-experiments.html#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;twowaydrug.RData&quot;</span>)</span>
+<span id="cb113-2"><a href="multiple-factor-designed-experiments.html#cb113-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(twowaydrug)</span></code></pre></div>
 <pre><code>## Rows: 16
 ## Columns: 4
 ## $ obs       &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16
 ## $ gender    &lt;fct&gt; m, m, m, m, m, m, m, m, f, f, f, f, f, f, f, f
 ## $ dosage    &lt;int&gt; 10, 10, 10, 10, 25, 25, 25, 25, 10, 10, 10, 10, 25, 25, 25, ~
 ## $ alertness &lt;int&gt; 8, 12, 13, 12, 6, 7, 23, 14, 15, 12, 22, 14, 15, 12, 18, 22</code></pre>
-<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="multiple-factor-designed-experiments.html#cb112-1" aria-hidden="true" tabindex="-1"></a>twowaydrug <span class="ot">&lt;-</span> twowaydrug <span class="sc">%&gt;%</span></span>
-<span id="cb112-2"><a href="multiple-factor-designed-experiments.html#cb112-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dosage =</span> <span class="fu">factor</span>(dosage),</span>
-<span id="cb112-3"><a href="multiple-factor-designed-experiments.html#cb112-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">gender =</span> <span class="fu">factor</span>(gender, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;Female&quot;</span>, <span class="st">&quot;Male&quot;</span>)) )</span>
-<span id="cb112-4"><a href="multiple-factor-designed-experiments.html#cb112-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(twowaydrug) <span class="sc">+</span> </span>
-<span id="cb112-5"><a href="multiple-factor-designed-experiments.html#cb112-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>dosage, <span class="at">y=</span>alertness) ) <span class="sc">+</span> </span>
-<span id="cb112-6"><a href="multiple-factor-designed-experiments.html#cb112-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(.<span class="sc">~</span>gender) <span class="sc">+</span> </span>
-<span id="cb112-7"><a href="multiple-factor-designed-experiments.html#cb112-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="multiple-factor-designed-experiments.html#cb115-1" aria-hidden="true" tabindex="-1"></a>twowaydrug <span class="ot">&lt;-</span> twowaydrug <span class="sc">%&gt;%</span></span>
+<span id="cb115-2"><a href="multiple-factor-designed-experiments.html#cb115-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dosage =</span> <span class="fu">factor</span>(dosage),</span>
+<span id="cb115-3"><a href="multiple-factor-designed-experiments.html#cb115-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">gender =</span> <span class="fu">factor</span>(gender, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;Female&quot;</span>, <span class="st">&quot;Male&quot;</span>)) )</span>
+<span id="cb115-4"><a href="multiple-factor-designed-experiments.html#cb115-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(twowaydrug) <span class="sc">+</span> </span>
+<span id="cb115-5"><a href="multiple-factor-designed-experiments.html#cb115-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>dosage, <span class="at">y=</span>alertness) ) <span class="sc">+</span> </span>
+<span id="cb115-6"><a href="multiple-factor-designed-experiments.html#cb115-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(.<span class="sc">~</span>gender) <span class="sc">+</span> </span>
+<span id="cb115-7"><a href="multiple-factor-designed-experiments.html#cb115-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch3-6"></span>
 <img src="introStatModeling_files/figure-html/ch3-6-1.png" alt="Boxplot distribution of the number of the alertness level as a function of dosage and gender." width="100%" />
 <p class="caption">
@@ -663,8 +665,8 @@ Figure 3.4: Boxplot distribution of the number of the alertness level as a funct
 <p>There may be a gender effect: it appears that male responses are graphically lower than females. However, the large spread in the 25 mg dosage
 group for males may mask this effect.</p>
 <p>We fit the interaction model in <code>aov()</code> by telling R to include an interaction term with the notation <code>factor1:factor2</code>. Below is the specific example for our study but first run a check on the residuals in Figure <a href="multiple-factor-designed-experiments.html#fig:ch3-7">3.5</a>.</p>
-<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="multiple-factor-designed-experiments.html#cb113-1" aria-hidden="true" tabindex="-1"></a>twoway.fit <span class="ot">&lt;-</span> <span class="fu">aov</span>(alertness <span class="sc">~</span> dosage <span class="sc">+</span> gender <span class="sc">+</span> dosage<span class="sc">:</span>gender, <span class="at">data=</span>twowaydrug)</span>
-<span id="cb113-2"><a href="multiple-factor-designed-experiments.html#cb113-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(twoway.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="multiple-factor-designed-experiments.html#cb116-1" aria-hidden="true" tabindex="-1"></a>twoway.fit <span class="ot">&lt;-</span> <span class="fu">aov</span>(alertness <span class="sc">~</span> dosage <span class="sc">+</span> gender <span class="sc">+</span> dosage<span class="sc">:</span>gender, <span class="at">data=</span>twowaydrug)</span>
+<span id="cb116-2"><a href="multiple-factor-designed-experiments.html#cb116-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(twoway.fit)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch3-7"></span>
 <img src="introStatModeling_files/figure-html/ch3-7-1.png" alt="Residual diagnostic plots when the response variable is the alertness as a function of gender and dosage. Here, the residuals appear fairly homoskedastic based on the Residuals vs Fitted and Scale-Location plots. The normality assumption is satisfied based on the Normal Q-Q plot." width="80%" />
 <p class="caption">
@@ -680,7 +682,7 @@ These consist of:</p>
 <li>Interaction means (i.e. treatment means for all factor combinations)</li>
 </ul>
 <p>These means are estimates from the data and are purely descriptive (like the boxplots were), but informative nonetheless. We could calculate each one of the above using a series of <code>tidyverse</code> commands or using the R function <code>model.tables()</code>:</p>
-<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="multiple-factor-designed-experiments.html#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model.tables</span>(twoway.fit, <span class="st">&quot;means&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="multiple-factor-designed-experiments.html#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model.tables</span>(twoway.fit, <span class="st">&quot;means&quot;</span>)</span></code></pre></div>
 <pre><code>## Tables of means
 ## Grand mean
 ##         
@@ -702,7 +704,7 @@ These consist of:</p>
 ##     10 15.75  11.25
 ##     25 16.75  12.50</code></pre>
 <p>We proceed to the hypothesis tests:</p>
-<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="multiple-factor-designed-experiments.html#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(twoway.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="multiple-factor-designed-experiments.html#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(twoway.fit)</span></code></pre></div>
 <pre><code>##               Df Sum Sq Mean Sq F value Pr(&gt;F)
 ## dosage         1    5.1     5.1    0.20   0.67
 ## gender         1   76.6    76.6    2.95   0.11
@@ -710,9 +712,9 @@ These consist of:</p>
 ## Residuals     12  311.3    25.9</code></pre>
 <p><strong>The first test to inspect is the interaction test.</strong> The interaction is insignificant (<span class="math inline">\(F\)</span> = 0.0024, <span class="math inline">\(\textrm{df}_1\)</span> = 1, <span class="math inline">\(\textrm{df}_2\)</span> = 12, <span class="math inline">\(p\)</span>-value = 0.9617). Thus, we could conclude the effect that dosage has on the mean alertness level does not depend on gender.</p>
 <p>A visualization of the interaction effect may be obtained using an interactions plot. An interaction plot is basically a plot of treatment means, whereby the means for all treatments having a given fixed level of one of the factors are visually “connected.” We can build the interaction plot seen in Figure <a href="multiple-factor-designed-experiments.html#fig:ch3-10">3.6</a> using aesthetic options in <code>ggplot()</code> and with the <code>stat_summary</code> functions. Note both <code>color</code> and <code>group</code> are determined based on the <code>gender</code> variable.</p>
-<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="multiple-factor-designed-experiments.html#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(twowaydrug, <span class="fu">aes</span>(<span class="at">x=</span>dosage, <span class="at">y=</span>alertness, <span class="at">color=</span>gender, <span class="at">group=</span>gender) ) <span class="sc">+</span>  </span>
-<span id="cb118-2"><a href="multiple-factor-designed-experiments.html#cb118-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.y=</span>mean, <span class="at">geom=</span><span class="st">&quot;point&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb118-3"><a href="multiple-factor-designed-experiments.html#cb118-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.y=</span>mean, <span class="at">geom=</span><span class="st">&quot;line&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="multiple-factor-designed-experiments.html#cb121-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(twowaydrug, <span class="fu">aes</span>(<span class="at">x=</span>dosage, <span class="at">y=</span>alertness, <span class="at">color=</span>gender, <span class="at">group=</span>gender) ) <span class="sc">+</span>  </span>
+<span id="cb121-2"><a href="multiple-factor-designed-experiments.html#cb121-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.y=</span>mean, <span class="at">geom=</span><span class="st">&quot;point&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb121-3"><a href="multiple-factor-designed-experiments.html#cb121-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.y=</span>mean, <span class="at">geom=</span><span class="st">&quot;line&quot;</span>)</span></code></pre></div>
 <pre><code>## Warning: `fun.y` is deprecated. Use `fun` instead.
 
 ## Warning: `fun.y` is deprecated. Use `fun` instead.</code></pre>
@@ -726,8 +728,8 @@ Figure 3.6: Interaction plot demonstrating that the gender and dosage factors do
 <p><strong>The lack of significant interaction is evidenced by the parallelism of these traces:</strong> the gender effect for 10mg dosage is depicted by the “gap” between the traces on the left. Similarly, the gender effect for the 25mg dosage is depicted by the gap between the traces at the far right. Note that these two “gaps” are of roughly the same size (which happens when the traces are parallel): this means that the effect of dose within females is about the same as the effect of dose within males.</p>
 <p>In other words, the effect of dose does not depend on gender. This is the textbook definition of non-interaction between dose and gender in determining mean alertness.</p>
 <p>Since the interaction term was non-significant and we have visual support that the two factors do not interact, we may look at a reduced model that eliminates the interaction term and includes only main effects:</p>
-<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="multiple-factor-designed-experiments.html#cb120-1" aria-hidden="true" tabindex="-1"></a>twoway.main.fit <span class="ot">&lt;-</span> <span class="fu">aov</span>(alertness <span class="sc">~</span> gender <span class="sc">+</span> dosage, <span class="at">data=</span>twowaydrug)</span>
-<span id="cb120-2"><a href="multiple-factor-designed-experiments.html#cb120-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(twoway.main.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="multiple-factor-designed-experiments.html#cb123-1" aria-hidden="true" tabindex="-1"></a>twoway.main.fit <span class="ot">&lt;-</span> <span class="fu">aov</span>(alertness <span class="sc">~</span> gender <span class="sc">+</span> dosage, <span class="at">data=</span>twowaydrug)</span>
+<span id="cb123-2"><a href="multiple-factor-designed-experiments.html#cb123-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(twoway.main.fit)</span></code></pre></div>
 <pre><code>##             Df Sum Sq Mean Sq F value Pr(&gt;F)  
 ## gender       1   76.6    76.6    3.20  0.097 .
 ## dosage       1    5.1     5.1    0.21  0.653  
@@ -736,8 +738,8 @@ Figure 3.6: Interaction plot demonstrating that the gender and dosage factors do
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>The only thing happening here is a very marginal effect of gender. Dosage level does not appear to make a significant difference in terms of mean alertness level, regardless of gender.</p>
 <p>At this point, the follow-up work would involve multiple comparisons among the levels of the significant main effect factors (here that would be only gender). However, since there are only two levels of gender, multiple comparisons are not necessary except perhaps to construct a confidence interval for the mean alertness level difference between males and females, regardless of dosage.</p>
-<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="multiple-factor-designed-experiments.html#cb122-1" aria-hidden="true" tabindex="-1"></a>twoway.mc <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(twoway.main.fit, <span class="st">&quot;gender&quot;</span>)</span>
-<span id="cb122-2"><a href="multiple-factor-designed-experiments.html#cb122-2" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(<span class="fu">contrast</span>(twoway.mc, <span class="st">&quot;pairwise&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="multiple-factor-designed-experiments.html#cb125-1" aria-hidden="true" tabindex="-1"></a>twoway.mc <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(twoway.main.fit, <span class="st">&quot;gender&quot;</span>)</span>
+<span id="cb125-2"><a href="multiple-factor-designed-experiments.html#cb125-2" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(<span class="fu">contrast</span>(twoway.mc, <span class="st">&quot;pairwise&quot;</span>))</span></code></pre></div>
 <pre><code>##  contrast      estimate   SE df lower.CL upper.CL
 ##  Female - Male     4.38 2.45 13   -0.911     9.66
 ## 
@@ -806,8 +808,8 @@ Treatment 6
 </tbody>
 </table>
 <p>As alluded to before, there are ten replicate guinea pigs per treatment. The data appear in the R workspace <code>ToothGrowth</code> included in the <code>datasets</code> package <span class="citation">(<a href="#ref-R-base" role="doc-biblioref">R Core Team, 2019</a>)</span>. Here is the head of the dataframe:</p>
-<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="multiple-factor-designed-experiments.html#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;ToothGrowth&quot;</span>)</span>
-<span id="cb124-2"><a href="multiple-factor-designed-experiments.html#cb124-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ToothGrowth)</span></code></pre></div>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="multiple-factor-designed-experiments.html#cb127-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;ToothGrowth&quot;</span>)</span>
+<span id="cb127-2"><a href="multiple-factor-designed-experiments.html#cb127-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ToothGrowth)</span></code></pre></div>
 <pre><code>##    len supp dose
 ## 1  4.2   VC  0.5
 ## 2 11.5   VC  0.5
@@ -816,9 +818,9 @@ Treatment 6
 ## 5  6.4   VC  0.5
 ## 6 10.0   VC  0.5</code></pre>
 <p>Let us bypass generating numeric descriptive statistics for the moment, and instead jump to an interaction plot of the length response in Figure <a href="multiple-factor-designed-experiments.html#fig:ch3-15">3.7</a>.</p>
-<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="multiple-factor-designed-experiments.html#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ToothGrowth, <span class="fu">aes</span>(<span class="at">x=</span>dose, <span class="at">y=</span>len, <span class="at">group=</span>supp, <span class="at">color=</span>supp) ) <span class="sc">+</span>  </span>
-<span id="cb126-2"><a href="multiple-factor-designed-experiments.html#cb126-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.y=</span>mean, <span class="at">geom=</span><span class="st">&quot;point&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb126-3"><a href="multiple-factor-designed-experiments.html#cb126-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.y=</span>mean, <span class="at">geom=</span><span class="st">&quot;line&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="multiple-factor-designed-experiments.html#cb129-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ToothGrowth, <span class="fu">aes</span>(<span class="at">x=</span>dose, <span class="at">y=</span>len, <span class="at">group=</span>supp, <span class="at">color=</span>supp) ) <span class="sc">+</span>  </span>
+<span id="cb129-2"><a href="multiple-factor-designed-experiments.html#cb129-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.y=</span>mean, <span class="at">geom=</span><span class="st">&quot;point&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb129-3"><a href="multiple-factor-designed-experiments.html#cb129-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.y=</span>mean, <span class="at">geom=</span><span class="st">&quot;line&quot;</span>)</span></code></pre></div>
 <pre><code>## Warning: `fun.y` is deprecated. Use `fun` instead.
 
 ## Warning: `fun.y` is deprecated. Use `fun` instead.</code></pre>
@@ -834,8 +836,8 @@ Figure 3.7: Interaction plot demonstrating that the dose and supplement may inte
 <li><strong>However, there may be a substantial interaction effect between the type of supplement and dose in determining mean tooth length.</strong> In particular, orange juice appears to be more effective than Vitamin C as a delivery method (longer tooth length), but only at lower dose levels. At the high dose level, there appears to be no difference between the supplements.</li>
 </ol>
 <p>Once again, non-parallel traces may be the red flag. But, we need to run the ANOVA test for interaction to confirm if this is a significant effect. First, check assumptions in Figure <a href="multiple-factor-designed-experiments.html#fig:ch3-16">3.8</a>.</p>
-<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="multiple-factor-designed-experiments.html#cb128-1" aria-hidden="true" tabindex="-1"></a>tooth.fit <span class="ot">&lt;-</span> <span class="fu">aov</span>(len <span class="sc">~</span> <span class="fu">factor</span>(dose) <span class="sc">+</span> supp <span class="sc">+</span> <span class="fu">factor</span>(dose)<span class="sc">:</span>supp, <span class="at">data=</span>ToothGrowth)</span>
-<span id="cb128-2"><a href="multiple-factor-designed-experiments.html#cb128-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(tooth.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="multiple-factor-designed-experiments.html#cb131-1" aria-hidden="true" tabindex="-1"></a>tooth.fit <span class="ot">&lt;-</span> <span class="fu">aov</span>(len <span class="sc">~</span> <span class="fu">factor</span>(dose) <span class="sc">+</span> supp <span class="sc">+</span> <span class="fu">factor</span>(dose)<span class="sc">:</span>supp, <span class="at">data=</span>ToothGrowth)</span>
+<span id="cb131-2"><a href="multiple-factor-designed-experiments.html#cb131-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(tooth.fit)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch3-16"></span>
 <img src="introStatModeling_files/figure-html/ch3-16-1.png" alt="Residual diagnostic plots when the response variable is the tooth length as a function of supplement and dosage. Here, the residuals appear fairly homoskedastic based on the Residuals vs Fitted and Scale-Location plots. The normality assumption is satisfied based on the Normal Q-Q plot." width="80%" />
 <p class="caption">
@@ -843,7 +845,7 @@ Figure 3.8: Residual diagnostic plots when the response variable is the tooth le
 </p>
 </div>
 <p>All assumptions look fine here. So, proceed to the ANOVA tests:</p>
-<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="multiple-factor-designed-experiments.html#cb129-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(tooth.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="multiple-factor-designed-experiments.html#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(tooth.fit)</span></code></pre></div>
 <pre><code>##                   Df Sum Sq Mean Sq F value  Pr(&gt;F)    
 ## factor(dose)       2   2426    1213   92.00 &lt; 2e-16 ***
 ## supp               1    205     205   15.57 0.00023 ***
@@ -867,9 +869,9 @@ Figure 3.8: Residual diagnostic plots when the response variable is the tooth le
 <li>Compare the dose levels within each of the supplement types (3 × 2 = 6 tests total)</li>
 </ul>
 <p>Frequently in practice, the context of the problem will dictate to the researcher which way makes the most sense. We’ll provide code that performs both cases using the <code>emmeans</code> package.</p>
-<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="multiple-factor-designed-experiments.html#cb131-1" aria-hidden="true" tabindex="-1"></a>tooth.mc1 <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(tooth.fit, pairwise <span class="sc">~</span> <span class="fu">factor</span>(dose) <span class="sc">|</span> supp)</span>
-<span id="cb131-2"><a href="multiple-factor-designed-experiments.html#cb131-2" aria-hidden="true" tabindex="-1"></a>tooth.mc2 <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(tooth.fit, pairwise <span class="sc">~</span> supp <span class="sc">|</span> <span class="fu">factor</span>(dose) )</span>
-<span id="cb131-3"><a href="multiple-factor-designed-experiments.html#cb131-3" aria-hidden="true" tabindex="-1"></a>tooth.mc1</span></code></pre></div>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="multiple-factor-designed-experiments.html#cb134-1" aria-hidden="true" tabindex="-1"></a>tooth.mc1 <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(tooth.fit, pairwise <span class="sc">~</span> <span class="fu">factor</span>(dose) <span class="sc">|</span> supp)</span>
+<span id="cb134-2"><a href="multiple-factor-designed-experiments.html#cb134-2" aria-hidden="true" tabindex="-1"></a>tooth.mc2 <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(tooth.fit, pairwise <span class="sc">~</span> supp <span class="sc">|</span> <span class="fu">factor</span>(dose) )</span>
+<span id="cb134-3"><a href="multiple-factor-designed-experiments.html#cb134-3" aria-hidden="true" tabindex="-1"></a>tooth.mc1</span></code></pre></div>
 <pre><code>## $emmeans
 ## supp = OJ:
 ##  dose emmean   SE df lower.CL upper.CL
@@ -899,7 +901,7 @@ Figure 3.8: Residual diagnostic plots when the response variable is the tooth le
 ##  1 - 2       -9.37 1.62 54  -5.770  &lt;.0001
 ## 
 ## P value adjustment: tukey method for comparing a family of 3 estimates</code></pre>
-<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="multiple-factor-designed-experiments.html#cb133-1" aria-hidden="true" tabindex="-1"></a>tooth.mc2</span></code></pre></div>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="multiple-factor-designed-experiments.html#cb136-1" aria-hidden="true" tabindex="-1"></a>tooth.mc2</span></code></pre></div>
 <pre><code>## $emmeans
 ## dose = 0.5:
 ##  supp emmean   SE df lower.CL upper.CL
@@ -933,7 +935,7 @@ Figure 3.8: Residual diagnostic plots when the response variable is the tooth le
 <p>Here we see the output includes the estimates and confidence intervals for the means (while holding one factor fixed) and also includes the contrasts (comparisons) of one factor while holding the second factor constant.</p>
 <p>At a dose level of 0.5 mg, ascorbic acid delivery via orange juice produces significantly larger mean tooth growth than does delivery via Vitamin C. We determined this based on the the second set of output, where we see an adjusted <span class="math inline">\(p\)</span>-value of 0.0021 comparing orange juice with Vitamin C. Similarly, at <code>dose=1.0</code>, there is still a difference but not at <code>dose=2.0</code>.</p>
 <p>We can also use plotting features to graphically explore the factors while holding another factor constant.</p>
-<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="multiple-factor-designed-experiments.html#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tooth.mc1)</span></code></pre></div>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="multiple-factor-designed-experiments.html#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tooth.mc1)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch3-19"></span>
 <img src="introStatModeling_files/figure-html/ch3-19-1.png" alt="Graphical exploration of all treatments noting that the OJ supplement tends to result in higher tooth lengths than Vitamin C." width="70%" />
 <p class="caption">

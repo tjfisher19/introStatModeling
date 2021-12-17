@@ -52,7 +52,7 @@ The book and course have been designed to be a follow-up to a standard introduct
 The book mixes statistical background with applications using the R Project for Statistical Computing [@R-base]. We have attempted to perform all data processing and analysis in this text using the *tidyverse*; thus all plots and functionality should follow the new grammar in R (*ggplot* and `%>%` type code).
 
 The book was designed with 13 chapters with the intent to be used during the 14-week semester at Miami University (one week reserved for midterm examination and end-of-semester review). 
-The first chapter reviews introductory statistics material and provides a crash course in the basics of R and making plots with `ggplot2`. 
+The first chapter reviews introductory statistics material and provides a crash course in the basics of R and making plots with `ggplot2` [@R-ggplot2]. 
 Chapters 2, 3 and 4 extend the idea of two-sample inference into the design setting, presenting all inference in the form of a linear model. 
 Chapters 5--10 cover the *classic* topics around multiple linear regression. 
 Chapters 11 and 12 provides an overview of statistical odds and logistic regression. 
@@ -76,15 +76,22 @@ knitr::include_graphics(c('hughes_with_border.png', 'fisher_with_border.png') )
 ```
 
 
-**Michael R. Hughes** is an instructor and manager of the statistical consulting center at Miami University. He has a B.S.\ in Mathematics and Statistics ('85) and an M.S.\ in Statistics ('87) from Miami University and typically teaches the nonparametric, statistical modeling and data practicum courses. He spends his free time snuggling up to a roaring fireplace with the most recent texts, and loves long walks on the beach thinking about the latest modeling techniques and applications. He seeks a ambitious group of students who wish to be taught the subject of statistical modeling. 
+**Michael R. Hughes** is an instructor and manager of the statistical consulting center at Miami University. 
+He has a B.S.\ in Mathematics and Statistics ('85) and an M.S.\ in Statistics ('87) from Miami University and typically teaches the nonparametric, statistical modeling and data practicum courses. 
+He spends his free time snuggling up to a roaring fireplace with the most recent texts, and loves long walks on the beach thinking about the latest modeling techniques and applications. 
+He seeks a ambitious group of students who wish to be taught the subject of statistical modeling. 
 
-**Thomas J. Fisher** is a Pisces who enjoys hockey and hiking. He has a PhD in Mathematical Sciences ('09) from Clemson University and a B.S. in Computer Science ('03) from the University of Maryland, Baltimore County. He has taught a wide-range of courses from *intro stat* to graduate-level probability and inference. When not teaching Statistical modeling, you'll most likely find him teaching one of the coding courses or skating in the Goggin Ice Center. 
+**Thomas J. Fisher** is a Pisces who enjoys hockey and hiking. 
+He has a PhD in Mathematical Sciences ('09) from Clemson University and a B.S. in Computer Science ('03) from the University of Maryland, Baltimore County. 
+He has taught a wide-range of courses from *intro stat* to graduate-level probability and inference. 
+When not teaching Statistical modeling, you'll most likely find him teaching one of the coding courses or skating in the Goggin Ice Center. 
 
 # Important Preliminary Review{-}
 
 ## Statistics background{-}
 
-This text assumes the reader has completed an introductory statistics course. For those needing a refresher, two links are provided below.
+This text assumes the reader has completed an introductory statistics course. 
+For those needing a refresher, two links are provided below.
 
 https://bookdown.org/chesterismay/rbasics/
 
@@ -136,7 +143,8 @@ install.packages(c("tidyverse",
                    "caret"))
 ```
 
-**IMPORTANT NOTE:** If running on a Mac, when asked, "Do you want to install from source?" In general it is better to select "No".
+**IMPORTANT NOTE:** If running on a Mac, when asked, "Do you want to install from source?" 
+In general it is better to select "No".
 
 
 ```{r setup, include=FALSE}
@@ -157,19 +165,22 @@ options(digits=6, dplyr.summarise.inform = FALSE)
 
 ## Help with RMarkdown{-}
 
-Throughout the STA 363 course, Rmarkdown is utilized. In fact, this textbook was written using RMarkdown. You can find a tutorial of RMarkdown here: https://www.youtube.com/watch?v=tKUufzpoHDE
+Throughout the STA 363 course, Rmarkdown is utilized. 
+In fact, this textbook was written using RMarkdown. 
+You can find a tutorial of RMarkdown here: https://www.youtube.com/watch?v=tKUufzpoHDE
 
 RStudio provides tutorials as well: https://rmarkdown.rstudio.com/lesson-1.html
 
 ## Managing your work in R{-}
 
+We recommend using 'Projects' in RStudio, which links all code and data to a folder in your computer: https://www.youtube.com/watch?v=pyJMWlDptYw
 
-https://www.youtube.com/watch?v=pyJMWlDptYw
-* Folders, directories, Projects (to be complete)
+Better yet, create a Github account, and github repository to manage your code and analysis: https://www.youtube.com/watch?v=kL6L2MNqPHg&ab_channel=IDGTECHtalk
+
 
 ## Data in this text{-}
 
-The data in the text is available here:
- and can be downloaded as a single zip file.
+The data used in this text is available on the hosting website and links are provided throughout the text.
+Alternatively, all data used in the text can be downloaded as a single zip file: zipFileLinkHere
  
 
