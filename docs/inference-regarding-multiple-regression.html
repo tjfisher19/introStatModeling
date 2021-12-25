@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Hughes and Thomas Fisher" />
 
 
-<meta name="date" content="2021-12-17" />
+<meta name="date" content="2021-12-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -209,7 +209,7 @@ div.csl-indent {
 <li class="chapter" data-level="2.3.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#analysis-of-variance"><i class="fa fa-check"></i><b>2.3.2</b> Analysis of variance</a></li>
 <li class="chapter" data-level="2.3.3" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#elements-of-a-designed-experiment"><i class="fa fa-check"></i><b>2.3.3</b> Elements of a designed experiment</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#paired-t-test"><i class="fa fa-check"></i><b>2.4</b> Paired <em>t</em>-test</a></li>
+<li class="chapter" data-level="2.4" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#paired-t-test"><i class="fa fa-check"></i><b>2.4</b> Paired <span class="math inline">\(t\)</span>-test</a></li>
 <li class="chapter" data-level="2.5" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#one-way-anova"><i class="fa fa-check"></i><b>2.5</b> One-Way ANOVA</a></li>
 <li class="chapter" data-level="2.6" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#assumption-checking"><i class="fa fa-check"></i><b>2.6</b> Assumption Checking</a>
 <ul>
@@ -414,8 +414,8 @@ div.csl-indent {
 <p>Diagnostic techniques can be either graphical or numerical, but <strong>we will focus on graphical diagnostics of the assumptions</strong>. <em>The important thing to keep in mind when you fit a regression model is that the first model you try might prove to be inadequate. Regression diagnostics often suggest improvements or remedies, which means that model building is an iterative and interactive process.</em> It is quite common to repeat diagnostics on a succession of models fit to the same data.</p>
 <p>This section is only meant to provide you with the means to run a cursory check of the assumptions in a simple linear regression problem. We will deal with specific issues and remedies for addressing assumption violations in more detail later in the book.</p>
 <p><strong>Example</strong> Muscle mass. Consider the age and muscle mass dataset from earlier. Before using the muscle mass regression model to perform tests/CIs about the mass vs. age relationship, check the regression assumptions. This can be achieved by using the <code>autoplot()</code> function on the fitted <code>lm</code> object.</p>
-<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="inference-regarding-multiple-regression.html#cb200-1" aria-hidden="true" tabindex="-1"></a>muscle.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(mass <span class="sc">~</span> age, <span class="at">data=</span>muscle)</span>
-<span id="cb200-2"><a href="inference-regarding-multiple-regression.html#cb200-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(muscle.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="inference-regarding-multiple-regression.html#cb203-1" aria-hidden="true" tabindex="-1"></a>muscle.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(mass <span class="sc">~</span> age, <span class="at">data=</span>muscle)</span>
+<span id="cb203-2"><a href="inference-regarding-multiple-regression.html#cb203-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(muscle.fit)</span></code></pre></div>
 <p><img src="introStatModeling_files/figure-html/ch6.1-1.png" width="672" /></p>
 <p>The QQ-Plot assesses normality of the <span class="math inline">\(\varepsilon\)</span> terms (we wish for the empirical quantiles to closely match the theoretical, resulting in a fairly straight line). Constant variance is assessed based on the other three plots (should see no systematic patterns in the residuals) and independence is determined based on the design of our experiment or data collection procedure.</p>
 <p><strong>Linearity assumption</strong></p>
@@ -453,9 +453,9 @@ div.csl-indent {
 <p>The “whole-model” F-test for model utility is generally assessed first when fitting a model.</p>
 <p><strong>Example. Property Appraisals.</strong></p>
 <p>Recall the property appraisal dataset from chapter 5.</p>
-<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="inference-regarding-multiple-regression.html#cb201-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;appraisal.RData&quot;</span>)</span>
-<span id="cb201-2"><a href="inference-regarding-multiple-regression.html#cb201-2" aria-hidden="true" tabindex="-1"></a>appraisal.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(saleprice <span class="sc">~</span> landvalue <span class="sc">+</span> impvalue <span class="sc">+</span> area, <span class="at">data=</span>appraisal)</span>
-<span id="cb201-3"><a href="inference-regarding-multiple-regression.html#cb201-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(appraisal.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="inference-regarding-multiple-regression.html#cb204-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;appraisal.RData&quot;</span>)</span>
+<span id="cb204-2"><a href="inference-regarding-multiple-regression.html#cb204-2" aria-hidden="true" tabindex="-1"></a>appraisal.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(saleprice <span class="sc">~</span> landvalue <span class="sc">+</span> impvalue <span class="sc">+</span> area, <span class="at">data=</span>appraisal)</span>
+<span id="cb204-3"><a href="inference-regarding-multiple-regression.html#cb204-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(appraisal.fit)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = saleprice ~ landvalue + impvalue + area, data = appraisal)
@@ -501,7 +501,7 @@ div.csl-indent {
 <p><span class="math display">\[t=\frac{\textrm{point estimate}-\textrm{hypothesized value}}{\textrm{standard error of point estimate}} = \frac{b_i - 0}{SE_{b_i}}\]</span></p>
 <p>and is provided in the <code>summary()</code> output in R.</p>
 <p><strong>Example. Property Appraisals</strong> Consider individual test from the Property Appraisal data.</p>
-<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="inference-regarding-multiple-regression.html#cb203-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(appraisal.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="inference-regarding-multiple-regression.html#cb206-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(appraisal.fit)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = saleprice ~ landvalue + impvalue + area, data = appraisal)
@@ -548,7 +548,7 @@ div.csl-indent {
 <h4><span class="header-section-number">6.3.1.1</span> Modeling trimming</h4>
 <p>What about insignificant predictors? At this point, one might wonder about the need for retaining appraised land value (landvalue) as a predictor due to its insignificance. In fact, we may delete insignificant predictors (one at a time) to see the effect on the quality of the fit. Remember: a simple model that does essentially as well as a more complex model is preferred.</p>
 <p>So, here’s what happens by deleting landvalue as a predictor (we actually did this in the last lecture to see the effect on the <span class="math inline">\(\beta\)</span> parameters):</p>
-<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="inference-regarding-multiple-regression.html#cb205-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(saleprice <span class="sc">~</span> impvalue <span class="sc">+</span> area, <span class="at">data=</span>appraisal))</span></code></pre></div>
+<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="inference-regarding-multiple-regression.html#cb208-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(saleprice <span class="sc">~</span> impvalue <span class="sc">+</span> area, <span class="at">data=</span>appraisal))</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = saleprice ~ impvalue + area, data = appraisal)
@@ -581,7 +581,7 @@ div.csl-indent {
 <p><span class="math display">\[b_i + t_{0.025}\times SE_{b_i}\]</span></p>
 <p>The point estimates and their SEs were provided in the R output from <code>summary()</code>.</p>
 <p>After fitting the linear model, getting 95% CIs for <span class="math inline">\(\beta_i\)</span> is a snap with the <code>confint()</code> function:</p>
-<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="inference-regarding-multiple-regression.html#cb207-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(appraisal.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="inference-regarding-multiple-regression.html#cb210-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(appraisal.fit)</span></code></pre></div>
 <pre><code>##                    2.5 %      97.5 %
 ## (Intercept) -1.07928e+04 13561.14546
 ## landvalue   -2.66591e-01     1.90219
@@ -613,11 +613,11 @@ div.csl-indent {
 <p>Why would these be different? It is because if we are estimating the true mean response at a given <span class="math inline">\(X\)</span> value, the only contributor to the uncertainty of the prediction is the uncertainty in the line (i.e. uncertainty due to the slope and intercept estimates). On the other hand, if we are estimating a future individual response value at a given <span class="math inline">\(X\)</span> value, the contributors to the uncertainty of the prediction are both the uncertainty in the line and the variation in the individual points about the line. Thus, the <span class="math inline">\(SE\)</span> for the prediction of a single future response value will be larger than the SE for predicting a mean response value.</p>
 <p>To help distinguish between the two kinds of intervals, we will call an interval estimate for the true mean response a confidence interval (CI) (also known as a confidence band) for the mean response, and an interval estimate for an individual future response value a prediction interval (PI) (also known as prediction bands) for an individual response. Which one is more appropriate depends on context, but confidence intervals are used more frequently in practice.</p>
 <p>The <code>predict()</code> extractor function in R will generate CIs and PIs from a linear model object according to your specifications for values of <span class="math inline">\(X\)</span>:</p>
-<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="inference-regarding-multiple-regression.html#cb209-1" aria-hidden="true" tabindex="-1"></a>muscle.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(mass<span class="sc">~</span>age,<span class="at">data=</span>muscle)</span>
-<span id="cb209-2"><a href="inference-regarding-multiple-regression.html#cb209-2" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(muscle.fit, <span class="at">newdata=</span><span class="fu">data.frame</span>(<span class="at">age=</span><span class="dv">65</span>), <span class="at">int=</span><span class="st">&quot;conf&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="inference-regarding-multiple-regression.html#cb212-1" aria-hidden="true" tabindex="-1"></a>muscle.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(mass<span class="sc">~</span>age,<span class="at">data=</span>muscle)</span>
+<span id="cb212-2"><a href="inference-regarding-multiple-regression.html#cb212-2" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(muscle.fit, <span class="at">newdata=</span><span class="fu">data.frame</span>(<span class="at">age=</span><span class="dv">65</span>), <span class="at">int=</span><span class="st">&quot;conf&quot;</span>)</span></code></pre></div>
 <pre><code>##       fit     lwr    upr
 ## 1 78.9969 76.6987 81.295</code></pre>
-<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="inference-regarding-multiple-regression.html#cb211-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(muscle.fit, <span class="at">newdata=</span><span class="fu">data.frame</span>(<span class="at">age=</span><span class="dv">65</span>), <span class="at">int=</span><span class="st">&quot;pred&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="inference-regarding-multiple-regression.html#cb214-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(muscle.fit, <span class="at">newdata=</span><span class="fu">data.frame</span>(<span class="at">age=</span><span class="dv">65</span>), <span class="at">int=</span><span class="st">&quot;pred&quot;</span>)</span></code></pre></div>
 <pre><code>##       fit     lwr     upr
 ## 1 78.9969 62.4758 95.5179</code></pre>
 <p>Note that the fitted value (labeled fit) is the same for both (78.996). However, the 95% PI for muscle mass of an unobserved 65 year old woman is 62.5 to 95.5, whereas the 95% CI for the mean muscle mass of all 65 year old women is 76.7 to 81.3. Thus, we can formally interpret the intervals as follows:</p>
@@ -626,10 +626,10 @@ div.csl-indent {
 <li>We can be 95% confident that the true muscle mass for a single random selected female aged 65 will be between 62.5 to 95.5.</li>
 </ul>
 <p>If we had deleted <code>newdata=data.frame(age=65)</code> from the <code>predict()</code> function call, we would get PIs (or CIs) for every age value that occurred in the original data set. However, since the values of age appear in random order, it might be a bit nicer to first sort them, and then generate the intervals:</p>
-<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="inference-regarding-multiple-regression.html#cb213-1" aria-hidden="true" tabindex="-1"></a>muscle.trim <span class="ot">&lt;-</span> muscle <span class="sc">%&gt;%</span></span>
-<span id="cb213-2"><a href="inference-regarding-multiple-regression.html#cb213-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(age) <span class="sc">%&gt;%</span></span>
-<span id="cb213-3"><a href="inference-regarding-multiple-regression.html#cb213-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(age)</span>
-<span id="cb213-4"><a href="inference-regarding-multiple-regression.html#cb213-4" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(muscle.fit, <span class="at">newdata=</span>muscle.trim, <span class="at">int=</span><span class="st">&quot;pred&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="inference-regarding-multiple-regression.html#cb216-1" aria-hidden="true" tabindex="-1"></a>muscle.trim <span class="ot">&lt;-</span> muscle <span class="sc">%&gt;%</span></span>
+<span id="cb216-2"><a href="inference-regarding-multiple-regression.html#cb216-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(age) <span class="sc">%&gt;%</span></span>
+<span id="cb216-3"><a href="inference-regarding-multiple-regression.html#cb216-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(age)</span>
+<span id="cb216-4"><a href="inference-regarding-multiple-regression.html#cb216-4" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(muscle.fit, <span class="at">newdata=</span>muscle.trim, <span class="at">int=</span><span class="st">&quot;pred&quot;</span>)</span></code></pre></div>
 <pre><code>##         fit     lwr      upr
 ## 1  107.5567 90.7083 124.4052
 ## 2  106.3668 89.5541 123.1794
@@ -671,19 +671,19 @@ div.csl-indent {
 <li>The width of the confidence bands (and prediction bands) is not uniform over the entire predictor space. It is subtle in this particular example, but a close look will reveal that as you move away from the center of the data, the intervals get wider.</li>
 </ol>
 <p>The below code will plot the fitted line with the confidence and prediction bands.</p>
-<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="inference-regarding-multiple-regression.html#cb215-1" aria-hidden="true" tabindex="-1"></a>muscle.bands <span class="ot">&lt;-</span> muscle.trim <span class="sc">%&gt;%</span></span>
-<span id="cb215-2"><a href="inference-regarding-multiple-regression.html#cb215-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ci.lo =</span> <span class="fu">predict</span>(muscle.fit, <span class="at">newdata=</span>muscle.trim, <span class="at">int=</span><span class="st">&quot;conf&quot;</span>)[,<span class="dv">2</span>],</span>
-<span id="cb215-3"><a href="inference-regarding-multiple-regression.html#cb215-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">ci.hi =</span> <span class="fu">predict</span>(muscle.fit, <span class="at">newdata=</span>muscle.trim, <span class="at">int=</span><span class="st">&quot;conf&quot;</span>)[,<span class="dv">3</span>],</span>
-<span id="cb215-4"><a href="inference-regarding-multiple-regression.html#cb215-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">pi.lo =</span> <span class="fu">predict</span>(muscle.fit, <span class="at">newdata=</span>muscle.trim, <span class="at">int=</span><span class="st">&quot;pred&quot;</span>)[,<span class="dv">2</span>],</span>
-<span id="cb215-5"><a href="inference-regarding-multiple-regression.html#cb215-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">pi.hi =</span> <span class="fu">predict</span>(muscle.fit, <span class="at">newdata=</span>muscle.trim, <span class="at">int=</span><span class="st">&quot;pred&quot;</span>)[,<span class="dv">3</span>] )</span>
-<span id="cb215-6"><a href="inference-regarding-multiple-regression.html#cb215-6" aria-hidden="true" tabindex="-1"></a>muscle.with.fit <span class="ot">&lt;-</span> muscle <span class="sc">%&gt;%</span></span>
-<span id="cb215-7"><a href="inference-regarding-multiple-regression.html#cb215-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Fitted=</span><span class="fu">fitted</span>(muscle.fit))</span>
-<span id="cb215-8"><a href="inference-regarding-multiple-regression.html#cb215-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
-<span id="cb215-9"><a href="inference-regarding-multiple-regression.html#cb215-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">data=</span>muscle.bands, <span class="fu">aes</span>(<span class="at">x=</span>age, <span class="at">ymin=</span>pi.lo, <span class="at">ymax=</span>pi.hi), <span class="at">fill=</span><span class="st">&quot;gray80&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb215-10"><a href="inference-regarding-multiple-regression.html#cb215-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">data=</span>muscle.bands, <span class="fu">aes</span>(<span class="at">x=</span>age, <span class="at">ymin=</span>ci.lo, <span class="at">ymax=</span>ci.hi), <span class="at">fill=</span><span class="st">&quot;gray60&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb215-11"><a href="inference-regarding-multiple-regression.html#cb215-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>muscle.with.fit, <span class="fu">aes</span>(<span class="at">x=</span>age, <span class="at">y=</span>Fitted), <span class="at">size=</span><span class="fl">1.25</span>, <span class="at">color=</span><span class="st">&quot;blue&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb215-12"><a href="inference-regarding-multiple-regression.html#cb215-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>muscle.with.fit, <span class="fu">aes</span>(<span class="at">x=</span>age, <span class="at">y=</span>mass) ) <span class="sc">+</span> </span>
-<span id="cb215-13"><a href="inference-regarding-multiple-regression.html#cb215-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="inference-regarding-multiple-regression.html#cb218-1" aria-hidden="true" tabindex="-1"></a>muscle.bands <span class="ot">&lt;-</span> muscle.trim <span class="sc">%&gt;%</span></span>
+<span id="cb218-2"><a href="inference-regarding-multiple-regression.html#cb218-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ci.lo =</span> <span class="fu">predict</span>(muscle.fit, <span class="at">newdata=</span>muscle.trim, <span class="at">int=</span><span class="st">&quot;conf&quot;</span>)[,<span class="dv">2</span>],</span>
+<span id="cb218-3"><a href="inference-regarding-multiple-regression.html#cb218-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">ci.hi =</span> <span class="fu">predict</span>(muscle.fit, <span class="at">newdata=</span>muscle.trim, <span class="at">int=</span><span class="st">&quot;conf&quot;</span>)[,<span class="dv">3</span>],</span>
+<span id="cb218-4"><a href="inference-regarding-multiple-regression.html#cb218-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">pi.lo =</span> <span class="fu">predict</span>(muscle.fit, <span class="at">newdata=</span>muscle.trim, <span class="at">int=</span><span class="st">&quot;pred&quot;</span>)[,<span class="dv">2</span>],</span>
+<span id="cb218-5"><a href="inference-regarding-multiple-regression.html#cb218-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">pi.hi =</span> <span class="fu">predict</span>(muscle.fit, <span class="at">newdata=</span>muscle.trim, <span class="at">int=</span><span class="st">&quot;pred&quot;</span>)[,<span class="dv">3</span>] )</span>
+<span id="cb218-6"><a href="inference-regarding-multiple-regression.html#cb218-6" aria-hidden="true" tabindex="-1"></a>muscle.with.fit <span class="ot">&lt;-</span> muscle <span class="sc">%&gt;%</span></span>
+<span id="cb218-7"><a href="inference-regarding-multiple-regression.html#cb218-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Fitted=</span><span class="fu">fitted</span>(muscle.fit))</span>
+<span id="cb218-8"><a href="inference-regarding-multiple-regression.html#cb218-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb218-9"><a href="inference-regarding-multiple-regression.html#cb218-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">data=</span>muscle.bands, <span class="fu">aes</span>(<span class="at">x=</span>age, <span class="at">ymin=</span>pi.lo, <span class="at">ymax=</span>pi.hi), <span class="at">fill=</span><span class="st">&quot;gray80&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb218-10"><a href="inference-regarding-multiple-regression.html#cb218-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">data=</span>muscle.bands, <span class="fu">aes</span>(<span class="at">x=</span>age, <span class="at">ymin=</span>ci.lo, <span class="at">ymax=</span>ci.hi), <span class="at">fill=</span><span class="st">&quot;gray60&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb218-11"><a href="inference-regarding-multiple-regression.html#cb218-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>muscle.with.fit, <span class="fu">aes</span>(<span class="at">x=</span>age, <span class="at">y=</span>Fitted), <span class="at">size=</span><span class="fl">1.25</span>, <span class="at">color=</span><span class="st">&quot;blue&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb218-12"><a href="inference-regarding-multiple-regression.html#cb218-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>muscle.with.fit, <span class="fu">aes</span>(<span class="at">x=</span>age, <span class="at">y=</span>mass) ) <span class="sc">+</span> </span>
+<span id="cb218-13"><a href="inference-regarding-multiple-regression.html#cb218-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
 <p><img src="introStatModeling_files/figure-html/ch6.9-1.png" width="672" /></p>
 <p><strong>Notes about the code.</strong> We are using the layering features in <code>ggplot()</code>. First we plot the prediction interval as a <code>geom_ribbon</code> type with a lighter colored gray. Then the confidence band (since we know it will be narrower) on the next layer. Then the fitted line and original data points.</p>
 <p><strong>Extrapolation warning.</strong> It might be tempting to use your model to make predictions outside the observed range of your predictor variable (e.g., what is the predicted muscle mass of a 90 year old woman?). The best advice: DON’T!</p>
@@ -697,8 +697,8 @@ The two plots below illustrate these points. Suppose you only observe the data i
 </ul>
 <p><img src="introStatModeling_files/figure-html/ch6.10-1.png" width="672" /></p>
 <p><strong>Back to multiple regression.</strong> We can do the same sort of thing with a multiple regression dataset, unfortunately it is not as easy to plot.</p>
-<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="inference-regarding-multiple-regression.html#cb216-1" aria-hidden="true" tabindex="-1"></a>x.pred <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">landvalue=</span><span class="dv">11000</span>, <span class="at">impvalue=</span><span class="dv">43500</span>, <span class="at">area=</span><span class="dv">2000</span>)</span>
-<span id="cb216-2"><a href="inference-regarding-multiple-regression.html#cb216-2" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(appraisal.fit, x.pred, <span class="at">int=</span><span class="st">&quot;pred&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="inference-regarding-multiple-regression.html#cb219-1" aria-hidden="true" tabindex="-1"></a>x.pred <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">landvalue=</span><span class="dv">11000</span>, <span class="at">impvalue=</span><span class="dv">43500</span>, <span class="at">area=</span><span class="dv">2000</span>)</span>
+<span id="cb219-2"><a href="inference-regarding-multiple-regression.html#cb219-2" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(appraisal.fit, x.pred, <span class="at">int=</span><span class="st">&quot;pred&quot;</span>)</span></code></pre></div>
 <pre><code>##       fit     lwr     upr
 ## 1 73235.9 54922.7 91549.1</code></pre>
 <p>We are 95% confident that this property will sell for between $54,922 and $91,549.</p>
@@ -733,7 +733,7 @@ We start as follows:</p>
 <p><strong>Adjusted <span class="math inline">\(R^2\)</span></strong>, or <span class="math inline">\(R_{adj}^2\)</span>, takes into account the degrees of freedom for both total variation and error variation, and is generally preferable to <span class="math inline">\(R^2\)</span>:</p>
 <p><span class="math display">\[R_{adj}^2 = 1 - \frac{RSS/df_{error}}{TSS/df_{total}} = 1 - \frac{RSS/(n-p)}{TSS/(n-1)} = 1 - (1-R^2)\frac{n-1}{n-p-1}\]</span></p>
 <p><span class="math inline">\(R_{adj}^2\)</span> is not technically a proportion like <span class="math inline">\(R^2\)</span>, but it is more useful than <span class="math inline">\(R^2\)</span> when comparing different models for the same data. It should also be said that, although informative, these measures do not give any direct indication of how well the regression equation will predict when applied to a new data set. Like <span class="math inline">\(R^2\)</span>, <span class="math inline">\(R_{adj}^2\)</span> is supplied with the <code>summary()</code> function and is labeled <code>Adjusted R-squared</code>. We show the output below for the appraisal model.</p>
-<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="inference-regarding-multiple-regression.html#cb219-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(appraisal.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="inference-regarding-multiple-regression.html#cb222-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(appraisal.fit)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = saleprice ~ landvalue + impvalue + area, data = appraisal)
@@ -762,13 +762,13 @@ We start as follows:</p>
 <p>For models based on normal theory and using least squares estimation, the AIC is defined as follows:</p>
 <p><span class="math display">\[AIC = n\log(RSS/n) + 2p\]</span></p>
 <p>where <span class="math inline">\(n\)</span> = sample size, <span class="math inline">\(RSS\)</span> is the model residual sum of squares, and <span class="math inline">\(p\)</span> = number of model parameters (i.e. number of <span class="math inline">\(\beta\)</span> parameters in the model). In R we can calculate the AIC value for a fit using the <code>AIC()</code> function.</p>
-<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="inference-regarding-multiple-regression.html#cb221-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(appraisal.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="inference-regarding-multiple-regression.html#cb224-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(appraisal.fit)</span></code></pre></div>
 <pre><code>## [1] 421.356</code></pre>
 <p>It should be noted that, in itself, the value of AIC for a given date set and model has no meaning. Its utility comes when we compare AIC values of different candidate models for the same data. Later on, as regression models become more complex with the inclusion of potentially many predictor variables, we will revisit AIC to help us in the selection of the “best” model among many choices.</p>
 <p>A similar measure is known as the Bayesian Schwarz Information Criteria, or BIC. It is calculated with the formula</p>
 <p><span class="math display">\[BIC = n\log(RSS/n) + \log(n)p\]</span></p>
 <p>and is calculated in R with the <code>BIC()</code> function.</p>
-<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="inference-regarding-multiple-regression.html#cb223-1" aria-hidden="true" tabindex="-1"></a><span class="fu">BIC</span>(appraisal.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="inference-regarding-multiple-regression.html#cb226-1" aria-hidden="true" tabindex="-1"></a><span class="fu">BIC</span>(appraisal.fit)</span></code></pre></div>
 <pre><code>## [1] 426.334</code></pre>
 
 </div>

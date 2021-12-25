@@ -140,27 +140,40 @@ The `class` of `Species` on the other hand is a `factor`. In R, a `factor` is a 
 
 In practice you will often encounter datasets from other external sources. 
 These are most commonly created or provided in formats that can be read in Excel. 
-The best formats for importing dataset files into R is space-delimited, tab-delimited text (both typically have the file extension .txt) or comma-separated values (file extension .csv). R can handle other formats, but these are the easiest with which to work. 
+The best formats for importing dataset files into R is space-delimited (typically with the file extension .txt), tab-delimited text (either the file extension .txt or .tsv) or comma-separated values (file extension .csv). 
+R can handle other formats, but these are the easiest with which to work. 
 
-#### `read.table()` -- for Space \& Tab delimited files
+There are multiple functions to import a data file in R. 
+The tools we will outline here include many functions in the `readr` package [@R-readr], part of the `tidyverse`. 
+We recommend reading through the Vignette by running the command `vignette("readr")` in the console.
 
-There are multiple functions to import a data file in R. One common tool is using the `read.table()` command. Below are two examples:
+#### `read_table()` -- for Space delimited files
+
+One common tool is using the `read_table()` command. 
+Below are two examples:
 
 1. Read a file directly from the web. The below code imports the file `univadmissions.txt` (details about the data are below) from a data repository into the current R session, and assigns the name `uadata` to the data frame object:
 
-```{r, eval=FALSE}
+```{r}
 site <- "https://tjfisher19.github.io/introStatModeling/data/univadmissions.txt"
 class(site)
-uadata <- read.table(site, header=TRUE)
+```
+```{r, eval=FALSE}
+options(readr.show_col_types = FALSE)
+uadata <- read_table(site, col_types = cols())
 head(uadata)
 ```
 
 ```{r, echo=FALSE, ch1-6}
-uadata <- read.table("docs/data/univadmissions.txt", header=TRUE)
+options(readr.show_col_types = FALSE)
+uadata <- read_table("docs/data/univadmissions.txt", col_types = cols())
 head(uadata)
 ```
 
-A few notes on the above code. In the first line, we are creating a string of characters (that happens to be a web address) and *assigning* it to the R object `site` using the `<-` notation. You should note the `class` of the object `site` is `character`. In the third line, we are applying the function `read.table()` with the file specified in the `site` variable, with the option `header=TRUE`, the output of the function is being assigned to `uadata`, again using the `<-` notation. We will be using this same data again below.
+A few notes on the above code. In the first line, we are creating a string of characters (that happens to be a web address) and *assigning* it to the R object `site` using the `<-` notation. You should note the `class` of the object `site` is `character`. 
+The third line, `options(readr.show_col_types = FALSE)`, is *entirely optional* and tells the `readr` package to suppress some extra output from display.
+The key is we are applying the function `read_table()` with the file specified in the `site` variable, we tell R to make a *best guess* on the variable types with the `col_types = cols()` statement (alternatively we can specify all the variable types, see `help(cols)`).
+Lastly, the output of the function is being assigned to `uadata`, again using the `<-` notation. We will be using this same data again below.
 
 2. Another option is to download the file to your computer, then read it.
 This is typically what you will do for homework and class examples.
@@ -168,26 +181,26 @@ You could go to the URL above and save the data file to your default working dir
 After saving it into a folder (or directory), you can read the file with code similar to:
 
 ```{r, eval=FALSE}
-uadata <- read.table("univadmissions.txt", header=TRUE)
+uadata <- read_table("univadmissions.txt")
 ```
 
-If you save the file to a directory on your computer other than the local directory (where your R code is stored), you must provide the path in the `read.table()` command:
+If you save the file to a directory on your computer other than the local directory (where your R code is stored), you must provide the path in the `read_table()` command:
 
 ```{r, eval=FALSE}
-uadata <- read.table("c:/My Documents/My STA363 Files/univadmissions.txt", header=TRUE)
+uadata <- read_table("c:/My Documents/My STA363 Files/univadmissions.txt")
 ```
 
 
-The function `read.table()` automatically converts a space (or tab) delimited text file to a data frame in R. The `header=TRUE` option tells R that the top line in the text file contains the variable names rather than data values.
+The function `read_table()` automatically converts a space delimited text file to a data frame in R. The `header=TRUE` option tells R that the top line in the text file contains the variable names rather than data values.
 
 
-#### `read.csv()` -- for Comma Separated Value files
+#### `read_csv()` -- for Comma Separated Value files
 
 Similar to the above examples, reading in a Comma Separated Value (CSV) file is very similar.
 This is becoming the standard format for transferring files. An example of some **non-executed code** is provided below:
 
 ```{r, eval=FALSE}
-uadata_csv <- read.csv("c:/My Documents/My STA363 Files/univadmissions.csv", header=TRUE)
+uadata_csv <- read_csv("c:/My Documents/My STA363 Files/univadmissions.csv")
 ```
 
 **Note:** the file `univadmissions.csv` does not exist but this code has been included for example purposes. 
@@ -262,7 +275,7 @@ Note in the above, we take the `uadata` and pipe it to a `filter`, which selects
 In fact, there are multiple versions of both the `filter` and `select` functions in R. 
 If you ever use one and receive a strange error, first check for a typo. 
 If the error still occurs it is likely the case that R is trying to use a different version of the `filter` or `select`. 
-You can always force R to use the `dplyr` version by specifying the pacakge as in the below example:
+You can always force R to use the `dplyr` version by specifying the package as in the below example:
 
 ```{r eval=FALSE}
 uadata %>% 
@@ -682,7 +695,7 @@ All pairwise correlations in this example are of modest magnitude ($r \approx 0.
 
 To visualize the relationship between numeric variables, we typically use a scatterplot.
 
-```{r ch1-25_scatter, fig.align='center', fig.cap='Scatterplot showing the relationship between the variables `act` and `gpa.endyr1` in the `uadata` dataset.', out.width='75%'}
+```{r ch1-25-scatter, fig.align='center', fig.cap='Scatterplot showing the relationship between the variables `act` and `gpa.endyr1` in the `uadata` dataset.', out.width='75%'}
 ggplot(uadata) + 
   geom_point(aes(x=act, y=gpa.endyr1) ) +
   labs(x="Composite ACT Score",
@@ -690,8 +703,20 @@ ggplot(uadata) +
   theme_minimal()
 ```
 
-You should note in Figure \@ref(ch1-25_scatter) the overall positive relationship (higher ACT scores tend to correspond to higher GPAs). 
-We also note the rounding of the ACT scores (always a whole number) resulting in these vertical striations in the plot. 
+You should note in Figure \@ref(fig:ch1-25-scatter) the overall positive relationship (higher ACT scores tend to correspond to higher GPAs). 
+We also note the rounding of the ACT scores (always a whole number) resulting in these vertical striations in the plot.
+
+We can attempt to visually address the striations with *jittering* (some visual random perturbations) in Figure \@ref(fig:ch1-25-jitter).
+There, we specify no jittering on the vertical axis (thus, `height=0`) and let `ggplot2` use the default behavior horizontally.
+
+```{r ch1-25-jitter, fig.align='center', fig.cap='Jittered scatterplot showing the relationship between the variables `act` and `gpa.endyr1` in the `uadata` dataset.', out.width='75%'}
+ggplot(uadata) + 
+  geom_jitter(aes(x=act, y=gpa.endyr1), height=0 ) +
+  labs(x="Composite ACT Score",
+       y="Grade point average following freshman year") +
+  theme_minimal()
+```
+
 
 ## Sampling distributions: describing how a statistic varies
 

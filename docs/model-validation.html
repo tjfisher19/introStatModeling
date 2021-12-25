@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Hughes and Thomas Fisher" />
 
 
-<meta name="date" content="2021-12-17" />
+<meta name="date" content="2021-12-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -209,7 +209,7 @@ div.csl-indent {
 <li class="chapter" data-level="2.3.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#analysis-of-variance"><i class="fa fa-check"></i><b>2.3.2</b> Analysis of variance</a></li>
 <li class="chapter" data-level="2.3.3" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#elements-of-a-designed-experiment"><i class="fa fa-check"></i><b>2.3.3</b> Elements of a designed experiment</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#paired-t-test"><i class="fa fa-check"></i><b>2.4</b> Paired <em>t</em>-test</a></li>
+<li class="chapter" data-level="2.4" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#paired-t-test"><i class="fa fa-check"></i><b>2.4</b> Paired <span class="math inline">\(t\)</span>-test</a></li>
 <li class="chapter" data-level="2.5" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#one-way-anova"><i class="fa fa-check"></i><b>2.5</b> One-Way ANOVA</a></li>
 <li class="chapter" data-level="2.6" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#assumption-checking"><i class="fa fa-check"></i><b>2.6</b> Assumption Checking</a>
 <ul>
@@ -425,20 +425,20 @@ Generally speaking, we should consider other measures to validate our models as 
 <p>Commonly used split proportions in practice are 80% for training data and 20% for test data, though this can be altered. To assess model predictive performance, a good choice is to look at the model’s <strong>residual standard error</strong> as calculated on the <strong>test data</strong>. Formulaically, the residual standard error is the square root of the mean squared prediction error values.</p>
 <p><strong>Example: Estimating Bodyfat Percentage.</strong> Let’s revisit the bodyfat percentage problem from Chapter 9 in the textbook. Recall that the goal was to develop a model that would do well at predicting a man’s bodyfat percentage by simply taking some selected circumference measurements around their body. Let’s use this data to do some model validation.</p>
 <p>The first thing we need to do is split the data set consisting of <span class="math inline">\(n\)</span> = 252 men into a training set and a test set. This is done using the code below, creating a random 80/20 training/test split using R’s <code>sample</code> function:</p>
-<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="model-validation.html#cb345-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">54321</span>)   <span class="co"># Set a seed value for reproducability purposes in this document</span></span>
-<span id="cb345-2"><a href="model-validation.html#cb345-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb345-3"><a href="model-validation.html#cb345-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Randomly select 80% of the data (rows)</span></span>
-<span id="cb345-4"><a href="model-validation.html#cb345-4" aria-hidden="true" tabindex="-1"></a>index <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(bodyfat), <span class="at">size=</span><span class="fu">floor</span>(.<span class="dv">80</span><span class="sc">*</span><span class="fu">nrow</span>(bodyfat)))</span>
-<span id="cb345-5"><a href="model-validation.html#cb345-5" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> bodyfat <span class="sc">%&gt;%</span> </span>
-<span id="cb345-6"><a href="model-validation.html#cb345-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">row_number</span>() <span class="sc">%in%</span> index)</span>
-<span id="cb345-7"><a href="model-validation.html#cb345-7" aria-hidden="true" tabindex="-1"></a>test  <span class="ot">&lt;-</span> bodyfat <span class="sc">%&gt;%</span> </span>
-<span id="cb345-8"><a href="model-validation.html#cb345-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">row_number</span>() <span class="sc">%in%</span> index)</span></code></pre></div>
+<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="model-validation.html#cb348-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">54321</span>)   <span class="co"># Set a seed value for reproducability purposes in this document</span></span>
+<span id="cb348-2"><a href="model-validation.html#cb348-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb348-3"><a href="model-validation.html#cb348-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Randomly select 80% of the data (rows)</span></span>
+<span id="cb348-4"><a href="model-validation.html#cb348-4" aria-hidden="true" tabindex="-1"></a>index <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(bodyfat), <span class="at">size=</span><span class="fu">floor</span>(.<span class="dv">80</span><span class="sc">*</span><span class="fu">nrow</span>(bodyfat)))</span>
+<span id="cb348-5"><a href="model-validation.html#cb348-5" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> bodyfat <span class="sc">%&gt;%</span> </span>
+<span id="cb348-6"><a href="model-validation.html#cb348-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">row_number</span>() <span class="sc">%in%</span> index)</span>
+<span id="cb348-7"><a href="model-validation.html#cb348-7" aria-hidden="true" tabindex="-1"></a>test  <span class="ot">&lt;-</span> bodyfat <span class="sc">%&gt;%</span> </span>
+<span id="cb348-8"><a href="model-validation.html#cb348-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">row_number</span>() <span class="sc">%in%</span> index)</span></code></pre></div>
 <p>The vector <code>index</code> consists of randomly selecting row numbers (cases) from the <code>bodyfat</code> dataset. The size of the selection is set to be 80% of the number of rows in the datset itself. Below we check to see how many cases landed in each of the training and test data sets:</p>
-<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="model-validation.html#cb346-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(bodyfat)</span></code></pre></div>
+<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="model-validation.html#cb349-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(bodyfat)</span></code></pre></div>
 <pre><code>## [1] 252</code></pre>
-<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="model-validation.html#cb348-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(train)</span></code></pre></div>
+<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="model-validation.html#cb351-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(train)</span></code></pre></div>
 <pre><code>## [1] 201</code></pre>
-<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="model-validation.html#cb350-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(test)</span></code></pre></div>
+<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="model-validation.html#cb353-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(test)</span></code></pre></div>
 <pre><code>## [1] 51</code></pre>
 <p>We have split the original sample of <span class="math inline">\(n\)</span> = 252 men into a training set of 201 men and a test (validation) set of 51 men.</p>
 <div id="use-the-training-data-to-fit-and-select-models" class="section level3" number="10.3.1">
@@ -448,63 +448,63 @@ Generally speaking, we should consider other measures to validate our models as 
 <div id="model-training" class="section level3" number="10.3.2">
 <h3><span class="header-section-number">10.3.2</span> Model training:</h3>
 <p>Check various models’ performance based on <span class="math inline">\(R^2_{adj}\)</span> and BIC:</p>
-<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="model-validation.html#cb352-1" aria-hidden="true" tabindex="-1"></a>bodyfat.gsub <span class="ot">&lt;-</span> <span class="fu">regsubsets</span>(bodyfat.pct <span class="sc">~</span> ., <span class="at">data=</span>train, <span class="at">nbest=</span><span class="dv">4</span>, <span class="at">nvmax=</span><span class="dv">13</span>)</span>
-<span id="cb352-2"><a href="model-validation.html#cb352-2" aria-hidden="true" tabindex="-1"></a>stats <span class="ot">&lt;-</span> <span class="fu">summary</span>(bodyfat.gsub)</span>
-<span id="cb352-3"><a href="model-validation.html#cb352-3" aria-hidden="true" tabindex="-1"></a>gsub.df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Model.Number=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(stats<span class="sc">$</span>adjr2), <span class="at">Adjusted.R2=</span>stats<span class="sc">$</span>adjr2, <span class="at">BIC=</span>stats<span class="sc">$</span>bic)</span>
-<span id="cb352-4"><a href="model-validation.html#cb352-4" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(gsub.df, <span class="fu">aes</span>(<span class="at">x=</span>Model.Number, <span class="at">y=</span>Adjusted.R2)) <span class="sc">+</span> </span>
-<span id="cb352-5"><a href="model-validation.html#cb352-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
-<span id="cb352-6"><a href="model-validation.html#cb352-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color=</span><span class="st">&quot;red&quot;</span>, <span class="at">size=</span><span class="dv">2</span>) <span class="sc">+</span> </span>
-<span id="cb352-7"><a href="model-validation.html#cb352-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb352-8"><a href="model-validation.html#cb352-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Adjusted R-squared&quot;</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;Model Number&quot;</span>)</span>
-<span id="cb352-9"><a href="model-validation.html#cb352-9" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(gsub.df, <span class="fu">aes</span>(<span class="at">x=</span>Model.Number, <span class="at">y=</span>BIC)) <span class="sc">+</span> </span>
-<span id="cb352-10"><a href="model-validation.html#cb352-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
-<span id="cb352-11"><a href="model-validation.html#cb352-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color=</span><span class="st">&quot;red&quot;</span>, <span class="at">size=</span><span class="dv">2</span>) <span class="sc">+</span> </span>
-<span id="cb352-12"><a href="model-validation.html#cb352-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb352-13"><a href="model-validation.html#cb352-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;BIC&quot;</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;Model Number&quot;</span>)</span>
-<span id="cb352-14"><a href="model-validation.html#cb352-14" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(p1,p2, <span class="at">nrow=</span><span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="model-validation.html#cb355-1" aria-hidden="true" tabindex="-1"></a>bodyfat.gsub <span class="ot">&lt;-</span> <span class="fu">regsubsets</span>(bodyfat.pct <span class="sc">~</span> ., <span class="at">data=</span>train, <span class="at">nbest=</span><span class="dv">4</span>, <span class="at">nvmax=</span><span class="dv">13</span>)</span>
+<span id="cb355-2"><a href="model-validation.html#cb355-2" aria-hidden="true" tabindex="-1"></a>stats <span class="ot">&lt;-</span> <span class="fu">summary</span>(bodyfat.gsub)</span>
+<span id="cb355-3"><a href="model-validation.html#cb355-3" aria-hidden="true" tabindex="-1"></a>gsub.df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Model.Number=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(stats<span class="sc">$</span>adjr2), <span class="at">Adjusted.R2=</span>stats<span class="sc">$</span>adjr2, <span class="at">BIC=</span>stats<span class="sc">$</span>bic)</span>
+<span id="cb355-4"><a href="model-validation.html#cb355-4" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(gsub.df, <span class="fu">aes</span>(<span class="at">x=</span>Model.Number, <span class="at">y=</span>Adjusted.R2)) <span class="sc">+</span> </span>
+<span id="cb355-5"><a href="model-validation.html#cb355-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb355-6"><a href="model-validation.html#cb355-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color=</span><span class="st">&quot;red&quot;</span>, <span class="at">size=</span><span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb355-7"><a href="model-validation.html#cb355-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb355-8"><a href="model-validation.html#cb355-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Adjusted R-squared&quot;</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;Model Number&quot;</span>)</span>
+<span id="cb355-9"><a href="model-validation.html#cb355-9" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(gsub.df, <span class="fu">aes</span>(<span class="at">x=</span>Model.Number, <span class="at">y=</span>BIC)) <span class="sc">+</span> </span>
+<span id="cb355-10"><a href="model-validation.html#cb355-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb355-11"><a href="model-validation.html#cb355-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color=</span><span class="st">&quot;red&quot;</span>, <span class="at">size=</span><span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb355-12"><a href="model-validation.html#cb355-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb355-13"><a href="model-validation.html#cb355-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;BIC&quot;</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;Model Number&quot;</span>)</span>
+<span id="cb355-14"><a href="model-validation.html#cb355-14" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(p1,p2, <span class="at">nrow=</span><span class="dv">2</span>)</span></code></pre></div>
 <p><img src="introStatModeling_files/figure-html/ch10-4-1.png" width="672" /></p>
 <p>The estimated <span class="math inline">\(\beta\)</span>-coefficients for the predictors of the best fitting model based on maximizing <span class="math inline">\(R^2_{adj}\)</span> are as follows:</p>
-<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="model-validation.html#cb353-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(bodyfat.gsub, <span class="fu">which.max</span>(gsub.df<span class="sc">$</span>Adjusted.R2))</span></code></pre></div>
+<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb356-1"><a href="model-validation.html#cb356-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(bodyfat.gsub, <span class="fu">which.max</span>(gsub.df<span class="sc">$</span>Adjusted.R2))</span></code></pre></div>
 <pre><code>## (Intercept)      weight        neck     abdomen       ankle      biceps 
 ##  -36.886823   -0.151137   -0.370366    1.005815    0.360620    0.371678 
 ##     forearm       wrist 
 ##    0.464346   -1.609547</code></pre>
 <p>We see that this criterion selects a 10-predictor model. While this is OK, it would involve a lot of body measuring in practice, and so might not be the best choice from an implementation prespective. Its adjusted <span class="math inline">\(R^2_{adj}\)</span> is found as follows:</p>
-<div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="model-validation.html#cb355-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(gsub.df<span class="sc">$</span>Adjusted.R2)</span></code></pre></div>
+<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb358-1"><a href="model-validation.html#cb358-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(gsub.df<span class="sc">$</span>Adjusted.R2)</span></code></pre></div>
 <pre><code>## [1] 0.731449</code></pre>
 <p>Now, let’s look at what model is selected as optimal when minimizing BIC:</p>
-<div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="model-validation.html#cb357-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(bodyfat.gsub, <span class="fu">which.min</span>(gsub.df<span class="sc">$</span>BIC))</span></code></pre></div>
+<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb360-1"><a href="model-validation.html#cb360-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(bodyfat.gsub, <span class="fu">which.min</span>(gsub.df<span class="sc">$</span>BIC))</span></code></pre></div>
 <pre><code>## (Intercept)      weight     abdomen     forearm       wrist 
 ##  -32.562236   -0.122294    0.969583    0.539201   -1.721664</code></pre>
 <p>The best fitting model based on BIC has four predictors: <code>weight</code>, <code>abdomen</code>, <code>biceps</code>, and <code>wrist</code>. As a corrolary assessment, we can check the value of <span class="math inline">\(R^2_{adj}\)</span> for this 4-predictor model:</p>
-<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="model-validation.html#cb359-1" aria-hidden="true" tabindex="-1"></a>gsub.df<span class="sc">$</span>Adjusted.R2[<span class="fu">which.min</span>(gsub.df<span class="sc">$</span>BIC)]</span></code></pre></div>
+<div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb362-1"><a href="model-validation.html#cb362-1" aria-hidden="true" tabindex="-1"></a>gsub.df<span class="sc">$</span>Adjusted.R2[<span class="fu">which.min</span>(gsub.df<span class="sc">$</span>BIC)]</span></code></pre></div>
 <pre><code>## [1] 0.725006</code></pre>
 <p>The best fitting model based on BIC is much simpler (4 predictors instead of 10), and its adjusted <span class="math inline">\(R^2_{adj}\)</span> is not noticeably lower than the 10-predictor model (0.7427 vs. 0.7549). <strong>So, let’s choose to use the four predictor model.</strong></p>
 </div>
 <div id="model-validation-step" class="section level3" number="10.3.3">
 <h3><span class="header-section-number">10.3.3</span> Model validation step:</h3>
 <p>Now, let’s use this model to predict bodyfat percentages for the men in the holdout (test) dataset. First we fit the chosen model on the training dataset. Then we use that model to predict the holdout values in the testing set.</p>
-<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb361-1"><a href="model-validation.html#cb361-1" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(bodyfat.pct <span class="sc">~</span> weight <span class="sc">+</span> abdomen <span class="sc">+</span> biceps <span class="sc">+</span> wrist, <span class="at">data=</span>train)</span>
-<span id="cb361-2"><a href="model-validation.html#cb361-2" aria-hidden="true" tabindex="-1"></a>test.predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit1, <span class="at">newdata=</span>test)</span></code></pre></div>
+<div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb364-1"><a href="model-validation.html#cb364-1" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(bodyfat.pct <span class="sc">~</span> weight <span class="sc">+</span> abdomen <span class="sc">+</span> biceps <span class="sc">+</span> wrist, <span class="at">data=</span>train)</span>
+<span id="cb364-2"><a href="model-validation.html#cb364-2" aria-hidden="true" tabindex="-1"></a>test.predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit1, <span class="at">newdata=</span>test)</span></code></pre></div>
 <p>The residual standard error (or equivalently, the square root of the mean squared residuals – or <strong>root mean squared error</strong>) can be calculated on the test data to see how well our model predicts future observations. Below we manually calculate this value for explanation.</p>
-<div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb362-1"><a href="model-validation.html#cb362-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate observed - predicted bodyfat for test data</span></span>
-<span id="cb362-2"><a href="model-validation.html#cb362-2" aria-hidden="true" tabindex="-1"></a>residuals <span class="ot">&lt;-</span> test<span class="sc">$</span>bodyfat.pct <span class="sc">-</span> test.predictions          </span>
-<span id="cb362-3"><a href="model-validation.html#cb362-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb362-4"><a href="model-validation.html#cb362-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate and display the residual std error</span></span>
-<span id="cb362-5"><a href="model-validation.html#cb362-5" aria-hidden="true" tabindex="-1"></a>test.rse <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(residuals<span class="sc">^</span><span class="dv">2</span>))</span>
-<span id="cb362-6"><a href="model-validation.html#cb362-6" aria-hidden="true" tabindex="-1"></a>test.rse</span></code></pre></div>
+<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="model-validation.html#cb365-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate observed - predicted bodyfat for test data</span></span>
+<span id="cb365-2"><a href="model-validation.html#cb365-2" aria-hidden="true" tabindex="-1"></a>residuals <span class="ot">&lt;-</span> test<span class="sc">$</span>bodyfat.pct <span class="sc">-</span> test.predictions          </span>
+<span id="cb365-3"><a href="model-validation.html#cb365-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb365-4"><a href="model-validation.html#cb365-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate and display the residual std error</span></span>
+<span id="cb365-5"><a href="model-validation.html#cb365-5" aria-hidden="true" tabindex="-1"></a>test.rse <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(residuals<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb365-6"><a href="model-validation.html#cb365-6" aria-hidden="true" tabindex="-1"></a>test.rse</span></code></pre></div>
 <pre><code>## [1] 4.48002</code></pre>
 <p>This is an estimate of the average residual (prediction error) size for individuals in an independent sample of men. Using an Empirical Rule-style argument, we can be about 95% confident that our model will produce a predicted male bodyfat percentage that is within about <span class="math inline">\(2\times 4.68 = 9.36\%\)</span> of the actual value.</p>
 <p>Compare this result to the artificially optimistic residual standard error we get by naively predicting the results for the <em>same men</em> we used to fit the model, using all the original data:</p>
-<div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb364-1"><a href="model-validation.html#cb364-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit model to all the data</span></span>
-<span id="cb364-2"><a href="model-validation.html#cb364-2" aria-hidden="true" tabindex="-1"></a>full.sample.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(bodyfat.pct <span class="sc">~</span> weight <span class="sc">+</span> abdomen <span class="sc">+</span> biceps <span class="sc">+</span> wrist, <span class="at">data=</span>bodyfat)  </span>
-<span id="cb364-3"><a href="model-validation.html#cb364-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb364-4"><a href="model-validation.html#cb364-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict all men in the same sample, </span></span>
-<span id="cb364-5"><a href="model-validation.html#cb364-5" aria-hidden="true" tabindex="-1"></a><span class="co"># and calculate their residuals and residual std error</span></span>
-<span id="cb364-6"><a href="model-validation.html#cb364-6" aria-hidden="true" tabindex="-1"></a>full.predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(full.sample.fit, <span class="at">newdata=</span>bodyfat)</span>
-<span id="cb364-7"><a href="model-validation.html#cb364-7" aria-hidden="true" tabindex="-1"></a>residuals <span class="ot">&lt;-</span> bodyfat<span class="sc">$</span>bodyfat.pct <span class="sc">-</span> full.predictions     </span>
-<span id="cb364-8"><a href="model-validation.html#cb364-8" aria-hidden="true" tabindex="-1"></a>full.rse <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(residuals<span class="sc">^</span><span class="dv">2</span>)) </span>
-<span id="cb364-9"><a href="model-validation.html#cb364-9" aria-hidden="true" tabindex="-1"></a>full.rse</span></code></pre></div>
+<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb367-1"><a href="model-validation.html#cb367-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit model to all the data</span></span>
+<span id="cb367-2"><a href="model-validation.html#cb367-2" aria-hidden="true" tabindex="-1"></a>full.sample.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(bodyfat.pct <span class="sc">~</span> weight <span class="sc">+</span> abdomen <span class="sc">+</span> biceps <span class="sc">+</span> wrist, <span class="at">data=</span>bodyfat)  </span>
+<span id="cb367-3"><a href="model-validation.html#cb367-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb367-4"><a href="model-validation.html#cb367-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict all men in the same sample, </span></span>
+<span id="cb367-5"><a href="model-validation.html#cb367-5" aria-hidden="true" tabindex="-1"></a><span class="co"># and calculate their residuals and residual std error</span></span>
+<span id="cb367-6"><a href="model-validation.html#cb367-6" aria-hidden="true" tabindex="-1"></a>full.predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(full.sample.fit, <span class="at">newdata=</span>bodyfat)</span>
+<span id="cb367-7"><a href="model-validation.html#cb367-7" aria-hidden="true" tabindex="-1"></a>residuals <span class="ot">&lt;-</span> bodyfat<span class="sc">$</span>bodyfat.pct <span class="sc">-</span> full.predictions     </span>
+<span id="cb367-8"><a href="model-validation.html#cb367-8" aria-hidden="true" tabindex="-1"></a>full.rse <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(residuals<span class="sc">^</span><span class="dv">2</span>)) </span>
+<span id="cb367-9"><a href="model-validation.html#cb367-9" aria-hidden="true" tabindex="-1"></a>full.rse</span></code></pre></div>
 <pre><code>## [1] 4.31743</code></pre>
 <p>The result might look better, but it is biased toward the sample it came from!</p>
 </div>
@@ -512,30 +512,30 @@ Generally speaking, we should consider other measures to validate our models as 
 <div id="hold-out-sample-validation-using-caret" class="section level2" number="10.4">
 <h2><span class="header-section-number">10.4</span> Hold-out sample validation using <code>caret</code></h2>
 <p>The above example was quite involved and done so for the sake of explanation. We can instead use some features in the <code>tidyverse</code> and the add-on <code>caret</code> library to effectively do the same thing.</p>
-<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb366-1"><a href="model-validation.html#cb366-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a balanced 80/20 split of the sample based on the response variable</span></span>
-<span id="cb366-2"><a href="model-validation.html#cb366-2" aria-hidden="true" tabindex="-1"></a>train.index <span class="ot">&lt;-</span> bodyfat<span class="sc">$</span>bodyfat.pct <span class="sc">%&gt;%</span></span>
-<span id="cb366-3"><a href="model-validation.html#cb366-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">createDataPartition</span>(<span class="at">p =</span> <span class="fl">0.8</span>, <span class="at">list =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb366-4"><a href="model-validation.html#cb366-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb366-5"><a href="model-validation.html#cb366-5" aria-hidden="true" tabindex="-1"></a>train.data <span class="ot">&lt;-</span> bodyfat <span class="sc">%&gt;%</span></span>
-<span id="cb366-6"><a href="model-validation.html#cb366-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">row_number</span>() <span class="sc">%in%</span> train.index)   <span class="co"># 80% goes into training data</span></span>
-<span id="cb366-7"><a href="model-validation.html#cb366-7" aria-hidden="true" tabindex="-1"></a>test.data <span class="ot">&lt;-</span> bodyfat <span class="sc">%&gt;%</span></span>
-<span id="cb366-8"><a href="model-validation.html#cb366-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">row_number</span>() <span class="sc">%in%</span> train.index)  <span class="co"># The rest goes into test data</span></span>
-<span id="cb366-9"><a href="model-validation.html#cb366-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb366-10"><a href="model-validation.html#cb366-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Verify balance between training and test data on the response variable:</span></span>
-<span id="cb366-11"><a href="model-validation.html#cb366-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
-<span id="cb366-12"><a href="model-validation.html#cb366-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">data=</span>train.data, <span class="fu">aes</span>(<span class="at">x =</span> bodyfat.pct), </span>
-<span id="cb366-13"><a href="model-validation.html#cb366-13" aria-hidden="true" tabindex="-1"></a>               <span class="at">fill =</span> <span class="st">&quot;#00BCD8&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span> </span>
-<span id="cb366-14"><a href="model-validation.html#cb366-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">data=</span>test.data, <span class="fu">aes</span>(<span class="at">x =</span> bodyfat.pct),</span>
-<span id="cb366-15"><a href="model-validation.html#cb366-15" aria-hidden="true" tabindex="-1"></a>               <span class="at">fill =</span> <span class="st">&quot;#F8766D&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="model-validation.html#cb369-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a balanced 80/20 split of the sample based on the response variable</span></span>
+<span id="cb369-2"><a href="model-validation.html#cb369-2" aria-hidden="true" tabindex="-1"></a>train.index <span class="ot">&lt;-</span> bodyfat<span class="sc">$</span>bodyfat.pct <span class="sc">%&gt;%</span></span>
+<span id="cb369-3"><a href="model-validation.html#cb369-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">createDataPartition</span>(<span class="at">p =</span> <span class="fl">0.8</span>, <span class="at">list =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb369-4"><a href="model-validation.html#cb369-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb369-5"><a href="model-validation.html#cb369-5" aria-hidden="true" tabindex="-1"></a>train.data <span class="ot">&lt;-</span> bodyfat <span class="sc">%&gt;%</span></span>
+<span id="cb369-6"><a href="model-validation.html#cb369-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">row_number</span>() <span class="sc">%in%</span> train.index)   <span class="co"># 80% goes into training data</span></span>
+<span id="cb369-7"><a href="model-validation.html#cb369-7" aria-hidden="true" tabindex="-1"></a>test.data <span class="ot">&lt;-</span> bodyfat <span class="sc">%&gt;%</span></span>
+<span id="cb369-8"><a href="model-validation.html#cb369-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">row_number</span>() <span class="sc">%in%</span> train.index)  <span class="co"># The rest goes into test data</span></span>
+<span id="cb369-9"><a href="model-validation.html#cb369-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb369-10"><a href="model-validation.html#cb369-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Verify balance between training and test data on the response variable:</span></span>
+<span id="cb369-11"><a href="model-validation.html#cb369-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb369-12"><a href="model-validation.html#cb369-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">data=</span>train.data, <span class="fu">aes</span>(<span class="at">x =</span> bodyfat.pct), </span>
+<span id="cb369-13"><a href="model-validation.html#cb369-13" aria-hidden="true" tabindex="-1"></a>               <span class="at">fill =</span> <span class="st">&quot;#00BCD8&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span> </span>
+<span id="cb369-14"><a href="model-validation.html#cb369-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">data=</span>test.data, <span class="fu">aes</span>(<span class="at">x =</span> bodyfat.pct),</span>
+<span id="cb369-15"><a href="model-validation.html#cb369-15" aria-hidden="true" tabindex="-1"></a>               <span class="at">fill =</span> <span class="st">&quot;#F8766D&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.3</span>)</span></code></pre></div>
 <p><img src="introStatModeling_files/figure-html/ch10-12-1.png" width="672" /></p>
-<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb367-1"><a href="model-validation.html#cb367-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Build/fit our model</span></span>
-<span id="cb367-2"><a href="model-validation.html#cb367-2" aria-hidden="true" tabindex="-1"></a>fitted.model <span class="ot">&lt;-</span> <span class="fu">lm</span>(bodyfat.pct <span class="sc">~</span> weight <span class="sc">+</span> abdomen <span class="sc">+</span> biceps <span class="sc">+</span> wrist, <span class="at">data=</span>train.data)</span>
-<span id="cb367-3"><a href="model-validation.html#cb367-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb367-4"><a href="model-validation.html#cb367-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Make predictions and compute RMSE and MAE</span></span>
-<span id="cb367-5"><a href="model-validation.html#cb367-5" aria-hidden="true" tabindex="-1"></a>predictions <span class="ot">&lt;-</span> fitted.model <span class="sc">%&gt;%</span> </span>
-<span id="cb367-6"><a href="model-validation.html#cb367-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(test.data)</span>
-<span id="cb367-7"><a href="model-validation.html#cb367-7" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">RMSE =</span> <span class="fu">RMSE</span>(predictions, test.data<span class="sc">$</span>bodyfat.pct),</span>
-<span id="cb367-8"><a href="model-validation.html#cb367-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">MAE =</span> <span class="fu">MAE</span>(predictions, test.data<span class="sc">$</span>bodyfat.pct))</span></code></pre></div>
+<div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb370-1"><a href="model-validation.html#cb370-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Build/fit our model</span></span>
+<span id="cb370-2"><a href="model-validation.html#cb370-2" aria-hidden="true" tabindex="-1"></a>fitted.model <span class="ot">&lt;-</span> <span class="fu">lm</span>(bodyfat.pct <span class="sc">~</span> weight <span class="sc">+</span> abdomen <span class="sc">+</span> biceps <span class="sc">+</span> wrist, <span class="at">data=</span>train.data)</span>
+<span id="cb370-3"><a href="model-validation.html#cb370-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb370-4"><a href="model-validation.html#cb370-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Make predictions and compute RMSE and MAE</span></span>
+<span id="cb370-5"><a href="model-validation.html#cb370-5" aria-hidden="true" tabindex="-1"></a>predictions <span class="ot">&lt;-</span> fitted.model <span class="sc">%&gt;%</span> </span>
+<span id="cb370-6"><a href="model-validation.html#cb370-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(test.data)</span>
+<span id="cb370-7"><a href="model-validation.html#cb370-7" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">RMSE =</span> <span class="fu">RMSE</span>(predictions, test.data<span class="sc">$</span>bodyfat.pct),</span>
+<span id="cb370-8"><a href="model-validation.html#cb370-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">MAE =</span> <span class="fu">MAE</span>(predictions, test.data<span class="sc">$</span>bodyfat.pct))</span></code></pre></div>
 <pre><code>##      RMSE     MAE
 ## 1 4.32594 3.58625</code></pre>
 <p>The <code>caret</code> package can easily provide us with the root mean squared error RMSE (residual standard error) like before, but can also provide other measures of model performance. Two measures are typically employed:</p>
@@ -558,17 +558,17 @@ Generally speaking, we should consider other measures to validate our models as 
 <li>Calculate the overall prediction error by averaging all the test errors recorded for the individual points through the process. We can still use RMSE or MAE for this.</li>
 </ol>
 <p>This is a very intensive process as you might imagine, but it is actually very easy to do in <code>caret</code>:</p>
-<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="model-validation.html#cb369-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set training control method as LOOCV</span></span>
-<span id="cb369-2"><a href="model-validation.html#cb369-2" aria-hidden="true" tabindex="-1"></a>train.control <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;LOOCV&quot;</span>)</span>
-<span id="cb369-3"><a href="model-validation.html#cb369-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb369-4"><a href="model-validation.html#cb369-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Train the model</span></span>
-<span id="cb369-5"><a href="model-validation.html#cb369-5" aria-hidden="true" tabindex="-1"></a>LOOCV.model <span class="ot">&lt;-</span> <span class="fu">train</span>(bodyfat.pct <span class="sc">~</span> weight <span class="sc">+</span> abdomen <span class="sc">+</span> biceps <span class="sc">+</span> wrist, </span>
-<span id="cb369-6"><a href="model-validation.html#cb369-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> bodyfat, </span>
-<span id="cb369-7"><a href="model-validation.html#cb369-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>,</span>
-<span id="cb369-8"><a href="model-validation.html#cb369-8" aria-hidden="true" tabindex="-1"></a>                     <span class="at">trControl =</span> train.control)</span>
-<span id="cb369-9"><a href="model-validation.html#cb369-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb369-10"><a href="model-validation.html#cb369-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Display results</span></span>
-<span id="cb369-11"><a href="model-validation.html#cb369-11" aria-hidden="true" tabindex="-1"></a>LOOCV.model</span></code></pre></div>
+<div class="sourceCode" id="cb372"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb372-1"><a href="model-validation.html#cb372-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set training control method as LOOCV</span></span>
+<span id="cb372-2"><a href="model-validation.html#cb372-2" aria-hidden="true" tabindex="-1"></a>train.control <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;LOOCV&quot;</span>)</span>
+<span id="cb372-3"><a href="model-validation.html#cb372-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb372-4"><a href="model-validation.html#cb372-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Train the model</span></span>
+<span id="cb372-5"><a href="model-validation.html#cb372-5" aria-hidden="true" tabindex="-1"></a>LOOCV.model <span class="ot">&lt;-</span> <span class="fu">train</span>(bodyfat.pct <span class="sc">~</span> weight <span class="sc">+</span> abdomen <span class="sc">+</span> biceps <span class="sc">+</span> wrist, </span>
+<span id="cb372-6"><a href="model-validation.html#cb372-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> bodyfat, </span>
+<span id="cb372-7"><a href="model-validation.html#cb372-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>,</span>
+<span id="cb372-8"><a href="model-validation.html#cb372-8" aria-hidden="true" tabindex="-1"></a>                     <span class="at">trControl =</span> train.control)</span>
+<span id="cb372-9"><a href="model-validation.html#cb372-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb372-10"><a href="model-validation.html#cb372-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Display results</span></span>
+<span id="cb372-11"><a href="model-validation.html#cb372-11" aria-hidden="true" tabindex="-1"></a>LOOCV.model</span></code></pre></div>
 <pre><code>## Linear Regression 
 ## 
 ## 252 samples
@@ -607,17 +607,17 @@ Generally speaking, we should consider other measures to validate our models as 
 </ul>
 <p>It has been shown in practice that using <span class="math inline">\(k\)</span> = 5 or 10 yields test error rates that do not appreciably suffer from excessive bias nor high prediction error variance.</p>
 <p>The following example uses <code>caret</code> to perform a 5-fold cross validation to estimate the prediction error for predicting bodyfat percentage in men from the <code>weight</code>, <code>abdomen</code>, <code>biceps</code>, and <code>wrist</code> measurement predictors.</p>
-<div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb371-1"><a href="model-validation.html#cb371-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set training control method as 5-fold CV</span></span>
-<span id="cb371-2"><a href="model-validation.html#cb371-2" aria-hidden="true" tabindex="-1"></a>train.control <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>)</span>
-<span id="cb371-3"><a href="model-validation.html#cb371-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb371-4"><a href="model-validation.html#cb371-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Train the model</span></span>
-<span id="cb371-5"><a href="model-validation.html#cb371-5" aria-hidden="true" tabindex="-1"></a>kfoldCV.model <span class="ot">&lt;-</span> <span class="fu">train</span>(bodyfat.pct <span class="sc">~</span> weight <span class="sc">+</span> abdomen <span class="sc">+</span> biceps <span class="sc">+</span> wrist, </span>
-<span id="cb371-6"><a href="model-validation.html#cb371-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> bodyfat, </span>
-<span id="cb371-7"><a href="model-validation.html#cb371-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>,</span>
-<span id="cb371-8"><a href="model-validation.html#cb371-8" aria-hidden="true" tabindex="-1"></a>                       <span class="at">trControl =</span> train.control)</span>
-<span id="cb371-9"><a href="model-validation.html#cb371-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb371-10"><a href="model-validation.html#cb371-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Display results</span></span>
-<span id="cb371-11"><a href="model-validation.html#cb371-11" aria-hidden="true" tabindex="-1"></a>kfoldCV.model</span></code></pre></div>
+<div class="sourceCode" id="cb374"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb374-1"><a href="model-validation.html#cb374-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set training control method as 5-fold CV</span></span>
+<span id="cb374-2"><a href="model-validation.html#cb374-2" aria-hidden="true" tabindex="-1"></a>train.control <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>)</span>
+<span id="cb374-3"><a href="model-validation.html#cb374-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb374-4"><a href="model-validation.html#cb374-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Train the model</span></span>
+<span id="cb374-5"><a href="model-validation.html#cb374-5" aria-hidden="true" tabindex="-1"></a>kfoldCV.model <span class="ot">&lt;-</span> <span class="fu">train</span>(bodyfat.pct <span class="sc">~</span> weight <span class="sc">+</span> abdomen <span class="sc">+</span> biceps <span class="sc">+</span> wrist, </span>
+<span id="cb374-6"><a href="model-validation.html#cb374-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> bodyfat, </span>
+<span id="cb374-7"><a href="model-validation.html#cb374-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>,</span>
+<span id="cb374-8"><a href="model-validation.html#cb374-8" aria-hidden="true" tabindex="-1"></a>                       <span class="at">trControl =</span> train.control)</span>
+<span id="cb374-9"><a href="model-validation.html#cb374-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb374-10"><a href="model-validation.html#cb374-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Display results</span></span>
+<span id="cb374-11"><a href="model-validation.html#cb374-11" aria-hidden="true" tabindex="-1"></a>kfoldCV.model</span></code></pre></div>
 <pre><code>## Linear Regression 
 ## 
 ## 252 samples

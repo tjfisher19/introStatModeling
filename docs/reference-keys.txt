@@ -6,6 +6,8 @@ fig:ch1-20
 fig:ch1-21
 fig:ch1-22
 fig:ch1-23
+fig:ch1-25-scatter
+fig:ch1-25-jitter
 fig:ch1-26
 eq:baseModel
 eq:twoSampleTtest
@@ -42,8 +44,8 @@ data-frames
 built-in-data
 types-of-data
 importing-datasets-into-r
-read.table-for-space-tab-delimited-files
-read.csv-for-comma-separated-value-files
+read_table-for-space-delimited-files
+read_csv-for-comma-separated-value-files
 load-loading-an-existing-r-data.frame
 referencing-data-from-inside-a-data-frame
 missing-values-and-computer-arithmetic-in-r

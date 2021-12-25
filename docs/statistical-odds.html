@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Hughes and Thomas Fisher" />
 
 
-<meta name="date" content="2021-12-17" />
+<meta name="date" content="2021-12-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -209,7 +209,7 @@ div.csl-indent {
 <li class="chapter" data-level="2.3.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#analysis-of-variance"><i class="fa fa-check"></i><b>2.3.2</b> Analysis of variance</a></li>
 <li class="chapter" data-level="2.3.3" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#elements-of-a-designed-experiment"><i class="fa fa-check"></i><b>2.3.3</b> Elements of a designed experiment</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#paired-t-test"><i class="fa fa-check"></i><b>2.4</b> Paired <em>t</em>-test</a></li>
+<li class="chapter" data-level="2.4" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#paired-t-test"><i class="fa fa-check"></i><b>2.4</b> Paired <span class="math inline">\(t\)</span>-test</a></li>
 <li class="chapter" data-level="2.5" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#one-way-anova"><i class="fa fa-check"></i><b>2.5</b> One-Way ANOVA</a></li>
 <li class="chapter" data-level="2.6" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#assumption-checking"><i class="fa fa-check"></i><b>2.6</b> Assumption Checking</a>
 <ul>
@@ -418,8 +418,8 @@ Figure 11.2: Image of the RMS Titanic (damage from iceberg not included)
 </div>
 <p>On April 14, 1912, the RMS Titanic struck an Iceberg in the North Atlantic Ocean off the coast of Newfoundland. Roughly 3 hours after striking the iceberg, the Titanic sunk on April 15, 1912 at 2:20am.</p>
 <p>In the paper, The “Unusual Episode” Data Revisited, published in the Journal of Statistics Education vol.3, no.3 (1995), records for 2201 passengers and crew were recorded with their ticket status (the Class variable), Age (categorized as Adult/Child), Gender (Female/Male) and whether they survived the sinking.</p>
-<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="statistical-odds.html#cb373-1" aria-hidden="true" tabindex="-1"></a>titanic <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;titanic.csv&quot;</span>)</span>
-<span id="cb373-2"><a href="statistical-odds.html#cb373-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(titanic)</span></code></pre></div>
+<div class="sourceCode" id="cb376"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb376-1"><a href="statistical-odds.html#cb376-1" aria-hidden="true" tabindex="-1"></a>titanic <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;titanic.csv&quot;</span>)</span>
+<span id="cb376-2"><a href="statistical-odds.html#cb376-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(titanic)</span></code></pre></div>
 <pre><code>##   X Class   Age Gender Survived
 ## 1 1     1 Adult   Male      Yes
 ## 2 2     1 Adult   Male      Yes
@@ -428,7 +428,7 @@ Figure 11.2: Image of the RMS Titanic (damage from iceberg not included)
 ## 5 5     1 Adult   Male      Yes
 ## 6 6     1 Adult   Male      Yes</code></pre>
 <p>In this example, we will explore the odds of surviving the sinking of the Titanic as a function of different variables. First consider the basic case of surviving, we will build a contigency table using the <code>xtabs()</code> function in R.</p>
-<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="statistical-odds.html#cb375-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span>Survived, <span class="at">data=</span>titanic)</span></code></pre></div>
+<div class="sourceCode" id="cb378"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb378-1"><a href="statistical-odds.html#cb378-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span>Survived, <span class="at">data=</span>titanic)</span></code></pre></div>
 <pre><code>## Survived
 ##   No  Yes 
 ## 1490  711</code></pre>
@@ -441,7 +441,7 @@ Figure 11.2: Image of the RMS Titanic (damage from iceberg not included)
 <p>In the Titanic dataset we have other information besides whether a person survived or not. Consider a simple question: Does <em>Gender</em> help explain, or predict, a person’s ability to survive this disaster?</p>
 <p>We have studied many problems such as this. Does area influence the sale price of a house; does ACT score predict first year GPA; etc…</p>
 <p>Here things are different because our response variable (survived or not) is categorical (binary) as well as our predictor variable (gender). The most basic way to explore this sort of relationship is with a two-way contigency table:</p>
-<div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="statistical-odds.html#cb377-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>( <span class="sc">~</span> Gender <span class="sc">+</span> Survived, <span class="at">data=</span>titanic)</span></code></pre></div>
+<div class="sourceCode" id="cb380"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb380-1"><a href="statistical-odds.html#cb380-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>( <span class="sc">~</span> Gender <span class="sc">+</span> Survived, <span class="at">data=</span>titanic)</span></code></pre></div>
 <pre><code>##         Survived
 ## Gender     No  Yes
 ##   Female  126  344
@@ -470,7 +470,7 @@ Here, we see a random female passenger had greater than a <span class="math inli
 <div id="ideas-of-modeling-odds" class="section level2" number="11.3">
 <h2><span class="header-section-number">11.3</span> Ideas of modeling odds</h2>
 <p>In the above discussion, it sure seems like gender is a predictor for surviving. Other variables are included in the dataset. Some additional contingency table analysis provides additional insight.</p>
-<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb379-1"><a href="statistical-odds.html#cb379-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> Age <span class="sc">+</span> Survived, <span class="at">data=</span>titanic)</span></code></pre></div>
+<div class="sourceCode" id="cb382"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb382-1"><a href="statistical-odds.html#cb382-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> Age <span class="sc">+</span> Survived, <span class="at">data=</span>titanic)</span></code></pre></div>
 <pre><code>##        Survived
 ## Age       No  Yes
 ##   Adult 1438  654
@@ -478,7 +478,7 @@ Here, we see a random female passenger had greater than a <span class="math inli
 <p>The odds of a child surviving are 1.0962 while that of an adult are 0.4548.</p>
 <p>Although not ideal, it was better to be a child than an adult on the Titanic.</p>
 <p>What about the <code>Class</code> variable. Here things get a little more interesting because there are multiple categories</p>
-<div class="sourceCode" id="cb381"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb381-1"><a href="statistical-odds.html#cb381-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> Class <span class="sc">+</span> Survived, <span class="at">data=</span>titanic)</span></code></pre></div>
+<div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb384-1"><a href="statistical-odds.html#cb384-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> Class <span class="sc">+</span> Survived, <span class="at">data=</span>titanic)</span></code></pre></div>
 <pre><code>##       Survived
 ## Class   No Yes
 ##   1    122 203
@@ -492,7 +492,7 @@ Here, we see a random female passenger had greater than a <span class="math inli
 <li>Crew members and third class did not fare well.</li>
 </ul>
 <p>Of course, all these factors may interact! We’ll revisit that topic in the next chapter but for now we can build more complicated contigency tables. Here we wrap the output of <code>xtabs</code> in the <code>ftable()</code> function for more pleasing output. First consider <code>Class</code> and <code>Age</code> on surviving.</p>
-<div class="sourceCode" id="cb383"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb383-1"><a href="statistical-odds.html#cb383-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ftable</span>(<span class="fu">xtabs</span>( <span class="sc">~</span> Class <span class="sc">+</span> Age <span class="sc">+</span> Survived, <span class="at">data=</span>titanic))</span></code></pre></div>
+<div class="sourceCode" id="cb386"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb386-1"><a href="statistical-odds.html#cb386-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ftable</span>(<span class="fu">xtabs</span>( <span class="sc">~</span> Class <span class="sc">+</span> Age <span class="sc">+</span> Survived, <span class="at">data=</span>titanic))</span></code></pre></div>
 <pre><code>##             Survived  No Yes
 ## Class Age                   
 ## 1     Adult          122 197
@@ -505,7 +505,7 @@ Here, we see a random female passenger had greater than a <span class="math inli
 ##       Child            0   0</code></pre>
 <p>We can see that being a child in first or second class turned out fairly well. The third class children did not survive at as higher of a frequency.</p>
 <p>Similarly we can explore other interactions.</p>
-<div class="sourceCode" id="cb385"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb385-1"><a href="statistical-odds.html#cb385-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ftable</span>(<span class="fu">xtabs</span>( <span class="sc">~</span> Class <span class="sc">+</span> Gender <span class="sc">+</span> Survived, <span class="at">data=</span>titanic))</span></code></pre></div>
+<div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb388-1"><a href="statistical-odds.html#cb388-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ftable</span>(<span class="fu">xtabs</span>( <span class="sc">~</span> Class <span class="sc">+</span> Gender <span class="sc">+</span> Survived, <span class="at">data=</span>titanic))</span></code></pre></div>
 <pre><code>##              Survived  No Yes
 ## Class Gender                 
 ## 1     Female            4 141
@@ -516,7 +516,7 @@ Here, we see a random female passenger had greater than a <span class="math inli
 ##       Male            422  88
 ## Crew  Female            3  20
 ##       Male            670 192</code></pre>
-<div class="sourceCode" id="cb387"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb387-1"><a href="statistical-odds.html#cb387-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ftable</span>(<span class="fu">xtabs</span>( <span class="sc">~</span> Age <span class="sc">+</span> Gender <span class="sc">+</span> Survived, <span class="at">data=</span>titanic))</span></code></pre></div>
+<div class="sourceCode" id="cb390"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb390-1"><a href="statistical-odds.html#cb390-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ftable</span>(<span class="fu">xtabs</span>( <span class="sc">~</span> Age <span class="sc">+</span> Gender <span class="sc">+</span> Survived, <span class="at">data=</span>titanic))</span></code></pre></div>
 <pre><code>##              Survived   No  Yes
 ## Age   Gender                   
 ## Adult Female           109  316
@@ -524,7 +524,7 @@ Here, we see a random female passenger had greater than a <span class="math inli
 ## Child Female            17   28
 ##       Male              35   29</code></pre>
 <p>Lastly, we can do a full interaction between all the variables</p>
-<div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb389-1"><a href="statistical-odds.html#cb389-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ftable</span>(<span class="fu">xtabs</span>( <span class="sc">~</span> Class <span class="sc">+</span> Age <span class="sc">+</span> Gender <span class="sc">+</span> Survived, <span class="at">data=</span>titanic))</span></code></pre></div>
+<div class="sourceCode" id="cb392"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb392-1"><a href="statistical-odds.html#cb392-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ftable</span>(<span class="fu">xtabs</span>( <span class="sc">~</span> Class <span class="sc">+</span> Age <span class="sc">+</span> Gender <span class="sc">+</span> Survived, <span class="at">data=</span>titanic))</span></code></pre></div>
 <pre><code>##                    Survived  No Yes
 ## Class Age   Gender                 
 ## 1     Adult Female            4 140
