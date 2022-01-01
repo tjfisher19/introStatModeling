@@ -20,6 +20,9 @@ fig:ch2-11
 fig:ch2-13
 fig:ch2-17
 fig:ch2-19
+fig:ch3-field
+fig:ch3-field-random
+fig:ch3-field-block
 fig:ch3-3
 fig:ch3-4
 fig:ch3-5a

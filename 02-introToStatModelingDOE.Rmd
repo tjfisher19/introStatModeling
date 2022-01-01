@@ -549,7 +549,7 @@ Lastly, the Normality assumption tends to not be all that important except in sm
 In general, independence (or lack thereof) is the result of the sampling scheme employed during data collection. 
 If you collect your data according to a well designed experiment or a simple random sampling scheme with one observation per subject, there is usually no reason to suspect you will have a problem. 
 Data collected sequentially in time (e.g., daily high temperatures or repeated measures on the same subject) will exhibit a phenomenon known as autocorrelation (or serial correlation) and is a major problem!
-Specialized methods are needed for this type of data (see \@ref(within-subject-designs)).
+Specialized methods are needed for this type of data (see Section \@ref(within-subject-designs)).
 
 
 

@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Hughes and Thomas Fisher" />
 
 
-<meta name="date" content="2021-12-25" />
+<meta name="date" content="2021-12-31" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -424,8 +424,8 @@ E[Y] = \mu = \lambda = e^{\beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_k
 <div id="example---tropical-cyclone-counts-in-the-north-atlantic" class="section level3" number="13.1.3">
 <h3><span class="header-section-number">13.1.3</span> Example - Tropical Cyclone Counts in the North Atlantic</h3>
 <p>A tropical cyclone is a rapidly rotating storm system characterized by a low-pressure center, a closed low-level atmospheric circulation, strong winds, and a spiral arrangement of thunderstorms that produce heavy rain. Depending on its location and strength, a tropical cyclone is referred to by different names, including hurricane, typhoon, tropical storm, cyclonic storm, tropical depression, and simply cyclone. A hurricane or tropical storm is a tropical cyclone that occurs in the Atlantic Ocean and northeastern Pacific Ocean, and a typhoon occurs in the northwestern Pacific Ocean; while in the south Pacific or Indian Ocean, comparable storms are referred to simply as “tropical cyclones” or “severe cyclonic storms.” We will consider the tropical cyclone record for the North Atlantic Basin.</p>
-<div class="sourceCode" id="cb424"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb424-1"><a href="generalized-linear-models.html#cb424-1" aria-hidden="true" tabindex="-1"></a>atlantic <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;atlanticCycloneRecord.csv&quot;</span>)</span>
-<span id="cb424-2"><a href="generalized-linear-models.html#cb424-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(atlantic)</span></code></pre></div>
+<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb422-1"><a href="generalized-linear-models.html#cb422-1" aria-hidden="true" tabindex="-1"></a>atlantic <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;atlanticCycloneRecord.csv&quot;</span>)</span>
+<span id="cb422-2"><a href="generalized-linear-models.html#cb422-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(atlantic)</span></code></pre></div>
 <pre><code>##   Year TS H1 H2 H3 H4 H5
 ## 1 1851  3  2  0  1  0  0
 ## 2 1852  0  3  1  1  0  0
@@ -433,7 +433,7 @@ E[Y] = \mu = \lambda = e^{\beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_k
 ## 4 1854  2  1  1  1  0  0
 ## 5 1855  1  1  2  1  0  0
 ## 6 1856  2  2  0  1  1  0</code></pre>
-<div class="sourceCode" id="cb426"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb426-1"><a href="generalized-linear-models.html#cb426-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(atlantic)</span></code></pre></div>
+<div class="sourceCode" id="cb424"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb424-1"><a href="generalized-linear-models.html#cb424-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(atlantic)</span></code></pre></div>
 <pre><code>##     Year TS H1 H2 H3 H4 H5
 ## 162 2012  9  5  3  2  0  0
 ## 163 2013 12  2  0  0  0  0
@@ -445,9 +445,9 @@ E[Y] = \mu = \lambda = e^{\beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_k
 <p>The answer to this question is a complex problem that cannot but tackled in a single textbook example but we will look at the simple case of modeling the number of storms (we are not concentrating on storm intensity or accumulated cyclone energy) and determined if 2017 seemed abnormal. In particular, we will consider the Southern Oscillation Index (SOI) as a predictor variable on trypical cyclone counts. The SOI is a standardized index based on the observed sea level pressure differences between Tahiti and Darwin, Australia. The SOI is one measure of the large-scale fluctuations in air pressure occurring between the western and eastern tropical Pacific (i.e., the state of the Southern Oscillation) during El Niño and La Niña episodes. In general, smoothed time series of the SOI correspond very well with changes in ocean temperatures across the eastern tropical Pacific. The negative phase of the SOI represents below-normal air pressure at Tahiti and above-normal air pressure at Darwin. Prolonged periods of negative (positive) SOI values coincide with abnormally warm (cold) ocean waters across the eastern tropical Pacific typical of El Niño (La Niña) episodes.</p>
 <p>We will attempt to tackle the question of whether the SOI predict cyclone counts.</p>
 <p>We begin by creating a total storm count variable</p>
-<div class="sourceCode" id="cb428"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb428-1"><a href="generalized-linear-models.html#cb428-1" aria-hidden="true" tabindex="-1"></a>atlantic <span class="ot">&lt;-</span> atlantic <span class="sc">%&gt;%</span></span>
-<span id="cb428-2"><a href="generalized-linear-models.html#cb428-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Storms=</span>TS<span class="sc">+</span>H1<span class="sc">+</span>H2<span class="sc">+</span>H3<span class="sc">+</span>H4<span class="sc">+</span>H5)</span>
-<span id="cb428-3"><a href="generalized-linear-models.html#cb428-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(atlantic)</span></code></pre></div>
+<div class="sourceCode" id="cb426"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb426-1"><a href="generalized-linear-models.html#cb426-1" aria-hidden="true" tabindex="-1"></a>atlantic <span class="ot">&lt;-</span> atlantic <span class="sc">%&gt;%</span></span>
+<span id="cb426-2"><a href="generalized-linear-models.html#cb426-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Storms=</span>TS<span class="sc">+</span>H1<span class="sc">+</span>H2<span class="sc">+</span>H3<span class="sc">+</span>H4<span class="sc">+</span>H5)</span>
+<span id="cb426-3"><a href="generalized-linear-models.html#cb426-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(atlantic)</span></code></pre></div>
 <pre><code>##     Year TS H1 H2 H3 H4 H5 Storms
 ## 162 2012  9  5  3  2  0  0     19
 ## 163 2013 12  2  0  0  0  0     14
@@ -457,16 +457,16 @@ E[Y] = \mu = \lambda = e^{\beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_k
 ## 167 2017  7  2  2  2  2  2     17</code></pre>
 <p>The variable <code>Storms</code> is the total number of tropical storms and hurricanes in a given year.
 Let’s plot the storm counts in time to look at the historic record.</p>
-<div class="sourceCode" id="cb430"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb430-1"><a href="generalized-linear-models.html#cb430-1" aria-hidden="true" tabindex="-1"></a>df.annotate <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Year=</span><span class="fu">c</span>(<span class="dv">1930</span>,<span class="dv">1960</span>),</span>
-<span id="cb430-2"><a href="generalized-linear-models.html#cb430-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">y=</span><span class="fu">rep</span>(<span class="dv">23</span>,<span class="dv">2</span>),</span>
-<span id="cb430-3"><a href="generalized-linear-models.html#cb430-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">labs=</span><span class="fu">c</span>(<span class="st">&quot;1930&quot;</span>, <span class="st">&quot;1960&quot;</span>))</span>
-<span id="cb430-4"><a href="generalized-linear-models.html#cb430-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(atlantic) <span class="sc">+</span></span>
-<span id="cb430-5"><a href="generalized-linear-models.html#cb430-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="fu">c</span>(<span class="dv">1930</span>,<span class="dv">1960</span>), <span class="at">col=</span><span class="st">&quot;royalblue&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb430-6"><a href="generalized-linear-models.html#cb430-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data=</span>df.annotate, <span class="fu">aes</span>(<span class="at">x=</span>Year, <span class="at">y=</span>y, <span class="at">label=</span>labs), <span class="at">angle=</span><span class="dv">90</span>, <span class="at">nudge_x=</span><span class="sc">-</span><span class="fl">2.5</span>, <span class="at">col=</span><span class="st">&quot;royalblue&quot;</span>) <span class="sc">+</span></span>
-<span id="cb430-7"><a href="generalized-linear-models.html#cb430-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span>Year, <span class="at">y=</span>Storms), <span class="at">col=</span><span class="st">&quot;gray50&quot;</span>) <span class="sc">+</span></span>
-<span id="cb430-8"><a href="generalized-linear-models.html#cb430-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>Year, <span class="at">y=</span>Storms) ) <span class="sc">+</span></span>
-<span id="cb430-9"><a href="generalized-linear-models.html#cb430-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;North Atlantic Tropical Cyclone Storm Counts&quot;</span>) <span class="sc">+</span></span>
-<span id="cb430-10"><a href="generalized-linear-models.html#cb430-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb428"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb428-1"><a href="generalized-linear-models.html#cb428-1" aria-hidden="true" tabindex="-1"></a>df.annotate <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Year=</span><span class="fu">c</span>(<span class="dv">1930</span>,<span class="dv">1960</span>),</span>
+<span id="cb428-2"><a href="generalized-linear-models.html#cb428-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">y=</span><span class="fu">rep</span>(<span class="dv">23</span>,<span class="dv">2</span>),</span>
+<span id="cb428-3"><a href="generalized-linear-models.html#cb428-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">labs=</span><span class="fu">c</span>(<span class="st">&quot;1930&quot;</span>, <span class="st">&quot;1960&quot;</span>))</span>
+<span id="cb428-4"><a href="generalized-linear-models.html#cb428-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(atlantic) <span class="sc">+</span></span>
+<span id="cb428-5"><a href="generalized-linear-models.html#cb428-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="fu">c</span>(<span class="dv">1930</span>,<span class="dv">1960</span>), <span class="at">col=</span><span class="st">&quot;royalblue&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb428-6"><a href="generalized-linear-models.html#cb428-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data=</span>df.annotate, <span class="fu">aes</span>(<span class="at">x=</span>Year, <span class="at">y=</span>y, <span class="at">label=</span>labs), <span class="at">angle=</span><span class="dv">90</span>, <span class="at">nudge_x=</span><span class="sc">-</span><span class="fl">2.5</span>, <span class="at">col=</span><span class="st">&quot;royalblue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb428-7"><a href="generalized-linear-models.html#cb428-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span>Year, <span class="at">y=</span>Storms), <span class="at">col=</span><span class="st">&quot;gray50&quot;</span>) <span class="sc">+</span></span>
+<span id="cb428-8"><a href="generalized-linear-models.html#cb428-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>Year, <span class="at">y=</span>Storms) ) <span class="sc">+</span></span>
+<span id="cb428-9"><a href="generalized-linear-models.html#cb428-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;North Atlantic Tropical Cyclone Storm Counts&quot;</span>) <span class="sc">+</span></span>
+<span id="cb428-10"><a href="generalized-linear-models.html#cb428-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
 <p><img src="introStatModeling_files/figure-html/13.3-1.png" width="672" /></p>
 <p>In our plot we have the number of tropical cyclones per year with 1930 and 1960 highlighted for the following reasons:
 Overall we see some distinct change in the record (highlighted by blue vertical lines).</p>
@@ -475,16 +475,16 @@ Overall we see some distinct change in the record (highlighted by blue vertical 
 <li>Circa 1960 - Satellites! Since the early 1960s we have eyes on the ocean all the time. Counts after 1960 are considered much more reliable.</li>
 </ul>
 <p>Thus we remove all data before 1961 and calculate some summary statistics</p>
-<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb431-1"><a href="generalized-linear-models.html#cb431-1" aria-hidden="true" tabindex="-1"></a>atlantic <span class="ot">&lt;-</span> atlantic <span class="sc">%&gt;%</span> </span>
-<span id="cb431-2"><a href="generalized-linear-models.html#cb431-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Year<span class="sc">&gt;</span><span class="dv">1960</span>)</span>
-<span id="cb431-3"><a href="generalized-linear-models.html#cb431-3" aria-hidden="true" tabindex="-1"></a>atlantic <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">Avg.Storm =</span> <span class="fu">mean</span>(Storms),</span>
-<span id="cb431-4"><a href="generalized-linear-models.html#cb431-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">Var.Storm =</span> <span class="fu">var</span>(Storms))</span></code></pre></div>
+<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="generalized-linear-models.html#cb429-1" aria-hidden="true" tabindex="-1"></a>atlantic <span class="ot">&lt;-</span> atlantic <span class="sc">%&gt;%</span> </span>
+<span id="cb429-2"><a href="generalized-linear-models.html#cb429-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Year<span class="sc">&gt;</span><span class="dv">1960</span>)</span>
+<span id="cb429-3"><a href="generalized-linear-models.html#cb429-3" aria-hidden="true" tabindex="-1"></a>atlantic <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">Avg.Storm =</span> <span class="fu">mean</span>(Storms),</span>
+<span id="cb429-4"><a href="generalized-linear-models.html#cb429-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">Var.Storm =</span> <span class="fu">var</span>(Storms))</span></code></pre></div>
 <pre><code>##   Avg.Storm Var.Storm
 ## 1    11.614   19.9555</code></pre>
 <p>We note that on average there are 11.6 storms per year with a variance of near 20. We have some indication that maybe our response variable suffers from overdispersion, we will revisit that a little later.</p>
 <p>Now we load in the SOI data.</p>
-<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb433-1"><a href="generalized-linear-models.html#cb433-1" aria-hidden="true" tabindex="-1"></a>soi <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;soi.txt&quot;</span>, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
-<span id="cb433-2"><a href="generalized-linear-models.html#cb433-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(soi)</span></code></pre></div>
+<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb431-1"><a href="generalized-linear-models.html#cb431-1" aria-hidden="true" tabindex="-1"></a>soi <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;soi.txt&quot;</span>, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
+<span id="cb431-2"><a href="generalized-linear-models.html#cb431-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(soi)</span></code></pre></div>
 <pre><code>##   YEAR  JAN  FEB  MAR  APR  MAY JUN  JUL  AUG  SEP  OCT  NOV  DEC
 ## 1 1951  1.5  0.9 -0.1 -0.3 -0.7 0.2 -1.0 -0.2 -1.1 -1.0 -0.8 -0.7
 ## 2 1952 -0.9 -0.6  0.5 -0.2  0.8 0.7  0.5  0.1 -0.2  0.4  0.0 -1.2
@@ -494,12 +494,12 @@ Overall we see some distinct change in the record (highlighted by blue vertical 
 ## 6 1956  1.3  1.6  1.3  0.9  1.4 1.1  1.1  1.2  0.1  1.8  0.2  1.1</code></pre>
 <p>Since our storm counts are by year we need a single SOI value per year. The North Atlantic “Hurricane Season” is June through November, so we will consider the mean SOI value in those months. We will create the new variable using material from Chapter 1.</p>
 <p>We take the SOI data and <code>group_by</code> <code>YEAR</code>. Then within a given year we calculate the mean SOI level for June, July, August, September, October and November. Lastly we select the variables of interest for our analysis and rename <code>YEAR</code> to <code>Year</code> (thus matching the cyclone counts).</p>
-<div class="sourceCode" id="cb435"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb435-1"><a href="generalized-linear-models.html#cb435-1" aria-hidden="true" tabindex="-1"></a>soi <span class="ot">&lt;-</span> soi <span class="sc">%&gt;%</span></span>
-<span id="cb435-2"><a href="generalized-linear-models.html#cb435-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(YEAR) <span class="sc">%&gt;%</span></span>
-<span id="cb435-3"><a href="generalized-linear-models.html#cb435-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SOI =</span> <span class="fu">mean</span>(<span class="fu">c</span>(JUN,JUL,AUG,SEP,OCT,NOV)) ) <span class="sc">%&gt;%</span></span>
-<span id="cb435-4"><a href="generalized-linear-models.html#cb435-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(YEAR, SOI) <span class="sc">%&gt;%</span></span>
-<span id="cb435-5"><a href="generalized-linear-models.html#cb435-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Year=</span>YEAR)</span>
-<span id="cb435-6"><a href="generalized-linear-models.html#cb435-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(soi)</span></code></pre></div>
+<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb433-1"><a href="generalized-linear-models.html#cb433-1" aria-hidden="true" tabindex="-1"></a>soi <span class="ot">&lt;-</span> soi <span class="sc">%&gt;%</span></span>
+<span id="cb433-2"><a href="generalized-linear-models.html#cb433-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(YEAR) <span class="sc">%&gt;%</span></span>
+<span id="cb433-3"><a href="generalized-linear-models.html#cb433-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SOI =</span> <span class="fu">mean</span>(<span class="fu">c</span>(JUN,JUL,AUG,SEP,OCT,NOV)) ) <span class="sc">%&gt;%</span></span>
+<span id="cb433-4"><a href="generalized-linear-models.html#cb433-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(YEAR, SOI) <span class="sc">%&gt;%</span></span>
+<span id="cb433-5"><a href="generalized-linear-models.html#cb433-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Year=</span>YEAR)</span>
+<span id="cb433-6"><a href="generalized-linear-models.html#cb433-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(soi)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 2
 ## # Groups:   Year [6]
 ##    Year     SOI
@@ -512,10 +512,10 @@ Overall we see some distinct change in the record (highlighted by blue vertical 
 ## 6  2017  0.55</code></pre>
 <p>Now we need to combine our Atlantic Hurricane data with the SOI measures. Essentially we want to <em>join</em> or <em>merge</em> the two datasets linking observations by Year. For those who know SQL, this is a common operation known as a <code>join</code>. R includes several functions to do this. Today we will use an <code>inner_join</code> so only rows with a common year between the two datasets will be included.</p>
 <p>First we select the necessary variables form the <code>atlantic</code> dataset and then <code>inner_join</code> it with the SOI.</p>
-<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb437-1"><a href="generalized-linear-models.html#cb437-1" aria-hidden="true" tabindex="-1"></a>atlantic <span class="ot">&lt;-</span> atlantic <span class="sc">%&gt;%</span></span>
-<span id="cb437-2"><a href="generalized-linear-models.html#cb437-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Year, Storms)</span>
-<span id="cb437-3"><a href="generalized-linear-models.html#cb437-3" aria-hidden="true" tabindex="-1"></a>combine <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(atlantic, soi, <span class="at">by=</span><span class="st">&quot;Year&quot;</span>)</span>
-<span id="cb437-4"><a href="generalized-linear-models.html#cb437-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(combine)</span></code></pre></div>
+<div class="sourceCode" id="cb435"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb435-1"><a href="generalized-linear-models.html#cb435-1" aria-hidden="true" tabindex="-1"></a>atlantic <span class="ot">&lt;-</span> atlantic <span class="sc">%&gt;%</span></span>
+<span id="cb435-2"><a href="generalized-linear-models.html#cb435-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Year, Storms)</span>
+<span id="cb435-3"><a href="generalized-linear-models.html#cb435-3" aria-hidden="true" tabindex="-1"></a>combine <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(atlantic, soi, <span class="at">by=</span><span class="st">&quot;Year&quot;</span>)</span>
+<span id="cb435-4"><a href="generalized-linear-models.html#cb435-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(combine)</span></code></pre></div>
 <pre><code>##   Year Storms       SOI
 ## 1 1961     11  0.133333
 ## 2 1962      5  0.516667
@@ -523,7 +523,7 @@ Overall we see some distinct change in the record (highlighted by blue vertical 
 ## 4 1964     12  0.950000
 ## 5 1965      6 -1.133333
 ## 6 1966     11  0.116667</code></pre>
-<div class="sourceCode" id="cb439"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb439-1"><a href="generalized-linear-models.html#cb439-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(combine)</span></code></pre></div>
+<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb437-1"><a href="generalized-linear-models.html#cb437-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(combine)</span></code></pre></div>
 <pre><code>##    Year Storms        SOI
 ## 52 2012     19  0.0333333
 ## 53 2013     14  0.5166667
@@ -533,20 +533,20 @@ Overall we see some distinct change in the record (highlighted by blue vertical 
 ## 57 2017     17  0.5500000</code></pre>
 <p>Let’s plot our response variable <code>Storms</code> against our predictor variable <code>Yearly.SOI</code>. Here we use some extra features in <code>ggplot</code> to highlight 2017</p>
 <p>First we create a variable called <code>Highlight</code> if the year is 2017. Then we save another dataset with just that observation so we can annotate the point with text. We use the aesthetic option <code>color</code> to highlight 2017 as a different color.</p>
-<div class="sourceCode" id="cb441"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb441-1"><a href="generalized-linear-models.html#cb441-1" aria-hidden="true" tabindex="-1"></a>combine <span class="ot">&lt;-</span> combine <span class="sc">%&gt;%</span></span>
-<span id="cb441-2"><a href="generalized-linear-models.html#cb441-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Highlight =</span> <span class="fu">ifelse</span>(Year<span class="sc">==</span><span class="dv">2017</span>, <span class="st">&quot;highlight&quot;</span>, <span class="st">&quot;normal&quot;</span>))</span>
-<span id="cb441-3"><a href="generalized-linear-models.html#cb441-3" aria-hidden="true" tabindex="-1"></a>recent<span class="fl">.2017</span> <span class="ot">&lt;-</span> combine <span class="sc">%&gt;%</span></span>
-<span id="cb441-4"><a href="generalized-linear-models.html#cb441-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Year<span class="sc">==</span><span class="dv">2017</span>)</span>
-<span id="cb441-5"><a href="generalized-linear-models.html#cb441-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(combine) <span class="sc">+</span> </span>
-<span id="cb441-6"><a href="generalized-linear-models.html#cb441-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>SOI, <span class="at">y=</span>Storms, <span class="at">color=</span>Highlight)) <span class="sc">+</span> </span>
-<span id="cb441-7"><a href="generalized-linear-models.html#cb441-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="st">&quot;Status&quot;</span>, <span class="at">values=</span><span class="fu">c</span>(<span class="st">&quot;highlight&quot;</span><span class="ot">=</span><span class="st">&quot;red&quot;</span>, <span class="st">&quot;normal&quot;</span><span class="ot">=</span><span class="st">&quot;black&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb441-8"><a href="generalized-linear-models.html#cb441-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data=</span>recent<span class="fl">.2017</span>, <span class="fu">aes</span>(<span class="at">x=</span>SOI<span class="sc">*</span><span class="fl">1.05</span>, <span class="at">y=</span>Storms<span class="sc">*</span><span class="fl">1.05</span>, <span class="at">label=</span><span class="st">&quot;2017&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb441-9"><a href="generalized-linear-models.html#cb441-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb441-10"><a href="generalized-linear-models.html#cb441-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb439"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb439-1"><a href="generalized-linear-models.html#cb439-1" aria-hidden="true" tabindex="-1"></a>combine <span class="ot">&lt;-</span> combine <span class="sc">%&gt;%</span></span>
+<span id="cb439-2"><a href="generalized-linear-models.html#cb439-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Highlight =</span> <span class="fu">ifelse</span>(Year<span class="sc">==</span><span class="dv">2017</span>, <span class="st">&quot;highlight&quot;</span>, <span class="st">&quot;normal&quot;</span>))</span>
+<span id="cb439-3"><a href="generalized-linear-models.html#cb439-3" aria-hidden="true" tabindex="-1"></a>recent<span class="fl">.2017</span> <span class="ot">&lt;-</span> combine <span class="sc">%&gt;%</span></span>
+<span id="cb439-4"><a href="generalized-linear-models.html#cb439-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Year<span class="sc">==</span><span class="dv">2017</span>)</span>
+<span id="cb439-5"><a href="generalized-linear-models.html#cb439-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(combine) <span class="sc">+</span> </span>
+<span id="cb439-6"><a href="generalized-linear-models.html#cb439-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>SOI, <span class="at">y=</span>Storms, <span class="at">color=</span>Highlight)) <span class="sc">+</span> </span>
+<span id="cb439-7"><a href="generalized-linear-models.html#cb439-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="st">&quot;Status&quot;</span>, <span class="at">values=</span><span class="fu">c</span>(<span class="st">&quot;highlight&quot;</span><span class="ot">=</span><span class="st">&quot;red&quot;</span>, <span class="st">&quot;normal&quot;</span><span class="ot">=</span><span class="st">&quot;black&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb439-8"><a href="generalized-linear-models.html#cb439-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data=</span>recent<span class="fl">.2017</span>, <span class="fu">aes</span>(<span class="at">x=</span>SOI<span class="sc">*</span><span class="fl">1.05</span>, <span class="at">y=</span>Storms<span class="sc">*</span><span class="fl">1.05</span>, <span class="at">label=</span><span class="st">&quot;2017&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb439-9"><a href="generalized-linear-models.html#cb439-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb439-10"><a href="generalized-linear-models.html#cb439-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
 <p><img src="introStatModeling_files/figure-html/13.8-1.png" width="672" /></p>
 <p>Visually we see that 2017 does not appear to be all that different compared to the other observations (think back to the ideas of leverage and influence – 2017 is in the middle of the pattern, not an outlier in any real way). We also see that the <code>Storms</code> appear to increase with a positive SOI value. Let’s test this with a poisson model; we use the <code>glm</code> function as before with logistic regression, but here we specify the family to be <code>poisson</code>.</p>
-<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="generalized-linear-models.html#cb442-1" aria-hidden="true" tabindex="-1"></a>storm.fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(Storms <span class="sc">~</span> SOI, <span class="at">data=</span>combine, <span class="at">family=</span>poisson)</span>
-<span id="cb442-2"><a href="generalized-linear-models.html#cb442-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(storm.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb440"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb440-1"><a href="generalized-linear-models.html#cb440-1" aria-hidden="true" tabindex="-1"></a>storm.fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(Storms <span class="sc">~</span> SOI, <span class="at">data=</span>combine, <span class="at">family=</span>poisson)</span>
+<span id="cb440-2"><a href="generalized-linear-models.html#cb440-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(storm.fit)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = Storms ~ SOI, family = poisson, data = combine)
@@ -575,19 +575,19 @@ Overall we see some distinct change in the record (highlighted by blue vertical 
 <p>The intercept of 2.42473 corresponds to <span class="math inline">\(\exp(2.42473)\)</span> = 11.299178 storms when the SOI value is 0.</p>
 <p>The slope term must be interpretation on a log scale. That is, <span class="math inline">\(2.42473+0.20502\times\)</span>(one unit of SOI) is a mean number of storm of 13.870302.</p>
 <p>We also note that the covariate predictor variable <code>SOI</code> is significant according to the Wald test (<span class="math inline">\(p\)</span>-value=0.000152). So we have evidence that SOI does in fact explain storm counts. Let’s look at the predictive ability of the model. First we will plot the fitted model against the data.</p>
-<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="generalized-linear-models.html#cb444-1" aria-hidden="true" tabindex="-1"></a>combine <span class="ot">&lt;-</span> combine <span class="sc">%&gt;%</span></span>
-<span id="cb444-2"><a href="generalized-linear-models.html#cb444-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Fitted =</span> <span class="fu">predict</span>(storm.fit, <span class="at">type=</span><span class="st">&quot;response&quot;</span>))</span>
-<span id="cb444-3"><a href="generalized-linear-models.html#cb444-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(combine) <span class="sc">+</span> </span>
-<span id="cb444-4"><a href="generalized-linear-models.html#cb444-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>SOI, <span class="at">y=</span>Storms)) <span class="sc">+</span> </span>
-<span id="cb444-5"><a href="generalized-linear-models.html#cb444-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span>SOI, <span class="at">y=</span>Fitted), <span class="at">col=</span><span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
-<span id="cb444-6"><a href="generalized-linear-models.html#cb444-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="generalized-linear-models.html#cb442-1" aria-hidden="true" tabindex="-1"></a>combine <span class="ot">&lt;-</span> combine <span class="sc">%&gt;%</span></span>
+<span id="cb442-2"><a href="generalized-linear-models.html#cb442-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Fitted =</span> <span class="fu">predict</span>(storm.fit, <span class="at">type=</span><span class="st">&quot;response&quot;</span>))</span>
+<span id="cb442-3"><a href="generalized-linear-models.html#cb442-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(combine) <span class="sc">+</span> </span>
+<span id="cb442-4"><a href="generalized-linear-models.html#cb442-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>SOI, <span class="at">y=</span>Storms)) <span class="sc">+</span> </span>
+<span id="cb442-5"><a href="generalized-linear-models.html#cb442-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span>SOI, <span class="at">y=</span>Fitted), <span class="at">col=</span><span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb442-6"><a href="generalized-linear-models.html#cb442-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
 <p><img src="introStatModeling_files/figure-html/13.10-1.png" width="672" /></p>
 <p>Note the slight curvature in the fitted “line” (recall the model is <span class="math inline">\(e^{\beta_0 + \beta_1 X_1}\)</span>). Using the model what doe we predict of 2017?</p>
-<div class="sourceCode" id="cb445"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb445-1"><a href="generalized-linear-models.html#cb445-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(storm.fit, <span class="at">newdata=</span>recent<span class="fl">.2017</span>, <span class="at">type=</span><span class="st">&quot;response&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="generalized-linear-models.html#cb443-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(storm.fit, <span class="at">newdata=</span>recent<span class="fl">.2017</span>, <span class="at">type=</span><span class="st">&quot;response&quot;</span>)</span></code></pre></div>
 <pre><code>##       1 
 ## 12.6479</code></pre>
 <p>Compared to the observed value of 17 we see that 2017 does appear to deviate from the predicted value. We may want to consider building an interval around this predicted value. To do this, we can tell the <code>predict</code> function to calculate a standard error for hte predicted value:</p>
-<div class="sourceCode" id="cb447"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb447-1"><a href="generalized-linear-models.html#cb447-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(storm.fit, <span class="at">newdata=</span>recent<span class="fl">.2017</span>, <span class="at">type=</span><span class="st">&quot;response&quot;</span>, <span class="at">se.fit=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb445"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb445-1"><a href="generalized-linear-models.html#cb445-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(storm.fit, <span class="at">newdata=</span>recent<span class="fl">.2017</span>, <span class="at">type=</span><span class="st">&quot;response&quot;</span>, <span class="at">se.fit=</span><span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## $fit
 ##       1 
 ## 12.6479 
@@ -603,8 +603,8 @@ Overall we see some distinct change in the record (highlighted by blue vertical 
 <div id="overdispersion" class="section level4" number="13.1.3.1">
 <h4><span class="header-section-number">13.1.3.1</span> Overdispersion</h4>
 <p>Let’s revisit the issue of overdispersion. Early we saw some indication of potential overdispersion in our data</p>
-<div class="sourceCode" id="cb449"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb449-1"><a href="generalized-linear-models.html#cb449-1" aria-hidden="true" tabindex="-1"></a>atlantic <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">Avg.Storm =</span> <span class="fu">mean</span>(Storms),</span>
-<span id="cb449-2"><a href="generalized-linear-models.html#cb449-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">Var.Storm =</span> <span class="fu">var</span>(Storms))</span></code></pre></div>
+<div class="sourceCode" id="cb447"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb447-1"><a href="generalized-linear-models.html#cb447-1" aria-hidden="true" tabindex="-1"></a>atlantic <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">Avg.Storm =</span> <span class="fu">mean</span>(Storms),</span>
+<span id="cb447-2"><a href="generalized-linear-models.html#cb447-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">Var.Storm =</span> <span class="fu">var</span>(Storms))</span></code></pre></div>
 <pre><code>##   Avg.Storm Var.Storm
 ## 1    11.614   19.9555</code></pre>
 <p>Here the variance appears to be nearly twice as big as the mean. However we must step back and realize this is BEFORE we fit our model. It is possible the covariate information (that is, the SOI variable) will explain some of this variability. A quick check for overdispersion in Poisson models is to compare the <code>Residual deviance</code> to its degrees of freedom. In the ideal situation, the ratio should be 1. In cases when it is much greater than 1 (typically a value of 2 or more is considered a problem), we have indication of overdispersion. Here we have the following output</p>
@@ -621,8 +621,8 @@ Overall we see some distinct change in the record (highlighted by blue vertical 
 <div id="example-attendnace-records" class="section level3" number="13.2.1">
 <h3><span class="header-section-number">13.2.1</span> Example – Attendnace Records</h3>
 <p>School administrators study the attendance behavior of high school juniors at two schools. Predictors of the number of days of absence include the type of program in which the student is enrolled and a standardized test in math. Attendance data on 314 high school juniors from two urban high schools in the file <code>attendance.RData</code>. The response variable of interest is days absent, <code>daysabs</code>. The variable <code>math</code> is the standardized math score for each student. The variable <code>prog</code> is a three-level nominal variable indicating the type of instructional program in which the student is enrolled (it is a factor but coded as a numeric).</p>
-<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="generalized-linear-models.html#cb452-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;attendance.RData&quot;</span>)</span>
-<span id="cb452-2"><a href="generalized-linear-models.html#cb452-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(attendance)</span></code></pre></div>
+<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb450-1"><a href="generalized-linear-models.html#cb450-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;attendance.RData&quot;</span>)</span>
+<span id="cb450-2"><a href="generalized-linear-models.html#cb450-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(attendance)</span></code></pre></div>
 <pre><code>## Rows: 314
 ## Columns: 5
 ## $ id      &lt;dbl&gt; 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 10~
@@ -631,11 +631,11 @@ Overall we see some distinct change in the record (highlighted by blue vertical 
 ## $ daysabs &lt;dbl&gt; 4, 4, 2, 3, 3, 13, 11, 7, 10, 9, 4, 5, 5, 6, 1, 0, 1, 0, 5, 24~
 ## $ prog    &lt;dbl&gt; 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 2, 2, 1, 3, 2, 2, 2, 1, 2, 2,~</code></pre>
 <p>As a first step we want to do a little data cleaning (making sure R properly handles the categorical variables). We add <code>labels</code> to the three <code>prog</code> levels and make <code>id</code> a factor.</p>
-<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb454-1"><a href="generalized-linear-models.html#cb454-1" aria-hidden="true" tabindex="-1"></a>attendance <span class="ot">&lt;-</span> attendance <span class="sc">%&gt;%</span></span>
-<span id="cb454-2"><a href="generalized-linear-models.html#cb454-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prog =</span> <span class="fu">factor</span>(prog, <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, </span>
-<span id="cb454-3"><a href="generalized-linear-models.html#cb454-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;General&quot;</span>, <span class="st">&quot;Academic&quot;</span>, <span class="st">&quot;Vocational&quot;</span>)),</span>
-<span id="cb454-4"><a href="generalized-linear-models.html#cb454-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">id =</span> <span class="fu">factor</span>(id) )</span>
-<span id="cb454-5"><a href="generalized-linear-models.html#cb454-5" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(attendance)</span></code></pre></div>
+<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="generalized-linear-models.html#cb452-1" aria-hidden="true" tabindex="-1"></a>attendance <span class="ot">&lt;-</span> attendance <span class="sc">%&gt;%</span></span>
+<span id="cb452-2"><a href="generalized-linear-models.html#cb452-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prog =</span> <span class="fu">factor</span>(prog, <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, </span>
+<span id="cb452-3"><a href="generalized-linear-models.html#cb452-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;General&quot;</span>, <span class="st">&quot;Academic&quot;</span>, <span class="st">&quot;Vocational&quot;</span>)),</span>
+<span id="cb452-4"><a href="generalized-linear-models.html#cb452-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">id =</span> <span class="fu">factor</span>(id) )</span>
+<span id="cb452-5"><a href="generalized-linear-models.html#cb452-5" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(attendance)</span></code></pre></div>
 <pre><code>## Rows: 314
 ## Columns: 5
 ## $ id      &lt;fct&gt; 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 10~
@@ -644,29 +644,29 @@ Overall we see some distinct change in the record (highlighted by blue vertical 
 ## $ daysabs &lt;dbl&gt; 4, 4, 2, 3, 3, 13, 11, 7, 10, 9, 4, 5, 5, 6, 1, 0, 1, 0, 5, 24~
 ## $ prog    &lt;fct&gt; Academic, Academic, Academic, Academic, Academic, Academic, Ac~</code></pre>
 <p>Now we graphically explore the data graphically. We build an advanced scatterplot where the shape of the points is determined by the gender and the color of the points is determined by the program.</p>
-<div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb456-1"><a href="generalized-linear-models.html#cb456-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(attendance) <span class="sc">+</span> </span>
-<span id="cb456-2"><a href="generalized-linear-models.html#cb456-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>math, <span class="at">y=</span>daysabs, <span class="at">color=</span>prog, <span class="at">shape=</span>gender)) <span class="sc">+</span> </span>
-<span id="cb456-3"><a href="generalized-linear-models.html#cb456-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb456-4"><a href="generalized-linear-models.html#cb456-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Standardized Math Score&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;Number of Days Absent&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb454-1"><a href="generalized-linear-models.html#cb454-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(attendance) <span class="sc">+</span> </span>
+<span id="cb454-2"><a href="generalized-linear-models.html#cb454-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>math, <span class="at">y=</span>daysabs, <span class="at">color=</span>prog, <span class="at">shape=</span>gender)) <span class="sc">+</span> </span>
+<span id="cb454-3"><a href="generalized-linear-models.html#cb454-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb454-4"><a href="generalized-linear-models.html#cb454-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Standardized Math Score&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;Number of Days Absent&quot;</span>)</span></code></pre></div>
 <p><img src="introStatModeling_files/figure-html/ch13.15-1.png" width="672" /></p>
 <p>It takes a minute to comprehend everything in this plot. Visually it is difficult to distinguish any differences in gender (shapes of the point). There does appear to be a relationship between attendance and the program (visually speaking “Vocational” and “Academic” appear to be lower on the days missed compared to “Gender”). We take a deeper dive at looking at these two categorical variables by comparing histograms.</p>
-<div class="sourceCode" id="cb457"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb457-1"><a href="generalized-linear-models.html#cb457-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(attendance) <span class="sc">+</span> </span>
-<span id="cb457-2"><a href="generalized-linear-models.html#cb457-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x=</span>daysabs), <span class="at">binwidth =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
-<span id="cb457-3"><a href="generalized-linear-models.html#cb457-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(gender<span class="sc">~</span>.) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;Days Absent&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb455"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb455-1"><a href="generalized-linear-models.html#cb455-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(attendance) <span class="sc">+</span> </span>
+<span id="cb455-2"><a href="generalized-linear-models.html#cb455-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x=</span>daysabs), <span class="at">binwidth =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb455-3"><a href="generalized-linear-models.html#cb455-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(gender<span class="sc">~</span>.) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;Days Absent&quot;</span>)</span></code></pre></div>
 <p><img src="introStatModeling_files/figure-html/ch13.16-1.png" width="672" /></p>
 <p>Here we see little difference between the number of days absent and gender (coincides with the scatterplot). Next we explore the relationship with the respective program.</p>
-<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="generalized-linear-models.html#cb458-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(attendance) <span class="sc">+</span> </span>
-<span id="cb458-2"><a href="generalized-linear-models.html#cb458-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x=</span>daysabs, <span class="at">fill=</span>prog), <span class="at">binwidth=</span><span class="dv">1</span>) <span class="sc">+</span> </span>
-<span id="cb458-3"><a href="generalized-linear-models.html#cb458-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(prog<span class="sc">~</span>., <span class="at">scales=</span><span class="st">&quot;free&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb458-4"><a href="generalized-linear-models.html#cb458-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Days Absent&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb456-1"><a href="generalized-linear-models.html#cb456-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(attendance) <span class="sc">+</span> </span>
+<span id="cb456-2"><a href="generalized-linear-models.html#cb456-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x=</span>daysabs, <span class="at">fill=</span>prog), <span class="at">binwidth=</span><span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb456-3"><a href="generalized-linear-models.html#cb456-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(prog<span class="sc">~</span>., <span class="at">scales=</span><span class="st">&quot;free&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb456-4"><a href="generalized-linear-models.html#cb456-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Days Absent&quot;</span>)</span></code></pre></div>
 <p><img src="introStatModeling_files/figure-html/ch13.17-1.png" width="672" /></p>
 <p>Here we see three distinct shapes in the historgrams. For the “General” program it is fairly uniformly distributed (compared to the other two) with all recorded students having several days abseent. For “Academic” and “Vocational” we see more a decay type shape (also sometimes known as a Pareto shape). The “Academic” program definitely has more days absent compare to the “Vocational” program.</p>
 </div>
 <div id="incorrect-poisson-model" class="section level3" number="13.2.2">
 <h3><span class="header-section-number">13.2.2</span> Incorrect Poisson Model</h3>
 <p>We have a count response variable and previously we learned about Poisson regression so let’s attempt to fit that model.</p>
-<div class="sourceCode" id="cb459"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb459-1"><a href="generalized-linear-models.html#cb459-1" aria-hidden="true" tabindex="-1"></a>attend.pois <span class="ot">&lt;-</span> <span class="fu">glm</span>(daysabs <span class="sc">~</span> math <span class="sc">+</span> gender <span class="sc">+</span> prog, <span class="at">data=</span>attendance, <span class="at">family=</span>poisson)</span>
-<span id="cb459-2"><a href="generalized-linear-models.html#cb459-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(attend.pois)</span></code></pre></div>
+<div class="sourceCode" id="cb457"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb457-1"><a href="generalized-linear-models.html#cb457-1" aria-hidden="true" tabindex="-1"></a>attend.pois <span class="ot">&lt;-</span> <span class="fu">glm</span>(daysabs <span class="sc">~</span> math <span class="sc">+</span> gender <span class="sc">+</span> prog, <span class="at">data=</span>attendance, <span class="at">family=</span>poisson)</span>
+<span id="cb457-2"><a href="generalized-linear-models.html#cb457-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(attend.pois)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = daysabs ~ math + gender + prog, family = poisson, 
@@ -699,8 +699,8 @@ Overall we see some distinct change in the record (highlighted by blue vertical 
 <div id="a-quasi-poisson-approach" class="section level3" number="13.2.3">
 <h3><span class="header-section-number">13.2.3</span> A quasi-Poisson approach</h3>
 <p>We now fit a Quasi-Poisson model to the data.</p>
-<div class="sourceCode" id="cb461"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb461-1"><a href="generalized-linear-models.html#cb461-1" aria-hidden="true" tabindex="-1"></a>attend.qpois <span class="ot">&lt;-</span> <span class="fu">glm</span>(daysabs <span class="sc">~</span> math <span class="sc">+</span> gender <span class="sc">+</span> prog, <span class="at">data=</span>attendance, <span class="at">family=</span>quasipoisson)</span>
-<span id="cb461-2"><a href="generalized-linear-models.html#cb461-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(attend.qpois)</span></code></pre></div>
+<div class="sourceCode" id="cb459"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb459-1"><a href="generalized-linear-models.html#cb459-1" aria-hidden="true" tabindex="-1"></a>attend.qpois <span class="ot">&lt;-</span> <span class="fu">glm</span>(daysabs <span class="sc">~</span> math <span class="sc">+</span> gender <span class="sc">+</span> prog, <span class="at">data=</span>attendance, <span class="at">family=</span>quasipoisson)</span>
+<span id="cb459-2"><a href="generalized-linear-models.html#cb459-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(attend.qpois)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = daysabs ~ math + gender + prog, family = quasipoisson, 
@@ -734,9 +734,9 @@ Overall we see some distinct change in the record (highlighted by blue vertical 
 <h3><span class="header-section-number">13.2.4</span> Fitting a Negative Binomial regression</h3>
 <p>The negative binomial model is sometimes considered to be more of a <em>direct</em> model for overdispersed data. That is, the Negative Binomial distribution allows for a larger variance than the mean whereas Quasi-Poisson is a fix to Poisson regression.
 To fit a negative binomial model we use the <code>glm.nb()</code> function in the <code>MASS</code> package. The function largely works the same as <code>lm</code> and <code>glm</code>. Below we fit the full model</p>
-<div class="sourceCode" id="cb463"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb463-1"><a href="generalized-linear-models.html#cb463-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
-<span id="cb463-2"><a href="generalized-linear-models.html#cb463-2" aria-hidden="true" tabindex="-1"></a>attend.negbin1 <span class="ot">&lt;-</span> <span class="fu">glm.nb</span>(daysabs <span class="sc">~</span> math <span class="sc">+</span> gender <span class="sc">+</span> prog, <span class="at">data=</span>attendance)</span>
-<span id="cb463-3"><a href="generalized-linear-models.html#cb463-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(attend.negbin1)</span></code></pre></div>
+<div class="sourceCode" id="cb461"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb461-1"><a href="generalized-linear-models.html#cb461-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb461-2"><a href="generalized-linear-models.html#cb461-2" aria-hidden="true" tabindex="-1"></a>attend.negbin1 <span class="ot">&lt;-</span> <span class="fu">glm.nb</span>(daysabs <span class="sc">~</span> math <span class="sc">+</span> gender <span class="sc">+</span> prog, <span class="at">data=</span>attendance)</span>
+<span id="cb461-3"><a href="generalized-linear-models.html#cb461-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(attend.negbin1)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm.nb(formula = daysabs ~ math + gender + prog, data = attendance, 
@@ -782,8 +782,8 @@ To fit a negative binomial model we use the <code>glm.nb()</code> function in th
 <div id="infererence-on-predictor-variables" class="section level3" number="13.2.6">
 <h3><span class="header-section-number">13.2.6</span> Infererence on predictor variables</h3>
 <p>Using the negative binomial regression model, we see that the <code>gender</code> variable does not appear significant. Let’s fit a reduced model:</p>
-<div class="sourceCode" id="cb465"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb465-1"><a href="generalized-linear-models.html#cb465-1" aria-hidden="true" tabindex="-1"></a>attend.negbin2 <span class="ot">&lt;-</span> <span class="fu">glm.nb</span>(daysabs <span class="sc">~</span> math <span class="sc">+</span> prog, <span class="at">data=</span>attendance)</span>
-<span id="cb465-2"><a href="generalized-linear-models.html#cb465-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(attend.negbin2)</span></code></pre></div>
+<div class="sourceCode" id="cb463"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb463-1"><a href="generalized-linear-models.html#cb463-1" aria-hidden="true" tabindex="-1"></a>attend.negbin2 <span class="ot">&lt;-</span> <span class="fu">glm.nb</span>(daysabs <span class="sc">~</span> math <span class="sc">+</span> prog, <span class="at">data=</span>attendance)</span>
+<span id="cb463-2"><a href="generalized-linear-models.html#cb463-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(attend.negbin2)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm.nb(formula = daysabs ~ math + prog, data = attendance, init.theta = 1.032713156, 
@@ -816,7 +816,7 @@ To fit a negative binomial model we use the <code>glm.nb()</code> function in th
 ## 
 ##  2 x log-likelihood:  -1731.258</code></pre>
 <p>We note that residual deviance has actually decreased in this reduced model! The other variables are still significant. We can formally test for significance with the <code>anova</code> function as we have before:</p>
-<div class="sourceCode" id="cb467"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb467-1"><a href="generalized-linear-models.html#cb467-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(attend.negbin1, attend.negbin2, <span class="at">test=</span><span class="st">&quot;Chisq&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb465"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb465-1"><a href="generalized-linear-models.html#cb465-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(attend.negbin1, attend.negbin2, <span class="at">test=</span><span class="st">&quot;Chisq&quot;</span>)</span></code></pre></div>
 <pre><code>## Likelihood ratio tests of Negative Binomial Models
 ## 
 ## Response: daysabs
@@ -831,20 +831,20 @@ To fit a negative binomial model we use the <code>glm.nb()</code> function in th
 <div id="plotting-fitted-model" class="section level3" number="13.2.7">
 <h3><span class="header-section-number">13.2.7</span> Plotting fitted model</h3>
 <p>Lastly, we will plot the fitted model. Even though the data used to fit the model is technically 5 dimensional (days absent, math score, and 3 factor values), since we only have two numeric terms, we can use aesthetic opions in <code>ggplot</code> to plot the chosen fitted model. We begin by creating some <em>fake</em> data that will results in a smooth fitted line:</p>
-<div class="sourceCode" id="cb469"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb469-1"><a href="generalized-linear-models.html#cb469-1" aria-hidden="true" tabindex="-1"></a>newdata2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb469-2"><a href="generalized-linear-models.html#cb469-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">math =</span> <span class="fu">rep</span>(<span class="fu">seq</span>(<span class="at">from =</span> <span class="fu">min</span>(attendance<span class="sc">$</span>math), </span>
-<span id="cb469-3"><a href="generalized-linear-models.html#cb469-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">to =</span> <span class="fu">max</span>(attendance<span class="sc">$</span>math), </span>
-<span id="cb469-4"><a href="generalized-linear-models.html#cb469-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">length.out =</span> <span class="dv">100</span>), <span class="dv">3</span>),</span>
-<span id="cb469-5"><a href="generalized-linear-models.html#cb469-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">prog =</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">each =</span> <span class="dv">100</span>), <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">labels =</span></span>
-<span id="cb469-6"><a href="generalized-linear-models.html#cb469-6" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">levels</span>(attendance<span class="sc">$</span>prog)))</span>
-<span id="cb469-7"><a href="generalized-linear-models.html#cb469-7" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(newdata2)</span></code></pre></div>
+<div class="sourceCode" id="cb467"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb467-1"><a href="generalized-linear-models.html#cb467-1" aria-hidden="true" tabindex="-1"></a>newdata2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb467-2"><a href="generalized-linear-models.html#cb467-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">math =</span> <span class="fu">rep</span>(<span class="fu">seq</span>(<span class="at">from =</span> <span class="fu">min</span>(attendance<span class="sc">$</span>math), </span>
+<span id="cb467-3"><a href="generalized-linear-models.html#cb467-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">to =</span> <span class="fu">max</span>(attendance<span class="sc">$</span>math), </span>
+<span id="cb467-4"><a href="generalized-linear-models.html#cb467-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">length.out =</span> <span class="dv">100</span>), <span class="dv">3</span>),</span>
+<span id="cb467-5"><a href="generalized-linear-models.html#cb467-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">prog =</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">each =</span> <span class="dv">100</span>), <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">labels =</span></span>
+<span id="cb467-6"><a href="generalized-linear-models.html#cb467-6" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">levels</span>(attendance<span class="sc">$</span>prog)))</span>
+<span id="cb467-7"><a href="generalized-linear-models.html#cb467-7" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(newdata2)</span></code></pre></div>
 <pre><code>## Rows: 300
 ## Columns: 2
 ## $ math &lt;dbl&gt; 1.00000, 1.98990, 2.97980, 3.96970, 4.95960, 5.94949, 6.93939, 7.~
 ## $ prog &lt;fct&gt; General, General, General, General, General, General, General, Ge~</code></pre>
 <p>You’ll note this dataset has 300 observations and the math scores range from 1 to 99 in small incremenets, repeating for each of the three factor levels in <code>prog</code>. We then use this data in the <code>predict</code> function. Here we specify the <code>type="resoibse"</code> so that output is in the original units.</p>
-<div class="sourceCode" id="cb471"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb471-1"><a href="generalized-linear-models.html#cb471-1" aria-hidden="true" tabindex="-1"></a>newdata3 <span class="ot">&lt;-</span> <span class="fu">predict</span>(attend.negbin2, newdata2, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>, <span class="at">se.fit=</span><span class="cn">TRUE</span>)</span>
-<span id="cb471-2"><a href="generalized-linear-models.html#cb471-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(newdata3)</span></code></pre></div>
+<div class="sourceCode" id="cb469"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb469-1"><a href="generalized-linear-models.html#cb469-1" aria-hidden="true" tabindex="-1"></a>newdata3 <span class="ot">&lt;-</span> <span class="fu">predict</span>(attend.negbin2, newdata2, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>, <span class="at">se.fit=</span><span class="cn">TRUE</span>)</span>
+<span id="cb469-2"><a href="generalized-linear-models.html#cb469-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(newdata3)</span></code></pre></div>
 <pre><code>## List of 3
 ##  $ fit           : Named num [1:300] 13.6 13.5 13.4 13.3 13.3 ...
 ##   ..- attr(*, &quot;names&quot;)= chr [1:300] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; ...
@@ -852,11 +852,11 @@ To fit a negative binomial model we use the <code>glm.nb()</code> function in th
 ##   ..- attr(*, &quot;names&quot;)= chr [1:300] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; ...
 ##  $ residual.scale: num 1</code></pre>
 <p>For each predicted response value (called <code>fit</code>) we have a standard error estimate (called <code>se.fit</code>). Using a standard empirical rule <span class="math inline">\(Z\)</span>-based confidence interval from your Intro Statistics course (<span class="math inline">\(\pm 2\)</span> standard errors), we can build a confidence band around the fitted line.</p>
-<div class="sourceCode" id="cb473"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb473-1"><a href="generalized-linear-models.html#cb473-1" aria-hidden="true" tabindex="-1"></a>newdata2 <span class="ot">&lt;-</span> newdata2 <span class="sc">%&gt;%</span></span>
-<span id="cb473-2"><a href="generalized-linear-models.html#cb473-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">DaysAbsent.Fitted =</span> newdata3<span class="sc">$</span>fit,</span>
-<span id="cb473-3"><a href="generalized-linear-models.html#cb473-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">lo =</span> (newdata3<span class="sc">$</span>fit <span class="sc">-</span> <span class="fl">1.96</span><span class="sc">*</span>newdata3<span class="sc">$</span>se.fit),</span>
-<span id="cb473-4"><a href="generalized-linear-models.html#cb473-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">up =</span> (newdata3<span class="sc">$</span>fit <span class="sc">+</span> <span class="fl">1.96</span><span class="sc">*</span>newdata3<span class="sc">$</span>se.fit))</span>
-<span id="cb473-5"><a href="generalized-linear-models.html#cb473-5" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(newdata2)</span></code></pre></div>
+<div class="sourceCode" id="cb471"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb471-1"><a href="generalized-linear-models.html#cb471-1" aria-hidden="true" tabindex="-1"></a>newdata2 <span class="ot">&lt;-</span> newdata2 <span class="sc">%&gt;%</span></span>
+<span id="cb471-2"><a href="generalized-linear-models.html#cb471-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">DaysAbsent.Fitted =</span> newdata3<span class="sc">$</span>fit,</span>
+<span id="cb471-3"><a href="generalized-linear-models.html#cb471-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">lo =</span> (newdata3<span class="sc">$</span>fit <span class="sc">-</span> <span class="fl">1.96</span><span class="sc">*</span>newdata3<span class="sc">$</span>se.fit),</span>
+<span id="cb471-4"><a href="generalized-linear-models.html#cb471-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">up =</span> (newdata3<span class="sc">$</span>fit <span class="sc">+</span> <span class="fl">1.96</span><span class="sc">*</span>newdata3<span class="sc">$</span>se.fit))</span>
+<span id="cb471-5"><a href="generalized-linear-models.html#cb471-5" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(newdata2)</span></code></pre></div>
 <pre><code>## Rows: 300
 ## Columns: 5
 ## $ math              &lt;dbl&gt; 1.00000, 1.98990, 2.97980, 3.96970, 4.95960, 5.94949~
@@ -866,10 +866,10 @@ To fit a negative binomial model we use the <code>glm.nb()</code> function in th
 ## $ up                &lt;dbl&gt; 18.8112, 18.6638, 18.5181, 18.3741, 18.2317, 18.0910~</code></pre>
 <p>Note the code specifying <code>lo</code> and <code>up</code>, it follows standard confidence intervals from your Intro Statistics course.
 Lastly, we can plot the fitted model with some aesthetic options.</p>
-<div class="sourceCode" id="cb475"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb475-1"><a href="generalized-linear-models.html#cb475-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(newdata2) <span class="sc">+</span></span>
-<span id="cb475-2"><a href="generalized-linear-models.html#cb475-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">x=</span>math, <span class="at">ymin=</span>lo, <span class="at">max=</span>up, <span class="at">fill=</span>prog), <span class="at">alpha=</span><span class="fl">0.3</span>)<span class="sc">+</span></span>
-<span id="cb475-3"><a href="generalized-linear-models.html#cb475-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span>math, <span class="at">y=</span>DaysAbsent.Fitted, <span class="at">color=</span>prog), <span class="at">size=</span><span class="fl">1.5</span>) <span class="sc">+</span> </span>
-<span id="cb475-4"><a href="generalized-linear-models.html#cb475-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill=</span><span class="st">&quot;Program type&quot;</span>, <span class="at">color=</span><span class="st">&quot;Program type&quot;</span>, <span class="at">x=</span><span class="st">&quot;Standardized Math Score&quot;</span>, <span class="at">y=</span><span class="st">&quot;Number of Days Absent&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb473"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb473-1"><a href="generalized-linear-models.html#cb473-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(newdata2) <span class="sc">+</span></span>
+<span id="cb473-2"><a href="generalized-linear-models.html#cb473-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">x=</span>math, <span class="at">ymin=</span>lo, <span class="at">max=</span>up, <span class="at">fill=</span>prog), <span class="at">alpha=</span><span class="fl">0.3</span>)<span class="sc">+</span></span>
+<span id="cb473-3"><a href="generalized-linear-models.html#cb473-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span>math, <span class="at">y=</span>DaysAbsent.Fitted, <span class="at">color=</span>prog), <span class="at">size=</span><span class="fl">1.5</span>) <span class="sc">+</span> </span>
+<span id="cb473-4"><a href="generalized-linear-models.html#cb473-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill=</span><span class="st">&quot;Program type&quot;</span>, <span class="at">color=</span><span class="st">&quot;Program type&quot;</span>, <span class="at">x=</span><span class="st">&quot;Standardized Math Score&quot;</span>, <span class="at">y=</span><span class="st">&quot;Number of Days Absent&quot;</span>)</span></code></pre></div>
 <p><img src="introStatModeling_files/figure-html/ch13.25-1.png" width="672" /></p>
 <p>Thus, we have plotted our fitted model. The final plot helps tell the underlying story with this data</p>
 <ul>
