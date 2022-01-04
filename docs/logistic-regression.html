@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Hughes and Thomas Fisher" />
 
 
-<meta name="date" content="2021-12-31" />
+<meta name="date" content="2022-01-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -251,7 +251,8 @@ div.csl-indent {
 <li class="chapter" data-level="5.1" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#regression-model"><i class="fa fa-check"></i><b>5.1</b> Regression Model</a></li>
 <li class="chapter" data-level="5.2" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#fitting-a-regression-model"><i class="fa fa-check"></i><b>5.2</b> Fitting a regression model</a>
 <ul>
-<li class="chapter" data-level="5.2.1" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#why-should-we-use-more-than-one-predictor"><i class="fa fa-check"></i><b>5.2.1</b> Why should we use more than one predictor?</a></li>
+<li class="chapter" data-level="5.2.1" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#multiple-regression-example"><i class="fa fa-check"></i><b>5.2.1</b> Multiple Regression Example</a></li>
+<li class="chapter" data-level="5.2.2" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#why-should-we-use-more-than-one-predictor"><i class="fa fa-check"></i><b>5.2.2</b> Why should we use more than one predictor?</a></li>
 </ul></li>
 <li class="chapter" data-level="5.3" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#interpreting-beta-parameter-estimates-in-mlr"><i class="fa fa-check"></i><b>5.3</b> Interpreting <span class="math inline">\(\beta\)</span>-parameter estimates in MLR</a>
 <ul>
@@ -450,8 +451,8 @@ Dividing one equation by the other yields something interesting:</p>
 <p><span class="math display">\[\frac{odds~of~osteroporosis~at~age=w+1}{odds~of~osteroporosis~at~age=w} = \frac{e^{-4.53 + 0.038(w+1)}}{e^{-4.53 + 0.038(w)}} = e^{0.038} = 1.0387\]</span></p>
 <p>Thus, the odds that an older female has osteoporosis are 1.0387 times the odds of an female one year younger. This may alternatively be stated to mean that the odds of osteoporosis increases 3.87% over that of a younger individual with each year of age. Note that this percentage change in the odds is <span class="math inline">\(e^b_1 − 1\)</span>. For a 10 year age difference, the increase is <span class="math inline">\(e^{b_1\times 10} = e^{(0.038\times 10)} = 1.0387^10 = 1.46\)</span>, or a 46% increase.</p>
 <p><strong>Example: Tadpole exposure to UV light.</strong> An experiment was performed that involved the exposure of 80 tadpoles to different level of ultraviolet light. There were 10 levels of UV light exposure (expressed as percentage of full exposure): 0% (dark), 1%, 9%, 16%, 23%, 31%, 40%, 57%, 78%, and 100%. The survival status of each tadpole is recorded after 21 days (variable Survival: 0=died, 1=survived). The researcher is most interested in looking at how well UV exposure predicts mortality. (The data are courtesy of Claire Meikle, and appear in the R workspace tadpoleUV.RData.)</p>
-<div class="sourceCode" id="cb392"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb392-1"><a href="logistic-regression.html#cb392-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;tadpoleUV.RData&quot;</span>)</span>
-<span id="cb392-2"><a href="logistic-regression.html#cb392-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tadUV)</span></code></pre></div>
+<div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb396-1"><a href="logistic-regression.html#cb396-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;tadpoleUV.RData&quot;</span>)</span>
+<span id="cb396-2"><a href="logistic-regression.html#cb396-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tadUV)</span></code></pre></div>
 <pre><code>##   Day.Exposed UV.Level Days.survived Survived
 ## 1           2     0.01             7        0
 ## 2           2     1.00             1        0
@@ -460,14 +461,14 @@ Dividing one equation by the other yields something interesting:</p>
 ## 5           1     0.16            19        0
 ## 6           1     0.16             5        0</code></pre>
 <p>First, we must recognize that the response variable, <code>Survived</code>, is a binary variable. The predictor of survival in the model is <code>UV.Level</code>. A plot of the data is below, and might look a little strange compared to data plots we’ve seen to date.</p>
-<div class="sourceCode" id="cb394"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb394-1"><a href="logistic-regression.html#cb394-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tadUV) <span class="sc">+</span> </span>
-<span id="cb394-2"><a href="logistic-regression.html#cb394-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>UV.Level, <span class="at">y=</span>Survived)) <span class="sc">+</span> </span>
-<span id="cb394-3"><a href="logistic-regression.html#cb394-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
-<p><img src="introStatModeling_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb398-1"><a href="logistic-regression.html#cb398-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tadUV) <span class="sc">+</span> </span>
+<span id="cb398-2"><a href="logistic-regression.html#cb398-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>UV.Level, <span class="at">y=</span>Survived)) <span class="sc">+</span> </span>
+<span id="cb398-3"><a href="logistic-regression.html#cb398-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="introStatModeling_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
 <p>One thing we can see is that there is a higher prevalence of mortality under higher UV conditions. So there may be an association between survival and exposure.</p>
 <p>We model <span class="math inline">\(p = P(survival)\)</span> as a function of UV level as follows:</p>
-<div class="sourceCode" id="cb395"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb395-1"><a href="logistic-regression.html#cb395-1" aria-hidden="true" tabindex="-1"></a>tadpole.fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(Survived <span class="sc">~</span> UV.Level, <span class="at">data=</span>tadUV, <span class="at">family=</span>binomial)</span>
-<span id="cb395-2"><a href="logistic-regression.html#cb395-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(tadpole.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="logistic-regression.html#cb399-1" aria-hidden="true" tabindex="-1"></a>tadpole.fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(Survived <span class="sc">~</span> UV.Level, <span class="at">data=</span>tadUV, <span class="at">family=</span>binomial)</span>
+<span id="cb399-2"><a href="logistic-regression.html#cb399-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(tadpole.fit)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = Survived ~ UV.Level, family = binomial, data = tadUV)
@@ -496,22 +497,22 @@ Dividing one equation by the other yields something interesting:</p>
 <li>In the summary table, the column <code>Pr(&gt;|z|)</code> contains the p-values for individual tests of model parameters. The row labeled <code>UV.Level</code> is a test of <span class="math inline">\(H_0 : \beta_1 = 0\)</span>, i.e. whether UV level is a significant predictor of the probability of survival. Since the <em>p</em>-value is large (0.113) we conclude that there is no significant relationship between the probability of survival and UV level. This is known as the <em>Wald</em> test for parameter <span class="math inline">\(\beta_j\)</span>.</li>
 <li>Even though there is not a significant relationship, we can still quantify this relationship by exponentiating <span class="math inline">\(b_1 = –0.0233\)</span></li>
 </ul>
-<div class="sourceCode" id="cb397"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb397-1"><a href="logistic-regression.html#cb397-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(tadpole.fit)[<span class="dv">2</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="logistic-regression.html#cb401-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(tadpole.fit)[<span class="dv">2</span>])</span></code></pre></div>
 <pre><code>##  UV.Level 
 ## 0.0972602</code></pre>
 <p>Recall that the percentage change in the odds for each one unit increase in the predictor can be found via <span class="math inline">\(e^b_1 − 1\)</span>. Thus, percentage change in the odds of survival for each 1% increase in UV is <span class="math inline">\(0.9769658 – 1 = –0.023\)</span>; i.e., a 2.3% decrease in the survival odds per 1% increase in UV exposure.</p>
 <ul>
 <li>We can find Wald based confidence intervals for the percentage change in the odds by using the R function <code>confint()</code></li>
 </ul>
-<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="logistic-regression.html#cb399-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">confint</span>(tadpole.fit)) <span class="sc">-</span> <span class="dv">1</span></span></code></pre></div>
+<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="logistic-regression.html#cb403-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">confint</span>(tadpole.fit)) <span class="sc">-</span> <span class="dv">1</span></span></code></pre></div>
 <pre><code>## Waiting for profiling to be done...</code></pre>
 <pre><code>##                 2.5 %    97.5 %
 ## (Intercept) -0.897605 -0.351891
 ## UV.Level    -0.996857  0.192072</code></pre>
 <p>Note that the CI for the percentage change in survival odds for a 1% increase in UV level contains 0, i.e. there is no significant effect on survival odds.</p>
 <p>There is no whole-model <span class="math inline">\(F\)</span>-test in logistic regression, but we can construct a whole-model test called a likelihood ratio chi-square test using the <code>anova()</code> model comparison function:</p>
-<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb402-1"><a href="logistic-regression.html#cb402-1" aria-hidden="true" tabindex="-1"></a>null.model <span class="ot">&lt;-</span> <span class="fu">glm</span>(Survived <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data=</span>tadUV, <span class="at">family=</span>binomial)</span>
-<span id="cb402-2"><a href="logistic-regression.html#cb402-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(null.model, tadpole.fit, <span class="at">test=</span><span class="st">&quot;Chisq&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="logistic-regression.html#cb406-1" aria-hidden="true" tabindex="-1"></a>null.model <span class="ot">&lt;-</span> <span class="fu">glm</span>(Survived <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data=</span>tadUV, <span class="at">family=</span>binomial)</span>
+<span id="cb406-2"><a href="logistic-regression.html#cb406-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(null.model, tadpole.fit, <span class="at">test=</span><span class="st">&quot;Chisq&quot;</span>)</span></code></pre></div>
 <pre><code>## Analysis of Deviance Table
 ## 
 ## Model 1: Survived ~ 1
@@ -523,27 +524,27 @@ Dividing one equation by the other yields something interesting:</p>
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>The <span class="math inline">\(p\)</span>-value is large (0.07092), indicating that the model fits are not significantly different; i.e., this result says that the model using UV level as a predictor is not significantly better than a model containing no predictors at all. This corroborates the earlier test result for <span class="math inline">\(\beta_1\)</span>.</p>
 <p><strong>Probability prediction.</strong> Since odds ratios can be hard to interpret, we can use predicted probabilities to interpret results. For example, here is how to have R obtain the predicted probability of tadpole survival at 40% UV exposure and 75% UV exposure:</p>
-<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb404-1"><a href="logistic-regression.html#cb404-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(tadpole.fit, <span class="at">newdata=</span><span class="fu">data.frame</span>(<span class="at">UV.Level=</span><span class="fl">0.40</span>), <span class="at">type=</span><span class="st">&quot;response&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="logistic-regression.html#cb408-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(tadpole.fit, <span class="at">newdata=</span><span class="fu">data.frame</span>(<span class="at">UV.Level=</span><span class="fl">0.40</span>), <span class="at">type=</span><span class="st">&quot;response&quot;</span>)</span></code></pre></div>
 <pre><code>##         1 
 ## 0.0968759</code></pre>
-<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="logistic-regression.html#cb406-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(tadpole.fit, <span class="at">newdata=</span><span class="fu">data.frame</span>(<span class="at">UV.Level=</span><span class="fl">0.75</span>), <span class="at">type=</span><span class="st">&quot;response&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb410"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb410-1"><a href="logistic-regression.html#cb410-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(tadpole.fit, <span class="at">newdata=</span><span class="fu">data.frame</span>(<span class="at">UV.Level=</span><span class="fl">0.75</span>), <span class="at">type=</span><span class="st">&quot;response&quot;</span>)</span></code></pre></div>
 <pre><code>##         1 
 ## 0.0453014</code></pre>
 <p>Making a 2D plot. We can coerce R into making a plot of the fitted logistic regression model. Here is code to do it in the present example.</p>
-<div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="logistic-regression.html#cb408-1" aria-hidden="true" tabindex="-1"></a>fake.tadpoles <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">UV.Level =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.05</span>) )</span>
-<span id="cb408-2"><a href="logistic-regression.html#cb408-2" aria-hidden="true" tabindex="-1"></a>fake.tadpoles <span class="ot">&lt;-</span> fake.tadpoles <span class="sc">%&gt;%</span></span>
-<span id="cb408-3"><a href="logistic-regression.html#cb408-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Fitted =</span> <span class="fu">predict</span>(tadpole.fit, <span class="at">newdata=</span>fake.tadpoles, <span class="at">type=</span><span class="st">&quot;response&quot;</span>))</span>
-<span id="cb408-4"><a href="logistic-regression.html#cb408-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tadUV) <span class="sc">+</span> </span>
-<span id="cb408-5"><a href="logistic-regression.html#cb408-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>UV.Level, <span class="at">y=</span>Survived) ) <span class="sc">+</span></span>
-<span id="cb408-6"><a href="logistic-regression.html#cb408-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>fake.tadpoles, <span class="fu">aes</span>(<span class="at">x=</span>UV.Level, <span class="at">y=</span>Fitted) ) <span class="sc">+</span> </span>
-<span id="cb408-7"><a href="logistic-regression.html#cb408-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
-<p><img src="introStatModeling_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb412-1"><a href="logistic-regression.html#cb412-1" aria-hidden="true" tabindex="-1"></a>fake.tadpoles <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">UV.Level =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.05</span>) )</span>
+<span id="cb412-2"><a href="logistic-regression.html#cb412-2" aria-hidden="true" tabindex="-1"></a>fake.tadpoles <span class="ot">&lt;-</span> fake.tadpoles <span class="sc">%&gt;%</span></span>
+<span id="cb412-3"><a href="logistic-regression.html#cb412-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Fitted =</span> <span class="fu">predict</span>(tadpole.fit, <span class="at">newdata=</span>fake.tadpoles, <span class="at">type=</span><span class="st">&quot;response&quot;</span>))</span>
+<span id="cb412-4"><a href="logistic-regression.html#cb412-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tadUV) <span class="sc">+</span> </span>
+<span id="cb412-5"><a href="logistic-regression.html#cb412-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>UV.Level, <span class="at">y=</span>Survived) ) <span class="sc">+</span></span>
+<span id="cb412-6"><a href="logistic-regression.html#cb412-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>fake.tadpoles, <span class="fu">aes</span>(<span class="at">x=</span>UV.Level, <span class="at">y=</span>Fitted) ) <span class="sc">+</span> </span>
+<span id="cb412-7"><a href="logistic-regression.html#cb412-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="introStatModeling_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
 <p>The notions of logistic regression extend into multiple predictors, ANCOVA settings, variable selection, etc. We will see some of these applications in the below case study.</p>
 </div>
 <div id="case-study---titanic-dataset" class="section level2" number="12.3">
 <h2><span class="header-section-number">12.3</span> Case Study - Titanic Dataset</h2>
 <p>We are now going to use logistic regression for the Titanic dataset. Recall the basic format of the dataset</p>
-<div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb409-1"><a href="logistic-regression.html#cb409-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(titanic)</span></code></pre></div>
+<div class="sourceCode" id="cb413"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb413-1"><a href="logistic-regression.html#cb413-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(titanic)</span></code></pre></div>
 <pre><code>##         X Class   Age Gender Survived
 ## 2196 2196  Crew Adult Female      Yes
 ## 2197 2197  Crew Adult Female      Yes
@@ -552,11 +553,11 @@ Dividing one equation by the other yields something interesting:</p>
 ## 2200 2200  Crew Adult Female       No
 ## 2201 2201  Crew Adult Female       No</code></pre>
 <p>By default, if we performed a logisitic regression with the <code>Survived</code> variable as the response, R would consider “No” to be a success (1) and “Yes” to be a failure (0) due to alphabetical ordering. We typically think of problems like this as a success being surviving! So we will create a new variable correspond to how we think of the problem.</p>
-<div class="sourceCode" id="cb411"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb411-1"><a href="logistic-regression.html#cb411-1" aria-hidden="true" tabindex="-1"></a>titanic <span class="ot">&lt;-</span> titanic <span class="sc">%&gt;%</span></span>
-<span id="cb411-2"><a href="logistic-regression.html#cb411-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Survive =</span> <span class="fu">ifelse</span>(Survived<span class="sc">==</span><span class="st">&quot;Yes&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>) )</span></code></pre></div>
+<div class="sourceCode" id="cb415"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb415-1"><a href="logistic-regression.html#cb415-1" aria-hidden="true" tabindex="-1"></a>titanic <span class="ot">&lt;-</span> titanic <span class="sc">%&gt;%</span></span>
+<span id="cb415-2"><a href="logistic-regression.html#cb415-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Survive =</span> <span class="fu">ifelse</span>(Survived<span class="sc">==</span><span class="st">&quot;Yes&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>) )</span></code></pre></div>
 <p>Now we will perform a logistic regression on the new variable <code>Survive</code> with <code>Class</code>, <code>Age</code> and <code>Gender</code> all being predictor variables. We note that all three predictor variables are <code>factors</code>.</p>
-<div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb412-1"><a href="logistic-regression.html#cb412-1" aria-hidden="true" tabindex="-1"></a>titanic.fit1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Survive <span class="sc">~</span> Class <span class="sc">+</span> Gender <span class="sc">+</span> Age, <span class="at">data=</span>titanic, <span class="at">family=</span><span class="st">&quot;binomial&quot;</span>)</span>
-<span id="cb412-2"><a href="logistic-regression.html#cb412-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(titanic.fit1)</span></code></pre></div>
+<div class="sourceCode" id="cb416"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb416-1"><a href="logistic-regression.html#cb416-1" aria-hidden="true" tabindex="-1"></a>titanic.fit1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Survive <span class="sc">~</span> Class <span class="sc">+</span> Gender <span class="sc">+</span> Age, <span class="at">data=</span>titanic, <span class="at">family=</span><span class="st">&quot;binomial&quot;</span>)</span>
+<span id="cb416-2"><a href="logistic-regression.html#cb416-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(titanic.fit1)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = Survive ~ Class + Gender + Age, family = &quot;binomial&quot;, 
@@ -591,8 +592,8 @@ Dividing one equation by the other yields something interesting:</p>
 <li>Other variable can be interpreted in a similar fashion.</li>
 </ul>
 <p>In the previous section we saw that some of these predictor variable may interact. That is, there seemed to be connection between some of the predictor variables. However, we also saw that some of the interactions resulted in a large number of 0 occurences. As such, here we consider a model with Gender and Class interacting (being part of the Crew or Third class and male was not good for your chances of surviving). So now we will consider a model with some interaction.</p>
-<div class="sourceCode" id="cb414"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb414-1"><a href="logistic-regression.html#cb414-1" aria-hidden="true" tabindex="-1"></a>titanic.fit2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Survive <span class="sc">~</span> Class <span class="sc">*</span> Gender <span class="sc">+</span> Age, <span class="at">data=</span>titanic, <span class="at">family=</span><span class="st">&quot;binomial&quot;</span>)</span>
-<span id="cb414-2"><a href="logistic-regression.html#cb414-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(titanic.fit2)</span></code></pre></div>
+<div class="sourceCode" id="cb418"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb418-1"><a href="logistic-regression.html#cb418-1" aria-hidden="true" tabindex="-1"></a>titanic.fit2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Survive <span class="sc">~</span> Class <span class="sc">*</span> Gender <span class="sc">+</span> Age, <span class="at">data=</span>titanic, <span class="at">family=</span><span class="st">&quot;binomial&quot;</span>)</span>
+<span id="cb418-2"><a href="logistic-regression.html#cb418-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(titanic.fit2)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = Survive ~ Class * Gender + Age, family = &quot;binomial&quot;, 
@@ -624,7 +625,7 @@ Dividing one equation by the other yields something interesting:</p>
 ## 
 ## Number of Fisher Scoring iterations: 6</code></pre>
 <p>Before proceding to interpret this model, let’s first ask if it imrpoves over the previous model. You’ll note that <code>titanic.fit1</code> is a simpler version of <code>titanic.fit2</code>. We use the <code>anova()</code> function to test if adding the interaction terms significantly improves the model.</p>
-<div class="sourceCode" id="cb416"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb416-1"><a href="logistic-regression.html#cb416-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(titanic.fit1, titanic.fit2, <span class="at">test=</span><span class="st">&quot;Chisq&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb420"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb420-1"><a href="logistic-regression.html#cb420-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(titanic.fit1, titanic.fit2, <span class="at">test=</span><span class="st">&quot;Chisq&quot;</span>)</span></code></pre></div>
 <pre><code>## Analysis of Deviance Table
 ## 
 ## Model 1: Survive ~ Class + Gender + Age
@@ -644,7 +645,7 @@ Dividing one equation by the other yields something interesting:</p>
 <span class="math display">\[\frac{e^{3.558-3.885-4.233+2.863}}{1+e^{3.558-3.885-4.233+2.863}} = 0.154857\]</span> which is relativaly close to the <span class="math inline">\(75/(75+387) = 0.162338\)</span> that did survive.</p></li>
 </ul>
 <p>Overall we see this more complex model appears to more closely match the observed relative frequencies from the previous chapter. This is not too surprising given the measure of <code>Residual deviance</code>. Before explaining, let’s look at both fitted models one more time</p>
-<div class="sourceCode" id="cb418"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb418-1"><a href="logistic-regression.html#cb418-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(titanic.fit1)</span></code></pre></div>
+<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb422-1"><a href="logistic-regression.html#cb422-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(titanic.fit1)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = Survive ~ Class + Gender + Age, family = &quot;binomial&quot;, 
@@ -672,7 +673,7 @@ Dividing one equation by the other yields something interesting:</p>
 ## AIC: 2222
 ## 
 ## Number of Fisher Scoring iterations: 4</code></pre>
-<div class="sourceCode" id="cb420"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb420-1"><a href="logistic-regression.html#cb420-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(titanic.fit2)</span></code></pre></div>
+<div class="sourceCode" id="cb424"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb424-1"><a href="logistic-regression.html#cb424-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(titanic.fit2)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = Survive ~ Class * Gender + Age, family = &quot;binomial&quot;, 

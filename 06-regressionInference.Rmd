@@ -33,7 +33,7 @@ This section is only meant to provide you with the means to run a cursory check 
 
 **Example** Muscle mass.  Consider the age and muscle mass dataset from earlier. Before using the muscle mass regression model to perform tests/CIs about the mass vs. age relationship, check the regression assumptions. This can be achieved by using the `autoplot()` function on the fitted `lm` object.
 
-```{r ch6.1}
+```{r ch6-1}
 muscle.fit <- lm(mass ~ age, data=muscle)
 autoplot(muscle.fit)
 ```
@@ -100,8 +100,11 @@ The “whole-model” F-test for model utility is generally assessed first when 
 
 Recall the property appraisal dataset from chapter 5. 
 
-```{r ch6.2}
+```{r, eval=FALSE}
 load("appraisal.RData")
+```
+
+```{r ch6-2}
 appraisal.fit <- lm(saleprice ~ landvalue + impvalue + area, data=appraisal)
 summary(appraisal.fit)
 ```
@@ -145,7 +148,7 @@ and is provided in the `summary()` output in R.
 
 **Example. Property Appraisals** Consider individual test from the Property Appraisal data. 
 
-```{r ch6.4}
+```{r ch6-4}
 summary(appraisal.fit)
 ```
 
@@ -176,7 +179,7 @@ What about insignificant predictors?  At this point, one might wonder about the 
 
 So, here’s what happens by deleting landvalue as a predictor (we actually did this in the last lecture to see the effect on the $\beta$ parameters):
 
-```{r ch6.5}
+```{r ch6-5}
 summary(lm(saleprice ~ impvalue + area, data=appraisal))
 ```
 
@@ -197,9 +200,10 @@ The point estimates and their SEs were provided in the R output from `summary()`
 
 After fitting the linear model, getting 95% CIs for $\beta_i$ is a snap with the `confint()` function:
 
-```{r ch6.6}
+```{r ch6-6}
 confint(appraisal.fit)
 ```
+
 We focus only on interpretation of the significant predictors:
 
 * After adjusting for appraised land value and area of living space of a given property, we can be 95\% confident that each additional dollar of appraised value of improvements is worth, on average, an additional \$0.37 to \$1.26 to the sale price.
@@ -234,7 +238,7 @@ To help distinguish between the two kinds of intervals, we will call an interval
 
 The `predict()` extractor function in R will generate CIs and PIs from a linear model object according to your specifications for values of $X$:
 
-```{r ch6.7}
+```{r ch6-7}
 muscle.fit <- lm(mass~age,data=muscle)
 predict(muscle.fit, newdata=data.frame(age=65), int="conf")
 predict(muscle.fit, newdata=data.frame(age=65), int="pred")
@@ -248,14 +252,15 @@ Note that the fitted value (labeled fit) is the same for both (78.996).  However
 
 If we had deleted `newdata=data.frame(age=65)` from the `predict()` function call, we would get PIs (or CIs) for every age value that occurred in the original data set.  However, since the values of age appear in random order, it might be a bit nicer to first sort them, and then generate the intervals:
 
-```{r ch6.8}
+```{r ch6-8}
 muscle.trim <- muscle %>%
   distinct(age) %>%
   arrange(age)
 predict(muscle.fit, newdata=muscle.trim, int="pred")
 ```
 
-So, for example, we can be 95% confident that the muscle mass of an unobserved 52 year old woman will be between 77.9 to 111.0.  (Note that these are PIs for future observations, not the current observations!)
+So, for example, we can be 95% confident that the muscle mass of an unobserved 52 year old woman will be between 77.9 to 111.0.
+(Note that these are PIs for future observations, not the current observations!)
 
 Since we have a two-dimensional problem here, it is instructive to graphically take a look at the confidence limits and prediction limits across the entire span of the predictor space (called confidence bands and prediction bands).  The display of the confidence and prediction bands for the muscle mass model fit appears below.  
 
@@ -264,9 +269,9 @@ Two things you should notice:
 1.	The prediction bands are wider than the confidence bands (as we have already established).
 2.	The width of the confidence bands (and prediction bands) is not uniform over the entire predictor space.  It is subtle in this particular example, but a close look will reveal that as you move away from the center of the data, the intervals get wider.
 
-The below code will plot the fitted line with the confidence and prediction bands.
+The below code will plot the fitted line with the confidence and prediction bands as seen in Figure \@ref(fig:ch6-9).
 
-```{r ch6.9}
+```{r ch6-9, message=FALSE, fig.align='center', fig.cap='Scatterplot with regression line, confidence bands and prediction bands.', fig.asp=0.55, out.width='80%'}
 muscle.bands <- muscle.trim %>%
   mutate(ci.lo = predict(muscle.fit, newdata=muscle.trim, int="conf")[,2],
          ci.hi = predict(muscle.fit, newdata=muscle.trim, int="conf")[,3],
@@ -274,6 +279,7 @@ muscle.bands <- muscle.trim %>%
          pi.hi = predict(muscle.fit, newdata=muscle.trim, int="pred")[,3] )
 muscle.with.fit <- muscle %>%
   mutate(Fitted=fitted(muscle.fit))
+
 ggplot() + 
   geom_ribbon(data=muscle.bands, aes(x=age, ymin=pi.lo, ymax=pi.hi), fill="gray80") + 
   geom_ribbon(data=muscle.bands, aes(x=age, ymin=ci.lo, ymax=ci.hi), fill="gray60") + 
@@ -282,9 +288,13 @@ ggplot() +
   theme_minimal()
 ```
 
-**Notes about the code.** We are using the layering features in `ggplot()`. First we plot the prediction interval as a `geom_ribbon` type with a lighter colored gray. Then the confidence band (since we know it will be narrower) on the next layer. Then the fitted line and original data points.
+**Notes about the code.** We are using the layering features in `ggplot()`.
+First we plot the prediction interval as a `geom_ribbon` type with a lighter colored gray.
+Then the confidence band (since we know it will be narrower) on the next layer.
+Then the fitted line and original data points.
 
-**Extrapolation warning.**  It might be tempting to use your model to make predictions outside the observed range of your predictor variable (e.g., what is the predicted muscle mass of a 90 year old woman?).  The best advice: DON’T!  
+**Extrapolation warning.**  It might be tempting to use your model to make predictions outside the observed range of your predictor variable (e.g., what is the predicted muscle mass of a 90 year old woman?).
+The best advice: DON’T!  
 
 Regression isn’t some magic pill that will get you reliable predictions of what’s going on out in some region where you have no information.  You may have a model that fits the observed data well, but the model may be completely different when you move outside this range.  For instance, perhaps muscle mass reaches a point of stabilization near age 80, resulting in a plot that levels off.  If you used the model we fitted above to make a prediction for a geriatric female above age 80, you may vastly underpredict her true muscle mass.  A relationship that looks linear on a small scale might be completely different on a larger scale. 
 
@@ -294,9 +304,13 @@ In summary, don’t extrapolate because:
 
 * confidence and prediction intervals for the response get wider the farther away from the center of the data you move; and
 * the structural form of the relationship may not be the same as you move away from the observed predictor space.
-The two plots below illustrate these points. Suppose you only observe the data in the narrow range around $X = 0$ as shown in the left hand plot.  If you fit a line to these data, you get the observed trend (and confidence bands).  However, if the true nature of the relationship outside this narrow range were radically different (and you don’t know this because you collected no data outside your “narrow” range), then extrapolating beyond your limited view of the relationship may produce wildly inaccurate predictions (see the right side plot).
 
-```{r ch6.10, echo=FALSE}
+The two plots in Figure \@ref(fig:ch6-10) below illustrate these points.
+Suppose you only observe the data in the narrow range around $X = 0$ as shown in the left hand plot.
+If you fit a line to these data, you get the observed trend (and confidence bands).
+However, if the true nature of the relationship outside this narrow range were radically different (and you do not know this because you collected no data outside your “narrow” range), then extrapolating beyond your limited view of the relationship may produce wildly inaccurate predictions (see the right side plot).
+
+```{r ch6-10, echo=FALSE, message=FALSE, fig.align='center', fig.cap='Scatterplot with regression line demonstrating the fanning of confidence and prediction bands (left) and the dangers of extrapolation (right).', fig.asp=0.55, out.width='80%'}
 set.seed(1)
 x <- runif(80, -15, 10)
 y <- -(x+5)^2 + rnorm(80, sd=7)
@@ -327,7 +341,7 @@ grid.arrange(p1,p2, nrow=1)
 
 **Back to multiple regression.** We can do the same sort of thing with a multiple regression dataset, unfortunately it is not as easy to plot.
 
-```{r ch6.11}
+```{r ch6-11}
 x.pred <- data.frame(landvalue=11000, impvalue=43500, area=2000)
 predict(appraisal.fit, x.pred, int="pred")
 ```
@@ -353,9 +367,11 @@ We start as follows:
 
 Formulaically, $TSS = \sum_{i=1}^n (y_i - \bar{y})^2$ and $RSS = \sum_{i=1}^n (y_i - \hat{y}_i)^2$.
 
-Below is a graphic illustrating how one may think of “sizing” these two quantities.  The picture shows a simulated data example where there is a clearly strong linear trend.  You can see that once you account for the linear trend element (which explains a lot of what you see in the plot), the relative size of the leftover residual variation is low, i.e. RSS is the much smaller partition of the total sums of squares.
+Figure \@ref(fig:ch6-12) below is a graphic illustrating how one may think of “sizing” these two quantities.
+The picture shows a simulated data example where there is a clearly strong linear trend.
+You can see that once you account for the linear trend element (which explains a lot of what you see in the plot), the relative size of the leftover residual variation is low, i.e. RSS is the much smaller partition of the total sums of squares.
 
-```{r ch6.12, echo=FALSE}
+```{r ch6-12, echo=FALSE, message=FALSE, fig.align='center', fig.cap='Simulated data with regression line demonstrating the decomposition of variation in the data, TSS vs. RSS.', fig.asp=0.55, out.width='80%'}
 set.seed(1)
 x <- runif(500)
 y <- 5 - 10*x + rnorm(500, sd=0.5)
@@ -392,7 +408,7 @@ $$R_{adj}^2 = 1 - \frac{RSS/df_{error}}{TSS/df_{total}} = 1 - \frac{RSS/(n-p)}{T
 
 $R_{adj}^2$ is not technically a proportion like $R^2$, but it is more useful than $R^2$ when comparing different models for the same data.  It should also be said that, although informative, these measures do not give any direct indication of how well the regression equation will predict when applied to a new data set. Like $R^2$, $R_{adj}^2$ is supplied with the `summary()` function and is labeled `Adjusted R-squared`. We show the output below for the appraisal model.
 
-```{r ch6.13}
+```{r ch6-13}
 summary(appraisal.fit)
 ```
 
@@ -409,7 +425,7 @@ $$AIC = n\log(RSS/n) + 2p$$
 where $n$ = sample size, $RSS$ is the model residual sum of squares, and $p$ = number of model parameters (i.e. number of $\beta$ parameters in the model).  In R we can calculate the AIC value for a fit using the `AIC()` function.
 
 
-```{r ch6.14}
+```{r ch6-14}
 AIC(appraisal.fit)
 ```
 
@@ -421,7 +437,7 @@ $$BIC = n\log(RSS/n) + \log(n)p$$
 
 and is calculated in R with the `BIC()` function.
 
-```{r ch6.15}
+```{r ch6-15}
 BIC(appraisal.fit)
 ```
 

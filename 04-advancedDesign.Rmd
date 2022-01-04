@@ -1,17 +1,24 @@
 
 # Advanced Designs
 
-The previous chapters have established the groundwork of experimental designed. We discussed the key elements of experimental units, factors, response variables, treatments, confounding influences and the purpose of replication and randomization. This former work just scratches the surface of the field of experimental design and the analyses associated with those designs. The objective of this chapter includes:
+The previous chapters have established the groundwork of experimental designed. 
+We discussed the key elements of experimental units, factors, response variables, treatments, confounding influences and the purpose of replication and randomization. 
+This former work just scratches the surface of the field of experimental design and the analyses associated with those designs. 
+The objective of this chapter includes:
 
-* Understanding the basic structure of factorial designs
-* Understanding the basic structure of within-subject designs
-* Building an appreciation for the complexity of experimental design
+* Understanding the basic structure of factorial designs.
+* Understanding the basic structure of within-subject designs.
+* Building an appreciation for the complexity of experimental design.
 
 ## Higher order factor models
 
-In the previous two chapters we've seen a One-Way and Two-Way ANOVA. In the former, a single factor consisted of $k$-levels (and thus $k$-treatments) while in the latter the first factor may consist of $k$ levels and the second factor $j$ levels (and therefore $k\times j$ treatments). Consider the following example.
+In the previous two chapters we have seen a One-Way and Two-Way ANOVA.
+In the former, a single factor consisted of $k$-levels (and thus $k$-treatments) while in the latter the first factor may consist of $k$ levels and the second factor $j$ levels (and therefore $k\times j$ treatments). 
+Consider the following example.
 
-**Example.** Marketing research contractors. A marketing research consultant evaluated the effects of free schedule, scope of work and type of supervisory control on the quality of work performed under contract by independent marketing research agencies. The design of this experiment can be summarized as follows
+**Example.** Marketing research contractors. 
+A marketing research consultant evaluated the effects of free schedule, scope of work and type of supervisory control on the quality of work performed under contract by independent marketing research agencies.
+The design of this experiment can be summarized as follows
 
 $$\begin{array}{ll} 
 \textbf{Factor} & \textbf{Factor Levels} \\
@@ -29,10 +36,10 @@ $$\begin{array}{ll}
 
 The quality of work performed was measured by an index taking into account several characteristics of quality. 
 
-You should note there are three factors in this experiment, with 3, 2 and 2 levels for each factor. This means the number of treatments is $3\times 2\times 2 = 12$ and can be summarized in the following table.
+You should note there are three factors in this experiment, with 3, 2 and 2 levels for each factor.
+This means the number of treatments is $3\times 2\times 2 = 12$ and can be summarized in the following table.
 
 ```{r three_way_table, echo=FALSE}
-# knitr::include_graphics("designTable.png")
 tab <- data.frame("Fee Level" = c("High", "Average", "Low"),
                   "In house" = c("Treatment 1", "Treatment 5", "Treatment 9"),
                   "Subcontracted" = c("Treatment 2", "Treatment 6", "Treatment 10"),
@@ -44,37 +51,52 @@ kable(tab) %>% kable_styling(full_width=FALSE) %>%
   add_header_above(c(" " = 1, "Supervision" = 4))
 ```
 
-Recall the main idea from two-factor experiments, the interaction terms are typically very important. In this three factor design we have the three main effects (Fee level, Scope and Supervision) but then we also have pairwise interactions between these variables and an interaction among all three. From a statistical modeling perspective, we are now essentially fitting the model 
+Recall the main idea from two-factor experiments--the interaction terms are typically very important. 
+In this three factor design we have the three main effects (Fee level, Scope and Supervision) but then we also have pairwise interactions between these variables and an interaction among all three.
+From a statistical modeling perspective, we are now essentially fitting the model 
 
 $$Y_{ijkm} = \mu + \alpha_i + \beta_j + \gamma_k + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk} + (\alpha\beta\gamma)_{ijk} + \varepsilon_{ijkm}$$
 
 where
 
 * $Y_{ijkm}$ is the $m^\mathrm{th}$ observation in the $i^\mathrm{th}$ level of the first factor, the $j^\mathrm{th}$ level of the second factor and the $k^\mathrm{th}$ level of the third factor.
-* $\mu$ is an overall mean
-* Fee level main effect $\alpha_i$
-* Scope main effect $\beta_j$
-* Supervision main effect $\gamma_k$
-* Fee level and Scope interaction effect $(\alpha\beta)_{ij}$
-* Fee level and Supervision interaction effect $(\alpha\gamma)_{ik}$
-* Scope and Supervision interaction effect $(\beta\gamma)_{jk}$
-* Fee level, Scope and Supervision interaction effect $(\alpha\beta\gamma)_{ijk}$
-* $\varepsilon_{ijkm}$ is the random error term
+* $\mu$ is an overall mean.
+* Fee level main effect $\alpha_i$.
+* Scope main effect $\beta_j$.
+* Supervision main effect $\gamma_k$.
+* Fee level and Scope interaction effect $(\alpha\beta)_{ij}$.
+* Fee level and Supervision interaction effect $(\alpha\gamma)_{ik}$.
+* Scope and Supervision interaction effect $(\beta\gamma)_{jk}$.
+* Fee level, Scope and Supervision interaction effect $(\alpha\beta\gamma)_{ijk}$.
+* $\varepsilon_{ijkm}$ is the random error term.
 
-As you can see this model has grown greater compare to to the two-way ANOVA examples from before. 
+As you can see this model has grown greatly compared to to the two-way ANOVA examples from before. 
 
 **What will happen if there are four factors?**
 
-In general, if an experiment consisted of $n$ factors, we would potentially have $2^n - 1$ terms in our model, thus with four factors you are looking at 15 terms in your ANOVA decomposition. With five factors, 31 terms. This will quickly grow out of control.
+In general, if an experiment consisted of $n$ factors, we would potentially have $2^n - 1$ terms in our model.
+Thus with four factors you are looking at $2^4 - 1 = 16-1=15$ terms in your ANOVA decomposition.
+With five factors, 31 terms. 
+This will quickly grow out of control.
 
-Fortunately, for higher order factor problems there are statisticians available to help formulate a better design and potentially *optimize* some of the variables of study. We leave out the details of these topics in this Introductory text but want to provide insight that these advanced designs and analyses can be done. Please consult a statistician before your experiment if you are planning a complex design!!
+Fortunately, for higher order factor problems there are statisticians available to help formulate a better design and potentially *optimize* some of the variables of study. 
+We leave out the details of these topics in this introductory text but want to provide insight that these advanced designs and analyses can be done. 
+Please consult a statistician before your experiment if you are planning a complex design!!
 
 **Example continued.** Below we complete the example involving the marketing research contractors.
 
 First we read in the data and make sure R properly treats the factors.
 
+```{r ch4marketingData-noeval, eval=FALSE}
+data_site <- "https://tjfisher19.github.io/introStatModeling/data/marketingResearch.txt"
+marketing <- read_table(data_site, col_types=cols() )
+```
+
+```{r ch4marketingData-noEcho, echo=FALSE}
+marketing <- read_table("docs/data/marketingResearch.txt", col_types=cols() )
+```
+
 ```{r ch4marketingData}
-marketing <- read.table("marketingResearch.txt", header=TRUE)
 marketing <- marketing %>%
   mutate(Fee = as.factor(Fee),
          Scope = as.factor(Scope),
@@ -87,85 +109,148 @@ We leave out EDA and residual analysis from this example for brevity. We fit the
 marketing.anova <- aov(Quality ~ Fee*Scope*Supervision, data=marketing)
 ```
 
-Here we used the notation `Fee*Scope*Supervision` so R will fit a full factorial model (that is, all main effects and interaction terms). Now look at the ANOVA output.
+Here we used the notation `Fee*Scope*Supervision` so R will fit a full factorial model (that is, all main effects and interaction terms). 
+Now look at the ANOVA output.
 
 ```{r ch4markingSummary}
 summary(marketing.anova)
 ```
 
-Here we see that the three factor interaction term is not significant but the interaction between Scope and Supervision is significant. Interactions involving the Fee level factor are not significant, thus we can interpret the Fee level main effect as being a significant influence on quality. We can also conclude that some combination of Scope and Supervision influence quality. We leave out any multiple comparisons analysis here as it gets incredibly complex when three factors are involved.
+As with the two-factor analysis, **always look at the most complex interaction term first.**
+Here we see that the three factor interaction term is not significant, thus we proceed to the pairwise interactions.
+
+The interaction between Scope and Supervision is significant.
+Interactions involving the Fee level factor are not significant, thus we can interpret the Fee level main effect as being a significant influence on quality. 
+We can also conclude that some combination of Scope and Supervision influence quality. 
+We leave out any multiple comparisons analysis here as it gets very complex when three factors are involved.
 
 ## Within-subject designs
 
-In the previous two chapters, you have seen different experimental designs where a factor(s) levels are manipulated by the researcher in order to measure a response. In simpler design settings, the factors that are manipulated are of the “between-subjects” type.  The one-way ANOVA example in chapter 2 on drug effects on alertness is illustrative of this: each participant (experimental unit) had exactly one drug randomly assigned to them.  As such, there is only one observation per experimental unit in the design. Drug was a **between-subjects factor**.
+In the previous two chapters, you have seen different experimental designs where a factor(s) levels are manipulated by the researcher in order to measure a response. 
+In simpler design settings, the factors that are manipulated are of the “between-subjects” type.
+The one-way ANOVA example in chapter 2 on drug effects on alertness is illustrative of this: each participant (experimental unit) had exactly one drug randomly assigned to them.
+As such, there is only one observation per experimental unit in the design. 
+Drug was a **between-subjects factor**.
 
-*Why is that important to note?*  Because, as you should realize by now, that assures that the observations in the data are all independent.  It will be elaborated upon later in this course how crucial this assumption is to the validity of any statistical inferences we draw from the tests/CIs we derive.  In fact, independence is more important to inference validity than either normality or constant variance assumptions.
+*Why is that important to note?*
+Because, as you should realize by now, that assures that the observations in the data are all independent.
+It will be elaborated upon later in this course how crucial this assumption is to the validity of any statistical inferences we draw from the tests/CIs we derive.
+In fact, independence is more important to inference validity than either normality or constant variance assumptions.
 
-Now, contrast this with the **paired $t$-test** (see section 2.4).  The example we saw there involved giving a sample of 10 mice a dietary treatment drug in order to study its effect on the weight of the mice. Let us think of that problem from a design of experiments point of view: what was/were the factor(s) that were manipulated by the researcher?
+Now, contrast this with the **paired $t$-test** (see section 2.4).
+An example was discussed that involved giving a sample of 20 people a drug treatment in order to study its effect on the Cholesterol of the patients. 
+Think of that problem from a design of experiments point of view: what was/were the factor(s) that were manipulated by the researcher?
 
-* It was not the diet!  Why? Because in the experiment, only one diet was studied: there was no “comparison” diet or placebo used to form a basis for comparison.  As such, the dietary treatment in that problem was not a variable at all: it was a constant.
-* So what is left? The answer is TIME. The researcher measured weight at two time points on each mouse (experimental unit): [1] just before the start of the diet, and [2] three months later.  The factor here is time, and it has two levels. Time is a **within-subject factor**.
+* It is not the drug treatment! Why? Because in the experiment, only one drug was studied: there was no “comparison” drug or placebo used to form a basis for comparison. As such, the drug treatment in that problem was not a variable at all: it was a constant.
+* So what is left? The answer is TIME. The researcher measured Cholesterol at two time points on each patient (experimental unit): [1] just before the start of the drug treatment, and [2] 45 days later. The factor here is time, and it has two levels. Time is a **within-subject factor**.
 
 In a designed experiment that involves several measurements made on the same experimental unit over time, the design is called a **repeated measures design**.
 
-The important thing to recognize here is that each mouse provided two observations, not one.  It stands to reason that *what a particular subject’s weight is after three months might have something to do with (i.e. be related to) what their starting weight was before the diet*.   That is the layman’s way of saying that the measurements within a subject are **not independent** (i.e. the observations are correlated).  If in any analysis we ignored this basic truth, that analysis would be seriously flawed.
+The important thing to recognize here is that each patient provided two observations, not one. 
+It stands to reason that *what a particular subject’s Cholesterol is after 45 days will be related to their starting Cholesterol before the drug treatment*. 
+That is the layman’s way of saying that the measurements within a subject are **not independent** (i.e., a patient is not independent of themselves -- the observations are correlated).
+If in any analysis we ignored this basic truth, that analysis would be seriously flawed.
 
-So how did we handle this before?  A simple strategy which is common with paired data comparisons is to calculate each subject’s difference score (yielding a single difference measurement per subject) and then performing a one-sample $t$-test on the differences.  Each difference score is independent, because each came from a different randomly chosen subject.  This is what was done in the paired $t$-test analysis in section 2.4.  Check back and remind yourself of this.
+So how did we handle this before?
+A simple strategy which is common with paired data comparisons is to calculate each subject’s difference score (yielding a single difference measurement per subject) and then performing a one-sample $t$-test on the differences.
+Each difference score is independent because each came from a different randomly chosen subject.
+This is what was done in the paired $t$-test analysis in section 2.4.  Check back and remind yourself of this.
 
 ### Blocks revisited: an approach to handling within-subjects factors
 
-The notion and purpose of blocking in an experimental design was introduced in section 3.1.  If you recall that witty definition of blocks as relatively homogeneously sets of experimental material, it may occur to you that subjects can serve as blocks.  In fact, this was already stated in section 3.1.  What this means for us now is that using a block design approach in analysis is a way to handle correlated (non-independent) observations such as in the paired $t$-test problem above.  We illustrate that here.
+The notion and purpose of blocking in an experimental design was introduced in section 3.1.
+If you recall that witty definition of blocks as relatively homogeneously sets of experimental material, it may occur to you that subjects can serve as blocks. 
+In fact, this was already stated in section 3.1.
+What this means for us now is that using a block design approach in analysis is 'a way' to handle correlated (non-independent) observations such as in the paired $t$-test problem above. 
+We illustrate that here.
 
-**Example.** 10 mice received a dietary treatment during 3 months. We want to know whether the dietary treatment has an impact on the weight of the mice. To answer to this question, the weight of the 20 mice has been measured before and after the treatment and is in the file `mice.csv`. Below is some code to quickly look at the data:
+**Example.** (originally in @WeissText) The makers of the MAGNETIZER Engine Energizer System (EES) claim that it improves the gas mileage and reduces emissions in automobiles by using magnetic free energy to increase the amount of oxygen in the fuel for greater combustion efficiency.
+Test results for 14 vehicles that underwent testing is available in the file `carCOemissions.csv`.
+The data includes the emitted carbon monoxide (CO) levels, in parts per million, of each of the 14 vehicles tested before and after installation of the EES.
 
-```{r ch4-1webData, eval=FALSE}
-mice <- read.csv("http://www.users.miamioh.edu/hughesmr/sta363/miceWeighttallform.csv")
-head(mice)
+This is a classic before-after (Paired design) study. Below is some code to implement the test.
+
+First, we quickly recap the Paired $t$-test result from Section REF
+
+```{r, eval=FALSE}
+www <- "https://tjfisher19.github.io/introStatModeling/data/carCOemissions.csv"
+vehicleCO <- read_csv(www, col_types = cols())
+vehicleCO
 ```
 
-```{r ch4-1, echo=FALSE}
-mice <- read.csv("miceWeighttallform.csv")
-head(mice)
+```{r ch4-coData, echo=FALSE}
+vehicleCO <- read_csv("docs/data/carCOemissions.csv", col_types = cols())
+vehicleCO
 ```
 
-Note the difference in the layout of the data here as compared to the file `miceWeightwideform.csv` used in the paired $t$-test in section 2.4.  The data here is in what is called “tall mode”: each observation occupies a single row of the data file now, and there is a new variable (id) that identifies which subject every observation belongs to. The variable group refers to the time factor.
+and the paired $t$-test
+
+```{r ch4-coData-ttest}
+t.test(vehicleCO$before, vehicleCO$after, paired=TRUE)
+```
+
+Now, we will perform this same analysis using a Block ANOVA. 
+The data is structure that 2 observations (the before and after) are on each row of the data frame.
+We will reshape this data into a tall, or long, format.
+
+```{r ch4-coData-reshape}
+vehicleCO_tall <- vehicleCO %>%
+  pivot_longer(cols=c(before, after),
+               names_to="Time",
+               values_to="Emitted_CO")
+head(vehicleCO_tall)
+```
+
+Note the difference in the layout of the data here as compared to the original `vehicleCO` used in the paired $t$-test: each observation occupies a single row of the data file now.
+There is an identifier variable (`id`) that identifies which subject every observation belongs to. 
+The variable Time `refers` to the time factor and `Emitted_CO` records the emitted Carbon Monoxide levels (ppm).
 
 We will analyze this same data (addressing the same research question) by using a **block design approach**:
 
 ```{r ch4-2}
-mice.block.aov <- aov(weight ~ factor(id) + group, data=mice)
-summary(mice.block.aov)
+vehicleco.block.aov <- aov(Emitted_CO ~ factor(id) + Time, data=vehicleCO_tall)
+summary(vehicleco.block.aov)
 ```
 
-Look at the $F$-test for the time factor (labeled group here).  This is identical to the result of the paired t-test in section 2.4 ($F$ = 436.11, $\textrm{df}_1$ = 1, $\textrm{df}_2$ = 9, $p$-value $\approx 6.2\times 10^{-9}$).  
+Look at the $F$-test for the time factor (labeled `Time` here).
+This result is identical to the result of the paired t-test above ($F$ = 9.897, $\textrm{df}_1$ = 1, $\textrm{df}_2$ = 13, $p$-value $= 0.00773$).
+Note, $\sqrt{9.897} =$ `r round(sqrt(9.897), 3)`, the value of the paired $t$-test statistic.
 
-*How does the block approach work here?*  You will note that the test of group (the within subjects effect) uses the residual effect as the error term.  Because the blocks are accounted for in the model (and here, the blocks constitutes the overall between-mice variability source), the only variation left over for the “residuals” is the variability due to the within-mouse differences.  In essence, there are **two components** to the random error now:
+*How does the block approach work here?* You will note that the test of Time (the within subjects effect) uses the residual effect as the error term. 
+Because the blocks are accounted for in the model (and here, the blocks constitutes the overall between-vehicle variability source), the only variation left over for the “residuals” is the variability due to the within-vehicle differences.
+In essence, there are **two components** to the random error now:
 
-* Aggregated variability between mice (block effect)
-* Remaining unexplained (random) variability after accounting for aggregate mouse-to-mouse differences and aggregated time-to-time differences.  We will call this leftover stuff “pure” error.
+* Aggregated variability between vehicles (block effect)
+* Remaining unexplained (random) variability after accounting for aggregate vehicle-to-vehicle differences and aggregated time-to-time differences. We will call this leftover stuff “pure” error.
 
-For a correct analysis, it is important that each factor of interest in the study be tested against the proper component of the error.  Here, **we test a within-subjects effect against the random error component dealing with “pure” random error**.
+For a correct analysis, it is important that each factor of interest in the study be tested against the proper component of the error. Here, **we test a within-subjects effect against the random error component dealing with “pure” random error**.
 
-Perhaps **a more general approach** to within-subjects analysis is to specify to R the fact that there are layers of random variability in the data introduced by the fact that we have more than one measurement per experimental unit.  This can be done using an `aov` model specification that explicitly cites these layers with an Error option.  The model specification in R is generally
+Perhaps **a more general approach** to within-subjects analysis is to specify to R the fact that there are layers of random variability in the data introduced by the fact that we have more than one measurement per experimental unit. 
+This can be done using an `aov` model specification that explicitly cites these layers with an `Error` option. 
+The model specification in R is generally
 
-    aov(response ~ between-subjects factor structure + Error(EU variable/WS factor)
+    `aov(response ~ between-subjects factor structure + Error(EU variable/WS factor)`
 
 In the present example, this would be as follows:
 
 ```{r ch4-3}
-WS_aov <- aov(weight ~ group + Error(factor(id)/group), data=mice)
+WS_aov <- aov(Emitted_CO ~ Time + Error(factor(id)/Time), data=vehicleCO_tall)
 summary(WS_aov)
 ```
 
 Again we see the same result. It turns out that for more complex studies this general approach is preferred.
 
+
+
 ### A more involved repeated measures case study
 
-If we can handle within-subjects factors using blocks, why not just stick with that all the time?  Well, the reason is that repeated measures designs can get complicated: multiple time measurement points (not just two), the addition of between-subjects factors, etc.  The following case study example illustrates this.
+If we can handle within-subjects factors using blocks, why not just stick with that all the time?  
+Well, the reason is that repeated measures designs can get complicated: multiple time measurement points (more than just two), the addition of between-subjects factors, etc.
+The following case study example illustrates this.
 
-**Example: Cholesterol study.** A study tested whether cholesterol was reduced after using a certain brand of margarine as part of a low fat, low cholesterol diet.  The subjects consumed on average 2.31g of the active ingredient, stanol ester, a day.  This data set `cholesterolreduction.csv` contains information on 18 people using margarine to reduce cholesterol over three time points.  
+**Example: Cholesterol study.** A study tested whether cholesterol was reduced after using a certain brand of margarine as part of a low fat, low cholesterol diet. The subjects consumed on average 2.31g of the active ingredient, stanol ester, a day.  This data set `cholesterolreduction.csv` contains information on 18 people using margarine to reduce cholesterol over three time points.  
 
-Source: The University of Sheffield.  
+Source: The University of Sheffield [@sheffield2021].  
 
 ```{r ch4tab, echo=FALSE}
 tab <- data.frame("Variable Name"=c("ID", "Before", "After4weeks", "After8weeks", "Margarine"),
@@ -177,37 +262,43 @@ kable(tab)
 
 
 ```{r, eval=FALSE}
-chol <- read.csv("http://www.users.miamioh.edu/hughesmr/sta363/cholesterolreduction.csv")
+"carCOemissions.csv"
+chol <- read_csv("https://tjfisher19.github.io/introStatModeling/data/cholesterolreduction.csv", col_types=cols())
 glimpse(chol)
 ```
 
 ```{r ch4-4, echo=FALSE}
-chol <- read.csv("cholesterolreduction.csv")
+chol <- read_csv("docs/data/cholesterolreduction.csv", col_types=cols())
 glimpse(chol)
 ```
 
 There are two factors of interest here: 
 
-* `time.pt` (3 levels within-subjects: before, after4weeks, after8weeks)
-* `Margarine` (2 level between-subjects: A or B)
+* Time points (3 levels within-subjects): before, after4weeks, after8weeks)
+* Margarine type (2 level between-subjects): A or B
 
-Note that the data is currently in wide form.  We need to convert it to tall form:
+Note that the data is currently in wide form.
+We need to convert it to tall form:
 
 ```{r ch4-5}
-library(tidyverse)
 chol_tall <- chol %>% 
-  pivot_longer(cols=Before:After8weeks, names_to="time.pt", values_to="chol.level")
+  pivot_longer(cols=Before:After8weeks, 
+               names_to="time.pt", 
+               values_to="chol.level")
 head(chol_tall)
+
 chol_tall <- chol_tall %>%
-  mutate(time.pt = factor(time.pt, levels=c("Before", "After4weeks", "After8weeks"),
+  mutate(time.pt = factor(time.pt, 
+                          levels=c("Before", "After4weeks", "After8weeks"),
                           labels=c("Before", "After 4 weeks", "After 8 weeks")))
 ```
 
-Note here change the variable `time.pt` to be a factor and we order the factors levels so they are sequential (in context)..
+Note here we have changed the variable `time.pt` to be a factor and we order the factors levels so they are contextually sequential (rather than alphabetical order).
+
 
 #### Exploratory Data Analysis
 
-We are now ready for some EDA.  A table of descriptive statistics by combinations of time and margarine group is our first cut:
+We are now ready for some EDA. A table of descriptive statistics by combinations of time and margarine group is our first cut:
 
 ```{r ch4-6}
 chol.summary <- chol_tall %>%
@@ -219,9 +310,12 @@ chol.summary <- chol_tall %>%
 kable(chol.summary)
 ```
 
-We generally observe that cholesterol levels with margarine A appear lower than with margarine B.  Also, there does appear to be some reduction in cholesterol level using both products: however, there also appears to be more unexplained variability (“noise”) in the cholesterol measurements under margarine A.  We can further check this using some data visualizations.  First let us try boxplots as seen in Figure \@ref(fig:ch4-7).
+We generally observe that cholesterol levels with margarine A appear lower than with margarine B. 
+Also, there does appear to be some reduction in cholesterol level using both products: however, there also appears to be more unexplained variability (“noise”) in the cholesterol measurements under margarine A. 
+We can further check this using some data visualizations. 
+First let us try boxplots (not appropriate given the design) as seen in Figure \@ref(fig:ch4-7).
 
-```{r ch4-7, fig.align='center', fig.cap='Boxplot distribution of the Cholesterol level as a function of Treatment and Time of measurement.',out.width='100%', fig.asp=0.55}
+```{r ch4-7, fig.align='center', fig.cap='Boxplot distribution of the Cholesterol level as a function of Treatment and Time of measurement.',out.width='80%', fig.asp=0.55}
 ggplot(chol_tall) +
   geom_boxplot(aes(x=time.pt, y=chol.level)) +
   facet_wrap(~Margarine) +
@@ -229,19 +323,25 @@ ggplot(chol_tall) +
   ylab("Cholesterol level (mmol/L)")
 ```
 
-We see in Figure \@ref(fig:ch4-7) that perhaps cholesterol levels are generally more consistent under margarine B, and that it is just some outlier(s) that are the issue.  However, this plot does not reveal a crucial piece of information: **the responses are correlated over time**.  A better depiction would allow us to see how each individual subject’s cholesterol changed over the span of the experiment as seen in Figure \@ref(fig:ch4-8).
+We see in Figure \@ref(fig:ch4-7) that perhaps cholesterol levels are generally more consistent under margarine B, and that it is just some outlier(s) that are the issue. 
+However, this plot does not reveal a crucial piece of information: **the responses are correlated over time**. 
+A better depiction would allow us to see how each individual subject’s cholesterol changed over the span of the experiment as seen in Figure \@ref(fig:ch4-8).
 
-```{r ch4-8, fig.align='center', fig.cap='Profile plots of the Cholesterol level as a function of Treatment and Time of measurement.',out.width='100%', fig.asp=0.55}
+```{r ch4-8, fig.align='center', fig.cap='Profile plots of the Cholesterol level as a function of Treatment and Time of measurement.',out.width='80%', fig.asp=0.55}
 # Plot the individual-level cholesterol profiles
 ggplot(chol_tall, aes(x=time.pt, y=chol.level, colour=Margarine, group=ID)) +
-  geom_line() + geom_point(shape=21, fill="white") + 
+  geom_line() + 
+  geom_point(shape=21, fill="white") + 
   facet_wrap(~Margarine) +
   xlab("Time Point of Measurement") +
   ylab("Cholesterol level (mmol/L)") +
   ggtitle("Subject-level cholesterol profiles by Margarine group")
 ```
 
-In Figure \@ref(fig:ch4-8) we see some things more clearly.  The general pattern over time appears to be pretty consistent for every experimental unit (visually, each “line” in the plot).  There are two individuals in margarine B whose cholesterol level seems unusually higher than the others: this might warrant further investigation. Now we provide an summary profile of the two treatments in \@ref(fig:ch4-9).
+In Figure \@ref(fig:ch4-8) we see some things more clearly. 
+The general pattern over time appears to be pretty consistent for every experimental unit (visually, each “line” in the plot). 
+There are two individuals in margarine B whose cholesterol level seems unusually higher than the others: this might warrant further investigation. 
+Now we provide an summary profile of the two treatments in \@ref(fig:ch4-9).
 
 ```{r ch4-9, fig.align='center', fig.cap='Average Profile of Cholesterol level by Treatment in Time.', out.width='70%', fig.asp=0.55}
 # we include a position_dodge elements to avoid overlap
@@ -256,7 +356,8 @@ ggplot(chol.summary, aes(x=time.pt, y=Mean, colour=Margarine)) +
 
 
 
-In the summary version (\@ref(fig:ch4-9)) we see that margarine A Cholesterol levels appear lower than margarine B. It is worth noting that the group assigned to margarine level A had lower cholesterol "before" the study began. 
+In the summary version (\@ref(fig:ch4-9)) we see that margarine A Cholesterol levels appear lower than margarine B. 
+It is worth noting that the group assigned to margarine level A had lower cholesterol "before" the study began. 
 
 #### Preliminary inferential analysis
 

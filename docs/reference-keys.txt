@@ -37,6 +37,14 @@ fig:ch4-8
 fig:ch4-9
 fig:ch4-12
 fig:ch4-14
+fig:ch5-1
+fig:ch5-2
+fig:ch5-3
+fig:ch5-6
+fig:ch5-9
+fig:ch6-9
+fig:ch6-10
+fig:ch6-12
 fig:ch11-1
 fig:ch11-2
 eq:poissonModel
@@ -104,6 +112,7 @@ further-study
 introduction-to-multiple-regression
 regression-model
 fitting-a-regression-model
+multiple-regression-example
 why-should-we-use-more-than-one-predictor
 interpreting-beta-parameter-estimates-in-mlr
 designed-experiments-1
