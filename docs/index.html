@@ -21,10 +21,10 @@
   <meta name="twitter:description" content="Covers Regression and elements of Design of Experiments in R using the tidyverse." />
   
 
-<meta name="author" content="Michael Hughes and Thomas Fisher" />
+<meta name="author" content="Michael R. Hughes and Thomas J. Fisher" />
 
 
-<meta name="date" content="2022-01-04" />
+<meta name="date" content="2022-01-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -211,7 +211,7 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="2.4" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#paired-t-test"><i class="fa fa-check"></i><b>2.4</b> Paired <span class="math inline">\(t\)</span>-test</a></li>
 <li class="chapter" data-level="2.5" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#one-way-anova"><i class="fa fa-check"></i><b>2.5</b> One-Way ANOVA</a></li>
-<li class="chapter" data-level="2.6" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#assumption-checking"><i class="fa fa-check"></i><b>2.6</b> Assumption Checking</a>
+<li class="chapter" data-level="2.6" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#assumptionCheck"><i class="fa fa-check"></i><b>2.6</b> Assumption Checking</a>
 <ul>
 <li class="chapter" data-level="2.6.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#independence"><i class="fa fa-check"></i><b>2.6.1</b> Independence</a></li>
 <li class="chapter" data-level="2.6.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#constant-variance"><i class="fa fa-check"></i><b>2.6.2</b> Constant Variance</a></li>
@@ -262,7 +262,7 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="6" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html"><i class="fa fa-check"></i><b>6</b> Inference regarding Multiple Regression</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#assumption-checking-1"><i class="fa fa-check"></i><b>6.1</b> Assumption checking</a></li>
+<li class="chapter" data-level="6.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#assumption-checking"><i class="fa fa-check"></i><b>6.1</b> Assumption checking</a></li>
 <li class="chapter" data-level="6.2" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#overall-f-test-for-model-signifance"><i class="fa fa-check"></i><b>6.2</b> Overall <span class="math inline">\(F\)</span>-test for model signifance</a></li>
 <li class="chapter" data-level="6.3" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#individual-parameter-inference"><i class="fa fa-check"></i><b>6.3</b> Individual parameter inference</a>
 <ul>
@@ -388,15 +388,15 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="header">
 <h1 class="title">Introduction to Statistical Modeling</h1>
-<p class="author"><em>Michael Hughes and Thomas Fisher</em></p>
-<p class="date"><em>2022-01-04</em></p>
+<p class="author"><em>Michael R. Hughes and Thomas J. Fisher</em></p>
+<p class="date"><em>2022-01-05</em></p>
 </div>
 <div id="preface" class="section level1 unnumbered">
 <h1>Preface</h1>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:dino"></span>
-<img src="introStatModeling_files/figure-html/dino-1.png" alt="Scatterplot resulting in the shape of a Tyrannusaurus [@R-datasauRus] with shaded Voronoi cells using the `ggvoronoi` package [@R-ggvoronoi]" width="576" />
+<img src="introStatModeling_files/figure-html/dino-1.png" alt="A 'fun' plot: A scatterplot resulting in the shape of a Tyrannusaurus [@R-datasauRus] with shaded Voronoi cells using the `ggvoronoi` package [@R-ggvoronoi]" width="576" />
 <p class="caption">
-Figure 0.1: Scatterplot resulting in the shape of a Tyrannusaurus <span class="citation">(<a href="#ref-R-datasauRus" role="doc-biblioref">Locke et al., 2018</a>)</span> with shaded Voronoi cells using the <code>ggvoronoi</code> package <span class="citation">(<a href="#ref-R-ggvoronoi" role="doc-biblioref">Garrett et al., 2019</a>)</span>
+Figure 0.1: A ‘fun’ plot: A scatterplot resulting in the shape of a Tyrannusaurus <span class="citation">(<a href="#ref-R-datasauRus" role="doc-biblioref">Locke et al., 2018</a>)</span> with shaded Voronoi cells using the <code>ggvoronoi</code> package <span class="citation">(<a href="#ref-R-ggvoronoi" role="doc-biblioref">Garrett et al., 2019</a>)</span>
 </p>
 </div>
 <p>This online text has been designed for <strong>STA 363 - Introduction to Statistical Modeling</strong> at Miami University.
@@ -407,12 +407,16 @@ Future iterations will improve some coding examples and provide more references.
 <blockquote>
 <p>Applications of statistics using regression and design of experiments techniques. Regression topics include simple linear regression, correlation, multiple regression and selection of the best model. Design topics include the completely randomized design, multiple comparisons, blocking and factorials.</p>
 </blockquote>
-<p>The book and course have been designed to be a follow-up to a standard introductory statistics course (in many ways, this course can be considered “Intro Stat 2”). The course and text assumes the reader has a solid foundation in two-sample inference and some basic computing skills.</p>
-<p>The book mixes statistical background with applications using the R Project for Statistical Computing <span class="citation">(<a href="#ref-R-base" role="doc-biblioref">R Core Team, 2019</a>)</span>. We have attempted to perform all data processing and analysis in this text using the <em>tidyverse</em>; thus all plots and functionality should follow the new grammar in R (<em>ggplot</em> and <code>%&gt;%</code> type code).</p>
+<p>The book and course have been designed to be a follow-up to a standard introductory statistics course (in many ways, this course can be considered “Intro Stat 2”).
+The course and text assumes the reader has a solid foundation in two-sample inference and some basic computing skills.</p>
+<p>The book mixes statistical background with applications using the R Project for Statistical Computing <span class="citation">(<a href="#ref-R-base" role="doc-biblioref">R Core Team, 2019</a>)</span>.
+We have attempted to perform all data processing and analysis in this text using the <em>tidyverse</em>; thus all plots and functionality should follow the new grammar in R (<em>ggplot</em> and <code>%&gt;%</code> type code).</p>
 <p>The book was designed with 13 chapters with the intent to be used during the 14-week semester at Miami University (one week reserved for midterm examination and end-of-semester review).
-The first chapter reviews introductory statistics material and provides a crash course in the basics of R and making plots with <code>ggplot2</code> <span class="citation">(<a href="#ref-R-ggplot2" role="doc-biblioref">Wickham, 2016</a>)</span>.
-Chapters 2, 3 and 4 extend the idea of two-sample inference into the design setting, presenting all inference in the form of a linear model.
-Chapters 5–10 cover the <em>classic</em> topics around multiple linear regression.
+The first chapter is comprehensive.
+It reviews introductory statistics material and provides a crash course in the basics of R and making plots with <code>ggplot2</code> <span class="citation">(<a href="#ref-R-ggplot2" role="doc-biblioref">Wickham, 2016</a>)</span>.
+Chapter 2 extends the idea of two-sample inference into multiple samples and introduces key concepts of experimental design.
+Chapters 3 and 4 cover some advanced design ideas (multiple factors, blocking and repeated measures), presenting all inference in the form of a linear model.
+Chapters 5–10 cover the <em>classic</em> topics around multiple linear regression as well as some <em>data science</em> concepts (prediction, variable selection and model validation).
 Chapters 11 and 12 provides an overview of statistical odds and logistic regression.
 Chapter 13 provides an overview of Generalized Linear Modeling with examples of both Poisson and Negative Binomial regression.</p>
 </div>

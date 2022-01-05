@@ -44,13 +44,13 @@ In Figure \@ref(fig:ch3-field-random) the treatments have been randomly assigned
 However, by random chance we note that treatment "C" has 4 of its 6 replicates in proximity to the stream, with the remaining 2 next to the forest. 
 A block design looks to address this limitation of randomization when there are suspected (known) confounding effects.
 
-A **block** is defined to be “a relatively homogeneous set of experimental material.” 
+A **block** is defined to be "a relatively homogeneous set of experimental material." 
 This essentially means that we would like to be able to assess the treatment effects without undue influence from a contaminating or confounding factor, such as land fertility.
 One way to do this would be to apply all the different treatments (e.g., the three plant varieties) to the same area of the field.
 Within one area (say next the creek in Figures \@ref(fig:ch3-field) and \@ref(fig:ch3-field-random)), we should see consistency in natural fertility levels.
 Thus any differences observed in a measured response (such as crop yield) between plant varieties will not be due to variation in fertility levels, but rather due to the different plant varieties themselves.
 
-A bock design is one that attempts to reduce the noise in the measured response in order to “clarify” the effect due to the treatments under study.
+A bock design is one that attempts to reduce the noise in the measured response in order to "clarify" the effect due to the treatments under study.
 
 A **randomized block design** in the field study would be conducted in the following way: 
 
@@ -67,10 +67,10 @@ Figure \@ref(fig:ch3-field-block) displays a randomized complete block design fo
 knitr::include_graphics('chap3_field_blocked.png')
 ```
 
-A good experimental design will be able to “parse out” the variability due to potential confounding factors, and thus give clarity to our assessment of the factor of interest.
+A good experimental design will be able to "parse out" the variability due to potential confounding factors, and thus give clarity to our assessment of the factor of interest.
 A block design can accomplish this task.
 
-**What can serve as a block?**  It is important to note that subjects (i.e., experimental units) themselves may form blocks in a block design.  It is also possible that different experimental units may collectively form a “block”.  It depends on the circumstances.  All that is needed is that a block, however, formed, creates a “relatively homogeneous set of experimental material.”
+**What can serve as a block?**  It is important to note that subjects (i.e., experimental units) themselves may form blocks in a block design.  It is also possible that different experimental units may collectively form a "block".  It depends on the circumstances.  All that is needed is that a block, however, formed, creates a "relatively homogeneous set of experimental material."
 
 **An example.** You've already seen the concept of a block design! Consider the paired *t*-test included in Section \@ref(paired-t-test). There, the individual vehicles are essentially treated as blocks. 
 We observe two responses within each block (or vehicle).
@@ -211,7 +211,7 @@ In a factorial design, you would observed a total of nine treatments, each of wh
 Note how quickly things will grow if you have more than two factors!
 
 In this design, the data are usually obtained by collecting a random sample of individuals to participate in the study, and then randomly allocating a single treatment to each of the study participants as in a one-way design structure. 
-The only difference now is that a “treatment” consists of a combination of different factors. 
+The only difference now is that a "treatment" consists of a combination of different factors. 
 If there are two factors, the data may be analyzed using a two-way ANOVA.
 
 The two-way data structure with two factors $\mathbf{A}$ and $\mathbf{B}$ looks like the following:
@@ -307,7 +307,7 @@ While there may be some issue with constant variance, it does not appear to be s
 At this point, we can also generate tables of response means after we fit the interaction model.
 These consist of:
 
-* The “grand mean” (overall mean, all data pooled together and estimate $\mu$).
+* The "grand mean" (overall mean, all data pooled together and estimate $\mu$).
 * Main effect means (i.e. means for each factor level, taken one factor at a time).
 * Interaction means (i.e. treatment means for all factor combinations).
 
@@ -327,7 +327,7 @@ summary(twoway.fit)
 **The first test to inspect is the interaction test.** The interaction is insignificant ($F$ = 0.0024, $\textrm{df}_1$ = 1, $\textrm{df}_2$ = 12, $p$-value = 0.9617). Thus, we could conclude the effect that dosage has on the mean alertness level does not depend on gender.
 
 A visualization of the interaction effect may be obtained using an interactions plot. 
-An interaction plot is basically a plot of treatment means, whereby the means for all treatments having a given fixed level of one of the factors are visually “connected”. 
+An interaction plot is basically a plot of treatment means, whereby the means for all treatments having a given fixed level of one of the factors are visually "connected". 
 We can build the interaction plot seen in Figure \@ref(fig:ch3-10) using aesthetic options in `ggplot()` and with the `stat_summary` functions. 
 Note both `color` and `group` are determined based on the `gender` variable.
 
@@ -340,9 +340,9 @@ ggplot(twowaydrug, aes(x=dosage, y=alertness, color=gender, group=gender) ) +
 There are two treatment mean traces, one for each gender. 
 Each trace connects the mean alertness level of the dosage within each gender level.
 
-**The lack of significant interaction is evidenced by the parallelism of these traces:** the gender effect for 10mg dosage is depicted by the “gap” between the traces on the left. 
+**The lack of significant interaction is evidenced by the parallelism of these traces:** the gender effect for 10mg dosage is depicted by the "gap" between the traces on the left. 
 Similarly, the gender effect for the 25mg dosage is depicted by the gap between the traces at the far right. 
-Note that these two “gaps” are of roughly the same size (which happens when the traces are parallel): this means that the effect of dose within females is about the same as the effect of dose within males.
+Note that these two "gaps" are of roughly the same size (which happens when the traces are parallel): this means that the effect of dose within females is about the same as the effect of dose within males.
 
 In other words, the effect of dose does not depend on gender. 
 This is the textbook definition of non-interaction between dose and gender in determining mean alertness.
@@ -374,7 +374,6 @@ The response variable `len` is tooth length.
 The two-way data structure here looks like this:
 
 ```{r tooth_table, echo=FALSE}
-# knitr::include_graphics("designTable.png")
 tab <- data.frame("Supplement" = c("Orange Juice", "Vitamin C"),
                   "0.5 mg" = c("Treatment 1", "Treatment 4"),
                   "1.0 mg" = c("Treatment 2", "Treatment 5"),
@@ -432,7 +431,7 @@ Remember the strategy we introduced earlier:
     a. **If interaction is significant, you must look at comparisons in terms of treatment combinations; i.e., you cannot separate the effects of $A$ and $B$**.
     b. If interaction is non-significant, you may delete the interaction term from the model, fitting a reduced main-effects model. Then (and only then) may you look at the effects of $A$ and $B$ separately.
 
-**Performing multiple comparisons. **In the case of a significant interaction effect in a two-factor ANOVA model, we typically follow up by performing multiple comparisons for the levels of one of the factors while holding the other factor fixed (the “conditioning” factor). 
+**Performing multiple comparisons. **In the case of a significant interaction effect in a two-factor ANOVA model, we typically follow up by performing multiple comparisons for the levels of one of the factors while holding the other factor fixed (the "conditioning" factor). 
 So for example, in the present problem we could either
 
 * Compare the supplements at each of the dose levels (3 tests total), or

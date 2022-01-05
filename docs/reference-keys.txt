@@ -14,9 +14,11 @@ eq:twoSampleTtest
 fig:ch2-5
 fig:ch2-7
 fig:ch2-7annotated
+eq:onewayAnovaModel
 fig:ch2-8
 fig:ch2-10
 fig:ch2-11
+fig:ch2-12
 fig:ch2-13
 fig:ch2-17
 fig:ch2-19
@@ -42,6 +44,7 @@ fig:ch5-2
 fig:ch5-3
 fig:ch5-6
 fig:ch5-9
+fig:ch6-1
 fig:ch6-9
 fig:ch6-10
 fig:ch6-12
@@ -83,7 +86,7 @@ elements-of-a-designed-experiment
 confounding
 paired-t-test
 one-way-anova
-assumption-checking
+assumptionCheck
 independence
 constant-variance
 checking-normality
@@ -118,7 +121,7 @@ interpreting-beta-parameter-estimates-in-mlr
 designed-experiments-1
 observational-studies-1
 inference-regarding-multiple-regression
-assumption-checking-1
+assumption-checking
 overall-f-test-for-model-signifance
 individual-parameter-inference
 t-tests

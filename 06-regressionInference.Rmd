@@ -1,81 +1,133 @@
 # Inference regarding Multiple Regression
 
-We now start the discussion of using the least squares simple linear regression model for the purpose of statistical inference about the parent population from which the sample was drawn.  Remember that by “inference,” we mean finding relevant confidence intervals or running hypothesis tests about various aspects of the modeled relationship. After this unit, you should be able to
+We now start the discussion of using the least squares simple linear regression model for the purpose of statistical inference about the parent population from which the sample was drawn.
+Remember that by "inference," we mean finding relevant confidence intervals or running hypothesis tests about various aspects of the modeled relationship.
+After this unit, you should be able to
 
-* Statistically determine if a model significantly predicts a response variable
-* Test each predictor variable's ability to significantly predict the response and measure its impact with a confidence interval
-* Determine the amount of variation in the response variable explained by the model
+* Statistically determine if a model significantly predicts a response variable.
+* Test each predictor variable's ability to significantly predict the response and measure its impact with a confidence interval.
+* Determine the amount of variation in the response variable explained by the model.
 
 ## Assumption checking
 
-Any time we run a hypothesis test or build a confidence interval in the context of a regression analysis, the validity of the findings depends on several assumptions being met.  These assumptions need to be checked **in advance** using regression diagnostics.  Think of diagnostics as preventative medicine for your data.
+Any time we run a hypothesis test or build a confidence interval in the context of a regression analysis, the validity of the findings depends on several assumptions being met.
+These assumptions need to be checked **in advance** using regression diagnostics.
+Think of diagnostics as preventative medicine for your data.
 
 The five collective assumptions for a standard regression models are as follows:
 
+* **Linearity assumption**: We assume that the structural part of the linear regression model is correctly specified.
 * **Error assumptions**:
     1. The errors are independent (the independence assumption) 
     2. The errors have homogeneous variance (the constant variance assumption)
     3. The errors are normally distributed (the normality assumption)
-* **Linearity assumption**: We assume that the structural part of the linear regression model is correctly specified.
-* **Unusual observations**: Occasionally, a few observations may not fit the model well.  These have the potential to dramatically alter the results, so we should check for them and investigate their validity.
+* **Unusual observations**: Occasionally, a few observations may not fit the model well. These have the potential to dramatically alter the results and may cause violations to the assumpiongs above. So we should check for them and investigate their validity.
 
-You'll note these assumptions are nearly identical to those we discussed in experimental design. We will diagnose the assumptions in a similar fashion.
+You'll note these assumptions are nearly identical to those we discussed in experimental design.
+We will diagnose the assumptions in a similar fashion.
 
 Recall from earlier that the general form of a model is 
 
 $$\textbf{Data} = \textbf{Systematic Structure} + \textbf{Random Variation}$$
 
-Since modeling seeks to identify structure in the data, the goal of a good model is to capture most (if not all) of the structure in the first partition, leaving nothing but random noise in the “leftovers”.  *All of our assumptions deal, in one way or another, with studying the random variation component via inspection of the residuals from a fitted model.*  The motivation is that if all things are satisfactory, there should be no structure, pattern or systematic behavior remaining in the errors.
+Since modeling seeks to identify structure in the data, the goal of a good model is to capture most (if not all) of the structure in the first partition, leaving nothing but random noise in the "leftovers". 
+*All of our assumptions deal, in one way or another, with studying the random variation component via inspection of the residuals from a fitted model.*
+The motivation is that if all things are satisfactory, there should be no structure, pattern or systematic behavior remaining in the errors.
 
-Diagnostic techniques can be either graphical or numerical, but **we will focus on graphical diagnostics of the assumptions**.  *The important thing to keep in mind when you fit a regression model is that the first model you try might prove to be inadequate.  Regression diagnostics often suggest improvements or remedies, which means that model building is an iterative and interactive process.*  It is quite common to repeat diagnostics on a succession of models fit to the same data.
+Diagnostic techniques can be either graphical or numerical, but **we will focus on graphical diagnostics of the assumptions**.
+*The important thing to keep in mind when you fit a regression model is that the first model you try might prove to be inadequate.*
+*Regression diagnostics often suggest improvements or remedies, which means that model building is an iterative and interactive process.*
+It is quite common to repeat diagnostics on a succession of models fit to the same data.
 
-This section is only meant to provide you with the means to run a cursory check of the assumptions in a simple linear regression problem.  We will deal with specific issues and remedies for addressing assumption violations in more detail later in the book.
+This section is only meant to provide you with the means to run a cursory check of the assumptions in a rudimentary linear regression problem.
+We will deal with specific issues and remedies for addressing assumption violations in more detail later in the text.
 
-**Example** Muscle mass.  Consider the age and muscle mass dataset from earlier. Before using the muscle mass regression model to perform tests/CIs about the mass vs. age relationship, check the regression assumptions. This can be achieved by using the `autoplot()` function on the fitted `lm` object.
+**Example** Muscle mass.
+Consider the age and muscle mass dataset from earlier.
+Before using the muscle mass regression model to perform tests/CIs about the mass vs. age relationship, check the regression assumptions. This can be achieved by using the `autoplot()` function on the fitted `lm` object and results in Figure \@ref(fig:ch6-1).
 
-```{r ch6-1}
+```{r ch6-1-noeval, eval=FALSE}
+site <- "https://tjfisher19.github.io/introStatModeling/data/musclemass.txt"
+muscle <- read_table(site, col_type=cols())
 muscle.fit <- lm(mass ~ age, data=muscle)
+```
+
+```{r ch6-1, message=FALSE, fig.align='center', fig.cap='Residual plots for the simple linear regression modelling muscle mass as a function of age - Top-left a Residuals vs Fitted Plot; Top-right a Normal Q-Q plot of the residuals; Bottom-left the Scale-Location plot; and Bottom-right a Residuals vs Leverage plot.', fig.asp=1, out.width='80%'}
 autoplot(muscle.fit)
 ```
 
-The QQ-Plot assesses normality of the $\varepsilon$ terms (we wish for the empirical quantiles to closely match the theoretical, resulting in a fairly straight line). Constant variance is assessed based on the other three plots (should see no systematic patterns in the residuals) and independence is determined based on the design of our experiment or data collection procedure.
-
 **Linearity assumption**
 
-We have fit a straight-line model to the data.  If the actual trend that relates muscle mass to age is linear, then this way of defining the structural part of the model should adequately explain all the systemic trends in the data.  If it is not adequate, then we would still be observing trend in the residuals.  
+We have fit a straight-line model to the data.
+If the actual trend that relates muscle mass to age is linear, then this way of defining the structural part of the model should adequately explain all the systemic trends in the data.
+If it is not adequate, then we would still be observing trend in the residuals.  
 
-To check, we return to the Residuals vs Fitted plot, specifically, the trend line in this plot.  If the linearity assumption were being met, the residuals should bounce randomly around the $e_i = 0$ line, resulting in a roughly flat (horizontal) smoother.  The subtle curvature in this line here suggests that we might need to fit a model that accommodates curvature in the response/predictor relationship.  That is, the linearity assumption here seems to be mildly violated.
+To check this assumption, we return to the Residuals vs Fitted plot.
+Specifically, the smoothed trend line in this plot (the blue line).
+If the linearity assumption is met, the residuals should bounce randomly around the $e_i = 0$ line, resulting in a roughly flat (horizontal) smoother.
+Generally, look for clear systematic patterns in that smoother.
+The subtle curvature in this line here suggests that we **might** need to fit a model that accommodates curvature in the response/predictor relationship.
+That is, the linearity assumption here seems to be **mildly** violated.
+
+**Error Assumptions**
+
+The three assumptions regarding the random noise component (or errors) are the same as those discussed in Section \@ref(assumptionCheck).
+
+Independence is determined based on the design of our experiment or data collection procedure -- here we must rely on the scientist who conducted this study and assume the sampled individuals were chosen at random and are representative of the target population (adult women).
+
+Constant variance is assessed based on the other three plots -- we should see no systematic patterns in the residuals. 
+Except for observation 56 (which may be an outlier), we note no visible pattern to the residuals in any of the plots.
+So we have no real concern about a violation in the constant variance assumption.
+
+Lastly, the QQ-Plot assesses normality of the $\varepsilon$ terms -- we wish for the empirical quantiles to closely match the theoretical, resulting in a fairly straight line. 
+Here we note some slight deviation from the 45-degree line but nothing overly concerning.
+
+**Warning:** When first studying and practicing statistics, many practitioners will fixate on a few single obsevations when exploring these plots. 
+Don't let your eyes fool you and don't fixate on a few points that appear just a *little* different.
+When they are greatly different, this can be a concern.
 
 **Unusual observations**
 
 In regression, there are two basic classifications of unusual observations:
 
-1.	**Outliers.**  These are relatively isolated observations that are poorly predicted by the fitted model, i.e. observations that are “extreme” in the $Y$s.  Outliers can inflate the SE of the residuals, resulting in the potential masking of truly significant effects and confidence intervals that are too wide. Outliers are determined by looking at each point’s standardized residual value, denoted $r_i$, and is considered high if $r_i > |3|$.
+1. **Outliers.** These are relatively isolated observations that are poorly predicted by the fitted model; i.e., observations that are "extreme" in the $Y$s. Outliers can inflate the standard errors of the residuals, resulting in the potential masking of truly significant effects and confidence intervals that are too wide. Outliers are determined by looking at each point's standardized residual value, denoted $r_i$, and is considered high if $r_i > |3|$.
 
-2.	**High-leverage points.**  These are observations whose predictor values are far from the center of the predictor space, i.e. observations that are unusually “extreme” in $X$.  High-leverage points have the potential to exert greater influence on the estimation of the $\beta$-coefficients in our model.  Leverage is measured by something known as a hat value, denoted $h_i$, and is considered high if $h_i > 2p/n$.
+2. **High-leverage points.** These are observations whose predictor values are far from the center of the predictor space; i.e., observations that are unusually "extreme" in $X$. High-leverage points have the potential to exert greater influence on the estimation of the $\beta$-coefficients in our model. Leverage is measured by something known as a hat value, denoted $h_i$, and is considered high if $h_i > 2p/n$.
 
-The plot labeled Residuals vs Leverage (in the lower right hand corner of the diagnostic plot quartet) provides a nice visualization of both the standardized residuals and hat values.  Suspect points are flagged in R by their observation number.  Observation 53 appears to be a potential outlier.  Since none of the leverage values appear to be above $2p/n = 4/60 = 0.0667$, we do not have any high leverage points.  
+The plot labeled Residuals vs Leverage (in the lower right hand corner of the diagnostic plot quartet) provides a nice visualization of both the standardized residuals and hat values.
+Potentially suspicious points are flagged in R by their observation number.
+Observation 53 appears to be a potential outlier with a value close to 3.
+Since none of the leverage values appear to be above $2p/n = 4/60 = 0.0667$, we do not have any high leverage points.  
 
-We will discuss this phenomenon later when we learn about Cook’s Distance.
+We will discuss these concepts in more detail later when we learn about Cook’s Distance.
 
 
 ## Overall $F$-test for model signifance
 
-Before proceeding to investigating the effects of the individual predictors one at a time, we usually perform a “whole-model” test to first confirm that there is merit (i.e. “utility”) to the model.  This is in essence testing the following hypotheses:
+Before proceeding to investigating the effects of the individual predictors one at a time, we usually perform a "whole-model" test to first confirm that there is merit (i.e. "utility") to the model.
+This is in essence testing the following hypotheses:
 
-$H_0:$ none of the predictor variables ($X_i$’s) are useful in determining the response
+$H_0:$ none of the predictor variables ($X_i$’s) are useful in determining the response.
 
-$H_a:$ at least one of the predictor variables is useful in determining the response
+versus
 
-Since the general form of the model is $Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_k X_k + \varepsilon$, these hypotheses can be equivalently written in terms of the model’s $\beta$-parameters as follows:
+$H_a:$ at least one of the predictor variables is useful in predicting the response.
+
+Since the general form of the model is $Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_k X_k + \varepsilon$, these hypotheses can be equivalently written in terms of the model's $\beta$-parameters as follows:
 
 $$H_0: \beta_1 = \beta_2 = \ldots = \beta_k = 0 ~~~~\textrm{vs.}~~~~ H_a: \textrm{at least one} \beta_i \neq 0$$
 
-One way of thinking about testing this null hypothesis is to think about fitting two models to the data, one using all the predictors (the ‘full” model), and the other using none of the predictors (a “reduced” null model), and seeing if there is a significant difference between them.  Thinking this way, the hypotheses may be rewritten again as:
+One way of thinking about testing this null hypothesis is to think about fitting two models to the data, one using all the predictors (the "full" model), and the other using none of the predictors (a *reduced* "null" model), and seeing if there is a significant difference between them.
+Thinking this way, the hypotheses may be rewritten again as:
 
 $$H_0: \textrm{the model is } Y = \beta_0 + \varepsilon ~~\textrm{vs.}~~ H_a: \textrm{the model is } Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_k X_k + \varepsilon$$
     
-We now construct a test statistic that compares the residual variance of the two models.  We fit both the full $H_a$ model and the reduced $H_0$ model and obtain their respective residual sums of squares values.  It is a mathematical fact that $RSS_{H_a} \geq RSS_{H_0}$ (thought exercise: why?), so if the difference $RSS_{H_a}-RSS_{H_0}$ is small, then the fit of the reduced $H_0$ model is almost as good as the full $H_a$ model, so we would prefer the reduced model on the basis of simplicity. On the other hand, if the difference is large, then the superior fit of the full $H_a$ model would be preferred.  If we scale this difference by how much error variation was in the full model in the first place, then this suggests that something like
+We now construct a test statistic that compares the residual variance of the two competing models.
+We fit both the "full" $H_a$ model and the reduced "null" $H_0$ model and obtain their respective residual sums of squares values.
+It is a mathematical fact that $RSS_{H_a} \geq RSS_{H_0}$ (thought exercise: why?).
+If the difference $RSS_{H_a}-RSS_{H_0}$ is small, then the fit of the reduced "null" $H_0$ model is almost as good as the "full" $H_a$ model, so we would prefer the reduced model on the basis of simplicity.
+On the other hand, if the difference is large, then the superior fit of the full $H_a$ model would be preferred.
+If we scale this difference by how much error variation was in the full model in the first place, then this suggests that something like
 
 $$\frac{\textrm{Reduction in error variance, }H_0 \textrm{ model} \rightarrow H_a\textrm{ model}}{\textrm{Error variance in }H_a \textrm{ model}} \leftrightarrow \frac{RSS_{H_a}-RSS_{H_0}}{RSS_{H_a}}$$
 
@@ -86,15 +138,18 @@ In practice, we will use what is known as **ANOVA F-statistic** to compare the n
 
 $$F = \frac{\left(RSS_{H_a}-RSS_{H_0}\right)/\left(\textrm{error }df_{H_a} - \textrm{error } df_{H_0}\right)}{RSS_{H_a}/\textrm{error } df_{H_a}}$$
 
-Under the usual regression assumptions, this $F$-ratio follows a sampling distribution known as an $F$-distribution.  $F$-distributions have two parameters: the degrees of freedom for the numerator, and the degrees of freedom for the denominator. Yes, it is the same underlying test as that in ANOVA from experimental design!
+Under the usual regression assumptions, this $F$-ratio follows a sampling distribution known as an $F$-distribution.
+The $F$-distribution has two parameters: the degrees of freedom for the numerator, and the degrees of freedom for the denominator.
+**Yes, it is the same underlying test as that in ANOVA from experimental design!**
 
-$F$-statistics are the standard method for comparing two variances.  Here’s what could happen:
+$F$-statistics are the standard method for comparing two variances.
+Here's what could happen:
 
-* If $F$ is too large, we reject $H_0$ in favor of $H_a$ and conclude that at least one of the predictor variables is useful in determining the response (i.e. at least one $\beta_i \neq 0$).
+* If $F$ is too large, we reject $H_0$ in favor of $H_a$ and conclude that at least one of the predictor variables is useful in determining the response (*i.e.*, at least one $\beta_i \neq 0$).
 
-* If $F$ is small, fail to reject $H_0$ in favor of $H_a$ and conclude that there is insignificant evidence to conclude that at least one of the predictor variables is useful in determining the response.
+* If $F$ is small, we fail to reject $H_0$ in favor of $H_a$ and conclude that there is insignificant evidence to conclude that at least one of the predictor variables is useful in determining the response.
 
-The “whole-model” F-test for model utility is generally assessed first when fitting a model.  
+The "whole-model" $F$-test for model utility is generally assessed first when fitting a model.  
 
 **Example. Property Appraisals.** 
 
@@ -109,28 +164,30 @@ appraisal.fit <- lm(saleprice ~ landvalue + impvalue + area, data=appraisal)
 summary(appraisal.fit)
 ```
 
-The $F$-statistic on 3 and 16 degrees of freedom is 46.72, with *p*-value < 0.0001. We reject $H_0$ and conclude at least one predictor is useful for predicting sales price.  
+The $F$-statistic on 3 and 16 degrees of freedom is 46.72, with $p$-value $< 0.0001$. We reject $H_0$ and conclude at least one predictor is useful for predicting sales price.  
 
 
 Two things to be aware of:
 
-1. What if we fail to reject $H_0$?  Does that mean that none of the predictors matter?  No.  A failure to reject the null hypothesis is not the end of the game — you may just have insufficient data to detect any real effects, which is why we must be careful to say “fail to reject” the null rather than “accept” the null.  It would be a mistake to conclude that no real relationships exist.  We may have misspecified the structural form of the model or there may be unusual observations obscuring a real effect.
+1. What if we fail to reject $H_0$? Does that mean that none of the predictors matter? No -- A failure to reject the null hypothesis is not the end of the game — you may just have insufficient data to detect any real effects, which is why we must be careful to say "fail to reject" the null rather than "accept" the null. It would be a mistake to conclude that no real relationships exist. We may have misspecified the structural form of the model or there may be unusual observations obscuring a real effect.
 
-2. What if we reject $H_0$?  By the same token, when $H_0$ is rejected, this does not mean that we have found the best model.  All we can say if that at least one of the predictors is useful.  We don’t know whether all the predictors are required to predict the response, or just some of them. Other predictors might also be added. Either way, the omnibus $F$-test is just the beginning of an inferential analysis, not the end.  What follows next are the more detailed assessments of the individual predictors.
+2. What if we reject $H_0$? By the same token, when $H_0$ is rejected, this does not mean that we have found the best model. All we can say is that at least one of the predictors is useful. We do not know whether all the predictors are required to predict the response, or just some of them. Other predictors might also be added and may be helpful. Either way, the omnibus $F$-test is just the beginning of an inferential analysis, not the end. What follows next are the more detailed assessments of the individual predictors.
 
 
 
 ## Individual parameter inference
 
-After running a whole-model $F$-test and determining that the fitted model has utility (i.e. if we rejected $H_0: \beta_1 = \beta_2 = \ldots = \beta_k = 0$), we may proceed to running tests or finding confidence intervals for the individual $\beta_i$ parameters.  These inferences may be used to
+After running a whole-model $F$-test and determining that the fitted model has utility (*i.e.*, if we rejected $H_0: \beta_1 = \beta_2 = \ldots = \beta_k = 0$), we may proceed to running tests or finding confidence intervals for the individual $\beta_i$ parameters.
+These inferences may be used to
 
-* Determine which predictors are significant predictors of the mean response
-* Estimate the size of the partial effect of each predictor on the response
-* “Streamline” the model through the removal of insignificant predictors
+* Determine which predictors are significant predictors of the mean response.
+* Estimate the size of the partial effect of each predictor on the response.
+* "Streamline" the model through the removal of insignificant predictors.
 
-The last point above will serve as our first taste of model building, i.e. the “arts and crafts” aspect of tweaking a model so that it best explains the observed patterns and trends in the data.  There will be much more on this later, but for now we can at least see a bit of it in action.
+The last point above will serve as our first taste of model building, *i.e.*, the "arts and crafts" aspect of tweaking a model so that it best explains the observed patterns and trends in the data.
+There will be much more on this later, but for now we can at least see a bit of it in action.
 
-The calculated values of $b_i$ are just point estimates of the true values $\beta_i$ for the population relationship.  $\beta_i$ is an unknown parameter, so we use our estimate $b_i$ to build confidence intervals or run hypothesis tests about $\beta_i$ (much like in Intro stat when you used $\bar{x}$ as a proxy for $\mu$).  While $\beta_0$ is usually of limited interest (and only in specific circumstances), the remaining $\beta_i$ terms are critical parameters because it measures the “true” linear rate of change in $Y$ as $X_i$ is increased by one unit.  
+The calculated values of $b_i$ are just point estimates of the true values $\beta_i$ for the population relationship.  $\beta_i$ is an unknown parameter, so we use our estimate $b_i$ to build confidence intervals or run hypothesis tests about $\beta_i$ (much like in Intro stat when you used $\bar{x}$ as a proxy for $\mu$).  While $\beta_0$ is usually of limited interest (and only in specific circumstances), the remaining $\beta_i$ terms are critical parameters because it measures the "true" linear rate of change in $Y$ as $X_i$ is increased by one unit.  
 
 
 
@@ -187,7 +244,7 @@ The quality of the fit of this model is comparable, albeit a bit worse, to the m
 
 * The residual SE has increased from $s$ = 7915 to $s$ = 8269.  In other words, the quality of `saleprice` predictions suffers somewhat by deleting `landvalue` as a predictor, even though it is statistically insignificant. For this reason, we may wish to retain it.
 
-This is actually a wise method of determining the “value” of a predictor to the model. Another (equivalent) way is to look at the adjusted $R^2$ values for the two models. We will cover that aspect shortly.
+This is actually a wise method of determining the "value" of a predictor to the model. Another (equivalent) way is to look at the adjusted $R^2$ values for the two models. We will cover that aspect shortly.
 
 
 ### Confidence Intervals
@@ -222,7 +279,7 @@ $$\hat{Y} = 156.35 - 1.19(65) = 79.0$$
 
 However, as good statisticians we know that the above result is not sufficient.  Remember: it’s only an estimate of $\mu_{Y|X=65}$, the true mean muscle mass of women age 65.  We would like to construct confidence limits around this estimate to get an idea of its precision.  
 
-There are actually two kinds of “prediction” that can be made using $\hat{Y}$ as our point estimate.  The distinction is between 
+There are actually two kinds of "prediction" that can be made using $\hat{Y}$ as our point estimate.  The distinction is between 
 
 * prediction of the mean response value at a given $X$ value
 * prediction of a future individual response at a given $X$ value  
@@ -271,7 +328,7 @@ Two things you should notice:
 
 The below code will plot the fitted line with the confidence and prediction bands as seen in Figure \@ref(fig:ch6-9).
 
-```{r ch6-9, message=FALSE, fig.align='center', fig.cap='Scatterplot with regression line, confidence bands and prediction bands.', fig.asp=0.55, out.width='80%'}
+```{r ch6-9, message=FALSE, fig.align='center', fig.cap='Scatterplot with regression line (blue line), confidence bands (dark gray) and prediction bands (light gray).', fig.asp=0.55, out.width='80%'}
 muscle.bands <- muscle.trim %>%
   mutate(ci.lo = predict(muscle.fit, newdata=muscle.trim, int="conf")[,2],
          ci.hi = predict(muscle.fit, newdata=muscle.trim, int="conf")[,3],
@@ -308,9 +365,9 @@ In summary, don’t extrapolate because:
 The two plots in Figure \@ref(fig:ch6-10) below illustrate these points.
 Suppose you only observe the data in the narrow range around $X = 0$ as shown in the left hand plot.
 If you fit a line to these data, you get the observed trend (and confidence bands).
-However, if the true nature of the relationship outside this narrow range were radically different (and you do not know this because you collected no data outside your “narrow” range), then extrapolating beyond your limited view of the relationship may produce wildly inaccurate predictions (see the right side plot).
+However, if the true nature of the relationship outside this narrow range were radically different (and you do not know this because you collected no data outside your "narrow" range), then extrapolating beyond your limited view of the relationship may produce wildly inaccurate predictions (see the right side plot).
 
-```{r ch6-10, echo=FALSE, message=FALSE, fig.align='center', fig.cap='Scatterplot with regression line demonstrating the fanning of confidence and prediction bands (left) and the dangers of extrapolation (right).', fig.asp=0.55, out.width='80%'}
+```{r ch6-10, echo=FALSE, message=FALSE, fig.align='center', fig.cap='Scatterplot with regression line demonstrating the fanning of prediction bands (left) and the dangers of extrapolation (right).', fig.asp=0.55, out.width='80%'}
 set.seed(1)
 x <- runif(80, -15, 10)
 y <- -(x+5)^2 + rnorm(80, sd=7)
@@ -357,7 +414,7 @@ $$\mathbf{Data} = \mathbf{Systematic Structure} + \mathbf{Random Variation}$$
 and thinking of partitioning the variation in the response values data (i.e. the $y$-values) into the two corresponding components:
 
 * Variation explained by the structural relationship between $y$ and the predictor(s);
-* Variation left unexplained by the model (i.e. variation due to “error”).
+* Variation left unexplained by the model (i.e. variation due to "error").
 
 We use sums of squares as the basis of the partitioning of variability.  The idea is that if the model explains the response variation well, then there should be relatively little error variation left over, that is, RSS should be relatively small.
 We start as follows:
@@ -367,7 +424,7 @@ We start as follows:
 
 Formulaically, $TSS = \sum_{i=1}^n (y_i - \bar{y})^2$ and $RSS = \sum_{i=1}^n (y_i - \hat{y}_i)^2$.
 
-Figure \@ref(fig:ch6-12) below is a graphic illustrating how one may think of “sizing” these two quantities.
+Figure \@ref(fig:ch6-12) below is a graphic illustrating how one may think of "sizing" these two quantities.
 The picture shows a simulated data example where there is a clearly strong linear trend.
 You can see that once you account for the linear trend element (which explains a lot of what you see in the plot), the relative size of the leftover residual variation is low, i.e. RSS is the much smaller partition of the total sums of squares.
 
@@ -396,7 +453,7 @@ $$TSS = SS(model) + RSS$$
 
 ### Coefficient of determination
 
-A basic descriptor of the “goodness of fit” for our model is the given by the ratio of the model sums of squares to the total sums of squares, commonly referred to as $R^2$:
+A basic descriptor of the "goodness of fit" for our model is the given by the ratio of the model sums of squares to the total sums of squares, commonly referred to as $R^2$:
 
 $$R^2 = \frac{TSS - RSS}{TSS} = 1 - \frac{RSS}{TSS}$$
 
@@ -429,7 +486,7 @@ where $n$ = sample size, $RSS$ is the model residual sum of squares, and $p$ = n
 AIC(appraisal.fit)
 ```
 
-It should be noted that, in itself, the value of AIC for a given date set and model has no meaning. Its utility comes when we compare AIC values of different candidate models for the same data.  Later on, as regression models become more complex with the inclusion of potentially many predictor variables, we will revisit AIC to help us in the selection of the “best” model among many choices.
+It should be noted that, in itself, the value of AIC for a given date set and model has no meaning. Its utility comes when we compare AIC values of different candidate models for the same data.  Later on, as regression models become more complex with the inclusion of potentially many predictor variables, we will revisit AIC to help us in the selection of the "best" model among many choices.
 
 A similar measure is known as the Bayesian Schwarz Information Criteria, or BIC. It is calculated with the formula
 

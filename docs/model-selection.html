@@ -21,10 +21,10 @@
   <meta name="twitter:description" content="Covers Regression and elements of Design of Experiments in R using the tidyverse." />
   
 
-<meta name="author" content="Michael Hughes and Thomas Fisher" />
+<meta name="author" content="Michael R. Hughes and Thomas J. Fisher" />
 
 
-<meta name="date" content="2022-01-04" />
+<meta name="date" content="2022-01-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -211,7 +211,7 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="2.4" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#paired-t-test"><i class="fa fa-check"></i><b>2.4</b> Paired <span class="math inline">\(t\)</span>-test</a></li>
 <li class="chapter" data-level="2.5" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#one-way-anova"><i class="fa fa-check"></i><b>2.5</b> One-Way ANOVA</a></li>
-<li class="chapter" data-level="2.6" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#assumption-checking"><i class="fa fa-check"></i><b>2.6</b> Assumption Checking</a>
+<li class="chapter" data-level="2.6" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#assumptionCheck"><i class="fa fa-check"></i><b>2.6</b> Assumption Checking</a>
 <ul>
 <li class="chapter" data-level="2.6.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#independence"><i class="fa fa-check"></i><b>2.6.1</b> Independence</a></li>
 <li class="chapter" data-level="2.6.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#constant-variance"><i class="fa fa-check"></i><b>2.6.2</b> Constant Variance</a></li>
@@ -262,7 +262,7 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="6" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html"><i class="fa fa-check"></i><b>6</b> Inference regarding Multiple Regression</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#assumption-checking-1"><i class="fa fa-check"></i><b>6.1</b> Assumption checking</a></li>
+<li class="chapter" data-level="6.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#assumption-checking"><i class="fa fa-check"></i><b>6.1</b> Assumption checking</a></li>
 <li class="chapter" data-level="6.2" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#overall-f-test-for-model-signifance"><i class="fa fa-check"></i><b>6.2</b> Overall <span class="math inline">\(F\)</span>-test for model signifance</a></li>
 <li class="chapter" data-level="6.3" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#individual-parameter-inference"><i class="fa fa-check"></i><b>6.3</b> Individual parameter inference</a>
 <ul>
@@ -431,30 +431,30 @@ All other things being equal, the simplest explanation tends to be the correct e
 <li>Continue the process until the deletion of any predictor results in a rise in the AIC.</li>
 </ol>
 <p><strong>Long-winded example</strong> To demonstrate the stepwise process let’s consider the housing appraisal dataset. We’ve used the full model fit multiple times.</p>
-<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="model-selection.html#cb326-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(appraisal.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="model-selection.html#cb327-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(appraisal.fit)</span></code></pre></div>
 <pre><code>## [1] 421.356</code></pre>
 <p>Now lets consider the three models were we remove a single predictor.</p>
-<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="model-selection.html#cb328-1" aria-hidden="true" tabindex="-1"></a>appraisal.no.land <span class="ot">&lt;-</span> <span class="fu">lm</span>(saleprice <span class="sc">~</span> impvalue <span class="sc">+</span> area, <span class="at">data=</span>appraisal)</span>
-<span id="cb328-2"><a href="model-selection.html#cb328-2" aria-hidden="true" tabindex="-1"></a>appraisal.no.imp <span class="ot">&lt;-</span> <span class="fu">lm</span>(saleprice <span class="sc">~</span> landvalue <span class="sc">+</span> area, <span class="at">data=</span>appraisal)</span>
-<span id="cb328-3"><a href="model-selection.html#cb328-3" aria-hidden="true" tabindex="-1"></a>appraisal.no.area <span class="ot">&lt;-</span> <span class="fu">lm</span>(saleprice <span class="sc">~</span> landvalue <span class="sc">+</span> impvalue, <span class="at">data=</span>appraisal)</span>
-<span id="cb328-4"><a href="model-selection.html#cb328-4" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(appraisal.no.land)</span></code></pre></div>
+<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="model-selection.html#cb329-1" aria-hidden="true" tabindex="-1"></a>appraisal.no.land <span class="ot">&lt;-</span> <span class="fu">lm</span>(saleprice <span class="sc">~</span> impvalue <span class="sc">+</span> area, <span class="at">data=</span>appraisal)</span>
+<span id="cb329-2"><a href="model-selection.html#cb329-2" aria-hidden="true" tabindex="-1"></a>appraisal.no.imp <span class="ot">&lt;-</span> <span class="fu">lm</span>(saleprice <span class="sc">~</span> landvalue <span class="sc">+</span> area, <span class="at">data=</span>appraisal)</span>
+<span id="cb329-3"><a href="model-selection.html#cb329-3" aria-hidden="true" tabindex="-1"></a>appraisal.no.area <span class="ot">&lt;-</span> <span class="fu">lm</span>(saleprice <span class="sc">~</span> landvalue <span class="sc">+</span> impvalue, <span class="at">data=</span>appraisal)</span>
+<span id="cb329-4"><a href="model-selection.html#cb329-4" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(appraisal.no.land)</span></code></pre></div>
 <pre><code>## [1] 422.32</code></pre>
-<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="model-selection.html#cb330-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(appraisal.no.imp)</span></code></pre></div>
+<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="model-selection.html#cb331-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(appraisal.no.imp)</span></code></pre></div>
 <pre><code>## [1] 432.666</code></pre>
-<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="model-selection.html#cb332-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(appraisal.no.area)</span></code></pre></div>
+<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="model-selection.html#cb333-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(appraisal.no.area)</span></code></pre></div>
 <pre><code>## [1] 424.105</code></pre>
 <p>We see that the full model has the best AIC (smallest) with a value of 421.3557. Removing any of the variables will make the model worse (in terms of AIC).</p>
 <p>So here there is nothing to do. But you can quickly imagine the tediousness of repeating the process over and over again.</p>
 <p>Performing the 7 step algorithm above would be redundant and tedious. Computers are excellent at performing redundant and tedious task. R has functions that will perform stepwise AIC model selection automatically. We highlight its use with another example.</p>
 <p><strong>Example: Estimating body fat percentage.</strong> Making accurate measurement of body fat is inconvenient and costly, so it is desirable to have methods of estimating body fat that are cheaper and easier to implement. The standard technique of underwater weighing computes body volume as the difference between body weight measured in air and weight measured during water submersion. Our goal is to develop a good predictive model for percentage of body fat that uses body measurements only; i.e., a model that gives body fat percentage estimates very close to the accurate measurements obtained via underwater weighing. Since underwater weighing is inconvenient and expensive, a good model based solely on body measurements only will be of much use in practice.</p>
 <p>We first fit the full model and check the assumptions.</p>
-<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="model-selection.html#cb334-1" aria-hidden="true" tabindex="-1"></a>site <span class="ot">&lt;-</span> <span class="st">&quot;http://www.users.miamioh.edu/hughesmr/sta363/bodyfat.txt&quot;</span></span>
-<span id="cb334-2"><a href="model-selection.html#cb334-2" aria-hidden="true" tabindex="-1"></a>bodyfat <span class="ot">&lt;-</span> <span class="fu">read.table</span>(site, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
-<span id="cb334-3"><a href="model-selection.html#cb334-3" aria-hidden="true" tabindex="-1"></a>bodyfat.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(bodyfat.pct <span class="sc">~</span> ., <span class="at">data=</span>bodyfat)</span>
-<span id="cb334-4"><a href="model-selection.html#cb334-4" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(bodyfat.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="model-selection.html#cb335-1" aria-hidden="true" tabindex="-1"></a>site <span class="ot">&lt;-</span> <span class="st">&quot;http://www.users.miamioh.edu/hughesmr/sta363/bodyfat.txt&quot;</span></span>
+<span id="cb335-2"><a href="model-selection.html#cb335-2" aria-hidden="true" tabindex="-1"></a>bodyfat <span class="ot">&lt;-</span> <span class="fu">read.table</span>(site, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
+<span id="cb335-3"><a href="model-selection.html#cb335-3" aria-hidden="true" tabindex="-1"></a>bodyfat.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(bodyfat.pct <span class="sc">~</span> ., <span class="at">data=</span>bodyfat)</span>
+<span id="cb335-4"><a href="model-selection.html#cb335-4" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(bodyfat.fit)</span></code></pre></div>
 <p><img src="introStatModeling_files/figure-html/ch9.3-1.png" width="672" /></p>
 <p>The assumptions generally look fine here. We then test for whole-model utility:</p>
-<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="model-selection.html#cb335-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bodyfat.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="model-selection.html#cb336-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bodyfat.fit)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = bodyfat.pct ~ ., data = bodyfat)
@@ -486,7 +486,7 @@ All other things being equal, the simplest explanation tends to be the correct e
 ## Multiple R-squared:  0.749,  Adjusted R-squared:  0.735 
 ## F-statistic: 54.6 on 13 and 238 DF,  p-value: &lt;2e-16</code></pre>
 <p>The <span class="math inline">\(F\)</span>-test for the whole model is significant (<span class="math inline">\(F\)</span> = 54.65, <span class="math inline">\(df\)</span>=(13, 238), <span class="math inline">\(p\)</span>-value &lt; 0.0001), so we know at least one predictor is significant. We proceed to run a backward variable selection using AIC as our criterion. The R function <code>step()</code> does this nicely in one pass. Below we include all output of the <code>step()</code> function, it can be supressed with the <code>trace=0</code> option.</p>
-<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="model-selection.html#cb337-1" aria-hidden="true" tabindex="-1"></a><span class="fu">step</span>(bodyfat.fit, <span class="at">direction=</span><span class="st">&quot;backward&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="model-selection.html#cb338-1" aria-hidden="true" tabindex="-1"></a><span class="fu">step</span>(bodyfat.fit, <span class="at">direction=</span><span class="st">&quot;backward&quot;</span>)</span></code></pre></div>
 <pre><code>## Start:  AIC=749.36
 ## bodyfat.pct ~ age + weight + height + neck + chest + abdomen + 
 ##     hip + thigh + knee + ankle + biceps + forearm + wrist
@@ -626,8 +626,8 @@ All other things being equal, the simplest explanation tends to be the correct e
 <h3><span class="header-section-number">9.1.2</span> Forward selection</h3>
 <p>A similiar method can occur when you build a model from the ground up. That is, start off with a “null” model, whereby the response variable is predicted with a mean only <span class="math inline">\(\hat{Y} = b_0 = \bar{Y}\)</span>. Then continually add terms picking the parameters that improve AIC the most. Stop the process when adding terms worsens the AIC value.</p>
 <p>In R, this can be accomplished with the <code>step</code> procedure but now we tell it to perform forward selection.</p>
-<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="model-selection.html#cb341-1" aria-hidden="true" tabindex="-1"></a>bodyfat.null <span class="ot">&lt;-</span> <span class="fu">lm</span>(bodyfat.pct <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data=</span>bodyfat)</span>
-<span id="cb341-2"><a href="model-selection.html#cb341-2" aria-hidden="true" tabindex="-1"></a><span class="fu">step</span>(bodyfat.null, <span class="at">scope=</span><span class="fu">formula</span>(bodyfat.fit), <span class="at">direction=</span><span class="st">&quot;forward&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="model-selection.html#cb342-1" aria-hidden="true" tabindex="-1"></a>bodyfat.null <span class="ot">&lt;-</span> <span class="fu">lm</span>(bodyfat.pct <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data=</span>bodyfat)</span>
+<span id="cb342-2"><a href="model-selection.html#cb342-2" aria-hidden="true" tabindex="-1"></a><span class="fu">step</span>(bodyfat.null, <span class="at">scope=</span><span class="fu">formula</span>(bodyfat.fit), <span class="at">direction=</span><span class="st">&quot;forward&quot;</span>)</span></code></pre></div>
 <pre><code>## Start:  AIC=1071.75
 ## bodyfat.pct ~ 1
 ## 
@@ -783,21 +783,21 @@ All other things being equal, the simplest explanation tends to be the correct e
 <p>If there are <span class="math inline">\(p\)</span> potential predictors, then there are <span class="math inline">\(2^p\)</span> possible models. This can get out of hand in a hurry. For example, the body fat example has 13 potential predictors, meaning we have <span class="math inline">\(2^{13} = 8192\)</span> main-effects linear models to consider!</p>
 <p>The idea of a best-subsets selection method is to choose candidate models based on some objective criterion that measures the quality of the fit or quality of the predictions resulting from the model. Because there are so many potential candidates to consider, we usually select the best few models of each size to evaluate. There are several possible criteria we could use to compare candidate models, but the usual criterion of choice is <span class="math inline">\(R_{adj}^2\)</span> or BIC (recall from Chapter 6 BIC is a variant of AIC).</p>
 <p>The <code>regsubsets()</code> function in the R add-on package <code>leaps</code> finds the optimal subset of predictors of each model size. By default, the function returns only optimal subsets and only computes subsets up to size 8; these defaults can be changed using the <code>nbest</code> and <code>nvmax</code> arguments, respectively.</p>
-<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="model-selection.html#cb344-1" aria-hidden="true" tabindex="-1"></a>bodyfat.gsub <span class="ot">&lt;-</span> <span class="fu">regsubsets</span>(bodyfat.pct <span class="sc">~</span> ., <span class="at">data=</span>bodyfat, <span class="at">nbest=</span><span class="dv">3</span>, <span class="at">nvmax=</span><span class="dv">13</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="model-selection.html#cb345-1" aria-hidden="true" tabindex="-1"></a>bodyfat.gsub <span class="ot">&lt;-</span> <span class="fu">regsubsets</span>(bodyfat.pct <span class="sc">~</span> ., <span class="at">data=</span>bodyfat, <span class="at">nbest=</span><span class="dv">3</span>, <span class="at">nvmax=</span><span class="dv">13</span>)</span></code></pre></div>
 <p>The object <code>bodyfat.gsub</code> contains a ton of information (we just fit upwards of <span class="math inline">\(3\times 13\)</span> models). It works best to plot the <span class="math inline">\(R^2_{adj}\)</span> and BIC values to get a feel for which models to consider. The following code extracts the <span class="math inline">\(R_{adj}^2\)</span> and BIC values for each model fit.</p>
-<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="model-selection.html#cb345-1" aria-hidden="true" tabindex="-1"></a>stats <span class="ot">&lt;-</span> <span class="fu">summary</span>(bodyfat.gsub)</span>
-<span id="cb345-2"><a href="model-selection.html#cb345-2" aria-hidden="true" tabindex="-1"></a>gsub.df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Model.Number=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(stats<span class="sc">$</span>adjr2), <span class="at">Adjusted.R2=</span>stats<span class="sc">$</span>adjr2, <span class="at">BIC=</span>stats<span class="sc">$</span>bic)</span>
-<span id="cb345-3"><a href="model-selection.html#cb345-3" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(gsub.df, <span class="fu">aes</span>(<span class="at">x=</span>Model.Number, <span class="at">y=</span>Adjusted.R2)) <span class="sc">+</span> </span>
-<span id="cb345-4"><a href="model-selection.html#cb345-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
-<span id="cb345-5"><a href="model-selection.html#cb345-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color=</span><span class="st">&quot;red&quot;</span>, <span class="at">size=</span><span class="dv">2</span>) <span class="sc">+</span> </span>
-<span id="cb345-6"><a href="model-selection.html#cb345-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb345-7"><a href="model-selection.html#cb345-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Adjusted R-squared&quot;</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;Model Number&quot;</span>)</span>
-<span id="cb345-8"><a href="model-selection.html#cb345-8" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(gsub.df, <span class="fu">aes</span>(<span class="at">x=</span>Model.Number, <span class="at">y=</span>BIC)) <span class="sc">+</span> </span>
-<span id="cb345-9"><a href="model-selection.html#cb345-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
-<span id="cb345-10"><a href="model-selection.html#cb345-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color=</span><span class="st">&quot;red&quot;</span>, <span class="at">size=</span><span class="dv">2</span>) <span class="sc">+</span> </span>
-<span id="cb345-11"><a href="model-selection.html#cb345-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb345-12"><a href="model-selection.html#cb345-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;BIC&quot;</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;Model Number&quot;</span>)</span>
-<span id="cb345-13"><a href="model-selection.html#cb345-13" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(p1,p2, <span class="at">nrow=</span><span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="model-selection.html#cb346-1" aria-hidden="true" tabindex="-1"></a>stats <span class="ot">&lt;-</span> <span class="fu">summary</span>(bodyfat.gsub)</span>
+<span id="cb346-2"><a href="model-selection.html#cb346-2" aria-hidden="true" tabindex="-1"></a>gsub.df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Model.Number=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(stats<span class="sc">$</span>adjr2), <span class="at">Adjusted.R2=</span>stats<span class="sc">$</span>adjr2, <span class="at">BIC=</span>stats<span class="sc">$</span>bic)</span>
+<span id="cb346-3"><a href="model-selection.html#cb346-3" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(gsub.df, <span class="fu">aes</span>(<span class="at">x=</span>Model.Number, <span class="at">y=</span>Adjusted.R2)) <span class="sc">+</span> </span>
+<span id="cb346-4"><a href="model-selection.html#cb346-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb346-5"><a href="model-selection.html#cb346-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color=</span><span class="st">&quot;red&quot;</span>, <span class="at">size=</span><span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb346-6"><a href="model-selection.html#cb346-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb346-7"><a href="model-selection.html#cb346-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Adjusted R-squared&quot;</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;Model Number&quot;</span>)</span>
+<span id="cb346-8"><a href="model-selection.html#cb346-8" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(gsub.df, <span class="fu">aes</span>(<span class="at">x=</span>Model.Number, <span class="at">y=</span>BIC)) <span class="sc">+</span> </span>
+<span id="cb346-9"><a href="model-selection.html#cb346-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb346-10"><a href="model-selection.html#cb346-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color=</span><span class="st">&quot;red&quot;</span>, <span class="at">size=</span><span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb346-11"><a href="model-selection.html#cb346-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb346-12"><a href="model-selection.html#cb346-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;BIC&quot;</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;Model Number&quot;</span>)</span>
+<span id="cb346-13"><a href="model-selection.html#cb346-13" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(p1,p2, <span class="at">nrow=</span><span class="dv">2</span>)</span></code></pre></div>
 <p><img src="introStatModeling_files/figure-html/ch9.7-1.png" width="672" /></p>
 <p>First we note that these plots may include too much information. It is hard to tell exactly what is happening. Recall the objective, we want a large <span class="math inline">\(R^2_{adj}\)</span> or small BIC values. From the computed <span class="math inline">\(R_{adj}^2\)</span> and BIC values, model number 10 has the best BIC value and model 25 has the best <span class="math inline">\(R^2_{adj}\)</span>. However we note from the plot that model 25 has essentially the same <span class="math inline">\(R^2_{adj}\)</span> as all the other models nearby. In fact consider the following:</p>
 <table>
@@ -848,12 +848,12 @@ Best BIC
 </tbody>
 </table>
 <p>The best model in terms of <span class="math inline">\(R_{adj}^2\)</span> barely improves over the best BIC model, yet there is quite a bit of improvement in terms of BIC. Let’s extract the coefficients from the two model fits.</p>
-<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="model-selection.html#cb346-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(bodyfat.gsub, <span class="fu">which.max</span>(gsub.df<span class="sc">$</span>Adjusted.R2))</span></code></pre></div>
+<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="model-selection.html#cb347-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(bodyfat.gsub, <span class="fu">which.max</span>(gsub.df<span class="sc">$</span>Adjusted.R2))</span></code></pre></div>
 <pre><code>## (Intercept)         age      weight        neck     abdomen         hip 
 ## -23.3049918   0.0634833  -0.0984253  -0.4932953   0.9492607  -0.1828710 
 ##       thigh      biceps     forearm       wrist 
 ##   0.2653788   0.1788900   0.4514962  -1.5420837</code></pre>
-<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="model-selection.html#cb348-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(bodyfat.gsub, <span class="fu">which.min</span>(gsub.df<span class="sc">$</span>BIC))</span></code></pre></div>
+<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="model-selection.html#cb349-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(bodyfat.gsub, <span class="fu">which.min</span>(gsub.df<span class="sc">$</span>BIC))</span></code></pre></div>
 <pre><code>## (Intercept)      weight     abdomen     forearm       wrist 
 ##  -34.854074   -0.135631    0.995751    0.472928   -1.505562</code></pre>
 <p>The model based on <span class="math inline">\(R^2_{adj}\)</span> chose 9 predictor variables compared to only 4 for the best BIC model. So, there is no clear-cut answer, but that’s the point: the “best subsets” idea allows you to consider the options and to weigh the relative trade-offs in using one model over another.</p>
