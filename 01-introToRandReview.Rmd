@@ -181,13 +181,13 @@ You could go to the URL above and save the data file to your default working dir
 After saving it into a folder (or directory), you can read the file with code similar to:
 
 ```{r, eval=FALSE}
-uadata <- read_table("univadmissions.txt")
+uadata <- read_table("univadmissions.txt", col_types = cols())
 ```
 
 If you save the file to a directory on your computer other than the local directory (where your R code is stored), you must provide the path in the `read_table()` command:
 
 ```{r, eval=FALSE}
-uadata <- read_table("c:/My Documents/My STA363 Files/univadmissions.txt")
+uadata <- read_table("c:/My Documents/My STA363 Files/univadmissions.txt", col_types = cols())
 ```
 
 
@@ -200,7 +200,7 @@ Similar to the above examples, reading in a Comma Separated Value (CSV) file is 
 This is becoming the standard format for transferring files. An example of some **non-executed code** is provided below:
 
 ```{r, eval=FALSE}
-uadata_csv <- read_csv("c:/My Documents/My STA363 Files/univadmissions.csv")
+uadata_csv <- read_csv("c:/My Documents/My STA363 Files/univadmissions.csv", col_types = cols())
 ```
 
 **Note:** the file `univadmissions.csv` does not exist but this code has been included for example purposes. 
@@ -220,21 +220,15 @@ We saw above that we can access a specific variable within a dataset using the `
 We can also access specific observations in the dataset based on rules we may wish to implement.
 As a working example we will consider the university admissions data we read in above.
 
-**Example:** (originally in @KutnerText) University admissions. The director of admissions at a state university wanted to determine how accurately students' grade point averages at the end of their freshman year could be predicted by entrance test scores and high school class rank. The academic years covered 1996 through 2000. This example uses the `univadmissions.txt` dataset in the repository.  The variables are as follows:
+**Example:** University admissions (originally in @KutnerText). The director of admissions at a state university wanted to determine how accurately students' grade point averages at the end of their freshman year could be predicted by entrance test scores and high school class rank. The academic years covered 1996 through 2000. This example uses the `univadmissions.txt` dataset in the repository.  The variables are as follows:
 
 *	`id` -- Identification number
-
 *	`gpa.endyr1` -- Grade point average following freshman year
-
 *	`hs.pct` -- High school class rank (as a percentile)
-
 *	`act` -- ACT entrance exam score
-
 *	`year` -- Calendar year the freshman entered university 
 
 This is the first dataset we input above, in the `uadata` data frame. 
-
-
 
 
 The `tidyverse` package [@R-tidyverse] is actually a wrapper for many R packages. 

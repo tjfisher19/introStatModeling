@@ -22,7 +22,7 @@ Randomized Block Designs are a bit of an odd duck.
 The type of design itself is straightforward, but the analysis might seem a bit unusual. 
 
 The design is best described in terms of the agricultural field trials that gave birth to it. 
-When conducting field trials to compare plant varieties, there is concern that some areas of a field may be more fertile than others (e.g., soil nutrients, access to water, shade versus sun, etc...). 
+When conducting field trials to compare plant varieties, there is concern that some areas of a field may be more fertile than others (*e.g.*, soil nutrients, access to water, shade versus sun, etc...). 
 For example, if one were comparing three plant varieties (call them A, B and C), it would not be a good idea to use one variety in one location (say next to a creek), another variety in a different location, and the third variety way back in another part of the field near a forest because the effects of the varieties would be confounded with the natural fertility of the land.
 See Figure \@ref(fig:ch3-field) as an example of a poorly designed experiment.
 
@@ -31,7 +31,7 @@ knitr::include_graphics('chap3_field.png')
 ```
 
 The natural fertility (next to the creek, compared to next to the forest, compared to the middle) in this situation is a **confounding factor**.
-A confounding factor is something we are not necessarily interested in, but that none the less will have an impact on our assessment of the factor of interest (e.g., plant variety).  
+A confounding factor is something we are not necessarily interested in, but that none the less will have an impact on our assessment of the factor of interest (*e.g.*, plant variety).  
 
 We could attempt to mitigate the effect of this confounding factor through randomization. 
 For example, suppose by random allocation the treatments are distributed as such as in Figure \@ref(fig:ch3-field-random).
@@ -46,7 +46,7 @@ A block design looks to address this limitation of randomization when there are 
 
 A **block** is defined to be "a relatively homogeneous set of experimental material." 
 This essentially means that we would like to be able to assess the treatment effects without undue influence from a contaminating or confounding factor, such as land fertility.
-One way to do this would be to apply all the different treatments (e.g., the three plant varieties) to the same area of the field.
+One way to do this would be to apply all the different treatments (*e.g.*, the three plant varieties) to the same area of the field.
 Within one area (say next the creek in Figures \@ref(fig:ch3-field) and \@ref(fig:ch3-field-random)), we should see consistency in natural fertility levels.
 Thus any differences observed in a measured response (such as crop yield) between plant varieties will not be due to variation in fertility levels, but rather due to the different plant varieties themselves.
 
@@ -70,14 +70,14 @@ knitr::include_graphics('chap3_field_blocked.png')
 A good experimental design will be able to "parse out" the variability due to potential confounding factors, and thus give clarity to our assessment of the factor of interest.
 A block design can accomplish this task.
 
-**What can serve as a block?**  It is important to note that subjects (i.e., experimental units) themselves may form blocks in a block design.  It is also possible that different experimental units may collectively form a "block".  It depends on the circumstances.  All that is needed is that a block, however, formed, creates a "relatively homogeneous set of experimental material."
+**What can serve as a block?**  It is important to note that subjects (*i.e.*, experimental units) themselves may form blocks in a block design.  It is also possible that different experimental units may collectively form a "block".  It depends on the circumstances.  All that is needed is that a block, however, formed, creates a "relatively homogeneous set of experimental material."
 
 **An example.** You've already seen the concept of a block design! Consider the paired *t*-test included in Section \@ref(paired-t-test). There, the individual vehicles are essentially treated as blocks. 
 We observe two responses within each block (or vehicle).
 
 ### Data structure, model form and analysis of variance of a Randomized Block Design
 
-Here is the general data structure for a randomized block design (RBD) with on treatment replicate per block:
+Here is the data structure for a randomized block design (RBD) with one treatment replicate per block:
 
 $$\begin{array}{c|cccc}
 \hline
@@ -146,6 +146,7 @@ wordrecall <- wordrecall %>%
 ```
 
 Now we can look at some plots of the data -- making sure to consider the different blocks (the people) as well as the treatments (word types).
+Figure \@ref(fig:ch3-3) displays Boxplots of the responses as functions of the people and treatments.
 
 ```{r ch3-3, fig.align='center', fig.cap='Boxplot distribution of the number of Word recalls as a function of Subject and Word Types.',out.width='100%', fig.asp=0.55}
 p1 <- ggplot(wordrecall) + 
@@ -162,8 +163,23 @@ Similarly we build a boxplot of words recalled by word type, called `p2`.
 We then use the `grid.arrange()` function in the `gridExtra` package [@R-gridExtra] to put the two plots side-by-side.
 The results are in Figure \@ref(fig:ch3-3).
 
-The effect of word type appears quite stark, with positive word recalls being higher than the other two types.
-There is also a bit of subject-to-subject variability, but not much.
+We note that these plots are not necessarily appropriate for this data.
+For one, Boxplots display a 5 number summary -- for each person we only have three observations (the number of positive words recalled, number of neutral and number of negative words), so the figure on the left does cannot display appropriate blocks.
+Second, the figure on the right is ignoring the block structure -- this is effectively equivalent to ignoring the *pairing* in a matched pairs design. 
+Each person will have their own abilities and strengths.
+For example, it is possible a particular individual may excel at recalling positive words and not negative words, where another succeeds in recalling negative words and not positive -- this information cannot be deduced from this plot.
+So we will build a profile plot similar to that used in the matched pairs design in Figure \@ref(fig:ch2-7) from Section \@ref(paired-t-test).
+
+```{r ch3-3profile, fig.align='center', fig.cap='Profiles of each person highlighting the number of words recalled of each type.',out.width='70%', fig.asp=0.55}
+ggplot(wordrecall) + 
+  geom_line(aes(x=word.type, y=recall, 
+                color=subject, group=subject) ) +
+  labs(x="Word Type", y="Words Recalled", color="Subject") + 
+  theme_minimal()
+```
+
+The effect of word type appears quite stark, with positive word recalls being higher than the other two types, followed by negative words.
+There is also a bit of subject-to-subject variability, but not much (*i.e.*, each person has their own profile!).
 
 Here is how to do a formal analysis in a call of `aov()` -- making sure to check underlying assumptions in Figure \@ref(fig:ch3-4).
 
@@ -183,8 +199,8 @@ We see that there is a significant difference in the mean recall between the thr
 
 You can also see how the total variation was partitioned into three components: 
 
-1.	Within-subject (i.e. block) sum of squares (105.067).
-2.	Between word type (i.e. treatment) sum of squares (2029.73).
+1.	Within-subject (*i.e.*, block) sum of squares (105.067).
+2.	Between word type (*i.e.*, treatment) sum of squares (2029.73).
 3.	Residual sum of squares (42.93).   
 
 We see that R also reports an $F$-statistic and associated $p$-value for the `subject`.
@@ -207,7 +223,7 @@ Negative word types have significantly more recalls than neutral types; positive
 
 A **factorial** structure in an experimental design is one in which there are two or more factors, and the levels of the factors are all observed in combination.
 For example, suppose you are testing for the effectiveness of three drugs (A, B, C) at three different dosages (5 mg, 10 mg, 25 mg). 
-In a factorial design, you would observed a total of nine treatments, each of which consists of a combination of drug and dose (e.g. treatment 1 is drug A administered at 5 mg, treatment 2 is drug A administered at 10 mg, etc). 
+In a factorial design, you would observed a total of nine treatments, each of which consists of a combination of drug and dose (*e.g.*, treatment 1 is drug A administered at 5 mg, treatment 2 is drug A administered at 10 mg, etc). 
 Note how quickly things will grow if you have more than two factors!
 
 In this design, the data are usually obtained by collecting a random sample of individuals to participate in the study, and then randomly allocating a single treatment to each of the study participants as in a one-way design structure. 
@@ -230,7 +246,7 @@ $$\begin{array}{c|cccc}
 
 
 
-Note there is replication (i.e. multiple independent observations) in each treatment (combination of factors $\mathbf{A}$ and $\mathbf{B}$).
+Note there is replication (*i.e.*, multiple independent observations) in each treatment (combination of factors $\mathbf{A}$ and $\mathbf{B}$).
 
 The general model for such data has the form
 
@@ -255,7 +271,7 @@ The usual testing strategy is as follows:
 
 1. Fit a full interaction model.
 2. Test for significant interaction between $A$ and $B$:
-    a. If the interaction term is significant, you must look at comparisons in terms of treatment combination; i.e., you cannot separate the effects of $A$ and $B$.
+    a. If the interaction term is significant, you must look at comparisons in terms of treatment combination; *i.e.*, you cannot separate the effects of $A$ and $B$.
     b. If the interaction term is non-significant, you can look into deleting the interaction term from your model, fitting a reduced **main-effects model**. Then (and only then) may you look at the effects of $A$ and $B$ separately.
     
 We consider two examples below.
@@ -308,8 +324,8 @@ At this point, we can also generate tables of response means after we fit the in
 These consist of:
 
 * The "grand mean" (overall mean, all data pooled together and estimate $\mu$).
-* Main effect means (i.e. means for each factor level, taken one factor at a time).
-* Interaction means (i.e. treatment means for all factor combinations).
+* Main effect means (*i.e.*, means for each factor level, taken one factor at a time).
+* Interaction means (*i.e.*, treatment means for all factor combinations).
 
 These means are estimates from the data and are purely descriptive (like the boxplots were), but informative nonetheless. 
 We could calculate each one of the above using a series of `tidyverse` commands or using the R function `model.tables()`:
@@ -428,7 +444,7 @@ Remember the strategy we introduced earlier:
 
 1. Fit a full interaction model.
 2. Test for significant interaction between $A$ and $B$:
-    a. **If interaction is significant, you must look at comparisons in terms of treatment combinations; i.e., you cannot separate the effects of $A$ and $B$**.
+    a. **If interaction is significant, you must look at comparisons in terms of treatment combinations; *i.e.*, you cannot separate the effects of $A$ and $B$**.
     b. If interaction is non-significant, you may delete the interaction term from the model, fitting a reduced main-effects model. Then (and only then) may you look at the effects of $A$ and $B$ separately.
 
 **Performing multiple comparisons. **In the case of a significant interaction effect in a two-factor ANOVA model, we typically follow up by performing multiple comparisons for the levels of one of the factors while holding the other factor fixed (the "conditioning" factor). 

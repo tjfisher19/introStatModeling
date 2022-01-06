@@ -572,16 +572,16 @@ This is typically what you will do for homework and class examples.
 You could go to the URL above and save the data file to your default working directory on your computer.
 After saving it into a folder (or directory), you can read the file with code similar to:</li>
 </ol>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="introductory-statistics-in-r.html#cb22-1" aria-hidden="true" tabindex="-1"></a>uadata <span class="ot">&lt;-</span> <span class="fu">read_table</span>(<span class="st">&quot;univadmissions.txt&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="introductory-statistics-in-r.html#cb22-1" aria-hidden="true" tabindex="-1"></a>uadata <span class="ot">&lt;-</span> <span class="fu">read_table</span>(<span class="st">&quot;univadmissions.txt&quot;</span>, <span class="at">col_types =</span> <span class="fu">cols</span>())</span></code></pre></div>
 <p>If you save the file to a directory on your computer other than the local directory (where your R code is stored), you must provide the path in the <code>read_table()</code> command:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="introductory-statistics-in-r.html#cb23-1" aria-hidden="true" tabindex="-1"></a>uadata <span class="ot">&lt;-</span> <span class="fu">read_table</span>(<span class="st">&quot;c:/My Documents/My STA363 Files/univadmissions.txt&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="introductory-statistics-in-r.html#cb23-1" aria-hidden="true" tabindex="-1"></a>uadata <span class="ot">&lt;-</span> <span class="fu">read_table</span>(<span class="st">&quot;c:/My Documents/My STA363 Files/univadmissions.txt&quot;</span>, <span class="at">col_types =</span> <span class="fu">cols</span>())</span></code></pre></div>
 <p>The function <code>read_table()</code> automatically converts a space delimited text file to a data frame in R. The <code>header=TRUE</code> option tells R that the top line in the text file contains the variable names rather than data values.</p>
 </div>
 <div id="read_csv-for-comma-separated-value-files" class="section level4" number="1.3.3.2">
 <h4><span class="header-section-number">1.3.3.2</span> <code>read_csv()</code> – for Comma Separated Value files</h4>
 <p>Similar to the above examples, reading in a Comma Separated Value (CSV) file is very similar.
 This is becoming the standard format for transferring files. An example of some <strong>non-executed code</strong> is provided below:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="introductory-statistics-in-r.html#cb24-1" aria-hidden="true" tabindex="-1"></a>uadata_csv <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;c:/My Documents/My STA363 Files/univadmissions.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="introductory-statistics-in-r.html#cb24-1" aria-hidden="true" tabindex="-1"></a>uadata_csv <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;c:/My Documents/My STA363 Files/univadmissions.csv&quot;</span>, <span class="at">col_types =</span> <span class="fu">cols</span>())</span></code></pre></div>
 <p><strong>Note:</strong> the file <code>univadmissions.csv</code> does not exist but this code has been included for example purposes.</p>
 </div>
 <div id="load-loading-an-existing-r-data.frame" class="section level4" number="1.3.3.3">
@@ -596,13 +596,13 @@ This is becoming the standard format for transferring files. An example of some 
 <p>We saw above that we can access a specific variable within a dataset using the <code>$</code> notation.
 We can also access specific observations in the dataset based on rules we may wish to implement.
 As a working example we will consider the university admissions data we read in above.</p>
-<p><strong>Example:</strong> (originally in <span class="citation"><a href="#ref-KutnerText" role="doc-biblioref">Kutner et al.</a> (<a href="#ref-KutnerText" role="doc-biblioref">2004</a>)</span>) University admissions. The director of admissions at a state university wanted to determine how accurately students’ grade point averages at the end of their freshman year could be predicted by entrance test scores and high school class rank. The academic years covered 1996 through 2000. This example uses the <code>univadmissions.txt</code> dataset in the repository. The variables are as follows:</p>
+<p><strong>Example:</strong> University admissions (originally in <span class="citation"><a href="#ref-KutnerText" role="doc-biblioref">Kutner et al.</a> (<a href="#ref-KutnerText" role="doc-biblioref">2004</a>)</span>). The director of admissions at a state university wanted to determine how accurately students’ grade point averages at the end of their freshman year could be predicted by entrance test scores and high school class rank. The academic years covered 1996 through 2000. This example uses the <code>univadmissions.txt</code> dataset in the repository. The variables are as follows:</p>
 <ul>
-<li><p><code>id</code> – Identification number</p></li>
-<li><p><code>gpa.endyr1</code> – Grade point average following freshman year</p></li>
-<li><p><code>hs.pct</code> – High school class rank (as a percentile)</p></li>
-<li><p><code>act</code> – ACT entrance exam score</p></li>
-<li><p><code>year</code> – Calendar year the freshman entered university</p></li>
+<li><code>id</code> – Identification number</li>
+<li><code>gpa.endyr1</code> – Grade point average following freshman year</li>
+<li><code>hs.pct</code> – High school class rank (as a percentile)</li>
+<li><code>act</code> – ACT entrance exam score</li>
+<li><code>year</code> – Calendar year the freshman entered university</li>
 </ul>
 <p>This is the first dataset we input above, in the <code>uadata</code> data frame.</p>
 <p>The <code>tidyverse</code> package <span class="citation">(<a href="#ref-R-tidyverse" role="doc-biblioref">Wickham, 2017</a>)</span> is actually a wrapper for many R packages.

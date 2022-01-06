@@ -475,7 +475,7 @@ Note that if <span class="math inline">\(H_0\)</span> were true, we are back to 
 <p>So to put it another way, a two-sample <span class="math inline">\(t\)</span>-test essentially is a choice of</p>
 <p><span class="math display">\[H_0: \textrm{Baseline Model} ~~ Y_i = \mu + \varepsilon_i\]</span>
 and
-<span class="math display">\[H_A: \textrm{More complex model} ~~ Y_i = \mu + \delta\cdot X_i + \varepsilon.\]</span></p>
+<span class="math display">\[H_A: \textrm{More complex model} ~~ Y_i = \mu + \delta\cdot X_i + \varepsilon_i.\]</span></p>
 <p>To tie everything together note that in <span class="math inline">\(H_A\)</span> we are essentially saying observation <span class="math inline">\(Y_i\)</span> is a function of the variable <span class="math inline">\(X_i\)</span>.</p>
 <p>Because of this we typically refer to <span class="math inline">\(Y_i\)</span> as the <strong>response</strong> (or dependent) variable and <span class="math inline">\(X_i\)</span> as a <strong>predictor</strong> (or independent) variable.
 This coincides with the R <code>formula</code> notation, <code>response ~ predictor</code>.</p>
@@ -678,7 +678,7 @@ Would you trust the results of this experiment?</p>
 <p><strong>Confounding</strong> is a condition that occurs when the experimental controls do not allow the experimenter to reasonably eliminate plausible alternative explanations for an observed relationship between factors and the response.
 Needless to say, confounding renders experimental results to be seriously impaired, if not totally useless.
 Consider this example:</p>
-<p><strong>Example.</strong> A drug manufacturer tests a new cold medicine with 200 participants: 100 men and 100 women.
+<p><strong>Example:</strong> A drug manufacturer tests a new cold medicine with 200 participants: 100 men and 100 women.
 The men receive the drug, and the women do not.
 At the end of the test period, the men report fewer colds.</p>
 <p><em>What is the problem?</em> This experiment implements no controls!
@@ -708,7 +708,7 @@ The paired <span class="math inline">\(t\)</span> does follow the model form dis
 We will revisit the model statement in a later section.</p>
 <p><strong>Implementation in R</strong></p>
 <p>To demonstrates its implementation in R we consider another example.</p>
-<p><strong>Example.</strong> (originally in <span class="citation"><a href="#ref-WeissText" role="doc-biblioref">Weiss</a> (<a href="#ref-WeissText" role="doc-biblioref">2012</a>)</span>) The makers of the MAGNETIZER Engine Energizer System (EES) claim that it improves the gas mileage and reduces emissions in automobiles by using magnetic free energy to increase the amount of oxygen in the fuel for greater combustion efficiency.
+<p><strong>Example:</strong> (originally in <span class="citation"><a href="#ref-WeissText" role="doc-biblioref">Weiss</a> (<a href="#ref-WeissText" role="doc-biblioref">2012</a>)</span>) The makers of the MAGNETIZER Engine Energizer System (EES) claim that it improves the gas mileage and reduces emissions in automobiles by using magnetic free energy to increase the amount of oxygen in the fuel for greater combustion efficiency.
 Test results for 14 vehicles that underwent testing is available in the file <code>carCOemissions.csv</code>.
 The data includes the emitted carbon monoxide (CO) levels, in parts per million, of each of the 14 vehicles tested before and after installation of the EES.</p>
 <p>This is a classic before-after (Paired design) study. Below is some code to implement the test.</p>
@@ -841,7 +841,7 @@ If we had a single factor with just two levels, you could still use a one-way AN
 As a designed experiment, these populations may be defined on the basis of an administered treatment.
 The levels of the factor being manipulated by the researcher form the different treatments.
 Frequently, the data are obtained by collecting a random sample of individuals to participate in the study, and then randomly allocating a single treatment to each of the study participants.
-If so, then <strong>the individual subjects (experimental units) receiving treatment <span class="math inline">\(i\)</span> may be thought of as a random sample from the population of all individuals who could be administered treatment <span class="math inline">\(i\)</span></strong>.</p>
+If so, then <strong>the individual subjects (experimental units) receiving treatment <span class="math inline">\(j\)</span> may be thought of as a random sample from the population of all individuals who could be administered treatment <span class="math inline">\(j\)</span></strong>.</p>
 <p>The one-way data structure looks like the following:</p>
 <p><span class="math display">\[\begin{array}{cccc}
 \hline
@@ -885,41 +885,46 @@ An <span class="math inline">\(F\)</span>-test is performed to run the test.</p>
 The test statistic is a ratio of variance estimates and follows the Fisher-Snedecor distribution (or <span class="math inline">\(F\)</span>-distribution for short).
 The details of this distribution are not important for this course and are covered in a Mathematical Statistics course.
 An example of a one-way ANOVA in R is provided below.</p>
-<p><strong>Example:</strong> Drug effects on alertness.
-Three different medications are tested on a sample of 18 individuals to see if they impact alertness.
-Each subject is randomly assigned one drug, the drug is administered.
-After 60 minutes, a test is administered that scores the alertness level of each subject (a higher score means higher alertness).
-The data appear in the R dataframe <code>onewaydrug.RData</code> in our repository: (<a href="https://tjfisher19.github.io/introStatModeling/data/onewaydrug.RData" class="uri">https://tjfisher19.github.io/introStatModeling/data/onewaydrug.RData</a>)</p>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;onewaydrug.RData&quot;</span>)</span>
-<span id="cb87-2"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb87-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(onewaydrug)</span></code></pre></div>
-<pre><code>## Rows: 18
+<p><strong>Example:</strong> Drug effects on “knockdown” times (from the text <span class="citation"><a href="#ref-Walpole2007" role="doc-biblioref">Walpole et al.</a> (<a href="#ref-Walpole2007" role="doc-biblioref">2007</a>)</span>).
+Immobilization of free-ranging white-tailed deer by drugs allows researchers the opportunity to closely examine deer and gather valuable physiological information.
+Wildlife biologists tested the “knockdown” time (time, measured in minutes, from injection to immobilization) of three different immobilizing drugs.
+Thirty male white-tailed deer were randomly assigned to each of three treatments: Group <em>A</em> received 5mg of liquid succinylcholine chloride (SCC); group <em>B</em> received 8 mg of powdered SSC; and group <em>C</em> received 200 mg of phencyclidine hydrochloride.</p>
+<p>Original Source: <span class="citation"><a href="#ref-Wesson1976" role="doc-biblioref">Wesson</a> (<a href="#ref-Wesson1976" role="doc-biblioref">1976</a>)</span></p>
+<p>The data appear in the R dataframe <code>deerKnockdown.RData</code> in our repository: (<a href="https://tjfisher19.github.io/introStatModeling/data/deerKnockdown.RData" class="uri">https://tjfisher19.github.io/introStatModeling/data/deerKnockdown.RData</a>)</p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb87-1" aria-hidden="true" tabindex="-1"></a>site <span class="ot">&lt;-</span> <span class="st">&quot;https://tjfisher19.github.io/introStatModeling/data/deerKnockdown.RData&quot;</span></span>
+<span id="cb87-2"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb87-2" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="fu">url</span>(site))</span>
+<span id="cb87-3"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb87-3" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(deer_knockdown_times)</span></code></pre></div>
+<pre><code>## Rows: 30
 ## Columns: 2
-## $ drug      &lt;fct&gt; a, a, a, a, a, a, b, b, b, b, b, b, b, c, c, c, c, c
-## $ alertness &lt;int&gt; 30, 38, 35, 41, 27, 24, 32, 26, 31, 29, 27, 35, 21, 19, 17, ~</code></pre>
-<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(onewaydrug) <span class="sc">+</span> </span>
-<span id="cb89-2"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb89-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>drug, <span class="at">y=</span>alertness)) <span class="sc">+</span> </span>
-<span id="cb89-3"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb89-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="fu">aes</span>(<span class="at">x=</span>drug, <span class="at">y=</span>alertness), <span class="at">width=</span><span class="fl">0.25</span>) <span class="sc">+</span></span>
-<span id="cb89-4"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb89-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Drug Treatment&quot;</span>, <span class="at">y=</span><span class="st">&quot;Alertness Score&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb89-5"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb89-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+## $ Drug           &lt;chr&gt; &quot;A&quot;, &quot;A&quot;, &quot;A&quot;, &quot;A&quot;, &quot;A&quot;, &quot;A&quot;, &quot;A&quot;, &quot;A&quot;, &quot;A&quot;, &quot;A&quot;, &quot;B&quot;, ~
+## $ Knockdown_time &lt;dbl&gt; 11, 5, 14, 7, 10, 7, 23, 4, 11, 11, 10, 7, 16, 7, 7, 5,~</code></pre>
+<p><strong>Note</strong> the subtle change in the code compared to <code>read_csv()</code> and <code>read_table()</code>. When loading an R data.frame from a website, we need to use the <code>url()</code> function to open and close the internet connection inside the <code>load()</code> function.</p>
+<p>We can then plot the data.</p>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(deer_knockdown_times, <span class="fu">aes</span>(<span class="at">x=</span>Drug, <span class="at">y=</span>Knockdown_time )) <span class="sc">+</span> </span>
+<span id="cb89-2"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb89-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
+<span id="cb89-3"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb89-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width=</span><span class="fl">0.25</span>) <span class="sc">+</span></span>
+<span id="cb89-4"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb89-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun=</span><span class="st">&quot;mean&quot;</span>, <span class="at">geom=</span><span class="st">&quot;point&quot;</span>, <span class="at">shape=</span><span class="dv">23</span>, <span class="at">fill=</span><span class="st">&quot;gray60&quot;</span>, <span class="at">size=</span><span class="dv">4</span>) <span class="sc">+</span> </span>
+<span id="cb89-5"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb89-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Drug Treatment&quot;</span>, <span class="at">y=</span><span class="st">&quot;Time to Immobilization (min)&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb89-6"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb89-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch2-8"></span>
-<img src="introStatModeling_files/figure-html/ch2-8-1.png" alt="Side-by-side Box-whiskers plots showing the distribution of `alertness` for each of the three drug treatments, `a`, `b` and `c`. Overall we see alertness is highest in treatment `a`, followed by `b` and `c`. We Also note that variability appears greatest in treatment `a`, followed by `b` and `c`." width="70%" />
+<img src="introStatModeling_files/figure-html/ch2-8-1.png" alt="Side-by-side Box-whiskers plots, with data overlayed jittered data, and treatement means (gray diamond), showing the distribution of 'knockdown' times for each of the three drug treatments, `A`, `B` and `C`. Overall we see immobilization times is highest in treatment `A`, followed by `B` and `C`. We Also note that variability appears greatest in treatment `A`, followed by `B` and `C`." width="70%" />
 <p class="caption">
-Figure 2.4: Side-by-side Box-whiskers plots showing the distribution of <code>alertness</code> for each of the three drug treatments, <code>a</code>, <code>b</code> and <code>c</code>. Overall we see alertness is highest in treatment <code>a</code>, followed by <code>b</code> and <code>c</code>. We Also note that variability appears greatest in treatment <code>a</code>, followed by <code>b</code> and <code>c</code>.
+Figure 2.4: Side-by-side Box-whiskers plots, with data overlayed jittered data, and treatement means (gray diamond), showing the distribution of ‘knockdown’ times for each of the three drug treatments, <code>A</code>, <code>B</code> and <code>C</code>. Overall we see immobilization times is highest in treatment <code>A</code>, followed by <code>B</code> and <code>C</code>. We Also note that variability appears greatest in treatment <code>A</code>, followed by <code>B</code> and <code>C</code>.
 </p>
 </div>
-<p>Visually it appears the scores under drug C seem to be noticeably lower on average than for the other two drugs.
-Also, we may suspect the variance is different between the three drug.
-That is, the distributions of scores for drugs A and B are more disperse than for drug C.</p>
+<p>Visually it appears the immobilization times under drug C seem to be noticeably lower on average than for the other two drugs.
+Also, we may suspect the variance of immobilization times is different between the three drugs.
+That is, the distributions of times for drugs <em>A</em> and <em>B</em> are more disperse than for drug <em>C</em>.</p>
 <p>To perform One-Way ANOVA we employ the <code>aov</code> function (for Analysis Of Variance).
 We use the <code>summary()</code> function to see its full output.</p>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb90-1" aria-hidden="true" tabindex="-1"></a>fit.drug <span class="ot">&lt;-</span> <span class="fu">aov</span>(alertness <span class="sc">~</span> drug, <span class="at">data=</span>onewaydrug)</span>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb90-1" aria-hidden="true" tabindex="-1"></a>fit.drug <span class="ot">&lt;-</span> <span class="fu">aov</span>(Knockdown_time <span class="sc">~</span> Drug, <span class="at">data=</span>deer_knockdown_times)</span>
 <span id="cb90-2"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb90-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.drug)</span></code></pre></div>
-<pre><code>##             Df Sum Sq Mean Sq F value Pr(&gt;F)   
-## drug         2    504   252.1    10.8 0.0013 **
-## Residuals   15    352    23.4                  
+<pre><code>##             Df Sum Sq Mean Sq F value Pr(&gt;F)  
+## Drug         2    159    79.4    5.46   0.01 *
+## Residuals   27    393    14.6                 
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<p>We see One-Way ANOVA report a significant <span class="math inline">\(p\)</span>-value (less than 0.01) but we’ll soon see there are problems with this result.</p>
+<p>We see One-Way ANOVA report a significant <span class="math inline">\(p\)</span>-value (<span class="math inline">\(p\)</span>-value of 0.0102) but we’ll soon see there are problems with this result.</p>
 </div>
 <div id="assumptionCheck" class="section level2" number="2.6">
 <h2><span class="header-section-number">2.6</span> Assumption Checking</h2>
@@ -971,7 +976,7 @@ The sample residuals would be found by <span class="math inline">\(e_{ji} = Y_{j
 <p><strong>How to read these plots?</strong></p>
 <p>A residuals versus fitted plot is provided in the left panel of Figure <a href="introduction-to-statistical-modeling-and-designed-experiments.html#fig:ch2-10">2.5</a>.
 If all is well, you should see fairly uniform (“constant”) spread of the points in the vertical direction and the scatter should be symmetric vertically around zero.
-The vertical spread here looks like it might be expanding as the fitted values increase (fanning effect), suggesting that there may be subtle non-constant error variance.</p>
+The vertical spread here looks like it might be expanding as the fitted values increase (fanning effect), suggesting that there may be non-constant error variance.</p>
 <p>An attempt at refining the residuals vs fitted plot is given in the plot on the right in Figure <a href="introduction-to-statistical-modeling-and-designed-experiments.html#fig:ch2-10">2.5</a>, called the Scale-Location plot.
 The difference now is that instead of plotting the raw residuals <span class="math inline">\(e_{ij}\)</span> on the vertical axis, R first standardizes them (so you can better check for extreme cases), takes their absolute value (to double the resolution in the plot) and then takes their square root (to remove skew that sometimes affects these plots).
 R then adds a trend line through the points: if the constant variance assumption is OK, this trend line should be roughly horizontal.
@@ -984,9 +989,9 @@ Thus, by looking at the magnitude of the residuals only by taking absolute value
 <h3><span class="header-section-number">2.6.3</span> Checking Normality</h3>
 <p>We typically make this assessment with a Normal quantile-quantile (Q-Q) plot.</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch2-11"></span>
-<img src="introStatModeling_files/figure-html/ch2-11-1.png" alt="Normal Q-Q plot demonstrating the residuals are reasonably Normally distributed." width="65%" />
+<img src="introStatModeling_files/figure-html/ch2-11-1.png" alt="Normal Q-Q plot demonstrating the residuals may deviation from the Normality assumption." width="65%" />
 <p class="caption">
-Figure 2.6: Normal Q-Q plot demonstrating the residuals are reasonably Normally distributed.
+Figure 2.6: Normal Q-Q plot demonstrating the residuals may deviation from the Normality assumption.
 </p>
 </div>
 <p>In a normal Q-Q plot, the observed sample values (the “sample quantiles”) are plotted against the corresponding quantiles from a reference normal distribution (the “theoretical quantiles”).
@@ -994,7 +999,7 @@ If the parent population is normally distributed, then the sample values should 
 <p>A normal Q-Q plot of the residuals is presented in Figure <a href="introduction-to-statistical-modeling-and-designed-experiments.html#fig:ch2-11">2.6</a>.
 A common <em>tool</em> to analyze these plots is sometimes known as the “fat pencil” test.
 Consider the thick pencils children are given when learning to write – if you lay that pencil on the plotted line, if all the points are covered by the pencil the data is approximately normally distributed.</p>
-<p>In Figure <a href="introduction-to-statistical-modeling-and-designed-experiments.html#fig:ch2-11">2.6</a> there is some minor deviation from the line (observation 16).
+<p>In Figure <a href="introduction-to-statistical-modeling-and-designed-experiments.html#fig:ch2-11">2.6</a> there is some deviation from the line (observations 13 and 7).
 Coupled with the issues with variance outlined above, we may have evidence to suggest the normality assumption is not met.</p>
 <p><strong>Note:</strong> It is quite common for violations of constant variance and normality to go hand-in-hand.
 That is, if there are concerns about one, it is common for there to be concerns regarding the other.</p>
@@ -1006,40 +1011,41 @@ The <code>autoplot</code> function provides 4 plots by default seen in Figure <a
 <div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggfortify)</span>
 <span id="cb92-2"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb92-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(fit.drug)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch2-12"></span>
-<img src="introStatModeling_files/figure-html/ch2-12-1.png" alt="Residual plots for the One-Way ANOVA studying the effect of different drugs on alertness - Top-left a Residuals vs Fitted Plot; Top-right a Normal Q-Q plot of the residuals; Bottom-left the Scale-Location plot; and Bottom-right a Residuals vs Leverage plot." width="80%" />
+<img src="introStatModeling_files/figure-html/ch2-12-1.png" alt="Residual plots for the One-Way ANOVA studying the effect of different drugs on immobilization times - Top-left a Residuals vs Fitted Plot; Top-right a Normal Q-Q plot of the residuals; Bottom-left the Scale-Location plot; and Bottom-right a Residuals vs Leverage plot." width="80%" />
 <p class="caption">
-Figure 2.7: Residual plots for the One-Way ANOVA studying the effect of different drugs on alertness - Top-left a Residuals vs Fitted Plot; Top-right a Normal Q-Q plot of the residuals; Bottom-left the Scale-Location plot; and Bottom-right a Residuals vs Leverage plot.
+Figure 2.7: Residual plots for the One-Way ANOVA studying the effect of different drugs on immobilization times - Top-left a Residuals vs Fitted Plot; Top-right a Normal Q-Q plot of the residuals; Bottom-left the Scale-Location plot; and Bottom-right a Residuals vs Leverage plot.
 </p>
 </div>
 </div>
 <div id="transforming-your-response" class="section level3" number="2.6.5">
 <h3><span class="header-section-number">2.6.5</span> Transforming your response</h3>
-<p>We have evidence from the above plots that the variance appears to be increasing with the response (determined by assessing the constant variance assumption).
+<p>We have evidence from the above plots that the variance appears to be increasing with the response (determined by assessing the constant variance assumption) and that there may be some violations to normality.
 One way to typically address this issue is to transform the response variable.
 We will go into more details later but common transformations include <span class="math inline">\(Y^*=log(Y)\)</span>, <span class="math inline">\(Y^*=\sqrt{Y}\)</span> and <span class="math inline">\(Y^*=1/Y\)</span>.
 Here we will use a logarithmic as it is fairly common.
 Later in the class we will describe the other transformations in more detail.
 We can achieve this in R with the following which provides the residuals plots in Figure <a href="introduction-to-statistical-modeling-and-designed-experiments.html#fig:ch2-13">2.8</a>.</p>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb93-1" aria-hidden="true" tabindex="-1"></a>fit.log.drug <span class="ot">&lt;-</span> <span class="fu">aov</span>(<span class="fu">log</span>(alertness) <span class="sc">~</span> drug, <span class="at">data=</span>onewaydrug)</span>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb93-1" aria-hidden="true" tabindex="-1"></a>fit.log.drug <span class="ot">&lt;-</span> <span class="fu">aov</span>(<span class="fu">log</span>(Knockdown_time) <span class="sc">~</span> Drug, <span class="at">data=</span>deer_knockdown_times)</span>
 <span id="cb93-2"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb93-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(fit.log.drug)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch2-13"></span>
-<img src="introStatModeling_files/figure-html/ch2-13-1.png" alt="Residual diagnostic plots when the response variable is the logarithm of the alertness. Here the heteroskedasticity in the original model has been improved, albeit not entirely mitigated, with some minor indication of increasing variability with the mean." width="80%" />
+<img src="introStatModeling_files/figure-html/ch2-13-1.png" alt="Residual diagnostic plots when the response variable is the logarithm of the immobilization time. Here the heteroskedasticity and non-normality in the original model has been improved, albeit not entirely mitigated, with some minor fanning in the residuals vs fitted plot." width="80%" />
 <p class="caption">
-Figure 2.8: Residual diagnostic plots when the response variable is the logarithm of the alertness. Here the heteroskedasticity in the original model has been improved, albeit not entirely mitigated, with some minor indication of increasing variability with the mean.
+Figure 2.8: Residual diagnostic plots when the response variable is the logarithm of the immobilization time. Here the heteroskedasticity and non-normality in the original model has been improved, albeit not entirely mitigated, with some minor fanning in the residuals vs fitted plot.
 </p>
 </div>
-<p>This is maybe a bit better, but a stronger transformation might be warranted.
+<p>This is a bit better but other transformations can be considered.
 For now we proceed with the logarithmic transformation.</p>
 <p>The test comparing the three drug population means (on a log scale) is given via the <code>summary()</code> command:</p>
 <div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.log.drug)</span></code></pre></div>
-<pre><code>##             Df Sum Sq Mean Sq F value  Pr(&gt;F)    
-## drug         2  0.769   0.384    14.2 0.00035 ***
-## Residuals   15  0.407   0.027                    
+<pre><code>##             Df Sum Sq Mean Sq F value Pr(&gt;F)   
+## Drug         2   2.84   1.420    8.22 0.0016 **
+## Residuals   27   4.67   0.173                  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<p>The result is significant (<span class="math inline">\(F\)</span> = 14.167, <span class="math inline">\(\textrm{df}_1\)</span> = 2, <span class="math inline">\(\textrm{df}_2\)</span> = 15, <span class="math inline">\(p\)</span>-value = 0.00035).
-Thus, we could conclude that at least two of the drugs produce significantly different mean alertness responses.</p>
-<p>Of course, what remains to be seen is which pairs of drugs produce different mean alertness levels.
+<p>The result is significant (<span class="math inline">\(F\)</span> = 8.219, <span class="math inline">\(\textrm{df}_1\)</span> = 2, <span class="math inline">\(\textrm{df}_2\)</span> = 27, <span class="math inline">\(p\)</span>-value = 0.00163).
+Thus, we could conclude that at least two of the drugs produce significantly different log-mean immobilization times.</p>
+<p><strong>Math Tangent</strong>: Note that the logarithm function is a monotone increasing function. So if <span class="math inline">\(a&gt;b\)</span> then <span class="math inline">\(\log(a)&gt;\log(b)\)</span>. Thus, we can infer that the mean immobilzation times for the three drug treatments also differs.</p>
+<p>Of course, what remains to be seen is which pairs of drugs produce different log-mean immobilization times.
 For that, we will need to look at techniques known as multiple comparison procedures.</p>
 </div>
 </div>
@@ -1098,65 +1104,66 @@ It has the advantage of controlling the Type I error rate when performing all po
 First we load the library and then run our fitted model <code>fit.log.drug</code> through the <code>emmeans()</code> function.
 Then we tell it to do a “pairwise” comparison via the <code>contrast()</code> function.</p>
 <div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span>
-<span id="cb96-2"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb96-2" aria-hidden="true" tabindex="-1"></a>drug.mc <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(fit.log.drug, <span class="st">&quot;drug&quot;</span>)</span>
+<span id="cb96-2"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb96-2" aria-hidden="true" tabindex="-1"></a>drug.mc <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(fit.log.drug, <span class="st">&quot;Drug&quot;</span>)</span>
 <span id="cb96-3"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb96-3" aria-hidden="true" tabindex="-1"></a><span class="fu">contrast</span>(drug.mc, <span class="st">&quot;pairwise&quot;</span>)</span></code></pre></div>
-<pre><code>##  contrast estimate     SE df t.ratio p.value
-##  a - b       0.118 0.0916 15   1.285  0.4246
-##  a - c       0.511 0.0997 15   5.125  0.0003
-##  b - c       0.393 0.0964 15   4.079  0.0027
+<pre><code>##  contrast estimate    SE df t.ratio p.value
+##  A - B      0.0754 0.186 27   0.406  0.9136
+##  A - C      0.6872 0.186 27   3.696  0.0027
+##  B - C      0.6117 0.186 27   3.291  0.0076
 ## 
 ## Results are given on the log (not the response) scale. 
 ## P value adjustment: tukey method for comparing a family of 3 estimates</code></pre>
-<p>The significant differences are what we expected based on our earlier EDA: drug <em>C</em> is significantly different in terms of mean alertness as compared to the other two drugs.
-This is borne out from the Tukey-adjusted <span class="math inline">\(p\)</span>-values of 0.0003 (when comparing drugs <em>A</em> and <em>C</em>) and 0.0027 (when comparing drugs <em>B</em> and <em>C</em>). <em>B</em> and <em>A</em> are not significantly different.
+<p>The significant differences are what we expected based on our earlier EDA: drug <em>C</em> is significantly different in terms of log-mean immobilization time as compared to the other two drugs.
+This is borne out from the Tukey-adjusted <span class="math inline">\(p\)</span>-values of 0.0027 (when comparing drugs <em>A</em> and <em>C</em>) and 0.0076 (when comparing drugs <em>B</em> and <em>C</em>). <em>B</em> and <em>A</em> are not significantly different.
 The <span class="math inline">\(p\)</span>-values in this output have been adjusted, so we can just compare them to our usual 0.05.</p>
 <p>We can also obtain simultaneous 95% confidence intervals for the true mean differences due to each drug pairing using the <code>confint()</code> function on our <code>contrast</code> of an <code>emmeans</code> object:</p>
 <div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(<span class="fu">contrast</span>(drug.mc, <span class="st">&quot;pairwise&quot;</span>))</span></code></pre></div>
-<pre><code>##  contrast estimate     SE df lower.CL upper.CL
-##  a - b       0.118 0.0916 15   -0.120    0.356
-##  a - c       0.511 0.0997 15    0.252    0.770
-##  b - c       0.393 0.0964 15    0.143    0.644
+<pre><code>##  contrast estimate    SE df lower.CL upper.CL
+##  A - B      0.0754 0.186 27   -0.386    0.536
+##  A - C      0.6872 0.186 27    0.226    1.148
+##  B - C      0.6117 0.186 27    0.151    1.073
 ## 
 ## Results are given on the log (not the response) scale. 
 ## Confidence level used: 0.95 
 ## Conf-level adjustment: tukey method for comparing a family of 3 estimates</code></pre>
 <p>These may be interpreted as follows:</p>
-<p>95% CI for <span class="math inline">\(\mu_A - \mu_B\)</span> = (-0.1203, 0.355788).
-This interval contains 0, so we cannot conclude that the true log-mean alertness scores significantly differ between drugs <em>A</em> and <em>B</em>.</p>
-<p>95% CI for <span class="math inline">\(\mu_A - \mu_C\)</span> = (0.2521, 0.7702).
-We can be 95% confident that drug <em>A</em> produces a true log-mean alertness score that is between 0.2521 to 0.7702 higher than drug <em>C</em>.</p>
-<p>95% CI for <span class="math inline">\(\mu_B - \mu_C\)</span> = (0.1429, 0.6439).
-We can be 95% confident that drug <em>B</em> produces a true log-mean alertness score that is between 0.1429 and 0.6439 higher than drug <em>C</em>.</p>
+<p>95% CI for <span class="math inline">\(\mu_A - \mu_B\)</span> = (-0.386, 0.536).
+This interval contains 0, so we cannot conclude that the true log-mean immobilization time significantly differ between drugs <em>A</em> and <em>B</em>.</p>
+<p>95% CI for <span class="math inline">\(\mu_A - \mu_C\)</span> = (0.226, 1.148).
+We can be 95% confident that drug <em>A</em> produces a true log-mean immobilization time that is between 0.226 to 1.148 higher than drug <em>C</em>.</p>
+<p>95% CI for <span class="math inline">\(\mu_B - \mu_C\)</span> = (0.151, 1.073).
+We can be 95% confident that drug <em>B</em> produces a true log-mean immobilization time that is between 0.151 and 1.073 higher than drug <em>C</em>.</p>
 <p>To put back in the original units we could “un”-log the intervals by taking exponents (use the <code>exp()</code> function since by default <code>log</code> takes a “natural log”).</p>
 <p>We can also visualize these results via a plot:</p>
 <div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">contrast</span>(drug.mc, <span class="st">&quot;pairwise&quot;</span>))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch2-17"></span>
-<img src="introStatModeling_files/figure-html/ch2-17-1.png" alt="Tukey adjusted confidence interval plots comparing treatments treatments `a`, `b` and `c`. Here, we see that treatments `b` and `c` are significantly different as well as treatments `a` and `c`. We also note there is no significant difference between treatments `a` and `b`." width="70%" />
+<img src="introStatModeling_files/figure-html/ch2-17-1.png" alt="Tukey adjusted confidence interval plots comparing treatments treatments `A`, `B` and `C`. Here, we see that treatments `B` and `C` are significantly different as well as treatments `A` and `C`. We also note there is no significant difference between treatments `A` and `B`." width="70%" />
 <p class="caption">
-Figure 2.9: Tukey adjusted confidence interval plots comparing treatments treatments <code>a</code>, <code>b</code> and <code>c</code>. Here, we see that treatments <code>b</code> and <code>c</code> are significantly different as well as treatments <code>a</code> and <code>c</code>. We also note there is no significant difference between treatments <code>a</code> and <code>b</code>.
+Figure 2.9: Tukey adjusted confidence interval plots comparing treatments treatments <code>A</code>, <code>B</code> and <code>C</code>. Here, we see that treatments <code>B</code> and <code>C</code> are significantly different as well as treatments <code>A</code> and <code>C</code>. We also note there is no significant difference between treatments <code>A</code> and <code>B</code>.
 </p>
 </div>
 <p>Here, we are interesting in comparing each plotted confident band to the value of 0.</p>
 </div>
 <div id="dunnett-multiple-comparisons" class="section level3" number="2.7.2">
 <h3><span class="header-section-number">2.7.2</span> Dunnett multiple comparisons</h3>
-<p>The Dunnett method is applicable when one of your experimental groups serves as a natural control to which you want to compare the remaining groups.
-In this situation, it is advisable to use a method that only controls the family-wise error rate for the comparisons of interest, rather than over-controlling by using a method like Tukey.
+<p>The Dunnett method is applicable when one of your experimental groups serves as a natural <em>control</em> to which you want to compare the remaining groups.
+<strong>Note</strong> that there is no <em>control</em> group in our working example, but we include the code below for demonstration purposes.</p>
+<p>In situations were a <em>control</em> group is present, it is advisable to use a method that only controls the family-wise error rate for the comparisons of interest, rather than over-controlling for all possible comparison such as when using a method like Tukey HSD.
 We still use the <code>emmeans</code> package but specify the comparisons are against a <em>control</em> group. The code is below:</p>
 <div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contrast</span>(drug.mc, <span class="st">&quot;trt.vs.ctrl&quot;</span>)</span></code></pre></div>
-<pre><code>##  contrast estimate     SE df t.ratio p.value
-##  b - a      -0.118 0.0916 15  -1.285  0.3640
-##  c - a      -0.511 0.0997 15  -5.125  0.0002
+<pre><code>##  contrast estimate    SE df t.ratio p.value
+##  B - A     -0.0754 0.186 27  -0.406  0.8750
+##  C - A     -0.6872 0.186 27  -3.696  0.0019
 ## 
 ## Results are given on the log (not the response) scale. 
 ## P value adjustment: dunnettx method for 2 tests</code></pre>
 <p>The two comparisons provided are <em>A</em> vs. <em>B</em> and <em>A</em> vs. <em>C</em>.
-The only significant difference is between <em>A</em> and <em>C</em> (<span class="math inline">\(p\)</span>-value = 0.0002).
+The only significant difference is between <em>A</em> and <em>C</em> (<span class="math inline">\(p\)</span>-value = 0.0019).
 As before, here are simultaneous CIs and plots:</p>
 <div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(<span class="fu">contrast</span>(drug.mc, <span class="st">&quot;trt.vs.ctrl&quot;</span>))</span></code></pre></div>
-<pre><code>##  contrast estimate     SE df lower.CL upper.CL
-##  b - a      -0.118 0.0916 15   -0.343    0.107
-##  c - a      -0.511 0.0997 15   -0.756   -0.266
+<pre><code>##  contrast estimate    SE df lower.CL upper.CL
+##  B - A     -0.0754 0.186 27   -0.512    0.361
+##  C - A     -0.6872 0.186 27   -1.123   -0.251
 ## 
 ## Results are given on the log (not the response) scale. 
 ## Confidence level used: 0.95 
@@ -1174,9 +1181,9 @@ Can you explain what you see?</p>
 To change this from the default, just tell R to do so in the <code>contrast</code> statement.
 In the below example we set the second (2) factor, <em>B</em>, to be the control with <code>ref=2</code>.</p>
 <div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contrast</span>(drug.mc, <span class="st">&quot;trt.vs.ctrl&quot;</span>, <span class="at">ref=</span><span class="dv">2</span>)</span></code></pre></div>
-<pre><code>##  contrast estimate     SE df t.ratio p.value
-##  a - b       0.118 0.0916 15   1.285  0.3640
-##  c - b      -0.393 0.0964 15  -4.079  0.0019
+<pre><code>##  contrast estimate    SE df t.ratio p.value
+##  A - B      0.0754 0.186 27   0.406  0.8750
+##  C - B     -0.6117 0.186 27  -3.291  0.0054
 ## 
 ## Results are given on the log (not the response) scale. 
 ## P value adjustment: dunnettx method for 2 tests</code></pre>
@@ -1195,8 +1202,14 @@ Kutner, M. H., Nachtsheim, C., Neter, J. and Li, W., <em>Applied Linear Statisti
 <div id="ref-R-emmeans" class="csl-entry">
 Lenth, R., <em>Emmeans: Estimated Marginal Means, Aka Least-Squares Means</em>, from <a href="https://CRAN.R-project.org/package=emmeans">https://CRAN.R-project.org/package=emmeans</a>, 2019.
 </div>
+<div id="ref-Walpole2007" class="csl-entry">
+Walpole, R. E., Myers, R. H., Myers, S. L. and Ye, K., <em>Probability &amp; Statistics for Engineers and Scientists</em>, Upper Saddle River: Pearson Education, 2007.
+</div>
 <div id="ref-WeissText" class="csl-entry">
 Weiss, N. A., <em>Introductory Statistics</em>, Pearson Education, 2012.
+</div>
+<div id="ref-Wesson1976" class="csl-entry">
+Wesson, J. A., Influence of Physical Restraint and Restraint-Facilitating Drugs on Blood Measurements of White-Tailed Deer and Other Selected Mammals, Master’s thesis, Virginia Polytechnic Institute; State University, 1976.
 </div>
 </div>
             </section>

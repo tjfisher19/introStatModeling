@@ -26,6 +26,7 @@ fig:ch3-field
 fig:ch3-field-random
 fig:ch3-field-block
 fig:ch3-3
+fig:ch3-3profile
 fig:ch3-4
 fig:ch3-5a
 fig:ch3-6

@@ -101,7 +101,7 @@ So to put it another way, a two-sample $t$-test essentially is a choice of
 
 $$H_0: \textrm{Baseline Model} ~~ Y_i = \mu + \varepsilon_i$$
 and
-$$H_A: \textrm{More complex model} ~~ Y_i = \mu + \delta\cdot X_i + \varepsilon.$$
+$$H_A: \textrm{More complex model} ~~ Y_i = \mu + \delta\cdot X_i + \varepsilon_i.$$
 
 To tie everything together note that in $H_A$ we are essentially saying observation $Y_i$ is a function of the variable $X_i$. 
 
@@ -275,7 +275,7 @@ This sounds serious. What is it?
 Needless to say, confounding renders experimental results to be seriously impaired, if not totally useless.
 Consider this example:
 
-**Example.** A drug manufacturer tests a new cold medicine with 200 participants: 100 men and 100 women.
+**Example:** A drug manufacturer tests a new cold medicine with 200 participants: 100 men and 100 women.
 The men receive the drug, and the women do not.
 At the end of the test period, the men report fewer colds.
 
@@ -312,7 +312,7 @@ We will revisit the model statement in a later section.
 
 To demonstrates its implementation in R we consider another example. 
 
-**Example.** (originally in @WeissText) The makers of the MAGNETIZER Engine Energizer System (EES) claim that it improves the gas mileage and reduces emissions in automobiles by using magnetic free energy to increase the amount of oxygen in the fuel for greater combustion efficiency.
+**Example:** (originally in @WeissText) The makers of the MAGNETIZER Engine Energizer System (EES) claim that it improves the gas mileage and reduces emissions in automobiles by using magnetic free energy to increase the amount of oxygen in the fuel for greater combustion efficiency.
 Test results for 14 vehicles that underwent testing is available in the file `carCOemissions.csv`.
 The data includes the emitted carbon monoxide (CO) levels, in parts per million, of each of the 14 vehicles tested before and after installation of the EES.
 
@@ -427,7 +427,7 @@ In this design, we observe random samples from $k$ different populations.
 As a designed experiment, these populations may be defined on the basis of an administered treatment.
 The levels of the factor being manipulated by the researcher form the different treatments.
 Frequently, the data are obtained by collecting a random sample of individuals to participate in the study, and then randomly allocating a single treatment to each of the study participants.
-If so, then **the individual subjects (experimental units) receiving treatment $i$ may be thought of as a random sample from the population of all individuals who could be administered treatment $i$**. 
+If so, then **the individual subjects (experimental units) receiving treatment $j$ may be thought of as a random sample from the population of all individuals who could be administered treatment $j$**. 
 
 The one-way data structure looks like the following:
 
@@ -483,43 +483,52 @@ The test statistic is a ratio of variance estimates and follows the Fisher-Snede
 The details of this distribution are not important for this course and are covered in a Mathematical Statistics course.
 An example of a one-way ANOVA in R is provided below.
 
-**Example:** Drug effects on alertness.
-Three different medications are tested on a sample of 18 individuals to see if they impact alertness.
-Each subject is randomly assigned one drug, the drug is administered.
-After 60 minutes, a test is administered that scores the alertness level of each subject (a higher score means higher alertness).
-The data appear in the R dataframe `onewaydrug.RData` in our repository: (https://tjfisher19.github.io/introStatModeling/data/onewaydrug.RData)
+**Example:** Drug effects on "knockdown" times (from the text @Walpole2007).
+Immobilization of free-ranging white-tailed deer by drugs allows researchers the opportunity to closely examine deer and gather valuable physiological information. 
+Wildlife biologists tested the "knockdown" time (time, measured in minutes, from injection to immobilization) of three different immobilizing drugs.
+Thirty male white-tailed deer were randomly assigned to each of three treatments: Group *A* received 5mg of liquid succinylcholine chloride (SCC); group *B* received 8 mg of powdered SSC; and group *C* received 200 mg of phencyclidine hydrochloride. 
+
+Original Source: @Wesson1976
+
+The data appear in the R dataframe `deerKnockdown.RData` in our repository: (https://tjfisher19.github.io/introStatModeling/data/deerKnockdown.RData)
 
 ```{r, eval=FALSE}
-load("onewaydrug.RData")
-glimpse(onewaydrug)
+site <- "https://tjfisher19.github.io/introStatModeling/data/deerKnockdown.RData"
+load(url(site))
+glimpse(deer_knockdown_times)
 ```
 
 ```{r ch2-8data, echo=FALSE}
-load("docs/data/onewaydrug.RData")
-glimpse(onewaydrug)
+load("docs/data/deerKnockdown.RData")
+glimpse(deer_knockdown_times)
 ```
 
-```{r ch2-8, fig.align='center', fig.cap='Side-by-side Box-whiskers plots showing the distribution of `alertness` for each of the three drug treatments, `a`, `b` and `c`. Overall we see alertness is highest in treatment `a`, followed by `b` and `c`. We Also note that variability appears greatest in treatment `a`, followed by `b` and `c`.', out.width='70%', fig.asp=0.55}
-ggplot(onewaydrug) + 
-  geom_boxplot(aes(x=drug, y=alertness)) + 
-  geom_jitter(aes(x=drug, y=alertness), width=0.25) +
-  labs(x="Drug Treatment", y="Alertness Score") + 
+**Note** the subtle change in the code compared to `read_csv()` and `read_table()`. When loading an R data.frame from a website, we need to use the `url()` function to open and close the internet connection inside the `load()` function.
+
+We can then plot the data.
+
+```{r ch2-8, fig.align='center', fig.cap="Side-by-side Box-whiskers plots, with data overlayed jittered data, and treatement means (gray diamond), showing the distribution of 'knockdown' times for each of the three drug treatments, `A`, `B` and `C`. Overall we see immobilization times is highest in treatment `A`, followed by `B` and `C`. We Also note that variability appears greatest in treatment `A`, followed by `B` and `C`.", out.width='70%', fig.asp=0.65}
+ggplot(deer_knockdown_times, aes(x=Drug, y=Knockdown_time )) + 
+  geom_boxplot() + 
+  geom_jitter(width=0.25) +
+  stat_summary(fun="mean", geom="point", shape=23, fill="gray60", size=4) + 
+  labs(x="Drug Treatment", y="Time to Immobilization (min)") + 
   theme_minimal()
 ```
 
-Visually it appears the scores under drug C seem to be noticeably lower on average than for the other two drugs.
-Also, we may suspect the variance is different between the three drug.
-That is, the distributions of scores for drugs A and B are more disperse than for drug C.  
+Visually it appears the immobilization times under drug C seem to be noticeably lower on average than for the other two drugs.
+Also, we may suspect the variance of immobilization times is different between the three drugs.
+That is, the distributions of times for drugs *A* and *B* are more disperse than for drug *C*.  
 
 To perform One-Way ANOVA we employ the `aov` function (for Analysis Of Variance).
 We use the `summary()` function to see its full output.
 
 ```{r ch2-9}
-fit.drug <- aov(alertness ~ drug, data=onewaydrug)
+fit.drug <- aov(Knockdown_time ~ Drug, data=deer_knockdown_times)
 summary(fit.drug)
 ```
 
-We see One-Way ANOVA report a significant $p$-value (less than 0.01) but we'll soon see there are problems with this result.
+We see One-Way ANOVA report a significant $p$-value ($p$-value of 0.0102) but we'll soon see there are problems with this result.
 
 ## Assumption Checking{#assumptionCheck}
 
@@ -561,7 +570,7 @@ Specialized methods are needed for this type of data (see Section \@ref(within-s
 
 To assess the constant variance assumption we typically consider two simple plots: a Residuals vs Fitted plot and Scale-Location plot as seen in Figure \@ref(fig:ch2-10) (code to generate the plot available below).
 
-```{r ch2-10, echo=FALSE,  fig.cap='Residual diagnostic plots showing a *fanning* effect in the residuals vs fitted and increasing linear trend in the Scale-Location plot, thus suggesting the variance increases with the mean.', out.width='70%', fig.align='center', fig.asp=0.6}
+```{r ch2-10, echo=FALSE,  fig.cap='Residual diagnostic plots showing a *fanning* effect in the residuals vs fitted and increasing linear trend in the Scale-Location plot, thus suggesting the variance increases with the mean.', out.width='70%', fig.align='center', fig.asp=0.55}
 autoplot(fit.drug, which=c(1,3), nrow=1)
 ```
 
@@ -579,7 +588,7 @@ The sample residuals would be found by $e_{ji} = Y_{ji} - \hat{Y}_{ji} = Y_{ji} 
 
 A residuals versus fitted plot is provided in the left panel of Figure \@ref(fig:ch2-10). 
 If all is well, you should see fairly uniform ("constant") spread of the points in the vertical direction and the scatter should be symmetric vertically around zero. 
-The vertical spread here looks like it might be expanding as the fitted values increase (fanning effect), suggesting that there may be subtle non-constant error variance.  
+The vertical spread here looks like it might be expanding as the fitted values increase (fanning effect), suggesting that there may be non-constant error variance.  
 
 An attempt at refining the residuals vs fitted plot is given in the plot on the right in Figure \@ref(fig:ch2-10), called the Scale-Location plot. 
 The difference now is that instead of plotting the raw residuals $e_{ij}$ on the vertical axis, R first standardizes them (so you can better check for extreme cases), takes their absolute value (to double the resolution in the plot) and then takes their square root (to remove skew that sometimes affects these plots). 
@@ -596,7 +605,7 @@ Thus, by looking at the magnitude of the residuals only by taking absolute value
 
 We typically make this assessment with a Normal quantile-quantile (Q-Q) plot. 
 
-```{r ch2-11, echo=FALSE, out.width='65%', fig.cap='Normal Q-Q plot demonstrating the residuals are reasonably Normally distributed.', fig.align='center'}
+```{r ch2-11, echo=FALSE, out.width='65%', fig.cap='Normal Q-Q plot demonstrating the residuals may deviation from the Normality assumption.', fig.align='center'}
 autoplot(fit.drug, which=c(2), nrow=1)
 ```
 
@@ -607,7 +616,7 @@ A normal Q-Q plot of the residuals is presented in Figure \@ref(fig:ch2-11).
 A common *tool* to analyze these plots is sometimes known as the "fat pencil" test.
 Consider the thick pencils children are given when learning to write -- if you lay that pencil on the plotted line, if all the points are covered by the pencil the data is approximately normally distributed.
 
-In Figure \@ref(fig:ch2-11) there is some minor deviation from the line (observation 16).
+In Figure \@ref(fig:ch2-11) there is some deviation from the line (observations 13 and 7).
 Coupled with the issues with variance outlined above, we may have evidence to suggest the normality assumption is not met.
 
 **Note:** It is quite common for violations of constant variance and normality to go hand-in-hand.
@@ -618,26 +627,26 @@ That is, if there are concerns about one, it is common for there to be concerns 
 The code to generate the above plots can be achieved via the `autoplot` function when including the `ggfortify` library [@R-ggfortify]. 
 The `autoplot` function provides 4 plots by default seen in Figure \@ref(fig:ch2-12) (note: we will discuss the Constant Leverage plot in Section \@ref(detecting-and-dealing-with-unusual-observations)).
 
-```{r ch2-12, message=FALSE, fig.align='center', fig.cap='Residual plots for the One-Way ANOVA studying the effect of different drugs on alertness - Top-left a Residuals vs Fitted Plot; Top-right a Normal Q-Q plot of the residuals; Bottom-left the Scale-Location plot; and Bottom-right a Residuals vs Leverage plot.', fig.asp=1, out.width='80%'}
+```{r ch2-12, message=FALSE, fig.align='center', fig.cap='Residual plots for the One-Way ANOVA studying the effect of different drugs on immobilization times - Top-left a Residuals vs Fitted Plot; Top-right a Normal Q-Q plot of the residuals; Bottom-left the Scale-Location plot; and Bottom-right a Residuals vs Leverage plot.', fig.asp=1, out.width='80%'}
 library(ggfortify)
 autoplot(fit.drug)
 ```
 
 ### Transforming your response
 
-We have evidence from the above plots that the variance appears to be increasing with the response (determined by assessing the constant variance assumption). 
+We have evidence from the above plots that the variance appears to be increasing with the response (determined by assessing the constant variance assumption) and that there may be some violations to normality. 
 One way to typically address this issue is to transform the response variable. 
 We will go into more details later but common transformations include $Y^*=log(Y)$, $Y^*=\sqrt{Y}$ and $Y^*=1/Y$. 
 Here we will use a logarithmic as it is fairly common. 
 Later in the class we will describe the other transformations in more detail. 
 We can achieve this in R with the following which provides the residuals plots in Figure \@ref(fig:ch2-13).
 
-```{r ch2-13, fig.width=7, fig.height=7, fig.align='center', fig.cap='Residual diagnostic plots when the response variable is the logarithm of the alertness. Here the heteroskedasticity in the original model has been improved, albeit not entirely mitigated, with some minor indication of increasing variability with the mean.', fig.asp=1, out.width='80%'}
-fit.log.drug <- aov(log(alertness) ~ drug, data=onewaydrug)
+```{r ch2-13, fig.width=7, fig.height=7, fig.align='center', fig.cap='Residual diagnostic plots when the response variable is the logarithm of the immobilization time. Here the heteroskedasticity and non-normality in the original model has been improved, albeit not entirely mitigated, with some minor fanning in the residuals vs fitted plot.', fig.asp=1, out.width='80%'}
+fit.log.drug <- aov(log(Knockdown_time) ~ Drug, data=deer_knockdown_times)
 autoplot(fit.log.drug)
 ```
 
-This is maybe a bit better, but a stronger transformation might be warranted.
+This is a bit better but other transformations can be considered.
 For now we proceed with the logarithmic transformation.
 
 The test comparing the three drug population means (on a log scale) is given via the `summary()` command:
@@ -646,10 +655,12 @@ The test comparing the three drug population means (on a log scale) is given via
 summary(fit.log.drug)
 ```
 
-The result is significant ($F$ = 14.167, $\textrm{df}_1$ = 2, $\textrm{df}_2$ = 15, $p$-value = 0.00035).
-Thus, we could conclude that at least two of the drugs produce significantly different mean alertness responses.
+The result is significant ($F$ = 8.219, $\textrm{df}_1$ = 2, $\textrm{df}_2$ = 27, $p$-value = 0.00163).
+Thus, we could conclude that at least two of the drugs produce significantly different log-mean immobilization times.
 
-Of course, what remains to be seen is which pairs of drugs produce different mean alertness levels.
+**Math Tangent**: Note that the logarithm function is a monotone increasing function. So if $a>b$ then $\log(a)>\log(b)$. Thus, we can infer that the mean immobilzation times for the three drug treatments also differs.
+
+Of course, what remains to be seen is which pairs of drugs produce different log-mean immobilization times.
 For that, we will need to look at techniques known as multiple comparison procedures.
 
 
@@ -722,12 +733,12 @@ Then we tell it to do a "pairwise" comparison via the `contrast()` function.
 
 ```{r ch2-15}
 library(emmeans)
-drug.mc <- emmeans(fit.log.drug, "drug")
+drug.mc <- emmeans(fit.log.drug, "Drug")
 contrast(drug.mc, "pairwise")
 ```
 
-The significant differences are what we expected based on our earlier EDA: drug *C* is significantly different in terms of mean alertness as compared to the other two drugs. 
-This is borne out from the Tukey-adjusted $p$-values of 0.0003 (when comparing drugs *A* and *C*) and 0.0027 (when comparing drugs *B* and *C*). *B* and *A* are not significantly different. 
+The significant differences are what we expected based on our earlier EDA: drug *C* is significantly different in terms of log-mean immobilization time as compared to the other two drugs. 
+This is borne out from the Tukey-adjusted $p$-values of 0.0027 (when comparing drugs *A* and *C*) and 0.0076 (when comparing drugs *B* and *C*). *B* and *A* are not significantly different. 
 The $p$-values in this output have been adjusted, so we can just compare them to our usual 0.05.
 
 We can also obtain simultaneous 95% confidence intervals for the true mean differences due to each drug pairing using the `confint()` function on our `contrast` of an `emmeans` object:
@@ -738,20 +749,20 @@ confint(contrast(drug.mc, "pairwise"))
 
 These may be interpreted as follows:
 
-95\% CI for $\mu_A - \mu_B$ = (-0.1203, 0.355788).
-This interval contains 0, so we cannot conclude that the true log-mean alertness scores significantly differ between drugs *A* and *B*.
+95\% CI for $\mu_A - \mu_B$ = (-0.386, 0.536).
+This interval contains 0, so we cannot conclude that the true log-mean immobilization time significantly differ between drugs *A* and *B*.
 
-95\% CI for $\mu_A - \mu_C$ = (0.2521, 0.7702). 
-We can be 95\% confident that drug *A* produces a true log-mean alertness score that is between 0.2521 to 0.7702 higher than drug *C*.
+95\% CI for $\mu_A - \mu_C$ = (0.226, 1.148). 
+We can be 95\% confident that drug *A* produces a true log-mean immobilization time that is between 0.226 to 1.148 higher than drug *C*.
 
-95\% CI for $\mu_B - \mu_C$ = (0.1429, 0.6439). 
-We can be 95\% confident that drug *B* produces a true log-mean alertness score that is between 0.1429 and 0.6439 higher than drug *C*.
+95\% CI for $\mu_B - \mu_C$ = (0.151, 1.073). 
+We can be 95\% confident that drug *B* produces a true log-mean immobilization time that is between 0.151 and 1.073 higher than drug *C*.
 
 To put back in the original units we could "un"-log the intervals by taking exponents (use the `exp()` function since by default `log` takes a "natural log").
 
 We can also visualize these results via a plot:
 
-```{r ch2-17, fig.align='center', fig.cap='Tukey adjusted confidence interval plots comparing treatments treatments `a`, `b` and `c`. Here, we see that treatments `b` and `c` are significantly different as well as treatments `a` and `c`. We also note there is no significant difference between treatments `a` and `b`.', out.width='70%', fig.asp=0.55}
+```{r ch2-17, fig.align='center', fig.cap='Tukey adjusted confidence interval plots comparing treatments treatments `A`, `B` and `C`. Here, we see that treatments `B` and `C` are significantly different as well as treatments `A` and `C`. We also note there is no significant difference between treatments `A` and `B`.', out.width='70%', fig.asp=0.55}
 plot(contrast(drug.mc, "pairwise"))
 ```
 
@@ -759,8 +770,10 @@ Here, we are interesting in comparing each plotted confident band to the value o
 
 ### Dunnett multiple comparisons
 
-The Dunnett method is applicable when one of your experimental groups serves as a natural control to which you want to compare the remaining groups. 
-In this situation, it is advisable to use a method that only controls the family-wise error rate for the comparisons of interest, rather than over-controlling by using a method like Tukey. 
+The Dunnett method is applicable when one of your experimental groups serves as a natural *control* to which you want to compare the remaining groups.
+**Note** that there is no *control* group in our working example, but we include the code below for demonstration purposes.
+
+In situations were a *control* group is present, it is advisable to use a method that only controls the family-wise error rate for the comparisons of interest, rather than over-controlling for all possible comparison such as when using a method like Tukey HSD. 
 We still use the `emmeans` package but specify the comparisons are against a *control* group. The code is below:
 
 ```{r ch2-18}
@@ -768,7 +781,7 @@ contrast(drug.mc, "trt.vs.ctrl")
 ```
 
 The two comparisons provided are *A* vs. *B* and *A* vs. *C*. 
-The only significant difference is between *A* and *C* ($p$-value = 0.0002). 
+The only significant difference is between *A* and *C* ($p$-value = 0.0019). 
 As before, here are simultaneous CIs and plots:
 
 ```{r ch2-19, fig.align='center', fig.cap='Dunnett adjusted confidence interval plots demonstrating that treatment `c` is significantly different than control group `a`, while treatment `b` is not significantly different than control group `a`.', out.width='70%', fig.asp=0.55}
