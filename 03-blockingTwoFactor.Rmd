@@ -72,7 +72,7 @@ A block design can accomplish this task.
 
 **What can serve as a block?**  It is important to note that subjects (*i.e.*, experimental units) themselves may form blocks in a block design.  It is also possible that different experimental units may collectively form a "block".  It depends on the circumstances.  All that is needed is that a block, however, formed, creates a "relatively homogeneous set of experimental material."
 
-**An example.** You've already seen the concept of a block design! Consider the paired *t*-test included in Section \@ref(paired-t-test). There, the individual vehicles are essentially treated as blocks. 
+**An example.** You've already seen the concept of a block design! Consider the paired *$t$-test included in Section \@ref(paired-t-test). There, the individual vehicles are essentially treated as blocks. 
 We observe two responses within each block (or vehicle).
 
 ### Data structure, model form and analysis of variance of a Randomized Block Design
@@ -107,116 +107,207 @@ The null and alternative hypotheses are given by:
 $$H_0: \tau_1 = \tau_2 = \ldots = \tau_k = 0 ~~\textrm{versus}~~ H_a: \textrm{at least one } \tau_i \neq 0$$
 We may also test for differences between blocks, but this is usually of secondary interest at best.  
 
-Here is an example in R.
+### Block ANOVA Example
 
-**Example:** Five subjects are asked to memorize a list of words.
-The words on this list are of three types: positive words, negative words and neutral words.
-The response variable is the number of words recalled by word type (Negative (Neg), Neutral (Neu) and Positive (Pos)), with a goal of determining if the ability to recall words is affected by the word type.
-Each subject provides the number of recalled words of each type.
-Here are the data:
+As a first example consider the following *classic* barley yield experiment.
 
-```{r ch3-1, echo=FALSE}
-load("docs/data/wordrecall.RData")
-knitr::kable( wordrecall %>% dplyr::select(-obs) %>% spread(word.type, recall))
+**Example.** Barley Yields (from @Fisher1935).
+
+Data was collected on the yields of five varieties of barley grown at six different locations in 1931 and 1932. 
+Of statistical interested is the mean difference in yield between the five different varieties.
+
+Original Source: @ImmerHayesPowers1934
+
+Before proceeding with the data analysis, we first note the variables and factors of interests in this study.
+
+* Barley yield - this is the response variable.
+* Barley variety - the variety, or species, of barley. This is the factor variable of interest. It has 5 levels.
+* Location and Year - The six different location and years serve as a block term in this model. We note that within each location and year, the environment should be fairly homogenous, so the location and year will serve as a blocking term.
+
+The data is available in the file `fisherBarley.RData` on the class repository.
+
+```{r ch3-barleyNoEval, eval=FALSE}
+load(url("https://tjfisher19.github.io/introStatModeling/data/fisherBarley.RData"))
+glimpse(fisherBarleyData)
 ```
 
-There data are available in the R dataframe `wordrecall.RData` on the class repository (`https://tjfisher19.github.io/introStatModeling/data/`). Below is an analysis of this data.
-
-
-```{r ch3-2noeval, eval=FALSE}
-load("wordrecall.RData")
-glimpse(wordrecall)
+```{r ch3-barley, echo=FALSE}
+load("docs/data/fisherBarley.RData")
+glimpse(fisherBarleyData)
 ```
 
-```{r ch3-2, echo=FALSE}
-load("docs/data/wordrecall.RData")
-glimpse(wordrecall)
-```
+We note the data includes a `LocationYear` variable that combines the information of both the `Location` and `Year`.
+We also note we have a single observation for each `Variety` and `LocationYear` -- this we have a complete randomized block design with a single observation in each.
 
-Each subject gives three responses instead of one as in a usual one-way design.
-In this manner, each subject (or person) forms a block.
-The design is a randomized block design, because the experimenter randomly determines the order of word type for recalling for each subject.
+We first proceed with an inappropriate simple visualization of the data.
+We do this for demonstration and learning purposes.
 
-Before doing a formal analysis, here are some descriptive looks at word type and subject factors.
-First we perform a little data cleaning so the `word.type` variable is displayed in a complete word.
-
-```{r ch3-3wordClean}
-wordrecall <- wordrecall %>%
-  mutate(word.type = factor(word.type, labels=c("Negative", "Neutral", "Positive")))
-```
-
-Now we can look at some plots of the data -- making sure to consider the different blocks (the people) as well as the treatments (word types).
-Figure \@ref(fig:ch3-3) displays Boxplots of the responses as functions of the people and treatments.
-
-```{r ch3-3, fig.align='center', fig.cap='Boxplot distribution of the number of Word recalls as a function of Subject and Word Types.',out.width='100%', fig.asp=0.55}
-p1 <- ggplot(wordrecall) + 
-  geom_boxplot(aes(x=subject, y=recall) ) +
-  labs(x="Subject", y="Words Recalled")
-p2 <- ggplot(wordrecall) + 
-  geom_boxplot(aes(x=word.type, y=recall)) +
-  labs(x="Word Type", y="Words Recalled")
+```{r ch3-3, fig.align='center', fig.cap="Boxplot distribution of the baryley yeilds of `LocationYear` and barley `Variety`.",out.width='100%', fig.asp=0.55}
+p1 <- ggplot(fisherBarleyData) + 
+  geom_boxplot(aes(x=LocationYear, y=Yield) ) +
+  labs(x="Location & Year", y="Yield (bushels)")
+p2 <- ggplot(fisherBarleyData) + 
+  geom_boxplot(aes(x=Variety, y=Yield)) +
+  labs(x="Barley Variety", y="Yield (bushels)")
 grid.arrange(p1, p2, nrow=1)
 ```
-
-In the above code, we build a simple boxplot of the words recalled by subject and call it `p1`.
-Similarly we build a boxplot of words recalled by word type, called `p2`.
+First, a quick note about the above code.
+We build a simple boxplot of the yield by the block term and call it `p1`.
+Similarly we build a boxplot of yield by variety, called `p2`.
 We then use the `grid.arrange()` function in the `gridExtra` package [@R-gridExtra] to put the two plots side-by-side.
 The results are in Figure \@ref(fig:ch3-3).
 
-We note that these plots are not necessarily appropriate for this data.
-For one, Boxplots display a 5 number summary -- for each person we only have three observations (the number of positive words recalled, number of neutral and number of negative words), so the figure on the left does cannot display appropriate blocks.
+**Incorrect plots.** We note that these plots are not necessarily appropriate for this data.
+For one, Boxplots display a 5 number summary -- for each block term we only have five observations (one for each variety), so the figure on the left appears to summarize a sample of data when in fact we only have 5 observations -- why not just display the raw data?
 Second, the figure on the right is ignoring the block structure -- this is effectively equivalent to ignoring the *pairing* in a matched pairs design. 
-Each person will have their own abilities and strengths.
-For example, it is possible a particular individual may excel at recalling positive words and not negative words, where another succeeds in recalling negative words and not positive -- this information cannot be deduced from this plot.
-So we will build a profile plot similar to that used in the matched pairs design in Figure \@ref(fig:ch2-7) from Section \@ref(paired-t-test).
+Each environmental condition consisting of a location & year will have its own climate, rainfall, soil nutrients, etc...
+For example, it is possible a particular barley may grow well in one Location and year due to *optimal* preciptation and sunshine levels, but another variety may grow poorly there. 
+Likewise, a different variety may prefer a different climate -- this information cannot be deduced from this plot.
 
-```{r ch3-3profile, fig.align='center', fig.cap='Profiles of each person highlighting the number of words recalled of each type.',out.width='70%', fig.asp=0.55}
-ggplot(wordrecall) + 
-  geom_line(aes(x=word.type, y=recall, 
-                color=subject, group=subject) ) +
-  labs(x="Word Type", y="Words Recalled", color="Subject") + 
+**A better plot** to consider is a profile plot similar to that used in the matched pairs design in Figure \@ref(fig:ch2-7) from Section \@ref(paired-t-test).
+Here, we explore the response at each treatment level within each block term.
+
+```{r ch3-3profile, fig.align='center', fig.cap='Profiles of each barley yield by variety profiling across each of the 12 Location & Year combinations.',out.width='70%', fig.asp=0.55}
+ggplot(fisherBarleyData) + 
+  geom_line(aes(x=Variety, y=Yield, 
+                color=LocationYear, group=LocationYear) ) +
+  labs(x="Baryley Variety", y="Yield (bushels)", color="Location & Year") + 
   theme_minimal()
 ```
 
-The effect of word type appears quite stark, with positive word recalls being higher than the other two types, followed by negative words.
-There is also a bit of subject-to-subject variability, but not much (*i.e.*, each person has their own profile!).
+This plot in Figure \@(fig:ch3-3profile) is an improvement over the previous result but can be further tweaked for visual improvement.
+In particular, each line corresponds to one of the block terms (this is the common approach for these plots) but there are 12 different colors displayed, and it can be difficult to distinguish them.
+This can be considered *visual clutter*.
+Since the specific Location & Year combinations are not necessarily of interest in our study, we can *mute* their impact by plotting each line with the same color as in Figure \@ref(fig:ch3-ImprovedProfile).
 
-Here is how to do a formal analysis in a call of `aov()` -- making sure to check underlying assumptions in Figure \@ref(fig:ch3-4).
+```{r ch3-ImprovedProfile, fig.align='center', fig.cap='Profiles of each barley yield by variety profiling across each of the 12 Location & Year combinations.',out.width='70%', fig.asp=0.55}
+ggplot(fisherBarleyData) + 
+  geom_line(aes(x=Variety, y=Yield, 
+                group=LocationYear), color="gray30" ) +
+  labs(x="Baryley Variety", y="Yield (bushels)") + 
+  theme_minimal()
+```
 
-```{r ch3-4, fig.width=7, fig.height=7, fig.align='center', fig.cap='Residual diagnostic plots when the response variable is the number of words recalled as  a function of subject (block) and word type. Here, the residuals appear fairly homoskedastic based on the Residuals vs Fitted and Scale-Location plots. The normality assumption is satisfied based on the Normal Q-Q plot.', fig.asp=1, out.width='80%'}
-word.fit <- aov(recall ~ subject + word.type, data=wordrecall)
-autoplot(word.fit)
+From the profile plots in Figures \@(fig:ch3-3profile) and \@ref(fig:ch3-ImprovedProfile) it is clear that certain Location & Years were more fruitful than others, in terms of barley yield.
+However, this is not the research question of interest - we are interested in determine how the different varieties influence yield.
+From the plots, this is not as clear.
+There is some evidence that the Trebi variety may result in more yield across all the blocks as well as maybe the Peatland variety. 
+
+To determine the effect variety has on yield we proceed with a formal analysis.
+Below is a formal analysis in a call of `aov()` -- making sure to check underlying assumptions in Figure \@ref(fig:ch3-4).
+
+```{r ch3-4, fig.width=7, fig.height=7, fig.align='center', fig.cap='Residual diagnostic plots when the response variable is the barley yield as  a function of location & year (block) and variety. Here, the residuals appear fairly homoskedastic based on the Residuals vs Fitted and Scale-Location plots. The normality assumption is satisfied based on the Normal Q-Q plot.', fig.asp=1, out.width='80%'}
+barley.fit <- aov(Yield ~ LocationYear + Variety, data=fisherBarleyData)
+autoplot(barley.fit)
 ```
 
 The assumptions look generally fine here (nothing too concerning about constant variance or normality).
 So, on to the analysis:
 
 ```{r ch3-5}
-summary(word.fit)
+summary(barley.fit)
 ```
 
-We see that there is a significant difference in the mean recall between the three word types ($F$ = 189.11, $\textrm{df}_1$ = 2, $\textrm{df}_2$ = 8, $p$-value = 0.0000001841)
+We see that there is a significant difference in the yield between the five varieties ($F$ = 7.779, $\textrm{df}_1$ = 4, $\textrm{df}_2$ = 44, $p$-value = 0.0000785)
 
 You can also see how the total variation was partitioned into three components: 
 
-1.	Within-subject (*i.e.*, block) sum of squares (105.067).
-2.	Between word type (*i.e.*, treatment) sum of squares (2029.73).
-3.	Residual sum of squares (42.93).   
+1.	Within-LocationYear (*i.e.*, the block term) sum of squares (31913).
+2.	Between variety (*i.e.*, treatment) sum of squares (5310).
+3.	Residual sum of squares (7509).   
 
-We see that R also reports an $F$-statistic and associated $p$-value for the `subject`.
+We see that R also reports an $F$-statistic and associated $p$-value for the `LocationYear`.
 This is the block term and is not of concern to our analysis.
-So we ignore that $F$-statistic and $p$-value!
+So we **ignore** that $F$-statistic and $p$-value!
 
-We can investigate the differences in mean recall between the three word types using a multiple comparison procedure.  
+We can investigate the differences in yields between the five varieties using a multiple comparison procedure.  
 
-```{r ch3-5a, fig.align='center', fig.cap='Tukey adjusted confidence interval plots comparing the three word types (treatments). Here, we see that Positive words are recalled at a greater rate than Neutral or Negative words and that Negative words are recalled at a greater rate than Neutral words.', out.width='70%', fig.asp=0.55}
-word.mc <- emmeans(word.fit, "word.type")
-plot(contrast(word.mc, "pairwise") )
+```{r ch3-5a, fig.align='center', fig.cap='Tukey adjusted confidence interval plots comparing the give barley varieties (treatments). Here, we see that Trebi variety is statistically different than the other four varieties, while those four are all statistically similar (recall, we look for zero in the confidence interval of the differences).', out.width='70%', fig.asp=0.55}
+barley.mc <- emmeans(barley.fit, "Variety")
+plot(contrast(barley.mc, "pairwise") )
 ```
 
 
-None of the Confidence Intervals in Figure \@ref(fig:ch3-5a) contain the value zero, so all word types are significantly different from each other.
-Negative word types have significantly more recalls than neutral types; positive word types have significantly more recalls on average than either negative or neutral word types.
+We see that six of the ten Confidence Intervals in Figure \@ref(fig:ch3-5a) contain the value zero, thus concluding there is not statistical difference between these varieties of barley.
+However, in four of the intervals zero is not included, and all four involve the 'Trebi' variety of barley - this we have statistical evidence to conclude that the Trebi variety results in a different yield than the other four varieties.
+Furthermore, based on the values of this intervals, it suggest that the Trebi variety will result in a greater yield than the other varieties (Trebi $-$ Variety $>0$ implies Trebi $>$ Variety, and Variety $-$ Trebi $<0$ implies Trebi $>$ Variety).
+
+
+### Another Block ANOVA Example
+
+The previous Block designed had roots in agriculture, much like our original description. 
+Here is a different example of block terms in an design. 
+
+**Example.** Weight loss study (published in @Walpole2007).
+
+Two reduction treatments and a control treatment were studied for their effects on weight change in obses women.
+The two reduction treatments involved were a self-induced weight reduction program and a therapist-controlled reduction program.
+Each of 10 subjects were assigned to the three treatment programs in a random order and measured for weight loss.
+
+Original Source: @Hall1975
+
+```{r ch3-1, echo=FALSE}
+weightloss <- read_csv("docs/data/weightlossStudy.csv", col_types=cols())
+knitr::kable( weightloss %>% pivot_wider(id_cols=Subject, names_from=Treatment, values_from=WtChanges))
+```
+
+There data are available in the R dataframe `wordrecall.RData` on the class repository (`https://tjfisher19.github.io/introStatModeling/data/`). Below is an analysis of this data.
+
+
+```{r ch3-2noeval, eval=FALSE}
+weightloss <- read_tsv("https://tjfisher19.github.io/introStatModeling/data/weightlossStudy.csv")
+glimpse(weightloss)
+```
+
+```{r ch3-2, echo=FALSE}
+glimpse(weightloss)
+```
+
+Each subject gives three responses instead of one as in a usual one-way design.
+In this manner, each subject (or person) forms a block (a person is a fairly homogeneous).
+The design is a randomized block design, because the experimenter randomly determines the order of treatments for each subject.
+
+Before the formal analysis we build profile plots to explore the effects of the three treatments within each subject in Figure \@ref(fig:ch3-WeightPprofiles).
+
+```{r ch3-WeightPprofiles, fig.align='center', fig.cap="Profiles of each subject's weight loss for the different treatments, with an overlayed 'average' highlighted in blue.",out.width='70%', fig.asp=0.55}
+ggplot(weightloss, aes(x=Treatment, y=WtChanges)) + 
+  geom_line(aes(group=Subject), color="gray30" ) +
+  stat_summary(fun="mean", geom="line", size=2, group=1, color="blue") + 
+  labs(x="Weight Loss Treatment", y="Weight Change") + 
+  theme_minimal()
+```
+
+Overall, in Figure \@ref(fig:ch3-WeightPprofiles) the effect of the different treatments appears quite stark, with the Therapist and Self-induced treatments improving over the control. 
+There is also quite a bit of subject-to-subject variability (*i.e.*, each person has their own profile!) and some subjects do not follow the "average" profile.
+
+Here is how to do a formal analysis in a call of `aov()` -- making sure to check underlying assumptions in Figure \@ref(fig:ch3-weightlossANOVA).
+
+```{r ch3-weightlossANOVA, fig.width=7, fig.height=7, fig.align='center', fig.cap='Residual diagnostic plots when the response variable is the weight change as a function of subject (block) and treatment. Here, the residuals appear to show some minor violations to the constant variance assumption as indicated by the Residuals vs Fitted and Scale-Location plots. Except for a single concerning observation, the normality assumption is satisfied based on the Normal Q-Q plot.', fig.asp=1, out.width='80%'}
+weightloss.fit <- aov(WtChanges ~ Subject + Treatment, data=weightloss)
+autoplot(weightloss.fit)
+```
+
+There appears to be a minor violation in the constant variance assumption (there is some indication that fitted values away from zero are more variable?).
+But, this type of violation cannot be easily be remedied by the standard techniques (a logarithm or square root transformation is not possible due to the negative values, and an reciprocal transformation is not possible due to a 0 observation).
+A single observation (observation 16) has a largest $z$-score value which deviates from the Normal line.
+We proceed with the analysis making note of some potential minor assumption violations.
+
+```{r ch3-545}
+summary(weightloss.fit)
+```
+
+We see that there is a significant difference in the mean weight change between the three treatments ($F$ = 6.878, $\textrm{df}_1$ = 2, $\textrm{df}_2$ = 26, $p$-value = 0.004).
+
+As a follow-up, we can investigate the differences in mean weight changes between the three treatments using a multiple comparison procedure and noting that there is a control treatment.
+
+```{r ch3-WeightMC, fig.align='center', fig.cap="Dunnett adjusted confidence interval plots comparing the two weight-loss treatments against the control. Here, we see that Self-induced treatment is not statistically different than the control (zero is in the interval) while the Therapist based treatment results in significantly more weight loss than the control.", out.width='70%', fig.asp=0.55}
+weightloss.mc <- emmeans(weightloss.fit, "Treatment")
+plot(contrast(weightloss.mc, "trt.vs.ctrl") )
+```
+
+
+The confidence intervals comparing the therapist-based weight loss treatment to the control in Figure \@ref(fig:ch3-WeightMC) does not contain the value zero, so we have evidence to suggest that the therapist based method results in a bigger weight change.
+However, the interval comparing the self-induced method to the control indicates there is not statistical difference (zero is included in the interval).
 
 
 ## Two-factor Designs
@@ -260,7 +351,7 @@ where
 * $\alpha\beta_{ij}$ is the "interaction effect" of the $i^\mathrm{th}$ level of factor $A$ and the $j^\mathrm{th}$ level of factor $B$ on the mean response.
 * $\varepsilon_{ijk}$ is the random error term.
 
-### Analysis
+### Analysis of a two-factor design
 
 First recall an important feature of designed experiments -- the analysis is determined by the experiment! 
 In most cases of factorial designs, the primary interest is to determine if some interaction between the two factors influences the response. 
@@ -276,49 +367,69 @@ The usual testing strategy is as follows:
     
 We consider two examples below.
 
-#### Example: An alertness study with two factors. 
+### Example with No Interaction
 
-An experimental medication is tested on a sample of 16 individuals at two dosage levels (10 mg, 25 mg) to see how it impacts alertness. 
-It is also of interest to investigate the effect of gender, and to see if the effect of a particular dosage on alertness depends on gender. 
-Thus, this is a two-factor factorial design: factor A is dosage (two levels) and factor B is gender (two levels). 
-Sometimes this is referred to as a $2\times 2$ factorial design. 
-Each subject is randomly assigned one drug, the drug is administered. After 60 minutes, a test is administered that scores the alertness level of each subject (a higher score means higher alertness). 
-The data appear in the R dataframe `twowaydrug.Rdata` in our repository (`https://tjfisher19.github.io/introStatModeling/data/`).
+**Example.** Highway Signage (published in @WeissText). 
 
-First take a look at the alertness scores by treatment (note that we need to coerce dosage to be an R factor since it is coded numerically and add labels on the gender variable) in Figure \@ref(fig:ch3-6):
+An experiment was conducted to determine the effects that the sign size and sign material have on *detection distance* (the distance at which drivers can first detect highway caution signs). 
+Four drivers were randomly selected for each combination of sign size (small, medium, and large) and sign material (marked 1, 2, and 3).
+Each driver covered the same streth of highway at a constant speed during the same time of day, and the detection distance (in feet) was determined for hte driver's assignment caution sign.
+
+Original Source: @Younes1994
+
+The data appear in the csv file `highwaySigns.tsv` in the textbook repository. 
+
+First note the data is stormed in a "Tab separated values" file, or TSV.
+This is similar to the more common, "Comma Separated values", or CSV, format.
+The `readr` package includes a `read_tsv()` function that works just like `read_csv()` and `read_table()`.
+
 
 ```{r ch3-6data-noeval, eval=FALSE}
-load("twowaydrug.RData")
-glimpse(twowaydrug)
+highway_signs <- read_tsv("https://tjfisher19.github.io/introStatModeling/data/highwaySigns.tsv", col_types=cols())
+glimpse(highway_signs)
 ```
 
 ```{r ch3-6data, echo=FALSE}
-load("docs/data/twowaydrug.RData")
-glimpse(twowaydrug)
+highway_signs <- read_tsv("docs/data/highwaySigns.tsv", col_types=cols() )
+glimpse(highway_signs)
+```
+Take a look at the detection distances by treatment and note that we need to coerce the `Material` variable to be a factor variable since it is coded as a numer.
+We will also turn `Size1 into a factor with a more logical order (recall that R will put the values in alphabetical order by default).
+
+```{r ch3-highwayFix}
+highway_signs <- highway_signs %>%
+  mutate(Material = as.factor(Material),
+         Size = factor(Size, levels=c("Small", "Medium", "Large")))
 ```
 
-```{r ch3-6, fig.align='center', fig.cap='Boxplot distribution of the number of the alertness level as a function of dosage and gender.',out.width='100%', fig.asp=0.55}
-twowaydrug <- twowaydrug %>%
-  mutate(dosage = factor(dosage),
-         gender = factor(gender, labels=c("Female", "Male")) )
-ggplot(twowaydrug) + 
-  geom_boxplot(aes(x=dosage, y=alertness) ) + 
-  facet_grid(.~gender) + 
+Now we wish to construct a plot of the data.
+We note that we have 4 observations per treatment (combination of size and material) so a boxplot makes no sense here. 
+We attempt to plot the raw data, using color to distinguish the three sign materials.
+We also add some *jittering* and *dodging* to separate data points and materials.
+
+```{r ch3-6, fig.align='center', fig.cap='Boxplot distribution of the texture values as a function of sauce and fish type.',out.width='100%', fig.asp=0.55}
+ggplot(highway_signs) + 
+  geom_point(aes(x=Size, y=Distance, color=Material),
+              position=position_jitterdodge() ) + 
+  labs(x="Sign Size", y="Detection Distance (ft)") +
   theme_bw()
 ```
 
-There may be a gender effect: it appears that male responses are graphically lower than females. However, the large spread in the 25 mg dosage group for males may mask this effect.
+From Figure \@ref(fig:ch3-6), there appears to be a size effect: Large signs have larger detection distances, followed by medium sized and then small.
+There may be a material effect as material type 3 appears to have lower detection distances than type 1.
+Material type 2 is somewhere between types 1 and 3 in terms of detection distances. 
 
 We fit the interaction model in `aov()` by telling R to include an interaction term with the notation `factor1:factor2`. 
 Below is the specific example for this study but first run a check on the residuals in Figure \@ref(fig:ch3-7).
 
-```{r ch3-7, fig.width=7, fig.height=7, fig.align='center', fig.cap='Residual diagnostic plots when the response variable is the alertness as a function of gender and dosage. Here, the residuals appear fairly homoskedastic based on the Residuals vs Fitted and Scale-Location plots. The normality assumption is satisfied based on the Normal Q-Q plot.', fig.asp=1, out.width='80%'}
-twoway.fit <- aov(alertness ~ dosage + gender + dosage:gender, data=twowaydrug)
-autoplot(twoway.fit)
+```{r ch3-7, fig.width=7, fig.height=7, fig.align='center', fig.cap='Residual diagnostic plots when the response variable is the detection distance as a function of sign size and sign material. Here, the residuals appear fairly homoskedastic based on the Residuals vs Fitted and Scale-Location plots. The normality assumption is satisfied based on the Normal Q-Q plot.', fig.asp=1, out.width='80%'}
+highway.fit <- aov(Distance ~ Size + Material + Size:Material, data=highway_signs)
+autoplot(highway.fit)
 ```
 
 The assumptions look to be reasonably met. 
-While there may be some issue with constant variance, it does not appear to be systemically related to the predicted (fitted) values, so transformations will not be helpful.
+While there may be some minor issues with constant variance, it does not appear to be systemically related to the predicted (fitted) values, so transformations will not be helpful.
+Likewise, those few observations in the QQ-Plot are not overly concerning given their $z$-score values are in the range $(-2,2)$.
 
 At this point, we can also generate tables of response means after we fit the interaction model.
 These consist of:
@@ -331,16 +442,16 @@ These means are estimates from the data and are purely descriptive (like the box
 We could calculate each one of the above using a series of `tidyverse` commands or using the R function `model.tables()`:
 
 ```{r ch3-8}
-model.tables(twoway.fit, "means")
+model.tables(highway.fit, "means")
 ```
 
 We proceed to the hypothesis tests:
 
 ```{r ch3-9}
-summary(twoway.fit)
+summary(highway.fit)
 ```
 
-**The first test to inspect is the interaction test.** The interaction is insignificant ($F$ = 0.0024, $\textrm{df}_1$ = 1, $\textrm{df}_2$ = 12, $p$-value = 0.9617). Thus, we could conclude the effect that dosage has on the mean alertness level does not depend on gender.
+**The first test to inspect is the interaction test.** The interaction is insignificant ($F$ = 1.031, $\textrm{df}_1$ = 4, $\textrm{df}_2$ = 27, $p$-value = 0.409). Thus, we could conclude the effect that sign size type has on the mean detection distance does not depend on material type.
 
 A visualization of the interaction effect may be obtained using an interactions plot. 
 An interaction plot is basically a plot of treatment means, whereby the means for all treatments having a given fixed level of one of the factors are visually "connected". 
@@ -348,45 +459,63 @@ We can build the interaction plot seen in Figure \@ref(fig:ch3-10) using aesthet
 Note both `color` and `group` are determined based on the `gender` variable.
 
 ```{r ch3-10, fig.align='center', fig.cap='Interaction plot demonstrating that the gender and dosage factors do not interact.', out.width='70%', fig.asp=0.55}
-ggplot(twowaydrug, aes(x=dosage, y=alertness, color=gender, group=gender) ) +  
+ggplot(highway.fit, 
+       aes(x=Size, y=Distance, color=Material, group=Material) ) +  
   stat_summary(fun=mean, geom="point") + 
-  stat_summary(fun=mean, geom="line")
+  stat_summary(fun=mean, geom="line") +
+  labs(x="Sign Size", y="Mean Detection Distance (ft)", color="Material")
 ```
 
-There are two treatment mean traces, one for each gender. 
-Each trace connects the mean alertness level of the dosage within each gender level.
+There are three treatment mean traces, one for each material type. 
+Each trace connects the mean detection distance of the sign size within each material.
 
-**The lack of significant interaction is evidenced by the parallelism of these traces:** the gender effect for 10mg dosage is depicted by the "gap" between the traces on the left. 
-Similarly, the gender effect for the 25mg dosage is depicted by the gap between the traces at the far right. 
-Note that these two "gaps" are of roughly the same size (which happens when the traces are parallel): this means that the effect of dose within females is about the same as the effect of dose within males.
+**The lack of significant interaction is evidenced by the parallelism of these traces:** the material effect for small signs is depicted by the "gaps" between the traces on the left. 
+Similarly, the material effect for the medium signs is depicted by the gaps at the middle points. 
+Likewise, the material effect for the large signs is dipicted by the gaps at the right points.
+Overall the three lines are reasonably parallel, and the interaction is not significant, this implies that the effect of material type within three sign sizes is about the same across all sign sizes.
 
-In other words, the effect of dose does not depend on gender. 
-This is the textbook definition of non-interaction between dose and gender in determining mean alertness.
+In other words, the effect of material type does not depend on sign size. 
 
-Since the interaction term was non-significant and we have visual support that the two factors do not interact, we may look at a reduced model that eliminates the interaction term and includes only main effects:
+The interaction term was non-significant.
+Visually, we may have support that the two factors do not interact.
+We can consider a reduced model that eliminates the interaction term and includes only main effects:
 
 ```{r ch3-11}
-twoway.main.fit <- aov(alertness ~ gender + dosage, data=twowaydrug)
-summary(twoway.main.fit)
+highway.main.fit <- aov(Distance ~ Size + Material, data=highway_signs)
+summary(highway.main.fit)
 ```
 
-The only statistical finding here is a very marginal effect of gender. Dosage level does not appear to make a significant difference in terms of mean alertness level, regardless of gender.
+From the results here (or with the interaction model), we see that the both material type and sign size appear to influence the detection distance of the fish (both $p$-values are smaller than typically-used significance levels).
 
-At this point, the follow-up work would involve multiple comparisons among the levels of the significant main effect factors (here that would be only gender). 
-However, since there are only two levels of gender, multiple comparisons are not necessary except perhaps to construct a confidence interval for the mean alertness level difference between males and females, regardless of dosage. 
+At this point, the follow-up work would involve multiple comparisons among the levels of the significant main effect factors. 
+Here, since ther is no interaction, we can perform multiple comparisons within each of the main effects separately. 
+First, we look at the influence of sign size.
 
 ```{r ch3-12}
-twoway.mc <- emmeans(twoway.main.fit, "gender")
-confint(contrast(twoway.mc, "pairwise"))
+twoway.size.mc <- emmeans(highway.main.fit, "Size")
+confint(contrast(twoway.size.mc, "pairwise"))
 ```
 
-We note that the adjusted 95\% confidence includes the value 0, this should not be surprising given we only had marginal ($p$-value $\approx$ 0.097) evidence that alertness was different between genders.
+We note that the adjusted 95\% confidence do not include the value 0, thus all sign sizes result in different detection distances.
 
-#### Example: Tooth growth in guinea pigs.
+For the three different material types.
 
-Let us consider an example that investigates the effects of ascorbic acid and delivery method on tooth growth in guinea pigs, @Crampton-1947.
+```{r ch3-12fish}
+twoway.material.mc <- emmeans(highway.main.fit, "Material")
+confint(contrast(twoway.material.mc, "pairwise"))
+```
+
+Similar to the above, we note that all three confidence intervals do not include the value of 0, indicating that all three material types result in different mean detection distances.
+
+
+### Example with Interaction
+
+
+**Example.** Tooth growth in guinea pigs (original from @Crampton-1947).
+
+Consider an example that investigates the effects of ascorbic acid and delivery method on tooth growth in guinea pigs.
 Sixty guinea pigs are randomly assigned to receive one of three levels of ascorbic acid (0.5, 1.0 or 2.0 mg) via one of two delivery methods (orange juice or Vitamin C), under the restriction that each treatment combination has an equal number of guinea pigs. 
-The response variable `len` is tooth length. 
+The response variable `len` is the length of odontoblasts (cells responsible for tooth growth). 
 The two-way data structure here looks like this:
 
 ```{r tooth_table, echo=FALSE}
@@ -410,10 +539,12 @@ head(ToothGrowth)
 
 Let us bypass generating numeric descriptive statistics for the moment, and instead jump to an interaction plot of the length response in Figure \@ref(fig:ch3-15). 
 
-```{r ch3-15, fig.align='center', fig.cap='Interaction plot demonstrating that the dose and supplement may interact.', out.width='70%', fig.asp=0.55}
+```{r ch3-15, fig.align='center', fig.cap='Interaction plot demonstrating that the dose and supplement may interact in predicting tooth length.', out.width='70%', fig.asp=0.55}
 ggplot(ToothGrowth, aes(x=dose, y=len, group=supp, color=supp) ) +  
   stat_summary(fun=mean, geom="point") + 
-  stat_summary(fun=mean, geom="line")
+  stat_summary(fun=mean, geom="line") +
+  labs(x="Dosage (mg per day)", y="Length of dontoblasts",
+       color="Supplement")
 ```
 
 There are a couple of things to note here:

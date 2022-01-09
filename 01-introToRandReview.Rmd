@@ -220,7 +220,9 @@ We saw above that we can access a specific variable within a dataset using the `
 We can also access specific observations in the dataset based on rules we may wish to implement.
 As a working example we will consider the university admissions data we read in above.
 
-**Example:** University admissions (originally in @KutnerText). The director of admissions at a state university wanted to determine how accurately students' grade point averages at the end of their freshman year could be predicted by entrance test scores and high school class rank. The academic years covered 1996 through 2000. This example uses the `univadmissions.txt` dataset in the repository.  The variables are as follows:
+**Example:** University admissions (originally in @KutnerText).
+
+The director of admissions at a state university wanted to determine how accurately students' grade point averages at the end of their freshman year could be predicted by entrance test scores and high school class rank. The academic years covered 1996 through 2000. This example uses the `univadmissions.txt` dataset in the repository.  The variables are as follows:
 
 *	`id` -- Identification number
 *	`gpa.endyr1` -- Grade point average following freshman year

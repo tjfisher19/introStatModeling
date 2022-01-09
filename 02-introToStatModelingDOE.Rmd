@@ -25,6 +25,8 @@ A **statistical model** is a mechanism we will use to try to describe the struct
 It is in this sense that you can think of a statistical model as a "simplification" in much the same way as the model airplane: we know that the true relationship between response and predictor variables is very detailed and complex. 
 The goal of the model is not to capture all the intricacies of the complexity but rather, the model only seeks to describe the essential features of any relationships that exist. 
 
+### Example of a two-sample $t$-test as a model
+
 It turns out, we have already fit a statistical model. 
 Consider a variation of the two-sample $t$-test we performed in the previous chapter on the University Admissions data [@KutnerText]. 
 For cohesiveness we input the data again.
@@ -295,7 +297,7 @@ Then, after all this, if the treatment group (*i.e.*, the group getting the medi
 ## Paired $t$-test
 
 Now that the framework for experimental design is complete let's consider our first example, the paired $t$-test (also known as the **matched pairs design**).
-Arguably the simplest example of such a design is a before and after study.
+Arguably the simplest example of such a design is a before and after study as outlined in the fictional example below.
 
 **Example.** In an effort to student the effectiveness of a new cholesterol drug 20 patients with high cholesterol are selected and their cholesterol is measured at the beginning of the study.
 The patients then take the new drug for 45 days.
@@ -308,11 +310,13 @@ The use of the paired $t$-test is not limited to experimental designs, it also a
 The paired $t$ does follow the model form discussed above but is actually somewhat complex due to the pairing mechanism.
 We will revisit the model statement in a later section.
 
-**Implementation in R**
+### Paired $t$-test example
 
-To demonstrates its implementation in R we consider another example. 
+To demonstrates the implementation of a paired $t$-test in R we consider another example. 
 
-**Example:** (originally in @WeissText) The makers of the MAGNETIZER Engine Energizer System (EES) claim that it improves the gas mileage and reduces emissions in automobiles by using magnetic free energy to increase the amount of oxygen in the fuel for greater combustion efficiency.
+**Example.** Carbon Emissions (originally in @WeissText).
+
+The makers of the MAGNETIZER Engine Energizer System (EES) claim that it improves the gas mileage and reduces emissions in automobiles by using magnetic free energy to increase the amount of oxygen in the fuel for greater combustion efficiency.
 Test results for 14 vehicles that underwent testing is available in the file `carCOemissions.csv`.
 The data includes the emitted carbon monoxide (CO) levels, in parts per million, of each of the 14 vehicles tested before and after installation of the EES.
 
@@ -483,7 +487,10 @@ The test statistic is a ratio of variance estimates and follows the Fisher-Snede
 The details of this distribution are not important for this course and are covered in a Mathematical Statistics course.
 An example of a one-way ANOVA in R is provided below.
 
+### Example of One-Way ANOVA
+
 **Example:** Drug effects on "knockdown" times (from the text @Walpole2007).
+
 Immobilization of free-ranging white-tailed deer by drugs allows researchers the opportunity to closely examine deer and gather valuable physiological information. 
 Wildlife biologists tested the "knockdown" time (time, measured in minutes, from injection to immobilization) of three different immobilizing drugs.
 Thirty male white-tailed deer were randomly assigned to each of three treatments: Group *A* received 5mg of liquid succinylcholine chloride (SCC); group *B* received 8 mg of powdered SSC; and group *C* received 200 mg of phencyclidine hydrochloride. 
@@ -622,7 +629,7 @@ Coupled with the issues with variance outlined above, we may have evidence to su
 **Note:** It is quite common for violations of constant variance and normality to go hand-in-hand.
 That is, if there are concerns about one, it is common for there to be concerns regarding the other.
 
-### Code to check assumption
+### Code to check assumptions
 
 The code to generate the above plots can be achieved via the `autoplot` function when including the `ggfortify` library [@R-ggfortify]. 
 The `autoplot` function provides 4 plots by default seen in Figure \@ref(fig:ch2-12) (note: we will discuss the Constant Leverage plot in Section \@ref(detecting-and-dealing-with-unusual-observations)).

@@ -16,7 +16,8 @@ In the previous two chapters we have seen a One-Way and Two-Way ANOVA.
 In the former, a single factor consisted of $k$-levels (and thus $k$-treatments) while in the latter the first factor may consist of $k$ levels and the second factor $j$ levels (and therefore $k\times j$ treatments). 
 Consider the following example.
 
-**Example.** Marketing research contractors. 
+**Example.** Marketing research contractors (CITATION). 
+
 A marketing research consultant evaluated the effects of free schedule, scope of work and type of supervisory control on the quality of work performed under contract by independent marketing research agencies.
 The design of this experiment can be summarized as follows
 
@@ -36,7 +37,7 @@ $$\begin{array}{ll}
 
 The quality of work performed was measured by an index taking into account several characteristics of quality. 
 
-You should note there are three factors in this experiment, with 3, 2 and 2 levels for each factor.
+You should note there are **three factors** in this experiment, with 3, 2 and 2 levels for each factor.
 This means the number of treatments is $3\times 2\times 2 = 12$ and can be summarized in the following table.
 
 ```{r three_way_table, echo=FALSE}
@@ -148,7 +149,7 @@ In a designed experiment that involves several measurements made on the same exp
 
 The important thing to recognize here is that each patient provided two observations, not one. 
 It stands to reason that *what a particular subject’s Cholesterol is after 45 days will be related to their starting Cholesterol before the drug treatment*. 
-That is the layman’s way of saying that the measurements within a subject are **not independent** (i.e., a patient is not independent of themselves -- the observations are correlated).
+That is the layman’s way of saying that the measurements within a subject are **not independent** (*i.e.*, a patient is not independent of themselves -- the observations are correlated).
 If in any analysis we ignored this basic truth, that analysis would be seriously flawed.
 
 So how did we handle this before?
@@ -164,7 +165,9 @@ In fact, this was already stated in section 3.1.
 What this means for us now is that using a block design approach in analysis is 'a way' to handle correlated (non-independent) observations such as in the paired $t$-test problem above. 
 We illustrate that here.
 
-**Example.** (originally in @WeissText) The makers of the MAGNETIZER Engine Energizer System (EES) claim that it improves the gas mileage and reduces emissions in automobiles by using magnetic free energy to increase the amount of oxygen in the fuel for greater combustion efficiency.
+**Example.** Carbon Emissions (originally in @WeissText).
+
+The makers of the MAGNETIZER Engine Energizer System (EES) claim that it improves the gas mileage and reduces emissions in automobiles by using magnetic free energy to increase the amount of oxygen in the fuel for greater combustion efficiency.
 Test results for 14 vehicles that underwent testing is available in the file `carCOemissions.csv`.
 The data includes the emitted carbon monoxide (CO) levels, in parts per million, of each of the 14 vehicles tested before and after installation of the EES.
 
@@ -248,13 +251,14 @@ If we can handle within-subjects factors using blocks, why not just stick with t
 Well, the reason is that repeated measures designs can get complicated: multiple time measurement points (more than just two), the addition of between-subjects factors, etc.
 The following case study example illustrates this.
 
-**Example: Cholesterol study.** A study tested whether cholesterol was reduced after using a certain brand of margarine as part of a low fat, low cholesterol diet. The subjects consumed on average 2.31g of the active ingredient, stanol ester, a day.  This data set `cholesterolreduction.csv` contains information on 18 people using margarine to reduce cholesterol over three time points.  
+**Example.** Cholesterol study (from the University of Sheffield [@sheffield2021]).
 
-Source: The University of Sheffield [@sheffield2021].  
+A study tested whether cholesterol was reduced after using a certain brand of margarine as part of a low fat, low cholesterol diet. The subjects consumed on average 2.31g of the active ingredient, stanol ester, a day.  This data set `cholesterolreduction.csv` contains information on 18 people using margarine to reduce cholesterol over three time points.  
+
 
 ```{r ch4tab, echo=FALSE}
 tab <- data.frame("Variable Name"=c("ID", "Before", "After4weeks", "After8weeks", "Margarine"),
-                  `Variable` = c("Participant Number", "Cholesterol befoore the diet (mmol/L)", "Cholesterol after 4 weeks on diet (mmol/L)", "Cholesterol after 8 weeks on diet (mmol/L)", "Margarine type A or B"),
+                  `Variable` = c("Participant Number", "Cholesterol before the diet (mmol/L)", "Cholesterol after 4 weeks on diet (mmol/L)", "Cholesterol after 8 weeks on diet (mmol/L)", "Margarine type A or B"),
                   `Data type` = c("", "Scale", "Scale", "Scale", "Binary") )
 names(tab) <- c("Variable Name", "Variable", "Data type")
 kable(tab)
