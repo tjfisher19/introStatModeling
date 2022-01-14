@@ -30,28 +30,36 @@ where $Y$ is the response variable, $X_j$ is the $j^\mathrm{th}$ predictor varia
 Note that if $\beta_1=\beta_2=\ldots=\beta_k=0$ we reduce to our baseline model
 
 $$Y=\beta_0 + \varepsilon = \mu + \varepsilon$$
-we saw earlier in the class. The multiple regression model is a generalization of a $k$ factor ANOVA model but instead of categorical inputs, we have numeric quantitative inputs.
+we saw earlier in the class. 
+The multiple regression model is a generalization of a $k$ factor ANOVA model but instead of categorical inputs, we have numeric, or quantitative, inputs.
 
 **Simple Linear Regression.** A special case of the above model occurs when $k=1$ and the model reduces to
 $$Y = \beta_0 + \beta_1 X + \varepsilon$$
 
-This is known as the simple linear regression (SLR) model (covered in your Intro Statistics course). It is very rare that a practicing Statistician will ever fit a SLR but we will utilize it to explain some concepts.
+This is known as the simple linear regression (SLR) model (covered in your Intro Statistics course).
+It is very rare that a practicing Statistician will ever fit a SLR but we will utilize it to explain some key concepts.
 
-It should be noted that multiple regression is in general a $k + 1$ dimensional problem, so it will usually not be feasible to graphically visualize a fitted model like we can easily do with SLR (which was 2-dimensional).  Not to worry though, as we can quantitatively explain what is going on in higher dimensions.  In the following sections will we utilize SLR to help visualize important statistical concepts.
+It should be noted that multiple regression is in general a $k + 1$ dimensional problem, so it will usually not be feasible to graphically visualize a fitted model like we can with SLR (which was 2-dimensional).
+Not to worry though, as we can quantitatively explain what is going on in higher dimensions.
+In the following sections will we utilize SLR to help visualize important statistical concepts.
 
 The **goals of linear regression** are:
 
-* Formal assessment of the impact of the predictor variables on the response 
-* Prediction of future responses
+* Formal assessment of the impact of the predictor variables on the response.
+* Prediction of future responses.
 
-These two goals are fundamentally different and may require different techniques to build a model. We outline the fundamental concepts and statistical methods over the next six chapters.
+These two goals are fundamentally different and may require different techniques to build a model.
+We outline the fundamental concepts and statistical methods over the next six chapters.
 
 ## Fitting a regression model
 
 Regression models are typically estimated through the method of least squares. 
 For the sake of visualizing the concept of least squares, we will consider a SLR example.
 
+### Simple Linear Regression Example
+
 **Example.** Muscle Mass with Age (originally in @KutnerText).
+
 A person's muscle mass is expected to decrease with age.
 To explore this relationship in women, a nutritionist randomly selected 15 women from each 10-year age group beginning with age 40 and ending with age 79.
 The data reside in the file `musclemass.txt`. 
@@ -75,7 +83,8 @@ Figure \@ref(fig:ch5-1) below displays the data.
 ```{r ch5-1, fig.align='center', fig.cap='Scatterplot showing the relationship between age and muscle mass in a selection of women aged 40 to 79.', out.width='80%', fig.asp=0.55}
 ggplot(muscle) + 
   geom_point(aes(x=age,y=mass)) +
-  ggtitle("Muscle Mass vs Age") + 
+  labs(title="Muscle Mass vs Age",
+       x="Age (years)", "Muscle Mass (kg)") + 
   theme_minimal()
 ```
 
@@ -90,7 +99,8 @@ The random fluctuations around the trend line are what the $\varepsilon$ terms a
 ggplot(muscle) + 
   geom_point(aes(x=age,y=mass)) +
   geom_smooth(aes(x=age,y=mass), method="lm", se=FALSE, formula=y~x)+
-  ggtitle("Muscle Mass vs Age") +
+  labs(title="Muscle Mass vs Age",
+       x="Age (years)", "Muscle Mass (kg)") + 
   theme_minimal()
 ```
 
@@ -114,7 +124,8 @@ ggplot(muscle) +
   geom_segment(aes(x=age,xend=age, y=mass, yend=Fitted), color="red") +
   geom_point(aes(x=age,y=mass)) +
   geom_smooth(aes(x=age,y=mass), method="lm", se=FALSE, formula=y~x)+
-  ggtitle("Muscle Mass vs Age") +
+  labs(title="Zoom in line with 'errors'",
+       x="Age (years)", "Muscle Mass (kg)") + 
   coord_cartesian(xlim=c(70,75)) +
   theme_minimal()
 ```
@@ -187,11 +198,11 @@ glimpse(muscle.fit)
 ```
 
 You'll note from the `glimpse()` function there are many attributes inside the `lm` object. 
-We will utilize many of these in our exploration of regression models later.
+We will utilize many of these in our exploration of regression models in the coming chapters.
 
 ### Multiple Regression Example
 
-To fit a multiple regression, the code is essentially the same. Consider another example
+To fit a multiple regression, the code is essentially the same. Consider another example.
 
 **Example:** Property appraisals (CITATION).
 
@@ -205,7 +216,8 @@ The data are in the R workspace `appraisal.RData` in our repository.  Lets use R
 
 $$\textrm{Sale Price} = \beta_0 + \beta_1(\textrm{Land Area}) + \beta_2(\textrm{Improvement Value}) + \beta_3(\textrm{Area}) + \varepsilon$$
 
-Note the model is just an extension of the simple linear regression model but with three predictor variables. Similar to our study of ANOVA modeling we follow a standard pattern for analysis:
+Note the model is just an extension of the simple linear regression model but with three predictor variables.
+Similar to our study of ANOVA modeling we follow a standard pattern for analysis:
 
 1. Describe the data both numerically and graphically.
 2. Fit a model.
@@ -281,10 +293,10 @@ Applying an Empirical Rule type argument (remember from Intro Statistics!), we c
 The error degrees of freedom are $n – p$ = $20 – 4 = 16$. 
 
 
-**Interpretation.** Since this is essentially the standard deviation of the residuals, we could interpret the value of $S$ as essentially the average residual size; i.e., the average size of the prediction errors produced by the regression model.
+**Interpretation.** Since this is essentially the standard deviation of the residuals, we could interpret the value of $S$ as essentially the average residual size; *i.e.*, the average size of the prediction errors produced by the regression model.
 In the present context, this translates to stating that the regression model produces predicted sale prices that are, on average, \$7,915 dollars off from the actual measured sale price values. 
 
-As you can see, such a measure is valuable in helping us determine how well a model performs (i.e. smaller residual error $\rightarrow$ better fitting model).
+As you can see, such a measure is valuable in helping us determine how well a model performs (*i.e.*, smaller residual error $\rightarrow$ better fitting model).
 So, $S^2$ and the standard errors are important ingredients in the development of inference in regression. 
 
 
@@ -470,7 +482,7 @@ Here is probably the best way of interpreting a $\beta$-parameter estimate (say 
 Even this, however, is not perfect.
 Often in practice, one predictor cannot be changed without changing other predictors.
 For example, competing species of ground cover in a botanical field study are often negatively correlated, so increasing the amount of cover of one species will likely mean the lowering of cover of the other.
-In health studies, it is unrealistic to presume that an increase of 1\% body fat in an individual would not correlate to changes in other physical characteristics too (e.g., waist circumference).  
+In health studies, it is unrealistic to presume that an increase of 1\% body fat in an individual would not correlate to changes in other physical characteristics too (*e.g.*, waist circumference).  
 
 Furthermore, this interpretation requires the specification of the other variables – so changing which other variables are included in the model may change the interpretation of $b_1$.
 Here's an illustration:
@@ -488,9 +500,9 @@ summary(appraisal.fit)
 * "For each additional square foot of living space on a property, we estimate an increase of \$13.61 in the mean selling price, holding appraised land and improvement values fixed."
 * "Each additional square foot of living space on a property results in an average increase of \$13.61 in the mean selling price, after adjusting for the appraised value of the land and improvements."
 
-*Moral.* When a predictor's effect on the response variable is assessed in a model that contains other predictor variables, that predictor's effect is said to be adjusted for the other predictors.
+**In Summary:** When a predictor's effect on the response variable is assessed in a model that contains other predictor variables, that predictor's effect is said to be adjusted for the other predictors.
 
-Now, suppose we delete `landvalue` (an insignificant predictor, $p$-value $>$ 0.05). How is the model affected?
+Now, suppose we delete `landvalue` (an insignificant predictor, $p$-value $>$ 0.05; we will cover this in more detail in the next chapter). How is the model affected?
 
 ```{r ch5-17}
 summary(lm(saleprice ~ impvalue + area, data=appraisal))
@@ -499,7 +511,7 @@ summary(lm(saleprice ~ impvalue + area, data=appraisal))
 Notice that the values of both $b_2$ and $b_3$ changed after the predictor $X_1$ (`landvalue`) was deleted from the model.
 This means that our estimate of the effect that one predictor has on the response depends on what other predictors are in the model (compare this with the example of orthogonality from earlier).
 
-Hopefully this example will give you an appreciation for why we must strive to find a good model for our data, and not just "fit once and hope for the best".
+Hopefully this example will give you an appreciation for why we must strive to find a good model for our data, and not just *fit once* and "hope for the best".
 Many different models may be fit to the same data, but that does not mean they are all good!
 Findings and results can vary based on which model we choose: precision of our predictions, interpretations of the parameter estimates, etc., so we must use caution and wisdom in our choices.
 

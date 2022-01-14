@@ -42,11 +42,22 @@ The **goals** of a statistical analysis typically are
 
 ## Before you begin an analysis
 
-Statistics starts with a problem, continues with the collection of data, proceeds with a data analysis, and then finishes with conclusions. 
-It is a common mistake of inexperienced statisticians to plunge into a complex analysis without paying attention to what the objectives are, or even whether the data are appropriate for the proposed analysis. 
-Look before you leap!
+The practice of statistics starts with an underlying problem or question.
+This will be a question with context.
+Some examples may include:
 
-**Problem formulation** - To attack a problem correctly, you should:
+* Are fish sensitive to UV light?
+* What socio-economic variables and demographics predict college graduation rates?
+* Can we determine if there truly is a *home field* advantage in sports?
+* Does a new experimental drug improve over an existing drug?
+
+From there, data is collected through an experiment, observations or a survey.
+You then proceed with a data analysis, and then finish with statistical, and contextual conclusions. 
+Unfortunately, it is common for inexperienced statisticians to start with a complex analysis without ever considering the objectives of the study, or whether the data are appropriate for the chosen analysis. 
+
+We recommend you follow the guidance (outlined below) provided in Chapter 1 of the text by @Faraway2004linear -- Look before you leap!
+
+**Problem formulation** - To perform statistical analysis correctly, you should:
 
 1. **Understand the background**. Statisticians often work in collaboration with researchers in other disciplines and need to understand something about the subject area. 
 You should regard this as an opportunity to learn something new. 

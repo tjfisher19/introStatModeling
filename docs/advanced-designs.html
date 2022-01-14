@@ -24,7 +24,7 @@
 <meta name="author" content="Michael R. Hughes and Thomas J. Fisher" />
 
 
-<meta name="date" content="2022-01-09" />
+<meta name="date" content="2022-01-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -251,7 +251,11 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="4" data-path="advanced-designs.html"><a href="advanced-designs.html"><i class="fa fa-check"></i><b>4</b> Advanced Designs</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="advanced-designs.html"><a href="advanced-designs.html#higher-order-factor-models"><i class="fa fa-check"></i><b>4.1</b> Higher order factor models</a></li>
+<li class="chapter" data-level="4.1" data-path="advanced-designs.html"><a href="advanced-designs.html#higher-order-factor-models"><i class="fa fa-check"></i><b>4.1</b> Higher order factor models</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="advanced-designs.html"><a href="advanced-designs.html#example-of-three-factor-design"><i class="fa fa-check"></i><b>4.1.1</b> Example of Three-factor design</a></li>
+<li class="chapter" data-level="4.1.2" data-path="advanced-designs.html"><a href="advanced-designs.html#three-factor-anova-example"><i class="fa fa-check"></i><b>4.1.2</b> Three-factor ANOVA Example</a></li>
+</ul></li>
 <li class="chapter" data-level="4.2" data-path="advanced-designs.html"><a href="advanced-designs.html#within-subject-designs"><i class="fa fa-check"></i><b>4.2</b> Within-subject designs</a>
 <ul>
 <li class="chapter" data-level="4.2.1" data-path="advanced-designs.html"><a href="advanced-designs.html#blocks-revisited-an-approach-to-handling-within-subjects-factors"><i class="fa fa-check"></i><b>4.2.1</b> Blocks revisited: an approach to handling within-subjects factors</a></li>
@@ -264,8 +268,9 @@ div.csl-indent {
 <li class="chapter" data-level="5.1" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#regression-model"><i class="fa fa-check"></i><b>5.1</b> Regression Model</a></li>
 <li class="chapter" data-level="5.2" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#fitting-a-regression-model"><i class="fa fa-check"></i><b>5.2</b> Fitting a regression model</a>
 <ul>
-<li class="chapter" data-level="5.2.1" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#multiple-regression-example"><i class="fa fa-check"></i><b>5.2.1</b> Multiple Regression Example</a></li>
-<li class="chapter" data-level="5.2.2" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#why-should-we-use-more-than-one-predictor"><i class="fa fa-check"></i><b>5.2.2</b> Why should we use more than one predictor?</a></li>
+<li class="chapter" data-level="5.2.1" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#simple-linear-regression-example"><i class="fa fa-check"></i><b>5.2.1</b> Simple Linear Regression Example</a></li>
+<li class="chapter" data-level="5.2.2" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#multiple-regression-example"><i class="fa fa-check"></i><b>5.2.2</b> Multiple Regression Example</a></li>
+<li class="chapter" data-level="5.2.3" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#why-should-we-use-more-than-one-predictor"><i class="fa fa-check"></i><b>5.2.3</b> Why should we use more than one predictor?</a></li>
 </ul></li>
 <li class="chapter" data-level="5.3" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#interpreting-beta-parameter-estimates-in-mlr"><i class="fa fa-check"></i><b>5.3</b> Interpreting <span class="math inline">\(\beta\)</span>-parameter estimates in MLR</a>
 <ul>
@@ -414,8 +419,10 @@ The objective of this chapter includes:</p>
 <h2><span class="header-section-number">4.1</span> Higher order factor models</h2>
 <p>In the previous two chapters we have seen a One-Way and Two-Way ANOVA.
 In the former, a single factor consisted of <span class="math inline">\(k\)</span>-levels (and thus <span class="math inline">\(k\)</span>-treatments) while in the latter the first factor may consist of <span class="math inline">\(k\)</span> levels and the second factor <span class="math inline">\(j\)</span> levels (and therefore <span class="math inline">\(k\times j\)</span> treatments).
-Consider the following example.</p>
-<p><strong>Example.</strong> Marketing research contractors (CITATION).</p>
+This idea can, of course, be expanded to even more terms, consider the following example.</p>
+<div id="example-of-three-factor-design" class="section level3" number="4.1.1">
+<h3><span class="header-section-number">4.1.1</span> Example of Three-factor design</h3>
+<p><strong>Example.</strong> Marketing research contractors (<span class="citation"><a href="#ref-KutnerText" role="doc-biblioref">Kutner et al.</a> (<a href="#ref-KutnerText" role="doc-biblioref">2004</a>)</span>).</p>
 <p>A marketing research consultant evaluated the effects of free schedule, scope of work and type of supervisory control on the quality of work performed under contract by independent marketing research agencies.
 The design of this experiment can be summarized as follows</p>
 <p><span class="math display">\[\begin{array}{ll} 
@@ -557,6 +564,9 @@ This will quickly grow out of control.</p>
 <p>Fortunately, for higher order factor problems there are statisticians available to help formulate a better design and potentially <em>optimize</em> some of the variables of study.
 We leave out the details of these topics in this introductory text but want to provide insight that these advanced designs and analyses can be done.
 Please consult a statistician before your experiment if you are planning a complex design!!</p>
+</div>
+<div id="three-factor-anova-example" class="section level3" number="4.1.2">
+<h3><span class="header-section-number">4.1.2</span> Three-factor ANOVA Example</h3>
 <p><strong>Example continued.</strong> Below we complete the example involving the marketing research contractors.</p>
 <p>First we read in the data and make sure R properly treats the factors.</p>
 <div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="advanced-designs.html#cb151-1" aria-hidden="true" tabindex="-1"></a>data_site <span class="ot">&lt;-</span> <span class="st">&quot;https://tjfisher19.github.io/introStatModeling/data/marketingResearch.txt&quot;</span></span>
@@ -587,6 +597,7 @@ Here we see that the three factor interaction term is not significant, thus we p
 Interactions involving the Fee level factor are not significant, thus we can interpret the Fee level main effect as being a significant influence on quality.
 We can also conclude that some combination of Scope and Supervision influence quality.
 We leave out any multiple comparisons analysis here as it gets very complex when three factors are involved.</p>
+</div>
 </div>
 <div id="within-subject-designs" class="section level2" number="4.2">
 <h2><span class="header-section-number">4.2</span> Within-subject designs</h2>
@@ -1161,6 +1172,9 @@ Figure 4.5: Graphical exploration of all treatments noting that there is no stat
 </div>
 <h3>References</h3>
 <div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-KutnerText" class="csl-entry">
+Kutner, M. H., Nachtsheim, C., Neter, J. and Li, W., <em>Applied Linear Statistical Models</em>, New York, NY: McGraw-Hill Irwin, 2004.
+</div>
 <div id="ref-sheffield2021" class="csl-entry">
 Sheffield, U. of, Mathematics and Statistics Help (MASH), <em>Datasets for Teaching - Statistics - MASH - The University of Sheffield</em>, January 2021.
 </div>

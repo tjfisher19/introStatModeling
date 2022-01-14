@@ -24,7 +24,7 @@
 <meta name="author" content="Michael R. Hughes and Thomas J. Fisher" />
 
 
-<meta name="date" content="2022-01-09" />
+<meta name="date" content="2022-01-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -251,7 +251,11 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="4" data-path="advanced-designs.html"><a href="advanced-designs.html"><i class="fa fa-check"></i><b>4</b> Advanced Designs</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="advanced-designs.html"><a href="advanced-designs.html#higher-order-factor-models"><i class="fa fa-check"></i><b>4.1</b> Higher order factor models</a></li>
+<li class="chapter" data-level="4.1" data-path="advanced-designs.html"><a href="advanced-designs.html#higher-order-factor-models"><i class="fa fa-check"></i><b>4.1</b> Higher order factor models</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="advanced-designs.html"><a href="advanced-designs.html#example-of-three-factor-design"><i class="fa fa-check"></i><b>4.1.1</b> Example of Three-factor design</a></li>
+<li class="chapter" data-level="4.1.2" data-path="advanced-designs.html"><a href="advanced-designs.html#three-factor-anova-example"><i class="fa fa-check"></i><b>4.1.2</b> Three-factor ANOVA Example</a></li>
+</ul></li>
 <li class="chapter" data-level="4.2" data-path="advanced-designs.html"><a href="advanced-designs.html#within-subject-designs"><i class="fa fa-check"></i><b>4.2</b> Within-subject designs</a>
 <ul>
 <li class="chapter" data-level="4.2.1" data-path="advanced-designs.html"><a href="advanced-designs.html#blocks-revisited-an-approach-to-handling-within-subjects-factors"><i class="fa fa-check"></i><b>4.2.1</b> Blocks revisited: an approach to handling within-subjects factors</a></li>
@@ -264,8 +268,9 @@ div.csl-indent {
 <li class="chapter" data-level="5.1" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#regression-model"><i class="fa fa-check"></i><b>5.1</b> Regression Model</a></li>
 <li class="chapter" data-level="5.2" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#fitting-a-regression-model"><i class="fa fa-check"></i><b>5.2</b> Fitting a regression model</a>
 <ul>
-<li class="chapter" data-level="5.2.1" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#multiple-regression-example"><i class="fa fa-check"></i><b>5.2.1</b> Multiple Regression Example</a></li>
-<li class="chapter" data-level="5.2.2" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#why-should-we-use-more-than-one-predictor"><i class="fa fa-check"></i><b>5.2.2</b> Why should we use more than one predictor?</a></li>
+<li class="chapter" data-level="5.2.1" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#simple-linear-regression-example"><i class="fa fa-check"></i><b>5.2.1</b> Simple Linear Regression Example</a></li>
+<li class="chapter" data-level="5.2.2" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#multiple-regression-example"><i class="fa fa-check"></i><b>5.2.2</b> Multiple Regression Example</a></li>
+<li class="chapter" data-level="5.2.3" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#why-should-we-use-more-than-one-predictor"><i class="fa fa-check"></i><b>5.2.3</b> Why should we use more than one predictor?</a></li>
 </ul></li>
 <li class="chapter" data-level="5.3" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#interpreting-beta-parameter-estimates-in-mlr"><i class="fa fa-check"></i><b>5.3</b> Interpreting <span class="math inline">\(\beta\)</span>-parameter estimates in MLR</a>
 <ul>
@@ -424,24 +429,31 @@ This leads to the idea of regression modeling.</p>
 where <span class="math inline">\(Y\)</span> is the response variable, <span class="math inline">\(X_j\)</span> is the <span class="math inline">\(j^\mathrm{th}\)</span> predictor variable with coefficient <span class="math inline">\(\beta_j\)</span> and <span class="math inline">\(\varepsilon\)</span> is the unexplained random error.</p>
 <p>Note that if <span class="math inline">\(\beta_1=\beta_2=\ldots=\beta_k=0\)</span> we reduce to our baseline model</p>
 <p><span class="math display">\[Y=\beta_0 + \varepsilon = \mu + \varepsilon\]</span>
-we saw earlier in the class. The multiple regression model is a generalization of a <span class="math inline">\(k\)</span> factor ANOVA model but instead of categorical inputs, we have numeric quantitative inputs.</p>
+we saw earlier in the class.
+The multiple regression model is a generalization of a <span class="math inline">\(k\)</span> factor ANOVA model but instead of categorical inputs, we have numeric, or quantitative, inputs.</p>
 <p><strong>Simple Linear Regression.</strong> A special case of the above model occurs when <span class="math inline">\(k=1\)</span> and the model reduces to
 <span class="math display">\[Y = \beta_0 + \beta_1 X + \varepsilon\]</span></p>
-<p>This is known as the simple linear regression (SLR) model (covered in your Intro Statistics course). It is very rare that a practicing Statistician will ever fit a SLR but we will utilize it to explain some concepts.</p>
-<p>It should be noted that multiple regression is in general a <span class="math inline">\(k + 1\)</span> dimensional problem, so it will usually not be feasible to graphically visualize a fitted model like we can easily do with SLR (which was 2-dimensional). Not to worry though, as we can quantitatively explain what is going on in higher dimensions. In the following sections will we utilize SLR to help visualize important statistical concepts.</p>
+<p>This is known as the simple linear regression (SLR) model (covered in your Intro Statistics course).
+It is very rare that a practicing Statistician will ever fit a SLR but we will utilize it to explain some key concepts.</p>
+<p>It should be noted that multiple regression is in general a <span class="math inline">\(k + 1\)</span> dimensional problem, so it will usually not be feasible to graphically visualize a fitted model like we can with SLR (which was 2-dimensional).
+Not to worry though, as we can quantitatively explain what is going on in higher dimensions.
+In the following sections will we utilize SLR to help visualize important statistical concepts.</p>
 <p>The <strong>goals of linear regression</strong> are:</p>
 <ul>
-<li>Formal assessment of the impact of the predictor variables on the response</li>
-<li>Prediction of future responses</li>
+<li>Formal assessment of the impact of the predictor variables on the response.</li>
+<li>Prediction of future responses.</li>
 </ul>
-<p>These two goals are fundamentally different and may require different techniques to build a model. We outline the fundamental concepts and statistical methods over the next six chapters.</p>
+<p>These two goals are fundamentally different and may require different techniques to build a model.
+We outline the fundamental concepts and statistical methods over the next six chapters.</p>
 </div>
 <div id="fitting-a-regression-model" class="section level2" number="5.2">
 <h2><span class="header-section-number">5.2</span> Fitting a regression model</h2>
 <p>Regression models are typically estimated through the method of least squares.
 For the sake of visualizing the concept of least squares, we will consider a SLR example.</p>
-<p><strong>Example.</strong> Muscle Mass with Age (originally in <span class="citation"><a href="#ref-KutnerText" role="doc-biblioref">Kutner et al.</a> (<a href="#ref-KutnerText" role="doc-biblioref">2004</a>)</span>).
-A person’s muscle mass is expected to decrease with age.
+<div id="simple-linear-regression-example" class="section level3" number="5.2.1">
+<h3><span class="header-section-number">5.2.1</span> Simple Linear Regression Example</h3>
+<p><strong>Example.</strong> Muscle Mass with Age (originally in <span class="citation"><a href="#ref-KutnerText" role="doc-biblioref">Kutner et al.</a> (<a href="#ref-KutnerText" role="doc-biblioref">2004</a>)</span>).</p>
+<p>A person’s muscle mass is expected to decrease with age.
 To explore this relationship in women, a nutritionist randomly selected 15 women from each 10-year age group beginning with age 40 and ending with age 79.
 The data reside in the file <code>musclemass.txt</code>.
 The variables in the dataset of interest are <code>mass</code> and <code>age</code>.</p>
@@ -456,8 +468,9 @@ The variables in the dataset of interest are <code>mass</code> and <code>age</co
 <p>Figure <a href="introduction-to-multiple-regression.html#fig:ch5-1">5.1</a> below displays the data.</p>
 <div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="introduction-to-multiple-regression.html#cb194-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(muscle) <span class="sc">+</span> </span>
 <span id="cb194-2"><a href="introduction-to-multiple-regression.html#cb194-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>age,<span class="at">y=</span>mass)) <span class="sc">+</span></span>
-<span id="cb194-3"><a href="introduction-to-multiple-regression.html#cb194-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Muscle Mass vs Age&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb194-4"><a href="introduction-to-multiple-regression.html#cb194-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<span id="cb194-3"><a href="introduction-to-multiple-regression.html#cb194-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;Muscle Mass vs Age&quot;</span>,</span>
+<span id="cb194-4"><a href="introduction-to-multiple-regression.html#cb194-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">x=</span><span class="st">&quot;Age (years)&quot;</span>, <span class="st">&quot;Muscle Mass (kg)&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb194-5"><a href="introduction-to-multiple-regression.html#cb194-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch5-1"></span>
 <img src="introStatModeling_files/figure-html/ch5-1-1.png" alt="Scatterplot showing the relationship between age and muscle mass in a selection of women aged 40 to 79." width="80%" />
 <p class="caption">
@@ -592,10 +605,11 @@ We illustrate via an example involving the muscle mass dataset.</p>
 ##   .. .. .. ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;mass&quot; &quot;age&quot;
 ##  - attr(*, &quot;class&quot;)= chr &quot;lm&quot;</code></pre>
 <p>You’ll note from the <code>glimpse()</code> function there are many attributes inside the <code>lm</code> object.
-We will utilize many of these in our exploration of regression models later.</p>
-<div id="multiple-regression-example" class="section level3" number="5.2.1">
-<h3><span class="header-section-number">5.2.1</span> Multiple Regression Example</h3>
-<p>To fit a multiple regression, the code is essentially the same. Consider another example</p>
+We will utilize many of these in our exploration of regression models in the coming chapters.</p>
+</div>
+<div id="multiple-regression-example" class="section level3" number="5.2.2">
+<h3><span class="header-section-number">5.2.2</span> Multiple Regression Example</h3>
+<p>To fit a multiple regression, the code is essentially the same. Consider another example.</p>
 <p><strong>Example:</strong> Property appraisals (CITATION).</p>
 <p>Suppose a property appraiser wants to model the relationship between the sale price (<code>saleprice</code>) of a residential property and the following three predictor variables:</p>
 <ul>
@@ -605,7 +619,8 @@ We will utilize many of these in our exploration of regression models later.</p>
 </ul>
 <p>The data are in the R workspace <code>appraisal.RData</code> in our repository. Lets use R to fit what is known as a “main effects” multiple regression model. The form of this model is given by:</p>
 <p><span class="math display">\[\textrm{Sale Price} = \beta_0 + \beta_1(\textrm{Land Area}) + \beta_2(\textrm{Improvement Value}) + \beta_3(\textrm{Area}) + \varepsilon\]</span></p>
-<p>Note the model is just an extension of the simple linear regression model but with three predictor variables. Similar to our study of ANOVA modeling we follow a standard pattern for analysis:</p>
+<p>Note the model is just an extension of the simple linear regression model but with three predictor variables.
+Similar to our study of ANOVA modeling we follow a standard pattern for analysis:</p>
 <ol style="list-style-type: decimal">
 <li>Describe the data both numerically and graphically.</li>
 <li>Fit a model.</li>
@@ -977,15 +992,15 @@ R provides the residual standard error in the <code>summary()</code> output from
 Here, <span class="math inline">\(s = 7915\)</span> which is our estimate for <span class="math inline">\(\sigma\)</span>.
 Applying an Empirical Rule type argument (remember from Intro Statistics!), we could say that approximately 95% of this model’s predicted sale prices would fall within <span class="math inline">\(\pm 2(7915) = \pm \$15,830\)</span> of the actual sales prices.
 The error degrees of freedom are <span class="math inline">\(n – p\)</span> = <span class="math inline">\(20 – 4 = 16\)</span>.</p>
-<p><strong>Interpretation.</strong> Since this is essentially the standard deviation of the residuals, we could interpret the value of <span class="math inline">\(S\)</span> as essentially the average residual size; i.e., the average size of the prediction errors produced by the regression model.
+<p><strong>Interpretation.</strong> Since this is essentially the standard deviation of the residuals, we could interpret the value of <span class="math inline">\(S\)</span> as essentially the average residual size; <em>i.e.</em>, the average size of the prediction errors produced by the regression model.
 In the present context, this translates to stating that the regression model produces predicted sale prices that are, on average, $7,915 dollars off from the actual measured sale price values.</p>
-<p>As you can see, such a measure is valuable in helping us determine how well a model performs (i.e. smaller residual error <span class="math inline">\(\rightarrow\)</span> better fitting model).
+<p>As you can see, such a measure is valuable in helping us determine how well a model performs (<em>i.e.</em>, smaller residual error <span class="math inline">\(\rightarrow\)</span> better fitting model).
 So, <span class="math inline">\(S^2\)</span> and the standard errors are important ingredients in the development of inference in regression.</p>
 <p>It should also be noted that at this point we are not even sure if this is a good model, and if not, how we might make it better.
 So later on, we will discuss the “art” of model building.</p>
 </div>
-<div id="why-should-we-use-more-than-one-predictor" class="section level3" number="5.2.2">
-<h3><span class="header-section-number">5.2.2</span> Why should we use more than one predictor?</h3>
+<div id="why-should-we-use-more-than-one-predictor" class="section level3" number="5.2.3">
+<h3><span class="header-section-number">5.2.3</span> Why should we use more than one predictor?</h3>
 <p>We briefly tangent with a discussion of why multiple linear regression is superior to running “separate” simple linear regressions.</p>
 <p>Because complex natural phenomena are typically impacted by many characteristics, it would be naive in most circumstances to think that just one variable serves as an adequate explanation for an outcome.
 Instead, we consider the simultaneous impact of potential predictors of interest on the response.
@@ -1196,7 +1211,7 @@ As a result, one must take care in interpreting <span class="math inline">\(\bet
 <p>Even this, however, is not perfect.
 Often in practice, one predictor cannot be changed without changing other predictors.
 For example, competing species of ground cover in a botanical field study are often negatively correlated, so increasing the amount of cover of one species will likely mean the lowering of cover of the other.
-In health studies, it is unrealistic to presume that an increase of 1% body fat in an individual would not correlate to changes in other physical characteristics too (e.g., waist circumference).</p>
+In health studies, it is unrealistic to presume that an increase of 1% body fat in an individual would not correlate to changes in other physical characteristics too (<em>e.g.</em>, waist circumference).</p>
 <p>Furthermore, this interpretation requires the specification of the other variables – so changing which other variables are included in the model may change the interpretation of <span class="math inline">\(b_1\)</span>.
 Here’s an illustration:</p>
 <p><strong>Example:</strong> Property appraisals. We earlier fit a full “main effects” model predicting <span class="math inline">\(Y\)</span> = salesprice from three predictor variables dealing with property appraisals.
@@ -1228,8 +1243,8 @@ Here’s a brief recap of those results:</p>
 <li>“For each additional square foot of living space on a property, we estimate an increase of $13.61 in the mean selling price, holding appraised land and improvement values fixed.”</li>
 <li>“Each additional square foot of living space on a property results in an average increase of $13.61 in the mean selling price, after adjusting for the appraised value of the land and improvements.”</li>
 </ul>
-<p><em>Moral.</em> When a predictor’s effect on the response variable is assessed in a model that contains other predictor variables, that predictor’s effect is said to be adjusted for the other predictors.</p>
-<p>Now, suppose we delete <code>landvalue</code> (an insignificant predictor, <span class="math inline">\(p\)</span>-value <span class="math inline">\(&gt;\)</span> 0.05). How is the model affected?</p>
+<p><strong>In Summary:</strong> When a predictor’s effect on the response variable is assessed in a model that contains other predictor variables, that predictor’s effect is said to be adjusted for the other predictors.</p>
+<p>Now, suppose we delete <code>landvalue</code> (an insignificant predictor, <span class="math inline">\(p\)</span>-value <span class="math inline">\(&gt;\)</span> 0.05; we will cover this in more detail in the next chapter). How is the model affected?</p>
 <div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="introduction-to-multiple-regression.html#cb214-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(saleprice <span class="sc">~</span> impvalue <span class="sc">+</span> area, <span class="at">data=</span>appraisal))</span></code></pre></div>
 <pre><code>## 
 ## Call:
@@ -1252,7 +1267,7 @@ Here’s a brief recap of those results:</p>
 ## F-statistic:   63 on 2 and 17 DF,  p-value: 1.37e-08</code></pre>
 <p>Notice that the values of both <span class="math inline">\(b_2\)</span> and <span class="math inline">\(b_3\)</span> changed after the predictor <span class="math inline">\(X_1\)</span> (<code>landvalue</code>) was deleted from the model.
 This means that our estimate of the effect that one predictor has on the response depends on what other predictors are in the model (compare this with the example of orthogonality from earlier).</p>
-<p>Hopefully this example will give you an appreciation for why we must strive to find a good model for our data, and not just “fit once and hope for the best.”
+<p>Hopefully this example will give you an appreciation for why we must strive to find a good model for our data, and not just <em>fit once</em> and “hope for the best.”
 Many different models may be fit to the same data, but that does not mean they are all good!
 Findings and results can vary based on which model we choose: precision of our predictions, interpretations of the parameter estimates, etc., so we must use caution and wisdom in our choices.</p>
 <p>As statistician George Box once said:</p>

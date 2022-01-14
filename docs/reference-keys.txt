@@ -114,6 +114,8 @@ example-with-no-interaction
 example-with-interaction
 advanced-designs
 higher-order-factor-models
+example-of-three-factor-design
+three-factor-anova-example
 within-subject-designs
 blocks-revisited-an-approach-to-handling-within-subjects-factors
 a-more-involved-repeated-measures-case-study
@@ -125,6 +127,7 @@ further-study
 introduction-to-multiple-regression
 regression-model
 fitting-a-regression-model
+simple-linear-regression-example
 multiple-regression-example
 why-should-we-use-more-than-one-predictor
 interpreting-beta-parameter-estimates-in-mlr

@@ -13,10 +13,12 @@ The objective of this chapter includes:
 ## Higher order factor models
 
 In the previous two chapters we have seen a One-Way and Two-Way ANOVA.
-In the former, a single factor consisted of $k$-levels (and thus $k$-treatments) while in the latter the first factor may consist of $k$ levels and the second factor $j$ levels (and therefore $k\times j$ treatments). 
-Consider the following example.
+In the former, a single factor consisted of $k$-levels (and thus $k$-treatments) while in the latter the first factor may consist of $k$ levels and the second factor $j$ levels (and therefore $k\times j$ treatments).
+This idea can, of course, be expanded to even more terms, consider the following example.
 
-**Example.** Marketing research contractors (CITATION). 
+### Example of Three-factor design
+
+**Example.** Marketing research contractors (@KutnerText). 
 
 A marketing research consultant evaluated the effects of free schedule, scope of work and type of supervisory control on the quality of work performed under contract by independent marketing research agencies.
 The design of this experiment can be summarized as follows
@@ -83,6 +85,8 @@ This will quickly grow out of control.
 Fortunately, for higher order factor problems there are statisticians available to help formulate a better design and potentially *optimize* some of the variables of study. 
 We leave out the details of these topics in this introductory text but want to provide insight that these advanced designs and analyses can be done. 
 Please consult a statistician before your experiment if you are planning a complex design!!
+
+### Three-factor ANOVA Example
 
 **Example continued.** Below we complete the example involving the marketing research contractors.
 

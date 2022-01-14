@@ -24,7 +24,7 @@
 <meta name="author" content="Michael R. Hughes and Thomas J. Fisher" />
 
 
-<meta name="date" content="2022-01-09" />
+<meta name="date" content="2022-01-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -251,7 +251,11 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="4" data-path="advanced-designs.html"><a href="advanced-designs.html"><i class="fa fa-check"></i><b>4</b> Advanced Designs</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="advanced-designs.html"><a href="advanced-designs.html#higher-order-factor-models"><i class="fa fa-check"></i><b>4.1</b> Higher order factor models</a></li>
+<li class="chapter" data-level="4.1" data-path="advanced-designs.html"><a href="advanced-designs.html#higher-order-factor-models"><i class="fa fa-check"></i><b>4.1</b> Higher order factor models</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="advanced-designs.html"><a href="advanced-designs.html#example-of-three-factor-design"><i class="fa fa-check"></i><b>4.1.1</b> Example of Three-factor design</a></li>
+<li class="chapter" data-level="4.1.2" data-path="advanced-designs.html"><a href="advanced-designs.html#three-factor-anova-example"><i class="fa fa-check"></i><b>4.1.2</b> Three-factor ANOVA Example</a></li>
+</ul></li>
 <li class="chapter" data-level="4.2" data-path="advanced-designs.html"><a href="advanced-designs.html#within-subject-designs"><i class="fa fa-check"></i><b>4.2</b> Within-subject designs</a>
 <ul>
 <li class="chapter" data-level="4.2.1" data-path="advanced-designs.html"><a href="advanced-designs.html#blocks-revisited-an-approach-to-handling-within-subjects-factors"><i class="fa fa-check"></i><b>4.2.1</b> Blocks revisited: an approach to handling within-subjects factors</a></li>
@@ -264,8 +268,9 @@ div.csl-indent {
 <li class="chapter" data-level="5.1" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#regression-model"><i class="fa fa-check"></i><b>5.1</b> Regression Model</a></li>
 <li class="chapter" data-level="5.2" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#fitting-a-regression-model"><i class="fa fa-check"></i><b>5.2</b> Fitting a regression model</a>
 <ul>
-<li class="chapter" data-level="5.2.1" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#multiple-regression-example"><i class="fa fa-check"></i><b>5.2.1</b> Multiple Regression Example</a></li>
-<li class="chapter" data-level="5.2.2" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#why-should-we-use-more-than-one-predictor"><i class="fa fa-check"></i><b>5.2.2</b> Why should we use more than one predictor?</a></li>
+<li class="chapter" data-level="5.2.1" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#simple-linear-regression-example"><i class="fa fa-check"></i><b>5.2.1</b> Simple Linear Regression Example</a></li>
+<li class="chapter" data-level="5.2.2" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#multiple-regression-example"><i class="fa fa-check"></i><b>5.2.2</b> Multiple Regression Example</a></li>
+<li class="chapter" data-level="5.2.3" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#why-should-we-use-more-than-one-predictor"><i class="fa fa-check"></i><b>5.2.3</b> Why should we use more than one predictor?</a></li>
 </ul></li>
 <li class="chapter" data-level="5.3" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#interpreting-beta-parameter-estimates-in-mlr"><i class="fa fa-check"></i><b>5.3</b> Interpreting <span class="math inline">\(\beta\)</span>-parameter estimates in MLR</a>
 <ul>
@@ -535,9 +540,9 @@ We do this for demonstration and learning purposes.</p>
 <span id="cb110-6"><a href="multiple-factor-designed-experiments.html#cb110-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Barley Variety&quot;</span>, <span class="at">y=</span><span class="st">&quot;Yield (bushels)&quot;</span>)</span>
 <span id="cb110-7"><a href="multiple-factor-designed-experiments.html#cb110-7" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(p1, p2, <span class="at">nrow=</span><span class="dv">1</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch3-3"></span>
-<img src="introStatModeling_files/figure-html/ch3-3-1.png" alt="Boxplot distribution of the baryley yeilds of `LocationYear` and barley `Variety`." width="100%" />
+<img src="introStatModeling_files/figure-html/ch3-3-1.png" alt="Boxplot distribution of the barley yeilds of `LocationYear` and barley `Variety`." width="100%" />
 <p class="caption">
-Figure 3.4: Boxplot distribution of the baryley yeilds of <code>LocationYear</code> and barley <code>Variety</code>.
+Figure 3.4: Boxplot distribution of the barley yeilds of <code>LocationYear</code> and barley <code>Variety</code>.
 </p>
 </div>
 <p>First, a quick note about the above code.
@@ -556,7 +561,7 @@ Here, we explore the response at each treatment level within each block term.</p
 <div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="multiple-factor-designed-experiments.html#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(fisherBarleyData) <span class="sc">+</span> </span>
 <span id="cb111-2"><a href="multiple-factor-designed-experiments.html#cb111-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span>Variety, <span class="at">y=</span>Yield, </span>
 <span id="cb111-3"><a href="multiple-factor-designed-experiments.html#cb111-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">color=</span>LocationYear, <span class="at">group=</span>LocationYear) ) <span class="sc">+</span></span>
-<span id="cb111-4"><a href="multiple-factor-designed-experiments.html#cb111-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Baryley Variety&quot;</span>, <span class="at">y=</span><span class="st">&quot;Yield (bushels)&quot;</span>, <span class="at">color=</span><span class="st">&quot;Location &amp; Year&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb111-4"><a href="multiple-factor-designed-experiments.html#cb111-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Barley Variety&quot;</span>, <span class="at">y=</span><span class="st">&quot;Yield (bushels)&quot;</span>, <span class="at">color=</span><span class="st">&quot;Location &amp; Year&quot;</span>) <span class="sc">+</span> </span>
 <span id="cb111-5"><a href="multiple-factor-designed-experiments.html#cb111-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch3-3profile"></span>
 <img src="introStatModeling_files/figure-html/ch3-3profile-1.png" alt="Profiles of each barley yield by variety profiling across each of the 12 Location &amp; Year combinations." width="70%" />
@@ -564,14 +569,14 @@ Here, we explore the response at each treatment level within each block term.</p
 Figure 3.5: Profiles of each barley yield by variety profiling across each of the 12 Location &amp; Year combinations.
 </p>
 </div>
-<p>This plot in Figure @(fig:ch3-3profile) is an improvement over the previous result but can be further tweaked for visual improvement.
+<p>This plot in Figure <a href="multiple-factor-designed-experiments.html#fig:ch3-3profile">3.5</a> is an improvement over the previous result but can be further tweaked for visual improvement.
 In particular, each line corresponds to one of the block terms (this is the common approach for these plots) but there are 12 different colors displayed, and it can be difficult to distinguish them.
 This can be considered <em>visual clutter</em>.
 Since the specific Location &amp; Year combinations are not necessarily of interest in our study, we can <em>mute</em> their impact by plotting each line with the same color as in Figure <a href="multiple-factor-designed-experiments.html#fig:ch3-ImprovedProfile">3.6</a>.</p>
 <div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="multiple-factor-designed-experiments.html#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(fisherBarleyData) <span class="sc">+</span> </span>
 <span id="cb112-2"><a href="multiple-factor-designed-experiments.html#cb112-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span>Variety, <span class="at">y=</span>Yield, </span>
 <span id="cb112-3"><a href="multiple-factor-designed-experiments.html#cb112-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">group=</span>LocationYear), <span class="at">color=</span><span class="st">&quot;gray30&quot;</span> ) <span class="sc">+</span></span>
-<span id="cb112-4"><a href="multiple-factor-designed-experiments.html#cb112-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Baryley Variety&quot;</span>, <span class="at">y=</span><span class="st">&quot;Yield (bushels)&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb112-4"><a href="multiple-factor-designed-experiments.html#cb112-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Barley Variety&quot;</span>, <span class="at">y=</span><span class="st">&quot;Yield (bushels)&quot;</span>) <span class="sc">+</span> </span>
 <span id="cb112-5"><a href="multiple-factor-designed-experiments.html#cb112-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch3-ImprovedProfile"></span>
 <img src="introStatModeling_files/figure-html/ch3-ImprovedProfile-1.png" alt="Profiles of each barley yield by variety profiling across each of the 12 Location &amp; Year combinations." width="70%" />
@@ -579,7 +584,7 @@ Since the specific Location &amp; Year combinations are not necessarily of inter
 Figure 3.6: Profiles of each barley yield by variety profiling across each of the 12 Location &amp; Year combinations.
 </p>
 </div>
-<p>From the profile plots in Figures @(fig:ch3-3profile) and <a href="multiple-factor-designed-experiments.html#fig:ch3-ImprovedProfile">3.6</a> it is clear that certain Location &amp; Years were more fruitful than others, in terms of barley yield.
+<p>From the profile plots in Figures <a href="multiple-factor-designed-experiments.html#fig:ch3-3profile">3.5</a> and <a href="multiple-factor-designed-experiments.html#fig:ch3-ImprovedProfile">3.6</a> it is clear that certain Location &amp; Years were more fruitful than others, in terms of barley yield.
 However, this is not the research question of interest - we are interested in determine how the different varieties influence yield.
 From the plots, this is not as clear.
 There is some evidence that the Trebi variety may result in more yield across all the blocks as well as maybe the Peatland variety.</p>
@@ -909,7 +914,7 @@ In other words, if the interaction between <span class="math inline">\(A\)</span
 <p>An experiment was conducted to determine the effects that the sign size and sign material have on <em>detection distance</em> (the distance at which drivers can first detect highway caution signs).
 Four drivers were randomly selected for each combination of sign size (small, medium, and large) and sign material (marked 1, 2, and 3).
 Each driver covered the same streth of highway at a constant speed during the same time of day, and the detection distance (in feet) was determined for hte driver’s assignment caution sign.</p>
-<p>Original Source: <span class="citation"><a href="#ref-Younes1994" role="doc-biblioref">Younes</a> (<a href="#ref-Younes1994" role="doc-biblioref">1194</a>)</span></p>
+<p>Original Source: <span class="citation"><a href="#ref-Younes1994" role="doc-biblioref">Younes</a> (<a href="#ref-Younes1994" role="doc-biblioref">1994</a>)</span></p>
 <p>The data appear in the csv file <code>highwaySigns.tsv</code> in the textbook repository.</p>
 <p>First note the data is stormed in a “Tab separated values” file, or TSV.
 This is similar to the more common, “Comma Separated values,” or CSV, format.
@@ -1300,7 +1305,7 @@ Walpole, R. E., Myers, R. H., Myers, S. L. and Ye, K., <em>Probability &amp; Sta
 Weiss, N. A., <em>Introductory Statistics</em>, Pearson Education, 2012.
 </div>
 <div id="ref-Younes1994" class="csl-entry">
-Younes, S. S., Highway Construction Safety and the Aging Driver: Detection and Legibility Distances of Construction Warning Signs, PhD thesis, Arizona State University, 1194.
+Younes, S. S., Highway Construction Safety and the Aging Driver: Detection and Legibility Distances of Construction Warning Signs, PhD thesis, Arizona State University, 1994.
 </div>
 </div>
             </section>

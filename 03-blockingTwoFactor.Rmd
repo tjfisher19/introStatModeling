@@ -142,7 +142,7 @@ We also note we have a single observation for each `Variety` and `LocationYear` 
 We first proceed with an inappropriate simple visualization of the data.
 We do this for demonstration and learning purposes.
 
-```{r ch3-3, fig.align='center', fig.cap="Boxplot distribution of the baryley yeilds of `LocationYear` and barley `Variety`.",out.width='100%', fig.asp=0.55}
+```{r ch3-3, fig.align='center', fig.cap="Boxplot distribution of the barley yeilds of `LocationYear` and barley `Variety`.",out.width='100%', fig.asp=0.55}
 p1 <- ggplot(fisherBarleyData) + 
   geom_boxplot(aes(x=LocationYear, y=Yield) ) +
   labs(x="Location & Year", y="Yield (bushels)")
@@ -171,11 +171,11 @@ Here, we explore the response at each treatment level within each block term.
 ggplot(fisherBarleyData) + 
   geom_line(aes(x=Variety, y=Yield, 
                 color=LocationYear, group=LocationYear) ) +
-  labs(x="Baryley Variety", y="Yield (bushels)", color="Location & Year") + 
+  labs(x="Barley Variety", y="Yield (bushels)", color="Location & Year") + 
   theme_minimal()
 ```
 
-This plot in Figure \@(fig:ch3-3profile) is an improvement over the previous result but can be further tweaked for visual improvement.
+This plot in Figure \@ref(fig:ch3-3profile) is an improvement over the previous result but can be further tweaked for visual improvement.
 In particular, each line corresponds to one of the block terms (this is the common approach for these plots) but there are 12 different colors displayed, and it can be difficult to distinguish them.
 This can be considered *visual clutter*.
 Since the specific Location & Year combinations are not necessarily of interest in our study, we can *mute* their impact by plotting each line with the same color as in Figure \@ref(fig:ch3-ImprovedProfile).
@@ -184,11 +184,11 @@ Since the specific Location & Year combinations are not necessarily of interest 
 ggplot(fisherBarleyData) + 
   geom_line(aes(x=Variety, y=Yield, 
                 group=LocationYear), color="gray30" ) +
-  labs(x="Baryley Variety", y="Yield (bushels)") + 
+  labs(x="Barley Variety", y="Yield (bushels)") + 
   theme_minimal()
 ```
 
-From the profile plots in Figures \@(fig:ch3-3profile) and \@ref(fig:ch3-ImprovedProfile) it is clear that certain Location & Years were more fruitful than others, in terms of barley yield.
+From the profile plots in Figures \@ref(fig:ch3-3profile) and \@ref(fig:ch3-ImprovedProfile) it is clear that certain Location & Years were more fruitful than others, in terms of barley yield.
 However, this is not the research question of interest - we are interested in determine how the different varieties influence yield.
 From the plots, this is not as clear.
 There is some evidence that the Trebi variety may result in more yield across all the blocks as well as maybe the Peatland variety. 
