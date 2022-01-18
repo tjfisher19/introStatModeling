@@ -204,7 +204,7 @@ We will utilize many of these in our exploration of regression models in the com
 
 To fit a multiple regression, the code is essentially the same. Consider another example.
 
-**Example:** Property appraisals (CITATION).
+**Example:** Property appraisals (example from @McClaveSincich2008).
 
 Suppose a property appraiser wants to model the relationship between the sale price (`saleprice`) of a residential property and the following three predictor variables:
 
@@ -227,7 +227,7 @@ Similar to our study of ANOVA modeling we follow a standard pattern for analysis
 Before embarking on addressing each part, it might be instructive, just once (since this is your first multiple regression encounter), to actually look at the raw data to see its form:
 
 ```{r, eval=FALSE}
-load("appraisal.RData")
+load(url("https://tjfisher19.github.io/introStatModeling/data/appraisal.RData"))
 kable(appraisal)
 ```
 
@@ -305,81 +305,18 @@ So later on, we will discuss the "art" of model building.
 
 
 
-### Why should we use more than one predictor?
-
-We briefly tangent with a discussion of why multiple linear regression is superior to running "separate" simple linear regressions.
-
-Because complex natural phenomena are typically impacted by many characteristics, it would be naive in most circumstances to think that just one variable serves as an adequate explanation for an outcome.
-Instead, we consider the simultaneous impact of potential predictors of interest on the response.
-Useful models reflect this fact.
-
-The "one-predictor-at-a-time approach" can be quite bad.
-Suppose you are considering three potential predictors $X_1$, $X_2$, $X_3$ on a response $Y$.
-You might be tempted to fit three separate simple linear regression models to each predictor:
-
-$$\begin{array}{c}
-Y = \beta_0 + \beta_1 X_1 + \varepsilon \\
-Y = \beta_0 + \beta_2 X_2 + \varepsilon \\
-Y = \beta_0 + \beta_3 X_3 + \varepsilon
-\end{array}$$
-
-As we shall see, this approach to regression is fundamentally flawed and is to be avoided at all costs.
-The problem is that if you fit "too simple" a model you will not account for the "collective" impact of multiple predictors of interest, you may then fail to detect significant relationships, or even come to completely wrong conclusions.
-Here is an example to illustrate:
-
-**Example:** Predictors of mathematical ability.  Suppose we construct a hypothesis that taller children are better at math, and we intend to test this using sample data collected from an elementary school.  A random sample of 32 children take a math test, and also have their heights measured.  The data are in the file `mathability.txt`. In the code below, I first downloaded the text file to my default directory and then read it into R.
-
-First we fit a simple regression predicting AMA (average math ability score) from height:
-
-```{r, eval=FALSE}
-site <- "htthttps://tjfisher19.github.io/introStatModeling/data/mathability.txt"
-math <- read_table(site, col_types=cols() )
-summary(lm(ama ~ height, data=math))
-```
-
-```{r ch5-8, echo=FALSE}
-math <- read_table("docs/data/mathability.txt", col_types=cols() )
-summary(lm(ama ~ height, data=math))
-```
-
-Although we have not formally covered inference on regression, We might conclude from this result that height influences math ability (see the very small $p$-value associated with the variable `height`).
-A two-dimensional scatterplot (Figure \@ref(fig:ch5-9)) seems to support this as well:
-
-```{r ch5-9, message=FALSE, fig.align='center', fig.cap='Scatterplot of student heights and the average math ability (AMA) scores.', fig.asp=0.55, out.width='80%'}
-ggplot(math) + 
-  geom_point(aes(x=height, y=ama)) +
-  labs(x="Height (cm)", y="AMA Score")
-```
-
-However, it would be erroneous to conclude that this relationship implies causation (a caution wisely applied to all observational data, as we will discuss later).
-The sample of children span a range of ages, so a logical question to ask is "how does age itself influence this relationship?"
-
-We fit a multiple regression predicting AMA from both age and height:
-
-```{r ch5-10}
-summary(lm(ama ~ age + height, data=math))
-```
-
-Compare this result to the simple regression model.
-When age is considered, height is unimportant ($p$-value = 0.860).
-The earlier result occurred because both height and mathematical ability are highly correlated with age – so the omission of age led us to detect what is known as a **spurious association** between math ability and height.  
-
-The addition of a second predictor into the model also alters the nature of the question being asked.
-The simple linear regression asks: "Does height influence mathematical ability?"
-The multiple linear regression, however, asks a more useful question: "Does height influence mathematical ability once any differences due to age are considered?"
-The answer is 'not really'. 
-It also asks: "Does age influence mathematical ability once any differences due to height are accounted for?" 
-The answer is 'yes'. 
-
 ## Interpreting $\beta$-parameter estimates in MLR
 
 Suppose we fit a model to obtain the multiple linear regression equation: 
 
 $$\hat{Y} = b_0 + b_1 X_1 + b_2 X_2 + \ldots + b_k X_k$$
 
-What does $b_1$ mean?  In multiple regression involving simultaneous assessments of many predictors, interpretation can become problematic.  In certain cases, a $b_i$ coefficient might represent some real physical constant, but oftentimes the statistical model is just a convenience for representing a more complex reality, so the real meaning of a particular $b_i$ may not be obvious.
+What does $b_1$ mean?
+In multiple regression involving simultaneous assessments of many predictors, interpretation can become problematic.
+In certain cases, a $b_i$ coefficient might represent some real physical constant, but oftentimes the statistical model is just a convenience for representing a more complex reality, so the real meaning of a particular $b_i$ may not be obvious.
 
-At this point in our trek through statistical model, it is important to remember that there are two methods for obtaining data for analysis: designed experiments and observational studies.  It is important to recall the distinction because each type of data results in a different approach to interpreting the $\beta$-parameter estimates in in a multiple linear regression model. 
+At this point in our trek through statistical model, it is important to remember that there are two methods for obtaining data for analysis: designed experiments and observational studies.
+It is important to recall the distinction because each type of data results in a different approach to interpreting the $\beta$-parameter estimates in in a multiple linear regression model. 
 
 
 ### Designed experiments
@@ -398,7 +335,11 @@ For example, orthogonality would permit us to examine the effect of increasing $
 This can only occur in a situation where the predictor settings are judiciously chosen and assigned by the experimenter.
 Let us look at an example.
 
-**Example.** Cleaning experiment. An experiment was performed to measure the effects of three predictors on the ability of a cleaning solution to remove oil from cloth. The data are in the R workspace `cleaningexp.RData`. Here are some details:
+### Example of Orthogonal Design
+
+**Example.** Cleaning experiment (from @NavidiMonk2015).
+
+An experiment was performed to measure the effects of three predictors on the ability of a cleaning solution to remove oil from cloth. The data are in the R workspace `cleaningexp.RData`. Here are some details:
 
 Response:
 
@@ -415,18 +356,18 @@ Each possible combination of the three predictors was tested on five separate st
 We want to illustrate the effect of orthogonality on the $\beta$-parameter estimates.
 
 ```{r, eval=FALSE}
-load("cleaningexp.RData")
+load(url("https://tjfisher19.github.io/introStatModeling/data/cleaningexp.RData")
 glimpse(cleaningexp)
 ```
 
-```{r ch5-11, echo=FALSE}
+```{r ch5-8, echo=FALSE}
 load("docs/data/cleaningexp.RData")
 glimpse(cleaningexp)
 ```
 
 Since we have many numeric levels and we are interested in the numeric association (as compared to the categorical association in ANOVA), we fit a linear model to all three predictors:
 
-```{r ch5-12}
+```{r ch5-9}
 summary(lm(pct.removed ~ soap.conc + lauric.acid + citric.acid, data=cleaningexp))
 ```
 
@@ -434,11 +375,11 @@ Take note of the model's $\beta$-parameter estimates and their SEs.
 
 Now for illustration only, let's drop `soap.conc` from the model:
 
-```{r ch5-13}
+```{r ch5-10}
 summary(lm(pct.removed ~ lauric.acid + citric.acid, data=cleaningexp))
 ```
 
-Notice that the coefficient estimates do not change regardless of what other predictors are in the model (this would hold true if we dropped `lauric.acid` or `citric.acid` from the model as well).
+Notice that the coefficient estimates do not change regardless of what other predictors are in the model (this would hold true if we dropped `lauric.acid` or `citric.acid` from the model as well - try it!).
 This is what orthogonality ensures.
 This means that we are safe in assessing the size of the impact of, say, soap concentration on the ability to remove the oil stain, without worrying about how other variables might impact the relationship.  
 
@@ -487,11 +428,15 @@ In health studies, it is unrealistic to presume that an increase of 1\% body fat
 Furthermore, this interpretation requires the specification of the other variables – so changing which other variables are included in the model may change the interpretation of $b_1$.
 Here's an illustration:
 
-**Example:** Property appraisals.  We earlier fit a full "main effects" model predicting $Y$ = salesprice from three predictor variables dealing with property appraisals.
-This is an observational study, since the predictor values are not set by design by the researcher.
-Here's a brief recap of those results:
+### Example of observational regression interpretation
 
-```{r ch5-16}
+**Example:** Property appraisals (from @McClaveSincich2008).
+
+We earlier fit a full "main effects" model predicting $Y$ = salesprice from three predictor variables dealing with property appraisals.
+This is an observational study, since the predictor values are not set by design by the researcher.
+Here's a brief recap of the fitted model:
+
+```{r ch5-11}
 summary(appraisal.fit)
 ```
 
@@ -504,18 +449,205 @@ summary(appraisal.fit)
 
 Now, suppose we delete `landvalue` (an insignificant predictor, $p$-value $>$ 0.05; we will cover this in more detail in the next chapter). How is the model affected?
 
-```{r ch5-17}
+```{r ch5-12}
 summary(lm(saleprice ~ impvalue + area, data=appraisal))
 ```
 
 Notice that the values of both $b_2$ and $b_3$ changed after the predictor $X_1$ (`landvalue`) was deleted from the model.
 This means that our estimate of the effect that one predictor has on the response depends on what other predictors are in the model (compare this with the example of orthogonality from earlier).
 
-Hopefully this example will give you an appreciation for why we must strive to find a good model for our data, and not just *fit once* and "hope for the best".
-Many different models may be fit to the same data, but that does not mean they are all good!
+
+
+## Why multiple regression?{#whymultiple}
+
+We briefly tangent with a discussion of why multiple linear regression is superior to running "separate" simple linear regressions.
+
+Because complex natural phenomena are typically impacted by many characteristics, it would be naive in most circumstances to think that just one variable serves as an adequate explanation for an outcome.
+Instead, we consider the simultaneous impact of potential predictors of interest on the response.
+Useful models reflect this fact.
+
+The "one-predictor-at-a-time approach" can be quite bad.
+Suppose you are considering three potential predictors $X_1$, $X_2$, $X_3$ on a response $Y$.
+You might be tempted to fit three separate simple linear regression models to each predictor:
+
+$$\begin{array}{c}
+Y = \beta_0 + \beta_1 X_1 + \varepsilon \\
+Y = \beta_0 + \beta_2 X_2 + \varepsilon \\
+Y = \beta_0 + \beta_3 X_3 + \varepsilon
+\end{array}$$
+
+As we shall see, this approach to regression is fundamentally flawed and is to be avoided at all costs.
+The problem is that if you fit "too simple" a model you will not account for the "collective" impact of multiple predictors of interest, you may then fail to detect significant relationships, or even come to completely wrong conclusions.
+Below we provide two examples of the dangers of simple linear regression.
+
+To fully understand these examples, you will need to review \@ref(inference-regarding-multiple-regression).
+For now we highlight the individual regression $t$-test and residual error to demonstrate the limitations of simple linear regression.
+
+### Example of Spurious Correlation
+
+Here is an example to illustrate potential dangers of using a simple linear regression.
+
+**Example.** Punting Ability in American Football (published in @Walpole2007)
+
+In the game of American Football, a *punter* will kick a ball to the opposing team as far as possible towards the opponent's end zone, attempting to maximize the distance the receiving team must advance the ball in order to score. 
+One key feature of a *good punt* is the "hang time," the amount of time the ball 'hangs' in the air before being caught by the punt returner.
+An experiment was conducted were each of 13 punters kicked the ball 10 times and the experimenter recorded their average hang time and distances, along with other measures of strength and flexibility. 
+
+* Punter_id - an identifier for each punter
+* Hang_time - The average hangtim 
+* Distance - 
+* RLS - right leg strength (pounds)
+* LLS - left leg strength (pounds)
+* RHF - right hamstring muscle flexibility (degrees)
+* LHF - left hamstring muscle flexibility (degrees)
+* Power - Overall leg strength (foot-pounds)
+
+Original Source: @VTpunting1983
+
+The data is available in the file `puntingData.csv`.
+
+```{r, eval=FALSE}
+site <- "https://tjfisher19.github.io/introStatModeling/data/puntingData.csv"
+punting <- read_csv(site, col_types=cols() )
+glimpse(punting)
+```
+
+```{r ch5-13, echo=FALSE}
+punting <- read_csv("docs/data/puntingData.csv", col_types=cols() )
+glimpse(punting)
+```
+
+First note that this data was collected through an experiment, but the data is **observational** -- the experimenter did not control any of the variables of interest.
+
+For our example, we will consider RLS, LLS and Power as potential predictor variables for hang time. 
+Let us look at the scatterplot matrix of the data.
+
+
+```{r ch5-14pairs, message=FALSE, fig.align='center', fig.cap='Pairs plot showing the relationship between the variables `RLS`, `LLS`, `Power` and `Hang_time`.', fig.asp=1, out.width='80%'}
+ggpairs(punting, columns=c(4,5,8,2) )
+```
+
+Based on Figure \@ref(fig:ch5-14pairs) it appears that all three variables, RLS, LLS and Power, are all moderately or strongly correlated with the hang time.
+Suppose we fit three simple linear regression models to the data.
+
+```{r ch5-15}
+slr_rls <- lm(Hang_time ~ RLS, data=punting)
+slr_lls <- lm(Hang_time ~ LLS, data=punting)
+slr_power <- lm(Hang_time ~ Power, data=punting)
+```
+
+Look at the summary output of each of the three models.
+
+```{r ch5-16}
+summary(slr_rls)
+summary(slr_lls)
+summary(slr_power)
+```
+
+Although we have not formally covered inference on regression, we might conclude from these results that each of the predictor variables influences hang time (see the very small $p$-value associated with the predictor variables).
+The scatterplots (Figure \@ref(fig:ch5-14pairs)) seems to support this as well.
+
+However, it would be erroneous to conclude that this relationship implies causation (a caution wisely applied to all observational data, as we will discuss later).
+The sample of punters span a range of abilities, and each might utilize their left or right leg more in the act of kicking. 
+So a logical question to ask is "how do all these variables, collectively, influence hang time?"
+
+We fit a multiple regression predicting hang time from all three predictor variables.
+
+```{r ch5-17}
+mlr_punting <- lm(Hang_time ~ RLS + LLS + Power, data=punting)
+summary(mlr_punting)
+```
+
+Compare this result to the simple regression models.
+When all three variables are included, the variable RLS appears to be unimportant ($p$-value = 0.9723).
+The earlier result occurred because both hang time and RLS are highly correlated with LLS – so the omission of LLS led us to detect what is known as a **spurious association** between RLS and hang time.
+To phrase another way, LLS and RLS appear to be providing much of the same, or redundant, information to the model.
+We may also consider the addition of LLS and Power to be *confounding* in regards to the variable RLS.
+
+Further, we can see how the multiple regression model improves on the accuracy of the predicted values of the regression model.
+Consider the table of residual standard errors below.
+
+```{r ch5-18, echo=FALSE}
+punting_error_df <- data.frame(
+  Model = c("SLR: RLS", "SLR: LLS", "SLR: Power", "MLR: RLS+LLS+Power"),
+  `Residual Standard Error` = c(summary(slr_rls)$sigma,summary(slr_lls)$sigma,summary(slr_power)$sigma,summary(mlr_punting)$sigma)
+)
+
+kbl(punting_error_df) %>%
+  kable_styling(full_width=FALSE)
+```
+
+Note that the multiple regression model has arguably the 'best' (smallest) residual standard error of the four models considered -- even though it includes the variable RLS which appears to not be important when LLS and Power are included.
+
+The addition of a multiple predictors into the model also alters the nature of the question being asked.
+The simple linear regression asks: "Does RLS influence hang time?"
+The multiple linear regression, however, asks a more useful question: "Does RLS influence hang time once any differences due to LHS and Power are considered?"
+The answer is 'not really'. 
+It also asks: "Does LLS influence hang time once any differences due to RLS and Power are accounted for?" 
+The answer is 'yes'. 
+
+### Example of Confounding in Regression
+
+In the previous section, \@ref(example-of-spurious-correlation), we saw how a combination of variables can change the interpretation of a variable in the presence of others.
+In Section \@ref(blocking) we discussed using *blocks* as a way to control for potential confounding factors, or nuisance variables.
+By modeling this extra (in some cases *known*) variability, we can more accurately determine if the variables of interest influence the response variable.
+In the below example we demonstrate that regression can be used in a similar way as a block design to control for nuisance variation.
+
+**Example.** Bleaching Pulp (from @WeissText)
+
+The production of paper requires the pupl used in the manufacturing process to be whitened by bleaching in a chemical reaction.
+The bleaching agents are usually chlorine dioxide (ClO$_2$) and hydrogen peroxide (H$_2$O$_2$).
+The amounts of these two chemical used in the process effects the whiteness of the pulp, and ultimately that of the paper.
+
+Original source: @Zhou1998
+
+The file `bleachingPulp.txt` on the textbook site contains the result of an experiment where 20 combinations of chlorine dioxide and hydrogen peroxide were varied and the *brightness* or *whiteness* of the paper was determined (smaller the number, the brighter the paper).
+The file is a tabbed separated value format
+
+```{r, eval=FALSE}
+site <- "https://tjfisher19.github.io/introStatModeling/data/bleachingPulp.txt"
+pulp <- read_tsv(site, col_type=cols())
+glimpse(pulp)
+```
+
+```{r ch5-19, echo=FALSE}
+pulp <- read_tsv("docs/data/bleachingPulp.txt", col_type=cols())
+glimpse(pulp)
+```
+
+Suppose a paper scientist wished to know the effect hydrogen peroxide has on the brightening process.
+The scientist fits a simple linear regression modeling the whiteness as a function of the amount of hydrogen peroxide.
+
+```{r ch5-20}
+slr_h2o2 <- lm(Whiteness ~ H2O2, data=pulp)
+summary(slr_h2o2)
+```
+
+From the summary output it appears that the amount of hydrogen peroxide does not influence the brightnes of the paper.
+Further, we note the residual standard error is `r round(summary(slr_h2o2)$sigma, 5)` which is not all that different than the standard deviation of the `Whiteness` variable, `r round(sd(pulp$Whiteness), 5)`.
+
+However, the above analysis is **incorrect** because we do not account for the potential effect of the chlorine dioxide (a **confounding** variable) -- the experiment used both.
+When we fit a multiple regression model we get a different result.
+
+```{r ch5-21}
+mlr_pulp <- lm(Whiteness ~ H2O2 + ClO2, data=pulp)
+summary(mlr_pulp)
+```
+
+Based on the multiple regression model, it appears hydrogen peroxide does predict the brightness of the pulp.
+Also note the decrease in the residual standard error.
+
+For reference, the residual standard error for the simple linear regression with just chlorine dioxide is `r round(summary(lm(Whiteness~ClO2,data=pulp))$sigma, 5)`.
+So it is apparent that both predictor variables provide a better mode than either simple linear regression approach.
+
+## Concluding the Multiple Regression Model
+
+Hopefully the examples outlined in this chapter will give you an appreciation for why we must strive to find a good model for our data, and **not** *fit once* and "hope for the best".
+In observational studies, many different models may be fit to the same data, but that does not mean they are all good!
 Findings and results can vary based on which model we choose: precision of our predictions, interpretations of the parameter estimates, etc., so we must use caution and wisdom in our choices.
+In the following chapters we will cover methods that will help us in our model building.
 
-As statistician George Box once said:
+As statistician George Box once said (@Box1979):
 
-> "All models are wrong, but some are useful."
+> "All models are wrong but some are useful."
 

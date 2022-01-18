@@ -17,7 +17,7 @@ This is what the science of statistics is all about.
 
 **Statistics** can be broadly defined as the study of variation. 
 We collect **sample** data from a parent **population** of interest typically because, even though we are ultimately interested in characteristics about the **population**, it is unfeasible to collect data from every member of a **population**. 
-Good statistical practice demands that we collect **sample** data from the **population** in such a manner so as to ensure that the **sample** is representative; i.e., it is not presenting a systematic bias in its representation. 
+Good statistical practice demands that we collect **sample** data from the **population** in such a manner so as to ensure that the **sample** is representative; *i.e.*, it is not presenting a systematic bias in its representation. 
 
 There are two issues that arise with respect to variation in such data:
 
@@ -46,14 +46,14 @@ The practice of statistics starts with an underlying problem or question.
 This will be a question with context.
 Some examples may include:
 
-* Are fish sensitive to UV light?
+* Are fish sensitive to Ultraviolet light?
 * What socio-economic variables and demographics predict college graduation rates?
 * Can we determine if there truly is a *home field* advantage in sports?
 * Does a new experimental drug improve over an existing drug?
 
 From there, data is collected through an experiment, observations or a survey.
 You then proceed with a data analysis, and then finish with statistical, and contextual conclusions. 
-Unfortunately, it is common for inexperienced statisticians to start with a complex analysis without ever considering the objectives of the study, or whether the data are appropriate for the chosen analysis. 
+Unfortunately, it is common for inexperienced statisticians to start with a complex analysis without ever considering the objectives of the study, or whether the data are appropriate for the chosen analysis and whether the underlying question can be answered. 
 
 We recommend you follow the guidance (outlined below) provided in Chapter 1 of the text by @Faraway2004linear -- Look before you leap!
 
@@ -400,7 +400,7 @@ Variances will serve as the foundation for much of what we use in making statist
 In fact, a standard method of data analysis for many of the problems we will encounter is known as analysis of variance (shorthanded ANOVA).
 
 You were (or should have been) exposed to variance in your introductory statistics course. 
-What is crucial now is that you know what you are finding the variance of; i.e., what is the "quantity" we referred to in the preceding paragraph? Consider the following example:
+What is crucial now is that you know what you are finding the variance of; *i.e.*, what is the "quantity" we referred to in the preceding paragraph? Consider the following example:
 
 * *Example*. Suppose you collect a simple random sample of *n* fasting blood glucose measurements from a population of diabetic patients. The measurements are denoted $x_1$, $x_2$, $\ldots$, $x_n$. What are some of the different "variances" that one might encounter in this scenario?
 
@@ -427,7 +427,7 @@ $$\textrm{Variance} = \frac{\textrm{sum of squares}}{\textrm{degrees of freedom}
 
 2. The formula for the population variance $\sigma^2$ is only given for completeness. We will never use it, since $\sigma^2$ cannot be calculated without a population census.
 
-3. When considering how a statistic (like $\bar{x}$) varies around the parameter it is estimating ($\mu$), it makes sense that the more data you have, the better it should perform as an estimator. This is precisely why the variance of $\bar{x}$ is inversely related to the sample size. **As $n$ increases, the variance of the estimate decreases**; i.e. the estimate will be closer to the thing it is estimating. This phenomenon is known as the law of large numbers.
+3. When considering how a statistic (like $\bar{x}$) varies around the parameter it is estimating ($\mu$), it makes sense that the more data you have, the better it should perform as an estimator. This is precisely why the variance of $\bar{x}$ is inversely related to the sample size. **As $n$ increases, the variance of the estimate decreases**; *i.e.*, the estimate will be closer to the thing it is estimating. This phenomenon is known as the law of large numbers.
 
 
 **Standard deviations and standard errors**
@@ -465,7 +465,7 @@ This display introduces a few keys points you need to be aware of:
 
 * We have the code spread across multiple lines with most lines ending with the piping operator `%>%`. This is done (and recommended) for readability. When performing an analysis, you often will revisit the code at a later time. Readable code is paramount to reproducibility.
 * Since we applied the command to the entire data frame (`everything()`), we also see numeric summaries of the variable `id`, even though it is meaningless to do so. (note: just because a computer outputs it, that doesn't mean it's useful)
-* If you look carefully, you'll see that `year` is treated as a number (e.g. 1996, 1997, etc.). However, that doesn't necessarily mean it should be treated as a numeric variable! It is meaningless to find numeric summaries like means or medians for the `year`, because it is really a qualitative (categorical) variable in the context of these data (again, just because a computer outputs it, that doesn't mean it is contextually correct). 
+* If you look carefully, you'll see that `year` is treated as a number (*e.g.*, 1996, 1997, etc.). However, that doesn't necessarily mean it should be treated as a numeric variable! It is meaningless to find numeric summaries like means or medians for the `year`, because it is really a qualitative (categorical) variable in the context of these data (again, just because a computer outputs it, that doesn't mean it is contextually correct). 
 
 These are common mistake to make.
 It is as simple as this: when R encounters a variable whose values are entered as numbers in a data frame, R will treat the variable as if it were a numeric variable (whether it is contextually or not).
@@ -489,7 +489,7 @@ uadata %>%
   summarize(across(everything(), class))
 ```
 
-No we can check the summary values again for only numeric values (i.e., the use of the `select(where(is.numeric))` function).
+No we can check the summary values again for only numeric values (*i.e.*, the use of the `select(where(is.numeric))` function).
 
 ```{r ch1-15}
 uadata %>% 
@@ -731,7 +731,7 @@ As described in the discussion on variability above, each of the numeric quantit
 It is not enough to know just the variance or standard deviation of an estimate. 
 Those are just ways to get a measure of the inconsistency in an estimate's value from sample to sample of a given size $n$.  
 
-If we wish to make a confident conclusion about an unknown population parameter using a sample statistic (e.g. $\bar{x}$), we also need to know something about the general pattern of behavior that statistic would take if we had observed it over many, many different potential random samples. 
+If we wish to make a confident conclusion about an unknown population parameter using a sample statistic (*e.g.*, $\bar{x}$), we also need to know something about the general pattern of behavior that statistic would take if we had observed it over many, many different potential random samples. 
 
 This long-run behavior pattern is described via the probability distribution of the statistic, also known as the **sampling distribution** of the statistic.  
 
