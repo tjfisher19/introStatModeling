@@ -2,11 +2,11 @@
 
 # Introductory Statistics in R
 
-Before we begin our dive into Statistical Modeling we first review content from your introductory statistics course and introduce fundamental elements of the R programming language [@R-base]. 
-The learning objective of this unit include:
+We begin our dive into Statistical Modeling by first reviewing content from your introductory statistics course and introduce fundamental elements of the R programming language [@R-base]. 
+The learning objective of this chapter include:
 
 * Review of the fundamental concepts of *populations*, *samples*, *parameters* and *statistics*.
-* Review of exploratory and descriptive statistics: numerical quantities and graphics.
+* Review of exploratory and descriptive statistics: numerical quantities and graphs.
 * An introduction and overview of the R software for statistical computing.
 * Basic statistical inference through a two-sample *t*-test and confidence interval.
 
