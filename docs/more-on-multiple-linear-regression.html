@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 7 More on multiple linear regression | Introduction to Statistical Modeling</title>
   <meta name="description" content="Covers Regression and elements of Design of Experiments in R using the tidyverse." />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 7 More on multiple linear regression | Introduction to Statistical Modeling" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="Covers Regression and elements of Design of Experiments in R using the tidyverse." />
   <meta name="github-repo" content="tjfisher19/introStatModeling" />
@@ -24,16 +23,15 @@
 <meta name="author" content="Michael R. Hughes and Thomas J. Fisher" />
 
 
-<meta name="date" content="2022-01-18" />
+<meta name="date" content="2025-06-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="inference-regarding-multiple-regression.html"/>
+<link rel="prev" href="regInferenceChp.html"/>
 <link rel="next" href="model-building-considerations.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -51,16 +49,20 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -94,7 +96,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -107,7 +109,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -121,6 +123,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -144,7 +150,7 @@ div.csl-indent {
 }
 </style>
 
-<link rel="stylesheet" href="style.css" type="text/css" />
+<link rel="stylesheet" href="css_files/mystyle.css" type="text/css" />
 </head>
 
 <body>
@@ -173,12 +179,15 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html"><i class="fa fa-check"></i><b>1</b> Introductory Statistics in R</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#goals-of-a-statistical-analysis"><i class="fa fa-check"></i><b>1.1</b> Goals of a statistical analysis</a></li>
-<li class="chapter" data-level="1.2" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#before-you-begin-an-analysis"><i class="fa fa-check"></i><b>1.2</b> Before you begin an analysis</a></li>
+<li class="chapter" data-level="1.1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#goals-of-a-statistical-analysis"><i class="fa fa-check"></i><b>1.1</b> Goals of a statistical analysis</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#conducting-a-statistical-analysis"><i class="fa fa-check"></i><b>1.1.1</b> Conducting a statistical analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#introduction-to-r"><i class="fa fa-check"></i><b>1.2</b> Introduction to R</a></li>
 <li class="chapter" data-level="1.3" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#data-frames"><i class="fa fa-check"></i><b>1.3</b> Data frames</a>
 <ul>
 <li class="chapter" data-level="1.3.1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#built-in-data"><i class="fa fa-check"></i><b>1.3.1</b> Built-in data</a></li>
-<li class="chapter" data-level="1.3.2" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#types-of-data"><i class="fa fa-check"></i><b>1.3.2</b> Types of Data</a></li>
+<li class="chapter" data-level="1.3.2" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#dataTypesSection"><i class="fa fa-check"></i><b>1.3.2</b> Types of Data</a></li>
 <li class="chapter" data-level="1.3.3" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#importing-datasets-into-r"><i class="fa fa-check"></i><b>1.3.3</b> Importing datasets into R</a></li>
 </ul></li>
 <li class="chapter" data-level="1.4" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#referencing-data-from-inside-a-data-frame"><i class="fa fa-check"></i><b>1.4</b> Referencing data from inside a data frame</a></li>
@@ -193,46 +202,55 @@ div.csl-indent {
 <li class="chapter" data-level="1.6.6" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#descriptive-statistics-and-visualizations-for-two-numeric-variables"><i class="fa fa-check"></i><b>1.6.6</b> Descriptive statistics and visualizations for two numeric variables</a></li>
 </ul></li>
 <li class="chapter" data-level="1.7" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#sampling-distributions-describing-how-a-statistic-varies"><i class="fa fa-check"></i><b>1.7</b> Sampling distributions: describing how a statistic varies</a></li>
-<li class="chapter" data-level="1.8" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#two-sample-inference"><i class="fa fa-check"></i><b>1.8</b> Two-sample inference</a></li>
+<li class="chapter" data-level="1.8" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#twoSampleInference"><i class="fa fa-check"></i><b>1.8</b> Two-sample inference</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html"><i class="fa fa-check"></i><b>2</b> Introduction to Statistical Modeling and Designed Experiments</a>
+<li class="chapter" data-level="2" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html"><i class="fa fa-check"></i><b>2</b> Statistical Modeling and Designed Experiments</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#statistical-analyses-is-modeling"><i class="fa fa-check"></i><b>2.1</b> Statistical Analyses is Modeling</a>
+<li class="chapter" data-level="2.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#dataSources"><i class="fa fa-check"></i><b>2.1</b> Observational Studies versus designed experiments</a>
 <ul>
-<li class="chapter" data-level="2.1.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#example-of-a-two-sample-t-test-as-a-model"><i class="fa fa-check"></i><b>2.1.1</b> Example of a two-sample <span class="math inline">\(t\)</span>-test as a model</a></li>
+<li class="chapter" data-level="2.1.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#observational-studies"><i class="fa fa-check"></i><b>2.1.1</b> Observational Studies</a></li>
+<li class="chapter" data-level="2.1.2" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#designed-experiments"><i class="fa fa-check"></i><b>2.1.2</b> Designed experiments</a></li>
 </ul></li>
-<li class="chapter" data-level="2.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#observational-studies-versus-designed-experiments"><i class="fa fa-check"></i><b>2.2</b> Observational Studies versus designed experiments</a>
+<li class="chapter" data-level="2.2" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#designed-experiement-vocabulary"><i class="fa fa-check"></i><b>2.2</b> Designed experiement vocabulary</a>
 <ul>
-<li class="chapter" data-level="2.2.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#observational-studies"><i class="fa fa-check"></i><b>2.2.1</b> Observational Studies</a></li>
-<li class="chapter" data-level="2.2.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#designed-experiments"><i class="fa fa-check"></i><b>2.2.2</b> Designed experiments</a></li>
+<li class="chapter" data-level="2.2.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#what-is-an-experiment"><i class="fa fa-check"></i><b>2.2.1</b> What is an experiment?</a></li>
+<li class="chapter" data-level="2.2.2" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#analysis-of-variance"><i class="fa fa-check"></i><b>2.2.2</b> Analysis of variance</a></li>
+<li class="chapter" data-level="2.2.3" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#elements-of-a-designed-experiment"><i class="fa fa-check"></i><b>2.2.3</b> Elements of a designed experiment</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#designed-experiement-vocabulary"><i class="fa fa-check"></i><b>2.3</b> Designed experiement vocabulary</a>
+<li class="chapter" data-level="2.3" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#statistical-analyses-is-modeling"><i class="fa fa-check"></i><b>2.3</b> Statistical Analyses is Modeling</a>
 <ul>
-<li class="chapter" data-level="2.3.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#what-is-an-experiment"><i class="fa fa-check"></i><b>2.3.1</b> What is an experiment?</a></li>
-<li class="chapter" data-level="2.3.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#analysis-of-variance"><i class="fa fa-check"></i><b>2.3.2</b> Analysis of variance</a></li>
-<li class="chapter" data-level="2.3.3" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#elements-of-a-designed-experiment"><i class="fa fa-check"></i><b>2.3.3</b> Elements of a designed experiment</a></li>
+<li class="chapter" data-level="2.3.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#example-of-a-two-sample-t-test-as-a-model"><i class="fa fa-check"></i><b>2.3.1</b> Example of a two-sample <span class="math inline">\(t\)</span>-test as a model</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#paired-t-test"><i class="fa fa-check"></i><b>2.4</b> Paired <span class="math inline">\(t\)</span>-test</a>
+<li class="chapter" data-level="2.4" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#one-way-anova"><i class="fa fa-check"></i><b>2.4</b> One-Way ANOVA</a>
 <ul>
-<li class="chapter" data-level="2.4.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#paired-t-test-example"><i class="fa fa-check"></i><b>2.4.1</b> Paired <span class="math inline">\(t\)</span>-test example</a></li>
+<li class="chapter" data-level="2.4.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#model-structure"><i class="fa fa-check"></i><b>2.4.1</b> Model Structure</a></li>
+<li class="chapter" data-level="2.4.2" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#testing-procedure"><i class="fa fa-check"></i><b>2.4.2</b> Testing Procedure</a></li>
+<li class="chapter" data-level="2.4.3" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#example-of-one-way-anova"><i class="fa fa-check"></i><b>2.4.3</b> Example of One-Way ANOVA</a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#one-way-anova"><i class="fa fa-check"></i><b>2.5</b> One-Way ANOVA</a>
+<li class="chapter" data-level="2.5" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#assumptionCheck"><i class="fa fa-check"></i><b>2.5</b> Model Assumptions &amp; Assessment</a>
 <ul>
-<li class="chapter" data-level="2.5.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#example-of-one-way-anova"><i class="fa fa-check"></i><b>2.5.1</b> Example of One-Way ANOVA</a></li>
+<li class="chapter" data-level="2.5.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#structural-assumptions"><i class="fa fa-check"></i><b>2.5.1</b> Structural Assumptions</a></li>
+<li class="chapter" data-level="2.5.2" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#random-variation-assumptions"><i class="fa fa-check"></i><b>2.5.2</b> Random Variation Assumptions</a></li>
+<li class="chapter" data-level="2.5.3" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#code-to-check-assumptions"><i class="fa fa-check"></i><b>2.5.3</b> Code to check assumptions</a></li>
 </ul></li>
-<li class="chapter" data-level="2.6" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#assumptionCheck"><i class="fa fa-check"></i><b>2.6</b> Assumption Checking</a>
+<li class="chapter" data-level="2.6" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#transforming-your-response"><i class="fa fa-check"></i><b>2.6</b> Transforming your response</a>
 <ul>
-<li class="chapter" data-level="2.6.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#independence"><i class="fa fa-check"></i><b>2.6.1</b> Independence</a></li>
-<li class="chapter" data-level="2.6.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#constant-variance"><i class="fa fa-check"></i><b>2.6.2</b> Constant Variance</a></li>
-<li class="chapter" data-level="2.6.3" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#checking-normality"><i class="fa fa-check"></i><b>2.6.3</b> Checking Normality</a></li>
-<li class="chapter" data-level="2.6.4" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#code-to-check-assumptions"><i class="fa fa-check"></i><b>2.6.4</b> Code to check assumptions</a></li>
-<li class="chapter" data-level="2.6.5" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#transforming-your-response"><i class="fa fa-check"></i><b>2.6.5</b> Transforming your response</a></li>
+<li class="chapter" data-level="2.6.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#a-note-on-logarithmic-transformations"><i class="fa fa-check"></i><b>2.6.1</b> A note on logarithmic transformations</a></li>
 </ul></li>
-<li class="chapter" data-level="2.7" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#follow-up-procedures-multiple-comparisons"><i class="fa fa-check"></i><b>2.7</b> Follow-up procedures – Multiple Comparisons</a>
+<li class="chapter" data-level="2.7" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#anova-testing-in-r"><i class="fa fa-check"></i><b>2.7</b> ANOVA Testing in R</a>
 <ul>
-<li class="chapter" data-level="2.7.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#tukeys-hsd-method"><i class="fa fa-check"></i><b>2.7.1</b> Tukey’s HSD method</a></li>
-<li class="chapter" data-level="2.7.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#dunnett-multiple-comparisons"><i class="fa fa-check"></i><b>2.7.2</b> Dunnett multiple comparisons</a></li>
+<li class="chapter" data-level="2.7.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#reading-an-anova-table"><i class="fa fa-check"></i><b>2.7.1</b> Reading an ANOVA table</a></li>
+<li class="chapter" data-level="2.7.2" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#conclusions-and-limitation-of-anova"><i class="fa fa-check"></i><b>2.7.2</b> Conclusions and Limitation of ANOVA</a></li>
 </ul></li>
+<li class="chapter" data-level="2.8" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#follow-up-procedures-multiple-comparisons"><i class="fa fa-check"></i><b>2.8</b> Follow-up procedures – Multiple Comparisons</a>
+<ul>
+<li class="chapter" data-level="2.8.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#multiple-testing-problem"><i class="fa fa-check"></i><b>2.8.1</b> Multiple testing problem</a></li>
+<li class="chapter" data-level="2.8.2" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#tukeys-hsd-method"><i class="fa fa-check"></i><b>2.8.2</b> Tukey’s HSD method</a></li>
+<li class="chapter" data-level="2.8.3" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#dunnett-multiple-comparisons"><i class="fa fa-check"></i><b>2.8.3</b> Dunnett multiple comparisons</a></li>
+<li class="chapter" data-level="2.8.4" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#coding-notes-about-emmeans"><i class="fa fa-check"></i><b>2.8.4</b> Coding notes about <code>emmeans</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2.9" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#two-sample-t-test-as-anova"><i class="fa fa-check"></i><b>2.9</b> Two-sample <span class="math inline">\(t\)</span>-test as ANOVA</a></li>
+<li class="chapter" data-level="2.10" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#a-complete-one-way-anova-example"><i class="fa fa-check"></i><b>2.10</b> A Complete One-Way ANOVA Example</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="multiple-factor-designed-experiments.html"><a href="multiple-factor-designed-experiments.html"><i class="fa fa-check"></i><b>3</b> Multiple Factor Designed Experiments</a>
 <ul>
@@ -285,35 +303,35 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="5.5" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#concluding-the-multiple-regression-model"><i class="fa fa-check"></i><b>5.5</b> Concluding the Multiple Regression Model</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html"><i class="fa fa-check"></i><b>6</b> Inference regarding Multiple Regression</a>
+<li class="chapter" data-level="6" data-path="regInferenceChp.html"><a href="regInferenceChp.html"><i class="fa fa-check"></i><b>6</b> Inference regarding Multiple Regression</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#assumption-checking"><i class="fa fa-check"></i><b>6.1</b> Assumption checking</a>
+<li class="chapter" data-level="6.1" data-path="regInferenceChp.html"><a href="regInferenceChp.html#assumption-checking"><i class="fa fa-check"></i><b>6.1</b> Assumption checking</a>
 <ul>
-<li class="chapter" data-level="6.1.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#example-of-assumption-checking-in-slr"><i class="fa fa-check"></i><b>6.1.1</b> Example of Assumption Checking in SLR</a></li>
+<li class="chapter" data-level="6.1.1" data-path="regInferenceChp.html"><a href="regInferenceChp.html#example-of-assumption-checking-in-slr"><i class="fa fa-check"></i><b>6.1.1</b> Example of Assumption Checking in SLR</a></li>
 </ul></li>
-<li class="chapter" data-level="6.2" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#overall-f-test-for-model-signifance"><i class="fa fa-check"></i><b>6.2</b> Overall <span class="math inline">\(F\)</span>-test for model signifance</a>
+<li class="chapter" data-level="6.2" data-path="regInferenceChp.html"><a href="regInferenceChp.html#overall-f-test-for-model-signifance"><i class="fa fa-check"></i><b>6.2</b> Overall <span class="math inline">\(F\)</span>-test for model signifance</a>
 <ul>
-<li class="chapter" data-level="6.2.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#example-of-model-overall-f-test"><i class="fa fa-check"></i><b>6.2.1</b> Example of model overall <span class="math inline">\(F\)</span>-test</a></li>
+<li class="chapter" data-level="6.2.1" data-path="regInferenceChp.html"><a href="regInferenceChp.html#example-of-model-overall-f-test"><i class="fa fa-check"></i><b>6.2.1</b> Example of model overall <span class="math inline">\(F\)</span>-test</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#individual-parameter-inference"><i class="fa fa-check"></i><b>6.3</b> Individual parameter inference</a>
+<li class="chapter" data-level="6.3" data-path="regInferenceChp.html"><a href="regInferenceChp.html#individual-parameter-inference"><i class="fa fa-check"></i><b>6.3</b> Individual parameter inference</a>
 <ul>
-<li class="chapter" data-level="6.3.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#parameter-t-tests"><i class="fa fa-check"></i><b>6.3.1</b> Parameter <span class="math inline">\(t\)</span>-tests</a></li>
-<li class="chapter" data-level="6.3.2" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#example-of-individual-parameter-t-test"><i class="fa fa-check"></i><b>6.3.2</b> Example of individual parameter <span class="math inline">\(t\)</span>-test</a></li>
-<li class="chapter" data-level="6.3.3" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#model-trimming"><i class="fa fa-check"></i><b>6.3.3</b> Model trimming</a></li>
-<li class="chapter" data-level="6.3.4" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#confidence-intervals"><i class="fa fa-check"></i><b>6.3.4</b> Confidence Intervals</a></li>
-<li class="chapter" data-level="6.3.5" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#example-of-individual-parameter-confidence-intervals"><i class="fa fa-check"></i><b>6.3.5</b> Example of individual parameter confidence intervals</a></li>
+<li class="chapter" data-level="6.3.1" data-path="regInferenceChp.html"><a href="regInferenceChp.html#parameter-t-tests"><i class="fa fa-check"></i><b>6.3.1</b> Parameter <span class="math inline">\(t\)</span>-tests</a></li>
+<li class="chapter" data-level="6.3.2" data-path="regInferenceChp.html"><a href="regInferenceChp.html#example-of-individual-parameter-t-test"><i class="fa fa-check"></i><b>6.3.2</b> Example of individual parameter <span class="math inline">\(t\)</span>-test</a></li>
+<li class="chapter" data-level="6.3.3" data-path="regInferenceChp.html"><a href="regInferenceChp.html#model-trimming"><i class="fa fa-check"></i><b>6.3.3</b> Model trimming</a></li>
+<li class="chapter" data-level="6.3.4" data-path="regInferenceChp.html"><a href="regInferenceChp.html#confidence-intervals"><i class="fa fa-check"></i><b>6.3.4</b> Confidence Intervals</a></li>
+<li class="chapter" data-level="6.3.5" data-path="regInferenceChp.html"><a href="regInferenceChp.html#example-of-individual-parameter-confidence-intervals"><i class="fa fa-check"></i><b>6.3.5</b> Example of individual parameter confidence intervals</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#confidence-and-prediction-bands"><i class="fa fa-check"></i><b>6.4</b> Confidence and prediction bands</a>
+<li class="chapter" data-level="6.4" data-path="regInferenceChp.html"><a href="regInferenceChp.html#confidence-and-prediction-bands"><i class="fa fa-check"></i><b>6.4</b> Confidence and prediction bands</a>
 <ul>
-<li class="chapter" data-level="6.4.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#simple-linear-regression-confident-and-prediction-bands"><i class="fa fa-check"></i><b>6.4.1</b> Simple Linear Regression Confident and Prediction bands</a></li>
-<li class="chapter" data-level="6.4.2" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#example-of-confidence-and-prediction-intervals"><i class="fa fa-check"></i><b>6.4.2</b> Example of confidence and prediction intervals</a></li>
-<li class="chapter" data-level="6.4.3" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#extrapolation-warning"><i class="fa fa-check"></i><b>6.4.3</b> Extrapolation warning!</a></li>
-<li class="chapter" data-level="6.4.4" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#confidence-and-prediction-bands-in-multiple-regression"><i class="fa fa-check"></i><b>6.4.4</b> Confidence and Prediction Bands in Multiple Regression</a></li>
+<li class="chapter" data-level="6.4.1" data-path="regInferenceChp.html"><a href="regInferenceChp.html#simple-linear-regression-confident-and-prediction-bands"><i class="fa fa-check"></i><b>6.4.1</b> Simple Linear Regression Confident and Prediction bands</a></li>
+<li class="chapter" data-level="6.4.2" data-path="regInferenceChp.html"><a href="regInferenceChp.html#example-of-confidence-and-prediction-intervals"><i class="fa fa-check"></i><b>6.4.2</b> Example of confidence and prediction intervals</a></li>
+<li class="chapter" data-level="6.4.3" data-path="regInferenceChp.html"><a href="regInferenceChp.html#extrapolation-warning"><i class="fa fa-check"></i><b>6.4.3</b> Extrapolation warning!</a></li>
+<li class="chapter" data-level="6.4.4" data-path="regInferenceChp.html"><a href="regInferenceChp.html#confidence-and-prediction-bands-in-multiple-regression"><i class="fa fa-check"></i><b>6.4.4</b> Confidence and Prediction Bands in Multiple Regression</a></li>
 </ul></li>
-<li class="chapter" data-level="6.5" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#goodness-of-fit"><i class="fa fa-check"></i><b>6.5</b> Goodness-of-fit</a>
+<li class="chapter" data-level="6.5" data-path="regInferenceChp.html"><a href="regInferenceChp.html#goodness-of-fit"><i class="fa fa-check"></i><b>6.5</b> Goodness-of-fit</a>
 <ul>
-<li class="chapter" data-level="6.5.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#coefficient-of-determination"><i class="fa fa-check"></i><b>6.5.1</b> Coefficient of determination</a></li>
-<li class="chapter" data-level="6.5.2" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#akaikes-information-criterion"><i class="fa fa-check"></i><b>6.5.2</b> Akaike’s Information Criterion</a></li>
+<li class="chapter" data-level="6.5.1" data-path="regInferenceChp.html"><a href="regInferenceChp.html#coefficient-of-determination"><i class="fa fa-check"></i><b>6.5.1</b> Coefficient of determination</a></li>
+<li class="chapter" data-level="6.5.2" data-path="regInferenceChp.html"><a href="regInferenceChp.html#akaikes-information-criterion"><i class="fa fa-check"></i><b>6.5.2</b> Akaike’s Information Criterion</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html"><i class="fa fa-check"></i><b>7</b> More on multiple linear regression</a>
@@ -426,10 +444,10 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="more-on-multiple-linear-regression" class="section level1" number="7">
-<h1><span class="header-section-number">Chapter 7</span> More on multiple linear regression</h1>
-<div id="model-comparision-reduced-f-tests" class="section level2" number="7.1">
-<h2><span class="header-section-number">7.1</span> Model comparision – Reduced <span class="math inline">\(F\)</span>-tests</h2>
+<div id="more-on-multiple-linear-regression" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">Chapter 7</span> More on multiple linear regression<a href="more-on-multiple-linear-regression.html#more-on-multiple-linear-regression" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="model-comparision-reduced-f-tests" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> Model comparision – Reduced <span class="math inline">\(F\)</span>-tests<a href="more-on-multiple-linear-regression.html#model-comparision-reduced-f-tests" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Occasionally, we might be interested in more specialized tests of a multiple regression model’s <span class="math inline">\(\beta\)</span> parameters. For example, consider the property appraisals data (again). The regression model we are using is</p>
 <p><span class="math display">\[\textrm{Sale price} = \beta_0 + \beta_1(\textrm{Land value}) + \beta_2(\textrm{Improvements value}) + \beta_3(\textrm{Area}) + \varepsilon\]</span>
 Think about questions like these:</p>
@@ -455,8 +473,8 @@ Think about questions like these:</p>
 </ul>
 <p>The R function <code>anova()</code> will do the computation of the ANOVA <span class="math inline">\(F\)</span>-statistic and its associated <span class="math inline">\(p\)</span>-value for this test, once you feed it the fitted full and reduced R model objects. The form of the R function is <code>anova(reducedmodel, fullmodel)</code></p>
 <p>So, the test of <span class="math inline">\(H_0\)</span>: The two appraisals collectively have no effect on mean sale price (i.e. <span class="math inline">\(\beta_1 = \beta_2 = 0\)</span>) is conducted as follows (recall <code>appraisal.fit</code> is the full model):</p>
-<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="more-on-multiple-linear-regression.html#cb255-1" aria-hidden="true" tabindex="-1"></a>reduced.appraisal.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(saleprice <span class="sc">~</span> area, <span class="at">data=</span>appraisal)</span>
-<span id="cb255-2"><a href="more-on-multiple-linear-regression.html#cb255-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(reduced.appraisal.fit, appraisal.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="more-on-multiple-linear-regression.html#cb291-1" tabindex="-1"></a>reduced.appraisal.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(saleprice <span class="sc">~</span> area, <span class="at">data=</span>appraisal)</span>
+<span id="cb291-2"><a href="more-on-multiple-linear-regression.html#cb291-2" tabindex="-1"></a><span class="fu">anova</span>(reduced.appraisal.fit, appraisal.fit)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Model 1: saleprice ~ area
@@ -494,10 +512,10 @@ Think about questions like these:</p>
 </ul>
 <p>Note in this last notation the null hypothesis essentially is performing a multiple regression on two predictor variables: Area and a new variable Land + Improv. We can perform this test in one of two ways.</p>
 <p><strong>Method 1</strong> - Creating a new variable</p>
-<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="more-on-multiple-linear-regression.html#cb257-1" aria-hidden="true" tabindex="-1"></a>appraisal <span class="ot">&lt;-</span> appraisal <span class="sc">%&gt;%</span></span>
-<span id="cb257-2"><a href="more-on-multiple-linear-regression.html#cb257-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">LandImprov =</span> landvalue <span class="sc">+</span> impvalue)</span>
-<span id="cb257-3"><a href="more-on-multiple-linear-regression.html#cb257-3" aria-hidden="true" tabindex="-1"></a>red.model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(saleprice <span class="sc">~</span> LandImprov <span class="sc">+</span> area, <span class="at">data=</span>appraisal)</span>
-<span id="cb257-4"><a href="more-on-multiple-linear-regression.html#cb257-4" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(red.model1, appraisal.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="more-on-multiple-linear-regression.html#cb293-1" tabindex="-1"></a>appraisal <span class="ot">&lt;-</span> appraisal <span class="sc">%&gt;%</span></span>
+<span id="cb293-2"><a href="more-on-multiple-linear-regression.html#cb293-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">LandImprov =</span> landvalue <span class="sc">+</span> impvalue)</span>
+<span id="cb293-3"><a href="more-on-multiple-linear-regression.html#cb293-3" tabindex="-1"></a>red.model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(saleprice <span class="sc">~</span> LandImprov <span class="sc">+</span> area, <span class="at">data=</span>appraisal)</span>
+<span id="cb293-4"><a href="more-on-multiple-linear-regression.html#cb293-4" tabindex="-1"></a><span class="fu">anova</span>(red.model1, appraisal.fit)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Model 1: saleprice ~ LandImprov + area
@@ -506,9 +524,9 @@ Think about questions like these:</p>
 ## 1     17 1.002e+09                       
 ## 2     16 1.002e+09  1     426.8  0  0.998</code></pre>
 <p><strong>Method 2</strong> - Calculation “on the fly”</p>
-<p>The <code>I()</code> function in R can be used to create a single new predictor for the null model by calculating the sum of the landvalue and impvalue variables “on the fly.” It is important to note this variable is not saved for future use. Here is the analysis:</p>
-<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="more-on-multiple-linear-regression.html#cb259-1" aria-hidden="true" tabindex="-1"></a>red.model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(saleprice <span class="sc">~</span> <span class="fu">I</span>(landvalue <span class="sc">+</span> impvalue) <span class="sc">+</span> area, <span class="at">data=</span>appraisal)</span>
-<span id="cb259-2"><a href="more-on-multiple-linear-regression.html#cb259-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(red.model2, appraisal.fit)</span></code></pre></div>
+<p>The <code>I()</code> function in R can be used to create a single new predictor for the null model by calculating the sum of the landvalue and impvalue variables “on the fly”. It is important to note this variable is not saved for future use. Here is the analysis:</p>
+<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="more-on-multiple-linear-regression.html#cb295-1" tabindex="-1"></a>red.model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(saleprice <span class="sc">~</span> <span class="fu">I</span>(landvalue <span class="sc">+</span> impvalue) <span class="sc">+</span> area, <span class="at">data=</span>appraisal)</span>
+<span id="cb295-2"><a href="more-on-multiple-linear-regression.html#cb295-2" tabindex="-1"></a><span class="fu">anova</span>(red.model2, appraisal.fit)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Model 1: saleprice ~ I(landvalue + impvalue) + area
@@ -518,7 +536,7 @@ Think about questions like these:</p>
 ## 2     16 1.002e+09  1     426.8  0  0.998</code></pre>
 <p>In both cases we see the <span class="math inline">\(F\)</span>-statistic value is essentially 0, with 1 and 16 degrees of freedom. The <span class="math inline">\(p\)</span>-value is 0.998, so we fail to reject <span class="math inline">\(H_0\)</span>. There is insufficient evidence to conclude that land value appraisal and improvements value appraisal have different effects on the mean sale price of a property.</p>
 <p>Lastly, note the two fitted reduced models are the same</p>
-<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="more-on-multiple-linear-regression.html#cb261-1" aria-hidden="true" tabindex="-1"></a>red.model1</span></code></pre></div>
+<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="more-on-multiple-linear-regression.html#cb297-1" tabindex="-1"></a>red.model1</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = saleprice ~ LandImprov + area, data = appraisal)
@@ -526,7 +544,7 @@ Think about questions like these:</p>
 ## Coefficients:
 ## (Intercept)   LandImprov         area  
 ##    1386.277        0.819       13.605</code></pre>
-<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="more-on-multiple-linear-regression.html#cb263-1" aria-hidden="true" tabindex="-1"></a>red.model2</span></code></pre></div>
+<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="more-on-multiple-linear-regression.html#cb299-1" tabindex="-1"></a>red.model2</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = saleprice ~ I(landvalue + impvalue) + area, data = appraisal)
@@ -535,7 +553,7 @@ Think about questions like these:</p>
 ##             (Intercept)  I(landvalue + impvalue)                     area  
 ##                1386.277                    0.819                   13.605</code></pre>
 <p>Also note the fitted full model</p>
-<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="more-on-multiple-linear-regression.html#cb265-1" aria-hidden="true" tabindex="-1"></a>appraisal.fit</span></code></pre></div>
+<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="more-on-multiple-linear-regression.html#cb301-1" tabindex="-1"></a>appraisal.fit</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = saleprice ~ landvalue + impvalue + area, data = appraisal)
@@ -545,12 +563,12 @@ Think about questions like these:</p>
 ##    1384.197        0.818        0.819       13.605</code></pre>
 <p>The coefficients on <code>landvalue</code> and <code>impvalue</code> are nearly identical (differ in the third decimal place). It should not be too surprising we failed to reject the null hypothesis that they were statistically the same.</p>
 </div>
-<div id="categorical-predictor-variables" class="section level2" number="7.2">
-<h2><span class="header-section-number">7.2</span> Categorical Predictor Variables</h2>
+<div id="categorical-predictor-variables" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> Categorical Predictor Variables<a href="more-on-multiple-linear-regression.html#categorical-predictor-variables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Up to now, all of our regression examples have included predictors that have been numerically valued variables; i.e., they have been quantitative variables. Predictors that are qualitative in nature (e.g., gender, ethnic group, eye color) are usually called categorical predictors or factors. How can predictors such as these be incorporated into a regression analysis?</p>
 <p>To use qualitative predictors in a regression model, we need to recode their values. The way to do this is to create one or more dummy variables. Dummy variables are variables that only take on the value 0 or 1, indicating the absence (0) or presence (1) of a particular qualitative characteristic.</p>
-<div id="a-qualitative-predictor-with-two-levels" class="section level3" number="7.2.1">
-<h3><span class="header-section-number">7.2.1</span> A qualitative predictor with two levels</h3>
+<div id="a-qualitative-predictor-with-two-levels" class="section level3 hasAnchor" number="7.2.1">
+<h3><span class="header-section-number">7.2.1</span> A qualitative predictor with two levels<a href="more-on-multiple-linear-regression.html#a-qualitative-predictor-with-two-levels" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Suppose we are interested in the effect of a fixed dosage of two different medications on reducing blood glucose level in men. One of these meds is an experimental drug (let’s call it drug A), and the other is a placebo (drug P). For a two-level variable such as this, one dummy variable is all that is required to distinguish between the two drugs. We could define our dummy variable as follows:</p>
 <p><span class="math display">\[X = \left\{\begin{array}{ll} 0 &amp; \textrm{if drug } P \\ 1 &amp; \textrm{if drug } A\end{array}\right.\]</span></p>
 <p><span class="math inline">\(X\)</span> is now a “numerically valued” (0 or 1) variable that simply serves to indicate that drug A was the administered drug. In such a coding, the placebo will serve as a reference (or “baseline”) group to which the drug A group will be compared. We will see this when we construct models using <span class="math inline">\(X\)</span>.</p>
@@ -573,9 +591,9 @@ A &amp; 1 &amp; \mu_A = \beta_0 + \beta_1(1) = \beta_0 + \beta_1 \\
 </ul>
 <p><strong>Example.</strong> Previous research indicates that children borne by diabetic mothers may suffer from obesity, high blood pressure and glucose intolerance. Independent random samples of adolescent offspring of diabetic and non-diabetic mothers were evaluated for potential differences in vital measurements, including blood pressure. The data are in the file <code>diabeticoffspring.txt</code> in our data repository. Use this data to (a) test to see if there is a difference in mean systolic BP between diabetic and non-diabetic offspring, and if so (b) estimate the true mean difference using a 95% CI. This is essentially an intro statistics problem.</p>
 <p>We begin by obtaining the data.</p>
-<div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb267-1"><a href="more-on-multiple-linear-regression.html#cb267-1" aria-hidden="true" tabindex="-1"></a>www <span class="ot">&lt;-</span> <span class="st">&quot;http://www.users.miamioh.edu/hughesmr/sta363/diabeticoffspring.txt&quot;</span></span>
-<span id="cb267-2"><a href="more-on-multiple-linear-regression.html#cb267-2" aria-hidden="true" tabindex="-1"></a>diabetes <span class="ot">&lt;-</span> <span class="fu">read.table</span>(www, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
-<span id="cb267-3"><a href="more-on-multiple-linear-regression.html#cb267-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(diabetes)</span></code></pre></div>
+<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="more-on-multiple-linear-regression.html#cb303-1" tabindex="-1"></a>www <span class="ot">&lt;-</span> <span class="st">&quot;http://www.users.miamioh.edu/hughesmr/sta363/diabeticoffspring.txt&quot;</span></span>
+<span id="cb303-2"><a href="more-on-multiple-linear-regression.html#cb303-2" tabindex="-1"></a>diabetes <span class="ot">&lt;-</span> <span class="fu">read.table</span>(www, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
+<span id="cb303-3"><a href="more-on-multiple-linear-regression.html#cb303-3" tabindex="-1"></a><span class="fu">head</span>(diabetes)</span></code></pre></div>
 <pre><code>##   sys.bp   mother
 ## 1    127 diabetic
 ## 2    137 diabetic
@@ -584,7 +602,7 @@ A &amp; 1 &amp; \mu_A = \beta_0 + \beta_1(1) = \beta_0 + \beta_1 \\
 ## 5    123 diabetic
 ## 6    120 diabetic</code></pre>
 <p>Now we perform a two-sample <em>t</em>-test.</p>
-<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb269-1"><a href="more-on-multiple-linear-regression.html#cb269-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(sys.bp <span class="sc">~</span> mother, <span class="at">var.equal=</span><span class="cn">TRUE</span>, <span class="at">data=</span>diabetes)</span></code></pre></div>
+<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="more-on-multiple-linear-regression.html#cb305-1" tabindex="-1"></a><span class="fu">t.test</span>(sys.bp <span class="sc">~</span> mother, <span class="at">var.equal=</span><span class="cn">TRUE</span>, <span class="at">data=</span>diabetes)</span></code></pre></div>
 <pre><code>## 
 ##  Two Sample t-test
 ## 
@@ -598,11 +616,11 @@ A &amp; 1 &amp; \mu_A = \beta_0 + \beta_1(1) = \beta_0 + \beta_1 \\
 ##                   118.000                   109.987</code></pre>
 <p>Now, let’s re-do this as a regression problem using a quantitative predictor. If the assumptions underlying the independent samples <em>t</em>-test are met, then the assumptions underlying a regression approach to the problem are also met (we will check these momentarily).</p>
 <p>Note that the variable <code>mother</code> is a character variable in the data frame, R automatically treates it as a qualitative variable and creates a dummy variable for you.</p>
-<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="more-on-multiple-linear-regression.html#cb271-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(diabetes<span class="sc">$</span>mother)</span></code></pre></div>
+<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="more-on-multiple-linear-regression.html#cb307-1" tabindex="-1"></a><span class="fu">class</span>(diabetes<span class="sc">$</span>mother)</span></code></pre></div>
 <pre><code>## [1] &quot;character&quot;</code></pre>
 <p>So we can perform regression as before, and R will handle the <code>factor</code> variable correctly.</p>
-<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="more-on-multiple-linear-regression.html#cb273-1" aria-hidden="true" tabindex="-1"></a>diabetes.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(sys.bp <span class="sc">~</span> mother, <span class="at">data=</span>diabetes)</span>
-<span id="cb273-2"><a href="more-on-multiple-linear-regression.html#cb273-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(diabetes.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="more-on-multiple-linear-regression.html#cb309-1" tabindex="-1"></a>diabetes.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(sys.bp <span class="sc">~</span> mother, <span class="at">data=</span>diabetes)</span>
+<span id="cb309-2"><a href="more-on-multiple-linear-regression.html#cb309-2" tabindex="-1"></a><span class="fu">summary</span>(diabetes.fit)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = sys.bp ~ mother, data = diabetes)
@@ -639,7 +657,7 @@ Not~diabetic &amp; 1 &amp; \mu_{nondiabetic} = \beta_0 + \beta_1(1) = \beta_0 + 
 <li>Therefore, <span class="math inline">\(\beta_1 = (\beta_0 + \beta_1) – \beta_0\)</span> is the true mean change in systolic blood pressure from diabetic to nondiabetic mothers.</li>
 </ul>
 <p>Confidence intervals for the <span class="math inline">\(\beta\)</span> parameters in this regression model should be interpreted accordingly, and are found the same as before using <code>confint()</code>:</p>
-<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="more-on-multiple-linear-regression.html#cb275-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(diabetes.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="more-on-multiple-linear-regression.html#cb311-1" tabindex="-1"></a><span class="fu">confint</span>(diabetes.fit)</span></code></pre></div>
 <pre><code>##                      2.5 %    97.5 %
 ## (Intercept)       115.6811 120.31892
 ## mothernondiabetic -11.4812  -4.54379</code></pre>
@@ -655,8 +673,8 @@ Not~diabetic &amp; 1 &amp; \mu_{nondiabetic} = \beta_0 + \beta_1(1) = \beta_0 + 
 <li>The manner of coding used for the qualitative variable (here, <span class="math inline">\(X=1\)</span> is a non-diabetic mother).</li>
 </ul>
 </div>
-<div id="a-qualitative-predictor-with-more-than-two-levels" class="section level3" number="7.2.2">
-<h3><span class="header-section-number">7.2.2</span> A qualitative predictor with more than two levels</h3>
+<div id="a-qualitative-predictor-with-more-than-two-levels" class="section level3 hasAnchor" number="7.2.2">
+<h3><span class="header-section-number">7.2.2</span> A qualitative predictor with more than two levels<a href="more-on-multiple-linear-regression.html#a-qualitative-predictor-with-more-than-two-levels" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>When using a qualitative predictor with more than two levels, we must use a coding scheme (i.e., a method of constructing dummy variables) that adequately distinguishes between all the levels of the qualitative predictor. Basically, let this be your guide:</p>
 <blockquote>
 <p>In general, if a factor has <span class="math inline">\(k\)</span> levels, we will require <span class="math inline">\(k – 1\)</span> dummy variables to sufficiently code the factor for regression.</p>
@@ -707,8 +725,8 @@ Placebo &amp; 0 &amp; 0 &amp; 0 &amp; \mu_{P} = \beta_0 + \beta_1(0) + \beta_2(0
 <li>Waiting List (WL) – a baseline control group.</li>
 </ol>
 <p>In the actual study, pre- and post-treatment measures were taken on a number of variables. For our purposes we will only look at post-treatment data on PTSD severity, which was the total number of symptoms endorsed by the subject. The goal is to compare the effects of the treatments with respect to post-treatment PTSD severity. The data appear in the R workspace <code>ptsd.RData</code> in our repository.</p>
-<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="more-on-multiple-linear-regression.html#cb277-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;ptsd.RData&quot;</span>)</span>
-<span id="cb277-2"><a href="more-on-multiple-linear-regression.html#cb277-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ptsd)</span></code></pre></div>
+<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="more-on-multiple-linear-regression.html#cb313-1" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;ptsd.RData&quot;</span>)</span>
+<span id="cb313-2"><a href="more-on-multiple-linear-regression.html#cb313-2" tabindex="-1"></a><span class="fu">head</span>(ptsd)</span></code></pre></div>
 <pre><code>##   ID Group Score
 ## 1  1     1     3
 ## 2  2     1    13
@@ -717,22 +735,22 @@ Placebo &amp; 0 &amp; 0 &amp; 0 &amp; \mu_{P} = \beta_0 + \beta_1(0) + \beta_2(0
 ## 5  5     1    11
 ## 6  6     1     9</code></pre>
 <p>As always, first look at the data. Since the predictor is qualitative (although coded as numeric), side-by-side boxplots are in order. It is also a good idea to coerce the numeric codes for the variable Group to be recognized by R as qualitative values rather than quantitative numbers. This can be done via the <code>as.factor()</code> command:</p>
-<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="more-on-multiple-linear-regression.html#cb279-1" aria-hidden="true" tabindex="-1"></a>ptsd <span class="ot">&lt;-</span> ptsd <span class="sc">%&gt;%</span></span>
-<span id="cb279-2"><a href="more-on-multiple-linear-regression.html#cb279-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Group=</span><span class="fu">as.factor</span>(Group))</span>
-<span id="cb279-3"><a href="more-on-multiple-linear-regression.html#cb279-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ptsd) <span class="sc">+</span> </span>
-<span id="cb279-4"><a href="more-on-multiple-linear-regression.html#cb279-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Group, <span class="at">y=</span>Score)) <span class="sc">+</span> </span>
-<span id="cb279-5"><a href="more-on-multiple-linear-regression.html#cb279-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Post treatment PTSD score&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb279-6"><a href="more-on-multiple-linear-regression.html#cb279-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="more-on-multiple-linear-regression.html#cb315-1" tabindex="-1"></a>ptsd <span class="ot">&lt;-</span> ptsd <span class="sc">%&gt;%</span></span>
+<span id="cb315-2"><a href="more-on-multiple-linear-regression.html#cb315-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Group=</span><span class="fu">as.factor</span>(Group))</span>
+<span id="cb315-3"><a href="more-on-multiple-linear-regression.html#cb315-3" tabindex="-1"></a><span class="fu">ggplot</span>(ptsd) <span class="sc">+</span> </span>
+<span id="cb315-4"><a href="more-on-multiple-linear-regression.html#cb315-4" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Group, <span class="at">y=</span>Score)) <span class="sc">+</span> </span>
+<span id="cb315-5"><a href="more-on-multiple-linear-regression.html#cb315-5" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Post treatment PTSD score&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb315-6"><a href="more-on-multiple-linear-regression.html#cb315-6" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
 <p><img src="introStatModeling_files/figure-html/ch7.11-1.png" width="672" /></p>
 <p>There is a lot of variability in the PTSD score in Group 2 (Prolonged Exposure treatment). At first glance, it appears as though SIT therapy may be producing a lower average number of post-treatment symptoms.</p>
 <p>The dramatic difference in variability patterns in the response from treatment to treatment may result in a violation of the constant variance assumption in the upcoming regression analysis.</p>
 <p>Let’s run a regression using Group as our qualitative predictor of PTSD score. As always, first check the regression assumptions before any inference:</p>
-<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="more-on-multiple-linear-regression.html#cb280-1" aria-hidden="true" tabindex="-1"></a>ptsd.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(Score <span class="sc">~</span> Group, <span class="at">data=</span>ptsd)</span>
-<span id="cb280-2"><a href="more-on-multiple-linear-regression.html#cb280-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(ptsd.fit) <span class="sc">+</span> <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="more-on-multiple-linear-regression.html#cb316-1" tabindex="-1"></a>ptsd.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(Score <span class="sc">~</span> Group, <span class="at">data=</span>ptsd)</span>
+<span id="cb316-2"><a href="more-on-multiple-linear-regression.html#cb316-2" tabindex="-1"></a><span class="fu">autoplot</span>(ptsd.fit) <span class="sc">+</span> <span class="fu">theme_minimal</span>()</span></code></pre></div>
 <p><img src="introStatModeling_files/figure-html/ch7.12-1.png" width="672" /></p>
 <p>Note how these plots look different when dealing with a qualitative predictor.</p>
 <p>Normality appears to be OK. No outliers appear to be present. Constant variance appears to have some potential violations (see the wobbly Scale-Location plot with a peak in the group with a fitted value of about 15.5). Nonetheless, we will proceed for now with hypothesis tests as an illustration, even though we know the results may be suspect.</p>
-<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="more-on-multiple-linear-regression.html#cb281-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ptsd.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="more-on-multiple-linear-regression.html#cb317-1" tabindex="-1"></a><span class="fu">summary</span>(ptsd.fit)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = Score ~ Group, data = ptsd)
@@ -755,10 +773,10 @@ Placebo &amp; 0 &amp; 0 &amp; 0 &amp; \mu_{P} = \beta_0 + \beta_1(0) + \beta_2(0
 ## F-statistic: 3.05 on 3 and 41 DF,  p-value: 0.0394</code></pre>
 <p>Note that R by default used a dummy variable coding that sets Group=1 as the reference level for Group. The default coding in R is to order the factor levels (either alphabetically or numerically, whichever applies) and choose the first level as the reference level. Here, the ordered Group levels in the data frame are 1, 2, 3 and 4: thus, 1 was chosen as the reference level.</p>
 <p>For convenience, you can change the reference level. The command to do so is called <code>relevel()</code> in R. In this example, Group=4 (the Waiting List baseline control group) is the most natural choice for a reference group to which we may compare the other treatments for PTSD. So, I change the Group reference level to 4 below and re-fit the model. Take note of what changes and what does not change from the first coding scheme:</p>
-<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="more-on-multiple-linear-regression.html#cb283-1" aria-hidden="true" tabindex="-1"></a>ptsd <span class="ot">&lt;-</span> ptsd <span class="sc">%&gt;%</span></span>
-<span id="cb283-2"><a href="more-on-multiple-linear-regression.html#cb283-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Group=</span><span class="fu">relevel</span>(Group, <span class="at">ref=</span><span class="st">&quot;4&quot;</span>))</span>
-<span id="cb283-3"><a href="more-on-multiple-linear-regression.html#cb283-3" aria-hidden="true" tabindex="-1"></a>ptsd.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(Score <span class="sc">~</span> Group, <span class="at">data=</span>ptsd)</span>
-<span id="cb283-4"><a href="more-on-multiple-linear-regression.html#cb283-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ptsd.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="more-on-multiple-linear-regression.html#cb319-1" tabindex="-1"></a>ptsd <span class="ot">&lt;-</span> ptsd <span class="sc">%&gt;%</span></span>
+<span id="cb319-2"><a href="more-on-multiple-linear-regression.html#cb319-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Group=</span><span class="fu">relevel</span>(Group, <span class="at">ref=</span><span class="st">&quot;4&quot;</span>))</span>
+<span id="cb319-3"><a href="more-on-multiple-linear-regression.html#cb319-3" tabindex="-1"></a>ptsd.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(Score <span class="sc">~</span> Group, <span class="at">data=</span>ptsd)</span>
+<span id="cb319-4"><a href="more-on-multiple-linear-regression.html#cb319-4" tabindex="-1"></a><span class="fu">summary</span>(ptsd.fit)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = Score ~ Group, data = ptsd)
@@ -793,7 +811,7 @@ Placebo &amp; 0 &amp; 0 &amp; 0 &amp; \mu_{P} = \beta_0 + \beta_1(0) + \beta_2(0
 <li>In comparing therapies to the WL control therapy, the only significant difference in mean PTSD score occurs with Group 1 (SIT). The test of <span class="math inline">\(H_0: \beta_1 = 0\)</span> here is equivalent to a test of <span class="math inline">\(H_0: \mu_{SIT} – \mu_{WL} = 0.\)</span> There is sufficient evidence here to conclude that the true mean PTSD score is significantly lower in the SIT therapy that under the WL therapy (<span class="math inline">\(t\)</span> = –2.731, df = 41, <span class="math inline">\(p\)</span>-value = 0.00928).</li>
 </ul>
 <p>A 95% confidence interval for <span class="math inline">\(\beta_1\)</span> (and hence <span class="math inline">\(\mu_{SIT} – \mu_{WL}\)</span>) can be found thus:</p>
-<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="more-on-multiple-linear-regression.html#cb285-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(ptsd.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="more-on-multiple-linear-regression.html#cb321-1" tabindex="-1"></a><span class="fu">confint</span>(ptsd.fit)</span></code></pre></div>
 <pre><code>##                 2.5 %   97.5 %
 ## (Intercept)  14.73889 24.26111
 ## Group1      -14.66232 -2.19482
@@ -802,8 +820,8 @@ Placebo &amp; 0 &amp; 0 &amp; 0 &amp; \mu_{P} = \beta_0 + \beta_1(0) + \beta_2(0
 <p>We can be 95% confident that the SIT therapy will produce, on average, between 2.19 to 14.66 fewer PTSD symptoms than will the WL therapy. [Note that this CI is the only one among the CIs for <span class="math inline">\(\beta_1\)</span>, <span class="math inline">\(\beta_2\)</span>, and <span class="math inline">\(\beta_3\)</span> that does not contain 0.]</p>
 </div>
 </div>
-<div id="bridging-regression-and-designed-experiments-ancova" class="section level2" number="7.3">
-<h2><span class="header-section-number">7.3</span> Bridging Regression and Designed Experiments – ANCOVA</h2>
+<div id="bridging-regression-and-designed-experiments-ancova" class="section level2 hasAnchor" number="7.3">
+<h2><span class="header-section-number">7.3</span> Bridging Regression and Designed Experiments – ANCOVA<a href="more-on-multiple-linear-regression.html#bridging-regression-and-designed-experiments-ancova" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Analysis of Covariance (or ANCOVA) refers to regression problems that have a mixture of both quantitative and qualitative predictors.</p>
 <p>As an illustration, let’s return to the experiment where we are interested in the effect of a fixed dosage of two different medications on reducing blood glucose level in men. One of these meds is an experimental drug (drug <span class="math inline">\(A\)</span>), and the other is a placebo (drug <span class="math inline">\(P\)</span>). Let’s create a dummy variable <span class="math inline">\(D\)</span> for distinguishing the drug groups as follows:</p>
 <p><span class="math display">\[D = \left\{\begin{array}{ll} 0 &amp; \textrm{if drug } P \\ 1 &amp; \textrm{if drug } A \end{array}\right.\]</span>
@@ -820,7 +838,7 @@ Suppose that we know that the body weight of an individual might influence the e
 <li><p>Same regression line for both groups. We fit the model <span class="math inline">\(Y = \beta_0 + \beta_1 X + \varepsilon\)</span>. Nothing in the model references which drug is administered, so both drug groups are effectively “pooled” together. This model imposes structure on the data that says that the effect of body weight on glucose reduction is identical regardless of drug – obviously, this may be too simplistic and unrealistic.</p></li>
 <li><p>Separate regression lines for each group, but with equal slopes. We fit the model <span class="math inline">\(Y = \beta_0 + \beta_1 X + \beta_2 D + \varepsilon\)</span>. This is known as an additive model involving weight and drug type. This model imposes structure on the data that says that the effect that the different drugs have glucose reduction is the same regardless of weight. In other words, this model allows for a difference in drug effect to be modeled, but restricts that effect to be the same regardless of body weight.</p>
 <p>Writing out the model explicitly for both drug groups will prove enlightening. The model parameters and their interpretations break down as follows:
-<span class="math display">\[\begin{array}{ccc} 
+<span class="math display">\[\begin{array}{ccc}
 \hline
 \textbf{Drug} &amp; \mathbf{D} &amp; \textbf{Model} \\
 \hline
@@ -835,7 +853,7 @@ You can see that the slope of the model for either drug is the same (<span class
 </ol>
 <p><span class="math display">\[Y = \beta_0 + \beta_1 X + \beta_2 D + \beta_3(D\cdot X) + \varepsilon\]</span></p>
 <p>This is called an interaction model involving weight and drug type. This model imposes structure on the data that says that the effect that the different drugs have on glucose reduction may vary depending on weight. In other words, this model allows for a difference in drug effect to be modeled, and that the size of that drug effect may vary depending on body weight. Here is how this model breaks out explicitly for each drug:</p>
-<p><span class="math display">\[\begin{array}{ccc} 
+<p><span class="math display">\[\begin{array}{ccc}
 \hline
 \textbf{Drug} &amp; \mathbf{D} &amp; \textbf{Model} \\
 \hline
@@ -847,11 +865,11 @@ A       &amp; 1 &amp;   Y = \beta_0 + \beta_1 X + \beta_2(1) + \beta_3(1\cdot X)
 \end{array}\]</span></p>
 <p>The models for each drug differ in both y-intercept and slope, so we are basically fitting different regression lines between glucose reduction and weight for each drug. Of specific interest is how the slopes differ between the models for the two drugs: it is <span class="math inline">\(\beta_1\)</span> for placebo and <span class="math inline">\(\beta_1 + \beta_3\)</span> for drug <span class="math inline">\(A\)</span>. Since the difference between these two slopes is <span class="math inline">\(\beta_3\)</span>, its interpretation is that it represents the difference in the rates of change in glucose reduction for a one-unit increase in weight between placebo to drug <span class="math inline">\(A\)</span>. In short, <span class="math inline">\(\beta_3\)</span> measures the difference in the effect of weight between the two drugs. If <span class="math inline">\(\beta_3 \neq 0\)</span>, then the two groups have different slopes and thus the size of the drug effect on glucose reduction depends on body weight.</p>
 <p>Since the unequal slopes model is most flexible, we usually use it as our initial model and then simplify the model if warranted. The next example illustrates this using R.</p>
-<div id="an-ancova-example-with-a-two-level-factor" class="section level3" number="7.3.1">
-<h3><span class="header-section-number">7.3.1</span> An ANCOVA example with a two-level factor</h3>
+<div id="an-ancova-example-with-a-two-level-factor" class="section level3 hasAnchor" number="7.3.1">
+<h3><span class="header-section-number">7.3.1</span> An ANCOVA example with a two-level factor<a href="more-on-multiple-linear-regression.html#an-ancova-example-with-a-two-level-factor" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><strong>Example:</strong> Glucose Reduction. We conduct an experiment to study the efficacy of a fixed dosage of two different medications (a new experimental drug A, and a placebo P) on reducing blood glucose level in men. Body weight may also have an effect on a drug’s impact on glucose levels (measured in mg/dl), so it is included as a covariate for the analysis. The data are in the R workspace <code>drug2.RData</code> in our data repository.</p>
-<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="more-on-multiple-linear-regression.html#cb287-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;drug2.RData&quot;</span>)</span>
-<span id="cb287-2"><a href="more-on-multiple-linear-regression.html#cb287-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(drug2)</span></code></pre></div>
+<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="more-on-multiple-linear-regression.html#cb323-1" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;drug2.RData&quot;</span>)</span>
+<span id="cb323-2"><a href="more-on-multiple-linear-regression.html#cb323-2" tabindex="-1"></a><span class="fu">head</span>(drug2)</span></code></pre></div>
 <pre><code>##   drug weight glu.red
 ## 1    P    160    -4.5
 ## 2    P    235    -3.4
@@ -860,11 +878,11 @@ A       &amp; 1 &amp;   Y = \beta_0 + \beta_1 X + \beta_2(1) + \beta_3(1\cdot X)
 ## 5    P    166   -11.7
 ## 6    P    220     5.0</code></pre>
 <p>First, let’s look at the data and generate a scatterplot of glu.red by weight. Because we now have a trend line relating glucose reduction to weight for each drug group, we can use an enhanced scatterplot by adding on another aesthetic layer (color).</p>
-<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="more-on-multiple-linear-regression.html#cb289-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(drug2) <span class="sc">+</span> </span>
-<span id="cb289-2"><a href="more-on-multiple-linear-regression.html#cb289-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>weight, <span class="at">y=</span>glu.red, <span class="at">color=</span>drug) ) <span class="sc">+</span> </span>
-<span id="cb289-3"><a href="more-on-multiple-linear-regression.html#cb289-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">x=</span>weight, <span class="at">y=</span>glu.red, <span class="at">color=</span>drug), <span class="at">se=</span><span class="cn">FALSE</span>, <span class="at">method=</span><span class="st">&quot;lm&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb289-4"><a href="more-on-multiple-linear-regression.html#cb289-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
-<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb325-1"><a href="more-on-multiple-linear-regression.html#cb325-1" tabindex="-1"></a><span class="fu">ggplot</span>(drug2) <span class="sc">+</span> </span>
+<span id="cb325-2"><a href="more-on-multiple-linear-regression.html#cb325-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>weight, <span class="at">y=</span>glu.red, <span class="at">color=</span>drug) ) <span class="sc">+</span> </span>
+<span id="cb325-3"><a href="more-on-multiple-linear-regression.html#cb325-3" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">x=</span>weight, <span class="at">y=</span>glu.red, <span class="at">color=</span>drug), <span class="at">se=</span><span class="cn">FALSE</span>, <span class="at">method=</span><span class="st">&quot;lm&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb325-4"><a href="more-on-multiple-linear-regression.html#cb325-4" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="introStatModeling_files/figure-html/ch7.17-1.png" width="672" /></p>
 <p>We get to see the scatter of points, plus both a linear trend line for both drug groups. Here are some preliminary observations:</p>
 <ul>
@@ -874,11 +892,11 @@ A       &amp; 1 &amp;   Y = \beta_0 + \beta_1 X + \beta_2(1) + \beta_3(1\cdot X)
 <li>There also appears to be some evidence that the effect of weight on glucose reduction is more pronounced under the experimental drug as opposed to the placebo (steeper slope for drug A).</li>
 </ul>
 <p>Because of the third bullet point above, we should fit the interaction model first. I do so below, after first checking assumptions:</p>
-<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="more-on-multiple-linear-regression.html#cb291-1" aria-hidden="true" tabindex="-1"></a>drug.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(glu.red <span class="sc">~</span> weight <span class="sc">+</span> drug <span class="sc">+</span> weight<span class="sc">:</span>drug, <span class="at">data=</span>drug2)</span>
-<span id="cb291-2"><a href="more-on-multiple-linear-regression.html#cb291-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(drug.fit) <span class="sc">+</span> <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="more-on-multiple-linear-regression.html#cb327-1" tabindex="-1"></a>drug.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(glu.red <span class="sc">~</span> weight <span class="sc">+</span> drug <span class="sc">+</span> weight<span class="sc">:</span>drug, <span class="at">data=</span>drug2)</span>
+<span id="cb327-2"><a href="more-on-multiple-linear-regression.html#cb327-2" tabindex="-1"></a><span class="fu">autoplot</span>(drug.fit) <span class="sc">+</span> <span class="fu">theme_minimal</span>()</span></code></pre></div>
 <p><img src="introStatModeling_files/figure-html/ch7.18-1.png" width="672" /></p>
 <p>The assumptions of constant variance, normality and linearity look good. We proceed to investigate the model:</p>
-<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="more-on-multiple-linear-regression.html#cb292-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(drug.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="more-on-multiple-linear-regression.html#cb328-1" tabindex="-1"></a><span class="fu">summary</span>(drug.fit)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = glu.red ~ weight + drug + weight:drug, data = drug2)
@@ -904,8 +922,8 @@ A       &amp; 1 &amp;   Y = \beta_0 + \beta_1 X + \beta_2(1) + \beta_3(1\cdot X)
 <p>The whole-model <span class="math inline">\(F\)</span>-test is significant (F(3, 23) = 4.712, <span class="math inline">\(p\)</span>-value = 0.01047), verifying that the model does have utility in explaining glucose reduction in men. So, we proceed to investigate the effects of weight and drug type.</p>
 <p><em>The first terms you should always check in an interaction model are the interaction terms</em>! Here, we proceed to first check for “equal slopes” by testing the interaction term to see if we can simplify the model. There is only one dummy variable constructed since drug has two levels, so we can just look at the single interaction term <code>weight:drugP</code>. We test <span class="math inline">\(H_0: \beta_{weight.drug~P} = 0\)</span> to check for equal slopes. The test statistic is <span class="math inline">\(t\)</span> = 0.809 with a <span class="math inline">\(p\)</span>-value of 0.4267. Since this is not significant, we can delete the interaction term without hurting the explanatory power of the model. So, an equal slopes (i.e. additive) model is warranted.</p>
 <p>We now drop the interaction term, which reduces the model to a main effects model:</p>
-<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="more-on-multiple-linear-regression.html#cb294-1" aria-hidden="true" tabindex="-1"></a>drug.fit.reduced <span class="ot">&lt;-</span> <span class="fu">lm</span>(glu.red <span class="sc">~</span> weight <span class="sc">+</span> drug, <span class="at">data=</span>drug2)</span>
-<span id="cb294-2"><a href="more-on-multiple-linear-regression.html#cb294-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(drug.fit.reduced)</span></code></pre></div>
+<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="more-on-multiple-linear-regression.html#cb330-1" tabindex="-1"></a>drug.fit.reduced <span class="ot">&lt;-</span> <span class="fu">lm</span>(glu.red <span class="sc">~</span> weight <span class="sc">+</span> drug, <span class="at">data=</span>drug2)</span>
+<span id="cb330-2"><a href="more-on-multiple-linear-regression.html#cb330-2" tabindex="-1"></a><span class="fu">summary</span>(drug.fit.reduced)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = glu.red ~ weight + drug, data = drug2)
@@ -929,7 +947,7 @@ A       &amp; 1 &amp;   Y = \beta_0 + \beta_1 X + \beta_2(1) + \beta_3(1\cdot X)
 <p>The fitted model, where <span class="math inline">\(Y\)</span> = glucose reduction, is</p>
 <p><span class="math display">\[\hat{Y} = 31.116 - 0.126\times\textrm{weight} - 9.087\times D\]</span>
 where <span class="math inline">\(D = 1\)</span> if the placebo is administered, and 0 otherwise. Using a breakdown like we first introduced above, we can write out the separate regression lines for each drug:</p>
-<p><span class="math display">\[\begin{array}{ccc} 
+<p><span class="math display">\[\begin{array}{ccc}
 \hline
 \textbf{Drug} &amp; \mathbf{D} &amp; \textbf{Model} \\
 \hline
@@ -940,7 +958,7 @@ A       &amp; 0 &amp;   31.116 - 0.013\times\textrm{weight} - 9.087() \\
 \hline
 \end{array}\]</span></p>
 <p>We can use <code>confint()</code> to find CIs for the <span class="math inline">\(\beta\)</span>-parameters in an ANCOVA model since ANCOVA is just a special case of the usual multiple linear regression model. Here is the result from R, with interpretations provided:</p>
-<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="more-on-multiple-linear-regression.html#cb296-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(drug.fit.reduced)</span></code></pre></div>
+<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="more-on-multiple-linear-regression.html#cb332-1" tabindex="-1"></a><span class="fu">confint</span>(drug.fit.reduced)</span></code></pre></div>
 <pre><code>##                  2.5 %      97.5 %
 ## (Intercept)   8.305129 53.92798704
 ## weight       -0.245841 -0.00539219
@@ -950,20 +968,20 @@ A       &amp; 0 &amp;   31.116 - 0.013\times\textrm{weight} - 9.087() \\
 <li>The 95% CI for <span class="math inline">\(\beta_D\)</span> is given by (–15.41, –2.76). Recall that <span class="math inline">\(\beta_D\)</span> measures the change in mean glucose reduction when changing from drug <span class="math inline">\(A\)</span> to the <span class="math inline">\(placebo\)</span>. Thus, we can be 95% confident that drug <span class="math inline">\(A\)</span>’s efficacy is between 2.76 mg/dl to 15.41 mg/dl higher with the placebo. This finding is valid regardless of weight since we are adjusting for weight in the equal slopes model.</li>
 </ul>
 <p><span class="math inline">\(R^2\)</span> is not great for this model, but none the less we may use the model for making predictions. Here are a few model predictions using R:</p>
-<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="more-on-multiple-linear-regression.html#cb298-1" aria-hidden="true" tabindex="-1"></a>p.A<span class="fl">.150</span> <span class="ot">&lt;-</span> <span class="fu">predict</span>(drug.fit.reduced, <span class="at">newdata=</span><span class="fu">data.frame</span>(<span class="at">weight=</span><span class="dv">150</span>, <span class="at">drug=</span><span class="st">&quot;A&quot;</span>),<span class="at">int=</span><span class="st">&quot;conf&quot;</span>)</span>
-<span id="cb298-2"><a href="more-on-multiple-linear-regression.html#cb298-2" aria-hidden="true" tabindex="-1"></a>p.A<span class="fl">.150</span></span></code></pre></div>
+<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="more-on-multiple-linear-regression.html#cb334-1" tabindex="-1"></a>p.A<span class="fl">.150</span> <span class="ot">&lt;-</span> <span class="fu">predict</span>(drug.fit.reduced, <span class="at">newdata=</span><span class="fu">data.frame</span>(<span class="at">weight=</span><span class="dv">150</span>, <span class="at">drug=</span><span class="st">&quot;A&quot;</span>),<span class="at">int=</span><span class="st">&quot;conf&quot;</span>)</span>
+<span id="cb334-2"><a href="more-on-multiple-linear-regression.html#cb334-2" tabindex="-1"></a>p.A<span class="fl">.150</span></span></code></pre></div>
 <pre><code>##       fit     lwr     upr
 ## 1 12.2741 5.99873 18.5494</code></pre>
-<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="more-on-multiple-linear-regression.html#cb300-1" aria-hidden="true" tabindex="-1"></a>p.P<span class="fl">.150</span> <span class="ot">&lt;-</span> <span class="fu">predict</span>(drug.fit.reduced, <span class="at">newdata=</span><span class="fu">data.frame</span>(<span class="at">weight=</span><span class="dv">150</span>, <span class="at">drug=</span><span class="st">&quot;P&quot;</span>),<span class="at">int=</span><span class="st">&quot;conf&quot;</span>)</span>
-<span id="cb300-2"><a href="more-on-multiple-linear-regression.html#cb300-2" aria-hidden="true" tabindex="-1"></a>p.P<span class="fl">.150</span></span></code></pre></div>
+<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="more-on-multiple-linear-regression.html#cb336-1" tabindex="-1"></a>p.P<span class="fl">.150</span> <span class="ot">&lt;-</span> <span class="fu">predict</span>(drug.fit.reduced, <span class="at">newdata=</span><span class="fu">data.frame</span>(<span class="at">weight=</span><span class="dv">150</span>, <span class="at">drug=</span><span class="st">&quot;P&quot;</span>),<span class="at">int=</span><span class="st">&quot;conf&quot;</span>)</span>
+<span id="cb336-2"><a href="more-on-multiple-linear-regression.html#cb336-2" tabindex="-1"></a>p.P<span class="fl">.150</span></span></code></pre></div>
 <pre><code>##       fit      lwr     upr
 ## 1 3.18701 -3.04853 9.42255</code></pre>
-<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="more-on-multiple-linear-regression.html#cb302-1" aria-hidden="true" tabindex="-1"></a>p.A<span class="fl">.225</span> <span class="ot">&lt;-</span> <span class="fu">predict</span>(drug.fit.reduced, <span class="at">newdata=</span><span class="fu">data.frame</span>(<span class="at">weight=</span><span class="dv">225</span>, <span class="at">drug=</span><span class="st">&quot;A&quot;</span>),<span class="at">int=</span><span class="st">&quot;conf&quot;</span>)</span>
-<span id="cb302-2"><a href="more-on-multiple-linear-regression.html#cb302-2" aria-hidden="true" tabindex="-1"></a>p.A<span class="fl">.225</span></span></code></pre></div>
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="more-on-multiple-linear-regression.html#cb338-1" tabindex="-1"></a>p.A<span class="fl">.225</span> <span class="ot">&lt;-</span> <span class="fu">predict</span>(drug.fit.reduced, <span class="at">newdata=</span><span class="fu">data.frame</span>(<span class="at">weight=</span><span class="dv">225</span>, <span class="at">drug=</span><span class="st">&quot;A&quot;</span>),<span class="at">int=</span><span class="st">&quot;conf&quot;</span>)</span>
+<span id="cb338-2"><a href="more-on-multiple-linear-regression.html#cb338-2" tabindex="-1"></a>p.A<span class="fl">.225</span></span></code></pre></div>
 <pre><code>##       fit      lwr     upr
 ## 1 2.85283 -3.68925 9.39491</code></pre>
-<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="more-on-multiple-linear-regression.html#cb304-1" aria-hidden="true" tabindex="-1"></a>p.P<span class="fl">.225</span> <span class="ot">&lt;-</span> <span class="fu">predict</span>(drug.fit.reduced, <span class="at">newdata=</span><span class="fu">data.frame</span>(<span class="at">weight=</span><span class="dv">225</span>, <span class="at">drug=</span><span class="st">&quot;P&quot;</span>),<span class="at">int=</span><span class="st">&quot;conf&quot;</span>)</span>
-<span id="cb304-2"><a href="more-on-multiple-linear-regression.html#cb304-2" aria-hidden="true" tabindex="-1"></a>p.P<span class="fl">.225</span></span></code></pre></div>
+<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="more-on-multiple-linear-regression.html#cb340-1" tabindex="-1"></a>p.P<span class="fl">.225</span> <span class="ot">&lt;-</span> <span class="fu">predict</span>(drug.fit.reduced, <span class="at">newdata=</span><span class="fu">data.frame</span>(<span class="at">weight=</span><span class="dv">225</span>, <span class="at">drug=</span><span class="st">&quot;P&quot;</span>),<span class="at">int=</span><span class="st">&quot;conf&quot;</span>)</span>
+<span id="cb340-2"><a href="more-on-multiple-linear-regression.html#cb340-2" tabindex="-1"></a>p.P<span class="fl">.225</span></span></code></pre></div>
 <pre><code>##        fit      lwr      upr
 ## 1 -6.23423 -12.5805 0.112083</code></pre>
 <p>The first interval may be interpreted as follows: we can be 95% confident that the true mean reduction in glucose due to drug A for all men weighing 150 lb to be between 5.99 mg/dl to 18.55 mg/dl. For men of the same weight taking the placebo, the corresponding interval is –3.05 mg/dl to 9.39 mg/dl.</p>
@@ -978,21 +996,21 @@ A       &amp; 0 &amp;   31.116 - 0.013\times\textrm{weight} - 9.087() \\
 <li>If using an equal slopes model, you may investigate the overall effects of the qualitative predictor and the covariate independently.</li>
 </ol>
 </div>
-<div id="ancova-with-a-multi-level-factor" class="section level3" number="7.3.2">
-<h3><span class="header-section-number">7.3.2</span> ANCOVA with a multi-level factor</h3>
+<div id="ancova-with-a-multi-level-factor" class="section level3 hasAnchor" number="7.3.2">
+<h3><span class="header-section-number">7.3.2</span> ANCOVA with a multi-level factor<a href="more-on-multiple-linear-regression.html#ancova-with-a-multi-level-factor" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><strong>Example:</strong> As an example, we revisit the data from the previous section, only now augment the experiment to study the efficacy of four drugs (called <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>, <span class="math inline">\(C\)</span> and a placebo <span class="math inline">\(P\)</span>) on glucose reduction (measured in mg/dl). Weight is still our covariate, and its effect may be different depending on the drug administered.</p>
 <p>Coding up 4 drugs in the regression requires 4 – 1 = 3 dummy variables, as first cited above. We have flexibility in how we could define these three dummy variables, but here is probably the most meaningful way given the context of the drug experiment:</p>
 <p><span class="math display">\[D_A = \left\{\begin{array}{ll} 1 &amp; \textrm{if drug } A \\ 0 &amp; \textrm{otherwise}\end{array}\right., ~~~ D_B = \left\{\begin{array}{ll} 1 &amp; \textrm{if drug } B \\ 0 &amp; \textrm{otherwise}\end{array}\right.,~~~ D_C = \left\{\begin{array}{ll} 1 &amp; \textrm{if drug } C \\ 0 &amp; \textrm{otherwise}\end{array}\right.\]</span></p>
 <p>The above dummy variable coding scheme is the most meaningful way to code drug for this analysis because the placebo is the natural choice for a “reference” drug.</p>
 <p>The data are in the R workspace <code>drug4.RData</code> and let’s look at an advanced scatterplot</p>
-<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="introStatModeling_files/figure-html/ch7.23-1.png" width="672" /></p>
 <p><em>Preliminary assessment:</em> It appears that drugs <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> perform very similarly across individuals of varying weights but lose their effectiveness in heavier individuals. However, weight does not appear to have as much of an impact on the effectiveness of drug <span class="math inline">\(C\)</span> (fairly shallow slope); moreover, glucose reduction for <span class="math inline">\(C\)</span> is generally quite high regardless of weight. The placebo <span class="math inline">\(P\)</span> appears to be largely ineffective (the responses tend to fluctuate around zero), but it is interesting that there appears to be some weight effect in the placebo (can you think of an explanation for this?).</p>
 <p><strong>Step 1.</strong> We start with the full interaction (“different slopes”) model. We also choose to set the placebo as the reference level. Checking residual assumptions are left as an exercise to the interested reader.</p>
-<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="more-on-multiple-linear-regression.html#cb307-1" aria-hidden="true" tabindex="-1"></a>drug4 <span class="ot">&lt;-</span> drug4 <span class="sc">%&gt;%</span></span>
-<span id="cb307-2"><a href="more-on-multiple-linear-regression.html#cb307-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">drug=</span><span class="fu">relevel</span>(drug, <span class="at">ref=</span><span class="st">&quot;P&quot;</span>))</span>
-<span id="cb307-3"><a href="more-on-multiple-linear-regression.html#cb307-3" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(glu.red <span class="sc">~</span> weight <span class="sc">+</span> drug <span class="sc">+</span> drug<span class="sc">:</span>weight, <span class="at">data=</span>drug4)</span>
-<span id="cb307-4"><a href="more-on-multiple-linear-regression.html#cb307-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code></pre></div>
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="more-on-multiple-linear-regression.html#cb343-1" tabindex="-1"></a>drug4 <span class="ot">&lt;-</span> drug4 <span class="sc">%&gt;%</span></span>
+<span id="cb343-2"><a href="more-on-multiple-linear-regression.html#cb343-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">drug=</span><span class="fu">relevel</span>(drug, <span class="at">ref=</span><span class="st">&quot;P&quot;</span>))</span>
+<span id="cb343-3"><a href="more-on-multiple-linear-regression.html#cb343-3" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(glu.red <span class="sc">~</span> weight <span class="sc">+</span> drug <span class="sc">+</span> drug<span class="sc">:</span>weight, <span class="at">data=</span>drug4)</span>
+<span id="cb343-4"><a href="more-on-multiple-linear-regression.html#cb343-4" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = glu.red ~ weight + drug + drug:weight, data = drug4)
@@ -1020,8 +1038,8 @@ A       &amp; 0 &amp;   31.116 - 0.013\times\textrm{weight} - 9.087() \\
 <p>The whole-model <span class="math inline">\(F\)</span>-test is significant. Let’s check to see if the model can be simplified. The three interaction terms in the model (<code>weight.drugA</code>, <code>weight.drugB</code> and <code>weight.drugC</code>) assess differences in slope between the reference drug <span class="math inline">\(P\)</span> versus <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span> and <span class="math inline">\(C\)</span> respectively. The null hypothesis for testing if the slopes are equal is:</p>
 <p><span class="math display">\[H_0: \beta_{weight.drugA} = \beta_{weight.drugB} = \beta_{weight.drugC} = 0\]</span></p>
 <p>If this hypothesis is true, then the four slopes are the same; i.e. parallel. To see if we can simplify to an “equal slopes” model, test these three parameters using an ANOVA <span class="math inline">\(F\)</span>-test:</p>
-<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="more-on-multiple-linear-regression.html#cb309-1" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(glu.red <span class="sc">~</span> weight <span class="sc">+</span> drug, <span class="at">data=</span>drug4)</span>
-<span id="cb309-2"><a href="more-on-multiple-linear-regression.html#cb309-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m2, m1)</span></code></pre></div>
+<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="more-on-multiple-linear-regression.html#cb345-1" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(glu.red <span class="sc">~</span> weight <span class="sc">+</span> drug, <span class="at">data=</span>drug4)</span>
+<span id="cb345-2"><a href="more-on-multiple-linear-regression.html#cb345-2" tabindex="-1"></a><span class="fu">anova</span>(m2, m1)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Model 1: glu.red ~ weight + drug
@@ -1036,7 +1054,7 @@ A       &amp; 0 &amp;   31.116 - 0.013\times\textrm{weight} - 9.087() \\
 <ul>
 <li>From the parameter estimates above, it appears that the largest difference between drugs with respect to how weight affects the reduction in glucose is between the placebo and drug <span class="math inline">\(B\)</span>. The slope estimate for the placebo is <span class="math inline">\(-0.08882\)</span>; for drug <span class="math inline">\(B\)</span>, the slope estimate is <span class="math inline">\(-0.08882 + (-0.16043) = -0.249\)</span>. This means that each additional pound of weight lowers the mean glucose reduction by 0.249 mg/dl if taking drug <span class="math inline">\(B\)</span>. This change is marginally significant (see <code>weight.drugB</code>: <span class="math inline">\(t\)</span> = –1.822, <span class="math inline">\(p\)</span>-value=0.0753), and can be estimated with a CI for <span class="math inline">\(\beta_{weight.drugB}\)</span>:</li>
 </ul>
-<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="more-on-multiple-linear-regression.html#cb311-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(m1)</span></code></pre></div>
+<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="more-on-multiple-linear-regression.html#cb347-1" tabindex="-1"></a><span class="fu">confint</span>(m1)</span></code></pre></div>
 <pre><code>##                   2.5 %     97.5 %
 ## (Intercept)  -10.769269 41.0780042
 ## weight        -0.225934  0.0482880
@@ -1050,7 +1068,7 @@ A       &amp; 0 &amp;   31.116 - 0.013\times\textrm{weight} - 9.087() \\
 <ul>
 <li>You could check the change in the residual SE or <span class="math inline">\(R_{adj}^2\)</span> values by using the “equal slopes” model:</li>
 </ul>
-<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="more-on-multiple-linear-regression.html#cb313-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m2)</span></code></pre></div>
+<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="more-on-multiple-linear-regression.html#cb349-1" tabindex="-1"></a><span class="fu">summary</span>(m2)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = glu.red ~ weight + drug, data = drug4)
@@ -1082,7 +1100,7 @@ A       &amp; 0 &amp;   31.116 - 0.013\times\textrm{weight} - 9.087() \\
           </div>
         </div>
       </div>
-<a href="inference-regarding-multiple-regression.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="regInferenceChp.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="model-building-considerations.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
@@ -1097,42 +1115,42 @@ A       &amp; 0 &amp;   31.116 - 0.013\times\textrm{weight} - 9.087() \\
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": null,
-"text": null
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["introStatModeling.pdf", "introStatModeling.epub"],
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "subsection"
-}
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["introStatModeling.pdf", "introStatModeling.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
 });
 });
 </script>
@@ -1143,7 +1161,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

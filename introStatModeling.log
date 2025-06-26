@@ -1,0 +1,2808 @@
+This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 23.12) (preloaded format=xelatex 2024.8.3)  26 JUN 2025 14:50
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**./introStatModeling.tex
+(introStatModeling.tex
+LaTeX2e <2023-11-01> patch level 1
+L3 programming layer <2024-01-04>
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/base\book.cls
+Document Class: book 2023/05/17 v1.4n Standard LaTeX document class
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/base\bk10.clo
+File: bk10.clo 2023/05/17 v1.4n Standard LaTeX file (size option)
+)
+\c@part=\count183
+\c@chapter=\count184
+\c@section=\count185
+\c@subsection=\count186
+\c@subsubsection=\count187
+\c@paragraph=\count188
+\c@subparagraph=\count189
+\c@figure=\count190
+\c@table=\count191
+\abovecaptionskip=\skip48
+\belowcaptionskip=\skip49
+\bibindent=\dimen140
+) (C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsmath.st
+y
+Package: amsmath 2023/05/13 v2.17o AMS math features
+\@mathmargin=\skip50
+For additional information on amsmath, use the `?' option.
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amstext.sty
+Package: amstext 2021/08/26 v2.01 AMS text
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks17
+\ex@=\dimen141
+)) (C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsbsy.st
+y
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen142
+) (C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsopn.sty
+Package: amsopn 2022/04/08 v2.04 operator names
+)
+\inf@bad=\count192
+LaTeX Info: Redefining \frac on input line 234.
+\uproot@=\count193
+\leftroot@=\count194
+LaTeX Info: Redefining \overline on input line 399.
+LaTeX Info: Redefining \colon on input line 410.
+\classnum@=\count195
+\DOTSCASE@=\count196
+LaTeX Info: Redefining \ldots on input line 496.
+LaTeX Info: Redefining \dots on input line 499.
+LaTeX Info: Redefining \cdots on input line 620.
+\Mathstrutbox@=\box51
+\strutbox@=\box52
+LaTeX Info: Redefining \big on input line 722.
+LaTeX Info: Redefining \Big on input line 723.
+LaTeX Info: Redefining \bigg on input line 724.
+LaTeX Info: Redefining \Bigg on input line 725.
+\big@size=\dimen143
+LaTeX Font Info:    Redeclaring font encoding OML on input line 743.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
+\macc@depth=\count197
+LaTeX Info: Redefining \bmod on input line 905.
+LaTeX Info: Redefining \pmod on input line 910.
+LaTeX Info: Redefining \smash on input line 940.
+LaTeX Info: Redefining \relbar on input line 970.
+LaTeX Info: Redefining \Relbar on input line 971.
+\c@MaxMatrixCols=\count198
+\dotsspace@=\muskip16
+\c@parentequation=\count199
+\dspbrk@lvl=\count266
+\tag@help=\toks18
+\row@=\count267
+\column@=\count268
+\maxfields@=\count269
+\andhelp@=\toks19
+\eqnshift@=\dimen144
+\alignsep@=\dimen145
+\tagshift@=\dimen146
+\tagwidth@=\dimen147
+\totwidth@=\dimen148
+\lineht@=\dimen149
+\@envbody=\toks20
+\multlinegap=\skip51
+\multlinetaggap=\skip52
+\mathdisplay@stack=\toks21
+LaTeX Info: Redefining \[ on input line 2953.
+LaTeX Info: Redefining \] on input line 2954.
+)
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amsfonts.st
+y
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+)) (C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/generic/iftex\iftex.sty
+Package: iftex 2022/02/03 v1.0f TeX engine tests
+)
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/unicode-math\unicode
+-math.sty (C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/l3kernel\e
+xpl3.sty
+Package: expl3 2024-01-04 L3 programming layer (loader) 
+
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-
+xetex.def
+File: l3backend-xetex.def 2024-01-04 L3 backend support: XeTeX
+\g__graphics_track_int=\count270
+\l__pdf_internal_box=\box53
+\g__pdf_backend_object_int=\count271
+\g__pdf_backend_annotation_int=\count272
+\g__pdf_backend_link_int=\count273
+))
+Package: unicode-math 2023/08/13 v0.8r Unicode maths in XeLaTeX and LuaLaTeX
+
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/unicode-math\unicode
+-math-xetex.sty
+Package: unicode-math-xetex 2023/08/13 v0.8r Unicode maths in XeLaTeX and LuaLa
+TeX
+
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/l3packages/xparse\xp
+arse.sty
+Package: xparse 2023-10-10 L3 Experimental document command parser
+)
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/l3packages/l3keys2e\
+l3keys2e.sty
+Package: l3keys2e 2023-10-10 LaTeX2e option processing using LaTeX3 keys
+)
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/fontspec\fontspec.st
+y
+Package: fontspec 2022/01/15 v2.8a Font selection for XeLaTeX and LuaLaTeX
+
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/fontspec\fontspec-xe
+tex.sty
+Package: fontspec-xetex 2022/01/15 v2.8a Font selection for XeLaTeX and LuaLaTe
+X
+\l__fontspec_script_int=\count274
+\l__fontspec_language_int=\count275
+\l__fontspec_strnum_int=\count276
+\l__fontspec_tmp_int=\count277
+\l__fontspec_tmpa_int=\count278
+\l__fontspec_tmpb_int=\count279
+\l__fontspec_tmpc_int=\count280
+\l__fontspec_em_int=\count281
+\l__fontspec_emdef_int=\count282
+\l__fontspec_strong_int=\count283
+\l__fontspec_strongdef_int=\count284
+\l__fontspec_tmpa_dim=\dimen150
+\l__fontspec_tmpb_dim=\dimen151
+\l__fontspec_tmpc_dim=\dimen152
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/base\fontenc.sty
+Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
+)
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/fontspec\fontspec.cf
+g))) (C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/base\fix-cm.sty
+Package: fix-cm 2020/11/24 v1.1t fixes to LaTeX
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/base\ts1enc.def
+File: ts1enc.def 2001/06/05 v3.0e (jk/car/fm) Standard LaTeX file
+LaTeX Font Info:    Redeclaring font encoding TS1 on input line 47.
+))
+\g__um_fam_int=\count285
+\g__um_fonts_used_int=\count286
+\l__um_primecount_int=\count287
+\g__um_primekern_muskip=\muskip17
+
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/unicode-math\unicode
+-math-table.tex))) (C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/l
+m\lmodern.sty
+Package: lmodern 2015/05/01 v1.6.1 Latin Modern Fonts
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/cmr/m/n --> OT1/lmr/m/n on input line 22.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `normal'
+(Font)                  OML/cmm/m/it --> OML/lmm/m/it on input line 23.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
+(Font)                  OMS/cmsy/m/n --> OMS/lmsy/m/n on input line 24.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  OMX/cmex/m/n --> OMX/lmex/m/n on input line 25.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 26.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
+(Font)                  OML/cmm/b/it --> OML/lmm/b/it on input line 27.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
+(Font)                  OMS/cmsy/b/n --> OMS/lmsy/b/n on input line 28.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/cmex/m/n --> OMX/lmex/m/n on input line 29.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
+(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 31.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
+(Font)                  OT1/cmss/m/n --> OT1/lmss/m/n on input line 32.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/cmr/m/it --> OT1/lmr/m/it on input line 33.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
+(Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 34.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 35.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
+(Font)                  OT1/cmss/bx/n --> OT1/lmss/bx/n on input line 36.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
+(Font)                  OT1/cmr/bx/it --> OT1/lmr/bx/it on input line 37.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
+(Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 38.
+) (C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/upquote\upquote.st
+y
+Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verba
+tim
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/base\textcomp.sty
+Package: textcomp 2020/02/02 v2.0n Standard LaTeX package
+))
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/microtype\microtype.
+sty
+Package: microtype 2023/03/13 v3.1a Micro-typographical refinements (RS)
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/graphics\keyval.sty
+Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
+\KV@toks@=\toks22
+)
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/etoolbox\etoolbox.st
+y
+Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count288
+)
+\MT@toks=\toks23
+\MT@tempbox=\box54
+\MT@count=\count289
+LaTeX Info: Redefining \noprotrusionifhmode on input line 1059.
+LaTeX Info: Redefining \leftprotrusion on input line 1060.
+\MT@prot@toks=\toks24
+LaTeX Info: Redefining \rightprotrusion on input line 1078.
+LaTeX Info: Redefining \textls on input line 1368.
+\MT@outer@kern=\dimen153
+LaTeX Info: Redefining \textmicrotypecontext on input line 1988.
+\MT@listname@count=\count290
+
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/microtype\microtype-
+xetex.def
+File: microtype-xetex.def 2023/03/13 v3.1a Definitions specific to xetex (RS)
+LaTeX Info: Redefining \lsstyle on input line 238.
+)
+Package microtype Info: Loading configuration file microtype.cfg.
+
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/microtype\microtype.
+cfg
+File: microtype.cfg 2023/03/13 v3.1a microtype main configuration file (RS)
+)) (C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/parskip\parskip.s
+ty
+Package: parskip 2021-03-14 v2.0h non-zero parskip adjustments
+
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/kvoptions\kvoptions.
+sty
+Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
+
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/generic/ltxcmds\ltxcmds.st
+y
+Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
+)
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/kvsetkeys\kvsetkeys.
+sty
+Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
+))) (C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/xcolor\xcolor.st
+y
+Package: xcolor 2023/11/15 v3.01 LaTeX color extensions (UK)
+
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\color.c
+fg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: xetex.def on input line 274.
+
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/graphics-def\xetex.d
+ef
+File: xetex.def 2022/09/22 v5.0n Graphics/color driver for xetex
+)
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/graphics\mathcolor.l
+tx)
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1350.
+Package xcolor Info: Model `RGB' extended on input line 1366.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1368.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1369.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1370.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1371.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1372.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1373.
+)
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/fancyvrb\fancyvrb.st
+y
+Package: fancyvrb 2024/01/20 4.5c verbatim text (tvz,hv)
+\FV@CodeLineNo=\count291
+\FV@InFile=\read2
+\FV@TabBox=\box55
+\c@FancyVerbLine=\count292
+\FV@StepNumber=\count293
+\FV@OutFile=\write3
+) (C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/framed\framed.sty
+Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
+\OuterFrameSep=\skip53
+\fb@frw=\dimen154
+\fb@frh=\dimen155
+\FrameRule=\dimen156
+\FrameSep=\dimen157
+) (C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/tools\longtable.st
+y
+Package: longtable 2023-11-01 v4.19 Multi-page Table package (DPC)
+\LTleft=\skip54
+\LTright=\skip55
+\LTpre=\skip56
+\LTpost=\skip57
+\LTchunksize=\count294
+\LTcapwidth=\dimen158
+\LT@head=\box56
+\LT@firsthead=\box57
+\LT@foot=\box58
+\LT@lastfoot=\box59
+\LT@gbox=\box60
+\LT@cols=\count295
+\LT@rows=\count296
+\c@LT@tables=\count297
+\c@LT@chunks=\count298
+\LT@p@ftn=\toks25
+)
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/booktabs\booktabs.st
+y
+Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
+\heavyrulewidth=\dimen159
+\lightrulewidth=\dimen160
+\cmidrulewidth=\dimen161
+\belowrulesep=\dimen162
+\belowbottomsep=\dimen163
+\aboverulesep=\dimen164
+\abovetopsep=\dimen165
+\cmidrulesep=\dimen166
+\cmidrulekern=\dimen167
+\defaultaddspace=\dimen168
+\@cmidla=\count299
+\@cmidlb=\count300
+\@aboverulesep=\dimen169
+\@belowrulesep=\dimen170
+\@thisruleclass=\count301
+\@lastruleclass=\count302
+\@thisrulewidth=\dimen171
+) (C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/tools\array.sty
+Package: array 2023/10/16 v2.5g Tabular extension package (FMi)
+\col@sep=\dimen172
+\ar@mcellbox=\box61
+\extrarowheight=\dimen173
+\NC@list=\toks26
+\extratabsurround=\skip58
+\backup@length=\skip59
+\ar@cellbox=\box62
+) (C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/tools\calc.sty
+Package: calc 2023/07/08 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count303
+\calc@Bcount=\count304
+\calc@Adimen=\dimen174
+\calc@Bdimen=\dimen175
+\calc@Askip=\skip60
+\calc@Bskip=\skip61
+LaTeX Info: Redefining \setlength on input line 80.
+LaTeX Info: Redefining \addtolength on input line 81.
+\calc@Ccount=\count305
+\calc@Cskip=\skip62
+)
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/footnotehyper\footno
+tehyper.sty
+Package: footnotehyper 2021/08/13 v1.1e hyperref aware footnote.sty (JFB)
+\FNH@notes=\box63
+\FNH@width=\dimen176
+\FNH@toks=\toks27
+)
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphicx.st
+y
+Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
+
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphics.st
+y
+Package: graphics 2022/03/10 v1.4e Standard LaTeX Graphics (DPC,SPQR)
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/graphics\trig.sty
+Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
+)
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\graphic
+s.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: xetex.def on input line 107.
+)
+\Gin@req@height=\dimen177
+\Gin@req@width=\dimen178
+) (C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/amscls\amsthm.sty
+Package: amsthm 2020/05/29 v2.20.6
+\thm@style=\toks28
+\thm@bodyfont=\toks29
+\thm@headfont=\toks30
+\thm@notefont=\toks31
+\thm@headpunct=\toks32
+\thm@preskip=\skip63
+\thm@postskip=\skip64
+\thm@headsep=\skip65
+\dth@everypar=\toks33
+)
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/multirow\multirow.st
+y
+Package: multirow 2021/03/15 v2.8 Span multiple rows of a table
+\multirow@colwidth=\skip66
+\multirow@cntb=\count306
+\multirow@dima=\skip67
+\bigstrutjot=\dimen179
+) (C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/wrapfig\wrapfig.st
+y
+\wrapoverhang=\dimen180
+\WF@size=\dimen181
+\c@WF@wrappedlines=\count307
+\WF@box=\box64
+\WF@everypar=\toks34
+Package: wrapfig 2003/01/31  v 3.6
+) (C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/float\float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count308
+\float@exts=\toks35
+\float@box=\box65
+\@float@everytoks=\toks36
+\@floatcapt=\box66
+)
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/colortbl\colortbl.st
+y
+Package: colortbl 2024/02/20 v1.0g Color table columns (DPC)
+\everycr=\toks37
+\minrowclearance=\skip68
+\rownum=\count309
+)
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/pdflscape\pdflscape.
+sty
+Package: pdflscape 2022-10-27 v0.13 Display of landscape pages in PDF
+
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/pdflscape\pdflscape-
+nometadata.sty
+Package: pdflscape-nometadata 2022-10-28 v0.13 Display of landscape pages in PD
+F (HO)
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/graphics\lscape.sty
+Package: lscape 2020/05/28 v3.02 Landscape Pages (DPC)
+)
+Package pdflscape Info: Auto-detected driver: dvipdfm (xetex) on input line 98.
+
+)) (C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/tabu\tabu.sty
+Package: tabu 2019/01/11 v2.9 - flexible LaTeX tabulars (FC+tabu-fixed)
+
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/varwidth\varwidth.st
+y
+Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
+\@vwid@box=\box67
+\sift@deathcycles=\count310
+\@vwid@loff=\dimen182
+\@vwid@roff=\dimen183
+)
+\c@taburow=\count311
+\tabu@nbcols=\count312
+\tabu@cnt=\count313
+\tabu@Xcol=\count314
+\tabu@alloc=\count315
+\tabu@nested=\count316
+\tabu@target=\dimen184
+\tabu@spreadtarget=\dimen185
+\tabu@naturalX=\dimen186
+\tabucolX=\dimen187
+\tabu@Xsum=\dimen188
+\extrarowdepth=\dimen189
+\abovetabulinesep=\dimen190
+\belowtabulinesep=\dimen191
+\tabustrutrule=\dimen192
+\tabu@thebody=\toks38
+\tabu@footnotes=\toks39
+\tabu@box=\box68
+\tabu@arstrutbox=\box69
+\tabu@hleads=\box70
+\tabu@vleads=\box71
+\tabu@cellskip=\skip69
+)
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/threeparttable\three
+parttable.sty
+Package: threeparttable 2003/06/13  v 3.0
+\@tempboxb=\box72
+)
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/threeparttablex\thre
+eparttablex.sty
+Package: threeparttablex 2013/07/23 v0.3 by daleif
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/environ\environ.sty
+Package: environ 2014/05/04 v0.3 A new way to define environments
+
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/trimspaces\trimspace
+s.sty
+Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
+))
+\TPTL@width=\skip70
+) (C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/ulem\ulem.sty
+\UL@box=\box73
+\UL@hyphenbox=\box74
+\UL@skip=\skip71
+\UL@hook=\toks40
+\UL@height=\dimen193
+\UL@pe=\count317
+\UL@pixel=\dimen194
+\ULC@box=\box75
+Package: ulem 2019/11/18
+\ULdepth=\dimen195
+)
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/makecell\makecell.st
+y
+Package: makecell 2009/08/03 V0.1e Managing of Tab Column Heads and Cells
+\rotheadsize=\dimen196
+\c@nlinenum=\count318
+\TeXr@lab=\toks41
+) (C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/natbib\natbib.sty
+Package: natbib 2010/09/13 8.31b (PWD, AO)
+\bibhang=\skip72
+\bibsep=\skip73
+LaTeX Info: Redefining \cite on input line 694.
+\c@NAT@ctr=\count319
+)
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/bookmark\bookmark.st
+y
+Package: bookmark 2023-12-10 v1.31 PDF bookmarks (HO)
+
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hyperref.st
+y
+Package: hyperref 2023-11-26 v7.01g Hypertext links for LaTeX
+
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/generic/infwarerr\infwarer
+r.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+)
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/generic/kvdefinekeys\kvdef
+inekeys.sty
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+)
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/generic/pdfescape\pdfescap
+e.sty
+Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
+
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/generic/pdftexcmds\pdftexc
+mds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode not found.
+)) (C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/hycolor\hycolor.s
+ty
+Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
+)
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/letltxmacro\letltxma
+cro.sty
+Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
+) (C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/auxhook\auxhook.st
+y
+Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
+)
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\nameref.sty
+Package: nameref 2023-11-26 v2.56 Cross-referencing by name of section
+
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/refcount\refcount.st
+y
+Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
+)
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/generic/gettitlestring\get
+titlestring.sty
+Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
+)
+\c@section@level=\count320
+)
+\@linkdim=\dimen197
+\Hy@linkcounter=\count321
+\Hy@pagecounter=\count322
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\pd1enc.def
+File: pd1enc.def 2023-11-26 v7.01g Hyperref: PDFDocEncoding definition (HO)
+)
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/generic/intcalc\intcalc.st
+y
+Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
+)
+\Hy@SavedSpaceFactor=\count323
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\puenc.def
+File: puenc.def 2023-11-26 v7.01g Hyperref: PDF Unicode definition (HO)
+)
+Package hyperref Info: Option `unicode' set `true' on input line 4064.
+Package hyperref Info: Hyper figures OFF on input line 4181.
+Package hyperref Info: Link nesting OFF on input line 4186.
+Package hyperref Info: Hyper index ON on input line 4189.
+Package hyperref Info: Plain pages OFF on input line 4196.
+Package hyperref Info: Backreferencing OFF on input line 4201.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4448.
+\c@Hy@tempcnt=\count324
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/url\url.sty
+\Urlmuskip=\muskip18
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 4786.
+\XeTeXLinkMargin=\dimen198
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/generic/bitset\bitset.sty
+Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
+
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/generic/bigintcalc\bigintc
+alc.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
+)
+))
+\Fld@menulength=\count325
+\Field@Width=\dimen199
+\Fld@charsize=\dimen256
+Package hyperref Info: Hyper figures OFF on input line 6065.
+Package hyperref Info: Link nesting OFF on input line 6070.
+Package hyperref Info: Hyper index ON on input line 6073.
+Package hyperref Info: backreferencing OFF on input line 6080.
+Package hyperref Info: Link coloring OFF on input line 6085.
+Package hyperref Info: Link coloring with OCG OFF on input line 6090.
+Package hyperref Info: PDF/A mode OFF on input line 6095.
+
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/base\atbegshi-ltx.st
+y
+Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
+package with kernel methods
+)
+\Hy@abspage=\count326
+\c@Item=\count327
+\c@Hfootnote=\count328
+)
+Package hyperref Info: Driver (autodetected): hxetex.
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hxetex.def
+File: hxetex.def 2023-11-26 v7.01g Hyperref driver for XeTeX
+
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/generic/stringenc\stringen
+c.sty
+Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO
+)
+)
+\pdfm@box=\box76
+\c@Hy@AnnotLevel=\count329
+\HyField@AnnotCount=\count330
+\Fld@listcount=\count331
+\c@bookmark@seq@number=\count332
+
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/rerunfilecheck\rerun
+filecheck.sty
+Package: rerunfilecheck 2022-07-10 v1.10 Rerun checks for auxiliary files (HO)
+
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/base\atveryend-ltx.s
+ty
+Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend pac
+kage
+with kernel methods
+)
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/generic/uniquecounter\uniq
+uecounter.sty
+Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
+)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+85.
+)
+\Hy@SectionHShift=\skip74
+)
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/bookmark\bkm-dvipdfm
+.def
+File: bkm-dvipdfm.def 2023-12-10 v1.31 bookmark driver for dvipdfm (HO)
+\BKM@id=\count333
+)) (C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/xurl\xurl.sty
+Package: xurl 2022/01/09 v 0.10 modify URL breaks
+)
+No file introStatModeling.aux.
+\openout1 = `introStatModeling.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 146.
+LaTeX Font Info:    ... okay on input line 146.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 146.
+LaTeX Font Info:    ... okay on input line 146.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 146.
+LaTeX Font Info:    ... okay on input line 146.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 146.
+LaTeX Font Info:    ... okay on input line 146.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 146.
+LaTeX Font Info:    ... okay on input line 146.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 146.
+LaTeX Font Info:    ... okay on input line 146.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 146.
+LaTeX Font Info:    ... okay on input line 146.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 146.
+LaTeX Font Info:    ... okay on input line 146.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 146.
+LaTeX Font Info:    ... okay on input line 146.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 146.
+LaTeX Font Info:    ... okay on input line 146.
+LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
+(Font)                  OT1/lmr/m/n --> TU/lmr/m/n on input line 146.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/lmr/m/it --> TU/lmr/m/it on input line 146.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
+(Font)                  OT1/lmr/bx/n --> TU/lmr/bx/n on input line 146.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
+(Font)                  OT1/lmss/m/n --> TU/lmss/m/n on input line 146.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
+(Font)                  OT1/lmss/bx/n --> TU/lmss/bx/n on input line 146.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
+(Font)                  OT1/lmtt/m/n --> TU/lmtt/m/n on input line 146.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
+(Font)                  OT1/lmtt/m/n --> TU/lmtt/bx/n on input line 146.
+
+Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
+
+
+Package fontspec Info: Font family 'latinmodern-math.otf(0)' created for font
+(fontspec)             'latinmodern-math.otf' with options
+(fontspec)             [Scale=MatchLowercase,BoldItalicFont={},ItalicFont={},Sm
+allCapsFont={},Script=Math,BoldFont={latinmodern-math.otf}].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <->s*[0.9999964596882403]"[latinmodern-math.otf]/OT:scri
+pt=math;language=dflt;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
+(fontspec)             - 'bold' (b/n) with NFSS spec.:
+(fontspec)             <->s*[0.9999964596882403]"[latinmodern-math.otf]/OT:scri
+pt=math;language=dflt;"
+(fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
+
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(0)/m/n' will be
+(Font)              scaled to size 10.0pt on input line 146.
+
+Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
+
+
+Package fontspec Info: Font family 'latinmodern-math.otf(1)' created for font
+(fontspec)             'latinmodern-math.otf' with options
+(fontspec)             [Scale=MatchLowercase,BoldItalicFont={},ItalicFont={},Sm
+allCapsFont={},Script=Math,SizeFeatures={{Size=8.5-},{Size=6-8.5,Font=latinmode
+rn-math.otf,Style=MathScript},{Size=-6,Font=latinmodern-math.otf,Style=MathScri
+ptScript}},BoldFont={latinmodern-math.otf}].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <8.5->s*[0.9999964596882403]"[latinmodern-math.otf]/OT:s
+cript=math;language=dflt;"<6-8.5>s*[0.9999964596882403]"[latinmodern-math.otf]/
+OT:script=math;language=dflt;+ssty=0;"<-6>s*[0.9999964596882403]"[latinmodern-m
+ath.otf]/OT:script=math;language=dflt;+ssty=1;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
+(fontspec)             - 'bold' (b/n) with NFSS spec.:
+(fontspec)             <->s*[0.9999964596882403]"[latinmodern-math.otf]/OT:scri
+pt=math;language=dflt;"
+(fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
+
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 10.0pt on input line 146.
+LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
+(Font)              `operators' in the math version `normal' on input line 146.
+
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/lmr/m/n --> TU/latinmodern-math.otf(1)/m/n on input
+ line 146.
+LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
+(Font)              `operators' in the math version `bold' on input line 146.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/lmr/bx/n --> TU/latinmodern-math.otf(1)/b/n on inpu
+t line 146.
+
+Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
+
+
+Package fontspec Info: latinmodern-math scale = 1.000096459334209.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
+
+
+Package fontspec Info: latinmodern-math scale = 1.000096459334209.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
+
+
+Package fontspec Info: latinmodern-math scale = 1.000096459334209.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
+
+
+Package fontspec Info: latinmodern-math scale = 1.000096459334209.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
+
+
+Package fontspec Info: latinmodern-math scale = 1.000096459334209.
+
+
+Package fontspec Info: Font family 'latinmodern-math.otf(2)' created for font
+(fontspec)             'latinmodern-math.otf' with options
+(fontspec)             [Scale=MatchLowercase,BoldItalicFont={},ItalicFont={},Sm
+allCapsFont={},Script=Math,SizeFeatures={{Size=8.5-},{Size=6-8.5,Font=latinmode
+rn-math.otf,Style=MathScript},{Size=-6,Font=latinmodern-math.otf,Style=MathScri
+ptScript}},BoldFont={latinmodern-math.otf},ScaleAgain=1.0001,FontAdjustment={\f
+ontdimen
+(fontspec)             8\font =6.77pt\relax \fontdimen 9\font =3.94pt\relax
+(fontspec)             \fontdimen 10\font =4.44pt\relax \fontdimen 11\font
+(fontspec)             =6.86pt\relax \fontdimen 12\font =3.45pt\relax
+(fontspec)             \fontdimen 13\font =3.63pt\relax \fontdimen 14\font
+(fontspec)             =3.63pt\relax \fontdimen 15\font =2.89pt\relax
+(fontspec)             \fontdimen 16\font =2.47pt\relax \fontdimen 17\font
+(fontspec)             =2.47pt\relax \fontdimen 18\font =2.5pt\relax
+(fontspec)             \fontdimen 19\font =2.0pt\relax \fontdimen 22\font
+(fontspec)             =2.5pt\relax \fontdimen 20\font =0pt\relax \fontdimen
+(fontspec)             21\font =0pt\relax }].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <8.5->s*[1.000096459334209]"[latinmodern-math.otf]/OT:sc
+ript=math;language=dflt;"<6-8.5>s*[1.000096459334209]"[latinmodern-math.otf]/OT
+:script=math;language=dflt;+ssty=0;"<-6>s*[1.000096459334209]"[latinmodern-math
+.otf]/OT:script=math;language=dflt;+ssty=1;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
+(fontspec)             and font adjustment code:
+(fontspec)             \fontdimen 8\font =6.77pt\relax \fontdimen 9\font
+(fontspec)             =3.94pt\relax \fontdimen 10\font =4.44pt\relax
+(fontspec)             \fontdimen 11\font =6.86pt\relax \fontdimen 12\font
+(fontspec)             =3.45pt\relax \fontdimen 13\font =3.63pt\relax
+(fontspec)             \fontdimen 14\font =3.63pt\relax \fontdimen 15\font
+(fontspec)             =2.89pt\relax \fontdimen 16\font =2.47pt\relax
+(fontspec)             \fontdimen 17\font =2.47pt\relax \fontdimen 18\font
+(fontspec)             =2.5pt\relax \fontdimen 19\font =2.0pt\relax \fontdimen
+(fontspec)             22\font =2.5pt\relax \fontdimen 20\font =0pt\relax
+(fontspec)             \fontdimen 21\font =0pt\relax 
+(fontspec)             - 'bold' (b/n) with NFSS spec.:
+(fontspec)             <->s*[1.000096459334209]"[latinmodern-math.otf]/OT:scrip
+t=math;language=dflt;"
+(fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
+(fontspec)             and font adjustment code:
+(fontspec)             \fontdimen 8\font =6.77pt\relax \fontdimen 9\font
+(fontspec)             =3.94pt\relax \fontdimen 10\font =4.44pt\relax
+(fontspec)             \fontdimen 11\font =6.86pt\relax \fontdimen 12\font
+(fontspec)             =3.45pt\relax \fontdimen 13\font =3.63pt\relax
+(fontspec)             \fontdimen 14\font =3.63pt\relax \fontdimen 15\font
+(fontspec)             =2.89pt\relax \fontdimen 16\font =2.47pt\relax
+(fontspec)             \fontdimen 17\font =2.47pt\relax \fontdimen 18\font
+(fontspec)             =2.5pt\relax \fontdimen 19\font =2.0pt\relax \fontdimen
+(fontspec)             22\font =2.5pt\relax \fontdimen 20\font =0pt\relax
+(fontspec)             \fontdimen 21\font =0pt\relax 
+
+LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
+(Font)              `symbols' in the math version `normal' on input line 146.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
+(Font)                  OMS/lmsy/m/n --> TU/latinmodern-math.otf(2)/m/n on inpu
+t line 146.
+LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
+(Font)              `symbols' in the math version `bold' on input line 146.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
+(Font)                  OMS/lmsy/b/n --> TU/latinmodern-math.otf(2)/b/n on inpu
+t line 146.
+
+Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9998964600422715.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9998964600422715.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9998964600422715.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9998964600422715.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9998964600422715.
+
+
+Package fontspec Info: Font family 'latinmodern-math.otf(3)' created for font
+(fontspec)             'latinmodern-math.otf' with options
+(fontspec)             [Scale=MatchLowercase,BoldItalicFont={},ItalicFont={},Sm
+allCapsFont={},Script=Math,SizeFeatures={{Size=8.5-},{Size=6-8.5,Font=latinmode
+rn-math.otf,Style=MathScript},{Size=-6,Font=latinmodern-math.otf,Style=MathScri
+ptScript}},BoldFont={latinmodern-math.otf},ScaleAgain=0.9999,FontAdjustment={\f
+ontdimen
+(fontspec)             8\font =0.4pt\relax \fontdimen 9\font =2.0pt\relax
+(fontspec)             \fontdimen 10\font =1.67pt\relax \fontdimen 11\font
+(fontspec)             =1.11pt\relax \fontdimen 12\font =6.0pt\relax
+(fontspec)             \fontdimen 13\font =0pt\relax }].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <8.5->s*[0.9998964600422715]"[latinmodern-math.otf]/OT:s
+cript=math;language=dflt;"<6-8.5>s*[0.9998964600422715]"[latinmodern-math.otf]/
+OT:script=math;language=dflt;+ssty=0;"<-6>s*[0.9998964600422715]"[latinmodern-m
+ath.otf]/OT:script=math;language=dflt;+ssty=1;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
+(fontspec)             and font adjustment code:
+(fontspec)             \fontdimen 8\font =0.4pt\relax \fontdimen 9\font
+(fontspec)             =2.0pt\relax \fontdimen 10\font =1.67pt\relax
+(fontspec)             \fontdimen 11\font =1.11pt\relax \fontdimen 12\font
+(fontspec)             =6.0pt\relax \fontdimen 13\font =0pt\relax 
+(fontspec)             - 'bold' (b/n) with NFSS spec.:
+(fontspec)             <->s*[0.9998964600422715]"[latinmodern-math.otf]/OT:scri
+pt=math;language=dflt;"
+(fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
+(fontspec)             and font adjustment code:
+(fontspec)             \fontdimen 8\font =0.4pt\relax \fontdimen 9\font
+(fontspec)             =2.0pt\relax \fontdimen 10\font =1.67pt\relax
+(fontspec)             \fontdimen 11\font =1.11pt\relax \fontdimen 12\font
+(fontspec)             =6.0pt\relax \fontdimen 13\font =0pt\relax 
+
+LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
+(Font)              `largesymbols' in the math version `normal' on input line 1
+46.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/m/n on inpu
+t line 146.
+LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
+(Font)              `largesymbols' in the math version `bold' on input line 146
+.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/b/n on inpu
+t line 146.
+LaTeX Info: Redefining \microtypecontext on input line 146.
+Package microtype Info: Applying patch `item' on input line 146.
+Package microtype Info: Applying patch `toc' on input line 146.
+Package microtype Info: Applying patch `eqnum' on input line 146.
+Package microtype Info: Applying patch `footnote' on input line 146.
+Package microtype Info: Applying patch `verbatim' on input line 146.
+Package microtype Info: Character protrusion enabled (level 2).
+Package microtype Info: Using protrusion set `basicmath'.
+Package microtype Info: No adjustment of tracking.
+Package microtype Info: No adjustment of spacing.
+Package microtype Info: No adjustment of kerning.
+
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/microtype\mt-LatinMo
+dernRoman.cfg
+File: mt-LatinModernRoman.cfg 2021/02/21 v1.1 microtype config. file: Latin Mod
+ern Roman (RS)
+)
+Package hyperref Info: Link coloring OFF on input line 146.
+
+Package hyperref Warning: Rerun to get /PageLabels entry.
+
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 12.0pt on input line 148.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 8.0pt on input line 148.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 6.0pt on input line 148.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 1
+48.
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/lm\omllmm.fd
+File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 12.0011pt on input line 148.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 8.00073pt on input line 148.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 6.00055pt on input line 148.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 11.99872pt on input line 148.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 7.99915pt on input line 148.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 5.99936pt on input line 148.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 148
+.
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/microtype\mt-msa.cfg
+File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 148
+.
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+(C:\Users\fishert4\AppData\Local\Programs\MiKTeX\tex/latex/microtype\mt-msb.cfg
+File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
+) [1
+
+
+] [2
+
+]
+No file introStatModeling.toc.
+\tf@toc=\write4
+\openout4 = `introStatModeling.toc'.
+
+[3] [4
+
+]
+File: introStatModeling_files/figure-latex/dino-1.pdf Graphic file (type pdf)
+<use introStatModeling_files/figure-latex/dino-1.pdf>
+[5]
+
+Package natbib Warning: Citation `R-base' on page 6 undefined on input line 180
+.
+
+
+Package natbib Warning: Citation `R-tidyverse' on page 6 undefined on input lin
+e 181.
+
+
+Package natbib Warning: Citation `R-emmeans' on page 6 undefined on input line 
+182.
+
+
+Package natbib Warning: Citation `R-dplyr' on page 6 undefined on input line 18
+6.
+
+
+Package natbib Warning: Citation `R-ggplot2' on page 6 undefined on input line 
+186.
+
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 7.0pt on input line 186.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 5.0pt on input line 186.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 10.00092pt on input line 186.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 7.00064pt on input line 186.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 5.00046pt on input line 186.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 9.99893pt on input line 186.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 6.99925pt on input line 186.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 4.99947pt on input line 186.
+[6]
+File: hughes_with_border.png Graphic file (type bmp)
+<hughes_with_border.png>
+File: fisher_with_border.png Graphic file (type bmp)
+<fisher_with_border.png>
+[7
+
+] [8
+
+] [9]
+
+Package natbib Warning: Citation `R-tidyverse' on page 10 undefined on input li
+ne 255.
+
+
+Package natbib Warning: Citation `R-knitr' on page 10 undefined on input line 2
+57.
+
+
+Package natbib Warning: Citation `R-kableExtra' on page 10 undefined on input l
+ine 259.
+
+
+Package natbib Warning: Citation `R-GGally' on page 10 undefined on input line 
+261.
+
+
+Package natbib Warning: Citation `R-ggfortify' on page 10 undefined on input li
+ne 263.
+
+
+Package natbib Warning: Citation `R-gridExtra' on page 10 undefined on input li
+ne 265.
+
+
+Package natbib Warning: Citation `R-emmeans' on page 10 undefined on input line
+ 267.
+
+
+Package natbib Warning: Citation `R-lindia' on page 10 undefined on input line 
+269.
+
+
+Package natbib Warning: Citation `R-car' on page 10 undefined on input line 271
+.
+
+
+Package natbib Warning: Citation `R-leaps' on page 10 undefined on input line 2
+73.
+
+
+Package natbib Warning: Citation `R-caret' on page 10 undefined on input line 2
+75.
+
+LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10> not available
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 284.
+
+Underfull \vbox (badness 1701) has occurred while \output is active []
+
+[10] [11] [12
+
+]
+Chapter 1.
+
+Package natbib Warning: Citation `R-base' on page 13 undefined on input line 32
+9.
+
+[13]
+
+Package natbib Warning: Citation `Faraway2004linear' on page 14 undefined on in
+put line 401.
+
+[14]
+
+LaTeX Warning: Reference `dataSources' on page 15 undefined on input line 428.
+
+[15]
+
+Package natbib Warning: Citation `R-base' on page 16 undefined on input line 44
+4.
+
+[16] [17]
+Overfull \hbox (1.5pt too wide) in paragraph at lines 577--577
+[]\TU/lmtt/m/n/10 ##     Sepal.Length Sepal.Width Petal.Length Petal.Width   Sp
+ecies[] 
+ []
+
+
+Overfull \hbox (1.5pt too wide) in paragraph at lines 577--577
+[]\TU/lmtt/m/n/10 ## 144          6.8         3.2          5.9         2.3 virg
+inica[] 
+ []
+
+
+Overfull \hbox (1.5pt too wide) in paragraph at lines 577--577
+[]\TU/lmtt/m/n/10 ## 145          6.7         3.3          5.7         2.5 virg
+inica[] 
+ []
+
+
+Overfull \hbox (1.5pt too wide) in paragraph at lines 577--577
+[]\TU/lmtt/m/n/10 ## 146          6.7         3.0          5.2         2.3 virg
+inica[] 
+ []
+
+
+Overfull \hbox (1.5pt too wide) in paragraph at lines 577--577
+[]\TU/lmtt/m/n/10 ## 147          6.3         2.5          5.0         1.9 virg
+inica[] 
+ []
+
+
+Overfull \hbox (1.5pt too wide) in paragraph at lines 577--577
+[]\TU/lmtt/m/n/10 ## 148          6.5         3.0          5.2         2.0 virg
+inica[] 
+ []
+
+
+Overfull \hbox (1.5pt too wide) in paragraph at lines 577--577
+[]\TU/lmtt/m/n/10 ## 149          6.2         3.4          5.4         2.3 virg
+inica[] 
+ []
+
+
+Overfull \hbox (1.5pt too wide) in paragraph at lines 577--577
+[]\TU/lmtt/m/n/10 ## 150          5.9         3.0          5.1         1.8 virg
+inica[] 
+ []
+
+[18]
+
+Package natbib Warning: Citation `R-tidyverse' on page 19 undefined on input li
+ne 593.
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 610--610
+[]\TU/lmtt/m/n/10 ## $ agegp     <ord> 25-34, 25-34, 25-34, 25-34, 25-34, 25-34
+, 25-34, 25-34, 25-3~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 610--610
+[]\TU/lmtt/m/n/10 ## $ alcgp     <ord> 0-39g/day, 0-39g/day, 0-39g/day, 0-39g/d
+ay, 40-79, 40-79, 40~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 610--610
+[]\TU/lmtt/m/n/10 ## $ tobgp     <ord> 0-9g/day, 10-19, 20-29, 30+, 0-9g/day, 1
+0-19, 20-29, 30+, 0-~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 610--610
+[]\TU/lmtt/m/n/10 ## $ ncases    <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0
+, 0, 0, 1, 0, 0, 0, ~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 610--610
+[]\TU/lmtt/m/n/10 ## $ ncontrols <dbl> 40, 10, 6, 5, 27, 7, 4, 7, 2, 1, 2, 1, 0
+, 1, 2, 60, 13, 7, 8~[] 
+ []
+
+
+Overfull \hbox (54.0pt too wide) in paragraph at lines 639--639
+[]\TU/lmtt/m/n/10 ## [1] "Sepal.Length" "Sepal.Width"  "Petal.Length" "Petal.Wi
+dth"  "Species"[] 
+ []
+
+[19]
+
+Package natbib Warning: Citation `R-readr' on page 20 undefined on input line 6
+70.
+
+
+Underfull \hbox (badness 1320) in paragraph at lines 681--682
+\TU/lmtt/m/n/10 univadmissions.txt \TU/lmr/m/n/10 (details about the data are b
+elow) from the
+ []
+
+[20] [21]
+
+Package natbib Warning: Citation `KutnerText' on page 22 undefined on input lin
+e 778.
+
+
+Package natbib Warning: Citation `R-tidyverse' on page 22 undefined on input li
+ne 798.
+
+
+Package natbib Warning: Citation `R-dplyr' on page 22 undefined on input line 7
+98.
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 815--815
+[]\TU/lmtt/m/n/10 ## $ id         <dbl> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 
+13, 14, 15, 16, 17, ~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 815--815
+[]\TU/lmtt/m/n/10 ## $ gpa.endyr1 <dbl> 0.98, 1.13, 1.25, 1.32, 1.48, 1.57, 1.6
+7, 1.73, 1.75, 1.76,~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 815--815
+[]\TU/lmtt/m/n/10 ## $ hs.pct     <dbl> 61, 84, 74, 95, 77, 47, 67, 69, 83, 72,
+ 83, 66, 76, 88, 46,~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 815--815
+[]\TU/lmtt/m/n/10 ## $ act        <dbl> 20, 20, 19, 23, 28, 23, 28, 20, 22, 24,
+ 27, 21, 23, 27, 21,~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 815--815
+[]\TU/lmtt/m/n/10 ## $ year       <dbl> 1996, 1996, 1996, 1996, 1996, 1996, 199
+6, 1996, 1996, 1996,~[] 
+ []
+
+[22] [23] [24] [25] [26] [27]
+Overfull \hbox (31.51936pt too wide) detected at line 1124
+[]   [] [] [] [] [][]    [][]
+ []
+
+[28]
+Overfull \hbox (12.0pt too wide) in paragraph at lines 1152--1152
+[]\TU/lmtt/m/n/10 ##   Variable   value_Mean value_SD value_Min value_Median va
+lue_Max[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 1152--1152
+[]\TU/lmtt/m/n/10 ##   <chr>           <dbl>    <dbl>     <dbl>        <dbl>   
+  <dbl>[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 1152--1152
+[]\TU/lmtt/m/n/10 ## 1 act             24.5     4.01      13           25      
+     35[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 1152--1152
+[]\TU/lmtt/m/n/10 ## 2 gpa.endyr1       2.98    0.635      0.51         3.05   
+      4[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 1152--1152
+[]\TU/lmtt/m/n/10 ## 3 hs.pct          77.0    18.6        4           81      
+     99[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 1152--1152
+[]\TU/lmtt/m/n/10 ## 4 id             353     204.         1          353      
+    705[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 1152--1152
+[]\TU/lmtt/m/n/10 ## 5 year          1998       1.40    1996         1998      
+   2000[] 
+ []
+
+
+Package natbib Warning: Citation `R-tidyr' on page 29 undefined on input line 1
+159.
+
+[29]
+Underfull \hbox (badness 1533) in paragraph at lines 1170--1171
+\TU/lmr/m/n/10 a list of summary statistics (hence, \TU/lmtt/m/n/10 list(Mean=m
+ean, SD=sd, Min=min,
+ []
+
+[30]
+Overfull \hbox (12.0pt too wide) in paragraph at lines 1255--1255
+[]\TU/lmtt/m/n/10 ##   Variable   value_Mean value_SD value_Min value_Median va
+lue_Max[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 1255--1255
+[]\TU/lmtt/m/n/10 ##   <chr>           <dbl>    <dbl>     <dbl>        <dbl>   
+  <dbl>[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 1255--1255
+[]\TU/lmtt/m/n/10 ## 1 act             24.5     4.01      13           25      
+     35[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 1255--1255
+[]\TU/lmtt/m/n/10 ## 2 gpa.endyr1       2.98    0.635      0.51         3.05   
+      4[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 1255--1255
+[]\TU/lmtt/m/n/10 ## 3 hs.pct          77.0    18.6        4           81      
+     99[] 
+ []
+
+[31]
+
+Package natbib Warning: Citation `R-tidyverse' on page 32 undefined on input li
+ne 1279.
+
+
+Package natbib Warning: Citation `Wickham2017R' on page 32 undefined on input l
+ine 1281.
+
+
+Package natbib Warning: Citation `R-GGally' on page 32 undefined on input line 
+1286.
+
+
+LaTeX Warning: Reference `fig:ch1-17' on page 32 undefined on input line 1286.
+
+File: introStatModeling_files/figure-latex/ch1-17-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch1-17-1.pdf>
+
+Underfull \hbox (badness 1783) in paragraph at lines 1301--1301
+[]\TU/lmr/m/n/10 Figure 1.1: []Pairs plot showing the relationship between the 
+variables
+ []
+
+
+LaTeX Warning: Reference `fig:ch1-17' on page 32 undefined on input line 1309.
+
+[32] [33]
+
+Package natbib Warning: Citation `R-ggplot2' on page 34 undefined on input line
+ 1325.
+
+
+Package natbib Warning: Citation `R-tidyverse' on page 34 undefined on input li
+ne 1325.
+
+
+LaTeX Warning: Reference `fig:ch1-18' on page 34 undefined on input line 1327.
+
+File: introStatModeling_files/figure-latex/ch1-18-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch1-18-1.pdf>
+[34]
+
+LaTeX Warning: Reference `fig:ch1-20' on page 35 undefined on input line 1422.
+
+File: introStatModeling_files/figure-latex/ch1-20-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch1-20-1.pdf>
+[35]
+File: introStatModeling_files/figure-latex/ch1-20a-1.pdf Graphic file (type pdf
+)
+<use introStatModeling_files/figure-latex/ch1-20a-1.pdf>
+
+LaTeX Warning: Reference `fig:ch1-20' on page 36 undefined on input line 1473.
+
+
+LaTeX Warning: Reference `fig:ch1-20a' on page 36 undefined on input line 1473.
+
+
+
+LaTeX Warning: Reference `fig:ch1-21' on page 36 undefined on input line 1480.
+
+File: introStatModeling_files/figure-latex/ch1-21-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch1-21-1.pdf>
+[36] [37]
+
+LaTeX Warning: Reference `fig:ch1-22' on page 38 undefined on input line 1505.
+
+File: introStatModeling_files/figure-latex/ch1-22-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch1-22-1.pdf>
+
+LaTeX Warning: Reference `fig:ch1-23' on page 38 undefined on input line 1533.
+
+
+LaTeX Warning: Reference `fig:ch1-23a' on page 38 undefined on input line 1533.
+
+
+[38]
+File: introStatModeling_files/figure-latex/ch1-23-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch1-23-1.pdf>
+
+LaTeX Warning: Reference `fig:ch1-23a' on page 39 undefined on input line 1555.
+
+
+File: introStatModeling_files/figure-latex/ch1-23a-1.pdf Graphic file (type pdf
+)
+<use introStatModeling_files/figure-latex/ch1-23a-1.pdf>
+[39]
+
+Package natbib Warning: Citation `R-knitr' on page 40 undefined on input line 1
+622.
+
+
+Package natbib Warning: Citation `R-kableExtra' on page 40 undefined on input l
+ine 1623.
+
+[40]
+
+LaTeX Warning: Reference `fig:ch1-17' on page 41 undefined on input line 1682.
+
+
+Underfull \vbox (badness 3219) has occurred while \output is active []
+
+[41]
+
+LaTeX Warning: Reference `fig:ch1-17' on page 42 undefined on input line 1706.
+
+File: introStatModeling_files/figure-latex/ch1-25-scatter-1.pdf Graphic file (t
+ype pdf)
+<use introStatModeling_files/figure-latex/ch1-25-scatter-1.pdf>
+
+LaTeX Warning: Reference `fig:ch1-25-scatter' on page 42 undefined on input lin
+e 1731.
+
+[42]
+
+LaTeX Warning: Reference `fig:ch1-25-jitter' on page 43 undefined on input line
+ 1734.
+
+File: introStatModeling_files/figure-latex/ch1-25-jitter-1.pdf Graphic file (ty
+pe pdf)
+<use introStatModeling_files/figure-latex/ch1-25-jitter-1.pdf>
+
+Overfull \hbox (25.75452pt too wide) has occurred while \output is active
+\TU/lmr/m/sl/10 1.7.  SAMPLING DISTRIBUTIONS: DESCRIBING HOW A STATISTIC VARIES
+ \TU/lmr/m/n/10 43
+ []
+
+[43]
+
+LaTeX Warning: Reference `fig:ch1-26' on page 44 undefined on input line 1797.
+
+[44]
+File: introStatModeling_files/figure-latex/ch1-26-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch1-26-1.pdf>
+[45]
+Overfull \hbox (195.75pt too wide) in paragraph at lines 1865--1865
+[]\TU/lmtt/m/n/10 ## alternative hypothesis: true difference in means between g
+roup 1996 and group 2000 is greater than 0[] 
+ []
+
+[46]
+Overfull \hbox (0.14001pt too wide) in paragraph at lines 1880--1882
+[]\TU/lmr/m/n/10 We specify the data set to be used to perform the test (\TU/lm
+tt/m/n/10 data=uadata.trim\TU/lmr/m/n/10 ). 
+ []
+
+
+Overfull \hbox (3.91002pt too wide) in paragraph at lines 1882--1884
+[]\TU/lmr/m/n/10 We specify the confidence level (by default it is 0.95) with \
+TU/lmtt/m/n/10 conf.level=0.98
+ []
+
+[47] [48
+
+]
+Chapter 2.
+[49]
+Overfull \hbox (15.22562pt too wide) has occurred while \output is active
+\TU/lmr/m/n/10 50 \TU/lmr/m/sl/10 CHAPTER 2.  STATISTICAL MODELING AND DESIGNED
+ EXPERIMENTS
+ []
+
+[50] [51]
+Overfull \hbox (15.22562pt too wide) has occurred while \output is active
+\TU/lmr/m/n/10 52 \TU/lmr/m/sl/10 CHAPTER 2.  STATISTICAL MODELING AND DESIGNED
+ EXPERIMENTS
+ []
+
+[52] [53]
+Overfull \hbox (15.22562pt too wide) has occurred while \output is active
+\TU/lmr/m/n/10 54 \TU/lmr/m/sl/10 CHAPTER 2.  STATISTICAL MODELING AND DESIGNED
+ EXPERIMENTS
+ []
+
+[54] [55]
+Underfull \vbox (badness 2698) has occurred while \output is active []
+
+
+Overfull \hbox (15.22562pt too wide) has occurred while \output is active
+\TU/lmr/m/n/10 56 \TU/lmr/m/sl/10 CHAPTER 2.  STATISTICAL MODELING AND DESIGNED
+ EXPERIMENTS
+ []
+
+[56]
+
+Package natbib Warning: Citation `KutnerText' on page 57 undefined on input lin
+e 2174.
+
+
+Overfull \hbox (195.75pt too wide) in paragraph at lines 2209--2209
+[]\TU/lmtt/m/n/10 ## alternative hypothesis: true difference in means between g
+roup 1996 and group 2000 is not equal to 0[] 
+ []
+
+[57]
+
+LaTeX Warning: Reference `eq:baseModel' on page 58 undefined on input line 2233
+.
+
+
+Overfull \hbox (15.22562pt too wide) has occurred while \output is active
+\TU/lmr/m/n/10 58 \TU/lmr/m/sl/10 CHAPTER 2.  STATISTICAL MODELING AND DESIGNED
+ EXPERIMENTS
+ []
+
+[58]
+
+LaTeX Warning: Reference `eq:baseModel' on page 59 undefined on input line 2251
+.
+
+
+LaTeX Warning: Reference `eq:baseModel' on page 59 undefined on input line 2269
+.
+
+[59]
+Overfull \hbox (15.22562pt too wide) has occurred while \output is active
+\TU/lmr/m/n/10 60 \TU/lmr/m/sl/10 CHAPTER 2.  STATISTICAL MODELING AND DESIGNED
+ EXPERIMENTS
+ []
+
+[60]
+Missing character: There is no 𝜇 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 𝜇 in font [lmroman10-regular]:mapping=tex-text;!
+Missing character: There is no 𝛿 in font [lmroman10-regular]:mapping=tex-text;!
+[61]
+
+LaTeX Warning: Reference `eq:baseModel' on page 62 undefined on input line 2374
+.
+
+
+Overfull \hbox (73.67607pt too wide) detected at line 2386
+[] [] [] [] []
+ []
+
+
+LaTeX Warning: Reference `variabilityDiscussion' on page 62 undefined on input 
+line 2387.
+
+
+Overfull \hbox (15.22562pt too wide) has occurred while \output is active
+\TU/lmr/m/n/10 62 \TU/lmr/m/sl/10 CHAPTER 2.  STATISTICAL MODELING AND DESIGNED
+ EXPERIMENTS
+ []
+
+[62]
+
+LaTeX Warning: Reference `regInferenceChp' on page 63 undefined on input line 2
+411.
+
+
+Package natbib Warning: Citation `Walpole2007' on page 63 undefined on input li
+ne 2423.
+
+
+Package natbib Warning: Citation `Wesson1976' on page 63 undefined on input lin
+e 2429.
+
+
+Overfull \vbox (0.9529pt too high) detected at line 2439
+ []
+
+[63]
+Overfull \hbox (85.5pt too wide) in paragraph at lines 2446--2446
+[]\TU/lmtt/m/n/10 ## $ Drug           <chr> "A", "A", "A", "A", "A", "A", "A", 
+"A", "A", "A", "B", ~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 2446--2446
+[]\TU/lmtt/m/n/10 ## $ Knockdown_time <dbl> 11, 5, 14, 7, 10, 7, 23, 4, 11, 11,
+ 10, 7, 16, 7, 7, 5,~[] 
+ []
+
+File: introStatModeling_files/figure-latex/ch2-8-1.pdf Graphic file (type pdf)
+<use introStatModeling_files/figure-latex/ch2-8-1.pdf>
+
+Overfull \hbox (15.22562pt too wide) has occurred while \output is active
+\TU/lmr/m/n/10 64 \TU/lmr/m/sl/10 CHAPTER 2.  STATISTICAL MODELING AND DESIGNED
+ EXPERIMENTS
+ []
+
+[64]
+
+LaTeX Warning: Reference `eq:onewayAnovaModel' on page 65 undefined on input li
+ne 2516.
+
+
+LaTeX Warning: Reference `dataTypesSection' on page 65 undefined on input line 
+2527.
+
+
+LaTeX Warning: Reference `eq:onewayAnovaLinearModel' on page 65 undefined on in
+put line 2541.
+
+[65]
+Overfull \hbox (17.25pt too wide) in paragraph at lines 2556--2556
+[]\TU/lmtt/m/n/10 ##  [5] "fitted.values" "assign"        "qr"            "df.r
+esidual"[] 
+ []
+
+
+LaTeX Warning: Reference `eq:onewayAnovaLinearModel' on page 66 undefined on in
+put line 2561.
+
+
+LaTeX Warning: Reference `eq:onewayAnovaLinearModel' on page 66 undefined on in
+put line 2575.
+
+
+LaTeX Warning: Reference `eq:onewayAnovaLinearModel' on page 66 undefined on in
+put line 2576.
+
+
+LaTeX Warning: Reference `eq:twoSampleTtest' on page 66 undefined on input line
+ 2601.
+
+
+LaTeX Warning: Reference `eq:onewayAnovaModel' on page 66 undefined on input li
+ne 2601.
+
+
+Underfull \vbox (badness 2050) has occurred while \output is active []
+
+
+Overfull \hbox (15.22562pt too wide) has occurred while \output is active
+\TU/lmr/m/n/10 66 \TU/lmr/m/sl/10 CHAPTER 2.  STATISTICAL MODELING AND DESIGNED
+ EXPERIMENTS
+ []
+
+[66]
+
+LaTeX Warning: Reference `within-subject-designs' on page 67 undefined on input
+ line 2635.
+
+
+LaTeX Warning: Reference `fig:ch2-10' on page 67 undefined on input line 2640.
+
+[67]
+File: introStatModeling_files/figure-latex/ch2-10-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch2-10-1.pdf>
+
+LaTeX Warning: Reference `eq:baseModel' on page 68 undefined on input line 2653
+.
+
+
+LaTeX Warning: Reference `eq:onewayAnovaModel' on page 68 undefined on input li
+ne 2658.
+
+
+LaTeX Warning: Reference `fig:ch2-10' on page 68 undefined on input line 2664.
+
+
+Overfull \hbox (15.22562pt too wide) has occurred while \output is active
+\TU/lmr/m/n/10 68 \TU/lmr/m/sl/10 CHAPTER 2.  STATISTICAL MODELING AND DESIGNED
+ EXPERIMENTS
+ []
+
+[68]
+
+LaTeX Warning: Reference `fig:ch2-10' on page 69 undefined on input line 2670.
+
+File: introStatModeling_files/figure-latex/ch2-11-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch2-11-1.pdf>
+[69]
+
+LaTeX Warning: Reference `fig:ch2-11' on page 70 undefined on input line 2697.
+
+
+LaTeX Warning: Reference `fig:ch2-11' on page 70 undefined on input line 2701.
+
+
+Package natbib Warning: Citation `R-ggfortify' on page 70 undefined on input li
+ne 2710.
+
+
+LaTeX Warning: Reference `fig:ch2-12' on page 70 undefined on input line 2711.
+
+
+LaTeX Warning: Reference `detecting-and-dealing-with-unusual-observations' on p
+age 70 undefined on input line 2711.
+
+File: introStatModeling_files/figure-latex/ch2-12-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch2-12-1.pdf>
+
+LaTeX Warning: Reference `fig:ch2-12' on page 70 undefined on input line 2735.
+
+
+Overfull \hbox (15.22562pt too wide) has occurred while \output is active
+\TU/lmr/m/n/10 70 \TU/lmr/m/sl/10 CHAPTER 2.  STATISTICAL MODELING AND DESIGNED
+ EXPERIMENTS
+ []
+
+[70] [71]
+
+LaTeX Warning: Reference `fig:ch2-13' on page 72 undefined on input line 2755.
+
+File: introStatModeling_files/figure-latex/ch2-13-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch2-13-1.pdf>
+
+Overfull \hbox (15.22562pt too wide) has occurred while \output is active
+\TU/lmr/m/n/10 72 \TU/lmr/m/sl/10 CHAPTER 2.  STATISTICAL MODELING AND DESIGNED
+ EXPERIMENTS
+ []
+
+[72]
+
+LaTeX Warning: Reference `eq:onewayAnovaModel' on page 73 undefined on input li
+ne 2822.
+
+
+LaTeX Warning: Reference `eq:twoSampleTtest' on page 73 undefined on input line
+ 2826.
+
+[73]
+Overfull \hbox (15.22562pt too wide) has occurred while \output is active
+\TU/lmr/m/n/10 74 \TU/lmr/m/sl/10 CHAPTER 2.  STATISTICAL MODELING AND DESIGNED
+ EXPERIMENTS
+ []
+
+[74]
+
+Package natbib Warning: Citation `R-broom' on page 75 undefined on input line 2
+891.
+
+[75]
+
+LaTeX Warning: Reference `eq:anovaDecomp' on page 76 undefined on input line 29
+35.
+
+
+Overfull \hbox (15.22562pt too wide) has occurred while \output is active
+\TU/lmr/m/n/10 76 \TU/lmr/m/sl/10 CHAPTER 2.  STATISTICAL MODELING AND DESIGNED
+ EXPERIMENTS
+ []
+
+[76] [77]
+Overfull \hbox (15.22562pt too wide) has occurred while \output is active
+\TU/lmr/m/n/10 78 \TU/lmr/m/sl/10 CHAPTER 2.  STATISTICAL MODELING AND DESIGNED
+ EXPERIMENTS
+ []
+
+[78]
+
+Package natbib Warning: Citation `R-emmeans' on page 79 undefined on input line
+ 3066.
+
+
+Overfull \hbox (38.25pt too wide) in paragraph at lines 3098--3098
+[]\TU/lmtt/m/n/10 ## P value adjustment: tukey method for comparing a family of
+ 3 estimates[] 
+ []
+
+[79]
+Overfull \hbox (54.0pt too wide) in paragraph at lines 3121--3121
+[]\TU/lmtt/m/n/10 ## Conf-level adjustment: tukey method for comparing a family
+ of 3 estimates[] 
+ []
+
+File: introStatModeling_files/figure-latex/ch2-17-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch2-17-1.pdf>
+
+Overfull \hbox (15.22562pt too wide) has occurred while \output is active
+\TU/lmr/m/n/10 80 \TU/lmr/m/sl/10 CHAPTER 2.  STATISTICAL MODELING AND DESIGNED
+ EXPERIMENTS
+ []
+
+[80]
+Overfull \hbox (38.25pt too wide) in paragraph at lines 3181--3181
+[]\TU/lmtt/m/n/10 ## P value adjustment: tukey method for comparing a family of
+ 3 estimates[] 
+ []
+
+[81]
+Overfull \hbox (54.0pt too wide) in paragraph at lines 3200--3200
+[]\TU/lmtt/m/n/10 ## Conf-level adjustment: tukey method for comparing a family
+ of 3 estimates[] 
+ []
+
+File: introStatModeling_files/figure-latex/ch2-17a-1.pdf Graphic file (type pdf
+)
+<use introStatModeling_files/figure-latex/ch2-17a-1.pdf>
+
+Overfull \hbox (15.22562pt too wide) has occurred while \output is active
+\TU/lmr/m/n/10 82 \TU/lmr/m/sl/10 CHAPTER 2.  STATISTICAL MODELING AND DESIGNED
+ EXPERIMENTS
+ []
+
+[82]
+File: introStatModeling_files/figure-latex/ch2-19-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch2-19-1.pdf>
+[83]
+LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <12> not available
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 3308.
+
+LaTeX Warning: Reference `fig:ch2emmInt' on page 84 undefined on input line 333
+5.
+
+File: introStatModeling_files/figure-latex/ch2emmInt-1.pdf Graphic file (type p
+df)
+<use introStatModeling_files/figure-latex/ch2emmInt-1.pdf>
+
+Overfull \hbox (15.22562pt too wide) has occurred while \output is active
+\TU/lmr/m/n/10 84 \TU/lmr/m/sl/10 CHAPTER 2.  STATISTICAL MODELING AND DESIGNED
+ EXPERIMENTS
+ []
+
+[84]
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 14.4pt on input line 3382.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 14.4013pt on input line 3382.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 14.39845pt on input line 3382.
+[85]
+File: introStatModeling_files/figure-latex/uadataPlot-1.pdf Graphic file (type 
+pdf)
+<use introStatModeling_files/figure-latex/uadataPlot-1.pdf>
+
+LaTeX Warning: Reference `fig:uadataPlot' on page 86 undefined on input line 34
+20.
+
+File: introStatModeling_files/figure-latex/uadataResiduals-1.pdf Graphic file (
+type pdf)
+<use introStatModeling_files/figure-latex/uadataResiduals-1.pdf>
+
+Overfull \hbox (15.22562pt too wide) has occurred while \output is active
+\TU/lmr/m/n/10 86 \TU/lmr/m/sl/10 CHAPTER 2.  STATISTICAL MODELING AND DESIGNED
+ EXPERIMENTS
+ []
+
+[86] [87]
+Overfull \hbox (195.75pt too wide) in paragraph at lines 3489--3489
+[]\TU/lmtt/m/n/10 ## alternative hypothesis: true difference in means between g
+roup 1996 and group 2000 is not equal to 0[] 
+ []
+
+
+Package natbib Warning: Citation `Devore2011' on page 88 undefined on input lin
+e 3511.
+
+
+Overfull \hbox (15.22562pt too wide) has occurred while \output is active
+\TU/lmr/m/n/10 88 \TU/lmr/m/sl/10 CHAPTER 2.  STATISTICAL MODELING AND DESIGNED
+ EXPERIMENTS
+ []
+
+[88]
+
+Package natbib Warning: Citation `StehmanMeredith1995' on page 89 undefined on 
+input line 3521.
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 3538--3538
+[]\TU/lmtt/m/n/10 ## $ BudBreaking <dbl> 0.8, 0.6, 0.8, 1.0, 0.8, 1.0, 1.0, 1.2
+, 1.4, 1.2, 1.0, 1.2~[] 
+ []
+
+
+Overfull \hbox (80.25pt too wide) in paragraph at lines 3538--3538
+[]\TU/lmtt/m/n/10 ## $ Treatment   <dbl> 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 2, 2, 2,
+ 2, 2, 0, 0, 0, 0, 0[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 3558--3558
+[]\TU/lmtt/m/n/10 ## $ BudBreaking <dbl> 0.8, 0.6, 0.8, 1.0, 0.8, 1.0, 1.0, 1.2
+, 1.4, 1.2, 1.0, 1.2~[] 
+ []
+
+
+Overfull \hbox (80.25pt too wide) in paragraph at lines 3558--3558
+[]\TU/lmtt/m/n/10 ## $ Treatment   <fct> 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 2, 2, 2,
+ 2, 2, 0, 0, 0, 0, 0[] 
+ []
+
+[89]
+
+LaTeX Warning: Reference `fig:ch2-24' on page 90 undefined on input line 3614.
+
+File: introStatModeling_files/figure-latex/ch2-24-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch2-24-1.pdf>
+
+LaTeX Warning: Reference `fig:ch2-24' on page 90 undefined on input line 3636.
+
+
+Underfull \vbox (badness 1221) has occurred while \output is active []
+
+
+Overfull \hbox (15.22562pt too wide) has occurred while \output is active
+\TU/lmr/m/n/10 90 \TU/lmr/m/sl/10 CHAPTER 2.  STATISTICAL MODELING AND DESIGNED
+ EXPERIMENTS
+ []
+
+[90]
+
+LaTeX Warning: Reference `fig:ch2-26' on page 91 undefined on input line 3646.
+
+File: introStatModeling_files/figure-latex/ch2-26-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch2-26-1.pdf>
+
+Underfull \hbox (badness 10000) in paragraph at lines 3669--3671
+
+ []
+
+[91]
+Overfull \hbox (33.0pt too wide) in paragraph at lines 3709--3709
+[]\TU/lmtt/m/n/10 ##  contrast                          estimate     SE df t.ra
+tio p.value[] 
+ []
+
+
+Overfull \hbox (33.0pt too wide) in paragraph at lines 3709--3709
+[]\TU/lmtt/m/n/10 ##  Neutral & Diseased Seed - Control    -0.12 0.0938 16  -1.
+279  0.4589[] 
+ []
+
+
+Overfull \hbox (33.0pt too wide) in paragraph at lines 3709--3709
+[]\TU/lmtt/m/n/10 ##  Acid & Healthy Seed - Control        -0.04 0.0938 16  -0.
+426  0.9254[] 
+ []
+
+
+Overfull \hbox (33.0pt too wide) in paragraph at lines 3709--3709
+[]\TU/lmtt/m/n/10 ##  Acid & Diseased Seed - Control       -0.48 0.0938 16  -5.
+117  0.0003[] 
+ []
+
+
+LaTeX Warning: Reference `fig:ch2-24' on page 92 undefined on input line 3711.
+
+
+Overfull \hbox (43.5pt too wide) in paragraph at lines 3729--3729
+[]\TU/lmtt/m/n/10 ##  contrast                          estimate     SE df lowe
+r.CL upper.CL[] 
+ []
+
+
+Overfull \hbox (43.5pt too wide) in paragraph at lines 3729--3729
+[]\TU/lmtt/m/n/10 ##  Neutral & Diseased Seed - Control    -0.12 0.0938 16   -0
+.365    0.125[] 
+ []
+
+
+Overfull \hbox (43.5pt too wide) in paragraph at lines 3729--3729
+[]\TU/lmtt/m/n/10 ##  Acid & Healthy Seed - Control        -0.04 0.0938 16   -0
+.285    0.205[] 
+ []
+
+
+Overfull \hbox (43.5pt too wide) in paragraph at lines 3729--3729
+[]\TU/lmtt/m/n/10 ##  Acid & Diseased Seed - Control       -0.48 0.0938 16   -0
+.725   -0.235[] 
+ []
+
+
+Overfull \hbox (15.22562pt too wide) has occurred while \output is active
+\TU/lmr/m/n/10 92 \TU/lmr/m/sl/10 CHAPTER 2.  STATISTICAL MODELING AND DESIGNED
+ EXPERIMENTS
+ []
+
+[92]
+File: introStatModeling_files/figure-latex/ch2-29-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch2-29-1.pdf>
+
+LaTeX Warning: Reference `fig:ch2-29' on page 93 undefined on input line 3749.
+
+[93]
+Overfull \hbox (15.22562pt too wide) has occurred while \output is active
+\TU/lmr/m/n/10 94 \TU/lmr/m/sl/10 CHAPTER 2.  STATISTICAL MODELING AND DESIGNED
+ EXPERIMENTS
+ []
+
+[94
+
+]
+Chapter 3.
+
+LaTeX Warning: Reference `fig:ch3-field' on page 95 undefined on input line 378
+8.
+
+[95]
+File: chap3_field.png Graphic file (type bmp)
+<chap3_field.png>
+
+LaTeX Warning: Reference `fig:ch3-field-random' on page 96 undefined on input l
+ine 3803.
+
+File: chap3_field_randomized.png Graphic file (type bmp)
+<chap3_field_randomized.png>
+
+LaTeX Warning: Reference `fig:ch3-field-random' on page 96 undefined on input l
+ine 3814.
+
+
+LaTeX Warning: Reference `fig:ch3-field' on page 96 undefined on input line 382
+1.
+
+
+LaTeX Warning: Reference `fig:ch3-field-random' on page 96 undefined on input l
+ine 3821.
+
+[96] [97]
+
+LaTeX Warning: Reference `fig:ch3-field-block' on page 98 undefined on input li
+ne 3856.
+
+File: chap3_field_blocked.png Graphic file (type bmp)
+<chap3_field_blocked.png>
+
+LaTeX Warning: Reference `paired-t-test' on page 98 undefined on input line 387
+2.
+
+[98] [99]
+
+Package natbib Warning: Citation `Fisher1935' on page 100 undefined on input li
+ne 3921.
+
+
+Package natbib Warning: Citation `ImmerHayesPowers1934' on page 100 undefined o
+n input line 3926.
+
+[100]
+Overfull \hbox (85.5pt too wide) in paragraph at lines 3957--3957
+[]\TU/lmtt/m/n/10 ## $ Yield        <dbl> 81.0, 80.7, 146.6, 100.4, 82.3, 103.1
+, 119.8, 98.9, 98.9,~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 3957--3957
+[]\TU/lmtt/m/n/10 ## $ Variety      <chr> "Manchuria", "Manchuria", "Manchuria"
+, "Manchuria", "Manc~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 3957--3957
+[]\TU/lmtt/m/n/10 ## $ LocationYear <chr> "L1-31", "L1-32", "L2-31", "L2-32", "
+L3-31", "L3-32", "L4~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 3957--3957
+[]\TU/lmtt/m/n/10 ## $ Location     <chr> "University Farm", "University Farm",
+ "Waseca", "Waseca",~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 3957--3957
+[]\TU/lmtt/m/n/10 ## $ Year         <dbl> 1931, 1932, 1931, 1932, 1931, 1932, 1
+931, 1932, 1931, 193~[] 
+ []
+
+File: introStatModeling_files/figure-latex/ch3-3-1.pdf Graphic file (type pdf)
+<use introStatModeling_files/figure-latex/ch3-3-1.pdf>
+
+Package natbib Warning: Citation `R-gridExtra' on page 101 undefined on input l
+ine 3989.
+
+
+LaTeX Warning: Reference `fig:ch3-3' on page 101 undefined on input line 3990.
+
+[101]
+
+LaTeX Warning: Reference `fig:ch2-7' on page 102 undefined on input line 3999.
+
+
+LaTeX Warning: Reference `paired-t-test' on page 102 undefined on input line 39
+99.
+
+File: introStatModeling_files/figure-latex/ch3-3profile-1.pdf Graphic file (typ
+e pdf)
+<use introStatModeling_files/figure-latex/ch3-3profile-1.pdf>
+
+LaTeX Warning: Reference `fig:ch3-3profile' on page 102 undefined on input line
+ 4021.
+
+
+LaTeX Warning: Reference `fig:ch3-ImprovedProfile' on page 102 undefined on inp
+ut line 4024.
+
+[102]
+File: introStatModeling_files/figure-latex/ch3-ImprovedProfile-1.pdf Graphic fi
+le (type pdf)
+<use introStatModeling_files/figure-latex/ch3-ImprovedProfile-1.pdf>
+
+LaTeX Warning: Reference `fig:ch3-3profile' on page 103 undefined on input line
+ 4045.
+
+
+LaTeX Warning: Reference `fig:ch3-ImprovedProfile' on page 103 undefined on inp
+ut line 4045.
+
+
+LaTeX Warning: Reference `fig:ch3-4' on page 103 undefined on input line 4051.
+
+File: introStatModeling_files/figure-latex/ch3-4-1.pdf Graphic file (type pdf)
+<use introStatModeling_files/figure-latex/ch3-4-1.pdf>
+[103] [104]
+File: introStatModeling_files/figure-latex/ch3-5a-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch3-5a-1.pdf>
+
+LaTeX Warning: Reference `fig:ch3-5a' on page 105 undefined on input line 4124.
+
+
+[105]
+
+Package natbib Warning: Citation `Walpole2007' on page 106 undefined on input l
+ine 4134.
+
+
+Package natbib Warning: Citation `Hall1975' on page 106 undefined on input line
+ 4140.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 4168--4169
+\TU/lmr/m/n/10 repository (\TU/lmtt/m/n/10 https://tjfisher19.github.io/introSt
+atModeling/data/\TU/lmr/m/n/10 ).
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 4183--4183
+[]\TU/lmtt/m/n/10 ## $ Subject   <dbl> 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5
+, 5, 6, 6, 6, 7, 7, ~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 4183--4183
+[]\TU/lmtt/m/n/10 ## $ Treatment <chr> "Control", "Self-induced", "Therapist", 
+"Control", "Self-ind~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 4183--4183
+[]\TU/lmtt/m/n/10 ## $ WtChanges <dbl> 1.00, -2.25, -10.50, 3.75, -6.00, -13.50
+, 0.00, -2.00, 0.75,~[] 
+ []
+
+[106]
+
+LaTeX Warning: Reference `fig:ch3-WeightPprofiles' on page 107 undefined on inp
+ut line 4189.
+
+File: introStatModeling_files/figure-latex/ch3-WeightPprofiles-1.pdf Graphic fi
+le (type pdf)
+<use introStatModeling_files/figure-latex/ch3-WeightPprofiles-1.pdf>
+
+LaTeX Warning: Reference `fig:ch3-WeightPprofiles' on page 107 undefined on inp
+ut line 4210.
+
+
+LaTeX Warning: Reference `fig:ch3-weightlossANOVA' on page 107 undefined on inp
+ut line 4213.
+
+File: introStatModeling_files/figure-latex/ch3-weightlossANOVA-1.pdf Graphic fi
+le (type pdf)
+<use introStatModeling_files/figure-latex/ch3-weightlossANOVA-1.pdf>
+[107] [108]
+File: introStatModeling_files/figure-latex/ch3-WeightMC-1.pdf Graphic file (typ
+e pdf)
+<use introStatModeling_files/figure-latex/ch3-WeightMC-1.pdf>
+
+LaTeX Warning: Reference `fig:ch3-WeightMC' on page 109 undefined on input line
+ 4271.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[109] [110]
+
+Package natbib Warning: Citation `WeissText' on page 111 undefined on input lin
+e 4356.
+
+
+Package natbib Warning: Citation `Younes1994' on page 111 undefined on input li
+ne 4362.
+
+[111]
+Overfull \hbox (85.5pt too wide) in paragraph at lines 4383--4383
+[]\TU/lmtt/m/n/10 ## $ Distance <dbl> 2503, 1929, 1512, 2774, 2187, 2288, 3354,
+ 2920, 2928, 2427, 2~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 4383--4383
+[]\TU/lmtt/m/n/10 ## $ Size     <chr> "Small", "Small", "Small", "Medium", "Med
+ium", "Medium", "Lar~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 4383--4383
+[]\TU/lmtt/m/n/10 ## $ Material <dbl> 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2,
+ 3, 1, 2, 3, 1, 2, 3~[] 
+ []
+
+File: introStatModeling_files/figure-latex/ch3-6-1.pdf Graphic file (type pdf)
+<use introStatModeling_files/figure-latex/ch3-6-1.pdf>
+
+LaTeX Warning: Reference `fig:ch3-6' on page 112 undefined on input line 4420.
+
+[112]
+
+LaTeX Warning: Reference `fig:ch3-7' on page 113 undefined on input line 4425.
+
+File: introStatModeling_files/figure-latex/ch3-7-1.pdf Graphic file (type pdf)
+<use introStatModeling_files/figure-latex/ch3-7-1.pdf>
+[113] [114]
+
+LaTeX Warning: Reference `fig:ch3-10' on page 115 undefined on input line 4515.
+
+
+File: introStatModeling_files/figure-latex/ch3-10-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch3-10-1.pdf>
+[115]
+Overfull \hbox (54.0pt too wide) in paragraph at lines 4589--4589
+[]\TU/lmtt/m/n/10 ## Conf-level adjustment: tukey method for comparing a family
+ of 3 estimates[] 
+ []
+
+
+Overfull \hbox (54.0pt too wide) in paragraph at lines 4611--4611
+[]\TU/lmtt/m/n/10 ## Conf-level adjustment: tukey method for comparing a family
+ of 3 estimates[] 
+ []
+
+[116]
+
+Package natbib Warning: Citation `Crampton-1947' on page 117 undefined on input
+ line 4618.
+
+
+Package natbib Warning: Citation `R-base' on page 117 undefined on input line 4
+641.
+
+
+LaTeX Warning: Reference `fig:ch3-15' on page 117 undefined on input line 4661.
+
+
+File: introStatModeling_files/figure-latex/ch3-15-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch3-15-1.pdf>
+[117]
+
+LaTeX Warning: Reference `fig:ch3-16' on page 118 undefined on input line 4695.
+
+
+File: introStatModeling_files/figure-latex/ch3-16-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch3-16-1.pdf>
+[118] [119] [120]
+Overfull \hbox (38.25pt too wide) in paragraph at lines 4807--4807
+[]\TU/lmtt/m/n/10 ## P value adjustment: tukey method for comparing a family of
+ 3 estimates[] 
+ []
+
+[121]
+File: introStatModeling_files/figure-latex/ch3-19-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch3-19-1.pdf>
+[122]
+Chapter 4.
+
+Package natbib Warning: Citation `KutnerText' on page 123 undefined on input li
+ne 4902.
+
+[123
+
+] [124] [125] [126]
+
+Package natbib Warning: Citation `WeissText' on page 127 undefined on input lin
+e 5099.
+
+[127] [128] [129]
+Overfull \hbox (80.25pt too wide) in paragraph at lines 5231--5231
+[][]\TU/lmtt/m/n/10 aov(response ~ between-subjects factor structure + Error(EU
+ variable/WS factor)[][] 
+ []
+
+
+Package natbib Warning: Citation `sheffield2021' on page 130 undefined on input
+ line 5265.
+
+[130]
+Overfull \hbox (85.5pt too wide) in paragraph at lines 5301--5301
+[]\TU/lmtt/m/n/10 ## $ ID          <dbl> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
+ 13, 14, 15, 16, 17,~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 5301--5301
+[]\TU/lmtt/m/n/10 ## $ Before      <dbl> 6.42, 6.76, 6.56, 4.80, 8.43, 7.49, 8.
+05, 5.05, 5.77, 3.91~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 5301--5301
+[]\TU/lmtt/m/n/10 ## $ After4weeks <dbl> 5.83, 6.20, 5.83, 4.27, 7.71, 7.12, 7.
+25, 4.63, 5.31, 3.70~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 5301--5301
+[]\TU/lmtt/m/n/10 ## $ After8weeks <dbl> 5.75, 6.13, 5.71, 4.15, 7.67, 7.05, 7.
+10, 4.67, 5.33, 3.66~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 5301--5301
+[]\TU/lmtt/m/n/10 ## $ Margarine   <chr> "B", "A", "B", "A", "B", "A", "B", "A"
+, "B", "A", "B", "B"~[] 
+ []
+
+[131]
+
+LaTeX Warning: Reference `fig:ch4-7' on page 132 undefined on input line 5387.
+
+File: introStatModeling_files/figure-latex/ch4-7-1.pdf Graphic file (type pdf)
+<use introStatModeling_files/figure-latex/ch4-7-1.pdf>
+
+LaTeX Warning: Reference `fig:ch4-7' on page 132 undefined on input line 5408.
+
+
+LaTeX Warning: Reference `fig:ch4-8' on page 132 undefined on input line 5410.
+
+[132]
+File: introStatModeling_files/figure-latex/ch4-8-1.pdf Graphic file (type pdf)
+<use introStatModeling_files/figure-latex/ch4-8-1.pdf>
+
+LaTeX Warning: Reference `fig:ch4-8' on page 133 undefined on input line 5434.
+
+
+LaTeX Warning: Reference `fig:ch4-9' on page 133 undefined on input line 5437.
+
+File: introStatModeling_files/figure-latex/ch4-9-1.pdf Graphic file (type pdf)
+<use introStatModeling_files/figure-latex/ch4-9-1.pdf>
+
+LaTeX Warning: Reference `fig:ch4-9' on page 133 undefined on input line 5461.
+
+
+Underfull \vbox (badness 3803) has occurred while \output is active []
+
+[133]
+Overfull \hbox (164.25pt too wide) in paragraph at lines 5489--5489
+[]\TU/lmtt/m/n/10 ## alternative hypothesis: true difference in means between g
+roup A and group B is not equal to 0[] 
+ []
+
+[134]
+
+LaTeX Warning: Reference `fig:ch4-12' on page 135 undefined on input line 5521.
+
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 5546--5546
+[]\TU/lmtt/m/n/10 ##  contrast                      estimate     SE df t.ratio 
+p.value[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 5546--5546
+[]\TU/lmtt/m/n/10 ##  Before - After 4 weeks          0.4856 0.0411 16  11.817 
+ <.0001[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 5546--5546
+[]\TU/lmtt/m/n/10 ##  Before - After 8 weeks          0.5467 0.0411 16  13.304 
+ <.0001[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 5546--5546
+[]\TU/lmtt/m/n/10 ##  After 4 weeks - After 8 weeks   0.0611 0.0411 16   1.487 
+ 0.3229[] 
+ []
+
+
+Overfull \hbox (38.25pt too wide) in paragraph at lines 5546--5546
+[]\TU/lmtt/m/n/10 ## P value adjustment: tukey method for comparing a family of
+ 3 estimates[] 
+ []
+
+[135]
+File: introStatModeling_files/figure-latex/ch4-12-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch4-12-1.pdf>
+[136]
+Overfull \hbox (6.75pt too wide) in paragraph at lines 5626--5626
+[]\TU/lmtt/m/n/10 ##  contrast                      estimate    SE df t.ratio p
+.value[] 
+ []
+
+
+Overfull \hbox (6.75pt too wide) in paragraph at lines 5626--5626
+[]\TU/lmtt/m/n/10 ##  Before - After 4 weeks          0.4856 0.043 32  11.290  
+<.0001[] 
+ []
+
+
+Overfull \hbox (6.75pt too wide) in paragraph at lines 5626--5626
+[]\TU/lmtt/m/n/10 ##  Before - After 8 weeks          0.5467 0.043 32  12.711  
+<.0001[] 
+ []
+
+
+Overfull \hbox (6.75pt too wide) in paragraph at lines 5626--5626
+[]\TU/lmtt/m/n/10 ##  After 4 weeks - After 8 weeks   0.0611 0.043 32   1.421  
+0.3424[] 
+ []
+
+
+Overfull \hbox (6.75pt too wide) in paragraph at lines 5626--5626
+[]\TU/lmtt/m/n/10 ##  contrast                      estimate    SE df t.ratio p
+.value[] 
+ []
+
+
+Overfull \hbox (6.75pt too wide) in paragraph at lines 5626--5626
+[]\TU/lmtt/m/n/10 ##  Before - After 4 weeks          0.6467 0.043 32  15.036  
+<.0001[] 
+ []
+
+
+Overfull \hbox (6.75pt too wide) in paragraph at lines 5626--5626
+[]\TU/lmtt/m/n/10 ##  Before - After 8 weeks          0.7111 0.043 32  16.535  
+<.0001[] 
+ []
+
+
+Overfull \hbox (6.75pt too wide) in paragraph at lines 5626--5626
+[]\TU/lmtt/m/n/10 ##  After 4 weeks - After 8 weeks   0.0644 0.043 32   1.498  
+0.3051[] 
+ []
+
+
+Overfull \hbox (38.25pt too wide) in paragraph at lines 5626--5626
+[]\TU/lmtt/m/n/10 ## P value adjustment: tukey method for comparing a family of
+ 3 estimates[] 
+ []
+
+File: introStatModeling_files/figure-latex/ch4-14-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch4-14-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[137] [138]
+Chapter 5.
+[139
+
+]
+
+Package natbib Warning: Citation `KutnerText' on page 140 undefined on input li
+ne 5736.
+
+[140]
+Overfull \hbox (85.5pt too wide) in paragraph at lines 5758--5758
+[]\TU/lmtt/m/n/10 ## $ mass <dbl> 106, 106, 97, 113, 96, 119, 92, 112, 92, 102,
+ 107, 107, 102, 115,~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 5758--5758
+[]\TU/lmtt/m/n/10 ## $ age  <dbl> 43, 41, 47, 46, 45, 41, 47, 41, 48, 48, 42, 4
+7, 43, 44, 42, 55, 5~[] 
+ []
+
+
+LaTeX Warning: Reference `fig:ch5-1' on page 141 undefined on input line 5760.
+
+File: introStatModeling_files/figure-latex/ch5-1-1.pdf Graphic file (type pdf)
+<use introStatModeling_files/figure-latex/ch5-1-1.pdf>
+
+LaTeX Warning: Reference `fig:ch5-2' on page 141 undefined on input line 5784.
+
+File: introStatModeling_files/figure-latex/ch5-2-1.pdf Graphic file (type pdf)
+<use introStatModeling_files/figure-latex/ch5-2-1.pdf>
+[141]
+
+LaTeX Warning: Reference `fig:ch5-3' on page 142 undefined on input line 5804.
+
+File: introStatModeling_files/figure-latex/ch5-3-1.pdf Graphic file (type pdf)
+<use introStatModeling_files/figure-latex/ch5-3-1.pdf>
+
+LaTeX Warning: Reference `fig:ch5-3' on page 142 undefined on input line 5821.
+
+[142] [143]
+Overfull \hbox (7.69998pt too wide) detected at line 5856
+[] [] [] [][] [] [] [][] [] [] [][]
+ []
+
+
+Overfull \hbox (48.75pt too wide) in paragraph at lines 5942--5942
+[]\TU/lmtt/m/n/10 ##  $ residuals    : Named num [1:60] 0.823 -1.557 -3.417 11.
+393 -6.797 ...[] 
+ []
+
+
+Overfull \hbox (48.75pt too wide) in paragraph at lines 5942--5942
+[]\TU/lmtt/m/n/10 ##  $ effects      : Named num [1:60] -658.15 -107.83 -3.34 1
+1.48 -6.69 ...[] 
+ []
+
+
+Overfull \hbox (6.75pt too wide) in paragraph at lines 5942--5942
+[]\TU/lmtt/m/n/10 ##   ..- attr(*, "names")= chr [1:60] "(Intercept)" "age" "" 
+"" ...[] 
+ []
+
+
+Overfull \hbox (1.5pt too wide) in paragraph at lines 5942--5942
+[]\TU/lmtt/m/n/10 ##   ..$ qr   : num [1:60, 1:2] -7.746 0.129 0.129 0.129 0.12
+9 ...[] 
+ []
+
+[144]
+Overfull \hbox (17.25pt too wide) in paragraph at lines 5942--5942
+[]\TU/lmtt/m/n/10 ##  $ call         : language lm(formula = mass ~ age, data =
+ muscle)[] 
+ []
+
+
+Overfull \hbox (6.75pt too wide) in paragraph at lines 5942--5942
+[]\TU/lmtt/m/n/10 ##  $ terms        :Classes []terms[], []formula[]  language 
+mass ~ age[] 
+ []
+
+
+Overfull \hbox (27.75pt too wide) in paragraph at lines 5942--5942
+[]\TU/lmtt/m/n/10 ##   .. ..- attr(*, "dataClasses")= Named chr [1:2] "numeric"
+ "numeric"[] 
+ []
+
+
+Overfull \hbox (38.25pt too wide) in paragraph at lines 5942--5942
+[]\TU/lmtt/m/n/10 ##   ..- attr(*, "terms")=Classes []terms[], []formula[]  lan
+guage mass ~ age[] 
+ []
+
+
+Overfull \hbox (43.5pt too wide) in paragraph at lines 5942--5942
+[]\TU/lmtt/m/n/10 ##   .. .. ..- attr(*, "dataClasses")= Named chr [1:2] "numer
+ic" "numeric"[] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[145]
+
+Package natbib Warning: Citation `McClaveSincich2008' on page 146 undefined on 
+input line 5952.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[146]
+
+Package natbib Warning: Citation `R-GGally' on page 147 undefined on input line
+ 6046.
+
+File: introStatModeling_files/figure-latex/ch5-6-1.pdf Graphic file (type pdf)
+<use introStatModeling_files/figure-latex/ch5-6-1.pdf>
+
+LaTeX Warning: Reference `fig:ch5-6' on page 147 undefined on input line 6065.
+
+
+LaTeX Warning: Reference `fig:ch5-6' on page 147 undefined on input line 6072.
+
+[147] [148]
+Overfull \hbox (43.5pt too wide) in paragraph at lines 6105--6105
+[]\TU/lmtt/m/n/10 ## lm(formula = saleprice ~ landvalue + impvalue + area, data
+ = appraisal)[] 
+ []
+
+[149] [150]
+
+Package natbib Warning: Citation `NavidiMonk2015' on page 151 undefined on inpu
+t line 6176.
+
+[151]
+Overfull \hbox (85.5pt too wide) in paragraph at lines 6219--6219
+[]\TU/lmtt/m/n/10 ## $ soap.conc   <int> 15, 15, 15, 15, 15, 15, 15, 15, 15, 15
+, 15, 15, 15, 15, 15~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 6219--6219
+[]\TU/lmtt/m/n/10 ## $ lauric.acid <int> 10, 10, 10, 10, 10, 10, 10, 10, 10, 10
+, 10, 10, 10, 10, 10~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 6219--6219
+[]\TU/lmtt/m/n/10 ## $ citric.acid <int> 10, 10, 10, 10, 10, 12, 12, 12, 12, 12
+, 14, 14, 14, 14, 14~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 6219--6219
+[]\TU/lmtt/m/n/10 ## $ rep         <int> 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3,
+ 4, 5, 1, 2, 3, 4, 5~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 6219--6219
+[]\TU/lmtt/m/n/10 ## $ pct.removed <dbl> 20.5, 14.1, 19.1, 20.8, 18.7, 21.2, 22
+.7, 20.3, 23.9, 20.1~[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 6251--6251
+[]\TU/lmtt/m/n/10 ## lm(formula = pct.removed ~ soap.conc + lauric.acid + citri
+c.acid,[] 
+ []
+
+
+Underfull \vbox (badness 1052) has occurred while \output is active []
+
+[152]
+Overfull \hbox (54.0pt too wide) in paragraph at lines 6283--6283
+[]\TU/lmtt/m/n/10 ## lm(formula = pct.removed ~ lauric.acid + citric.acid, data
+ = cleaningexp)[] 
+ []
+
+[153] [154]
+
+Package natbib Warning: Citation `McClaveSincich2008' on page 155 undefined on 
+input line 6342.
+
+
+Overfull \hbox (43.5pt too wide) in paragraph at lines 6375--6375
+[]\TU/lmtt/m/n/10 ## lm(formula = saleprice ~ landvalue + impvalue + area, data
+ = appraisal)[] 
+ []
+
+[155] [156]
+
+LaTeX Warning: Reference `inference-regarding-multiple-regression' on page 157 
+undefined on input line 6445.
+
+
+Package natbib Warning: Citation `Walpole2007' on page 157 undefined on input l
+ine 6453.
+
+
+Package natbib Warning: Citation `VTpunting1983' on page 157 undefined on input
+ line 6479.
+
+[157]
+Overfull \hbox (85.5pt too wide) in paragraph at lines 6502--6502
+[]\TU/lmtt/m/n/10 ## $ Hang_time <dbl> 4.75, 4.07, 4.04, 4.18, 4.35, 4.16, 4.43
+, 3.20, 3.02, 3.64, ~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 6502--6502
+[]\TU/lmtt/m/n/10 ## $ Distance  <dbl> 162.50, 144.00, 147.50, 163.50, 192.00, 
+171.75, 162.00, 104.~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 6502--6502
+[]\TU/lmtt/m/n/10 ## $ RLS       <dbl> 170, 140, 180, 160, 170, 150, 170, 110, 
+120, 130, 120, 140, ~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 6502--6502
+[]\TU/lmtt/m/n/10 ## $ LLS       <dbl> 170, 130, 170, 160, 150, 150, 180, 110, 
+110, 120, 140, 130, ~[] 
+ []
+
+
+Overfull \hbox (54.0pt too wide) in paragraph at lines 6502--6502
+[]\TU/lmtt/m/n/10 ## $ RHF       <dbl> 106, 92, 93, 103, 104, 101, 108, 86, 90,
+ 85, 89, 92, 95[] 
+ []
+
+
+Overfull \hbox (38.25pt too wide) in paragraph at lines 6502--6502
+[]\TU/lmtt/m/n/10 ## $ LHF       <dbl> 106, 93, 78, 93, 93, 87, 106, 92, 86, 80
+, 83, 94, 95[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 6502--6502
+[]\TU/lmtt/m/n/10 ## $ Power     <dbl> 240.57, 195.49, 152.99, 197.09, 266.56, 
+260.56, 219.25, 132.~[] 
+ []
+
+File: introStatModeling_files/figure-latex/ch5-14pairs-1.pdf Graphic file (type
+ pdf)
+<use introStatModeling_files/figure-latex/ch5-14pairs-1.pdf>
+! Missing $ inserted.
+<inserted text> 
+                $
+l.6521 ... `RLS`, `LLS`, `Power` and `Hang_time`.}
+                                                  \label{fig:ch5-14pairs} 
+Here is how much of TeX's memory you used:
+ 21577 strings out of 409617
+ 403977 string characters out of 5773405
+ 1942191 words of memory out of 5000000
+ 43314 multiletter control sequences out of 15000+600000
+ 565675 words of font info for 107 fonts, out of 8000000 for 9000
+ 1348 hyphenation exceptions out of 8191
+ 90i,16n,120p,1062b,560s stack positions out of 10000i,1000n,20000p,200000b,200000s
+
+Output written on introStatModeling.pdf (157 pages).

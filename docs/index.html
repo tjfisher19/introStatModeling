@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Introduction to Statistical Modeling</title>
   <meta name="description" content="Covers Regression and elements of Design of Experiments in R using the tidyverse." />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Introduction to Statistical Modeling" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="Covers Regression and elements of Design of Experiments in R using the tidyverse." />
   <meta name="github-repo" content="tjfisher19/introStatModeling" />
@@ -24,7 +23,7 @@
 <meta name="author" content="Michael R. Hughes and Thomas J. Fisher" />
 
 
-<meta name="date" content="2022-01-18" />
+<meta name="date" content="2025-06-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +32,6 @@
   
 
 <link rel="next" href="about-the-authors.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -51,16 +49,20 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -94,7 +96,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -107,7 +109,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -121,6 +123,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -144,7 +150,7 @@ div.csl-indent {
 }
 </style>
 
-<link rel="stylesheet" href="style.css" type="text/css" />
+<link rel="stylesheet" href="css_files/mystyle.css" type="text/css" />
 </head>
 
 <body>
@@ -173,12 +179,15 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html"><i class="fa fa-check"></i><b>1</b> Introductory Statistics in R</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#goals-of-a-statistical-analysis"><i class="fa fa-check"></i><b>1.1</b> Goals of a statistical analysis</a></li>
-<li class="chapter" data-level="1.2" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#before-you-begin-an-analysis"><i class="fa fa-check"></i><b>1.2</b> Before you begin an analysis</a></li>
+<li class="chapter" data-level="1.1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#goals-of-a-statistical-analysis"><i class="fa fa-check"></i><b>1.1</b> Goals of a statistical analysis</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#conducting-a-statistical-analysis"><i class="fa fa-check"></i><b>1.1.1</b> Conducting a statistical analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#introduction-to-r"><i class="fa fa-check"></i><b>1.2</b> Introduction to R</a></li>
 <li class="chapter" data-level="1.3" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#data-frames"><i class="fa fa-check"></i><b>1.3</b> Data frames</a>
 <ul>
 <li class="chapter" data-level="1.3.1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#built-in-data"><i class="fa fa-check"></i><b>1.3.1</b> Built-in data</a></li>
-<li class="chapter" data-level="1.3.2" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#types-of-data"><i class="fa fa-check"></i><b>1.3.2</b> Types of Data</a></li>
+<li class="chapter" data-level="1.3.2" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#dataTypesSection"><i class="fa fa-check"></i><b>1.3.2</b> Types of Data</a></li>
 <li class="chapter" data-level="1.3.3" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#importing-datasets-into-r"><i class="fa fa-check"></i><b>1.3.3</b> Importing datasets into R</a></li>
 </ul></li>
 <li class="chapter" data-level="1.4" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#referencing-data-from-inside-a-data-frame"><i class="fa fa-check"></i><b>1.4</b> Referencing data from inside a data frame</a></li>
@@ -193,46 +202,55 @@ div.csl-indent {
 <li class="chapter" data-level="1.6.6" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#descriptive-statistics-and-visualizations-for-two-numeric-variables"><i class="fa fa-check"></i><b>1.6.6</b> Descriptive statistics and visualizations for two numeric variables</a></li>
 </ul></li>
 <li class="chapter" data-level="1.7" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#sampling-distributions-describing-how-a-statistic-varies"><i class="fa fa-check"></i><b>1.7</b> Sampling distributions: describing how a statistic varies</a></li>
-<li class="chapter" data-level="1.8" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#two-sample-inference"><i class="fa fa-check"></i><b>1.8</b> Two-sample inference</a></li>
+<li class="chapter" data-level="1.8" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#twoSampleInference"><i class="fa fa-check"></i><b>1.8</b> Two-sample inference</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html"><i class="fa fa-check"></i><b>2</b> Introduction to Statistical Modeling and Designed Experiments</a>
+<li class="chapter" data-level="2" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html"><i class="fa fa-check"></i><b>2</b> Statistical Modeling and Designed Experiments</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#statistical-analyses-is-modeling"><i class="fa fa-check"></i><b>2.1</b> Statistical Analyses is Modeling</a>
+<li class="chapter" data-level="2.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#dataSources"><i class="fa fa-check"></i><b>2.1</b> Observational Studies versus designed experiments</a>
 <ul>
-<li class="chapter" data-level="2.1.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#example-of-a-two-sample-t-test-as-a-model"><i class="fa fa-check"></i><b>2.1.1</b> Example of a two-sample <span class="math inline">\(t\)</span>-test as a model</a></li>
+<li class="chapter" data-level="2.1.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#observational-studies"><i class="fa fa-check"></i><b>2.1.1</b> Observational Studies</a></li>
+<li class="chapter" data-level="2.1.2" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#designed-experiments"><i class="fa fa-check"></i><b>2.1.2</b> Designed experiments</a></li>
 </ul></li>
-<li class="chapter" data-level="2.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#observational-studies-versus-designed-experiments"><i class="fa fa-check"></i><b>2.2</b> Observational Studies versus designed experiments</a>
+<li class="chapter" data-level="2.2" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#designed-experiement-vocabulary"><i class="fa fa-check"></i><b>2.2</b> Designed experiement vocabulary</a>
 <ul>
-<li class="chapter" data-level="2.2.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#observational-studies"><i class="fa fa-check"></i><b>2.2.1</b> Observational Studies</a></li>
-<li class="chapter" data-level="2.2.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#designed-experiments"><i class="fa fa-check"></i><b>2.2.2</b> Designed experiments</a></li>
+<li class="chapter" data-level="2.2.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#what-is-an-experiment"><i class="fa fa-check"></i><b>2.2.1</b> What is an experiment?</a></li>
+<li class="chapter" data-level="2.2.2" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#analysis-of-variance"><i class="fa fa-check"></i><b>2.2.2</b> Analysis of variance</a></li>
+<li class="chapter" data-level="2.2.3" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#elements-of-a-designed-experiment"><i class="fa fa-check"></i><b>2.2.3</b> Elements of a designed experiment</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#designed-experiement-vocabulary"><i class="fa fa-check"></i><b>2.3</b> Designed experiement vocabulary</a>
+<li class="chapter" data-level="2.3" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#statistical-analyses-is-modeling"><i class="fa fa-check"></i><b>2.3</b> Statistical Analyses is Modeling</a>
 <ul>
-<li class="chapter" data-level="2.3.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#what-is-an-experiment"><i class="fa fa-check"></i><b>2.3.1</b> What is an experiment?</a></li>
-<li class="chapter" data-level="2.3.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#analysis-of-variance"><i class="fa fa-check"></i><b>2.3.2</b> Analysis of variance</a></li>
-<li class="chapter" data-level="2.3.3" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#elements-of-a-designed-experiment"><i class="fa fa-check"></i><b>2.3.3</b> Elements of a designed experiment</a></li>
+<li class="chapter" data-level="2.3.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#example-of-a-two-sample-t-test-as-a-model"><i class="fa fa-check"></i><b>2.3.1</b> Example of a two-sample <span class="math inline">\(t\)</span>-test as a model</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#paired-t-test"><i class="fa fa-check"></i><b>2.4</b> Paired <span class="math inline">\(t\)</span>-test</a>
+<li class="chapter" data-level="2.4" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#one-way-anova"><i class="fa fa-check"></i><b>2.4</b> One-Way ANOVA</a>
 <ul>
-<li class="chapter" data-level="2.4.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#paired-t-test-example"><i class="fa fa-check"></i><b>2.4.1</b> Paired <span class="math inline">\(t\)</span>-test example</a></li>
+<li class="chapter" data-level="2.4.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#model-structure"><i class="fa fa-check"></i><b>2.4.1</b> Model Structure</a></li>
+<li class="chapter" data-level="2.4.2" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#testing-procedure"><i class="fa fa-check"></i><b>2.4.2</b> Testing Procedure</a></li>
+<li class="chapter" data-level="2.4.3" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#example-of-one-way-anova"><i class="fa fa-check"></i><b>2.4.3</b> Example of One-Way ANOVA</a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#one-way-anova"><i class="fa fa-check"></i><b>2.5</b> One-Way ANOVA</a>
+<li class="chapter" data-level="2.5" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#assumptionCheck"><i class="fa fa-check"></i><b>2.5</b> Model Assumptions &amp; Assessment</a>
 <ul>
-<li class="chapter" data-level="2.5.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#example-of-one-way-anova"><i class="fa fa-check"></i><b>2.5.1</b> Example of One-Way ANOVA</a></li>
+<li class="chapter" data-level="2.5.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#structural-assumptions"><i class="fa fa-check"></i><b>2.5.1</b> Structural Assumptions</a></li>
+<li class="chapter" data-level="2.5.2" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#random-variation-assumptions"><i class="fa fa-check"></i><b>2.5.2</b> Random Variation Assumptions</a></li>
+<li class="chapter" data-level="2.5.3" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#code-to-check-assumptions"><i class="fa fa-check"></i><b>2.5.3</b> Code to check assumptions</a></li>
 </ul></li>
-<li class="chapter" data-level="2.6" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#assumptionCheck"><i class="fa fa-check"></i><b>2.6</b> Assumption Checking</a>
+<li class="chapter" data-level="2.6" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#transforming-your-response"><i class="fa fa-check"></i><b>2.6</b> Transforming your response</a>
 <ul>
-<li class="chapter" data-level="2.6.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#independence"><i class="fa fa-check"></i><b>2.6.1</b> Independence</a></li>
-<li class="chapter" data-level="2.6.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#constant-variance"><i class="fa fa-check"></i><b>2.6.2</b> Constant Variance</a></li>
-<li class="chapter" data-level="2.6.3" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#checking-normality"><i class="fa fa-check"></i><b>2.6.3</b> Checking Normality</a></li>
-<li class="chapter" data-level="2.6.4" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#code-to-check-assumptions"><i class="fa fa-check"></i><b>2.6.4</b> Code to check assumptions</a></li>
-<li class="chapter" data-level="2.6.5" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#transforming-your-response"><i class="fa fa-check"></i><b>2.6.5</b> Transforming your response</a></li>
+<li class="chapter" data-level="2.6.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#a-note-on-logarithmic-transformations"><i class="fa fa-check"></i><b>2.6.1</b> A note on logarithmic transformations</a></li>
 </ul></li>
-<li class="chapter" data-level="2.7" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#follow-up-procedures-multiple-comparisons"><i class="fa fa-check"></i><b>2.7</b> Follow-up procedures – Multiple Comparisons</a>
+<li class="chapter" data-level="2.7" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#anova-testing-in-r"><i class="fa fa-check"></i><b>2.7</b> ANOVA Testing in R</a>
 <ul>
-<li class="chapter" data-level="2.7.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#tukeys-hsd-method"><i class="fa fa-check"></i><b>2.7.1</b> Tukey’s HSD method</a></li>
-<li class="chapter" data-level="2.7.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#dunnett-multiple-comparisons"><i class="fa fa-check"></i><b>2.7.2</b> Dunnett multiple comparisons</a></li>
+<li class="chapter" data-level="2.7.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#reading-an-anova-table"><i class="fa fa-check"></i><b>2.7.1</b> Reading an ANOVA table</a></li>
+<li class="chapter" data-level="2.7.2" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#conclusions-and-limitation-of-anova"><i class="fa fa-check"></i><b>2.7.2</b> Conclusions and Limitation of ANOVA</a></li>
 </ul></li>
+<li class="chapter" data-level="2.8" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#follow-up-procedures-multiple-comparisons"><i class="fa fa-check"></i><b>2.8</b> Follow-up procedures – Multiple Comparisons</a>
+<ul>
+<li class="chapter" data-level="2.8.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#multiple-testing-problem"><i class="fa fa-check"></i><b>2.8.1</b> Multiple testing problem</a></li>
+<li class="chapter" data-level="2.8.2" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#tukeys-hsd-method"><i class="fa fa-check"></i><b>2.8.2</b> Tukey’s HSD method</a></li>
+<li class="chapter" data-level="2.8.3" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#dunnett-multiple-comparisons"><i class="fa fa-check"></i><b>2.8.3</b> Dunnett multiple comparisons</a></li>
+<li class="chapter" data-level="2.8.4" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#coding-notes-about-emmeans"><i class="fa fa-check"></i><b>2.8.4</b> Coding notes about <code>emmeans</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2.9" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#two-sample-t-test-as-anova"><i class="fa fa-check"></i><b>2.9</b> Two-sample <span class="math inline">\(t\)</span>-test as ANOVA</a></li>
+<li class="chapter" data-level="2.10" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#a-complete-one-way-anova-example"><i class="fa fa-check"></i><b>2.10</b> A Complete One-Way ANOVA Example</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="multiple-factor-designed-experiments.html"><a href="multiple-factor-designed-experiments.html"><i class="fa fa-check"></i><b>3</b> Multiple Factor Designed Experiments</a>
 <ul>
@@ -285,35 +303,35 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="5.5" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#concluding-the-multiple-regression-model"><i class="fa fa-check"></i><b>5.5</b> Concluding the Multiple Regression Model</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html"><i class="fa fa-check"></i><b>6</b> Inference regarding Multiple Regression</a>
+<li class="chapter" data-level="6" data-path="regInferenceChp.html"><a href="regInferenceChp.html"><i class="fa fa-check"></i><b>6</b> Inference regarding Multiple Regression</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#assumption-checking"><i class="fa fa-check"></i><b>6.1</b> Assumption checking</a>
+<li class="chapter" data-level="6.1" data-path="regInferenceChp.html"><a href="regInferenceChp.html#assumption-checking"><i class="fa fa-check"></i><b>6.1</b> Assumption checking</a>
 <ul>
-<li class="chapter" data-level="6.1.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#example-of-assumption-checking-in-slr"><i class="fa fa-check"></i><b>6.1.1</b> Example of Assumption Checking in SLR</a></li>
+<li class="chapter" data-level="6.1.1" data-path="regInferenceChp.html"><a href="regInferenceChp.html#example-of-assumption-checking-in-slr"><i class="fa fa-check"></i><b>6.1.1</b> Example of Assumption Checking in SLR</a></li>
 </ul></li>
-<li class="chapter" data-level="6.2" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#overall-f-test-for-model-signifance"><i class="fa fa-check"></i><b>6.2</b> Overall <span class="math inline">\(F\)</span>-test for model signifance</a>
+<li class="chapter" data-level="6.2" data-path="regInferenceChp.html"><a href="regInferenceChp.html#overall-f-test-for-model-signifance"><i class="fa fa-check"></i><b>6.2</b> Overall <span class="math inline">\(F\)</span>-test for model signifance</a>
 <ul>
-<li class="chapter" data-level="6.2.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#example-of-model-overall-f-test"><i class="fa fa-check"></i><b>6.2.1</b> Example of model overall <span class="math inline">\(F\)</span>-test</a></li>
+<li class="chapter" data-level="6.2.1" data-path="regInferenceChp.html"><a href="regInferenceChp.html#example-of-model-overall-f-test"><i class="fa fa-check"></i><b>6.2.1</b> Example of model overall <span class="math inline">\(F\)</span>-test</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#individual-parameter-inference"><i class="fa fa-check"></i><b>6.3</b> Individual parameter inference</a>
+<li class="chapter" data-level="6.3" data-path="regInferenceChp.html"><a href="regInferenceChp.html#individual-parameter-inference"><i class="fa fa-check"></i><b>6.3</b> Individual parameter inference</a>
 <ul>
-<li class="chapter" data-level="6.3.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#parameter-t-tests"><i class="fa fa-check"></i><b>6.3.1</b> Parameter <span class="math inline">\(t\)</span>-tests</a></li>
-<li class="chapter" data-level="6.3.2" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#example-of-individual-parameter-t-test"><i class="fa fa-check"></i><b>6.3.2</b> Example of individual parameter <span class="math inline">\(t\)</span>-test</a></li>
-<li class="chapter" data-level="6.3.3" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#model-trimming"><i class="fa fa-check"></i><b>6.3.3</b> Model trimming</a></li>
-<li class="chapter" data-level="6.3.4" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#confidence-intervals"><i class="fa fa-check"></i><b>6.3.4</b> Confidence Intervals</a></li>
-<li class="chapter" data-level="6.3.5" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#example-of-individual-parameter-confidence-intervals"><i class="fa fa-check"></i><b>6.3.5</b> Example of individual parameter confidence intervals</a></li>
+<li class="chapter" data-level="6.3.1" data-path="regInferenceChp.html"><a href="regInferenceChp.html#parameter-t-tests"><i class="fa fa-check"></i><b>6.3.1</b> Parameter <span class="math inline">\(t\)</span>-tests</a></li>
+<li class="chapter" data-level="6.3.2" data-path="regInferenceChp.html"><a href="regInferenceChp.html#example-of-individual-parameter-t-test"><i class="fa fa-check"></i><b>6.3.2</b> Example of individual parameter <span class="math inline">\(t\)</span>-test</a></li>
+<li class="chapter" data-level="6.3.3" data-path="regInferenceChp.html"><a href="regInferenceChp.html#model-trimming"><i class="fa fa-check"></i><b>6.3.3</b> Model trimming</a></li>
+<li class="chapter" data-level="6.3.4" data-path="regInferenceChp.html"><a href="regInferenceChp.html#confidence-intervals"><i class="fa fa-check"></i><b>6.3.4</b> Confidence Intervals</a></li>
+<li class="chapter" data-level="6.3.5" data-path="regInferenceChp.html"><a href="regInferenceChp.html#example-of-individual-parameter-confidence-intervals"><i class="fa fa-check"></i><b>6.3.5</b> Example of individual parameter confidence intervals</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#confidence-and-prediction-bands"><i class="fa fa-check"></i><b>6.4</b> Confidence and prediction bands</a>
+<li class="chapter" data-level="6.4" data-path="regInferenceChp.html"><a href="regInferenceChp.html#confidence-and-prediction-bands"><i class="fa fa-check"></i><b>6.4</b> Confidence and prediction bands</a>
 <ul>
-<li class="chapter" data-level="6.4.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#simple-linear-regression-confident-and-prediction-bands"><i class="fa fa-check"></i><b>6.4.1</b> Simple Linear Regression Confident and Prediction bands</a></li>
-<li class="chapter" data-level="6.4.2" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#example-of-confidence-and-prediction-intervals"><i class="fa fa-check"></i><b>6.4.2</b> Example of confidence and prediction intervals</a></li>
-<li class="chapter" data-level="6.4.3" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#extrapolation-warning"><i class="fa fa-check"></i><b>6.4.3</b> Extrapolation warning!</a></li>
-<li class="chapter" data-level="6.4.4" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#confidence-and-prediction-bands-in-multiple-regression"><i class="fa fa-check"></i><b>6.4.4</b> Confidence and Prediction Bands in Multiple Regression</a></li>
+<li class="chapter" data-level="6.4.1" data-path="regInferenceChp.html"><a href="regInferenceChp.html#simple-linear-regression-confident-and-prediction-bands"><i class="fa fa-check"></i><b>6.4.1</b> Simple Linear Regression Confident and Prediction bands</a></li>
+<li class="chapter" data-level="6.4.2" data-path="regInferenceChp.html"><a href="regInferenceChp.html#example-of-confidence-and-prediction-intervals"><i class="fa fa-check"></i><b>6.4.2</b> Example of confidence and prediction intervals</a></li>
+<li class="chapter" data-level="6.4.3" data-path="regInferenceChp.html"><a href="regInferenceChp.html#extrapolation-warning"><i class="fa fa-check"></i><b>6.4.3</b> Extrapolation warning!</a></li>
+<li class="chapter" data-level="6.4.4" data-path="regInferenceChp.html"><a href="regInferenceChp.html#confidence-and-prediction-bands-in-multiple-regression"><i class="fa fa-check"></i><b>6.4.4</b> Confidence and Prediction Bands in Multiple Regression</a></li>
 </ul></li>
-<li class="chapter" data-level="6.5" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#goodness-of-fit"><i class="fa fa-check"></i><b>6.5</b> Goodness-of-fit</a>
+<li class="chapter" data-level="6.5" data-path="regInferenceChp.html"><a href="regInferenceChp.html#goodness-of-fit"><i class="fa fa-check"></i><b>6.5</b> Goodness-of-fit</a>
 <ul>
-<li class="chapter" data-level="6.5.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#coefficient-of-determination"><i class="fa fa-check"></i><b>6.5.1</b> Coefficient of determination</a></li>
-<li class="chapter" data-level="6.5.2" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#akaikes-information-criterion"><i class="fa fa-check"></i><b>6.5.2</b> Akaike’s Information Criterion</a></li>
+<li class="chapter" data-level="6.5.1" data-path="regInferenceChp.html"><a href="regInferenceChp.html#coefficient-of-determination"><i class="fa fa-check"></i><b>6.5.1</b> Coefficient of determination</a></li>
+<li class="chapter" data-level="6.5.2" data-path="regInferenceChp.html"><a href="regInferenceChp.html#akaikes-information-criterion"><i class="fa fa-check"></i><b>6.5.2</b> Akaike’s Information Criterion</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html"><i class="fa fa-check"></i><b>7</b> More on multiple linear regression</a>
@@ -429,41 +447,45 @@ div.csl-indent {
 <div id="header">
 <h1 class="title">Introduction to Statistical Modeling</h1>
 <p class="author"><em>Michael R. Hughes and Thomas J. Fisher</em></p>
-<p class="date"><em>2022-01-18</em></p>
+<p class="date"><em>2025-06-26</em></p>
 </div>
-<div id="preface" class="section level1 unnumbered">
-<h1>Preface</h1>
+<div id="preface" class="section level1 unnumbered hasAnchor">
+<h1>Preface<a href="index.html#preface" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:dino"></span>
 <img src="introStatModeling_files/figure-html/dino-1.png" alt="A 'fun' plot: A scatterplot resulting in the shape of a Tyrannusaurus [@R-datasauRus] with shaded Voronoi cells using the `ggvoronoi` package [@R-ggvoronoi]" width="576" />
 <p class="caption">
-Figure 0.1: A ‘fun’ plot: A scatterplot resulting in the shape of a Tyrannusaurus <span class="citation">(<a href="#ref-R-datasauRus" role="doc-biblioref">Locke et al., 2018</a>)</span> with shaded Voronoi cells using the <code>ggvoronoi</code> package <span class="citation">(<a href="#ref-R-ggvoronoi" role="doc-biblioref">Garrett et al., 2019</a>)</span>
+Figure 0.1: A ‘fun’ plot: A scatterplot resulting in the shape of a Tyrannusaurus <span class="citation">(<a href="#ref-R-datasauRus">Locke et al., 2018</a>)</span> with shaded Voronoi cells using the <code>ggvoronoi</code> package <span class="citation">(<a href="#ref-R-ggvoronoi">Garrett et al., 2019</a>)</span>
 </p>
 </div>
-<p>This online text has been designed for <strong>STA 363 - Introduction to Statistical Modeling</strong> at Miami University.
-What is now this text was originally a set of notes written by Mr. Mike Hughes and has since been reformulated into this bookdown version.
-The original version of this document was not intended for publication but, as is common, has evolved into an textbook of sorts.
-Future iterations will improve some coding examples and provide more references.</p>
-<p>The bulletin description for the course states:</p>
+<p>This online text was designed for <strong>STA 363 - Introduction to Statistical Modeling</strong> at Miami University and has been used as a resource in other courses at Miami University (<em>e.g.</em>, STA 672 - Statistical Modeling and Study Design, a service course for graduate students in the life sciences).
+The original version of this document was not intended for broad publication but, as is common, has evolved into an textbook of sorts.
+What is now this text was originally a set of class notes written by Mr. Mike Hughes for use during class.
+Many of the data and coding examples have been updated and everything has been structured such that this work can largely <em>stand alone</em>.</p>
+<p>The bulletin description for the STA 363 course states:</p>
 <blockquote>
 <p>Applications of statistics using regression and design of experiments techniques. Regression topics include simple linear regression, correlation, multiple regression and selection of the best model. Design topics include the completely randomized design, multiple comparisons, blocking and factorials.</p>
 </blockquote>
 <p>The book and course have been designed to be a follow-up to a standard introductory statistics course (in many ways, this course can be considered “Intro Stat 2”).
 The course and text assumes the reader has a solid foundation in two-sample inference and some basic computing skills.</p>
-<p>The book mixes statistical background with applications using the R Project for Statistical Computing <span class="citation">(<a href="#ref-R-base" role="doc-biblioref">R Core Team, 2019</a>)</span>.
-We have attempted to perform all data processing and analysis in this text using the <em>tidyverse</em>; thus all plots and functionality should follow the new grammar in R (<em>ggplot</em> and <code>%&gt;%</code> type code).</p>
+<p>The book mixes statistical background with applications using the R Project for Statistical Computing <span class="citation">(<a href="#ref-R-base">R Core Team, 2019</a>)</span>.
+We have attempted to perform all data processing and graphics in this text using the <code>tidyverse</code> <span class="citation">(<a href="#ref-R-tidyverse">Wickham, 2017</a>)</span>; thus all plots and data processing should follow the <em>tidy</em> grammar in R (<code>ggplot</code>, piping <code>|&gt;</code> and <code>dplyr</code> function calls).
+All statistical modeling uses base R function calls (<em>e.g.</em>, <code>lm()</code> and <code>aov()</code>) and the <code>emmeans</code> package <span class="citation">(<a href="#ref-R-emmeans">Lenth, 2019</a>)</span> is used for follow-up comparisons.</p>
 <p>The book was designed with 13 chapters with the intent to be used during the 14-week semester at Miami University (one week reserved for midterm examination and end-of-semester review).
-The first chapter is comprehensive.
-It reviews introductory statistics material and provides a crash course in the basics of R and making plots with <code>ggplot2</code> <span class="citation">(<a href="#ref-R-ggplot2" role="doc-biblioref">Wickham, 2016</a>)</span>.
-Chapter 2 extends the idea of two-sample inference into multiple samples and introduces key concepts of experimental design.
+The first two chapters are very comprehensive.
+Chapter 1 reviews introductory statistics material and provides a crash course in the basics of R, some elementary data handling with <code>dplyr</code> <span class="citation">(<a href="#ref-R-dplyr">Wickham, François, et al., 2021</a>)</span> and making plots with <code>ggplot2</code> <span class="citation">(<a href="#ref-R-ggplot2">Wickham, 2016</a>)</span>. The development of the two-sample <span class="math inline">\(t\)</span>-test is reviewed.
+Chapter 2 discusses the difference between designed experiments and observational studies, and extends the idea of two-sample inference into <em>multiple samples</em>. The key concepts of experimental design are introduced, some mathematical foundation for statistical models is introduced, and One-Way ANOVA is fully covered, including follow-up multiple comparisons.
 Chapters 3 and 4 cover some advanced design ideas (multiple factors, blocking and repeated measures), presenting all inference in the form of a linear model.
 Chapters 5–10 cover the <em>classic</em> topics around multiple linear regression as well as some <em>data science</em> concepts (prediction, variable selection and model validation).
 Chapters 11 and 12 provides an overview of statistical odds and logistic regression.
 Chapter 13 provides an overview of Generalized Linear Modeling with examples of both Poisson and Negative Binomial regression.</p>
 </div>
-<h3>References</h3>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-R-ggvoronoi" class="csl-entry">
 Garrett, R. C., Nar, A. and Fisher, T. J., <em>Ggvoronoi: Voronoi Diagrams and Heatmaps with ’Ggplot2’</em>, from <a href="https://CRAN.R-project.org/package=ggvoronoi">https://CRAN.R-project.org/package=ggvoronoi</a>, 2019.
+</div>
+<div id="ref-R-emmeans" class="csl-entry">
+Lenth, R., <em>Emmeans: Estimated Marginal Means, Aka Least-Squares Means</em>, from <a href="https://CRAN.R-project.org/package=emmeans">https://CRAN.R-project.org/package=emmeans</a>, 2019.
 </div>
 <div id="ref-R-datasauRus" class="csl-entry">
 Locke, S. and D’Agostino McGowan, L., <em>datasauRus: Datasets from the Datasaurus Dozen</em>, from <a href="https://CRAN.R-project.org/package=datasauRus">https://CRAN.R-project.org/package=datasauRus</a>, 2018.
@@ -473,6 +495,12 @@ R Core Team, <em>R: A Language and Environment for Statistical Computing</em>, V
 </div>
 <div id="ref-R-ggplot2" class="csl-entry">
 Wickham, H., <em>Ggplot2: Elegant Graphics for Data Analysis</em>, Springer-Verlag New York, from <a href="https://ggplot2.tidyverse.org">https://ggplot2.tidyverse.org</a>, 2016.
+</div>
+<div id="ref-R-tidyverse" class="csl-entry">
+Wickham, H., <em>Tidyverse: Easily Install and Load the ’Tidyverse’</em>, from <a href="https://CRAN.R-project.org/package=tidyverse">https://CRAN.R-project.org/package=tidyverse</a>, 2017.
+</div>
+<div id="ref-R-dplyr" class="csl-entry">
+Wickham, H., François, R., Henry, L. and Müller, K., <em>Dplyr: A Grammar of Data Manipulation</em>, from <a href="https://CRAN.R-project.org/package=dplyr">https://CRAN.R-project.org/package=dplyr</a>, 2021.
 </div>
 </div>
             </section>
@@ -495,42 +523,42 @@ Wickham, H., <em>Ggplot2: Elegant Graphics for Data Analysis</em>, Springer-Verl
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": null,
-"text": null
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["introStatModeling.pdf", "introStatModeling.epub"],
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "subsection"
-}
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["introStatModeling.pdf", "introStatModeling.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
 });
 });
 </script>
@@ -541,7 +569,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

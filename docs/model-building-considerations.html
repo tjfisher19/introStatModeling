@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 8 Model Building Considerations | Introduction to Statistical Modeling</title>
   <meta name="description" content="Covers Regression and elements of Design of Experiments in R using the tidyverse." />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 8 Model Building Considerations | Introduction to Statistical Modeling" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="Covers Regression and elements of Design of Experiments in R using the tidyverse." />
   <meta name="github-repo" content="tjfisher19/introStatModeling" />
@@ -24,7 +23,7 @@
 <meta name="author" content="Michael R. Hughes and Thomas J. Fisher" />
 
 
-<meta name="date" content="2022-01-18" />
+<meta name="date" content="2025-06-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +32,6 @@
   
 <link rel="prev" href="more-on-multiple-linear-regression.html"/>
 <link rel="next" href="model-selection.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -51,16 +49,20 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -94,7 +96,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -107,7 +109,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -121,6 +123,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -144,7 +150,7 @@ div.csl-indent {
 }
 </style>
 
-<link rel="stylesheet" href="style.css" type="text/css" />
+<link rel="stylesheet" href="css_files/mystyle.css" type="text/css" />
 </head>
 
 <body>
@@ -173,12 +179,15 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html"><i class="fa fa-check"></i><b>1</b> Introductory Statistics in R</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#goals-of-a-statistical-analysis"><i class="fa fa-check"></i><b>1.1</b> Goals of a statistical analysis</a></li>
-<li class="chapter" data-level="1.2" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#before-you-begin-an-analysis"><i class="fa fa-check"></i><b>1.2</b> Before you begin an analysis</a></li>
+<li class="chapter" data-level="1.1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#goals-of-a-statistical-analysis"><i class="fa fa-check"></i><b>1.1</b> Goals of a statistical analysis</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#conducting-a-statistical-analysis"><i class="fa fa-check"></i><b>1.1.1</b> Conducting a statistical analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#introduction-to-r"><i class="fa fa-check"></i><b>1.2</b> Introduction to R</a></li>
 <li class="chapter" data-level="1.3" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#data-frames"><i class="fa fa-check"></i><b>1.3</b> Data frames</a>
 <ul>
 <li class="chapter" data-level="1.3.1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#built-in-data"><i class="fa fa-check"></i><b>1.3.1</b> Built-in data</a></li>
-<li class="chapter" data-level="1.3.2" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#types-of-data"><i class="fa fa-check"></i><b>1.3.2</b> Types of Data</a></li>
+<li class="chapter" data-level="1.3.2" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#dataTypesSection"><i class="fa fa-check"></i><b>1.3.2</b> Types of Data</a></li>
 <li class="chapter" data-level="1.3.3" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#importing-datasets-into-r"><i class="fa fa-check"></i><b>1.3.3</b> Importing datasets into R</a></li>
 </ul></li>
 <li class="chapter" data-level="1.4" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#referencing-data-from-inside-a-data-frame"><i class="fa fa-check"></i><b>1.4</b> Referencing data from inside a data frame</a></li>
@@ -193,46 +202,55 @@ div.csl-indent {
 <li class="chapter" data-level="1.6.6" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#descriptive-statistics-and-visualizations-for-two-numeric-variables"><i class="fa fa-check"></i><b>1.6.6</b> Descriptive statistics and visualizations for two numeric variables</a></li>
 </ul></li>
 <li class="chapter" data-level="1.7" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#sampling-distributions-describing-how-a-statistic-varies"><i class="fa fa-check"></i><b>1.7</b> Sampling distributions: describing how a statistic varies</a></li>
-<li class="chapter" data-level="1.8" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#two-sample-inference"><i class="fa fa-check"></i><b>1.8</b> Two-sample inference</a></li>
+<li class="chapter" data-level="1.8" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#twoSampleInference"><i class="fa fa-check"></i><b>1.8</b> Two-sample inference</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html"><i class="fa fa-check"></i><b>2</b> Introduction to Statistical Modeling and Designed Experiments</a>
+<li class="chapter" data-level="2" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html"><i class="fa fa-check"></i><b>2</b> Statistical Modeling and Designed Experiments</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#statistical-analyses-is-modeling"><i class="fa fa-check"></i><b>2.1</b> Statistical Analyses is Modeling</a>
+<li class="chapter" data-level="2.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#dataSources"><i class="fa fa-check"></i><b>2.1</b> Observational Studies versus designed experiments</a>
 <ul>
-<li class="chapter" data-level="2.1.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#example-of-a-two-sample-t-test-as-a-model"><i class="fa fa-check"></i><b>2.1.1</b> Example of a two-sample <span class="math inline">\(t\)</span>-test as a model</a></li>
+<li class="chapter" data-level="2.1.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#observational-studies"><i class="fa fa-check"></i><b>2.1.1</b> Observational Studies</a></li>
+<li class="chapter" data-level="2.1.2" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#designed-experiments"><i class="fa fa-check"></i><b>2.1.2</b> Designed experiments</a></li>
 </ul></li>
-<li class="chapter" data-level="2.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#observational-studies-versus-designed-experiments"><i class="fa fa-check"></i><b>2.2</b> Observational Studies versus designed experiments</a>
+<li class="chapter" data-level="2.2" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#designed-experiement-vocabulary"><i class="fa fa-check"></i><b>2.2</b> Designed experiement vocabulary</a>
 <ul>
-<li class="chapter" data-level="2.2.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#observational-studies"><i class="fa fa-check"></i><b>2.2.1</b> Observational Studies</a></li>
-<li class="chapter" data-level="2.2.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#designed-experiments"><i class="fa fa-check"></i><b>2.2.2</b> Designed experiments</a></li>
+<li class="chapter" data-level="2.2.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#what-is-an-experiment"><i class="fa fa-check"></i><b>2.2.1</b> What is an experiment?</a></li>
+<li class="chapter" data-level="2.2.2" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#analysis-of-variance"><i class="fa fa-check"></i><b>2.2.2</b> Analysis of variance</a></li>
+<li class="chapter" data-level="2.2.3" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#elements-of-a-designed-experiment"><i class="fa fa-check"></i><b>2.2.3</b> Elements of a designed experiment</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#designed-experiement-vocabulary"><i class="fa fa-check"></i><b>2.3</b> Designed experiement vocabulary</a>
+<li class="chapter" data-level="2.3" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#statistical-analyses-is-modeling"><i class="fa fa-check"></i><b>2.3</b> Statistical Analyses is Modeling</a>
 <ul>
-<li class="chapter" data-level="2.3.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#what-is-an-experiment"><i class="fa fa-check"></i><b>2.3.1</b> What is an experiment?</a></li>
-<li class="chapter" data-level="2.3.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#analysis-of-variance"><i class="fa fa-check"></i><b>2.3.2</b> Analysis of variance</a></li>
-<li class="chapter" data-level="2.3.3" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#elements-of-a-designed-experiment"><i class="fa fa-check"></i><b>2.3.3</b> Elements of a designed experiment</a></li>
+<li class="chapter" data-level="2.3.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#example-of-a-two-sample-t-test-as-a-model"><i class="fa fa-check"></i><b>2.3.1</b> Example of a two-sample <span class="math inline">\(t\)</span>-test as a model</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#paired-t-test"><i class="fa fa-check"></i><b>2.4</b> Paired <span class="math inline">\(t\)</span>-test</a>
+<li class="chapter" data-level="2.4" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#one-way-anova"><i class="fa fa-check"></i><b>2.4</b> One-Way ANOVA</a>
 <ul>
-<li class="chapter" data-level="2.4.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#paired-t-test-example"><i class="fa fa-check"></i><b>2.4.1</b> Paired <span class="math inline">\(t\)</span>-test example</a></li>
+<li class="chapter" data-level="2.4.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#model-structure"><i class="fa fa-check"></i><b>2.4.1</b> Model Structure</a></li>
+<li class="chapter" data-level="2.4.2" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#testing-procedure"><i class="fa fa-check"></i><b>2.4.2</b> Testing Procedure</a></li>
+<li class="chapter" data-level="2.4.3" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#example-of-one-way-anova"><i class="fa fa-check"></i><b>2.4.3</b> Example of One-Way ANOVA</a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#one-way-anova"><i class="fa fa-check"></i><b>2.5</b> One-Way ANOVA</a>
+<li class="chapter" data-level="2.5" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#assumptionCheck"><i class="fa fa-check"></i><b>2.5</b> Model Assumptions &amp; Assessment</a>
 <ul>
-<li class="chapter" data-level="2.5.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#example-of-one-way-anova"><i class="fa fa-check"></i><b>2.5.1</b> Example of One-Way ANOVA</a></li>
+<li class="chapter" data-level="2.5.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#structural-assumptions"><i class="fa fa-check"></i><b>2.5.1</b> Structural Assumptions</a></li>
+<li class="chapter" data-level="2.5.2" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#random-variation-assumptions"><i class="fa fa-check"></i><b>2.5.2</b> Random Variation Assumptions</a></li>
+<li class="chapter" data-level="2.5.3" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#code-to-check-assumptions"><i class="fa fa-check"></i><b>2.5.3</b> Code to check assumptions</a></li>
 </ul></li>
-<li class="chapter" data-level="2.6" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#assumptionCheck"><i class="fa fa-check"></i><b>2.6</b> Assumption Checking</a>
+<li class="chapter" data-level="2.6" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#transforming-your-response"><i class="fa fa-check"></i><b>2.6</b> Transforming your response</a>
 <ul>
-<li class="chapter" data-level="2.6.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#independence"><i class="fa fa-check"></i><b>2.6.1</b> Independence</a></li>
-<li class="chapter" data-level="2.6.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#constant-variance"><i class="fa fa-check"></i><b>2.6.2</b> Constant Variance</a></li>
-<li class="chapter" data-level="2.6.3" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#checking-normality"><i class="fa fa-check"></i><b>2.6.3</b> Checking Normality</a></li>
-<li class="chapter" data-level="2.6.4" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#code-to-check-assumptions"><i class="fa fa-check"></i><b>2.6.4</b> Code to check assumptions</a></li>
-<li class="chapter" data-level="2.6.5" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#transforming-your-response"><i class="fa fa-check"></i><b>2.6.5</b> Transforming your response</a></li>
+<li class="chapter" data-level="2.6.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#a-note-on-logarithmic-transformations"><i class="fa fa-check"></i><b>2.6.1</b> A note on logarithmic transformations</a></li>
 </ul></li>
-<li class="chapter" data-level="2.7" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#follow-up-procedures-multiple-comparisons"><i class="fa fa-check"></i><b>2.7</b> Follow-up procedures – Multiple Comparisons</a>
+<li class="chapter" data-level="2.7" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#anova-testing-in-r"><i class="fa fa-check"></i><b>2.7</b> ANOVA Testing in R</a>
 <ul>
-<li class="chapter" data-level="2.7.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#tukeys-hsd-method"><i class="fa fa-check"></i><b>2.7.1</b> Tukey’s HSD method</a></li>
-<li class="chapter" data-level="2.7.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#dunnett-multiple-comparisons"><i class="fa fa-check"></i><b>2.7.2</b> Dunnett multiple comparisons</a></li>
+<li class="chapter" data-level="2.7.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#reading-an-anova-table"><i class="fa fa-check"></i><b>2.7.1</b> Reading an ANOVA table</a></li>
+<li class="chapter" data-level="2.7.2" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#conclusions-and-limitation-of-anova"><i class="fa fa-check"></i><b>2.7.2</b> Conclusions and Limitation of ANOVA</a></li>
 </ul></li>
+<li class="chapter" data-level="2.8" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#follow-up-procedures-multiple-comparisons"><i class="fa fa-check"></i><b>2.8</b> Follow-up procedures – Multiple Comparisons</a>
+<ul>
+<li class="chapter" data-level="2.8.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#multiple-testing-problem"><i class="fa fa-check"></i><b>2.8.1</b> Multiple testing problem</a></li>
+<li class="chapter" data-level="2.8.2" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#tukeys-hsd-method"><i class="fa fa-check"></i><b>2.8.2</b> Tukey’s HSD method</a></li>
+<li class="chapter" data-level="2.8.3" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#dunnett-multiple-comparisons"><i class="fa fa-check"></i><b>2.8.3</b> Dunnett multiple comparisons</a></li>
+<li class="chapter" data-level="2.8.4" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#coding-notes-about-emmeans"><i class="fa fa-check"></i><b>2.8.4</b> Coding notes about <code>emmeans</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2.9" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#two-sample-t-test-as-anova"><i class="fa fa-check"></i><b>2.9</b> Two-sample <span class="math inline">\(t\)</span>-test as ANOVA</a></li>
+<li class="chapter" data-level="2.10" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#a-complete-one-way-anova-example"><i class="fa fa-check"></i><b>2.10</b> A Complete One-Way ANOVA Example</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="multiple-factor-designed-experiments.html"><a href="multiple-factor-designed-experiments.html"><i class="fa fa-check"></i><b>3</b> Multiple Factor Designed Experiments</a>
 <ul>
@@ -285,35 +303,35 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="5.5" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#concluding-the-multiple-regression-model"><i class="fa fa-check"></i><b>5.5</b> Concluding the Multiple Regression Model</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html"><i class="fa fa-check"></i><b>6</b> Inference regarding Multiple Regression</a>
+<li class="chapter" data-level="6" data-path="regInferenceChp.html"><a href="regInferenceChp.html"><i class="fa fa-check"></i><b>6</b> Inference regarding Multiple Regression</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#assumption-checking"><i class="fa fa-check"></i><b>6.1</b> Assumption checking</a>
+<li class="chapter" data-level="6.1" data-path="regInferenceChp.html"><a href="regInferenceChp.html#assumption-checking"><i class="fa fa-check"></i><b>6.1</b> Assumption checking</a>
 <ul>
-<li class="chapter" data-level="6.1.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#example-of-assumption-checking-in-slr"><i class="fa fa-check"></i><b>6.1.1</b> Example of Assumption Checking in SLR</a></li>
+<li class="chapter" data-level="6.1.1" data-path="regInferenceChp.html"><a href="regInferenceChp.html#example-of-assumption-checking-in-slr"><i class="fa fa-check"></i><b>6.1.1</b> Example of Assumption Checking in SLR</a></li>
 </ul></li>
-<li class="chapter" data-level="6.2" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#overall-f-test-for-model-signifance"><i class="fa fa-check"></i><b>6.2</b> Overall <span class="math inline">\(F\)</span>-test for model signifance</a>
+<li class="chapter" data-level="6.2" data-path="regInferenceChp.html"><a href="regInferenceChp.html#overall-f-test-for-model-signifance"><i class="fa fa-check"></i><b>6.2</b> Overall <span class="math inline">\(F\)</span>-test for model signifance</a>
 <ul>
-<li class="chapter" data-level="6.2.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#example-of-model-overall-f-test"><i class="fa fa-check"></i><b>6.2.1</b> Example of model overall <span class="math inline">\(F\)</span>-test</a></li>
+<li class="chapter" data-level="6.2.1" data-path="regInferenceChp.html"><a href="regInferenceChp.html#example-of-model-overall-f-test"><i class="fa fa-check"></i><b>6.2.1</b> Example of model overall <span class="math inline">\(F\)</span>-test</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#individual-parameter-inference"><i class="fa fa-check"></i><b>6.3</b> Individual parameter inference</a>
+<li class="chapter" data-level="6.3" data-path="regInferenceChp.html"><a href="regInferenceChp.html#individual-parameter-inference"><i class="fa fa-check"></i><b>6.3</b> Individual parameter inference</a>
 <ul>
-<li class="chapter" data-level="6.3.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#parameter-t-tests"><i class="fa fa-check"></i><b>6.3.1</b> Parameter <span class="math inline">\(t\)</span>-tests</a></li>
-<li class="chapter" data-level="6.3.2" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#example-of-individual-parameter-t-test"><i class="fa fa-check"></i><b>6.3.2</b> Example of individual parameter <span class="math inline">\(t\)</span>-test</a></li>
-<li class="chapter" data-level="6.3.3" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#model-trimming"><i class="fa fa-check"></i><b>6.3.3</b> Model trimming</a></li>
-<li class="chapter" data-level="6.3.4" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#confidence-intervals"><i class="fa fa-check"></i><b>6.3.4</b> Confidence Intervals</a></li>
-<li class="chapter" data-level="6.3.5" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#example-of-individual-parameter-confidence-intervals"><i class="fa fa-check"></i><b>6.3.5</b> Example of individual parameter confidence intervals</a></li>
+<li class="chapter" data-level="6.3.1" data-path="regInferenceChp.html"><a href="regInferenceChp.html#parameter-t-tests"><i class="fa fa-check"></i><b>6.3.1</b> Parameter <span class="math inline">\(t\)</span>-tests</a></li>
+<li class="chapter" data-level="6.3.2" data-path="regInferenceChp.html"><a href="regInferenceChp.html#example-of-individual-parameter-t-test"><i class="fa fa-check"></i><b>6.3.2</b> Example of individual parameter <span class="math inline">\(t\)</span>-test</a></li>
+<li class="chapter" data-level="6.3.3" data-path="regInferenceChp.html"><a href="regInferenceChp.html#model-trimming"><i class="fa fa-check"></i><b>6.3.3</b> Model trimming</a></li>
+<li class="chapter" data-level="6.3.4" data-path="regInferenceChp.html"><a href="regInferenceChp.html#confidence-intervals"><i class="fa fa-check"></i><b>6.3.4</b> Confidence Intervals</a></li>
+<li class="chapter" data-level="6.3.5" data-path="regInferenceChp.html"><a href="regInferenceChp.html#example-of-individual-parameter-confidence-intervals"><i class="fa fa-check"></i><b>6.3.5</b> Example of individual parameter confidence intervals</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#confidence-and-prediction-bands"><i class="fa fa-check"></i><b>6.4</b> Confidence and prediction bands</a>
+<li class="chapter" data-level="6.4" data-path="regInferenceChp.html"><a href="regInferenceChp.html#confidence-and-prediction-bands"><i class="fa fa-check"></i><b>6.4</b> Confidence and prediction bands</a>
 <ul>
-<li class="chapter" data-level="6.4.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#simple-linear-regression-confident-and-prediction-bands"><i class="fa fa-check"></i><b>6.4.1</b> Simple Linear Regression Confident and Prediction bands</a></li>
-<li class="chapter" data-level="6.4.2" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#example-of-confidence-and-prediction-intervals"><i class="fa fa-check"></i><b>6.4.2</b> Example of confidence and prediction intervals</a></li>
-<li class="chapter" data-level="6.4.3" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#extrapolation-warning"><i class="fa fa-check"></i><b>6.4.3</b> Extrapolation warning!</a></li>
-<li class="chapter" data-level="6.4.4" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#confidence-and-prediction-bands-in-multiple-regression"><i class="fa fa-check"></i><b>6.4.4</b> Confidence and Prediction Bands in Multiple Regression</a></li>
+<li class="chapter" data-level="6.4.1" data-path="regInferenceChp.html"><a href="regInferenceChp.html#simple-linear-regression-confident-and-prediction-bands"><i class="fa fa-check"></i><b>6.4.1</b> Simple Linear Regression Confident and Prediction bands</a></li>
+<li class="chapter" data-level="6.4.2" data-path="regInferenceChp.html"><a href="regInferenceChp.html#example-of-confidence-and-prediction-intervals"><i class="fa fa-check"></i><b>6.4.2</b> Example of confidence and prediction intervals</a></li>
+<li class="chapter" data-level="6.4.3" data-path="regInferenceChp.html"><a href="regInferenceChp.html#extrapolation-warning"><i class="fa fa-check"></i><b>6.4.3</b> Extrapolation warning!</a></li>
+<li class="chapter" data-level="6.4.4" data-path="regInferenceChp.html"><a href="regInferenceChp.html#confidence-and-prediction-bands-in-multiple-regression"><i class="fa fa-check"></i><b>6.4.4</b> Confidence and Prediction Bands in Multiple Regression</a></li>
 </ul></li>
-<li class="chapter" data-level="6.5" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#goodness-of-fit"><i class="fa fa-check"></i><b>6.5</b> Goodness-of-fit</a>
+<li class="chapter" data-level="6.5" data-path="regInferenceChp.html"><a href="regInferenceChp.html#goodness-of-fit"><i class="fa fa-check"></i><b>6.5</b> Goodness-of-fit</a>
 <ul>
-<li class="chapter" data-level="6.5.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#coefficient-of-determination"><i class="fa fa-check"></i><b>6.5.1</b> Coefficient of determination</a></li>
-<li class="chapter" data-level="6.5.2" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#akaikes-information-criterion"><i class="fa fa-check"></i><b>6.5.2</b> Akaike’s Information Criterion</a></li>
+<li class="chapter" data-level="6.5.1" data-path="regInferenceChp.html"><a href="regInferenceChp.html#coefficient-of-determination"><i class="fa fa-check"></i><b>6.5.1</b> Coefficient of determination</a></li>
+<li class="chapter" data-level="6.5.2" data-path="regInferenceChp.html"><a href="regInferenceChp.html#akaikes-information-criterion"><i class="fa fa-check"></i><b>6.5.2</b> Akaike’s Information Criterion</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html"><i class="fa fa-check"></i><b>7</b> More on multiple linear regression</a>
@@ -426,11 +444,11 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="model-building-considerations" class="section level1" number="8">
-<h1><span class="header-section-number">Chapter 8</span> Model Building Considerations</h1>
+<div id="model-building-considerations" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">Chapter 8</span> Model Building Considerations<a href="model-building-considerations.html#model-building-considerations" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>We now spend some time on the intricacies of regression modeling.</p>
-<div id="regression-assumptions-revisited" class="section level2" number="8.1">
-<h2><span class="header-section-number">8.1</span> Regression assumptions revisited</h2>
+<div id="regression-assumptions-revisited" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">8.1</span> Regression assumptions revisited<a href="model-building-considerations.html#regression-assumptions-revisited" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Any time we run a hypothesis test or build a confidence or prediction interval in the context of a regression analysis or ANOVA, the validity of the findings depends on the assumptions being met. Here we remind you of the assumptions:</p>
 <p><strong>Error assumptions:</strong></p>
 <ol style="list-style-type: decimal">
@@ -450,13 +468,13 @@ div.csl-indent {
 <p>We have already introduced graphical ways to check these assumptions using a process we call regression diagnostics. Think of diagnostics as preventative medicine for your data.</p>
 <p>Our goal now is to investigate ways to address assumption violations so that we may trust the results of statistical tests and confidence intervals. We can tell you that the typical approach to remedy assumption violations usually involves some form of data transformation or a specifying a new (better) model.</p>
 </div>
-<div id="violations-of-the-independence-assumption" class="section level2" number="8.2">
-<h2><span class="header-section-number">8.2</span> Violations of the independence assumption</h2>
+<div id="violations-of-the-independence-assumption" class="section level2 hasAnchor" number="8.2">
+<h2><span class="header-section-number">8.2</span> Violations of the independence assumption<a href="model-building-considerations.html#violations-of-the-independence-assumption" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Arguably the most vital of all assumptions necessary to validate tests and confidence intervals in the assumption that the errors are independent (i.e. uncorrelated). Even mild violations can greatly tarnish statistical inferences.</p>
 <p>In general, checking for independence is not easy. However, if you collect your data according to a simple random sampling scheme with one observation per subject, there is usually no reason to suspect you will have a problem. In such a case, simple random sampling of individuals ensures independence of the information contributed to the study by each individual. In the realm of experimental design, this is typically handled through the design. The only circumstances where you will need to address the issue are outlined below.</p>
 <p>Correlated (non-independent) errors can arise as a result of:</p>
-<div id="collecting-data-that-are-temporal-or-spatial-in-nature" class="section level3" number="8.2.1">
-<h3><span class="header-section-number">8.2.1</span> Collecting data that are temporal or spatial in nature</h3>
+<div id="collecting-data-that-are-temporal-or-spatial-in-nature" class="section level3 hasAnchor" number="8.2.1">
+<h3><span class="header-section-number">8.2.1</span> Collecting data that are temporal or spatial in nature<a href="model-building-considerations.html#collecting-data-that-are-temporal-or-spatial-in-nature" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>This means that the data are such that you can meaningfully think about the “proximity” of observations to each other. This can happen by thinking in terms of time (e.g., measurements taken more closely together in time might tend to be more similar) or space (e.g., measurements located more geographically close to each other might tend to look more similar). Here are two examples:</p>
 <p><strong>Example: Corn yields.</strong> Suppose you are interested in studying the effect of annual rainfall on a crop yield (in bushels per acre). For a particular plot of land, you have the following measurements:</p>
 <ul>
@@ -467,23 +485,24 @@ div.csl-indent {
 <p>Here, we are repeatedly measuring the same plot of land over time. It might be reasonable to suspect that the amount of rainfall in years immediately preceding a given year might have some impact on the yield in that given year (e.g., recovery from years of drought). If so, the observations within this plot might not be independent.</p>
 <p>If the data are obtained in a time sequence, a residuals vs. order plot (or index plot) helps to see if there is any correlation between the error terms that are near each other in the sequence. <strong>This plot is only appropriate if you know the order in which the data were collected!</strong> Highlight this, circle this, do whatever it takes to remember it — it is a very common mistake made by people new to regression diagnostics.</p>
 <p>Below is R code for the corn yield data. This code fits a simple linear regression model where the yield is a function of the annual rainfall amount, and generates a plot of the standardized (mean 0, standard deviation of 1) residuals vs <code>year</code> (which corresponds to the order of the data).</p>
-<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="model-building-considerations.html#cb315-1" aria-hidden="true" tabindex="-1"></a>site <span class="ot">&lt;-</span> <span class="st">&quot;http://www.users.miamioh.edu/hughesmr/sta363/cornyield.txt&quot;</span></span>
-<span id="cb315-2"><a href="model-building-considerations.html#cb315-2" aria-hidden="true" tabindex="-1"></a>corn <span class="ot">&lt;-</span> <span class="fu">read.table</span>(site, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
-<span id="cb315-3"><a href="model-building-considerations.html#cb315-3" aria-hidden="true" tabindex="-1"></a>corn.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(yield <span class="sc">~</span> rain, <span class="at">data=</span>corn)</span>
-<span id="cb315-4"><a href="model-building-considerations.html#cb315-4" aria-hidden="true" tabindex="-1"></a>corn <span class="ot">&lt;-</span> corn <span class="sc">%&gt;%</span></span>
-<span id="cb315-5"><a href="model-building-considerations.html#cb315-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Std.Residuals =</span> <span class="fu">rstandard</span>(corn.fit))</span>
-<span id="cb315-6"><a href="model-building-considerations.html#cb315-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(corn) <span class="sc">+</span> </span>
-<span id="cb315-7"><a href="model-building-considerations.html#cb315-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept=</span><span class="dv">0</span>, <span class="at">slope=</span><span class="dv">0</span>, <span class="at">color=</span><span class="st">&quot;gray40&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb315-8"><a href="model-building-considerations.html#cb315-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span>year, <span class="at">y=</span>Std.Residuals) ) <span class="sc">+</span> </span>
-<span id="cb315-9"><a href="model-building-considerations.html#cb315-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>year, <span class="at">y=</span>Std.Residuals) ) <span class="sc">+</span> </span>
-<span id="cb315-10"><a href="model-building-considerations.html#cb315-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="model-building-considerations.html#cb351-1" tabindex="-1"></a>site <span class="ot">&lt;-</span> <span class="st">&quot;http://www.users.miamioh.edu/hughesmr/sta363/cornyield.txt&quot;</span></span>
+<span id="cb351-2"><a href="model-building-considerations.html#cb351-2" tabindex="-1"></a>site <span class="ot">&lt;-</span> <span class="st">&quot;docs/data/cornyield.txt&quot;</span></span>
+<span id="cb351-3"><a href="model-building-considerations.html#cb351-3" tabindex="-1"></a>corn <span class="ot">&lt;-</span> <span class="fu">read_table</span>(site)</span>
+<span id="cb351-4"><a href="model-building-considerations.html#cb351-4" tabindex="-1"></a>corn.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(yield <span class="sc">~</span> rain, <span class="at">data=</span>corn)</span>
+<span id="cb351-5"><a href="model-building-considerations.html#cb351-5" tabindex="-1"></a>corn <span class="ot">&lt;-</span> corn <span class="sc">%&gt;%</span></span>
+<span id="cb351-6"><a href="model-building-considerations.html#cb351-6" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Std.Residuals =</span> <span class="fu">rstandard</span>(corn.fit))</span>
+<span id="cb351-7"><a href="model-building-considerations.html#cb351-7" tabindex="-1"></a><span class="fu">ggplot</span>(corn) <span class="sc">+</span> </span>
+<span id="cb351-8"><a href="model-building-considerations.html#cb351-8" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept=</span><span class="dv">0</span>, <span class="at">slope=</span><span class="dv">0</span>, <span class="at">color=</span><span class="st">&quot;gray40&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb351-9"><a href="model-building-considerations.html#cb351-9" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span>year, <span class="at">y=</span>Std.Residuals) ) <span class="sc">+</span> </span>
+<span id="cb351-10"><a href="model-building-considerations.html#cb351-10" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>year, <span class="at">y=</span>Std.Residuals) ) <span class="sc">+</span> </span>
+<span id="cb351-11"><a href="model-building-considerations.html#cb351-11" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
 <p><img src="introStatModeling_files/figure-html/ch8.12-1.png" width="672" /></p>
 <p>In general, residuals exhibit random fluctuation around the <span class="math inline">\(e_i = 0\)</span> line across time suggests that there is no correlation. If there was correlation in the residuals, we would see longer consecutive runs of residuals either above or below the <span class="math inline">\(e_i = 0\)</span> line. Unless these effects are strong, they can be difficult to spot. Nothing is obviously wrong here.</p>
 <p><strong>Example: Ground cover.</strong> Suppose we are engaged in a field study in a mountainous region. We take measurements at various locations on a particular mountain in order to study how rainfall, elevation and soil pH impact the amount of cover (per square meter) of a certain species of moss.</p>
 <p>Why might non-independence be a concern in this example? Think about two measurements taken at geographically close locations: they might tend to look more similar than those made between measurement locations far apart, even if the predictors are all similar in value. In other words, proximity might produce similarity. That violates independence.</p>
 </div>
-<div id="pseudoreplication" class="section level3" number="8.2.2">
-<h3><span class="header-section-number">8.2.2</span> Pseudoreplication</h3>
+<div id="pseudoreplication" class="section level3 hasAnchor" number="8.2.2">
+<h3><span class="header-section-number">8.2.2</span> Pseudoreplication<a href="model-building-considerations.html#pseudoreplication" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In the most basic form of a designed experiment, each separate subject (EU) contributes one independent piece of information about the response to the study. But, common to all designed experiments is the notion of replication: this means we assign the same experimental conditions to several independent subjects (EUs), the idea being that we want to know how much natural variation in the response is present without changing the conditions of the experiment in order to estimate the random error component in a model. Two or more independent EUs receiving the same treatment are called replicates.</p>
 <p>Pseudoreplication is actually a form of spatial correlation introduced above in the ground cover example, but here it is purposefully built into the sampling plan of a designed experiment. Here’s an example:</p>
 <p><strong>Example: Calcium content of leaves.</strong> In a study to analyze the calcium content in leaves, three plants are chosen, from which four leaves were sampled. Then from each of these twelve leaves, four discs were cut and processed.</p>
@@ -493,8 +512,8 @@ div.csl-indent {
 <p>Discs from the same leaves are likely to be closer in value than those from different leaves, and those on the same plant will be more similar to each other than those from different plants. There are natural clusters or hierarchies within the data, and this fact needs to be reflected in the way it is analyzed.</p>
 <p>In truth, this example has only three replicates (the number of plants), not 48. The measurements within a plant are not real replicates, but rather pseudoreplicates.</p>
 </div>
-<div id="what-if-we-have-non-independent-errors" class="section level3" number="8.2.3">
-<h3><span class="header-section-number">8.2.3</span> What if we have non-independent errors?</h3>
+<div id="what-if-we-have-non-independent-errors" class="section level3 hasAnchor" number="8.2.3">
+<h3><span class="header-section-number">8.2.3</span> What if we have non-independent errors?<a href="model-building-considerations.html#what-if-we-have-non-independent-errors" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Your first step is to think about the context to determine if the data are likely to have the problem. The solution to the non-independence problem always necessitates a change in how the data are analyzed.</p>
 <ol style="list-style-type: decimal">
 <li><p>If you have a designed experiment that has pseudoreplication or temporal characteristics built-in, you will need to account for this in how you construct your model. Examples of this sort of structure are covered in <a href="advanced-designs.html#advanced-designs">4</a>.</p></li>
@@ -502,12 +521,12 @@ div.csl-indent {
 </ol>
 </div>
 </div>
-<div id="constant-variance-violations" class="section level2" number="8.3">
-<h2><span class="header-section-number">8.3</span> Constant Variance Violations</h2>
+<div id="constant-variance-violations" class="section level2 hasAnchor" number="8.3">
+<h2><span class="header-section-number">8.3</span> Constant Variance Violations<a href="model-building-considerations.html#constant-variance-violations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>For hypothesis tests, confidence interval or prediction interval results to be correct, we must assume that the variance of the errors is constant; i.e., it does not change across varying values of the predictors or the response. Constant error variance is sometimes referred to as homoscedacticity. This is usually a more crucial assumption than normality in validating model inferences but violations of the two are often connected.</p>
 <p>The basic plot to investigate the constant variance assumption is a Residuals vs Fitted plot; i.e., a plot of <span class="math inline">\(e_i\)</span> versus <span class="math inline">\(\hat{y}_i\)</span>. If all is well, you should see fairly uniform (“constant”) variability in the vertical direction and the scatter should be symmetric vertically around zero. This plot is the first of the four-plot diagnostic summary in R (upper-left corner):</p>
-<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="model-building-considerations.html#cb316-1" aria-hidden="true" tabindex="-1"></a>appraisal.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(saleprice <span class="sc">~</span> landvalue <span class="sc">+</span> impvalue <span class="sc">+</span> area, <span class="at">data=</span>appraisal)</span>
-<span id="cb316-2"><a href="model-building-considerations.html#cb316-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(appraisal.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="model-building-considerations.html#cb352-1" tabindex="-1"></a>appraisal.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(saleprice <span class="sc">~</span> landvalue <span class="sc">+</span> impvalue <span class="sc">+</span> area, <span class="at">data=</span>appraisal)</span>
+<span id="cb352-2"><a href="model-building-considerations.html#cb352-2" tabindex="-1"></a><span class="fu">autoplot</span>(appraisal.fit)</span></code></pre></div>
 <p><img src="introStatModeling_files/figure-html/ch8.7-1.png" width="672" /></p>
 <p>R adds a smoother to help you determine trend, which looks non-existent here (which is good). However, don’t put too much credence in the smoother if the sample size is small.
 The thing you should notice is what a violation looks like. Typically, a violation appears as a systematic fanning or funneling of points on these plots. This can occur in either direction: left to right, or right to left. Our experience has been that students learning regression diagnostics for the first time tend to over-interpret these plots, looking at every twist and turn as something potentially troublesome. You will especially want to be careful about putting too much weight on residual versus fitted plots based on small datasets. Sometimes datasets are just too small to make plot interpretation worthwhile. Don’t worry! With a little practice, you will learn how to read these plots.</p>
@@ -519,12 +538,12 @@ The thing you should notice is what a violation looks like. Typically, a violati
 <li><p>Use a Generalized Linear Model (GLM). For certain response variables, there may be a natural connection between the value of the response and the variance of the response. Two common examples of this are when your <span class="math inline">\(Y\)</span> variable is a count or a proportion. In these cases, you should instead consider fitting a form of a generalized linear model. These types of models allow flexibility in choice of an error distribution (it doesn’t necessarily need to be normal) and error variance (doesn’t necessarily need to be constant). We will see a bit more on this later in the couse; see <a href="logistic-regression.html#logistic-regression">12</a> and <a href="generalized-linear-models.html#generalized-linear-models">13</a>.</p></li>
 </ol>
 <p><strong>Example: University admissions.</strong> A director of admissions at a state university wanted to determine how accurately students’ grade point averages at the end of their freshman year could be predicted by entrance test scores and high school class rank. We want to develop a model to predict <code>gpa.endyr1</code> from <code>hs.pct</code> (High school class rank as a percentile), <code>act</code> (ACT entrance exam score) and <code>year</code> (Calendar year the freshman entered university). The variable <code>year</code> will be treated as a categorical factor.</p>
-<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="model-building-considerations.html#cb317-1" aria-hidden="true" tabindex="-1"></a>uadata.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(gpa.endyr1 <span class="sc">~</span> hs.pct <span class="sc">+</span> act <span class="sc">+</span> <span class="fu">factor</span>(year), <span class="at">data=</span>uadata)</span>
-<span id="cb317-2"><a href="model-building-considerations.html#cb317-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(uadata.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="model-building-considerations.html#cb353-1" tabindex="-1"></a>uadata.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(gpa.endyr1 <span class="sc">~</span> hs.pct <span class="sc">+</span> act <span class="sc">+</span> <span class="fu">factor</span>(year), <span class="at">data=</span>uadata)</span>
+<span id="cb353-2"><a href="model-building-considerations.html#cb353-2" tabindex="-1"></a><span class="fu">autoplot</span>(uadata.fit)</span></code></pre></div>
 <p><img src="introStatModeling_files/figure-html/ch8.8-1.png" width="672" /></p>
 <p>We see some substantial non-constant variance (the residuals vs fitted plot shows clearly systematic fanning; the scale-location plot shows a downward trend in the adjusted residuals as the fitted values increase) as well as some non-normality. Even though <span class="math inline">\(n\)</span> is large here and hence the non-normality isn’t a serious issue (more on that below).</p>
-<div id="box-cox-power-tranformations" class="section level3" number="8.3.1">
-<h3><span class="header-section-number">8.3.1</span> Box-Cox Power Tranformations</h3>
+<div id="box-cox-power-tranformations" class="section level3 hasAnchor" number="8.3.1">
+<h3><span class="header-section-number">8.3.1</span> Box-Cox Power Tranformations<a href="model-building-considerations.html#box-cox-power-tranformations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Power transformation, also known as Box-Cox transformations, are typically implemented treat issues with Normality. However, it is often the case that violations of the constant variance assumption are accompanied with violations of normality. A transformation of the response variable <span class="math inline">\(Y\)</span> can often address both violations.</p>
 <p>The Box-Cox transformation method is a popular way to determine a normalizing data transformation for <span class="math inline">\(Y\)</span>. It is designed for strictly positive responses (<span class="math inline">\(Y\)</span> &gt; 0) and determines the transformation to find the best fit to the data. In the Box-Cox method, instead of fitting the original <span class="math inline">\(Y\)</span> as the response, we determine a transformed version <span class="math inline">\(t_\lambda(Y)\)</span>, where</p>
 <p><span class="math display">\[t_\lambda(Y) = \left\{\begin{array}{ll} \frac{Y^\lambda - 1}{\lambda} &amp; \textrm{for } \lambda\neq 0 \\
@@ -532,7 +551,7 @@ The thing you should notice is what a violation looks like. Typically, a violati
 <p>From the data, the “power” <span class="math inline">\(\lambda\)</span> is estimated. Once optimally determined, we fit the linear model using the transformed response:</p>
 <p><span class="math display">\[t_\lambda(Y) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_k X_k + \varepsilon\]</span></p>
 <p>The <code>gg_boxcox()</code> function in the <code>lindia</code> package will produce a plot of the profile likelihood against the transformation parameter <span class="math inline">\(\lambda\)</span>. We typically look for the <span class="math inline">\(\lambda\)</span> value that includes the maximum (or peak) of the plotted curve. Let’s see what a Box-Cox normalizing transformation does for the error variance problem for the GPA predictor problem.</p>
-<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="model-building-considerations.html#cb318-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gg_boxcox</span>(uadata.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb354-1"><a href="model-building-considerations.html#cb354-1" tabindex="-1"></a><span class="fu">gg_boxcox</span>(uadata.fit)</span></code></pre></div>
 <p><img src="introStatModeling_files/figure-html/ch8.9-1.png" width="672" /></p>
 <p>We typically choose a convenient <span class="math inline">\(\lambda\)</span> value near the peak. Here, using <span class="math inline">\(\lambda = 2\)</span> (i.e., squaring the response <code>gpa.endyr1</code>) will be the best normalizing transformation.</p>
 <p>How does the transformation improve our error variance problem? Below is a direct comparison of the residuals vs fitted plots for the original response (model m, on the left) and the transformed response (model m2, on the right):</p>
@@ -542,8 +561,8 @@ The thing you should notice is what a violation looks like. Typically, a violati
 <p>Thus, using <span class="math inline">\(Y^2\)</span> as our response (instead of <span class="math inline">\(Y\)</span>) effectively treats the problem.</p>
 </div>
 </div>
-<div id="normality-violations" class="section level2" number="8.4">
-<h2><span class="header-section-number">8.4</span> Normality violations</h2>
+<div id="normality-violations" class="section level2 hasAnchor" number="8.4">
+<h2><span class="header-section-number">8.4</span> Normality violations<a href="model-building-considerations.html#normality-violations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>What if we have non-normal errors?</p>
 <ul>
 <li>A treatment for non-normality comes usually in the form of a <em>power transformation</em> applied to the response variable <span class="math inline">\(Y\)</span>.</li>
@@ -551,22 +570,22 @@ The thing you should notice is what a violation looks like. Typically, a violati
 </ul>
 <p><strong>Example: 1993 Passenger Cars.</strong> Cars were selected at random from among 1993 passenger models that were listed in both the Consumer Reports issue and the PACE Buying Guide. Pickup trucks and Sport/Utility vehicles were eliminated due to incomplete information in the Consumer Reports source. Duplicate models (e.g., Dodge Shadow and Plymouth Sundance) were listed at most once. That data reside in the <code>Cars93</code> data frame in the <code>MASS</code> package. After loading the package, details about all the variables in the data frame may be obtained by typing <code>?Cars93</code>.</p>
 <p>Let’s look at a simple linear regression to predict highway mileage (MPG.highway) from the weight of the car (Weight). I will look at the normal Q-Q plot for the residuals, too:</p>
-<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="model-building-considerations.html#cb319-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
-<span id="cb319-2"><a href="model-building-considerations.html#cb319-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Cars93)</span>
-<span id="cb319-3"><a href="model-building-considerations.html#cb319-3" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(MPG.highway <span class="sc">~</span> Weight, <span class="at">data=</span>Cars93)</span>
-<span id="cb319-4"><a href="model-building-considerations.html#cb319-4" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(m1)  </span></code></pre></div>
+<div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="model-building-considerations.html#cb355-1" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb355-2"><a href="model-building-considerations.html#cb355-2" tabindex="-1"></a><span class="fu">data</span>(Cars93)</span>
+<span id="cb355-3"><a href="model-building-considerations.html#cb355-3" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(MPG.highway <span class="sc">~</span> Weight, <span class="at">data=</span>Cars93)</span>
+<span id="cb355-4"><a href="model-building-considerations.html#cb355-4" tabindex="-1"></a><span class="fu">autoplot</span>(m1)  </span></code></pre></div>
 <p><img src="introStatModeling_files/figure-html/ch8.1-1.png" width="672" /></p>
 <p>Normality is typically assessed via a Normal Q-Q plot (upper right corner). There is a noticeable skew in the points at the top of the plot, suggesting a skew in the residuals. Since normally distributed data should be symmetric, this suggests a violation of the normality assumption. As aforementioned, violations of normality typically are typically linked with violations of constant variance and we see that here with variance issues (looks like the variance increases with the Fitted values)</p>
 <p>We can consider a Box-Cox transformation</p>
-<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="model-building-considerations.html#cb320-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gg_boxcox</span>(m1)</span></code></pre></div>
+<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb356-1"><a href="model-building-considerations.html#cb356-1" tabindex="-1"></a><span class="fu">gg_boxcox</span>(m1)</span></code></pre></div>
 <p><img src="introStatModeling_files/figure-html/ch8.2-1.png" width="672" /></p>
 <p>The optimal choice of power transformation is near <span class="math inline">\(\lambda = –0.75\)</span>. The confidence interval for <span class="math inline">\(\lambda\)</span> runs from about –1.4 to 0. For ease of interpretation, we typically use a convenient value of <span class="math inline">\(\lambda\)</span> nearest to the optimum. So in this case, I would choose <span class="math inline">\(\lambda = –1\)</span> for my optimal transformation. In other words, instead of fitting <span class="math inline">\(Y\)</span> as the response, use</p>
 <p><span class="math display">\[t_\lambda(Y) = \frac{Y^{-1}-1}{-1} = \frac{1}{Y}\]</span>.</p>
 <p>Since <span class="math inline">\(Y\)</span> = <code>MPG.highway</code>, we instead use the reciprocal <code>1/MPG.highway</code> as our response variable. This should help normalize the residuals and hence validate any test or confidence or prediction intervals. Let’s see:</p>
-<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="model-building-considerations.html#cb321-1" aria-hidden="true" tabindex="-1"></a>Cars93 <span class="ot">&lt;-</span> Cars93 <span class="sc">%&gt;%</span></span>
-<span id="cb321-2"><a href="model-building-considerations.html#cb321-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Rec.MPG.highway =</span> <span class="dv">1</span><span class="sc">/</span>MPG.highway)</span>
-<span id="cb321-3"><a href="model-building-considerations.html#cb321-3" aria-hidden="true" tabindex="-1"></a>t.m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Rec.MPG.highway <span class="sc">~</span> Weight, <span class="at">data=</span>Cars93)</span>
-<span id="cb321-4"><a href="model-building-considerations.html#cb321-4" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(t.m1)</span></code></pre></div>
+<div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="model-building-considerations.html#cb357-1" tabindex="-1"></a>Cars93 <span class="ot">&lt;-</span> Cars93 <span class="sc">%&gt;%</span></span>
+<span id="cb357-2"><a href="model-building-considerations.html#cb357-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Rec.MPG.highway =</span> <span class="dv">1</span><span class="sc">/</span>MPG.highway)</span>
+<span id="cb357-3"><a href="model-building-considerations.html#cb357-3" tabindex="-1"></a>t.m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Rec.MPG.highway <span class="sc">~</span> Weight, <span class="at">data=</span>Cars93)</span>
+<span id="cb357-4"><a href="model-building-considerations.html#cb357-4" tabindex="-1"></a><span class="fu">autoplot</span>(t.m1)</span></code></pre></div>
 <p><img src="introStatModeling_files/figure-html/ch8.4-1.png" width="672" /></p>
 <p>This looks much better than the normal Q-Q plot for our original R model <code>m1</code>, which used <code>MPG.highway</code> as the response.</p>
 <p>Two notes:</p>
@@ -574,40 +593,40 @@ The thing you should notice is what a violation looks like. Typically, a violati
 <li><p>Regression coefficients will need to be interpreted with respect to the transformed scale. There is no straightforward way of “untransforming” them to values that can interpreted in the original scale. Also, you cannot directly compare regression coefficients between models where the response transformation is different. Difficulties of this type may dissuade one from transforming the response.</p></li>
 <li><p>Even if you transform the response, you will want to express model predictions back in the original scale. This is simply a matter of “untransforming” by using the inverse function of the original transformation. For example, suppose I use model <code>trans.m1</code> to obtain a 95% PI for the true highway mileage for a car weighing 3000 lb:</p></li>
 </ol>
-<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="model-building-considerations.html#cb322-1" aria-hidden="true" tabindex="-1"></a>car.pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(t.m1, <span class="at">newdata=</span><span class="fu">data.frame</span>(<span class="at">Weight=</span><span class="dv">3000</span>),<span class="at">int=</span><span class="st">&quot;pred&quot;</span>) </span>
-<span id="cb322-2"><a href="model-building-considerations.html#cb322-2" aria-hidden="true" tabindex="-1"></a>car.pred</span></code></pre></div>
+<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb358-1"><a href="model-building-considerations.html#cb358-1" tabindex="-1"></a>car.pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(t.m1, <span class="at">newdata=</span><span class="fu">data.frame</span>(<span class="at">Weight=</span><span class="dv">3000</span>),<span class="at">int=</span><span class="st">&quot;pred&quot;</span>) </span>
+<span id="cb358-2"><a href="model-building-considerations.html#cb358-2" tabindex="-1"></a>car.pred</span></code></pre></div>
 <pre><code>##         fit       lwr      upr
 ## 1 0.0348106 0.0281462 0.041475</code></pre>
 <p>The PI (0.028, 0.0414) is in terms of <code>1/MPG.highway</code>. Note that this is actually equivalent to “gallons per mile” here! To untransform, reciprocate:</p>
-<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="model-building-considerations.html#cb324-1" aria-hidden="true" tabindex="-1"></a>car.pred.mpg <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>car.pred</span>
-<span id="cb324-2"><a href="model-building-considerations.html#cb324-2" aria-hidden="true" tabindex="-1"></a>car.pred.mpg</span></code></pre></div>
+<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb360-1"><a href="model-building-considerations.html#cb360-1" tabindex="-1"></a>car.pred.mpg <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>car.pred</span>
+<span id="cb360-2"><a href="model-building-considerations.html#cb360-2" tabindex="-1"></a>car.pred.mpg</span></code></pre></div>
 <pre><code>##       fit     lwr     upr
 ## 1 28.7269 35.5287 24.1109</code></pre>
 <p>We are 95% confident that the true highway mileage for an unobserved individual car weighing 3000 lb is somewhere between 24.11 to 35.53 miles per gallon. Note: The lower and upper prediction limits in R are switched because of the reciprocal transformation we used.</p>
 </div>
-<div id="violations-of-the-linearity-assumption" class="section level2" number="8.5">
-<h2><span class="header-section-number">8.5</span> Violations of the linearity assumption</h2>
+<div id="violations-of-the-linearity-assumption" class="section level2 hasAnchor" number="8.5">
+<h2><span class="header-section-number">8.5</span> Violations of the linearity assumption<a href="model-building-considerations.html#violations-of-the-linearity-assumption" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>When fitting a linear regression model, it is assumed that the structural part of the model has been correctly specified. If so, this ensures that the mean value of the residuals <span class="math inline">\(e_i\)</span> is always 0, which is desirable since we do not want the model to have any systematic tendency to overpredict or underpredict <span class="math inline">\(Y\)</span>.</p>
 <p><strong>Example: Tree volume.</strong> This data set provides measurements of the girth, height and volume of timber in 31 felled black cherry trees. Girth is the diameter of the tree (in inches) measured at 4 feet 6 inches above the ground. The data are in the data frame <code>trees</code> from the <code>datasets</code> package in the R base installation. For now, we will only consider a model to predict volume from girth, ignoring height. (Question: why might we want to do this?)</p>
 <p>First, let’s look at a plot of Volume against Girth. I add a scatterplot smoother (called a LOESS, or LOWESS, curve) to make a preliminary assessment of the relationship:</p>
-<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="model-building-considerations.html#cb326-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(trees)</span>
-<span id="cb326-2"><a href="model-building-considerations.html#cb326-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(trees) <span class="sc">+</span> </span>
-<span id="cb326-3"><a href="model-building-considerations.html#cb326-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>Girth, <span class="at">y=</span>Volume) ) <span class="sc">+</span> </span>
-<span id="cb326-4"><a href="model-building-considerations.html#cb326-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">x=</span>Girth, <span class="at">y=</span>Volume), <span class="at">method=</span><span class="st">&quot;loess&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb326-5"><a href="model-building-considerations.html#cb326-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
-<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb362-1"><a href="model-building-considerations.html#cb362-1" tabindex="-1"></a><span class="fu">data</span>(trees)</span>
+<span id="cb362-2"><a href="model-building-considerations.html#cb362-2" tabindex="-1"></a><span class="fu">ggplot</span>(trees) <span class="sc">+</span> </span>
+<span id="cb362-3"><a href="model-building-considerations.html#cb362-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>Girth, <span class="at">y=</span>Volume) ) <span class="sc">+</span> </span>
+<span id="cb362-4"><a href="model-building-considerations.html#cb362-4" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">x=</span>Girth, <span class="at">y=</span>Volume), <span class="at">method=</span><span class="st">&quot;loess&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb362-5"><a href="model-building-considerations.html#cb362-5" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="introStatModeling_files/figure-html/ch8.14-1.png" width="672" /></p>
 <p>It’s pretty clear that the relationship is non-linear: the rate of increase in volume per inch of girth is higher for larger trees. If we fit the model <code>VOLUME</code> = <span class="math inline">\(\beta_0\)</span> + <span class="math inline">\(\beta_1\)</span><code>GIRTH</code> + <span class="math inline">\(\varepsilon\)</span> to these data, we are erroneously forcing the same rate of increase in volume regardless of tree size, since the rate parameter <span class="math inline">\(\beta_1\)</span> is the same regardless of girth. Let’s see the effect of doing this on the residual diagnostics:</p>
-<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="model-building-considerations.html#cb328-1" aria-hidden="true" tabindex="-1"></a>tree.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(Volume <span class="sc">~</span> Girth, <span class="at">data=</span>trees)     <span class="co"># fits an incorrect straight-line model</span></span>
-<span id="cb328-2"><a href="model-building-considerations.html#cb328-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(tree.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb364-1"><a href="model-building-considerations.html#cb364-1" tabindex="-1"></a>tree.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(Volume <span class="sc">~</span> Girth, <span class="at">data=</span>trees)     <span class="co"># fits an incorrect straight-line model</span></span>
+<span id="cb364-2"><a href="model-building-considerations.html#cb364-2" tabindex="-1"></a><span class="fu">autoplot</span>(tree.fit)</span></code></pre></div>
 <p><img src="introStatModeling_files/figure-html/ch8.15-1.png" width="672" /></p>
 <p>Consider the Residuals vs Fitted plot (upper-left). If the linearity assumption were being met, the residuals should bounce randomly around the <span class="math inline">\(e_i = 0\)</span> line, but there is an obvious trend in the residuals, clearly depicted by the smoother curve: model predicted values that are low (&lt;20) or high (&gt;50) tend to be underpredicted, that is, their residuals <span class="math inline">\(e_i\)</span> are positive; and model predicted values of modest magnitude (between 20 and 50) tend to be overpredicted (their residuals <span class="math inline">\(e_i\)</span> are negative).</p>
 <p>Addressing linearity violations involves making adjustments to how the predictors enter the model. This usually means that we try applying transformations to the predictor(s). Common choices are to fit a polynomial model in <span class="math inline">\(X\)</span>, taking <span class="math inline">\(\log\)</span>s, etc. Trial and error can reveal good choices of transformation.</p>
 <p>In the tree example, the smoother suggest that a quadratic model (the curve we see in the above plot) might perform better:</p>
 <p><span class="math display">\[VOLUME = \beta_0 + \beta_1 GIRTH + \beta_2 GIRTH^2 + \varepsilon\]</span></p>
 <p>We fit this model in R:</p>
-<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="model-building-considerations.html#cb329-1" aria-hidden="true" tabindex="-1"></a>tree.fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Volume <span class="sc">~</span> Girth <span class="sc">+</span> <span class="fu">I</span>(Girth<span class="sc">^</span><span class="dv">2</span>), <span class="at">data=</span>trees)</span>
-<span id="cb329-2"><a href="model-building-considerations.html#cb329-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(tree.fit2)</span></code></pre></div>
+<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="model-building-considerations.html#cb365-1" tabindex="-1"></a>tree.fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Volume <span class="sc">~</span> Girth <span class="sc">+</span> <span class="fu">I</span>(Girth<span class="sc">^</span><span class="dv">2</span>), <span class="at">data=</span>trees)</span>
+<span id="cb365-2"><a href="model-building-considerations.html#cb365-2" tabindex="-1"></a><span class="fu">summary</span>(tree.fit2)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = Volume ~ Girth + I(Girth^2), data = trees)
@@ -628,7 +647,7 @@ The thing you should notice is what a violation looks like. Typically, a violati
 ## Multiple R-squared:  0.962,  Adjusted R-squared:  0.959 
 ## F-statistic:  350 on 2 and 28 DF,  p-value: &lt;2e-16</code></pre>
 <p>Note the p-value of the quadratic term (0.000152). This means that curvature in the girth/volume relationship is statistically significant. We could have equivalently investigated this by using <code>anova()</code> to compare the straight-line model (<code>tree.fit</code>) to the quadratic model (<code>tree.fit2</code>):</p>
-<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="model-building-considerations.html#cb331-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(tree.fit, tree.fit2)</span></code></pre></div>
+<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb367-1"><a href="model-building-considerations.html#cb367-1" tabindex="-1"></a><span class="fu">anova</span>(tree.fit, tree.fit2)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Model 1: Volume ~ Girth
@@ -639,14 +658,14 @@ The thing you should notice is what a violation looks like. Typically, a violati
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Now consider the residuals from the quadratic fit</p>
-<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="model-building-considerations.html#cb333-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(tree.fit2)</span></code></pre></div>
+<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="model-building-considerations.html#cb369-1" tabindex="-1"></a><span class="fu">autoplot</span>(tree.fit2)</span></code></pre></div>
 <p><img src="introStatModeling_files/figure-html/ch8.18-1.png" width="672" /></p>
 <p>The trend we saw in the residuals for the straight-line model is now gone.
 So, the linearity assumption has been satisfied here by fitting a quadratic model.</p>
 <p>Also note the adjusted R-squared value increases with the quadratic model (from 0.9331 to 0.9588).</p>
 </div>
-<div id="detecting-and-dealing-with-unusual-observations" class="section level2" number="8.6">
-<h2><span class="header-section-number">8.6</span> Detecting and dealing with unusual observations</h2>
+<div id="detecting-and-dealing-with-unusual-observations" class="section level2 hasAnchor" number="8.6">
+<h2><span class="header-section-number">8.6</span> Detecting and dealing with unusual observations<a href="model-building-considerations.html#detecting-and-dealing-with-unusual-observations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Sometimes we will encounter unusual observations in our data. It is important to have mechanisms for identifying such observations because they can wreak havoc on certain aspects of an analysis. Once identified, we need a strategy for dealing with them.
 In regression, there are three classifications of unusual observations:</p>
 <ol style="list-style-type: decimal">
@@ -680,11 +699,11 @@ In regression, there are three classifications of unusual observations:</p>
 <p>Recall that in R, the <code>autoplot()</code> function when applied to a linear model object created with <code>lm()</code> generates a set of four diagnostic plots. The plot labeled Residuals vs Leverage provides a nice visualization of the standardized residuals, the hat values, and contours corresponding to values of the Cook’s Distance influence measure. Let’s look at a new example.</p>
 <p><strong>Example: Estimating body fat percentage.</strong> The R workspace bodyfat.RData in our repository gives the percentage of body fat determined by the method of underwater weighing, in addition to numerous body circumference measurements, for a random sample of 252 men. The goal of the study is to develop a good predictive model for estimating percentage of body fat using body circumference measurements only.</p>
 <p>We fit a main effects model using <code>bodyfat.pct</code> as the response and the remaining 13 variables as predictors, and request the diagnostic plots for the model fit:</p>
-<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="model-building-considerations.html#cb334-1" aria-hidden="true" tabindex="-1"></a>site <span class="ot">&lt;-</span> <span class="st">&quot;http://www.users.miamioh.edu/hughesmr/sta363/bodyfat.txt&quot;</span></span>
-<span id="cb334-2"><a href="model-building-considerations.html#cb334-2" aria-hidden="true" tabindex="-1"></a>bodyfat <span class="ot">&lt;-</span> <span class="fu">read.table</span>(site, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
-<span id="cb334-3"><a href="model-building-considerations.html#cb334-3" aria-hidden="true" tabindex="-1"></a>bodyfat.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(bodyfat.pct <span class="sc">~</span> ., <span class="at">data=</span>bodyfat)</span></code></pre></div>
+<div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb370-1"><a href="model-building-considerations.html#cb370-1" tabindex="-1"></a>site <span class="ot">&lt;-</span> <span class="st">&quot;http://www.users.miamioh.edu/hughesmr/sta363/bodyfat.txt&quot;</span></span>
+<span id="cb370-2"><a href="model-building-considerations.html#cb370-2" tabindex="-1"></a>bodyfat <span class="ot">&lt;-</span> <span class="fu">read.table</span>(site, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
+<span id="cb370-3"><a href="model-building-considerations.html#cb370-3" tabindex="-1"></a>bodyfat.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(bodyfat.pct <span class="sc">~</span> ., <span class="at">data=</span>bodyfat)</span></code></pre></div>
 <p>The notation <code>bodyfat.pct ~ .</code> tells R to treat the variable <code>bodyfat.pct</code> as the response and all other variables are predictors.</p>
-<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="model-building-considerations.html#cb335-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(bodyfat.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb371-1"><a href="model-building-considerations.html#cb371-1" tabindex="-1"></a><span class="fu">autoplot</span>(bodyfat.fit)</span></code></pre></div>
 <p><img src="introStatModeling_files/figure-html/ch8.21-1.png" width="672" /></p>
 <p>Look at the plot in the bottom-left corner, zoomed in below.</p>
 <p><img src="introStatModeling_files/figure-html/ch8.21.extended-1.png" width="672" /></p>
@@ -699,15 +718,15 @@ In regression, there are three classifications of unusual observations:</p>
 <li><p>An unusual observation might indicate a mistake in the data (like a typo, or a measuring error), in which case it should be corrected if possible or else removed from the data before fitting a regression model (and the reason for the mistake should be investigated).</p></li>
 </ul>
 </div>
-<div id="multicollinearity" class="section level2" number="8.7">
-<h2><span class="header-section-number">8.7</span> Multicollinearity</h2>
+<div id="multicollinearity" class="section level2 hasAnchor" number="8.7">
+<h2><span class="header-section-number">8.7</span> Multicollinearity<a href="model-building-considerations.html#multicollinearity" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Multicollinearity (abbreviated MC) is the condition where two or more of the predictors in a regression model are highly correlated among themselves. It is a condition in the <span class="math inline">\(X\)</span>s, and has nothing to do with the response variable <span class="math inline">\(Y\)</span>. MC is always present in non-orthogonal data (i.e., observational studies). The issue is to what degree it is present.</p>
 <p><strong>Why is MC a potential concern?</strong> Very strong MC can have a severe impact on your ability to assess certain aspects of a regression analysis. Let’s see via an example.</p>
 <p><strong>Example:</strong> Housing Appraisal. Consider the housing appraisal data we’ve used multiple times. We have already established that the two values (improved appraised value and land value appear connected).</p>
-<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="model-building-considerations.html#cb336-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggscatmat</span>(appraisal)</span></code></pre></div>
+<div class="sourceCode" id="cb372"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb372-1"><a href="model-building-considerations.html#cb372-1" tabindex="-1"></a><span class="fu">ggscatmat</span>(appraisal)</span></code></pre></div>
 <p><img src="introStatModeling_files/figure-html/ch8.22-1.png" width="672" /></p>
 <p>We see that all the predictor variables appear to be linearly connected (fairly strong correlations). We have moderately strong correlation between all three predictors and all three appear to be linearly connected to the response variable. Recall the full regression model.</p>
-<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="model-building-considerations.html#cb337-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(appraisal.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="model-building-considerations.html#cb373-1" tabindex="-1"></a><span class="fu">summary</span>(appraisal.fit)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = saleprice ~ landvalue + impvalue + area, data = appraisal)
@@ -745,8 +764,8 @@ In regression, there are three classifications of unusual observations:</p>
 <p><span class="math display">\[VIF_i = \frac{1}{1-R^2_i}\]</span></p>
 <p>where <span class="math inline">\(R_i^2\)</span> is the <span class="math inline">\(R^2\)</span> value from modeling <span class="math inline">\(X_i\)</span> on the remaining predictors. If <span class="math inline">\(R_i^2\)</span> is large, say &gt; 0.90, then <span class="math inline">\(VIF_i &gt; 10\)</span>. VIFs are the most effective way to detect Multicollinearity. Generally speaking, <span class="math inline">\(VIF_i &gt; 10\)</span> is considered a major issue and <span class="math inline">\(5 &lt; VIF_i &lt; 10\)</span> is of moderate concern. VIF values under the value of 5 are not considered worrisome.</p>
 <p>The function <code>vif()</code> in the add-on package <code>car</code> computes VIFs for a fitted model. Based on our preliminar view there is some concern</p>
-<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="model-building-considerations.html#cb339-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
-<span id="cb339-2"><a href="model-building-considerations.html#cb339-2" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(appraisal.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="model-building-considerations.html#cb375-1" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb375-2"><a href="model-building-considerations.html#cb375-2" tabindex="-1"></a><span class="fu">vif</span>(appraisal.fit)</span></code></pre></div>
 <pre><code>## landvalue  impvalue      area 
 ##   2.29985   3.17126   2.83913</code></pre>
 <p>Here, we see there is no major concerns about MC based on VIF values.</p>
@@ -770,8 +789,8 @@ In regression, there are three classifications of unusual observations:</p>
 </ul>
 <p>Finally, remember that multicollinearity has no appreciable effect on predictions of the response variable <span class="math inline">\(Y\)</span>. So if the only intended purpose for your model is response prediction via CIs/PIs for <span class="math inline">\(Y\)</span>, then taking drastic steps to curb any MC among the predictor variables is a bit like performing major surgery to treat a cold.</p>
 </div>
-<div id="standardizingPredictors" class="section level2" number="8.8">
-<h2><span class="header-section-number">8.8</span> Scale changes</h2>
+<div id="standardizingPredictors" class="section level2 hasAnchor" number="8.8">
+<h2><span class="header-section-number">8.8</span> Scale changes<a href="model-building-considerations.html#standardizingPredictors" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Rescaling a predictor <span class="math inline">\(X_i\)</span> means applying a linear transformation of the form</p>
 <p><span class="math display">\[\frac{X_i - c_1}{c_2}\]</span></p>
 <p>where <span class="math inline">\(c_1\)</span> and <span class="math inline">\(c_2\)</span> are constants (<span class="math inline">\(c_2 \neq 0\)</span>), and then fitting a model. One particular important scaling is to <em>standardize</em> the predictor variables, namely the <span class="math inline">\(i^\mathrm{th}\)</span> observation of predictor <span class="math inline">\(j\)</span>, or the datum <span class="math inline">\(X_{ij}\)</span> is scaled via</p>
@@ -794,7 +813,7 @@ Scaling can have several advantages in certain situations:</p>
 </ul>
 <p>Note two of the variables are in the units of dollars and the other is in square feet (the units are completely different). The computer treates every value as a number (it does not care about units) but given the difference in scale and units, this can lead to one variable appearing more important than another.</p>
 <p>First let’s recall the fitted model:</p>
-<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="model-building-considerations.html#cb341-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(appraisal.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="model-building-considerations.html#cb377-1" tabindex="-1"></a><span class="fu">summary</span>(appraisal.fit)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = saleprice ~ landvalue + impvalue + area, data = appraisal)
@@ -817,16 +836,16 @@ Scaling can have several advantages in certain situations:</p>
 ## F-statistic: 46.7 on 3 and 16 DF,  p-value: 3.87e-08</code></pre>
 <p>Those who know much about houses know that the size of the home and plot of land (essentially the <code>landvalue</code>) typically influence the sale price (larger homes sell for more), yet only the <code>impvalue</code> variable appears significant. But when looking at the coefficients, the <span class="math inline">\(b_{landvalue} \approx b_{impvalue} \approx 0.81\)</span> so it appears the two variables contribute the same predictive ability. Likewise, <code>area</code> appears it will be the most important in terms of predicting the <code>saleprice</code> in terms of raw numbers. It turns out that the variability in the <code>impvalue</code> variable is masking the influence of the other variables.</p>
 <p>This idea will make more sense with a plot. Using material from the first chapter we convert the predictor variables from wide to tall format to make a side-by-side boxplot.</p>
-<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="model-building-considerations.html#cb343-1" aria-hidden="true" tabindex="-1"></a>appraisal.tall <span class="ot">&lt;-</span> appraisal <span class="sc">%&gt;%</span></span>
-<span id="cb343-2"><a href="model-building-considerations.html#cb343-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>saleprice, <span class="sc">-</span>LandImprov) <span class="sc">%&gt;%</span></span>
-<span id="cb343-3"><a href="model-building-considerations.html#cb343-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(<span class="at">key=</span><span class="st">&quot;Variable&quot;</span>, <span class="at">value=</span><span class="st">&quot;Value&quot;</span>)</span>
-<span id="cb343-4"><a href="model-building-considerations.html#cb343-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(appraisal.tall) <span class="sc">+</span> </span>
-<span id="cb343-5"><a href="model-building-considerations.html#cb343-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Variable, <span class="at">y=</span>Value))</span></code></pre></div>
+<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb379-1"><a href="model-building-considerations.html#cb379-1" tabindex="-1"></a>appraisal.tall <span class="ot">&lt;-</span> appraisal <span class="sc">%&gt;%</span></span>
+<span id="cb379-2"><a href="model-building-considerations.html#cb379-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>saleprice, <span class="sc">-</span>LandImprov) <span class="sc">%&gt;%</span></span>
+<span id="cb379-3"><a href="model-building-considerations.html#cb379-3" tabindex="-1"></a>  <span class="fu">gather</span>(<span class="at">key=</span><span class="st">&quot;Variable&quot;</span>, <span class="at">value=</span><span class="st">&quot;Value&quot;</span>)</span>
+<span id="cb379-4"><a href="model-building-considerations.html#cb379-4" tabindex="-1"></a><span class="fu">ggplot</span>(appraisal.tall) <span class="sc">+</span> </span>
+<span id="cb379-5"><a href="model-building-considerations.html#cb379-5" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Variable, <span class="at">y=</span>Value))</span></code></pre></div>
 <p><img src="introStatModeling_files/figure-html/ch8.26-1.png" width="672" /></p>
 <p>Note the range for the <code>impvalue</code> variable compared to <code>area</code> and <code>landvalue</code>. Remember each value is also mapped to a <code>saleprice</code> value, the information provided in <code>impvalue</code> will overpower any information in <code>area</code> or <code>landvalue</code> since the variables are not on the same scale. Let’s standardize each predictor variable by applying the <code>scale()</code> function to each column of the dataset.</p>
-<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="model-building-considerations.html#cb344-1" aria-hidden="true" tabindex="-1"></a>z.appraisal <span class="ot">&lt;-</span> appraisal <span class="sc">%&gt;%</span></span>
-<span id="cb344-2"><a href="model-building-considerations.html#cb344-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_at</span>(<span class="fu">c</span>(<span class="st">&quot;landvalue&quot;</span>, <span class="st">&quot;impvalue&quot;</span>, <span class="st">&quot;area&quot;</span>), scale)</span>
-<span id="cb344-3"><a href="model-building-considerations.html#cb344-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(z.appraisal)</span></code></pre></div>
+<div class="sourceCode" id="cb380"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb380-1"><a href="model-building-considerations.html#cb380-1" tabindex="-1"></a>z.appraisal <span class="ot">&lt;-</span> appraisal <span class="sc">%&gt;%</span></span>
+<span id="cb380-2"><a href="model-building-considerations.html#cb380-2" tabindex="-1"></a>  <span class="fu">mutate_at</span>(<span class="fu">c</span>(<span class="st">&quot;landvalue&quot;</span>, <span class="st">&quot;impvalue&quot;</span>, <span class="st">&quot;area&quot;</span>), scale)</span>
+<span id="cb380-3"><a href="model-building-considerations.html#cb380-3" tabindex="-1"></a><span class="fu">head</span>(z.appraisal)</span></code></pre></div>
 <pre><code>##   saleprice  landvalue  impvalue      area LandImprov
 ## 1     68900 -0.6042621  0.630281  1.051338      50927
 ## 2     48500 -0.0395659 -0.484310 -0.977692      36860
@@ -835,17 +854,15 @@ Scaling can have several advantages in certain situations:</p>
 ## 5    116500  1.6322320  2.445472  1.783507      90827
 ## 6     45000 -0.1324435 -0.519688 -1.012046      35817</code></pre>
 <p>We se the <code>landvalue</code>, <code>impvalue</code> and <code>area</code> variables all resemble <span class="math inline">\(z\)</span>-scores. Now for a regurgitation of the box-plot on the standardized variables</p>
-<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="model-building-considerations.html#cb346-1" aria-hidden="true" tabindex="-1"></a>z.appraisal.tall <span class="ot">&lt;-</span> z.appraisal <span class="sc">%&gt;%</span></span>
-<span id="cb346-2"><a href="model-building-considerations.html#cb346-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>saleprice, <span class="sc">-</span>LandImprov) <span class="sc">%&gt;%</span></span>
-<span id="cb346-3"><a href="model-building-considerations.html#cb346-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(<span class="at">key=</span><span class="st">&quot;Variable&quot;</span>, <span class="at">value=</span><span class="st">&quot;Value&quot;</span>)</span></code></pre></div>
-<pre><code>## Warning: attributes are not identical across measure variables;
-## they will be dropped</code></pre>
-<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="model-building-considerations.html#cb348-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(z.appraisal.tall) <span class="sc">+</span> </span>
-<span id="cb348-2"><a href="model-building-considerations.html#cb348-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Variable, <span class="at">y=</span>Value))</span></code></pre></div>
+<div class="sourceCode" id="cb382"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb382-1"><a href="model-building-considerations.html#cb382-1" tabindex="-1"></a>z.appraisal.tall <span class="ot">&lt;-</span> z.appraisal <span class="sc">%&gt;%</span></span>
+<span id="cb382-2"><a href="model-building-considerations.html#cb382-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>saleprice, <span class="sc">-</span>LandImprov) <span class="sc">%&gt;%</span></span>
+<span id="cb382-3"><a href="model-building-considerations.html#cb382-3" tabindex="-1"></a>  <span class="fu">gather</span>(<span class="at">key=</span><span class="st">&quot;Variable&quot;</span>, <span class="at">value=</span><span class="st">&quot;Value&quot;</span>)</span>
+<span id="cb382-4"><a href="model-building-considerations.html#cb382-4" tabindex="-1"></a><span class="fu">ggplot</span>(z.appraisal.tall) <span class="sc">+</span> </span>
+<span id="cb382-5"><a href="model-building-considerations.html#cb382-5" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Variable, <span class="at">y=</span>Value))</span></code></pre></div>
 <p><img src="introStatModeling_files/figure-html/ch8.28-1.png" width="672" /></p>
 <p>Now the units on all three predictor variables is essentailly the same. Let’s fit our model again.</p>
-<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="model-building-considerations.html#cb349-1" aria-hidden="true" tabindex="-1"></a>z.appraisal.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(saleprice <span class="sc">~</span> landvalue <span class="sc">+</span> impvalue <span class="sc">+</span> area, <span class="at">data=</span>z.appraisal)</span>
-<span id="cb349-2"><a href="model-building-considerations.html#cb349-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(z.appraisal.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb383"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb383-1"><a href="model-building-considerations.html#cb383-1" tabindex="-1"></a>z.appraisal.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(saleprice <span class="sc">~</span> landvalue <span class="sc">+</span> impvalue <span class="sc">+</span> area, <span class="at">data=</span>z.appraisal)</span>
+<span id="cb383-2"><a href="model-building-considerations.html#cb383-2" tabindex="-1"></a><span class="fu">summary</span>(z.appraisal.fit)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = saleprice ~ landvalue + impvalue + area, data = z.appraisal)
@@ -890,42 +907,42 @@ Scaling can have several advantages in certain situations:</p>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": null,
-"text": null
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["introStatModeling.pdf", "introStatModeling.epub"],
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "subsection"
-}
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["introStatModeling.pdf", "introStatModeling.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
 });
 });
 </script>
@@ -936,7 +953,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

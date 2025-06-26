@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 9 Model Selection | Introduction to Statistical Modeling</title>
   <meta name="description" content="Covers Regression and elements of Design of Experiments in R using the tidyverse." />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 9 Model Selection | Introduction to Statistical Modeling" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="Covers Regression and elements of Design of Experiments in R using the tidyverse." />
   <meta name="github-repo" content="tjfisher19/introStatModeling" />
@@ -24,7 +23,7 @@
 <meta name="author" content="Michael R. Hughes and Thomas J. Fisher" />
 
 
-<meta name="date" content="2022-01-18" />
+<meta name="date" content="2025-06-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +32,6 @@
   
 <link rel="prev" href="model-building-considerations.html"/>
 <link rel="next" href="model-validation.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -51,16 +49,20 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -94,7 +96,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -107,7 +109,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -121,6 +123,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -144,7 +150,7 @@ div.csl-indent {
 }
 </style>
 
-<link rel="stylesheet" href="style.css" type="text/css" />
+<link rel="stylesheet" href="css_files/mystyle.css" type="text/css" />
 </head>
 
 <body>
@@ -173,12 +179,15 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html"><i class="fa fa-check"></i><b>1</b> Introductory Statistics in R</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#goals-of-a-statistical-analysis"><i class="fa fa-check"></i><b>1.1</b> Goals of a statistical analysis</a></li>
-<li class="chapter" data-level="1.2" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#before-you-begin-an-analysis"><i class="fa fa-check"></i><b>1.2</b> Before you begin an analysis</a></li>
+<li class="chapter" data-level="1.1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#goals-of-a-statistical-analysis"><i class="fa fa-check"></i><b>1.1</b> Goals of a statistical analysis</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#conducting-a-statistical-analysis"><i class="fa fa-check"></i><b>1.1.1</b> Conducting a statistical analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#introduction-to-r"><i class="fa fa-check"></i><b>1.2</b> Introduction to R</a></li>
 <li class="chapter" data-level="1.3" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#data-frames"><i class="fa fa-check"></i><b>1.3</b> Data frames</a>
 <ul>
 <li class="chapter" data-level="1.3.1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#built-in-data"><i class="fa fa-check"></i><b>1.3.1</b> Built-in data</a></li>
-<li class="chapter" data-level="1.3.2" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#types-of-data"><i class="fa fa-check"></i><b>1.3.2</b> Types of Data</a></li>
+<li class="chapter" data-level="1.3.2" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#dataTypesSection"><i class="fa fa-check"></i><b>1.3.2</b> Types of Data</a></li>
 <li class="chapter" data-level="1.3.3" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#importing-datasets-into-r"><i class="fa fa-check"></i><b>1.3.3</b> Importing datasets into R</a></li>
 </ul></li>
 <li class="chapter" data-level="1.4" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#referencing-data-from-inside-a-data-frame"><i class="fa fa-check"></i><b>1.4</b> Referencing data from inside a data frame</a></li>
@@ -193,46 +202,55 @@ div.csl-indent {
 <li class="chapter" data-level="1.6.6" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#descriptive-statistics-and-visualizations-for-two-numeric-variables"><i class="fa fa-check"></i><b>1.6.6</b> Descriptive statistics and visualizations for two numeric variables</a></li>
 </ul></li>
 <li class="chapter" data-level="1.7" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#sampling-distributions-describing-how-a-statistic-varies"><i class="fa fa-check"></i><b>1.7</b> Sampling distributions: describing how a statistic varies</a></li>
-<li class="chapter" data-level="1.8" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#two-sample-inference"><i class="fa fa-check"></i><b>1.8</b> Two-sample inference</a></li>
+<li class="chapter" data-level="1.8" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#twoSampleInference"><i class="fa fa-check"></i><b>1.8</b> Two-sample inference</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html"><i class="fa fa-check"></i><b>2</b> Introduction to Statistical Modeling and Designed Experiments</a>
+<li class="chapter" data-level="2" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html"><i class="fa fa-check"></i><b>2</b> Statistical Modeling and Designed Experiments</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#statistical-analyses-is-modeling"><i class="fa fa-check"></i><b>2.1</b> Statistical Analyses is Modeling</a>
+<li class="chapter" data-level="2.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#dataSources"><i class="fa fa-check"></i><b>2.1</b> Observational Studies versus designed experiments</a>
 <ul>
-<li class="chapter" data-level="2.1.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#example-of-a-two-sample-t-test-as-a-model"><i class="fa fa-check"></i><b>2.1.1</b> Example of a two-sample <span class="math inline">\(t\)</span>-test as a model</a></li>
+<li class="chapter" data-level="2.1.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#observational-studies"><i class="fa fa-check"></i><b>2.1.1</b> Observational Studies</a></li>
+<li class="chapter" data-level="2.1.2" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#designed-experiments"><i class="fa fa-check"></i><b>2.1.2</b> Designed experiments</a></li>
 </ul></li>
-<li class="chapter" data-level="2.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#observational-studies-versus-designed-experiments"><i class="fa fa-check"></i><b>2.2</b> Observational Studies versus designed experiments</a>
+<li class="chapter" data-level="2.2" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#designed-experiement-vocabulary"><i class="fa fa-check"></i><b>2.2</b> Designed experiement vocabulary</a>
 <ul>
-<li class="chapter" data-level="2.2.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#observational-studies"><i class="fa fa-check"></i><b>2.2.1</b> Observational Studies</a></li>
-<li class="chapter" data-level="2.2.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#designed-experiments"><i class="fa fa-check"></i><b>2.2.2</b> Designed experiments</a></li>
+<li class="chapter" data-level="2.2.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#what-is-an-experiment"><i class="fa fa-check"></i><b>2.2.1</b> What is an experiment?</a></li>
+<li class="chapter" data-level="2.2.2" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#analysis-of-variance"><i class="fa fa-check"></i><b>2.2.2</b> Analysis of variance</a></li>
+<li class="chapter" data-level="2.2.3" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#elements-of-a-designed-experiment"><i class="fa fa-check"></i><b>2.2.3</b> Elements of a designed experiment</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#designed-experiement-vocabulary"><i class="fa fa-check"></i><b>2.3</b> Designed experiement vocabulary</a>
+<li class="chapter" data-level="2.3" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#statistical-analyses-is-modeling"><i class="fa fa-check"></i><b>2.3</b> Statistical Analyses is Modeling</a>
 <ul>
-<li class="chapter" data-level="2.3.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#what-is-an-experiment"><i class="fa fa-check"></i><b>2.3.1</b> What is an experiment?</a></li>
-<li class="chapter" data-level="2.3.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#analysis-of-variance"><i class="fa fa-check"></i><b>2.3.2</b> Analysis of variance</a></li>
-<li class="chapter" data-level="2.3.3" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#elements-of-a-designed-experiment"><i class="fa fa-check"></i><b>2.3.3</b> Elements of a designed experiment</a></li>
+<li class="chapter" data-level="2.3.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#example-of-a-two-sample-t-test-as-a-model"><i class="fa fa-check"></i><b>2.3.1</b> Example of a two-sample <span class="math inline">\(t\)</span>-test as a model</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#paired-t-test"><i class="fa fa-check"></i><b>2.4</b> Paired <span class="math inline">\(t\)</span>-test</a>
+<li class="chapter" data-level="2.4" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#one-way-anova"><i class="fa fa-check"></i><b>2.4</b> One-Way ANOVA</a>
 <ul>
-<li class="chapter" data-level="2.4.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#paired-t-test-example"><i class="fa fa-check"></i><b>2.4.1</b> Paired <span class="math inline">\(t\)</span>-test example</a></li>
+<li class="chapter" data-level="2.4.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#model-structure"><i class="fa fa-check"></i><b>2.4.1</b> Model Structure</a></li>
+<li class="chapter" data-level="2.4.2" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#testing-procedure"><i class="fa fa-check"></i><b>2.4.2</b> Testing Procedure</a></li>
+<li class="chapter" data-level="2.4.3" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#example-of-one-way-anova"><i class="fa fa-check"></i><b>2.4.3</b> Example of One-Way ANOVA</a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#one-way-anova"><i class="fa fa-check"></i><b>2.5</b> One-Way ANOVA</a>
+<li class="chapter" data-level="2.5" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#assumptionCheck"><i class="fa fa-check"></i><b>2.5</b> Model Assumptions &amp; Assessment</a>
 <ul>
-<li class="chapter" data-level="2.5.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#example-of-one-way-anova"><i class="fa fa-check"></i><b>2.5.1</b> Example of One-Way ANOVA</a></li>
+<li class="chapter" data-level="2.5.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#structural-assumptions"><i class="fa fa-check"></i><b>2.5.1</b> Structural Assumptions</a></li>
+<li class="chapter" data-level="2.5.2" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#random-variation-assumptions"><i class="fa fa-check"></i><b>2.5.2</b> Random Variation Assumptions</a></li>
+<li class="chapter" data-level="2.5.3" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#code-to-check-assumptions"><i class="fa fa-check"></i><b>2.5.3</b> Code to check assumptions</a></li>
 </ul></li>
-<li class="chapter" data-level="2.6" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#assumptionCheck"><i class="fa fa-check"></i><b>2.6</b> Assumption Checking</a>
+<li class="chapter" data-level="2.6" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#transforming-your-response"><i class="fa fa-check"></i><b>2.6</b> Transforming your response</a>
 <ul>
-<li class="chapter" data-level="2.6.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#independence"><i class="fa fa-check"></i><b>2.6.1</b> Independence</a></li>
-<li class="chapter" data-level="2.6.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#constant-variance"><i class="fa fa-check"></i><b>2.6.2</b> Constant Variance</a></li>
-<li class="chapter" data-level="2.6.3" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#checking-normality"><i class="fa fa-check"></i><b>2.6.3</b> Checking Normality</a></li>
-<li class="chapter" data-level="2.6.4" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#code-to-check-assumptions"><i class="fa fa-check"></i><b>2.6.4</b> Code to check assumptions</a></li>
-<li class="chapter" data-level="2.6.5" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#transforming-your-response"><i class="fa fa-check"></i><b>2.6.5</b> Transforming your response</a></li>
+<li class="chapter" data-level="2.6.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#a-note-on-logarithmic-transformations"><i class="fa fa-check"></i><b>2.6.1</b> A note on logarithmic transformations</a></li>
 </ul></li>
-<li class="chapter" data-level="2.7" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#follow-up-procedures-multiple-comparisons"><i class="fa fa-check"></i><b>2.7</b> Follow-up procedures – Multiple Comparisons</a>
+<li class="chapter" data-level="2.7" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#anova-testing-in-r"><i class="fa fa-check"></i><b>2.7</b> ANOVA Testing in R</a>
 <ul>
-<li class="chapter" data-level="2.7.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#tukeys-hsd-method"><i class="fa fa-check"></i><b>2.7.1</b> Tukey’s HSD method</a></li>
-<li class="chapter" data-level="2.7.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#dunnett-multiple-comparisons"><i class="fa fa-check"></i><b>2.7.2</b> Dunnett multiple comparisons</a></li>
+<li class="chapter" data-level="2.7.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#reading-an-anova-table"><i class="fa fa-check"></i><b>2.7.1</b> Reading an ANOVA table</a></li>
+<li class="chapter" data-level="2.7.2" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#conclusions-and-limitation-of-anova"><i class="fa fa-check"></i><b>2.7.2</b> Conclusions and Limitation of ANOVA</a></li>
 </ul></li>
+<li class="chapter" data-level="2.8" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#follow-up-procedures-multiple-comparisons"><i class="fa fa-check"></i><b>2.8</b> Follow-up procedures – Multiple Comparisons</a>
+<ul>
+<li class="chapter" data-level="2.8.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#multiple-testing-problem"><i class="fa fa-check"></i><b>2.8.1</b> Multiple testing problem</a></li>
+<li class="chapter" data-level="2.8.2" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#tukeys-hsd-method"><i class="fa fa-check"></i><b>2.8.2</b> Tukey’s HSD method</a></li>
+<li class="chapter" data-level="2.8.3" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#dunnett-multiple-comparisons"><i class="fa fa-check"></i><b>2.8.3</b> Dunnett multiple comparisons</a></li>
+<li class="chapter" data-level="2.8.4" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#coding-notes-about-emmeans"><i class="fa fa-check"></i><b>2.8.4</b> Coding notes about <code>emmeans</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2.9" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#two-sample-t-test-as-anova"><i class="fa fa-check"></i><b>2.9</b> Two-sample <span class="math inline">\(t\)</span>-test as ANOVA</a></li>
+<li class="chapter" data-level="2.10" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#a-complete-one-way-anova-example"><i class="fa fa-check"></i><b>2.10</b> A Complete One-Way ANOVA Example</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="multiple-factor-designed-experiments.html"><a href="multiple-factor-designed-experiments.html"><i class="fa fa-check"></i><b>3</b> Multiple Factor Designed Experiments</a>
 <ul>
@@ -285,35 +303,35 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="5.5" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#concluding-the-multiple-regression-model"><i class="fa fa-check"></i><b>5.5</b> Concluding the Multiple Regression Model</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html"><i class="fa fa-check"></i><b>6</b> Inference regarding Multiple Regression</a>
+<li class="chapter" data-level="6" data-path="regInferenceChp.html"><a href="regInferenceChp.html"><i class="fa fa-check"></i><b>6</b> Inference regarding Multiple Regression</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#assumption-checking"><i class="fa fa-check"></i><b>6.1</b> Assumption checking</a>
+<li class="chapter" data-level="6.1" data-path="regInferenceChp.html"><a href="regInferenceChp.html#assumption-checking"><i class="fa fa-check"></i><b>6.1</b> Assumption checking</a>
 <ul>
-<li class="chapter" data-level="6.1.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#example-of-assumption-checking-in-slr"><i class="fa fa-check"></i><b>6.1.1</b> Example of Assumption Checking in SLR</a></li>
+<li class="chapter" data-level="6.1.1" data-path="regInferenceChp.html"><a href="regInferenceChp.html#example-of-assumption-checking-in-slr"><i class="fa fa-check"></i><b>6.1.1</b> Example of Assumption Checking in SLR</a></li>
 </ul></li>
-<li class="chapter" data-level="6.2" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#overall-f-test-for-model-signifance"><i class="fa fa-check"></i><b>6.2</b> Overall <span class="math inline">\(F\)</span>-test for model signifance</a>
+<li class="chapter" data-level="6.2" data-path="regInferenceChp.html"><a href="regInferenceChp.html#overall-f-test-for-model-signifance"><i class="fa fa-check"></i><b>6.2</b> Overall <span class="math inline">\(F\)</span>-test for model signifance</a>
 <ul>
-<li class="chapter" data-level="6.2.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#example-of-model-overall-f-test"><i class="fa fa-check"></i><b>6.2.1</b> Example of model overall <span class="math inline">\(F\)</span>-test</a></li>
+<li class="chapter" data-level="6.2.1" data-path="regInferenceChp.html"><a href="regInferenceChp.html#example-of-model-overall-f-test"><i class="fa fa-check"></i><b>6.2.1</b> Example of model overall <span class="math inline">\(F\)</span>-test</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#individual-parameter-inference"><i class="fa fa-check"></i><b>6.3</b> Individual parameter inference</a>
+<li class="chapter" data-level="6.3" data-path="regInferenceChp.html"><a href="regInferenceChp.html#individual-parameter-inference"><i class="fa fa-check"></i><b>6.3</b> Individual parameter inference</a>
 <ul>
-<li class="chapter" data-level="6.3.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#parameter-t-tests"><i class="fa fa-check"></i><b>6.3.1</b> Parameter <span class="math inline">\(t\)</span>-tests</a></li>
-<li class="chapter" data-level="6.3.2" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#example-of-individual-parameter-t-test"><i class="fa fa-check"></i><b>6.3.2</b> Example of individual parameter <span class="math inline">\(t\)</span>-test</a></li>
-<li class="chapter" data-level="6.3.3" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#model-trimming"><i class="fa fa-check"></i><b>6.3.3</b> Model trimming</a></li>
-<li class="chapter" data-level="6.3.4" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#confidence-intervals"><i class="fa fa-check"></i><b>6.3.4</b> Confidence Intervals</a></li>
-<li class="chapter" data-level="6.3.5" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#example-of-individual-parameter-confidence-intervals"><i class="fa fa-check"></i><b>6.3.5</b> Example of individual parameter confidence intervals</a></li>
+<li class="chapter" data-level="6.3.1" data-path="regInferenceChp.html"><a href="regInferenceChp.html#parameter-t-tests"><i class="fa fa-check"></i><b>6.3.1</b> Parameter <span class="math inline">\(t\)</span>-tests</a></li>
+<li class="chapter" data-level="6.3.2" data-path="regInferenceChp.html"><a href="regInferenceChp.html#example-of-individual-parameter-t-test"><i class="fa fa-check"></i><b>6.3.2</b> Example of individual parameter <span class="math inline">\(t\)</span>-test</a></li>
+<li class="chapter" data-level="6.3.3" data-path="regInferenceChp.html"><a href="regInferenceChp.html#model-trimming"><i class="fa fa-check"></i><b>6.3.3</b> Model trimming</a></li>
+<li class="chapter" data-level="6.3.4" data-path="regInferenceChp.html"><a href="regInferenceChp.html#confidence-intervals"><i class="fa fa-check"></i><b>6.3.4</b> Confidence Intervals</a></li>
+<li class="chapter" data-level="6.3.5" data-path="regInferenceChp.html"><a href="regInferenceChp.html#example-of-individual-parameter-confidence-intervals"><i class="fa fa-check"></i><b>6.3.5</b> Example of individual parameter confidence intervals</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#confidence-and-prediction-bands"><i class="fa fa-check"></i><b>6.4</b> Confidence and prediction bands</a>
+<li class="chapter" data-level="6.4" data-path="regInferenceChp.html"><a href="regInferenceChp.html#confidence-and-prediction-bands"><i class="fa fa-check"></i><b>6.4</b> Confidence and prediction bands</a>
 <ul>
-<li class="chapter" data-level="6.4.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#simple-linear-regression-confident-and-prediction-bands"><i class="fa fa-check"></i><b>6.4.1</b> Simple Linear Regression Confident and Prediction bands</a></li>
-<li class="chapter" data-level="6.4.2" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#example-of-confidence-and-prediction-intervals"><i class="fa fa-check"></i><b>6.4.2</b> Example of confidence and prediction intervals</a></li>
-<li class="chapter" data-level="6.4.3" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#extrapolation-warning"><i class="fa fa-check"></i><b>6.4.3</b> Extrapolation warning!</a></li>
-<li class="chapter" data-level="6.4.4" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#confidence-and-prediction-bands-in-multiple-regression"><i class="fa fa-check"></i><b>6.4.4</b> Confidence and Prediction Bands in Multiple Regression</a></li>
+<li class="chapter" data-level="6.4.1" data-path="regInferenceChp.html"><a href="regInferenceChp.html#simple-linear-regression-confident-and-prediction-bands"><i class="fa fa-check"></i><b>6.4.1</b> Simple Linear Regression Confident and Prediction bands</a></li>
+<li class="chapter" data-level="6.4.2" data-path="regInferenceChp.html"><a href="regInferenceChp.html#example-of-confidence-and-prediction-intervals"><i class="fa fa-check"></i><b>6.4.2</b> Example of confidence and prediction intervals</a></li>
+<li class="chapter" data-level="6.4.3" data-path="regInferenceChp.html"><a href="regInferenceChp.html#extrapolation-warning"><i class="fa fa-check"></i><b>6.4.3</b> Extrapolation warning!</a></li>
+<li class="chapter" data-level="6.4.4" data-path="regInferenceChp.html"><a href="regInferenceChp.html#confidence-and-prediction-bands-in-multiple-regression"><i class="fa fa-check"></i><b>6.4.4</b> Confidence and Prediction Bands in Multiple Regression</a></li>
 </ul></li>
-<li class="chapter" data-level="6.5" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#goodness-of-fit"><i class="fa fa-check"></i><b>6.5</b> Goodness-of-fit</a>
+<li class="chapter" data-level="6.5" data-path="regInferenceChp.html"><a href="regInferenceChp.html#goodness-of-fit"><i class="fa fa-check"></i><b>6.5</b> Goodness-of-fit</a>
 <ul>
-<li class="chapter" data-level="6.5.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#coefficient-of-determination"><i class="fa fa-check"></i><b>6.5.1</b> Coefficient of determination</a></li>
-<li class="chapter" data-level="6.5.2" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#akaikes-information-criterion"><i class="fa fa-check"></i><b>6.5.2</b> Akaike’s Information Criterion</a></li>
+<li class="chapter" data-level="6.5.1" data-path="regInferenceChp.html"><a href="regInferenceChp.html#coefficient-of-determination"><i class="fa fa-check"></i><b>6.5.1</b> Coefficient of determination</a></li>
+<li class="chapter" data-level="6.5.2" data-path="regInferenceChp.html"><a href="regInferenceChp.html#akaikes-information-criterion"><i class="fa fa-check"></i><b>6.5.2</b> Akaike’s Information Criterion</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html"><i class="fa fa-check"></i><b>7</b> More on multiple linear regression</a>
@@ -426,16 +444,16 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="model-selection" class="section level1" number="9">
-<h1><span class="header-section-number">Chapter 9</span> Model Selection</h1>
+<div id="model-selection" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">Chapter 9</span> Model Selection<a href="model-selection.html#model-selection" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>One of the important themes running through what we do in regression concerns model simplification. The principle of <em>parsimony</em>, by which we should abide, is attributed to the 14th century English logician William of Occam, who developed what is known as Occam’s Razor):</p>
 <p><strong>Occam’s Razor</strong> (paraphrased)
 All other things being equal, the simplest explanation tends to be the correct explanation.</p>
-<p>The term razor refers to the act of shaving away unnecessary complications to get to the simplest explanation. In statistical models, application of Occam’s Razor means that models should have as few parameters as possible, and should be pared down until they are “minimally adequate.” This theme extends beyond this course (model parsimony is important in many areas of statistics).</p>
+<p>The term razor refers to the act of shaving away unnecessary complications to get to the simplest explanation. In statistical models, application of Occam’s Razor means that models should have as few parameters as possible, and should be pared down until they are “minimally adequate”. This theme extends beyond this course (model parsimony is important in many areas of statistics).</p>
 <p>Historically, the process of model simplification required the application of hypothesis testing in regression models. In general, a predictor variable <span class="math inline">\(X_j\)</span> under investigation was retained in a model only if it was statistically significant (i.e., if the test for <span class="math inline">\(H_0: \beta_j = 0\)</span> had a small <span class="math inline">\(p\)</span>-value). However, one can show that this method of choosing predictors to retain is fraught with potential problems (e.g., consider multicollinearity), so luckily more robust methods have been developed for the task.</p>
 <p>In our quest to simplify models, however, we must be careful not to throw out the baby with the bathwater. Too simple is not good, either! Building statistical models is as much an art as it is a science, so you must be aware of how your models are explaining the observed data at every step along the way to obtaining a final model.</p>
-<div id="stepwise-procedures" class="section level2" number="9.1">
-<h2><span class="header-section-number">9.1</span> Stepwise Procedures</h2>
+<div id="stepwise-procedures" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> Stepwise Procedures<a href="model-selection.html#stepwise-procedures" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Variable selection is intended to select some “best” subset of predictors. Why bother?</p>
 <ol style="list-style-type: decimal">
 <li><p>Occam’s Razor applied to regression implies that the smallest model that fits the data is best. Unnecessary predictors can add noise to the estimation of other quantities that we are interested in.</p></li>
@@ -448,7 +466,7 @@ All other things being equal, the simplest explanation tends to be the correct e
 <li><p>Apply transformations to the variables that seem appropriate from a preliminary inspection of the data (standardizing predictor variables or squaring terms to handle curvature, etc…).</p></li>
 </ol>
 <p>There are two useful measures for comparing the quality of the fits of regression models: <span class="math inline">\(R_{adj}^2\)</span> and the Akaike Information Criterion (AIC). We will do a demonstration of variable selection using both measures, but the AIC is preferable in practice because its concept is applicable to a broader array of model types.</p>
-<p>Minimizing the “loss of information.” Before engaging in the construction of a regression model, we must first accept that there are no true models. Indeed, models only approximate reality. The question then is to find which model would best approximate reality given the data we have recorded. In other words, we are trying to minimize the loss of information. Kullback and Leibler addressed such issues in the 1950s and developed a measure to represent the information lost when approximating reality (i.e., a good model minimizes the loss of information). A few decades later, Japanese statistician Hirotugu Akaike proposed a method for variable selection. He established a relationship between the maximum likelihood, which is an estimation method used in many statistical analyses, and the Kullback-Leibler measure. The result is known as the Akaike Information Criterion, defined by</p>
+<p>Minimizing the “loss of information”. Before engaging in the construction of a regression model, we must first accept that there are no true models. Indeed, models only approximate reality. The question then is to find which model would best approximate reality given the data we have recorded. In other words, we are trying to minimize the loss of information. Kullback and Leibler addressed such issues in the 1950s and developed a measure to represent the information lost when approximating reality (i.e., a good model minimizes the loss of information). A few decades later, Japanese statistician Hirotugu Akaike proposed a method for variable selection. He established a relationship between the maximum likelihood, which is an estimation method used in many statistical analyses, and the Kullback-Leibler measure. The result is known as the Akaike Information Criterion, defined by</p>
 <p><span class="math display">\[AIC = n\log\left({RSS}/{n}\right) + 2k\]</span></p>
 <p>The AIC penalizes a model for the addition of parameters (<span class="math inline">\(k\)</span>), and thus selects a model that fits well but also has a minimum number of parameters (i.e., simplicity and parsimony).</p>
 <p>By itself, the value of the AIC for a given data set has no meaning. It becomes interesting when it is compared to the AICs of a series of models. Specified in advance, the model with the lowest AIC is generally considered the best model among all models specified for the data at hand. Thus, if only poor models are considered, the AIC will select the best of the poor models. This highlights the importance of spending time to determine the set of candidate models based on previous investigations, as well as judgment and knowledge of the system under study.</p>
@@ -458,43 +476,43 @@ All other things being equal, the simplest explanation tends to be the correct e
 <li>Missing values for only certain variables in the data set can also lead to variations in the number of observations.</li>
 <li>Furthermore, the same response variable <span class="math inline">\(Y\)</span> must be used for all models (i.e., it must be identical across models, consistently with or without transformation).</li>
 </ul>
-<div id="backward-selection" class="section level3" number="9.1.1">
-<h3><span class="header-section-number">9.1.1</span> Backward Selection</h3>
+<div id="backward-selection" class="section level3 hasAnchor" number="9.1.1">
+<h3><span class="header-section-number">9.1.1</span> Backward Selection<a href="model-selection.html#backward-selection" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Strategy for stepwise variable selection using AIC:</p>
 <ol style="list-style-type: decimal">
 <li>Start with all the candidate predictors in the model. Check assumptions and make corrections if necessary.</li>
 <li>Run a whole-model $F4-test on this “global” model. Be sure it indicates that your model does have utility. If not, then none of your variables should be selected!</li>
 <li>Find the AIC of the global model.</li>
-<li>Look at all candidate models that result by the removal of one predictor from the global model. This is called “backward selection.” Calculate the AIC for each of these models.</li>
+<li>Look at all candidate models that result by the removal of one predictor from the global model. This is called “backward selection”. Calculate the AIC for each of these models.</li>
 <li>Pick the model with the smallest AIC. (Akaike’s rule of thumb: two models are essentially indistinguishable if the difference in their AIC is less than 2.)</li>
 <li>Return to step 4, and repeat the process starting with the revised model.</li>
 <li>Continue the process until the deletion of any predictor results in a rise in the AIC.</li>
 </ol>
 <p><strong>Long-winded example</strong> To demonstrate the stepwise process let’s consider the housing appraisal dataset. We’ve used the full model fit multiple times.</p>
-<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="model-selection.html#cb351-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(appraisal.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb385"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb385-1"><a href="model-selection.html#cb385-1" tabindex="-1"></a><span class="fu">AIC</span>(appraisal.fit)</span></code></pre></div>
 <pre><code>## [1] 421.356</code></pre>
 <p>Now lets consider the three models were we remove a single predictor.</p>
-<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="model-selection.html#cb353-1" aria-hidden="true" tabindex="-1"></a>appraisal.no.land <span class="ot">&lt;-</span> <span class="fu">lm</span>(saleprice <span class="sc">~</span> impvalue <span class="sc">+</span> area, <span class="at">data=</span>appraisal)</span>
-<span id="cb353-2"><a href="model-selection.html#cb353-2" aria-hidden="true" tabindex="-1"></a>appraisal.no.imp <span class="ot">&lt;-</span> <span class="fu">lm</span>(saleprice <span class="sc">~</span> landvalue <span class="sc">+</span> area, <span class="at">data=</span>appraisal)</span>
-<span id="cb353-3"><a href="model-selection.html#cb353-3" aria-hidden="true" tabindex="-1"></a>appraisal.no.area <span class="ot">&lt;-</span> <span class="fu">lm</span>(saleprice <span class="sc">~</span> landvalue <span class="sc">+</span> impvalue, <span class="at">data=</span>appraisal)</span>
-<span id="cb353-4"><a href="model-selection.html#cb353-4" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(appraisal.no.land)</span></code></pre></div>
+<div class="sourceCode" id="cb387"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb387-1"><a href="model-selection.html#cb387-1" tabindex="-1"></a>appraisal.no.land <span class="ot">&lt;-</span> <span class="fu">lm</span>(saleprice <span class="sc">~</span> impvalue <span class="sc">+</span> area, <span class="at">data=</span>appraisal)</span>
+<span id="cb387-2"><a href="model-selection.html#cb387-2" tabindex="-1"></a>appraisal.no.imp <span class="ot">&lt;-</span> <span class="fu">lm</span>(saleprice <span class="sc">~</span> landvalue <span class="sc">+</span> area, <span class="at">data=</span>appraisal)</span>
+<span id="cb387-3"><a href="model-selection.html#cb387-3" tabindex="-1"></a>appraisal.no.area <span class="ot">&lt;-</span> <span class="fu">lm</span>(saleprice <span class="sc">~</span> landvalue <span class="sc">+</span> impvalue, <span class="at">data=</span>appraisal)</span>
+<span id="cb387-4"><a href="model-selection.html#cb387-4" tabindex="-1"></a><span class="fu">AIC</span>(appraisal.no.land)</span></code></pre></div>
 <pre><code>## [1] 422.32</code></pre>
-<div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="model-selection.html#cb355-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(appraisal.no.imp)</span></code></pre></div>
+<div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb389-1"><a href="model-selection.html#cb389-1" tabindex="-1"></a><span class="fu">AIC</span>(appraisal.no.imp)</span></code></pre></div>
 <pre><code>## [1] 432.666</code></pre>
-<div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="model-selection.html#cb357-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(appraisal.no.area)</span></code></pre></div>
+<div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb391-1"><a href="model-selection.html#cb391-1" tabindex="-1"></a><span class="fu">AIC</span>(appraisal.no.area)</span></code></pre></div>
 <pre><code>## [1] 424.105</code></pre>
 <p>We see that the full model has the best AIC (smallest) with a value of 421.3557. Removing any of the variables will make the model worse (in terms of AIC).</p>
 <p>So here there is nothing to do. But you can quickly imagine the tediousness of repeating the process over and over again.</p>
 <p>Performing the 7 step algorithm above would be redundant and tedious. Computers are excellent at performing redundant and tedious task. R has functions that will perform stepwise AIC model selection automatically. We highlight its use with another example.</p>
 <p><strong>Example: Estimating body fat percentage.</strong> Making accurate measurement of body fat is inconvenient and costly, so it is desirable to have methods of estimating body fat that are cheaper and easier to implement. The standard technique of underwater weighing computes body volume as the difference between body weight measured in air and weight measured during water submersion. Our goal is to develop a good predictive model for percentage of body fat that uses body measurements only; i.e., a model that gives body fat percentage estimates very close to the accurate measurements obtained via underwater weighing. Since underwater weighing is inconvenient and expensive, a good model based solely on body measurements only will be of much use in practice.</p>
 <p>We first fit the full model and check the assumptions.</p>
-<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="model-selection.html#cb359-1" aria-hidden="true" tabindex="-1"></a>site <span class="ot">&lt;-</span> <span class="st">&quot;http://www.users.miamioh.edu/hughesmr/sta363/bodyfat.txt&quot;</span></span>
-<span id="cb359-2"><a href="model-selection.html#cb359-2" aria-hidden="true" tabindex="-1"></a>bodyfat <span class="ot">&lt;-</span> <span class="fu">read.table</span>(site, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
-<span id="cb359-3"><a href="model-selection.html#cb359-3" aria-hidden="true" tabindex="-1"></a>bodyfat.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(bodyfat.pct <span class="sc">~</span> ., <span class="at">data=</span>bodyfat)</span>
-<span id="cb359-4"><a href="model-selection.html#cb359-4" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(bodyfat.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb393"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb393-1"><a href="model-selection.html#cb393-1" tabindex="-1"></a>site <span class="ot">&lt;-</span> <span class="st">&quot;http://www.users.miamioh.edu/hughesmr/sta363/bodyfat.txt&quot;</span></span>
+<span id="cb393-2"><a href="model-selection.html#cb393-2" tabindex="-1"></a>bodyfat <span class="ot">&lt;-</span> <span class="fu">read.table</span>(site, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
+<span id="cb393-3"><a href="model-selection.html#cb393-3" tabindex="-1"></a>bodyfat.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(bodyfat.pct <span class="sc">~</span> ., <span class="at">data=</span>bodyfat)</span>
+<span id="cb393-4"><a href="model-selection.html#cb393-4" tabindex="-1"></a><span class="fu">autoplot</span>(bodyfat.fit)</span></code></pre></div>
 <p><img src="introStatModeling_files/figure-html/ch9.3-1.png" width="672" /></p>
 <p>The assumptions generally look fine here. We then test for whole-model utility:</p>
-<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb360-1"><a href="model-selection.html#cb360-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bodyfat.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb394"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb394-1"><a href="model-selection.html#cb394-1" tabindex="-1"></a><span class="fu">summary</span>(bodyfat.fit)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = bodyfat.pct ~ ., data = bodyfat)
@@ -526,7 +544,7 @@ All other things being equal, the simplest explanation tends to be the correct e
 ## Multiple R-squared:  0.749,  Adjusted R-squared:  0.735 
 ## F-statistic: 54.6 on 13 and 238 DF,  p-value: &lt;2e-16</code></pre>
 <p>The <span class="math inline">\(F\)</span>-test for the whole model is significant (<span class="math inline">\(F\)</span> = 54.65, <span class="math inline">\(df\)</span>=(13, 238), <span class="math inline">\(p\)</span>-value &lt; 0.0001), so we know at least one predictor is significant. We proceed to run a backward variable selection using AIC as our criterion. The R function <code>step()</code> does this nicely in one pass. Below we include all output of the <code>step()</code> function, it can be supressed with the <code>trace=0</code> option.</p>
-<div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb362-1"><a href="model-selection.html#cb362-1" aria-hidden="true" tabindex="-1"></a><span class="fu">step</span>(bodyfat.fit, <span class="at">direction=</span><span class="st">&quot;backward&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb396-1"><a href="model-selection.html#cb396-1" tabindex="-1"></a><span class="fu">step</span>(bodyfat.fit, <span class="at">direction=</span><span class="st">&quot;backward&quot;</span>)</span></code></pre></div>
 <pre><code>## Start:  AIC=749.36
 ## bodyfat.pct ~ age + weight + height + neck + chest + abdomen + 
 ##     hip + thigh + knee + ankle + biceps + forearm + wrist
@@ -662,12 +680,12 @@ All other things being equal, the simplest explanation tends to be the correct e
 ##       thigh      forearm        wrist  
 ##      0.3024       0.5157      -1.5367</code></pre>
 </div>
-<div id="forward-selection" class="section level3" number="9.1.2">
-<h3><span class="header-section-number">9.1.2</span> Forward selection</h3>
+<div id="forward-selection" class="section level3 hasAnchor" number="9.1.2">
+<h3><span class="header-section-number">9.1.2</span> Forward selection<a href="model-selection.html#forward-selection" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>A similiar method can occur when you build a model from the ground up. That is, start off with a “null” model, whereby the response variable is predicted with a mean only <span class="math inline">\(\hat{Y} = b_0 = \bar{Y}\)</span>. Then continually add terms picking the parameters that improve AIC the most. Stop the process when adding terms worsens the AIC value.</p>
 <p>In R, this can be accomplished with the <code>step</code> procedure but now we tell it to perform forward selection.</p>
-<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb366-1"><a href="model-selection.html#cb366-1" aria-hidden="true" tabindex="-1"></a>bodyfat.null <span class="ot">&lt;-</span> <span class="fu">lm</span>(bodyfat.pct <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data=</span>bodyfat)</span>
-<span id="cb366-2"><a href="model-selection.html#cb366-2" aria-hidden="true" tabindex="-1"></a><span class="fu">step</span>(bodyfat.null, <span class="at">scope=</span><span class="fu">formula</span>(bodyfat.fit), <span class="at">direction=</span><span class="st">&quot;forward&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb400"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb400-1"><a href="model-selection.html#cb400-1" tabindex="-1"></a>bodyfat.null <span class="ot">&lt;-</span> <span class="fu">lm</span>(bodyfat.pct <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data=</span>bodyfat)</span>
+<span id="cb400-2"><a href="model-selection.html#cb400-2" tabindex="-1"></a><span class="fu">step</span>(bodyfat.null, <span class="at">scope=</span><span class="fu">formula</span>(bodyfat.fit), <span class="at">direction=</span><span class="st">&quot;forward&quot;</span>)</span></code></pre></div>
 <pre><code>## Start:  AIC=1071.75
 ## bodyfat.pct ~ 1
 ## 
@@ -818,82 +836,59 @@ All other things being equal, the simplest explanation tends to be the correct e
 <p><strong>IMPORTANT NOTE</strong> It is possible that forward and backward selection will determine different models! If you have taken an elementary calculus course the concept of local versus global minimums should not be foreign. The stepwise procedures essentially find local minimums of AIC working in one direction, they can result in different models.</p>
 </div>
 </div>
-<div id="best-subsets" class="section level2" number="9.2">
-<h2><span class="header-section-number">9.2</span> Best subsets</h2>
+<div id="best-subsets" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> Best subsets<a href="model-selection.html#best-subsets" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>If there are <span class="math inline">\(p\)</span> potential predictors, then there are <span class="math inline">\(2^p\)</span> possible models. This can get out of hand in a hurry. For example, the body fat example has 13 potential predictors, meaning we have <span class="math inline">\(2^{13} = 8192\)</span> main-effects linear models to consider!</p>
 <p>The idea of a best-subsets selection method is to choose candidate models based on some objective criterion that measures the quality of the fit or quality of the predictions resulting from the model. Because there are so many potential candidates to consider, we usually select the best few models of each size to evaluate. There are several possible criteria we could use to compare candidate models, but the usual criterion of choice is <span class="math inline">\(R_{adj}^2\)</span> or BIC (recall from Chapter 6 BIC is a variant of AIC).</p>
 <p>The <code>regsubsets()</code> function in the R add-on package <code>leaps</code> finds the optimal subset of predictors of each model size. By default, the function returns only optimal subsets and only computes subsets up to size 8; these defaults can be changed using the <code>nbest</code> and <code>nvmax</code> arguments, respectively.</p>
-<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="model-selection.html#cb369-1" aria-hidden="true" tabindex="-1"></a>bodyfat.gsub <span class="ot">&lt;-</span> <span class="fu">regsubsets</span>(bodyfat.pct <span class="sc">~</span> ., <span class="at">data=</span>bodyfat, <span class="at">nbest=</span><span class="dv">3</span>, <span class="at">nvmax=</span><span class="dv">13</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="model-selection.html#cb403-1" tabindex="-1"></a>bodyfat.gsub <span class="ot">&lt;-</span> <span class="fu">regsubsets</span>(bodyfat.pct <span class="sc">~</span> ., <span class="at">data=</span>bodyfat, <span class="at">nbest=</span><span class="dv">3</span>, <span class="at">nvmax=</span><span class="dv">13</span>)</span></code></pre></div>
 <p>The object <code>bodyfat.gsub</code> contains a ton of information (we just fit upwards of <span class="math inline">\(3\times 13\)</span> models). It works best to plot the <span class="math inline">\(R^2_{adj}\)</span> and BIC values to get a feel for which models to consider. The following code extracts the <span class="math inline">\(R_{adj}^2\)</span> and BIC values for each model fit.</p>
-<div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb370-1"><a href="model-selection.html#cb370-1" aria-hidden="true" tabindex="-1"></a>stats <span class="ot">&lt;-</span> <span class="fu">summary</span>(bodyfat.gsub)</span>
-<span id="cb370-2"><a href="model-selection.html#cb370-2" aria-hidden="true" tabindex="-1"></a>gsub.df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Model.Number=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(stats<span class="sc">$</span>adjr2), <span class="at">Adjusted.R2=</span>stats<span class="sc">$</span>adjr2, <span class="at">BIC=</span>stats<span class="sc">$</span>bic)</span>
-<span id="cb370-3"><a href="model-selection.html#cb370-3" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(gsub.df, <span class="fu">aes</span>(<span class="at">x=</span>Model.Number, <span class="at">y=</span>Adjusted.R2)) <span class="sc">+</span> </span>
-<span id="cb370-4"><a href="model-selection.html#cb370-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
-<span id="cb370-5"><a href="model-selection.html#cb370-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color=</span><span class="st">&quot;red&quot;</span>, <span class="at">size=</span><span class="dv">2</span>) <span class="sc">+</span> </span>
-<span id="cb370-6"><a href="model-selection.html#cb370-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb370-7"><a href="model-selection.html#cb370-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Adjusted R-squared&quot;</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;Model Number&quot;</span>)</span>
-<span id="cb370-8"><a href="model-selection.html#cb370-8" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(gsub.df, <span class="fu">aes</span>(<span class="at">x=</span>Model.Number, <span class="at">y=</span>BIC)) <span class="sc">+</span> </span>
-<span id="cb370-9"><a href="model-selection.html#cb370-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
-<span id="cb370-10"><a href="model-selection.html#cb370-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color=</span><span class="st">&quot;red&quot;</span>, <span class="at">size=</span><span class="dv">2</span>) <span class="sc">+</span> </span>
-<span id="cb370-11"><a href="model-selection.html#cb370-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb370-12"><a href="model-selection.html#cb370-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;BIC&quot;</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;Model Number&quot;</span>)</span>
-<span id="cb370-13"><a href="model-selection.html#cb370-13" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(p1,p2, <span class="at">nrow=</span><span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb404-1"><a href="model-selection.html#cb404-1" tabindex="-1"></a>stats <span class="ot">&lt;-</span> <span class="fu">summary</span>(bodyfat.gsub)</span>
+<span id="cb404-2"><a href="model-selection.html#cb404-2" tabindex="-1"></a>gsub.df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Model.Number=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(stats<span class="sc">$</span>adjr2), <span class="at">Adjusted.R2=</span>stats<span class="sc">$</span>adjr2, <span class="at">BIC=</span>stats<span class="sc">$</span>bic)</span>
+<span id="cb404-3"><a href="model-selection.html#cb404-3" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(gsub.df, <span class="fu">aes</span>(<span class="at">x=</span>Model.Number, <span class="at">y=</span>Adjusted.R2)) <span class="sc">+</span> </span>
+<span id="cb404-4"><a href="model-selection.html#cb404-4" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb404-5"><a href="model-selection.html#cb404-5" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color=</span><span class="st">&quot;red&quot;</span>, <span class="at">size=</span><span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb404-6"><a href="model-selection.html#cb404-6" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb404-7"><a href="model-selection.html#cb404-7" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Adjusted R-squared&quot;</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;Model Number&quot;</span>)</span>
+<span id="cb404-8"><a href="model-selection.html#cb404-8" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(gsub.df, <span class="fu">aes</span>(<span class="at">x=</span>Model.Number, <span class="at">y=</span>BIC)) <span class="sc">+</span> </span>
+<span id="cb404-9"><a href="model-selection.html#cb404-9" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb404-10"><a href="model-selection.html#cb404-10" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color=</span><span class="st">&quot;red&quot;</span>, <span class="at">size=</span><span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb404-11"><a href="model-selection.html#cb404-11" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb404-12"><a href="model-selection.html#cb404-12" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;BIC&quot;</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;Model Number&quot;</span>)</span>
+<span id="cb404-13"><a href="model-selection.html#cb404-13" tabindex="-1"></a><span class="fu">grid.arrange</span>(p1,p2, <span class="at">nrow=</span><span class="dv">2</span>)</span></code></pre></div>
 <p><img src="introStatModeling_files/figure-html/ch9.7-1.png" width="672" /></p>
 <p>First we note that these plots may include too much information. It is hard to tell exactly what is happening. Recall the objective, we want a large <span class="math inline">\(R^2_{adj}\)</span> or small BIC values. From the computed <span class="math inline">\(R_{adj}^2\)</span> and BIC values, model number 10 has the best BIC value and model 25 has the best <span class="math inline">\(R^2_{adj}\)</span>. However we note from the plot that model 25 has essentially the same <span class="math inline">\(R^2_{adj}\)</span> as all the other models nearby. In fact consider the following:</p>
 <table>
 <thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:right;">
-Model
-</th>
-<th style="text-align:right;">
-Adjusted.R2
-</th>
-<th style="text-align:right;">
-BIC
-</th>
+<tr class="header">
+<th align="left"></th>
+<th align="right">Model</th>
+<th align="right">Adjusted.R2</th>
+<th align="right">BIC</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-Best Adjusted-R2
-</td>
-<td style="text-align:right;">
-25
-</td>
-<td style="text-align:right;">
-0.73835
-</td>
-<td style="text-align:right;">
--291.776
-</td>
+<tr class="odd">
+<td align="left">Best Adjusted-R2</td>
+<td align="right">25</td>
+<td align="right">0.73835</td>
+<td align="right">-291.776</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-Best BIC
-</td>
-<td style="text-align:right;">
-10
-</td>
-<td style="text-align:right;">
-0.73072
-</td>
-<td style="text-align:right;">
--307.026
-</td>
+<tr class="even">
+<td align="left">Best BIC</td>
+<td align="right">10</td>
+<td align="right">0.73072</td>
+<td align="right">-307.026</td>
 </tr>
 </tbody>
 </table>
 <p>The best model in terms of <span class="math inline">\(R_{adj}^2\)</span> barely improves over the best BIC model, yet there is quite a bit of improvement in terms of BIC. Let’s extract the coefficients from the two model fits.</p>
-<div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb371-1"><a href="model-selection.html#cb371-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(bodyfat.gsub, <span class="fu">which.max</span>(gsub.df<span class="sc">$</span>Adjusted.R2))</span></code></pre></div>
+<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="model-selection.html#cb405-1" tabindex="-1"></a><span class="fu">coef</span>(bodyfat.gsub, <span class="fu">which.max</span>(gsub.df<span class="sc">$</span>Adjusted.R2))</span></code></pre></div>
 <pre><code>## (Intercept)         age      weight        neck     abdomen         hip 
 ## -23.3049918   0.0634833  -0.0984253  -0.4932953   0.9492607  -0.1828710 
 ##       thigh      biceps     forearm       wrist 
 ##   0.2653788   0.1788900   0.4514962  -1.5420837</code></pre>
-<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="model-selection.html#cb373-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(bodyfat.gsub, <span class="fu">which.min</span>(gsub.df<span class="sc">$</span>BIC))</span></code></pre></div>
+<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb407-1"><a href="model-selection.html#cb407-1" tabindex="-1"></a><span class="fu">coef</span>(bodyfat.gsub, <span class="fu">which.min</span>(gsub.df<span class="sc">$</span>BIC))</span></code></pre></div>
 <pre><code>## (Intercept)      weight     abdomen     forearm       wrist 
 ##  -34.854074   -0.135631    0.995751    0.472928   -1.505562</code></pre>
 <p>The model based on <span class="math inline">\(R^2_{adj}\)</span> chose 9 predictor variables compared to only 4 for the best BIC model. So, there is no clear-cut answer, but that’s the point: the “best subsets” idea allows you to consider the options and to weigh the relative trade-offs in using one model over another.</p>
@@ -912,8 +907,8 @@ Best BIC
 </ol>
 <p>If you find models that seem (roughly) equally as good yet lead to quite different conclusions, then it is clear that the data cannot answer the question of interest without ambiguity.</p>
 </div>
-<div id="shrinkage-methods" class="section level2" number="9.3">
-<h2><span class="header-section-number">9.3</span> Shrinkage Methods</h2>
+<div id="shrinkage-methods" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">9.3</span> Shrinkage Methods<a href="model-selection.html#shrinkage-methods" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We conclude this chapter with a short review of what are known as <em>shrinkage</em> methods for regression. These methods are utilized more in <em>modern</em> practice than the subsets or stepwise procedures described above. The details and implementation of these methods are outside the scope of this class but the topic is relevant enough for a short introduction.</p>
 <p>First, recall the least squares estimation procedure associated with regression; that is, find the set <span class="math inline">\(b_0\)</span>, <span class="math inline">\(b_1\)</span>, <span class="math inline">\(\ldots\)</span>, <span class="math inline">\(b_p\)</span> that minimize</p>
 <p><span class="math display">\[RSS = \sum_{i=1}^n \left(y_i - (b_0 + b_1 x_{1i} + b_2 x_{2i} + \ldots + b_p x_{pi})\right)^2\]</span></p>
@@ -964,42 +959,42 @@ Best BIC
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": null,
-"text": null
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["introStatModeling.pdf", "introStatModeling.epub"],
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "subsection"
-}
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["introStatModeling.pdf", "introStatModeling.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
 });
 });
 </script>
@@ -1010,7 +1005,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 Introduction to Statistical Modeling and Designed Experiments | Introduction to Statistical Modeling</title>
   <meta name="description" content="Covers Regression and elements of Design of Experiments in R using the tidyverse." />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 2 Introduction to Statistical Modeling and Designed Experiments | Introduction to Statistical Modeling" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="Covers Regression and elements of Design of Experiments in R using the tidyverse." />
   <meta name="github-repo" content="tjfisher19/introStatModeling" />
@@ -24,7 +23,7 @@
 <meta name="author" content="Michael R. Hughes and Thomas J. Fisher" />
 
 
-<meta name="date" content="2022-01-18" />
+<meta name="date" content="2025-06-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +32,6 @@
   
 <link rel="prev" href="introductory-statistics-in-r.html"/>
 <link rel="next" href="multiple-factor-designed-experiments.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -51,8 +49,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
@@ -61,6 +60,7 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -94,7 +94,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -107,7 +107,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -121,6 +121,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -160,21 +164,22 @@ div.csl-indent {
 <li><a href="./">Inroduction to Statistical Modeling</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
-<li class="chapter" data-level="" data-path="about-the-authors.html"><a href="about-the-authors.html"><i class="fa fa-check"></i>About the Authors</a></li>
-<li class="chapter" data-level="" data-path="important-preliminary-review.html"><a href="important-preliminary-review.html"><i class="fa fa-check"></i>Important Preliminary Review</a>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
 <ul>
-<li class="chapter" data-level="" data-path="important-preliminary-review.html"><a href="important-preliminary-review.html#statistics-background"><i class="fa fa-check"></i>Statistics background</a></li>
-<li class="chapter" data-level="" data-path="important-preliminary-review.html"><a href="important-preliminary-review.html#software"><i class="fa fa-check"></i>Software</a></li>
-<li class="chapter" data-level="" data-path="important-preliminary-review.html"><a href="important-preliminary-review.html#add-on-packages"><i class="fa fa-check"></i>Add-on packages</a></li>
-<li class="chapter" data-level="" data-path="important-preliminary-review.html"><a href="important-preliminary-review.html#help-with-rmarkdown"><i class="fa fa-check"></i>Help with RMarkdown</a></li>
-<li class="chapter" data-level="" data-path="important-preliminary-review.html"><a href="important-preliminary-review.html#managing-your-work-in-r"><i class="fa fa-check"></i>Managing your work in R</a></li>
-<li class="chapter" data-level="" data-path="important-preliminary-review.html"><a href="important-preliminary-review.html#data-in-this-text"><i class="fa fa-check"></i>Data in this text</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#statistics-background"><i class="fa fa-check"></i>Statistics background</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#software"><i class="fa fa-check"></i>Software</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#add-on-packages"><i class="fa fa-check"></i>Add-on packages</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#help-with-rmarkdown"><i class="fa fa-check"></i>Help with RMarkdown</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#managing-your-work-in-r"><i class="fa fa-check"></i>Managing your work in R</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#data-in-this-text"><i class="fa fa-check"></i>Data in this text</a></li>
 </ul></li>
 <li class="chapter" data-level="1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html"><i class="fa fa-check"></i><b>1</b> Introductory Statistics in R</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#goals-of-a-statistical-analysis"><i class="fa fa-check"></i><b>1.1</b> Goals of a statistical analysis</a></li>
-<li class="chapter" data-level="1.2" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#before-you-begin-an-analysis"><i class="fa fa-check"></i><b>1.2</b> Before you begin an analysis</a></li>
+<li class="chapter" data-level="1.1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#goals-of-a-statistical-analysis"><i class="fa fa-check"></i><b>1.1</b> Goals of a statistical analysis</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#conducting-a-statistical-analysis"><i class="fa fa-check"></i><b>1.1.1</b> Conducting a statistical analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#introduction-to-r"><i class="fa fa-check"></i><b>1.2</b> Introduction to R</a></li>
 <li class="chapter" data-level="1.3" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#data-frames"><i class="fa fa-check"></i><b>1.3</b> Data frames</a>
 <ul>
 <li class="chapter" data-level="1.3.1" data-path="introductory-statistics-in-r.html"><a href="introductory-statistics-in-r.html#built-in-data"><i class="fa fa-check"></i><b>1.3.1</b> Built-in data</a></li>
@@ -197,42 +202,39 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html"><i class="fa fa-check"></i><b>2</b> Introduction to Statistical Modeling and Designed Experiments</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#statistical-analyses-is-modeling"><i class="fa fa-check"></i><b>2.1</b> Statistical Analyses is Modeling</a>
+<li class="chapter" data-level="2.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#observational-studies-versus-designed-experiments"><i class="fa fa-check"></i><b>2.1</b> Observational Studies versus designed experiments</a>
 <ul>
-<li class="chapter" data-level="2.1.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#example-of-a-two-sample-t-test-as-a-model"><i class="fa fa-check"></i><b>2.1.1</b> Example of a two-sample <span class="math inline">\(t\)</span>-test as a model</a></li>
+<li class="chapter" data-level="2.1.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#observational-studies"><i class="fa fa-check"></i><b>2.1.1</b> Observational Studies</a></li>
+<li class="chapter" data-level="2.1.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#designed-experiments"><i class="fa fa-check"></i><b>2.1.2</b> Designed experiments</a></li>
 </ul></li>
-<li class="chapter" data-level="2.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#observational-studies-versus-designed-experiments"><i class="fa fa-check"></i><b>2.2</b> Observational Studies versus designed experiments</a>
+<li class="chapter" data-level="2.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#designed-experiement-vocabulary"><i class="fa fa-check"></i><b>2.2</b> Designed experiement vocabulary</a>
 <ul>
-<li class="chapter" data-level="2.2.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#observational-studies"><i class="fa fa-check"></i><b>2.2.1</b> Observational Studies</a></li>
-<li class="chapter" data-level="2.2.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#designed-experiments"><i class="fa fa-check"></i><b>2.2.2</b> Designed experiments</a></li>
+<li class="chapter" data-level="2.2.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#what-is-an-experiment"><i class="fa fa-check"></i><b>2.2.1</b> What is an experiment?</a></li>
+<li class="chapter" data-level="2.2.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#analysis-of-variance"><i class="fa fa-check"></i><b>2.2.2</b> Analysis of variance</a></li>
+<li class="chapter" data-level="2.2.3" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#elements-of-a-designed-experiment"><i class="fa fa-check"></i><b>2.2.3</b> Elements of a designed experiment</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#designed-experiement-vocabulary"><i class="fa fa-check"></i><b>2.3</b> Designed experiement vocabulary</a>
+<li class="chapter" data-level="2.3" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#statistical-analyses-is-modeling"><i class="fa fa-check"></i><b>2.3</b> Statistical Analyses is Modeling</a>
 <ul>
-<li class="chapter" data-level="2.3.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#what-is-an-experiment"><i class="fa fa-check"></i><b>2.3.1</b> What is an experiment?</a></li>
-<li class="chapter" data-level="2.3.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#analysis-of-variance"><i class="fa fa-check"></i><b>2.3.2</b> Analysis of variance</a></li>
-<li class="chapter" data-level="2.3.3" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#elements-of-a-designed-experiment"><i class="fa fa-check"></i><b>2.3.3</b> Elements of a designed experiment</a></li>
+<li class="chapter" data-level="2.3.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#example-of-a-two-sample-t-test-as-a-model"><i class="fa fa-check"></i><b>2.3.1</b> Example of a two-sample <span class="math inline">\(t\)</span>-test as a model</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#paired-t-test"><i class="fa fa-check"></i><b>2.4</b> Paired <span class="math inline">\(t\)</span>-test</a>
+<li class="chapter" data-level="2.4" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#one-way-anova"><i class="fa fa-check"></i><b>2.4</b> One-Way ANOVA</a>
 <ul>
-<li class="chapter" data-level="2.4.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#paired-t-test-example"><i class="fa fa-check"></i><b>2.4.1</b> Paired <span class="math inline">\(t\)</span>-test example</a></li>
+<li class="chapter" data-level="2.4.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#example-of-one-way-anova"><i class="fa fa-check"></i><b>2.4.1</b> Example of One-Way ANOVA</a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#one-way-anova"><i class="fa fa-check"></i><b>2.5</b> One-Way ANOVA</a>
+<li class="chapter" data-level="2.5" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#assumptionCheck"><i class="fa fa-check"></i><b>2.5</b> Model Assumptions &amp; Assessment</a>
 <ul>
-<li class="chapter" data-level="2.5.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#example-of-one-way-anova"><i class="fa fa-check"></i><b>2.5.1</b> Example of One-Way ANOVA</a></li>
+<li class="chapter" data-level="2.5.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#structural-assumptions"><i class="fa fa-check"></i><b>2.5.1</b> Structural Assumptions</a></li>
+<li class="chapter" data-level="2.5.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#random-variation-assumptions"><i class="fa fa-check"></i><b>2.5.2</b> Random Variation Assumptions</a></li>
+<li class="chapter" data-level="2.5.3" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#code-to-check-assumptions"><i class="fa fa-check"></i><b>2.5.3</b> Code to check assumptions</a></li>
 </ul></li>
-<li class="chapter" data-level="2.6" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#assumptionCheck"><i class="fa fa-check"></i><b>2.6</b> Assumption Checking</a>
+<li class="chapter" data-level="2.6" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#transforming-your-response"><i class="fa fa-check"></i><b>2.6</b> Transforming your response</a></li>
+<li class="chapter" data-level="2.7" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#performing-anova"><i class="fa fa-check"></i><b>2.7</b> Performing ANOVA</a></li>
+<li class="chapter" data-level="2.8" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#follow-up-procedures-multiple-comparisons"><i class="fa fa-check"></i><b>2.8</b> Follow-up procedures – Multiple Comparisons</a>
 <ul>
-<li class="chapter" data-level="2.6.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#independence"><i class="fa fa-check"></i><b>2.6.1</b> Independence</a></li>
-<li class="chapter" data-level="2.6.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#constant-variance"><i class="fa fa-check"></i><b>2.6.2</b> Constant Variance</a></li>
-<li class="chapter" data-level="2.6.3" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#checking-normality"><i class="fa fa-check"></i><b>2.6.3</b> Checking Normality</a></li>
-<li class="chapter" data-level="2.6.4" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#code-to-check-assumptions"><i class="fa fa-check"></i><b>2.6.4</b> Code to check assumptions</a></li>
-<li class="chapter" data-level="2.6.5" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#transforming-your-response"><i class="fa fa-check"></i><b>2.6.5</b> Transforming your response</a></li>
+<li class="chapter" data-level="2.8.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#tukeys-hsd-method"><i class="fa fa-check"></i><b>2.8.1</b> Tukey’s HSD method</a></li>
+<li class="chapter" data-level="2.8.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#dunnett-multiple-comparisons"><i class="fa fa-check"></i><b>2.8.2</b> Dunnett multiple comparisons</a></li>
 </ul></li>
-<li class="chapter" data-level="2.7" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#follow-up-procedures-multiple-comparisons"><i class="fa fa-check"></i><b>2.7</b> Follow-up procedures – Multiple Comparisons</a>
-<ul>
-<li class="chapter" data-level="2.7.1" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#tukeys-hsd-method"><i class="fa fa-check"></i><b>2.7.1</b> Tukey’s HSD method</a></li>
-<li class="chapter" data-level="2.7.2" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#dunnett-multiple-comparisons"><i class="fa fa-check"></i><b>2.7.2</b> Dunnett multiple comparisons</a></li>
-</ul></li>
+<li class="chapter" data-level="2.9" data-path="introduction-to-statistical-modeling-and-designed-experiments.html"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#a-complete-one-way-anova-example"><i class="fa fa-check"></i><b>2.9</b> A Complete One-Way ANOVA Example</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="multiple-factor-designed-experiments.html"><a href="multiple-factor-designed-experiments.html"><i class="fa fa-check"></i><b>3</b> Multiple Factor Designed Experiments</a>
 <ul>
@@ -285,35 +287,35 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="5.5" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#concluding-the-multiple-regression-model"><i class="fa fa-check"></i><b>5.5</b> Concluding the Multiple Regression Model</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html"><i class="fa fa-check"></i><b>6</b> Inference regarding Multiple Regression</a>
+<li class="chapter" data-level="6" data-path="regInferenceChp.html"><a href="regInferenceChp.html"><i class="fa fa-check"></i><b>6</b> Inference regarding Multiple Regression</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#assumption-checking"><i class="fa fa-check"></i><b>6.1</b> Assumption checking</a>
+<li class="chapter" data-level="6.1" data-path="regInferenceChp.html"><a href="regInferenceChp.html#assumption-checking"><i class="fa fa-check"></i><b>6.1</b> Assumption checking</a>
 <ul>
-<li class="chapter" data-level="6.1.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#example-of-assumption-checking-in-slr"><i class="fa fa-check"></i><b>6.1.1</b> Example of Assumption Checking in SLR</a></li>
+<li class="chapter" data-level="6.1.1" data-path="regInferenceChp.html"><a href="regInferenceChp.html#example-of-assumption-checking-in-slr"><i class="fa fa-check"></i><b>6.1.1</b> Example of Assumption Checking in SLR</a></li>
 </ul></li>
-<li class="chapter" data-level="6.2" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#overall-f-test-for-model-signifance"><i class="fa fa-check"></i><b>6.2</b> Overall <span class="math inline">\(F\)</span>-test for model signifance</a>
+<li class="chapter" data-level="6.2" data-path="regInferenceChp.html"><a href="regInferenceChp.html#overall-f-test-for-model-signifance"><i class="fa fa-check"></i><b>6.2</b> Overall <span class="math inline">\(F\)</span>-test for model signifance</a>
 <ul>
-<li class="chapter" data-level="6.2.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#example-of-model-overall-f-test"><i class="fa fa-check"></i><b>6.2.1</b> Example of model overall <span class="math inline">\(F\)</span>-test</a></li>
+<li class="chapter" data-level="6.2.1" data-path="regInferenceChp.html"><a href="regInferenceChp.html#example-of-model-overall-f-test"><i class="fa fa-check"></i><b>6.2.1</b> Example of model overall <span class="math inline">\(F\)</span>-test</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#individual-parameter-inference"><i class="fa fa-check"></i><b>6.3</b> Individual parameter inference</a>
+<li class="chapter" data-level="6.3" data-path="regInferenceChp.html"><a href="regInferenceChp.html#individual-parameter-inference"><i class="fa fa-check"></i><b>6.3</b> Individual parameter inference</a>
 <ul>
-<li class="chapter" data-level="6.3.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#parameter-t-tests"><i class="fa fa-check"></i><b>6.3.1</b> Parameter <span class="math inline">\(t\)</span>-tests</a></li>
-<li class="chapter" data-level="6.3.2" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#example-of-individual-parameter-t-test"><i class="fa fa-check"></i><b>6.3.2</b> Example of individual parameter <span class="math inline">\(t\)</span>-test</a></li>
-<li class="chapter" data-level="6.3.3" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#model-trimming"><i class="fa fa-check"></i><b>6.3.3</b> Model trimming</a></li>
-<li class="chapter" data-level="6.3.4" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#confidence-intervals"><i class="fa fa-check"></i><b>6.3.4</b> Confidence Intervals</a></li>
-<li class="chapter" data-level="6.3.5" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#example-of-individual-parameter-confidence-intervals"><i class="fa fa-check"></i><b>6.3.5</b> Example of individual parameter confidence intervals</a></li>
+<li class="chapter" data-level="6.3.1" data-path="regInferenceChp.html"><a href="regInferenceChp.html#parameter-t-tests"><i class="fa fa-check"></i><b>6.3.1</b> Parameter <span class="math inline">\(t\)</span>-tests</a></li>
+<li class="chapter" data-level="6.3.2" data-path="regInferenceChp.html"><a href="regInferenceChp.html#example-of-individual-parameter-t-test"><i class="fa fa-check"></i><b>6.3.2</b> Example of individual parameter <span class="math inline">\(t\)</span>-test</a></li>
+<li class="chapter" data-level="6.3.3" data-path="regInferenceChp.html"><a href="regInferenceChp.html#model-trimming"><i class="fa fa-check"></i><b>6.3.3</b> Model trimming</a></li>
+<li class="chapter" data-level="6.3.4" data-path="regInferenceChp.html"><a href="regInferenceChp.html#confidence-intervals"><i class="fa fa-check"></i><b>6.3.4</b> Confidence Intervals</a></li>
+<li class="chapter" data-level="6.3.5" data-path="regInferenceChp.html"><a href="regInferenceChp.html#example-of-individual-parameter-confidence-intervals"><i class="fa fa-check"></i><b>6.3.5</b> Example of individual parameter confidence intervals</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#confidence-and-prediction-bands"><i class="fa fa-check"></i><b>6.4</b> Confidence and prediction bands</a>
+<li class="chapter" data-level="6.4" data-path="regInferenceChp.html"><a href="regInferenceChp.html#confidence-and-prediction-bands"><i class="fa fa-check"></i><b>6.4</b> Confidence and prediction bands</a>
 <ul>
-<li class="chapter" data-level="6.4.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#simple-linear-regression-confident-and-prediction-bands"><i class="fa fa-check"></i><b>6.4.1</b> Simple Linear Regression Confident and Prediction bands</a></li>
-<li class="chapter" data-level="6.4.2" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#example-of-confidence-and-prediction-intervals"><i class="fa fa-check"></i><b>6.4.2</b> Example of confidence and prediction intervals</a></li>
-<li class="chapter" data-level="6.4.3" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#extrapolation-warning"><i class="fa fa-check"></i><b>6.4.3</b> Extrapolation warning!</a></li>
-<li class="chapter" data-level="6.4.4" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#confidence-and-prediction-bands-in-multiple-regression"><i class="fa fa-check"></i><b>6.4.4</b> Confidence and Prediction Bands in Multiple Regression</a></li>
+<li class="chapter" data-level="6.4.1" data-path="regInferenceChp.html"><a href="regInferenceChp.html#simple-linear-regression-confident-and-prediction-bands"><i class="fa fa-check"></i><b>6.4.1</b> Simple Linear Regression Confident and Prediction bands</a></li>
+<li class="chapter" data-level="6.4.2" data-path="regInferenceChp.html"><a href="regInferenceChp.html#example-of-confidence-and-prediction-intervals"><i class="fa fa-check"></i><b>6.4.2</b> Example of confidence and prediction intervals</a></li>
+<li class="chapter" data-level="6.4.3" data-path="regInferenceChp.html"><a href="regInferenceChp.html#extrapolation-warning"><i class="fa fa-check"></i><b>6.4.3</b> Extrapolation warning!</a></li>
+<li class="chapter" data-level="6.4.4" data-path="regInferenceChp.html"><a href="regInferenceChp.html#confidence-and-prediction-bands-in-multiple-regression"><i class="fa fa-check"></i><b>6.4.4</b> Confidence and Prediction Bands in Multiple Regression</a></li>
 </ul></li>
-<li class="chapter" data-level="6.5" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#goodness-of-fit"><i class="fa fa-check"></i><b>6.5</b> Goodness-of-fit</a>
+<li class="chapter" data-level="6.5" data-path="regInferenceChp.html"><a href="regInferenceChp.html#goodness-of-fit"><i class="fa fa-check"></i><b>6.5</b> Goodness-of-fit</a>
 <ul>
-<li class="chapter" data-level="6.5.1" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#coefficient-of-determination"><i class="fa fa-check"></i><b>6.5.1</b> Coefficient of determination</a></li>
-<li class="chapter" data-level="6.5.2" data-path="inference-regarding-multiple-regression.html"><a href="inference-regarding-multiple-regression.html#akaikes-information-criterion"><i class="fa fa-check"></i><b>6.5.2</b> Akaike’s Information Criterion</a></li>
+<li class="chapter" data-level="6.5.1" data-path="regInferenceChp.html"><a href="regInferenceChp.html#coefficient-of-determination"><i class="fa fa-check"></i><b>6.5.1</b> Coefficient of determination</a></li>
+<li class="chapter" data-level="6.5.2" data-path="regInferenceChp.html"><a href="regInferenceChp.html#akaikes-information-criterion"><i class="fa fa-check"></i><b>6.5.2</b> Akaike’s Information Criterion</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="more-on-multiple-linear-regression.html"><a href="more-on-multiple-linear-regression.html"><i class="fa fa-check"></i><b>7</b> More on multiple linear regression</a>
@@ -408,7 +410,6 @@ div.csl-indent {
 <li class="chapter" data-level="13.2.7" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#plotting-fitted-model"><i class="fa fa-check"></i><b>13.2.7</b> Plotting fitted model</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 </ul>
 
       </nav>
@@ -426,173 +427,84 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="introduction-to-statistical-modeling-and-designed-experiments" class="section level1" number="2">
-<h1><span class="header-section-number">Chapter 2</span> Introduction to Statistical Modeling and Designed Experiments</h1>
+<div id="introduction-to-statistical-modeling-and-designed-experiments" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Introduction to Statistical Modeling and Designed Experiments<a href="introduction-to-statistical-modeling-and-designed-experiments.html#introduction-to-statistical-modeling-and-designed-experiments" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>We begin our dive into Statistical Modeling by building from some introductory statistics material, namely two-sample inference and analysis of variance.
 The learning objective of this unit include:</p>
 <ul>
+<li>Distinguishing between observational studies and designed experiments.</li>
 <li>Understanding the basic structure of statistical model.</li>
 <li>Understanding that statistical inference can be formulated as the comparison of models.</li>
-<li>Distinguishing between observational studies and designed experiments.</li>
 <li>Performing a full analysis involving a one-factor experiment.</li>
 </ul>
-<div id="statistical-analyses-is-modeling" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> Statistical Analyses is Modeling</h2>
-<p>Think of a model airplane.
-It is just a simplified representation of the real thing.</p>
-<p>In many statistical problems (and all the problems we will encounter in this course), we are interested in describing the relationship that may exist among several different measured variables.
-For example, your current GPA could be impacted by how much you study.
-Or there may be several contributing factors – your credit hour load, your ACT score, whether or not you have a part-time job, etc.</p>
-<p>Of course, what makes your GPA is the result of a very highly complex combination of factors, some important and others not so important.</p>
-<p>A <strong>statistical model</strong> is a mechanism we will use to try to describe the structural relationship between some measured outcome (called the <em>response </em>variable) and one or more impacting variables (called <em>predictor</em> variables or <em>factors</em> or <em>features</em>, depending on the contextual circumstance) in a simplified mathematical way.</p>
-<p>It is in this sense that you can think of a statistical model as a “simplification” in much the same way as the model airplane: we know that the true relationship between response and predictor variables is very detailed and complex.
-The goal of the model is not to capture all the intricacies of the complexity but rather, the model only seeks to describe the essential features of any relationships that exist.</p>
-<div id="example-of-a-two-sample-t-test-as-a-model" class="section level3" number="2.1.1">
-<h3><span class="header-section-number">2.1.1</span> Example of a two-sample <span class="math inline">\(t\)</span>-test as a model</h3>
-<p>It turns out, we have already fit a statistical model.
-Consider a variation of the two-sample <span class="math inline">\(t\)</span>-test we performed in the previous chapter on the University Admissions data <span class="citation">(<a href="#ref-KutnerText" role="doc-biblioref">Kutner et al., 2004</a>)</span>.
-For cohesiveness we input the data again.</p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb72-1" aria-hidden="true" tabindex="-1"></a>uadata <span class="ot">&lt;-</span> <span class="fu">read_table</span>(<span class="st">&quot;https://tjfisher19.github.io/introStatModeling/data/univadmissions.txt&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb73-1" aria-hidden="true" tabindex="-1"></a>uadata.trim <span class="ot">&lt;-</span> uadata <span class="sc">%&gt;%</span></span>
-<span id="cb73-2"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb73-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1996</span>, <span class="dv">2000</span>) )</span>
-<span id="cb73-3"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb73-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-4"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb73-4" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(act <span class="sc">~</span> year, <span class="at">data=</span>uadata.trim, <span class="at">conf.level=</span><span class="fl">0.98</span>, </span>
-<span id="cb73-5"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb73-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">alternative=</span><span class="st">&quot;two.sided&quot;</span>, <span class="at">var.equal=</span><span class="cn">TRUE</span>)</span></code></pre></div>
-<pre><code>## 
-##  Two Sample t-test
-## 
-## data:  act by year
-## t = 0.3013, df = 277, p-value = 0.763
-## alternative hypothesis: true difference in means between group 1996 and group 2000 is not equal to 0
-## 98 percent confidence interval:
-##  -0.916072  1.186864
-## sample estimates:
-## mean in group 1996 mean in group 2000 
-##            24.6901            24.5547</code></pre>
-<p>Looking at the code you’ll note here we are performing a <code>two.sided</code> or “not equal to” test.
-More importantly note the <code>act ~ year</code> notation – this is known as a <strong>formula</strong> in R.
-In particular, we are telling R that the ACT scores are a function of the student’s incoming Year.
-This concept should be familiar as it is similar to the regression ideas from your Intro Statistics course.</p>
-<p>It turns out that nearly all statistical inference can be framed in terms of modeling.
-To see this we first must cover some light <em>math</em>.</p>
-<p>Recall from Intro Statistics that a random variable <span class="math inline">\(Y\)</span> is typically assumed to come from a Normal distribution with mean <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma\)</span>.
-Standard shorthand notation for this is to write
-<span class="math display">\[Y \sim N(\mu, \sigma).\]</span>
-You may also remember that if you subtract off the mean, <span class="math inline">\(\mu\)</span>, from a random variable it will just shift the distribution by <span class="math inline">\(\mu\)</span> units.
-For example
-<span class="math display">\[ Y - \mu \sim N(0, \sigma)\]</span>
-We could reformulate the above via
-<span class="math display" id="eq:baseModel">\[\begin{equation}
-Y = \mu + \varepsilon 
-\tag{2.1}
-\end{equation}\]</span>
-where
-<span class="math display">\[\varepsilon \sim N(0, \sigma).\]</span></p>
-<p>The equation <a href="introduction-to-statistical-modeling-and-designed-experiments.html#eq:baseModel">(2.1)</a> can be considered a <em>baseline</em> model.
-Here, we are simply stating that the random variable <span class="math inline">\(Y\)</span> is a function of a mean <span class="math inline">\(\mu\)</span> and random component <span class="math inline">\(\varepsilon\)</span>, which happens to be from a Normal distribution with mean 0 and standard deviation <span class="math inline">\(\sigma\)</span>.
-In words have the model
-<span class="math display">\[\textbf{Data} = \textbf{Systematic Structure} + \textbf{Random Variation}\]</span>
-where in the base model the Systematic Structure is simply the constant <span class="math inline">\(\mu\)</span>.
-We will consider more complicated structures later.</p>
-<p><strong>Estimation</strong></p>
-<p>A quick note about estimation.
-In your Intro Stat class you worked with this model regularly.
-We would estimate <span class="math inline">\(\mu\)</span> with the sample mean <span class="math inline">\(\bar{Y}\)</span> and estimate <span class="math inline">\(\sigma\)</span> with the sample standard deviation <span class="math inline">\(S\)</span>.
-You learned about one-sample hypothesis testing and confidence intervals all based from this baseline model.</p>
-<p><strong>Two-sample <span class="math inline">\(t\)</span>-test as a Model</strong></p>
-<p>Now consider the case of testing if ACT scores were different in 1996 compared to 2000.
-Let’s create a new variable called <span class="math inline">\(\tau\)</span> that measures how the 2000 ACT scores deviate from the 1996 ACT scores.
-That is, considering a model
-<span class="math display">\[Y_i = \mu + \tau + \varepsilon_i\]</span>
-Here the value <span class="math inline">\(\mu\)</span> corresponds to the mean ACT score in 1996 and is the baseline, <span class="math inline">\(\tau\)</span> measures how the year 2000 ACT scores <strong>differ</strong> from 1996 and <span class="math inline">\(\varepsilon_i\)</span> is the underlying random part of the <span class="math inline">\(i^\mathrm{th}\)</span> observation <span class="math inline">\(Y_i\)</span>.</p>
-<p>Another way to frame this model is to consider a variable <span class="math inline">\(X\)</span> such that if observation <span class="math inline">\(i\)</span> is from 1996 then <span class="math inline">\(X_i\)</span> takes on the value zero and if the observation if from 2000 then <span class="math inline">\(X_i\)</span> takes on the value one. We’ll let <span class="math inline">\(Y_i\)</span> be the observed ACT score for student <span class="math inline">\(i\)</span> and consider the following</p>
-<p><span class="math display" id="eq:twoSampleTtest">\[\begin{equation}
-Y_i = \mu + \delta\cdot X_i + \varepsilon_i.
-\tag{2.2}
-\end{equation}\]</span></p>
-<p>Now <span class="math inline">\(\mu\)</span> is the mean of 1996 ACT scores, <span class="math inline">\(\delta\)</span> is the effect the year 2000 has on ACT scores (<em>i.e.</em>, if ACT scores increased by 4 units from 1996 to 2000, <span class="math inline">\(\delta=4\)</span>), thus <span class="math inline">\(\mu+\delta\)</span> is the mean ACT score in the year 2000 (the <span class="math inline">\(\tau\)</span> effect in the above).
-Lastly, <span class="math inline">\(\varepsilon_i\)</span> is how observation <span class="math inline">\(i\)</span> deviates from the mean and we assume <span class="math inline">\(\varepsilon_i \sim N(0, \sigma)\)</span> for standard deviation <span class="math inline">\(\sigma\)</span> for all <span class="math inline">\(i=1,\ldots,n\)</span>.</p>
-<p>When performing a two-sample <span class="math inline">\(t\)</span>-test we are essentially testing <span class="math inline">\(H_0:\ \delta=0\)</span> versus <span class="math inline">\(H_A:\ \delta\neq 0\)</span>.
-Note that if <span class="math inline">\(H_0\)</span> were true, we are back to the baseline model <a href="introduction-to-statistical-modeling-and-designed-experiments.html#eq:baseModel">(2.1)</a>.</p>
-<p>So to put it another way, a two-sample <span class="math inline">\(t\)</span>-test essentially is a choice of</p>
-<p><span class="math display">\[H_0: \textrm{Baseline Model} ~~ Y_i = \mu + \varepsilon_i\]</span>
-and
-<span class="math display">\[H_A: \textrm{More complex model} ~~ Y_i = \mu + \delta\cdot X_i + \varepsilon_i.\]</span></p>
-<p>To tie everything together note that in <span class="math inline">\(H_A\)</span> we are essentially saying observation <span class="math inline">\(Y_i\)</span> is a function of the variable <span class="math inline">\(X_i\)</span>.</p>
-<p>Because of this we typically refer to <span class="math inline">\(Y_i\)</span> as the <strong>response</strong> (or dependent) variable and <span class="math inline">\(X_i\)</span> as a <strong>predictor</strong> (or independent) variable.
-This coincides with the R <code>formula</code> notation, <code>response ~ predictor</code>.</p>
-</div>
-</div>
-<div id="observational-studies-versus-designed-experiments" class="section level2" number="2.2">
-<h2><span class="header-section-number">2.2</span> Observational Studies versus designed experiments</h2>
-<p>Before we introduce more statistical models we need to step back and discuss the <strong>source of our data</strong>.
-Are the data a “sample of convenience,” or were they obtained via a designed experiment or some random sampling scheme?
+<div id="observational-studies-versus-designed-experiments" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Observational Studies versus designed experiments<a href="introduction-to-statistical-modeling-and-designed-experiments.html#observational-studies-versus-designed-experiments" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Before we introduce some details on statistical models we need to step back and discuss the <strong>source of our data</strong>.
+Are the data a “sample of convenience”, or were they obtained via a designed experiment or some random sampling scheme or by some sort of survey?
 How the data were collected has a crucial impact on what conclusions can be meaningfully made.</p>
 <p>It is important to recognize that there are two primary methods for obtaining data for analysis: <strong>designed experiments</strong> and <strong>observational studies</strong>.
-There is a third type of data collected through <strong>survey sampling</strong> methods that incorporates elements from both designed experiments and observational studies, but we exclude it here.
-It is important to know the distinction because each type of data results in a different approach to interpreting estimated models.</p>
-<div id="observational-studies" class="section level3" number="2.2.1">
-<h3><span class="header-section-number">2.2.1</span> Observational Studies</h3>
+There is a third type of data collected through <strong>survey sampling</strong> methods that incorporates elements from both designed experiments and observational studies, but are excluded here.
+It is important to know the distinction between each type of data, as this results in a different approach to interpreting estimated models.</p>
+<div id="observational-studies" class="section level3 hasAnchor" number="2.1.1">
+<h3><span class="header-section-number">2.1.1</span> Observational Studies<a href="introduction-to-statistical-modeling-and-designed-experiments.html#observational-studies" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In many situations a practitioner (perhaps you, or a client) simply collect measurements on predictor and response variables as they naturally occur, without intervention from the data collector.
 Such data is called <strong>observational data</strong>.</p>
-<p>Interpreting models built on observational data can be challenging.
+<p>Interpreting models built on observational data can be more challenging.
 There are many opportunities for error and any conclusions will carry with them substantial unquantifiable uncertainty.
 Nevertheless, there are many important questions for which only observational data will ever be available.
 For example, how else would we study something like differences in prevalence of obesity, diabetes and other cardiovascular risk factors between different ethnic groups?
 Or the effect of socio-economic status on self esteem?
-It may be impossible to design experiments to investigate these, so we must make the attempt to build good models with observational data in spite of their shortcomings.</p>
+It may be impossible to design experiments to investigate these questions, so we must make the attempt to build good models with observational data in spite of their shortcomings.</p>
 <p>In observational studies, establishing causal connections between response and predictor variables is nearly impossible.
-In the limited scope of a single study, the best one can hope for is to establish associations between predictor variables and response variables.
-But even this can be difficult due to the uncontrolled nature of observational data. Why?
-It is because unmeasured and possibly unsuspected “lurking” variables may be the real cause of an observed relationship between <span class="math inline">\(Y\)</span> and some predictor <span class="math inline">\(X\)</span>.</p>
+In the limited scope of a single study, the best one can hope is to establish associations between predictor variables and response variables.
+But even this can be difficult due to the uncontrolled nature of observational data. Unmeasured and possibly unsuspected “lurking” variables may be the real cause of an observed relationship between <span class="math inline">\(Y\)</span> and some predictor <span class="math inline">\(X\)</span>.</p>
 <p>In observational studies, it is important to adjust for the effects of possible confounding variables.
 Unfortunately, one can never be sure that the all relevant confounding variables have been identified.
 As a result, one must take care in interpreting estimated models involving observational data.</p>
-<p>This topic will be more thoroughly visited later.</p>
+<p>For the next few chapters we will concentrate on analyses of Designed experiments but the topic of observational studies will be more thoroughly visited later.</p>
 </div>
-<div id="designed-experiments" class="section level3" number="2.2.2">
-<h3><span class="header-section-number">2.2.2</span> Designed experiments</h3>
+<div id="designed-experiments" class="section level3 hasAnchor" number="2.1.2">
+<h3><span class="header-section-number">2.1.2</span> Designed experiments<a href="introduction-to-statistical-modeling-and-designed-experiments.html#designed-experiments" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In a <strong>designed experiment</strong>, the researcher has control over the settings of the predictor variables.
-For example, suppose we wish to study several physical exercise regimens and how they impact calorie burn.
+For example, suppose we wish to study several physical exercise regimens and how they impact calorie burn where we (the experimenter) assign the different exercise regimes to participants.
 Typically the values of the predictor variables are discrete (that is, a countably finite number of controlled values).
 Because of this, predictor variables of this type are known as <strong>factors</strong>.
 The <strong>experimental units</strong> (EUs) are the people we use for the study.
-We can control some of the predictors such as the amount of time spent exercising or the amount of carbohydrates consumed prior to exercising.
-Some other predictors may not be controlled but could be measured, such as baseline metabolic variables.
+We can control some of the predictors variables in this study, such as the amount of time spent exercising or the amount of carbohydrates consumed prior to exercising.
+Some other predictors may not be controlled but could be measured, such as baseline metabolic variables and the partipant’s age.
 Other variables, such as the temperature in the room or the type of exercise done, could be held fixed.</p>
 <p>Having control over the conditions in an experiment allows us to make stronger conclusions from the analysis.
 Another key feature from a designed experiment is that the model is chosen for us!
-We will see later in the class that with observational data we typically need to select a model.
-But with a designed experiment the model is predetermined based on the experiment.</p>
+We will see later in the class that with observational data we typically need to select a model, but with a designed experiment the model is predetermined based on the experiment.</p>
 </div>
 </div>
-<div id="designed-experiement-vocabulary" class="section level2" number="2.3">
-<h2><span class="header-section-number">2.3</span> Designed experiement vocabulary</h2>
-<div id="what-is-an-experiment" class="section level3" number="2.3.1">
-<h3><span class="header-section-number">2.3.1</span> What is an experiment?</h3>
+<div id="designed-experiement-vocabulary" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Designed experiement vocabulary<a href="introduction-to-statistical-modeling-and-designed-experiments.html#designed-experiement-vocabulary" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="what-is-an-experiment" class="section level3 hasAnchor" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> What is an experiment?<a href="introduction-to-statistical-modeling-and-designed-experiments.html#what-is-an-experiment" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In an experiment, a researcher manipulates one or more variables, while holding all other variables constant.
 The main advantage of well-designed experiments over observational studies is that we can establish cause and effect relationships between the predictors and response.</p>
 <p>One of the most important things to keep in mind with analyzing designed experiments is that <strong>the structure of the experiment dictates how the analysis may proceed</strong>.
 There are a plethora of structural possibilities of which we will only scratch the surface here.</p>
 <p>Consider, for example, these four scenarios:</p>
 <ol style="list-style-type: decimal">
-<li><p>Suppose a study is conducted on the effects a new drug has on patient blood pressure. At the start of the study the blood pressure of all participants is measured. After receiving the drug for two months the blood pressure of each patient is measured again. The analysis to determine the effect of the drug on blood pressure is the <strong>Paired <span class="math inline">\(t\)</span>-test</strong> from your Intro stat class. Here the <em>pairing</em> of each observation is the difference between the before and after blood pressure.</p></li>
-<li><p>We may have a simple design with only one factor, where each subject (experimental unit) is measured only under one of the factor levels. For example, suppose three different drugs are administered to 18 subjects. Each person is randomly assigned to receive only one of the three drugs. A response is measured after drug administration. The analysis we use for such data is known as a <strong>one-way analysis of variance</strong>.</p></li>
-<li><p>We may have a design with two factors, where every level of the first factor appears with every level of the second factor. For example, suppose your data are from an experiment in which alertness levels of male and female subjects were measured after they had been given one of two possible dosages of a drug. Such an experimental design is known as a factorial design. Here, the two factors are gender and dosage. The analysis we use for such data is known as a <strong>two-way analysis of variance.</strong></p></li>
-<li><p>Suppose we have a design with only one factor of interest (word type). Five subjects are asked to memorize a list of words. The words on this list are of three types: positive words, negative words and neutral words. The response variable is the number of words recalled by word type, with a goal of determining if the ability to recall words is affected by the word type. Note that even though there is only one factor of interest (word type) with three levels (negative, neutral and positive), this data structure differs greatly from a one-way analysis of variance mentioned earlier because each subject is observed under every factor level. Thus, there will be variability in the responses within subjects as well as between subjects. This fact will affect how we analyze the data.</p></li>
+<li><p>Suppose a study is conducted on the effects a new drug has on patient blood pressure. At the start of the study the blood pressure of all participants is measured. After receiving the drug for two months the blood pressure of each patient is measured again. The analysis to determine the effect of the drug on blood pressure is the <strong>Paired <span class="math inline">\(t\)</span>-test</strong> from your introductory statistics class. Here the <em>pairing</em> of each observation is the difference between the before and after blood pressure.</p></li>
+<li><p>Consider a simple design with a single categorical input variable, or one factor, where each subject (experimental unit) is measured only under one of the factor levels. For example, suppose three different drugs are administered to 18 subjects. Each person is randomly assigned to receive only one of the three drugs. A response is measured after drug administration. The analysis we use for such data is known as a <strong>one-way analysis of variance</strong>.</p></li>
+<li><p>We may have a design with two factors, where every level of the first factor appears with every level of the second factor. For example, suppose your data are from an experiment in which alertness levels of subjects were measured after they had been given one of three possible dosages of a drug and whether or not they were allowed to nap for 20 minutes. Such an experimental design is known as a factorial design. Here, the two factors are drug dosage and the occurrence of a nap. The analysis we use for such data is known as a <strong>two-way analysis of variance.</strong></p></li>
+<li><p>Suppose we have a design with only one factor of interest (word type). Five subjects are asked to memorize a list of words. The words on this list are of three types: positive words, negative words and neutral words. The response variable is the number of words recalled by word type, with a goal of determining if the ability to recall words is affected by the word type. Note that even though there is only one factor of interest (word type) with three levels (negative, neutral and positive), this data structure differs greatly from a one-way analysis of variance mentioned above because each subject is observed under every factor level. Thus, there will be variability in the responses within subjects as well as between subjects. This fact will affect how we analyze the data. This is known as a <strong>within-subjects analysis of variance</strong>, or <strong>repeated measures</strong>.</p></li>
 </ol>
 <p>We will cover each of these analyses.</p>
 </div>
-<div id="analysis-of-variance" class="section level3" number="2.3.2">
-<h3><span class="header-section-number">2.3.2</span> Analysis of variance</h3>
+<div id="analysis-of-variance" class="section level3 hasAnchor" number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> Analysis of variance<a href="introduction-to-statistical-modeling-and-designed-experiments.html#analysis-of-variance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><strong>Analysis of variance</strong> (ANOVA) is an analytic tool in statistics to partition the variation in a response variable and attribute it to known sources in the experiment.
-It is essentially an extension of the more familiar <span class="math inline">\(t\)</span>-test. As stated earlier, there are many different experimental structures possible when conducting an experiment.
+In practice, it is essentially an extension of the more familiar <span class="math inline">\(t\)</span>-test. As stated earlier, there are many different experimental structures possible when conducting an experiment and ANOVA can adapt to many of those structures.
 Some of the other widely used structures in practice are known as nested designs, split-plot designs, and repeated measures designs.
-It is worth saying again that the structure of the experimental data will dictate how an analysis of variance is used to model the data.
+It is worth reiterating that the structure of the experimental data will dictate how an analysis of variance is used to model the data.
 In each of these designs, some variant of an Analysis of Variance is used for analysis.</p>
 </div>
-<div id="elements-of-a-designed-experiment" class="section level3" number="2.3.3">
-<h3><span class="header-section-number">2.3.3</span> Elements of a designed experiment</h3>
+<div id="elements-of-a-designed-experiment" class="section level3 hasAnchor" number="2.2.3">
+<h3><span class="header-section-number">2.2.3</span> Elements of a designed experiment<a href="introduction-to-statistical-modeling-and-designed-experiments.html#elements-of-a-designed-experiment" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>All experiments have factors, a response variable, and experimental units.
 Here are some definitions and terms:</p>
 <ul>
@@ -676,28 +588,28 @@ Two control strategies are control groups and placebos:</p>
 <ul>
 <li><p><strong>Control group</strong>: A control group is a baseline group that receives no treatment or a neutral treatment. To assess treatment effects, the experimenter compares results in the treatment group to results in the control group.</p></li>
 <li><p><strong>Placebo</strong>: Often, participants in an experiment respond differently after they receive a treatment, even if the treatment is neutral. A neutral treatment that has no “real” effect on the dependent variable is called a placebo, and a participant’s positive response to a placebo is called the placebo effect. To control for the placebo effect, researchers often administer a neutral treatment (<em>i.e.</em>, a placebo) to the control group. The classic example is using a sugar pill in drug research. The drug is effective only if participants who receive the drug have better outcomes than participants who receive the sugar pill.</p></li>
-<li><p><strong>Blinding</strong>: Of course, if participants in the control group know that they are receiving a placebo, the placebo effect will be reduced or eliminated; and the placebo will not serve its intended control purpose. Blinding is the practice of not telling participants whether they are receiving a placebo. In this way, participants in the control and treatment groups experience the placebo effect equally. Often, knowledge of which groups receive placebos is also kept from people who administer or evaluate the experiment. This practice is called double blinding. It prevents the experimenter from “spilling the beans” to participants through subtle cues; and it assures that the analyst’s evaluation is not tainted by awareness of actual treatment conditions.</p></li>
+<li><p><strong>Blinding</strong>: Of course, if participants in the control group know that they are receiving a placebo, the placebo effect will be reduced or eliminated; and the placebo will not serve its intended control purpose. Blinding is the practice of not telling participants whether they are receiving a placebo or even what treatment they receive. In this way, participants in the control and treatment groups experience the placebo effect equally. Often, knowledge of which groups receive placebos is also kept from people who administer or evaluate the experiment. This practice is called double blinding. It prevents the experimenter from “spilling the beans” to participants through subtle cues; and it assures that the analyst’s evaluation is not tainted by awareness of actual treatment conditions.</p></li>
 </ul></li>
 <li><p><strong>Randomization</strong>: Randomization refers to the practice of using chance methods (random number generation, etc.) to assign experimental units to treatments. In this way, the potential effects of lurking variables are distributed at chance levels (hopefully roughly evenly) across treatment conditions. For example, suppose we had 12 experimental units which we wanted to completely randomly allocate to three different treatments (call them A, B and C). We can accomplish this as follows in R:</p></li>
 </ul>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb75-1" aria-hidden="true" tabindex="-1"></a>ids <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span></span>
-<span id="cb75-2"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb75-2" aria-hidden="true" tabindex="-1"></a>trt <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&#39;A&#39;</span>,<span class="st">&#39;B&#39;</span>,<span class="st">&#39;C&#39;</span>), <span class="at">each=</span><span class="dv">4</span>)</span>
-<span id="cb75-3"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb75-3" aria-hidden="true" tabindex="-1"></a>randomized <span class="ot">&lt;-</span> <span class="fu">sample</span>(ids, <span class="at">size=</span><span class="fu">length</span>(ids), <span class="at">replace=</span><span class="cn">FALSE</span>)</span>
-<span id="cb75-4"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb75-4" aria-hidden="true" tabindex="-1"></a>CRD <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(trt, randomized)</span>
-<span id="cb75-5"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb75-5" aria-hidden="true" tabindex="-1"></a>CRD</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb1-1" tabindex="-1"></a>ids <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span></span>
+<span id="cb1-2"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb1-2" tabindex="-1"></a>trt <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&#39;A&#39;</span>,<span class="st">&#39;B&#39;</span>,<span class="st">&#39;C&#39;</span>), <span class="at">each=</span><span class="dv">4</span>)</span>
+<span id="cb1-3"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb1-3" tabindex="-1"></a>randomized <span class="ot">&lt;-</span> <span class="fu">sample</span>(ids, <span class="at">size=</span><span class="fu">length</span>(ids), <span class="at">replace=</span><span class="cn">FALSE</span>)</span>
+<span id="cb1-4"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb1-4" tabindex="-1"></a>CRD <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(trt, randomized)</span>
+<span id="cb1-5"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb1-5" tabindex="-1"></a>CRD</span></code></pre></div>
 <pre><code>##    trt randomized
-## 1    A          5
-## 2    A          6
-## 3    A          8
-## 4    A          1
-## 5    B          3
-## 6    B          2
-## 7    B         10
-## 8    B         11
-## 9    C          9
-## 10   C          4
-## 11   C          7
-## 12   C         12</code></pre>
+## 1    A          9
+## 2    A          3
+## 3    A         11
+## 4    A          2
+## 5    B          6
+## 6    B          1
+## 7    B          8
+## 8    B         12
+## 9    C         10
+## 10   C          7
+## 11   C          5
+## 12   C          4</code></pre>
 <p>Such a design is known as a <strong>completely randomized design</strong> (or CRD).</p>
 <p>Randomization is arguably one of the most important pieces of any well-designed experiment.
 Failure to randomize can lead to confounded conclusions (see discussion below) and biased results!</p>
@@ -710,14 +622,14 @@ Would you trust the results of this experiment?</p>
 <ul>
 <li><p><strong>Replication</strong>: Replication refers to the practice of assigning each treatment to many experimental units. The purpose of replication is as follows:</p>
 <ul>
-<li>Estimate the noise in the system. Recall early in the text when we discussed sources of variation in data. What do I mean by that? Well, think of this: if you were to apply precisely the same treatment to a set of different individuals, the response would naturally vary due to myriad reasons of little to no interest to the researcher. So, responses vary to some degree due to simple random chance fluctuations, or “noise.” For our purposes, this constitutes a single source of variation.</li>
-<li>Now, lets apply different treatments to a set of individuals. The responses would still vary, but now there are two sources of variation: the random chance element from above (because we still have different individuals), but now we add in the effect that the different treatments have on the response. So, one purpose of replication is so that <strong>we can estimate how much noise is naturally in the system, so that we can see if the variability in response introduced by changing the treatment rises above the noise</strong>. The more replication in an experiment, the better you can estimate the noise. However, this comes at an expense!</li>
+<li>Estimate the noise in the system. Recall earlier in the text when we discussed sources of variation in data. If you were to apply precisely the same treatment to a set of different individuals, the response would naturally vary due to myriad reasons of little to no interest to the researcher. So, responses vary to some degree due to simple random chance fluctuations, or “noise.” For our purposes, this constitutes a single source of variation.</li>
+<li>Now, lets apply different treatments to a set of individuals. The responses would still vary, but now there are two sources of variation: the random chance element from above (because we still have different individuals), but now we also include that the different treatments may have different effects on the response. So, one purpose of replication is so that <strong>we can estimate how much noise is naturally in the system, and can see if the variability in response introduced by changing the treatment rises above the noise</strong>. The more replication in an experiment, the better you can estimate the noise. However, this comes at an expense!</li>
 <li>Help wash out the effect of lurking variables. This was also mentioned as a reason for randomization. When coupled with randomization, replication provides the “opportunity” for your experiment to have a mix of all those lurkers appear under each treatment, thus mitigating their effects from biasing your results.</li>
 </ul></li>
 </ul>
-<div id="confounding" class="section level4" number="2.3.3.1">
-<h4><span class="header-section-number">2.3.3.1</span> Confounding</h4>
-<p>This sounds serious. What is it?</p>
+<div id="confounding" class="section level4 hasAnchor" number="2.2.3.1">
+<h4><span class="header-section-number">2.2.3.1</span> Confounding<a href="introduction-to-statistical-modeling-and-designed-experiments.html#confounding" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>This sounds serious but what is it?</p>
 <p><strong>Confounding</strong> is a condition that occurs when the experimental controls do not allow the experimenter to reasonably eliminate plausible alternative explanations for an observed relationship between factors and the response.
 Needless to say, confounding renders experimental results to be seriously impaired, if not totally useless.
 Consider this example:</p>
@@ -728,7 +640,7 @@ At the end of the test period, the men report fewer colds.</p>
 As a result, many variables are confounded, and it is impossible to say whether the drug was effective.
 For example:</p>
 <ul>
-<li>Gender is confounded with drug use. Perhaps, men are less vulnerable to the particular cold virus circulating during the experiment, and the new medicine had no effect at all. Or perhaps the men experienced a placebo effect.</li>
+<li>Biological sex is confounded with drug use. Perhaps, men are less vulnerable to the particular cold virus circulating during the experiment, and the new medicine had no effect at all. Or perhaps the men experienced a placebo effect.</li>
 </ul>
 <p>This experiment could be strengthened with a few controls.
 Women and men could be randomly assigned to treatments. One treatment group could receive a placebo.
@@ -737,152 +649,96 @@ Then, after all this, if the treatment group (<em>i.e.</em>, the group getting t
 </div>
 </div>
 </div>
-<div id="paired-t-test" class="section level2" number="2.4">
-<h2><span class="header-section-number">2.4</span> Paired <span class="math inline">\(t\)</span>-test</h2>
-<p>Now that the framework for experimental design is complete let’s consider our first example, the paired <span class="math inline">\(t\)</span>-test (also known as the <strong>matched pairs design</strong>).
-Arguably the simplest example of such a design is a before and after study as outlined in the fictional example below.</p>
-<p><strong>Example.</strong> In an effort to student the effectiveness of a new cholesterol drug 20 patients with high cholesterol are selected and their cholesterol is measured at the beginning of the study.
-The patients then take the new drug for 45 days.
-At the conclusion of the 45 days their cholesterol is measured and compared to that at the beginning of the study.</p>
-<p>The above is an example of a designed experiment.
-The experimental units are the 20 individuals, the response is the difference in cholesterol (before and after) and the pairing attempts to control for confounding variability (variability within an individual is somewhat controlled via the pairing mechanism).</p>
-<p>The use of the paired <span class="math inline">\(t\)</span>-test is not limited to experimental designs, it also appears in observational studies.
-The paired <span class="math inline">\(t\)</span> does follow the model form discussed above but is actually somewhat complex due to the pairing mechanism.
-We will revisit the model statement in a later section.</p>
-<div id="paired-t-test-example" class="section level3" number="2.4.1">
-<h3><span class="header-section-number">2.4.1</span> Paired <span class="math inline">\(t\)</span>-test example</h3>
-<p>To demonstrates the implementation of a paired <span class="math inline">\(t\)</span>-test in R we consider another example.</p>
-<p><strong>Example.</strong> Carbon Emissions (originally in <span class="citation"><a href="#ref-WeissText" role="doc-biblioref">Weiss</a> (<a href="#ref-WeissText" role="doc-biblioref">2012</a>)</span>).</p>
-<p>The makers of the MAGNETIZER Engine Energizer System (EES) claim that it improves the gas mileage and reduces emissions in automobiles by using magnetic free energy to increase the amount of oxygen in the fuel for greater combustion efficiency.
-Test results for 14 vehicles that underwent testing is available in the file <code>carCOemissions.csv</code>.
-The data includes the emitted carbon monoxide (CO) levels, in parts per million, of each of the 14 vehicles tested before and after installation of the EES.</p>
-<p>This is a classic before-after (Paired design) study. Below is some code to implement the test.</p>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb77-1" aria-hidden="true" tabindex="-1"></a>www <span class="ot">&lt;-</span> <span class="st">&quot;https://tjfisher19.github.io/introStatModeling/data/carCOemissions.csv&quot;</span></span>
-<span id="cb77-2"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb77-2" aria-hidden="true" tabindex="-1"></a>vehicleCO <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(www, <span class="at">col_types =</span> <span class="fu">cols</span>())</span>
-<span id="cb77-3"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb77-3" aria-hidden="true" tabindex="-1"></a>vehicleCO</span></code></pre></div>
-<pre><code>## # A tibble: 14 x 3
-##       id before after
-##    &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
-##  1     1   1.6   0.15
-##  2     2   0.3   0.2 
-##  3     3   3.8   2.8 
-##  4     4   6.2   3.6 
-##  5     5   3.6   1   
-##  6     6   1.5   0.5 
-##  7     7   2     1.6 
-##  8     8   2.6   1.6 
-##  9     9   0.15  0.06
-## 10    10   0.06  0.16
-## 11    11   0.6   0.35
-## 12    12   0.03  0.01
-## 13    13   0.1   0   
-## 14    14   0.19  0</code></pre>
-<p>First we note each row of the data consist of an <code>id</code> with a <code>before</code> and <code>after</code> measurement.
-In the paired <span class="math inline">\(t\)</span>-test, we are comparing the differences between the before and after measurements.
-We perform this test in two different ways: (1) we explicitly calculate the difference and (2) we use features in the <code>t.test</code> function.</p>
-<p><strong>Method 1</strong></p>
-<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb79-1" aria-hidden="true" tabindex="-1"></a>vehicleCO <span class="ot">&lt;-</span> vehicleCO <span class="sc">%&gt;%</span></span>
-<span id="cb79-2"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb79-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Difference =</span> before <span class="sc">-</span> after)</span>
-<span id="cb79-3"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb79-3" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(vehicleCO<span class="sc">$</span>Difference)</span></code></pre></div>
+<div id="statistical-analyses-is-modeling" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Statistical Analyses is Modeling<a href="introduction-to-statistical-modeling-and-designed-experiments.html#statistical-analyses-is-modeling" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Think of a model airplane or a Lego kit of the Eiffel Tower – it is just a simplified representation of the real thing.</p>
+<p>In many statistical problems (and all the problems encountered in this course), we are interested in describing the relationship that may exist among several different measured variables.
+For example, your current GPA could be impacted by how much you study.
+And there may be several contributing factors – your credit hour load, your ACT score, whether or not you have a part-time job, etc.</p>
+<p>Of course, what makes your GPA is the result of a very highly complex combination of factors, some important and others not so important.</p>
+<p>A <strong>statistical model</strong> is a mechanism to describe the structural relationship between some measured outcome (called the <strong>response</strong> variable) and one or more impacting variables (called <strong>predictor</strong> variables or <strong>factors</strong> or <em>features</em>, depending on the contextual circumstance) in a simplified mathematical way.</p>
+<p>It is in this sense that you can think of a statistical model as a “simplification”: we know that the true relationship between response and predictor variables is very detailed and complex.
+The goal of the model is not to capture all the intricacies of the complexity but rather, the model only seeks to describe the essential features of any relationships that exist.</p>
+<div id="example-of-a-two-sample-t-test-as-a-model" class="section level3 hasAnchor" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> Example of a two-sample <span class="math inline">\(t\)</span>-test as a model<a href="introduction-to-statistical-modeling-and-designed-experiments.html#example-of-a-two-sample-t-test-as-a-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>It turns out, we have already fit a statistical model.
+Consider a variation of the two-sample <span class="math inline">\(t\)</span>-test we performed in the previous chapter on the University Admissions data <span class="citation">(<a href="#ref-KutnerText">Kutner et al., 2004</a>)</span>.
+For cohesiveness we input the data again.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb3-1" tabindex="-1"></a>uadata <span class="ot">&lt;-</span> <span class="fu">read_table</span>(<span class="st">&quot;https://tjfisher19.github.io/introStatModeling/data/univadmissions.txt&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb4-1" tabindex="-1"></a>uadata.trim <span class="ot">&lt;-</span> uadata <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb4-2" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1996</span>, <span class="dv">2000</span>) )</span>
+<span id="cb4-3"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb4-3" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb4-4" tabindex="-1"></a><span class="fu">t.test</span>(act <span class="sc">~</span> year, <span class="at">data=</span>uadata.trim, <span class="at">conf.level=</span><span class="fl">0.98</span>, </span>
+<span id="cb4-5"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb4-5" tabindex="-1"></a>       <span class="at">alternative=</span><span class="st">&quot;two.sided&quot;</span>, <span class="at">var.equal=</span><span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## 
-##  One Sample t-test
+##  Two Sample t-test
 ## 
-## data:  vehicleCO$Difference
-## t = 3.146, df = 13, p-value = 0.00773
-## alternative hypothesis: true mean is not equal to 0
-## 95 percent confidence interval:
-##  0.239443 1.289129
+## data:  act by year
+## t = 0.3013, df = 277, p-value = 0.7634
+## alternative hypothesis: true difference in means between group 1996 and group 2000 is not equal to 0
+## 98 percent confidence interval:
+##  -0.9160716  1.1868643
 ## sample estimates:
-## mean of x 
-##  0.764286</code></pre>
-<p><strong>Method 2</strong></p>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(vehicleCO<span class="sc">$</span>before, vehicleCO<span class="sc">$</span>after, <span class="at">paired=</span><span class="cn">TRUE</span>)</span></code></pre></div>
-<pre><code>## 
-##  Paired t-test
-## 
-## data:  vehicleCO$before and vehicleCO$after
-## t = 3.146, df = 13, p-value = 0.00773
-## alternative hypothesis: true difference in means is not equal to 0
-## 95 percent confidence interval:
-##  0.239443 1.289129
-## sample estimates:
-## mean of the differences 
-##                0.764286</code></pre>
-<p>In the <strong>first method</strong>, since we explicitly calculated the Difference as a new variable, we are determining if it is significantly different than zero (essentially it reduces to a one-sample <span class="math inline">\(t\)</span>-test from your Intro Stat course).
-In the <strong>second method</strong>, we compare the before and after measures but we tell R that the data are paired with the <code>paired=TRUE</code> option. Lastly we note both methods provide the same findings with a <span class="math inline">\(p\)</span>-value of approximately 0.0077, thus we have strong evidence to support that the EES system changes carbon monoxide levels.</p>
-<p><strong>Graphical comparison</strong></p>
-<p>To graphically compare paired data we must use some caution and consider the pairing feature in the data.
-Ultimately we are interested in the pairwise difference between observations.
-Thus, side-by-side boxplots are <strong>not</strong> appropriate since they do not account for the pairing.
-We can however report a visualization of the differences.
-Figure <a href="introduction-to-statistical-modeling-and-designed-experiments.html#fig:ch2-5">2.1</a> provides a horizontal boxplot, with overlayed <em>jittered</em> observations, of the differences (the <code>coord_clip()</code> function causes the vertical-horizontal switch while the <em>jittering</em> just add some minor random perturbation to the data to visually separate observations, specifying a maximum shift with <code>width=0.25</code>).</p>
-<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(vehicleCO) <span class="sc">+</span> </span>
-<span id="cb83-2"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb83-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>,<span class="at">y=</span>Difference) )<span class="sc">+</span></span>
-<span id="cb83-3"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb83-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span>Difference), <span class="at">width=</span><span class="fl">0.25</span> ) <span class="sc">+</span></span>
-<span id="cb83-4"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb83-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span><span class="st">&quot;Changes in CO Levels (ppm)&quot;</span>, </span>
-<span id="cb83-5"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb83-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">title=</span><span class="st">&quot;Effects of Engine Energizer System (EES) on 14 vehicles&quot;</span>, </span>
-<span id="cb83-6"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb83-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle=</span><span class="st">&quot;Change in Carbon Monoxide Emissions after installation of EES&quot;</span>) <span class="sc">+</span></span>
-<span id="cb83-7"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb83-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb83-8"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb83-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch2-5"></span>
-<img src="introStatModeling_files/figure-html/ch2-5-1.png" alt="Box-whiskers plot showing the distribution of difference in CO emissions (Before installation of EES - After installation) demonstrating a CO emissions decreased for most vehicles under study." width="70%" />
-<p class="caption">
-Figure 2.1: Box-whiskers plot showing the distribution of difference in CO emissions (Before installation of EES - After installation) demonstrating a CO emissions decreased for most vehicles under study.
-</p>
-</div>
-<p>Another type of plot that can be handy for this sort of data (and will be more important later) is known as a profile plot.
-Here we use the <code>id</code> values to group data.Basically we wish to draw a line for each and every individual vehicle.
-We begin with some data manipulation.</p>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb84-1" aria-hidden="true" tabindex="-1"></a>vehicleCO.tall <span class="ot">&lt;-</span> vehicleCO <span class="sc">%&gt;%</span></span>
-<span id="cb84-2"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb84-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>Difference) <span class="sc">%&gt;%</span> </span>
-<span id="cb84-3"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb84-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">c</span>(before, after), <span class="at">names_to=</span><span class="st">&quot;Time&quot;</span>, <span class="at">values_to=</span><span class="st">&quot;CO&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb84-4"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb84-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id=</span><span class="fu">factor</span>(id),</span>
-<span id="cb84-5"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb84-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">Time=</span><span class="fu">factor</span>(Time, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;before&quot;</span>,<span class="st">&quot;after&quot;</span>)))</span></code></pre></div>
-<p>Let’s step through the above R code.
-In the first statement <code>select(-Difference)</code> we are telling R to drop the <code>Difference</code> variable as we do not need it for the plot.
-Then we are pivoting from wide-to-long format (or wide-to-tall) with the <code>before</code> and <code>after</code> measurements.
-The resulting dataset has two new variables, one called <code>Time</code> which states if it is the <em>before</em> or <em>after</em> measure and another called <code>CO</code> with the corresponding Carbon Monoxide emissions at that time.
-Lastly, we tell R to treat <code>id</code> as a factor and set the levels of <code>Time</code> so that <code>before</code> is first (otherwise it would put things in alphabetical order, by default).</p>
-<p>Now that the data is in a tall format, we can make our profile plot in Figure <a href="introduction-to-statistical-modeling-and-designed-experiments.html#fig:ch2-7">2.2</a>.
-Here we simply tell R to treat the factor <code>Time</code> as the <span class="math inline">\(x\)</span>-variable with <code>CO</code> as the <span class="math inline">\(y\)</span>-variable, but group each line by vehicle <code>id</code>.</p>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(vehicleCO.tall) <span class="sc">+</span> </span>
-<span id="cb85-2"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb85-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span>Time, <span class="at">y=</span>CO, <span class="at">group=</span>id) ) <span class="sc">+</span></span>
-<span id="cb85-3"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb85-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
-<span id="cb85-4"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb85-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">&quot;CO Emissions (ppm)&quot;</span>, <span class="at">x=</span><span class="st">&quot;Installation of EES&quot;</span>)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch2-7"></span>
-<img src="introStatModeling_files/figure-html/ch2-7-1.png" alt="Profiles of each vehicle demonstrating a general decrease in CO emissions after EES installation." width="70%" />
-<p class="caption">
-Figure 2.2: Profiles of each vehicle demonstrating a general decrease in CO emissions after EES installation.
-</p>
-</div>
-<p>To jazz up our plot we can add the overall effect by including some summary values.
-First we calculate summary statistics. Since we use a <code>group</code> variable for each vehicle we need to <em>trick</em> R into plotting the overall summary line as well, thus we create an <code>id="Summary"</code> variable in <code>vehicleCO.summary</code> to use as a <code>group</code> variable.
-We also tweak the <span class="math inline">\(x\)</span>-axis scale by limiting the amount of space around the before and after markings.
-The code below produces Figure <a href="introduction-to-statistical-modeling-and-designed-experiments.html#fig:ch2-7">2.2</a>.</p>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb86-1" aria-hidden="true" tabindex="-1"></a>vehicleCO.summary <span class="ot">&lt;-</span> vehicleCO.tall <span class="sc">%&gt;%</span></span>
-<span id="cb86-2"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb86-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Time) <span class="sc">%&gt;%</span></span>
-<span id="cb86-3"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb86-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">CO=</span><span class="fu">mean</span>(CO),</span>
-<span id="cb86-4"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb86-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">id=</span><span class="st">&quot;Summary&quot;</span>)</span>
-<span id="cb86-5"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb86-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb86-6"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb86-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(vehicleCO.tall) <span class="sc">+</span> </span>
-<span id="cb86-7"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb86-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span>Time, <span class="at">y=</span>CO, <span class="at">group=</span>id), <span class="at">color=</span><span class="st">&quot;gray50&quot;</span> ) <span class="sc">+</span></span>
-<span id="cb86-8"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb86-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>vehicleCO.summary, <span class="fu">aes</span>(<span class="at">x=</span>Time, <span class="at">y=</span>CO, <span class="at">group=</span>id), <span class="at">color=</span><span class="st">&quot;darkred&quot;</span>, <span class="at">size=</span><span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb86-9"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb86-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">&quot;CO Emissions (ppm)&quot;</span>, <span class="at">x=</span><span class="st">&quot;Installation of EES&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb86-10"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb86-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">expand=</span><span class="fu">c</span>(<span class="fl">0.075</span>, <span class="fl">0.075</span>) ) <span class="sc">+</span> </span>
-<span id="cb86-11"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb86-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch2-7annotated"></span>
-<img src="introStatModeling_files/figure-html/ch2-7annotated-1.png" alt="Profiles of each vehicle, with average profile highlighted in a thick dark red line, demonstrating a general decrease in CO emissions after EES installation." width="70%" />
-<p class="caption">
-Figure 2.3: Profiles of each vehicle, with average profile highlighted in a thick dark red line, demonstrating a general decrease in CO emissions after EES installation.
-</p>
-</div>
-<p>Based on the two plots, coupled with the results of the paired <span class="math inline">\(t\)</span>-test, it is clear there is significant decrease in CO emissions after installation of the EES.</p>
+## mean in group 1996 mean in group 2000 
+##           24.69014           24.55474</code></pre>
+<p>Looking at the code you’ll note here we are performing a <code>two.sided</code> or “not equal to” test (in chapter 1 we performed a “&gt;” test).
+More importantly note the <code>act ~ year</code> notation – this is known as a <code>formula</code> in R.
+In particular, we are telling R that the ACT scores are a function of the student’s incoming Year.
+This concept should be familiar as it is similar to the regression ideas from your Intro Statistics course.</p>
+<p>It turns out that nearly all statistical inference can be framed in terms of modeling.
+To see this we first must cover some <em>light math</em>.</p>
+<p>Recall from Intro Statistics that a random variable <span class="math inline">\(Y\)</span> is typically assumed to come from a Normal distribution with mean <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma\)</span>.
+Standard shorthand notation for this is to write
+<span class="math display">\[Y \sim N(\mu, \sigma).\]</span>
+You may also remember that if you subtract off the mean, <span class="math inline">\(\mu\)</span>, from a random variable it will just shift the distribution by <span class="math inline">\(\mu\)</span> units.
+For example
+<span class="math display">\[ Y - \mu \sim N(0, \sigma)\]</span>
+We could reformulate this equation further with
+<span class="math display" id="eq:baseModel">\[\begin{equation}
+Y = \mu + \varepsilon
+\tag{2.1}
+\end{equation}\]</span>
+where
+<span class="math display">\[\varepsilon \sim N(0, \sigma).\]</span></p>
+<p>The equation <a href="introduction-to-statistical-modeling-and-designed-experiments.html#eq:baseModel">(2.1)</a> can be considered a <em>baseline</em> model.
+Here, we are simply stating that the random variable <span class="math inline">\(Y\)</span> is a function of a mean <span class="math inline">\(\mu\)</span> and some random component <span class="math inline">\(\varepsilon\)</span>, which happens to be from a Normal distribution with mean 0 and standard deviation <span class="math inline">\(\sigma\)</span>.
+In words have the model
+<span class="math display">\[\textbf{Data} = \textbf{Systematic Structure} + \textbf{Random Variation}\]</span>
+where in the base model the Systematic Structure is simply the constant <span class="math inline">\(\mu\)</span>.</p>
+<p><strong>Estimation</strong></p>
+<p>A quick note about estimation.
+In your Intro Stat class you worked with this model regularly.
+We would estimate <span class="math inline">\(\mu\)</span> with the sample mean <span class="math inline">\(\bar{Y}\)</span> and estimate <span class="math inline">\(\sigma\)</span> with the sample standard deviation <span class="math inline">\(S\)</span>.
+One-sample hypothesis testing and confidence intervals are all formulated using this baseline model.</p>
+<p><strong>Two-sample <span class="math inline">\(t\)</span>-test as a Model</strong></p>
+<p>Now consider the case of a two-sample <span class="math inline">\(t\)</span>-test; for example, testing if ACT scores were different in 1996 compared to 2000.
+Let’s create a new variable called <span class="math inline">\(\tau\)</span> that measures how the 2000 ACT scores deviate from the 1996 ACT scores.
+That is, consider a model
+<span class="math display">\[Y_i = \mu + \tau + \varepsilon_i\]</span>
+Here the value <span class="math inline">\(\mu\)</span> corresponds to the mean ACT score in 1996 and is the baseline, <span class="math inline">\(\tau\)</span> measures how the year 2000 ACT scores <strong>differ</strong> from 1996 (increase? decrease? no change?) and <span class="math inline">\(\varepsilon_i\)</span> is the underlying random part of the <span class="math inline">\(i^\mathrm{th}\)</span> observation <span class="math inline">\(Y_i\)</span>. Thus, if <span class="math inline">\(Y_i\)</span> is an observation from the year 2000, the structural component will be <span class="math inline">\(\mu+\tau\)</span>, whereas if the observation is from 1996, the structural component is simply <span class="math inline">\(\mu\)</span>.</p>
+<p>Another way to frame this model is to augment with a random variable <span class="math inline">\(X_i\)</span>. If observation <span class="math inline">\(i\)</span> is from 1996 then <span class="math inline">\(X_i\)</span> takes on the value zero and if the observation is from 2000 then <span class="math inline">\(X_i\)</span> takes on the value one. We’ll let <span class="math inline">\(Y_i\)</span> be the observed ACT score for student <span class="math inline">\(i\)</span> and consider the following</p>
+<p><span class="math display" id="eq:twoSampleTtest">\[\begin{equation}
+Y_i = \mu + \delta\cdot X_i + \varepsilon_i.
+\tag{2.2}
+\end{equation}\]</span></p>
+<p>Now <span class="math inline">\(\mu\)</span> is the mean of 1996 ACT scores (when <span class="math inline">\(X_i=0\)</span>), <span class="math inline">\(\delta\)</span> is the effect the year 2000 has on mean ACT scores (<em>e.g.</em>, suppose mean ACT scores in 1996 were 27, but in 2000 they were 31, thus <span class="math inline">\(\delta=4\)</span>), thus <span class="math inline">\(\mu+\delta\)</span> is the mean ACT score in the year 2000 (much like the <span class="math inline">\(\tau\)</span> effect above).
+Lastly, <span class="math inline">\(\varepsilon_i\)</span> is how observation <span class="math inline">\(i\)</span> deviates from the structural component and we assume <span class="math inline">\(\varepsilon_i \sim N(0, \sigma)\)</span> for standard deviation <span class="math inline">\(\sigma\)</span> for all <span class="math inline">\(i=1,\ldots,n\)</span>.</p>
+<p>When performing a two-sample <span class="math inline">\(t\)</span>-test we are essentially testing <span class="math inline">\(H_0:\ \delta=0\)</span> versus <span class="math inline">\(H_A:\ \delta\neq 0\)</span>.
+Note that if <span class="math inline">\(H_0\)</span> were true, we are back to the baseline model <a href="introduction-to-statistical-modeling-and-designed-experiments.html#eq:baseModel">(2.1)</a>.</p>
+<p>So to frame this another way, a two-sample <span class="math inline">\(t\)</span>-test essentially is a choice of</p>
+<p><span class="math display">\[H_0: \textrm{Baseline Model} ~~~ Y_i = \mu + \varepsilon_i\]</span>
+and
+<span class="math display">\[H_A: \textrm{More complex model} ~~~ Y_i = \mu + \delta\cdot X_i + \varepsilon_i.\]</span></p>
+<p>To tie everything together note that in <span class="math inline">\(H_A\)</span> we are essentially describing observation <span class="math inline">\(Y_i\)</span> as a function of the variable <span class="math inline">\(X_i\)</span>. Because of this we typically refer to <span class="math inline">\(Y_i\)</span> as the <strong>response</strong> (or dependent) variable and <span class="math inline">\(X_i\)</span> as a <strong>predictor</strong> (or independent) variable.
+This coincides with the R <code>formula</code> notation, <code>response ~ predictor</code>.</p>
+<p><strong>Back to the example</strong></p>
+<p>In this observational study, we compared the ACT scores of incoming freshmen in 1996 and compared them to ACT scores for the incoming class of 2000. With a <span class="math inline">\(p\)</span>-value of 0.7634 on 277 degrees of freedom, we do not have evidence to suggest that the ACT scores for freshmen in 1996 differs from those in 2000.</p>
 </div>
 </div>
-<div id="one-way-anova" class="section level2" number="2.5">
-<h2><span class="header-section-number">2.5</span> One-Way ANOVA</h2>
-<p>When there is a single factor whose levels may only change between different EUs, we can analyze the effect of the factor on the response by using a one-way analysis of variance (one-way ANOVA) on the between-subjects factor.
-If we had a single factor with just two levels, you could still use a one-way ANOVA, but it would be equivalent to running an independent samples <span class="math inline">\(t\)</span>-test (see earlier material).</p>
+<div id="one-way-anova" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> One-Way ANOVA<a href="introduction-to-statistical-modeling-and-designed-experiments.html#one-way-anova" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>When there is a single factor variable whose levels may only change between different experimental units, we can analyze the effect of the factor on the response using a one-way analysis of variance (one-way ANOVA) on the between-subjects factor.
+If we had a single factor with just two levels, you could still use a one-way ANOVA, but it would be equivalent to running an independent samples <span class="math inline">\(t\)</span>-test (see above for an example). In this sense, one-way ANOVA is an extension of the two-sample <span class="math inline">\(t\)</span>-test (think a <span class="math inline">\(k\)</span>-sample test).</p>
 <p>In this design, we observe random samples from <span class="math inline">\(k\)</span> different populations.
 As a designed experiment, these populations may be defined on the basis of an administered treatment.
 The levels of the factor being manipulated by the researcher form the different treatments.
@@ -899,14 +755,17 @@ Y_{13} &amp; Y_{23} &amp; \ldots &amp; Y_{k3} \\
 \vdots &amp; \vdots &amp; \vdots &amp; \vdots \\
 Y_{1n_{1}} &amp; Y_{2n_{2}} &amp; \ldots &amp; Y_{kn_{k}} \\
 \hline
-\end{array}\]</span></p>
+\end{array}\]</span>
+where <span class="math inline">\(Y_{ji}\)</span> is the <span class="math inline">\(i^\mathrm{th}\)</span> observation within treatment <span class="math inline">\(j\)</span>, for <span class="math inline">\(j=1,\ldots,k\)</span> and <span class="math inline">\(i=1,\ldots, n_j\)</span>.</p>
 <p>The model for such data has the form
 <span class="math display" id="eq:onewayAnovaModel">\[\begin{equation}
-Y_{ji} = \mu_j + \varepsilon_{ji} 
+Y_{ji} = \mu_j + \varepsilon_{ji}
 \tag{2.3}
 \end{equation}\]</span>
 where <span class="math inline">\(\mu_j\)</span> is the mean of the <span class="math inline">\(j^\mathrm{th}\)</span> treatment, <span class="math inline">\(j=1,\ldots,k\)</span>, or more commonly,
-<span class="math display">\[Y_{ji} = \mu + \tau_j + \varepsilon_{ji}\]</span>
+<span class="math display">\[
+Y_{ji} = \mu + \tau_j + \varepsilon_{ji}
+\]</span>
 where</p>
 <ul>
 <li><span class="math inline">\(Y_{ji}\)</span> is the <span class="math inline">\(i^\mathrm{th}\)</span> observation in the <span class="math inline">\(j^\mathrm{th}\)</span> treatment.</li>
@@ -914,198 +773,251 @@ where</p>
 <li><span class="math inline">\(\tau_j\)</span> is the deviation of the mean by the <span class="math inline">\(j^\mathrm{th}\)</span> treatment population from the overall mean <span class="math inline">\(\mu\)</span>.</li>
 <li><span class="math inline">\(\varepsilon_{ji}\)</span> is the random error term.</li>
 </ul>
+<p>Similar to the two-sample <span class="math inline">\(t\)</span>-test formulas above, this equation can also be written as
+<span class="math display">\[
+Y_{i} = \mu_1 + \delta_2 X_{2i} + \delta_3 X_{3i} + \ldots + \delta_k X_{ki} + \varepsilon_{i}
+\]</span>
+where
+* <span class="math inline">\(Y_i\)</span> is the <span class="math inline">\(i^\mathrm{th}\)</span> observation.
+* <span class="math inline">\(\mu_1\)</span> is the mean of the first treatment.
+* <span class="math inline">\(\delta_j\)</span> is the different between the <span class="math inline">\(j^\mathrm{th}\)</span> treatment mean and the first treatment mean; <em>i.e.</em>, _j = _1 + _j$.
+* <span class="math inline">\(X_{ji}\)</span> is an indicator variable, indicating if the <span class="math inline">\(i^\mathrm{th}\)</span> observation is in the <span class="math inline">\(j^\mathrm{th}\)</span> treatment; <em>i.e.</em>, <span class="math inline">\(X_{ji}=1\)</span> when the <span class="math inline">\(i^\mathrm{th}\)</span> observation is in group <span class="math inline">\(j\)</span>, otherwise <span class="math inline">\(X_{ji}=0\)</span>.</p>
 <p>The usual test of interest in a one-way analysis of variance is to compare the population means.
 The null and alternative hypotheses are given by:</p>
 <p><span class="math display">\[H_0: \mu_1 = \mu_2 = \ldots = \mu_k\]</span>
-<span class="math display">\[H_a: \textrm{at least two of the population means differ}\]</span></p>
+<span class="math display">\[H_a: ~\textrm{at least two of the population means differ}\]</span></p>
 <p>Expressed in terms of the more commonly used model parameters, we really want to test to see if there are no treatment mean deviations among the populations, so the above hypotheses can be equivalently expressed as follows:</p>
 <p><span class="math display">\[H_0: \tau_1 = \tau_2 = \ldots = \tau_k = 0\]</span>
-<span class="math display">\[H_a: \textrm{at least one } \tau_j \neq 0\]</span></p>
-<p>In terms of modeling, we are testing</p>
-<p><span class="math display">\[H_0: \textrm{Baseline Model:} ~~ Y_{ji} = \mu + \varepsilon_{ji}\]</span></p>
-<p><span class="math display">\[H_0: \textrm{More Complex Model:} ~~ Y_{ji} = \mu + \tau_j + \varepsilon_{ji},~~\textrm{at least one}~\tau_j\neq0\]</span></p>
-<p>We can test these hypotheses by partitioning the total variability in the response into two components: (1) variation between treatments, and (2) variation within treatments.
-The latter partition is essentially residual error (unexplained variability) while the former is the explained variability.
-An <span class="math inline">\(F\)</span>-test is performed to run the test.</p>
-<p>The <span class="math inline">\(F\)</span>-test works like other hypothesis test.
+<span class="math display">\[H_a: ~\text{at least one } \tau_j \neq 0~~~~~\text{for}~j=1,\ldots, k\]</span></p>
+<p>An alternative formulation is based on the coefficients on the indicator functions:</p>
+<p><span class="math display">\[H_0: \delta_2 = \delta_3 = \ldots = \delta_k = 0\]</span>
+<span class="math display">\[H_A: ~\text{at least one } \delta_j \neq 0~~~~\text{for}~j=2,\ldots,k\]</span>
+With this last formulation, under <span class="math inline">\(H_0\)</span> all the <span class="math inline">\(\delta_j\)</span> terms equal zero, so the <span class="math inline">\(X_{ji}\)</span> terms have no effect, and the model reduces to the baseline model <span class="math inline">\(Y = \mu+\varepsilon\)</span>.</p>
+<p>In terms of modeling, we are testing”</p>
+<p><span class="math display">\[H_0: \textrm{Baseline Model:} ~~ Y_{ji} = \mu + \varepsilon_{ji}\]</span>
+<span class="math display">\[H_a: \textrm{More Complex Model:} ~~ Y_{ji} = \mu + \tau_j + \varepsilon_{ji},~~\textrm{at least one}~\tau_j\neq0\]</span>
+and we note the more complicated model can be expressed a few different ways.</p>
+<p>We test these equivalent hypotheses by partitioning the total variability in the response into two components: (1) variation between treatments, and (2) variation within treatments.
+The former, (1) variation between treatments, effectively is the variability that is explained by the structural components in the model.
+The latter partition is essentially residual error, or unexplained variability.
+The details of this partitioning are outside the scope of this text, but we will <em>hint</em> at the ideas further in Chapter <a href="regInferenceChp.html#regInferenceChp">6</a>.
+The resulting method for this hypothesis is the ANOVA <span class="math inline">\(F\)</span>-test.</p>
+<p>The <span class="math inline">\(F\)</span>-test works like other hypothesis test you may have seen (<em>e.g.</em>, the <span class="math inline">\(t\)</span>-test or <span class="math inline">\(\chi^2\)</span> goodness-of-fit test).
 The test statistic is a ratio of variance estimates and follows the Fisher-Snedecor distribution (or <span class="math inline">\(F\)</span>-distribution for short).
 The details of this distribution are not important for this course and are covered in a Mathematical Statistics course.
 An example of a one-way ANOVA in R is provided below.</p>
-<div id="example-of-one-way-anova" class="section level3" number="2.5.1">
-<h3><span class="header-section-number">2.5.1</span> Example of One-Way ANOVA</h3>
-<p><strong>Example:</strong> Drug effects on “knockdown” times (from the text <span class="citation"><a href="#ref-Walpole2007" role="doc-biblioref">Walpole et al.</a> (<a href="#ref-Walpole2007" role="doc-biblioref">2007</a>)</span>).</p>
+<div id="example-of-one-way-anova" class="section level3 hasAnchor" number="2.4.1">
+<h3><span class="header-section-number">2.4.1</span> Example of One-Way ANOVA<a href="introduction-to-statistical-modeling-and-designed-experiments.html#example-of-one-way-anova" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Example:</strong> Drug effects on “knockdown” times (from the text <span class="citation">Walpole et al. (<a href="#ref-Walpole2007">2007</a>)</span>).</p>
 <p>Immobilization of free-ranging white-tailed deer by drugs allows researchers the opportunity to closely examine deer and gather valuable physiological information.
 Wildlife biologists tested the “knockdown” time (time, measured in minutes, from injection to immobilization) of three different immobilizing drugs.
 Thirty male white-tailed deer were randomly assigned to each of three treatments: Group <em>A</em> received 5mg of liquid succinylcholine chloride (SCC); group <em>B</em> received 8 mg of powdered SSC; and group <em>C</em> received 200 mg of phencyclidine hydrochloride.</p>
-<p>Original Source: <span class="citation"><a href="#ref-Wesson1976" role="doc-biblioref">Wesson</a> (<a href="#ref-Wesson1976" role="doc-biblioref">1976</a>)</span></p>
+<p>Original Source: <span class="citation">Wesson (<a href="#ref-Wesson1976">1976</a>)</span></p>
 <p>The data appear in the R dataframe <code>deerKnockdown.RData</code> in our repository: (<a href="https://tjfisher19.github.io/introStatModeling/data/deerKnockdown.RData" class="uri">https://tjfisher19.github.io/introStatModeling/data/deerKnockdown.RData</a>)</p>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb87-1" aria-hidden="true" tabindex="-1"></a>site <span class="ot">&lt;-</span> <span class="st">&quot;https://tjfisher19.github.io/introStatModeling/data/deerKnockdown.RData&quot;</span></span>
-<span id="cb87-2"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb87-2" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="fu">url</span>(site))</span>
-<span id="cb87-3"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb87-3" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(deer_knockdown_times)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb6-1" tabindex="-1"></a>site <span class="ot">&lt;-</span> <span class="st">&quot;https://tjfisher19.github.io/introStatModeling/data/deerKnockdown.RData&quot;</span></span>
+<span id="cb6-2"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb6-2" tabindex="-1"></a><span class="fu">load</span>(<span class="fu">url</span>(site))</span>
+<span id="cb6-3"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb6-3" tabindex="-1"></a><span class="fu">glimpse</span>(deer_knockdown_times)</span></code></pre></div>
 <pre><code>## Rows: 30
 ## Columns: 2
-## $ Drug           &lt;chr&gt; &quot;A&quot;, &quot;A&quot;, &quot;A&quot;, &quot;A&quot;, &quot;A&quot;, &quot;A&quot;, &quot;A&quot;, &quot;A&quot;, &quot;A&quot;, &quot;A&quot;, &quot;B&quot;, ~
-## $ Knockdown_time &lt;dbl&gt; 11, 5, 14, 7, 10, 7, 23, 4, 11, 11, 10, 7, 16, 7, 7, 5,~</code></pre>
+## $ Drug           &lt;chr&gt; &quot;A&quot;, &quot;A&quot;, &quot;A&quot;, &quot;A&quot;, &quot;A&quot;, &quot;A&quot;, &quot;A&quot;, &quot;A&quot;, &quot;A&quot;, &quot;A&quot;, &quot;B&quot;, …
+## $ Knockdown_time &lt;dbl&gt; 11, 5, 14, 7, 10, 7, 23, 4, 11, 11, 10, 7, 16, 7, 7, 5,…</code></pre>
 <p><strong>Note</strong> the subtle change in the code compared to <code>read_csv()</code> and <code>read_table()</code>. When loading an R data.frame from a website, we need to use the <code>url()</code> function to open and close the internet connection inside the <code>load()</code> function.</p>
 <p>We can then plot the data.</p>
-<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(deer_knockdown_times, <span class="fu">aes</span>(<span class="at">x=</span>Drug, <span class="at">y=</span>Knockdown_time )) <span class="sc">+</span> </span>
-<span id="cb89-2"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb89-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
-<span id="cb89-3"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb89-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width=</span><span class="fl">0.25</span>) <span class="sc">+</span></span>
-<span id="cb89-4"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb89-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun=</span><span class="st">&quot;mean&quot;</span>, <span class="at">geom=</span><span class="st">&quot;point&quot;</span>, <span class="at">shape=</span><span class="dv">23</span>, <span class="at">fill=</span><span class="st">&quot;gray60&quot;</span>, <span class="at">size=</span><span class="dv">4</span>) <span class="sc">+</span> </span>
-<span id="cb89-5"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb89-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Drug Treatment&quot;</span>, <span class="at">y=</span><span class="st">&quot;Time to Immobilization (min)&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb89-6"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb89-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb8-1" tabindex="-1"></a><span class="fu">ggplot</span>(deer_knockdown_times, <span class="fu">aes</span>(<span class="at">x=</span>Knockdown_time, <span class="at">y=</span>Drug)) <span class="sc">+</span> </span>
+<span id="cb8-2"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb8-2" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
+<span id="cb8-3"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb8-3" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">height=</span><span class="fl">0.25</span>) <span class="sc">+</span></span>
+<span id="cb8-4"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb8-4" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun=</span><span class="st">&quot;mean&quot;</span>, <span class="at">geom=</span><span class="st">&quot;point&quot;</span>, <span class="at">shape=</span><span class="dv">23</span>, <span class="at">fill=</span><span class="st">&quot;gray60&quot;</span>, <span class="at">size=</span><span class="dv">4</span>) <span class="sc">+</span> </span>
+<span id="cb8-5"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb8-5" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Time to Immobilization (min)&quot;</span>, <span class="at">y=</span><span class="st">&quot;Drug Treatment&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb8-6"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb8-6" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch2-8"></span>
 <img src="introStatModeling_files/figure-html/ch2-8-1.png" alt="Side-by-side Box-whiskers plots, with data overlayed jittered data, and treatement means (gray diamond), showing the distribution of 'knockdown' times for each of the three drug treatments, `A`, `B` and `C`. Overall we see immobilization times is highest in treatment `A`, followed by `B` and `C`. We Also note that variability appears greatest in treatment `A`, followed by `B` and `C`." width="70%" />
 <p class="caption">
-Figure 2.4: Side-by-side Box-whiskers plots, with data overlayed jittered data, and treatement means (gray diamond), showing the distribution of ‘knockdown’ times for each of the three drug treatments, <code>A</code>, <code>B</code> and <code>C</code>. Overall we see immobilization times is highest in treatment <code>A</code>, followed by <code>B</code> and <code>C</code>. We Also note that variability appears greatest in treatment <code>A</code>, followed by <code>B</code> and <code>C</code>.
+Figure 2.1: Side-by-side Box-whiskers plots, with data overlayed jittered data, and treatement means (gray diamond), showing the distribution of ‘knockdown’ times for each of the three drug treatments, <code>A</code>, <code>B</code> and <code>C</code>. Overall we see immobilization times is highest in treatment <code>A</code>, followed by <code>B</code> and <code>C</code>. We Also note that variability appears greatest in treatment <code>A</code>, followed by <code>B</code> and <code>C</code>.
 </p>
 </div>
 <p>Visually it appears the immobilization times under drug C seem to be noticeably lower on average than for the other two drugs.
 Also, we may suspect the variance of immobilization times is different between the three drugs.
 That is, the distributions of times for drugs <em>A</em> and <em>B</em> are more disperse than for drug <em>C</em>.</p>
-<p>To perform One-Way ANOVA we employ the <code>aov</code> function (for Analysis Of Variance).
-We use the <code>summary()</code> function to see its full output.</p>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb90-1" aria-hidden="true" tabindex="-1"></a>fit.drug <span class="ot">&lt;-</span> <span class="fu">aov</span>(Knockdown_time <span class="sc">~</span> Drug, <span class="at">data=</span>deer_knockdown_times)</span>
-<span id="cb90-2"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb90-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.drug)</span></code></pre></div>
-<pre><code>##             Df Sum Sq Mean Sq F value Pr(&gt;F)  
-## Drug         2    159    79.4    5.46   0.01 *
-## Residuals   27    393    14.6                 
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<p>We see One-Way ANOVA report a significant <span class="math inline">\(p\)</span>-value (<span class="math inline">\(p\)</span>-value of 0.0102) but we’ll soon see there are problems with this result.</p>
+<p>To perform One-Way ANOVA we employ the <code>aov</code> function (for Analysis Of Variance).</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb9-1" tabindex="-1"></a>fit.drug <span class="ot">&lt;-</span> <span class="fu">aov</span>(Knockdown_time <span class="sc">~</span> Drug, <span class="at">data=</span>deer_knockdown_times)</span></code></pre></div>
+<p>That’s it! The single line of code above fits the model described in <a href="introduction-to-statistical-modeling-and-designed-experiments.html#eq:onewayAnovaModel">(2.3)</a> with <span class="math inline">\(k=3\)</span> treatments corresponding to the three Drug types.</p>
+<p>Before proceeding with the analysis of the model output, we need to check the assumptions of our underlying model.</p>
 </div>
 </div>
-<div id="assumptionCheck" class="section level2" number="2.6">
-<h2><span class="header-section-number">2.6</span> Assumption Checking</h2>
-<p>Arguably the most important aspect in statistics is the assumptions made with the chosen statistical model.
+<div id="assumptionCheck" class="section level2 hasAnchor" number="2.5">
+<h2><span class="header-section-number">2.5</span> Model Assumptions &amp; Assessment<a href="introduction-to-statistical-modeling-and-designed-experiments.html#assumptionCheck" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Arguably the most important aspect in an analysis is the assumptions made with the chosen statistical model.
 In the field of statistics there are two types of assumptions made:</p>
 <ol style="list-style-type: decimal">
 <li>Assumptions about the systematic structure.</li>
 <li>Assumptions about the random variation.</li>
 </ol>
-<p>Most of the time, when referring to assumptions we are concerned about 2: Assumptions about the random variation.
-However, it is important to consider the assumptions on the structure.
-In all of our models/testing discussed above, we are assuming the response variable is a linear function on the predictor variable (consider <a href="introduction-to-statistical-modeling-and-designed-experiments.html#eq:twoSampleTtest">(2.2)</a>).
-Based on context, it is important to consider if a linear structure is appropriate.</p>
-<p>In this class, along with nearly all methods you learned in your Intro Stat course, we make the following assumptions about the underlying stochastic (<em>i.e.</em>, random) part of the response variable, <span class="math inline">\(\varepsilon\)</span>:</p>
+<p>Most of the time, when referring to “assumptions” we are concerned about 2: Assumptions about the random variation.
+However, it is important to consider the assumptions on the structure.</p>
+<div id="structural-assumptions" class="section level3 hasAnchor" number="2.5.1">
+<h3><span class="header-section-number">2.5.1</span> Structural Assumptions<a href="introduction-to-statistical-modeling-and-designed-experiments.html#structural-assumptions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In all of our models/testing discussed above, we are assuming the response variable is a linear function on the predictor variable(s) (consider <a href="introduction-to-statistical-modeling-and-designed-experiments.html#eq:twoSampleTtest">(2.2)</a> and <a href="introduction-to-statistical-modeling-and-designed-experiments.html#eq:onewayAnovaModel">(2.3)</a>, both are linear equations).
+This assumption becomes more important later in the course when discussing lintear regression.
+Here, since the model is looking at factor, or categorical treatments, as the inputs, the linear equation reduces to comparing the mean of each group.<br />
+Based on context, it is important to consider if this structure is appropriate.</p>
+</div>
+<div id="random-variation-assumptions" class="section level3 hasAnchor" number="2.5.2">
+<h3><span class="header-section-number">2.5.2</span> Random Variation Assumptions<a href="introduction-to-statistical-modeling-and-designed-experiments.html#random-variation-assumptions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In this class, along with nearly all methods you learned in your introductory statistics course, we make the following assumptions about the underlying random variation (<em>i.e.</em>, stochastic part) of the response variable, <span class="math inline">\(\varepsilon\)</span>:</p>
 <ul>
 <li>The <span class="math inline">\(\varepsilon_i\)</span> terms are independent.</li>
-<li>The variance of <span class="math inline">\(\varepsilon_i\)</span> is homogeneous; <em>i.e.</em>, <span class="math inline">\(Var(\epsilon_i)=\sigma^2\)</span> is constant for all <span class="math inline">\(i=1,\ldots,n\)</span>. This is sometimes known as being homoskedastic.</li>
+<li>The variance of <span class="math inline">\(\varepsilon_i\)</span> is homogeneous; <em>i.e.</em>, <span class="math inline">\(Var(\epsilon_i)=\sigma^2\)</span> is constant for all <span class="math inline">\(i=1,\ldots,n\)</span>. This is sometimes known as being homoskedastic or having “constant variance”.</li>
 <li>The <span class="math inline">\(\varepsilon_i\)</span> terms are Normally distributed.</li>
 </ul>
 <p>Collectively, the three assumptions simply state
 <span class="math display">\[\varepsilon_i \stackrel{iid}{\sim} N(0, \sigma^2), ~~\textrm{for variance}~\sigma^2\]</span></p>
 <p><strong>Important Note.</strong> In the above bullet points, the assumptions are listed in their order of importance.
-If you lack independence, <em>nearly all</em> statistical methods we will cover in this text are invalid.
-The constant variance assumption can be important but in many cases we can address it.
-Lastly, the Normality assumption tends to not be all that important except in small sample sizes and when the data is heavily skewed – we can also address it in many cases.</p>
-<div id="independence" class="section level3" number="2.6.1">
-<h3><span class="header-section-number">2.6.1</span> Independence</h3>
+If you lack independence, <em>nearly all</em> statistical methods we cover in this text are invalid.
+The constant variance assumption is important but in many cases violations of the assumption can be addressed.
+Lastly, the Normality assumption tends to not be all that important except in small sample sizes and when the data are heavily skewed – but we can also address issues with Normality in many cases.</p>
+<div id="independence" class="section level4 hasAnchor" number="2.5.2.1">
+<h4><span class="header-section-number">2.5.2.1</span> Independence<a href="introduction-to-statistical-modeling-and-designed-experiments.html#independence" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>In general, independence (or lack thereof) is the result of the sampling scheme employed during data collection.
 If you collect your data according to a well designed experiment or a simple random sampling scheme with one observation per subject, there is usually no reason to suspect you will have a problem.
-Data collected sequentially in time (<em>e.g.</em>, daily high temperatures or repeated measures on the same subject) will exhibit a phenomenon known as autocorrelation (or serial correlation) and is a major problem!
-Specialized methods are needed for this type of data (see Section <a href="advanced-designs.html#within-subject-designs">4.2</a>).</p>
+Data collected sequentially in time (<em>e.g.</em>, daily high temperatures or repeated measures on the same subject) will exhibit a phenomenon known as autocorrelation (also called serial correlation) and is a major problem!
+Specialized methods are needed for this type of data! We will briefly cover the idea of repeated measures in Section <a href="advanced-designs.html#within-subject-designs">4.2</a>, while a general treatment of autocorrelation is excluded from our work.</p>
 </div>
-<div id="constant-variance" class="section level3" number="2.6.2">
-<h3><span class="header-section-number">2.6.2</span> Constant Variance</h3>
-<p>To assess the constant variance assumption we typically consider two simple plots: a Residuals vs Fitted plot and Scale-Location plot as seen in Figure <a href="introduction-to-statistical-modeling-and-designed-experiments.html#fig:ch2-10">2.5</a> (code to generate the plot available below).</p>
+<div id="constant-variance" class="section level4 hasAnchor" number="2.5.2.2">
+<h4><span class="header-section-number">2.5.2.2</span> Constant Variance<a href="introduction-to-statistical-modeling-and-designed-experiments.html#constant-variance" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>To assess the constant variance assumption we typically consider two simple plots: the ‘Residuals vs Fitted’ plot and ‘Scale-Location’ plots as seen in Figure <a href="introduction-to-statistical-modeling-and-designed-experiments.html#fig:ch2-10">2.2</a> (code to generate the plot is provided below).</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch2-10"></span>
 <img src="introStatModeling_files/figure-html/ch2-10-1.png" alt="Residual diagnostic plots showing a *fanning* effect in the residuals vs fitted and increasing linear trend in the Scale-Location plot, thus suggesting the variance increases with the mean." width="70%" />
 <p class="caption">
-Figure 2.5: Residual diagnostic plots showing a <em>fanning</em> effect in the residuals vs fitted and increasing linear trend in the Scale-Location plot, thus suggesting the variance increases with the mean.
+Figure 2.2: Residual diagnostic plots showing a <em>fanning</em> effect in the residuals vs fitted and increasing linear trend in the Scale-Location plot, thus suggesting the variance increases with the mean.
 </p>
 </div>
-<p><strong>What is a residual?</strong></p>
-<p>Consider the baseline model <a href="introduction-to-statistical-modeling-and-designed-experiments.html#eq:baseModel">(2.1)</a>.
-We can estimate <span class="math inline">\(\mu\)</span> with <span class="math inline">\(\bar{Y}\)</span> and we would predict each observed <span class="math inline">\(Y_i\)</span> with <span class="math inline">\(\hat{Y}_i=\bar{Y}\)</span>.
-From there, we can approximate the random variation of the <span class="math inline">\(i^\mathrm{th}\)</span> observation <span class="math inline">\(\varepsilon_i\)</span> with <span class="math inline">\(e_i = Y_i - \hat{Y}_i = Y_i - \bar{Y}\)</span>.
-The values <span class="math inline">\(\hat{Y}_i\)</span> are known as the <em>fitted</em>, or <em>predicted</em>, values and <span class="math inline">\(e_j\)</span> as the sample <em>residuals</em>.</p>
-<p>In the case of the One-Way ANOVA model <a href="introduction-to-statistical-modeling-and-designed-experiments.html#eq:onewayAnovaModel">(2.3)</a>, we would calculate a different mean <span class="math inline">\(\bar{Y}_J\)</span> for each of the <span class="math inline">\(k\)</span> treatments and each <span class="math inline">\(Y_{ji}\)</span> would be predicted by the appropriate <span class="math inline">\(\bar{Y}_j\)</span> for <span class="math inline">\(j=1,\ldots,k\)</span>.
-The sample residuals would be found by <span class="math inline">\(e_{ji} = Y_{ji} - \hat{Y}_{ji} = Y_{ji} - \bar{Y}_j\)</span>.</p>
+<p>Before reading these plots, we need to answer two questions: <strong>What is a residual?</strong> <em>and</em> <strong>What is a fitted value?</strong></p>
+<p>Consider the baseline model <a href="introduction-to-statistical-modeling-and-designed-experiments.html#eq:baseModel">(2.1)</a>, <span class="math inline">\(Y = \mu + \varepsilon\)</span>.
+We can estimate <span class="math inline">\(\mu\)</span> with <span class="math inline">\(\bar{y}\)</span>, then we could <em>predict</em> each unobserved <span class="math inline">\(Y_i\)</span> with <span class="math inline">\(\hat{Y}_i=\bar{y}\)</span>.
+From there, we can approximate the random noise of the <span class="math inline">\(i^\mathrm{th}\)</span> observation <span class="math inline">\(\varepsilon_i\)</span> with <span class="math inline">\(e_i = Y_i - \hat{Y}_i = Y_i - \bar{y}\)</span>.
+The values <span class="math inline">\(\hat{Y}_i\)</span> are known as the <strong>fitted</strong>, or <em>predicted</em>, values and the <span class="math inline">\(e_i\)</span> terms are the sample <strong>residuals</strong>.</p>
+<p>In the case of the One-Way ANOVA model <a href="introduction-to-statistical-modeling-and-designed-experiments.html#eq:onewayAnovaModel">(2.3)</a>, we would calculate a different mean <span class="math inline">\(\bar{y}_J\)</span> for each of the <span class="math inline">\(k\)</span> treatments and each <span class="math inline">\(Y_{ji}\)</span> would be predicted by the appropriate <span class="math inline">\(\bar{y}_j\)</span> for <span class="math inline">\(j=1,\ldots,k\)</span>.
+The sample residuals would be found by <span class="math inline">\(e_{ji} = Y_{ji} - \hat{Y}_{ji} = Y_{ji} - \bar{y}_j\)</span>.</p>
 <p><strong>How to read these plots?</strong></p>
-<p>A residuals versus fitted plot is provided in the left panel of Figure <a href="introduction-to-statistical-modeling-and-designed-experiments.html#fig:ch2-10">2.5</a>.
+<p>A residuals versus fitted plot is provided in the left panel of Figure <a href="introduction-to-statistical-modeling-and-designed-experiments.html#fig:ch2-10">2.2</a>.
 If all is well, you should see fairly uniform (“constant”) spread of the points in the vertical direction and the scatter should be symmetric vertically around zero.
-The vertical spread here looks like it might be expanding as the fitted values increase (fanning effect), suggesting that there may be non-constant error variance.</p>
-<p>An attempt at refining the residuals vs fitted plot is given in the plot on the right in Figure <a href="introduction-to-statistical-modeling-and-designed-experiments.html#fig:ch2-10">2.5</a>, called the Scale-Location plot.
+The vertical spread here looks like it might be expanding as the fitted values increase (look at the dots from left-to-right, we see a ‘fanning’ effect where the vertical spread for fitted values around 5 is more narrow, than the spread at fitted values of 9, and the largest is at the fitted values near 10.5), suggesting that there may be non-constant error variance.</p>
+<p><strong>Note:</strong> In the case of ANOVA, you will also see <em>stacked</em> dots, or vertical stratification in the Residuals vs Fitted plot. This is an artifact of the fitted values – all observations in the same treatment are predicted with the same value (<span class="math inline">\(\bar{y}_j\)</span>), so you should expect to see this stratification. Also, when looking at ANOVA, we can generally <em>ignore</em> the plotted trend line (blue line in the left panel above). It will be more useful when assessing linear regression.</p>
+<p>An attempt at refining the residuals vs fitted plot is given in the plot on the right in Figure <a href="introduction-to-statistical-modeling-and-designed-experiments.html#fig:ch2-10">2.2</a>, called the Scale-Location plot.
 The difference now is that instead of plotting the raw residuals <span class="math inline">\(e_{ij}\)</span> on the vertical axis, R first standardizes them (so you can better check for extreme cases), takes their absolute value (to double the resolution in the plot) and then takes their square root (to remove skew that sometimes affects these plots).
-R then adds a trend line through the points: if the constant variance assumption is OK, this trend line should be roughly horizontal.
-Here, you can see it trending upward, so we may have a constant variance problem.</p>
-<p>Using the absolute values of the residuals is a good refinement.
-The reason is because we really do not care if a residual is positive or negative: all we are looking for is if the scatter is uniform across the plot.
-Thus, by looking at the magnitude of the residuals only by taking absolute values (and not their direction), we are actually improving the resolution of the information that the plot contains in addressing constant variance.</p>
+R then adds a trend line through the points: if the constant variance assumption is reasonable, this trend line should be roughly horizontal.
+Here, you can see it trending upward, so we likely have a variance that is increasing with the predicted values (<em>i.e.</em>, we not have constant variance).</p>
+<p><strong>Note:</strong> Using the absolute values of the residuals in the Scale-Location plot is often a good refinement.
+The reason being we typically do not care if a residual is positive or negative: all we are looking for is if the scatter is uniform across the plot.
+Thus, by looking at the magnitude of the residuals only (and not their direction), we are actually improving the resolution of the information that the plot contains in addressing constant variance.
+Also, like with the Residuals vs Fitted plot, we will see vertical stratifications since our fitted values are the sample mean within a treatment group.</p>
 </div>
-<div id="checking-normality" class="section level3" number="2.6.3">
-<h3><span class="header-section-number">2.6.3</span> Checking Normality</h3>
+<div id="checking-normality" class="section level4 hasAnchor" number="2.5.2.3">
+<h4><span class="header-section-number">2.5.2.3</span> Checking Normality<a href="introduction-to-statistical-modeling-and-designed-experiments.html#checking-normality" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>We typically make this assessment with a Normal quantile-quantile (Q-Q) plot.</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch2-11"></span>
 <img src="introStatModeling_files/figure-html/ch2-11-1.png" alt="Normal Q-Q plot demonstrating the residuals may deviation from the Normality assumption." width="65%" />
 <p class="caption">
-Figure 2.6: Normal Q-Q plot demonstrating the residuals may deviation from the Normality assumption.
+Figure 2.3: Normal Q-Q plot demonstrating the residuals may deviation from the Normality assumption.
 </p>
 </div>
 <p>In a normal Q-Q plot, the observed sample values (the “sample quantiles”) are plotted against the corresponding quantiles from a reference normal distribution (the “theoretical quantiles”).
-If the parent population is normally distributed, then the sample values should reasonably match up one-to-one with normal reference quantiles, resulting in a plot of points that line up in a linear (straight line) fashion.</p>
-<p>A normal Q-Q plot of the residuals is presented in Figure <a href="introduction-to-statistical-modeling-and-designed-experiments.html#fig:ch2-11">2.6</a>.
+If the parent population is normally distributed, then the sample values should reasonably match up one-to-one with normal reference quantiles, resulting in a plot of points that line up in a linear “45-degree” fashion.</p>
+<p>A normal Q-Q plot of the residuals is presented in Figure <a href="introduction-to-statistical-modeling-and-designed-experiments.html#fig:ch2-11">2.3</a>.
 A common <em>tool</em> to analyze these plots is sometimes known as the “fat pencil” test.
-Consider the thick pencils children are given when learning to write – if you lay that pencil on the plotted line, if all the points are covered by the pencil the data is approximately normally distributed.</p>
-<p>In Figure <a href="introduction-to-statistical-modeling-and-designed-experiments.html#fig:ch2-11">2.6</a> there is some deviation from the line (observations 13 and 7).
+Consider the thick pencils children are given when learning to write – lay that pencil on the plotted line, if all the points are covered by the pencil then the data is approximately normally distributed.</p>
+<p>In Figure <a href="introduction-to-statistical-modeling-and-designed-experiments.html#fig:ch2-11">2.3</a> there is some deviation from the line (observations 13 and 7).
 Coupled with the issues with variance outlined above, we may have evidence to suggest the normality assumption is not met.</p>
 <p><strong>Note:</strong> It is quite common for violations of constant variance and normality to go hand-in-hand.
-That is, if there are concerns about one, it is common for there to be concerns regarding the other.</p>
+That is, if there are concerns about one, it is likely there will be concerns regarding the other.</p>
 </div>
-<div id="code-to-check-assumptions" class="section level3" number="2.6.4">
-<h3><span class="header-section-number">2.6.4</span> Code to check assumptions</h3>
-<p>The code to generate the above plots can be achieved via the <code>autoplot</code> function when including the <code>ggfortify</code> library <span class="citation">(<a href="#ref-R-ggfortify" role="doc-biblioref">Horikoshi et al., 2019</a>)</span>.
-The <code>autoplot</code> function provides 4 plots by default seen in Figure <a href="introduction-to-statistical-modeling-and-designed-experiments.html#fig:ch2-12">2.7</a> (note: we will discuss the Constant Leverage plot in Section <a href="model-building-considerations.html#detecting-and-dealing-with-unusual-observations">8.6</a>).</p>
-<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggfortify)</span>
-<span id="cb92-2"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb92-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(fit.drug)</span></code></pre></div>
+</div>
+<div id="code-to-check-assumptions" class="section level3 hasAnchor" number="2.5.3">
+<h3><span class="header-section-number">2.5.3</span> Code to check assumptions<a href="introduction-to-statistical-modeling-and-designed-experiments.html#code-to-check-assumptions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The code to generate the above plots can be achieved via the <code>autoplot</code> function when including the <code>ggfortify</code> library <span class="citation">(<a href="#ref-R-ggfortify">Horikoshi et al., 2019</a>)</span>.
+The <code>autoplot</code> function on the fitted model provides 4 plots by default as seen in Figure <a href="introduction-to-statistical-modeling-and-designed-experiments.html#fig:ch2-12">2.4</a> (note: we will discuss the Constant Leverage plot in Section <a href="model-building-considerations.html#detecting-and-dealing-with-unusual-observations">8.6</a>).</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb10-1" tabindex="-1"></a><span class="fu">library</span>(ggfortify)</span>
+<span id="cb10-2"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb10-2" tabindex="-1"></a><span class="fu">autoplot</span>(fit.drug)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch2-12"></span>
 <img src="introStatModeling_files/figure-html/ch2-12-1.png" alt="Residual plots for the One-Way ANOVA studying the effect of different drugs on immobilization times - Top-left a Residuals vs Fitted Plot; Top-right a Normal Q-Q plot of the residuals; Bottom-left the Scale-Location plot; and Bottom-right a Residuals vs Leverage plot." width="80%" />
 <p class="caption">
-Figure 2.7: Residual plots for the One-Way ANOVA studying the effect of different drugs on immobilization times - Top-left a Residuals vs Fitted Plot; Top-right a Normal Q-Q plot of the residuals; Bottom-left the Scale-Location plot; and Bottom-right a Residuals vs Leverage plot.
+Figure 2.4: Residual plots for the One-Way ANOVA studying the effect of different drugs on immobilization times - Top-left a Residuals vs Fitted Plot; Top-right a Normal Q-Q plot of the residuals; Bottom-left the Scale-Location plot; and Bottom-right a Residuals vs Leverage plot.
 </p>
 </div>
 </div>
-<div id="transforming-your-response" class="section level3" number="2.6.5">
-<h3><span class="header-section-number">2.6.5</span> Transforming your response</h3>
+</div>
+<div id="transforming-your-response" class="section level2 hasAnchor" number="2.6">
+<h2><span class="header-section-number">2.6</span> Transforming your response<a href="introduction-to-statistical-modeling-and-designed-experiments.html#transforming-your-response" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In cases where we have violations of our underlying assumptions, a common remedy is to <strong>transform the response variable</strong>.</p>
 <p>We have evidence from the above plots that the variance appears to be increasing with the response (determined by assessing the constant variance assumption) and that there may be some violations to normality.
 One way to typically address this issue is to transform the response variable.
-We will go into more details later but common transformations include <span class="math inline">\(Y^*=log(Y)\)</span>, <span class="math inline">\(Y^*=\sqrt{Y}\)</span> and <span class="math inline">\(Y^*=1/Y\)</span>.
+We will go into more details later but common transformations include <span class="math inline">\(Y^*=log_{10}(Y)\)</span>, <span class="math inline">\(Y^*=\sqrt{Y}\)</span> and <span class="math inline">\(Y^*=1/Y\)</span>.
 Here we will use a logarithmic as it is fairly common.
-Later in the class we will describe the other transformations in more detail.
-We can achieve this in R with the following which provides the residuals plots in Figure <a href="introduction-to-statistical-modeling-and-designed-experiments.html#fig:ch2-13">2.8</a>.</p>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb93-1" aria-hidden="true" tabindex="-1"></a>fit.log.drug <span class="ot">&lt;-</span> <span class="fu">aov</span>(<span class="fu">log</span>(Knockdown_time) <span class="sc">~</span> Drug, <span class="at">data=</span>deer_knockdown_times)</span>
-<span id="cb93-2"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb93-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(fit.log.drug)</span></code></pre></div>
+Later in the text we will describe other transformations in more detail.
+We can achieve this in R with the following which provides the residuals plots in Figure <a href="introduction-to-statistical-modeling-and-designed-experiments.html#fig:ch2-13">2.5</a>.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb11-1" tabindex="-1"></a>fit.log.drug <span class="ot">&lt;-</span> <span class="fu">aov</span>(<span class="fu">log10</span>(Knockdown_time) <span class="sc">~</span> Drug, <span class="at">data=</span>deer_knockdown_times)</span>
+<span id="cb11-2"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb11-2" tabindex="-1"></a><span class="fu">autoplot</span>(fit.log.drug)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch2-13"></span>
 <img src="introStatModeling_files/figure-html/ch2-13-1.png" alt="Residual diagnostic plots when the response variable is the logarithm of the immobilization time. Here the heteroskedasticity and non-normality in the original model has been improved, albeit not entirely mitigated, with some minor fanning in the residuals vs fitted plot." width="80%" />
 <p class="caption">
-Figure 2.8: Residual diagnostic plots when the response variable is the logarithm of the immobilization time. Here the heteroskedasticity and non-normality in the original model has been improved, albeit not entirely mitigated, with some minor fanning in the residuals vs fitted plot.
+Figure 2.5: Residual diagnostic plots when the response variable is the logarithm of the immobilization time. Here the heteroskedasticity and non-normality in the original model has been improved, albeit not entirely mitigated, with some minor fanning in the residuals vs fitted plot.
 </p>
 </div>
-<p>This is a bit better but other transformations can be considered.
-For now we proceed with the logarithmic transformation.</p>
-<p>The test comparing the three drug population means (on a log scale) is given via the <code>summary()</code> command:</p>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.log.drug)</span></code></pre></div>
-<pre><code>##             Df Sum Sq Mean Sq F value Pr(&gt;F)   
-## Drug         2   2.84   1.420    8.22 0.0016 **
-## Residuals   27   4.67   0.173                  
+<p>Note the improvement in the Normal Q-Q plot – the observed quantiles closely match the theoretical quantiles. The Scale-Location plot shows that the issues with a changing variance have largely been addressed as we see a nearly horizontal line. In the Residuals vs Fitted plot the violation in constant variance has improved although some indication the vertical spread is increasing but is present.</p>
+<p>Overall, the logarithmic transformation has improved our model assumptions.
+We can try other transformations but a <em>perfect transformation</em> is unlikely to exist.
+When a variance increases with the fitted value, a logarithm on the response tends to useful (and fairly interpretable). Later in the text we will discuss another approach to transforming the response, but for now we proceed with the logarithmic transformation.</p>
+<p>Although logarithms tend to be somewhat easy to interpret, we should note that our model has changed. Specifically, if you consider equation <a href="introduction-to-statistical-modeling-and-designed-experiments.html#eq:onewayAnovaModel">(2.3)</a> with regard to our working example, <span class="math inline">\(Y\)</span> is the knockdown time but we fit the ANOVA model on <span class="math inline">\(\log_{10}(Y)\)</span>. Using the ideas of <a href="introduction-to-statistical-modeling-and-designed-experiments.html#eq:twoSampleTtest">(2.2)</a>, the model can be rewritten as
+<span class="math display">\[\log_{10}(Y_{i}) = \mu_A + \delta_B X_{Bi} + \delta_C X_{Ci} + \varepsilon_{ji}\]</span>
+where <span class="math inline">\(\mu_A\)</span> is the mean of group <span class="math inline">\(A\)</span>. <span class="math inline">\(X_{Bi}\)</span> takes on the value 1 if the <span class="math inline">\(i^\mathrm{th}\)</span> observation is in group <span class="math inline">\(B\)</span>, otherwise it is zero. Likewise <span class="math inline">\(X_{Ci}\)</span> for group <span class="math inline">\(C\)</span>. The value <span class="math inline">\(\delta_B\)</span> measures how the mean of group <span class="math inline">\(B\)</span> differs from <span class="math inline">\(A\)</span>, and <span class="math inline">\(\delta_C\)</span> how group <span class="math inline">\(C\)</span> differs from <span class="math inline">\(A\)</span>.</p>
+<p>If we were to “un”-log the above model to the original units by raising each side to the power of 10, we get.
+<span class="math display">\[10^{\log_{10}(Y_i)} = Y_i = 10^{\mu_A + \delta_B X_{Bi} + \delta_C X_{Ci} + \varepsilon_{ji}} = 10^{\mu_A} \times 10^{\delta_B X_{Bi}}\times 10^{\delta_C X_{Ci}} \times 10^{\varepsilon_{ji}}\]</span>
+by properties of logarithms and power rules. So technically speaking, in terms of the original units, we have fit a multiplicative model.</p>
+<p>Interpretation of the multiplicative model is a bit more nuanced than that of a linear model. First, we need to recall a few properties of logarithms and powers from an Algebra course.</p>
+<ul>
+<li><span class="math inline">\(\log_{10}(1) = 0\)</span>.</li>
+<li>For an <span class="math inline">\(x\)</span> such that <span class="math inline">\(0 &lt; x &lt; 1\)</span>, <span class="math inline">\(\log_{10}(x) &lt; 0\)</span>.</li>
+<li>For an <span class="math inline">\(x&gt;1\)</span>, <span class="math inline">\(\log_{10}(x) &gt; 0\)</span>.</li>
+<li><span class="math inline">\(10^0 = 1\)</span></li>
+<li>For an <span class="math inline">\(x &lt; 0\)</span>, then <span class="math inline">\(0 &lt; 10^x &lt; 1\)</span>.</li>
+<li>For an <span class="math inline">\(x &gt; 0\)</span>, then <span class="math inline">\(10^x &gt; 1\)</span></li>
+</ul>
+</div>
+<div id="performing-anova" class="section level2 hasAnchor" number="2.7">
+<h2><span class="header-section-number">2.7</span> Performing ANOVA<a href="introduction-to-statistical-modeling-and-designed-experiments.html#performing-anova" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In the above, we fit a initial model, assessed its assumptions, transformed the response variable and fit the model again. Specifically, the following code was used.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb12-1" tabindex="-1"></a><span class="co"># Fit the model with the original response</span></span>
+<span id="cb12-2"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb12-2" tabindex="-1"></a>fit.drug <span class="ot">&lt;-</span> <span class="fu">aov</span>(Knockdown_time <span class="sc">~</span> Drug, <span class="at">data=</span>deer_knockdown_times)</span>
+<span id="cb12-3"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb12-3" tabindex="-1"></a><span class="co"># Check model assumptions</span></span>
+<span id="cb12-4"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb12-4" tabindex="-1"></a><span class="fu">autoplot</span>(fit.drug)</span>
+<span id="cb12-5"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb12-5" tabindex="-1"></a><span class="co"># We determined a transformation is warranted due to issues</span></span>
+<span id="cb12-6"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb12-6" tabindex="-1"></a><span class="co">#   with the constant variance and normality assumption</span></span>
+<span id="cb12-7"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb12-7" tabindex="-1"></a>fit.log.drug <span class="ot">&lt;-</span> <span class="fu">aov</span>(<span class="fu">log10</span>(Knockdown_time) <span class="sc">~</span> Drug, <span class="at">data=</span>deer_knockdown_times)</span>
+<span id="cb12-8"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb12-8" tabindex="-1"></a><span class="fu">autoplot</span>(fit.log.drug)</span>
+<span id="cb12-9"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb12-9" tabindex="-1"></a><span class="co"># Model assumptions looked acceptable.</span></span></code></pre></div>
+<p>Now that we have assessed that we reasonably meet the underlying assumption, we can proceed to perform the analysis. The test comparing the three drug population means (on a log scale) is provided via the <code>summary()</code> command:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb13-1" tabindex="-1"></a><span class="fu">summary</span>(fit.log.drug)</span></code></pre></div>
+<pre><code>##             Df Sum Sq Mean Sq F value  Pr(&gt;F)   
+## Drug         2 0.5357 0.26786   8.219 0.00163 **
+## Residuals   27 0.8800 0.03259                   
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>The result is significant (<span class="math inline">\(F\)</span> = 8.219, <span class="math inline">\(\textrm{df}_1\)</span> = 2, <span class="math inline">\(\textrm{df}_2\)</span> = 27, <span class="math inline">\(p\)</span>-value = 0.00163).
 Thus, we could conclude that at least two of the drugs produce significantly different log-mean immobilization times.</p>
-<p><strong>Math Tangent</strong>: Note that the logarithm function is a monotone increasing function. So if <span class="math inline">\(a&gt;b\)</span> then <span class="math inline">\(\log(a)&gt;\log(b)\)</span>. Thus, we can infer that the mean immobilzation times for the three drug treatments also differs.</p>
-<p>Of course, what remains to be seen is which pairs of drugs produce different log-mean immobilization times.
+<p><strong>Math Tangent</strong>: Note that the logarithm function is a monotone increasing function. So if <span class="math inline">\(a&gt;b\)</span> then <span class="math inline">\(\log(a)&gt;\log(b)\)</span>. Thus, we can infer that the mean immobilization times for the three drug treatments also differs. Also, recall from an algebra course that the base of the logarithm does not affect the overall behavior of the function (you can easily convert from one base to another with the ‘change of base formula’). For this reason, we recommend you use a base-10 logarithm (coded in R with <code>log10()</code>) as it is commonly used in most scientific fields and is fairly interpretable.</p>
+<p><strong>Conclusions of ANOVA</strong></p>
+<p>The results of the simple One-Way ANOVA tells us that the logarithm of knockdown time differs among the three drug treatments; essentially it tells us that the null hypothesis <span class="math inline">\(H_0:\ \mu_A = \mu_B = \mu_C\)</span> is rejected in favor of an alternative.
+Of course, what remains to be seen is which pairs of drugs produce different log-mean immobilization times.
 For that, we will need to look at techniques known as multiple comparison procedures.</p>
 </div>
-</div>
-<div id="follow-up-procedures-multiple-comparisons" class="section level2" number="2.7">
-<h2><span class="header-section-number">2.7</span> Follow-up procedures – Multiple Comparisons</h2>
-<p>When there is no significant difference detected among treatment means, we can safely conclude that the treatment had no effect on the mean response that was any larger than the type of change we might expect just due to random chance.
-In such a case, the analysis is essentially over, except that we might want to assess the size of the observed treatment differences for descriptive purposes.</p>
-<p>However, if significant differences are detected among the treatments (as in the example above), the ANOVA <span class="math inline">\(F\)</span>-test does not inform you where the differences lie.
-In such a situation, a follow-up procedure known as a multiple comparison procedure is warranted for seeking out pairwise mean differences where they exist.</p>
-<p>There are numerous multiple comparison methods in existence, and they all have certain advantages and disadvantages, and some are designed for specific sorts of follow-up comparisons.
-Here we will discuss two procedures for handling the following scenarios:</p>
+<div id="follow-up-procedures-multiple-comparisons" class="section level2 hasAnchor" number="2.8">
+<h2><span class="header-section-number">2.8</span> Follow-up procedures – Multiple Comparisons<a href="introduction-to-statistical-modeling-and-designed-experiments.html#follow-up-procedures-multiple-comparisons" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>When there is no significant difference detected among treatment means, we can safely conclude that the treatment had no effect on the mean response. This effectively says that any differences in means were no larger than the type of change we might expect just due to random chance. In such a case, the analysis is essentially over, except that we might want to assess the size of the observed treatment differences for descriptive purposes.</p>
+<p>However, if significant differences are detected among the treatments (as in the knockdown times example above), the ANOVA <span class="math inline">\(F\)</span>-test does not inform you where the differences lie.
+In such a situation, a follow-up procedure known as a multiple comparison procedure is necessary to seek out pairwise mean differences.</p>
+<p>There are numerous multiple comparison methods in existence, and they all have certain advantages and disadvantages.
+Some are designed for specific follow-up comparisons and are customizable (known as <em>contrasts</em>).
+Here we will discuss procedures for handling the following scenarios:</p>
 <ol style="list-style-type: decimal">
 <li>All possible pairwise comparisons</li>
 <li>All comparisons versus a control group</li>
@@ -1124,120 +1036,135 @@ A~\textrm{vs.}~C  \\
 A~\textrm{vs.}~D  \\
 A~\textrm{vs.}~E  \\
 \end{array}\]</span></p>
-<p>So what is the big deal?
-Well, if you find yourself in a multiple comparison situation, it is because you have declared that at least two groups differ based on the result of a single hypothesis test (the <span class="math inline">\(F\)</span>-test).
-For that test, you used a specific criterion to make the decision (probably <span class="math inline">\(p\)</span>-value &lt; 0.05).</p>
-<p>But to tease out where the differences are, you now need to run multiple tests under the same “umbrella.”
+<p>Now, you may say to yourself, “So what is the big deal? I’ll just do 10 two-sample <span class="math inline">\(t\)</span>-test!”</p>
+<p>Well, if you find yourself in a multiple comparison situation, it is because you have declared that at least two groups differ based on the result of a single hypothesis test (the <span class="math inline">\(F\)</span>-test). For that test, you used a specific criterion to make the decision (probably <span class="math inline">\(p\)</span>-value &lt; 0.05). You performed the analysis with an accepted false positive rate, known as the Type I error rate, or <span class="math inline">\(\alpha\)</span>.</p>
+<p>But to tease out where the differences are, you now need to run multiple tests under the same “umbrella”.
 That gives rise to something known as the multiple testing problem.
-The problem is an increase in the false positive rate (also known as Type I error rate) that occurs when statistical tests are used repeatedly.</p>
-<p><strong>Multiple testing problem</strong>. If <span class="math inline">\(m\)</span> independent comparisons are made, each using a Type I error rate of <span class="math inline">\(\alpha_{PCER}\)</span>, then the family-wise (overall) Type I error rate for all comparisons considered simultaneously is given by
-<span class="math display">\[\alpha_{FWER} = 1 -  (1 - \alpha_{PCER})^m.\]</span></p>
-<p><strong>Illustration: Coin flips.</strong> Suppose that we declare that a coin is biased if in 10 flips it landed heads at least 9 times.
+The problem is an increase in the false positive rate (the Type I error rate) that occurs when statistical tests are used repeatedly.</p>
+<p><strong>Multiple testing problem.</strong></p>
+<p>If <span class="math inline">\(m\)</span> independent comparisons are made, each using a Type I error rate of <span class="math inline">\(\alpha\)</span>, then the family-wise (overall) Type I error rate (FWER) for all comparisons considered simultaneously is given by
+<span class="math display">\[\alpha_{FWER} = 1 -  (1 - \alpha)^m.\]</span></p>
+<p><strong>Illustration: Coin flips.</strong></p>
+<p>Suppose that we declare that a coin is biased if in 10 flips it landed heads at least 9 times.
 Indeed, if one assumes as a null hypothesis that the coin is fair, then it can be shown that the probability that a fair coin would come up heads at least 9 out of 10 times is 0.0107.
-This is relatively unlikely, and under usual statistical criteria such as “reject <span class="math inline">\(H_0\)</span> if <span class="math inline">\(p\)</span>-value &lt; 0.05,” one would declare that the null hypothesis should be rejected — <em>i.e.</em>, declare the coin is unfair.</p>
-<p>A multiple testing problem arises if one wanted to use this test (which is appropriate for testing the fairness of a <em>single</em> coin) to test the fairness of many coins.
-Now, imagine if you were to test 100 coins by this method.
-Given that the probability of a fair coin coming up 9 or 10 heads in 10 flips is 0.0107, one would expect that when flipping 100 coins ten times each, to see a particular (<em>i.e.</em>, pre-selected) coin come up heads 9 or 10 times would still be very unlikely, but seeing <em>some</em> coin (as in <em>any</em> of the 100 coins) behave that way, without concern for which one, would be more likely than not.
-In fact, the likelihood that all 100 fair coins are identified as fair by this criterion is <span class="math inline">\((1 - 0.0107)^{100} \approx 0.34\)</span>.
-Therefore the application of a “single-test coin-fairness criterion” to multiple comparisons would more likely than not <strong>falsely identify</strong> <strong>at least one fair coin as unfair!</strong></p>
-<p>But alas, multiple testing is a reality and a natural follow-up procedure to ANOVA.
+This is relatively unlikely, and under usual statistical criteria such as “reject <span class="math inline">\(H_0\)</span> if <span class="math inline">\(p\)</span>-value &lt; 0.05”, one would declare that the null hypothesis should be rejected — <em>i.e.</em>, declare the coin is unfair.</p>
+<p>A multiple testing problem arises if someone wanted to use this criteria (which is appropriate for testing the fairness of a <em>single</em> coin) to test the fairness of many coins.
+So, imagine you were to test 100 coins using this method.
+For any particular coin (<em>i.e.</em>, some pre-selected coin), we would expect the likelihood of it flipping heads 9 or 10 times to be relatively small (in fact, it would be with probability 0.0107). However, seeing <em>some</em> coin (as in <em>any</em> of the 100 coins) behave that way, without concern for which one, would be more likely.
+In fact, the probability that all 100 fair coins are identified as fair by this criterion is <span class="math inline">\((1 - 0.0107)^{100} \approx 0.34\)</span>. This suggest, even if all 100 coins were in fact fair, the probably some coin is incorrectly flagged as unfair is approximately 66%.
+Therefore the application of a “single coin fairness criterion” to multiple comparisons would more likely than not <strong>falsely identify</strong> <strong>at least one fair coin as unfair!</strong></p>
+<p>The above illustration may seem contrived, but multiple testing is a reality and a natural follow-up procedure to ANOVA.
 To address the problem, many multiple comparison procedures have been developed that help control the accumulation of the false positive rate.
 Some methods perform better than others, but common to all of them is making adjustments to <span class="math inline">\(p\)</span>-values or CIs based upon how many comparisons are being made.
-Multiple comparisons in an ANOVA framework can be performed using the add-on R package <code>emmeans</code> <span class="citation">(<a href="#ref-R-emmeans" role="doc-biblioref">Lenth, 2019</a>)</span>.
+Multiple comparisons in an ANOVA framework can be performed using the add-on R package <code>emmeans</code> <span class="citation">(<a href="#ref-R-emmeans">Lenth, 2019</a>)</span>.
+The package <code>emmeans</code> is quite powerful. We only demonstrate a few pieces of its functionality here, for those interested in a more in depth look, we suggest checking out the <a href="https://rvlenth.github.io/emmeans/index.html">emmeans website</a>.
 We will focus on two useful methods: Tukey’s HSD and Dunnett’s.</p>
-<div id="tukeys-hsd-method" class="section level3" number="2.7.1">
-<h3><span class="header-section-number">2.7.1</span> Tukey’s HSD method</h3>
-<p>One of the more widely used methods is attributable to statistician John Tukey (creator of the Box-Whiskers plot and credited with creating the word “bit”).
-It is sometimes referred to as Tukey’s Honestly Significant Difference method (honestly!).
+<div id="tukeys-hsd-method" class="section level3 hasAnchor" number="2.8.1">
+<h3><span class="header-section-number">2.8.1</span> Tukey’s HSD method<a href="introduction-to-statistical-modeling-and-designed-experiments.html#tukeys-hsd-method" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>One of the more widely used methods is attributed to statistician John Tukey (creator of the Box-Whiskers plot and credited with creating the word “bit”).
+It is referred to as Tukey’s Honestly Significant Difference method (honestly!).
 It has the advantage of controlling the Type I error rate when performing all possible pairwise comparisons.
-First we load the library and then run our fitted model <code>fit.log.drug</code> through the <code>emmeans()</code> function.
-Then we tell it to do a “pairwise” comparison via the <code>contrast()</code> function.</p>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span>
-<span id="cb96-2"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb96-2" aria-hidden="true" tabindex="-1"></a>drug.mc <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(fit.log.drug, <span class="st">&quot;Drug&quot;</span>)</span>
-<span id="cb96-3"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb96-3" aria-hidden="true" tabindex="-1"></a><span class="fu">contrast</span>(drug.mc, <span class="st">&quot;pairwise&quot;</span>)</span></code></pre></div>
-<pre><code>##  contrast estimate    SE df t.ratio p.value
-##  A - B      0.0754 0.186 27   0.406  0.9136
-##  A - C      0.6872 0.186 27   3.696  0.0027
-##  B - C      0.6117 0.186 27   3.291  0.0076
+First we load the library and then run our fitted model <code>fit.log.drug</code> through the <code>emmeans()</code> function and provide it a formula to inform how we wish to do the comparisons. In this case the formula is simple since we only have a single factor input <code>~ Drug</code>. Lastly, to do a “pairwise” comparison via the <code>contrast()</code> function.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb15-1" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span></code></pre></div>
+<pre><code>## Warning: package &#39;emmeans&#39; was built under R version 4.4.3</code></pre>
+<pre><code>## Welcome to emmeans.
+## Caution: You lose important information if you filter this package&#39;s results.
+## See &#39;? untidy&#39;</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb18-1" tabindex="-1"></a>drug.mc <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(fit.log.drug, <span class="sc">~</span> Drug)</span>
+<span id="cb18-2"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb18-2" tabindex="-1"></a><span class="fu">contrast</span>(drug.mc, <span class="st">&quot;pairwise&quot;</span>)</span></code></pre></div>
+<pre><code>##  contrast estimate     SE df t.ratio p.value
+##  A - B      0.0328 0.0807 27   0.406  0.9136
+##  A - C      0.2984 0.0807 27   3.696  0.0027
+##  B - C      0.2657 0.0807 27   3.291  0.0076
 ## 
-## Results are given on the log (not the response) scale. 
+## Results are given on the log10 (not the response) scale. 
 ## P value adjustment: tukey method for comparing a family of 3 estimates</code></pre>
 <p>The significant differences are what we expected based on our earlier EDA: drug <em>C</em> is significantly different in terms of log-mean immobilization time as compared to the other two drugs.
-This is borne out from the Tukey-adjusted <span class="math inline">\(p\)</span>-values of 0.0027 (when comparing drugs <em>A</em> and <em>C</em>) and 0.0076 (when comparing drugs <em>B</em> and <em>C</em>). <em>B</em> and <em>A</em> are not significantly different.
-The <span class="math inline">\(p\)</span>-values in this output have been adjusted, so we can just compare them to our usual 0.05.</p>
+This is dertermined from the Tukey-adjusted <span class="math inline">\(p\)</span>-values of 0.0027 (when comparing drugs <em>A</em> and <em>C</em>) and 0.0076 (when comparing drugs <em>B</em> and <em>C</em>). <em>B</em> and <em>A</em> are not significantly different (<span class="math inline">\(p\)</span>-value of 0.9136).
+The <span class="math inline">\(p\)</span>-values in this output have been adjusted for performing 3 comparisons, so we can just compare them to our usual 0.05.</p>
 <p>We can also obtain simultaneous 95% confidence intervals for the true mean differences due to each drug pairing using the <code>confint()</code> function on our <code>contrast</code> of an <code>emmeans</code> object:</p>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(<span class="fu">contrast</span>(drug.mc, <span class="st">&quot;pairwise&quot;</span>))</span></code></pre></div>
-<pre><code>##  contrast estimate    SE df lower.CL upper.CL
-##  A - B      0.0754 0.186 27   -0.386    0.536
-##  A - C      0.6872 0.186 27    0.226    1.148
-##  B - C      0.6117 0.186 27    0.151    1.073
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb20-1" tabindex="-1"></a><span class="fu">confint</span>(<span class="fu">contrast</span>(drug.mc, <span class="st">&quot;pairwise&quot;</span>))</span></code></pre></div>
+<pre><code>##  contrast estimate     SE df lower.CL upper.CL
+##  A - B      0.0328 0.0807 27  -0.1674    0.233
+##  A - C      0.2984 0.0807 27   0.0983    0.499
+##  B - C      0.2657 0.0807 27   0.0655    0.466
 ## 
-## Results are given on the log (not the response) scale. 
+## Results are given on the log10 (not the response) scale. 
 ## Confidence level used: 0.95 
 ## Conf-level adjustment: tukey method for comparing a family of 3 estimates</code></pre>
 <p>These may be interpreted as follows:</p>
-<p>95% CI for <span class="math inline">\(\mu_A - \mu_B\)</span> = (-0.386, 0.536).
+<p>95% CI for <span class="math inline">\(\mu_A - \mu_B\)</span> = (-0.167, 0.233).
 This interval contains 0, so we cannot conclude that the true log-mean immobilization time significantly differ between drugs <em>A</em> and <em>B</em>.</p>
-<p>95% CI for <span class="math inline">\(\mu_A - \mu_C\)</span> = (0.226, 1.148).
-We can be 95% confident that drug <em>A</em> produces a true log-mean immobilization time that is between 0.226 to 1.148 higher than drug <em>C</em>.</p>
-<p>95% CI for <span class="math inline">\(\mu_B - \mu_C\)</span> = (0.151, 1.073).
-We can be 95% confident that drug <em>B</em> produces a true log-mean immobilization time that is between 0.151 and 1.073 higher than drug <em>C</em>.</p>
-<p>To put back in the original units we could “un”-log the intervals by taking exponents (use the <code>exp()</code> function since by default <code>log</code> takes a “natural log”).</p>
+<p>95% CI for <span class="math inline">\(\mu_A - \mu_C\)</span> = (0.0983, 0.499).
+We can be 95% confident that drug <em>A</em> produces a true log-mean immobilization time that is between 0.0983 to 0.499 higher than drug <em>C</em>.</p>
+<p>95% CI for <span class="math inline">\(\mu_B - \mu_C\)</span> = (0.066, 0.466).
+We can be 95% confident that drug <em>B</em> produces a true log-mean immobilization time that is between 0.066 and 0.466 higher than drug <em>C</em>.</p>
+<p>You should note in the above output that <code>emmeans</code> provides a warning that the results are provided on a <code>log10</code> scale. To put back in the original units we could “un”-log the intervals by taking base-10 exponents (that is, raise 10 to the power of the value). When using a logarithmic transformation, emmeans provides the functionality to put the response in the original units.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb22-1" tabindex="-1"></a><span class="fu">confint</span>(<span class="fu">contrast</span>(drug.mc, <span class="st">&quot;pairwise&quot;</span>, <span class="at">type=</span><span class="st">&quot;response&quot;</span>))</span></code></pre></div>
+<pre><code>##  contrast ratio    SE df lower.CL upper.CL
+##  A / B     1.08 0.200 27     0.68     1.71
+##  A / C     1.99 0.370 27     1.25     3.15
+##  B / C     1.84 0.343 27     1.16     2.92
+## 
+## Confidence level used: 0.95 
+## Conf-level adjustment: tukey method for comparing a family of 3 estimates 
+## Intervals are back-transformed from the log10 scale</code></pre>
 <p>We can also visualize these results via a plot:</p>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">contrast</span>(drug.mc, <span class="st">&quot;pairwise&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb24-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">contrast</span>(drug.mc, <span class="st">&quot;pairwise&quot;</span>))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch2-17"></span>
 <img src="introStatModeling_files/figure-html/ch2-17-1.png" alt="Tukey adjusted confidence interval plots comparing treatments treatments `A`, `B` and `C`. Here, we see that treatments `B` and `C` are significantly different as well as treatments `A` and `C`. We also note there is no significant difference between treatments `A` and `B`." width="70%" />
 <p class="caption">
-Figure 2.9: Tukey adjusted confidence interval plots comparing treatments treatments <code>A</code>, <code>B</code> and <code>C</code>. Here, we see that treatments <code>B</code> and <code>C</code> are significantly different as well as treatments <code>A</code> and <code>C</code>. We also note there is no significant difference between treatments <code>A</code> and <code>B</code>.
+Figure 2.6: Tukey adjusted confidence interval plots comparing treatments treatments <code>A</code>, <code>B</code> and <code>C</code>. Here, we see that treatments <code>B</code> and <code>C</code> are significantly different as well as treatments <code>A</code> and <code>C</code>. We also note there is no significant difference between treatments <code>A</code> and <code>B</code>.
 </p>
 </div>
 <p>Here, we are interesting in comparing each plotted confident band to the value of 0.</p>
 </div>
-<div id="dunnett-multiple-comparisons" class="section level3" number="2.7.2">
-<h3><span class="header-section-number">2.7.2</span> Dunnett multiple comparisons</h3>
+<div id="dunnett-multiple-comparisons" class="section level3 hasAnchor" number="2.8.2">
+<h3><span class="header-section-number">2.8.2</span> Dunnett multiple comparisons<a href="introduction-to-statistical-modeling-and-designed-experiments.html#dunnett-multiple-comparisons" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The Dunnett method is applicable when one of your experimental groups serves as a natural <em>control</em> to which you want to compare the remaining groups.
-<strong>Note</strong> that there is no <em>control</em> group in our working example, but we include the code below for demonstration purposes.</p>
+<strong>Note</strong> that there is no <em>control</em> group in our working example, but we include the code below for demonstration purposes where treatment level “A” is the reference (<code>ref</code>) control group.</p>
 <p>In situations were a <em>control</em> group is present, it is advisable to use a method that only controls the family-wise error rate for the comparisons of interest, rather than over-controlling for all possible comparison such as when using a method like Tukey HSD.
 We still use the <code>emmeans</code> package but specify the comparisons are against a <em>control</em> group. The code is below:</p>
-<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contrast</span>(drug.mc, <span class="st">&quot;trt.vs.ctrl&quot;</span>)</span></code></pre></div>
-<pre><code>##  contrast estimate    SE df t.ratio p.value
-##  B - A     -0.0754 0.186 27  -0.406  0.8750
-##  C - A     -0.6872 0.186 27  -3.696  0.0019
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb25-1" tabindex="-1"></a><span class="fu">contrast</span>(drug.mc, <span class="st">&quot;trt.vs.ctrl&quot;</span>, <span class="at">ref=</span><span class="st">&quot;A&quot;</span>)</span></code></pre></div>
+<pre><code>##  contrast estimate     SE df t.ratio p.value
+##  B - A     -0.0328 0.0807 27  -0.406  0.8750
+##  C - A     -0.2984 0.0807 27  -3.696  0.0019
 ## 
-## Results are given on the log (not the response) scale. 
+## Results are given on the log10 (not the response) scale. 
 ## P value adjustment: dunnettx method for 2 tests</code></pre>
 <p>The two comparisons provided are <em>A</em> vs. <em>B</em> and <em>A</em> vs. <em>C</em>.
 The only significant difference is between <em>A</em> and <em>C</em> (<span class="math inline">\(p\)</span>-value = 0.0019).
 As before, here are simultaneous CIs and plots:</p>
-<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(<span class="fu">contrast</span>(drug.mc, <span class="st">&quot;trt.vs.ctrl&quot;</span>))</span></code></pre></div>
-<pre><code>##  contrast estimate    SE df lower.CL upper.CL
-##  B - A     -0.0754 0.186 27   -0.512    0.361
-##  C - A     -0.6872 0.186 27   -1.123   -0.251
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb27-1" tabindex="-1"></a><span class="fu">confint</span>(<span class="fu">contrast</span>(drug.mc, <span class="st">&quot;trt.vs.ctrl&quot;</span>))</span></code></pre></div>
+<pre><code>##  contrast estimate     SE df lower.CL upper.CL
+##  B - A     -0.0328 0.0807 27   -0.222    0.157
+##  C - A     -0.2984 0.0807 27   -0.488   -0.109
 ## 
-## Results are given on the log (not the response) scale. 
+## Results are given on the log10 (not the response) scale. 
 ## Confidence level used: 0.95 
 ## Conf-level adjustment: dunnettx method for 2 estimates</code></pre>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">contrast</span>(drug.mc, <span class="st">&quot;trt.vs.ctrl&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb29-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">contrast</span>(drug.mc, <span class="st">&quot;trt.vs.ctrl&quot;</span>))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch2-19"></span>
 <img src="introStatModeling_files/figure-html/ch2-19-1.png" alt="Dunnett adjusted confidence interval plots demonstrating that treatment `c` is significantly different than control group `a`, while treatment `b` is not significantly different than control group `a`." width="70%" />
 <p class="caption">
-Figure 2.10: Dunnett adjusted confidence interval plots demonstrating that treatment <code>c</code> is significantly different than control group <code>a</code>, while treatment <code>b</code> is not significantly different than control group <code>a</code>.
+Figure 2.7: Dunnett adjusted confidence interval plots demonstrating that treatment <code>c</code> is significantly different than control group <code>a</code>, while treatment <code>b</code> is not significantly different than control group <code>a</code>.
 </p>
 </div>
-<p>It is interesting to compare the results you get via the two methods for the same comparisons (<em>e.g.</em>, <em>A</em> vs. <em>C</em>).
+<p>It is interesting to compare the results you get via the two methods (Tukey vs Dunnett) for the same comparisons (<em>e.g.</em>, <em>A</em> vs. <em>C</em>).
 Can you explain what you see?</p>
-<p><strong>Note.</strong> Group <em>A</em> was automatically chosen as the reference group for Dunnett (the default behavior is to choose the first factor level [in this case the first alphabetically]).
-To change this from the default, just tell R to do so in the <code>contrast</code> statement.
-In the below example we set the second (2) factor, <em>B</em>, to be the control with <code>ref=2</code>.</p>
-<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contrast</span>(drug.mc, <span class="st">&quot;trt.vs.ctrl&quot;</span>, <span class="at">ref=</span><span class="dv">2</span>)</span></code></pre></div>
-<pre><code>##  contrast estimate    SE df t.ratio p.value
-##  A - B      0.0754 0.186 27   0.406  0.8750
-##  C - B     -0.6117 0.186 27  -3.291  0.0054
+<p><strong>Note.</strong> If you do not specify a <code>ref=</code> in the <code>contrast function, group *A* will automatically be chosen as the reference group for Dunnett (the default behavior is to choose the first factor level [in this case the first alphabetically]).  We recommend you always explicitly tell the code the reference groups. In the below example we set the second (2) factor, *B*, to be the control with</code>ref=“B”`.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="introduction-to-statistical-modeling-and-designed-experiments.html#cb30-1" tabindex="-1"></a><span class="fu">contrast</span>(drug.mc, <span class="st">&quot;trt.vs.ctrl&quot;</span>, <span class="at">ref=</span><span class="st">&quot;B&quot;</span>)</span></code></pre></div>
+<pre><code>##  contrast estimate     SE df t.ratio p.value
+##  A - B      0.0328 0.0807 27   0.406  0.8750
+##  C - B     -0.2657 0.0807 27  -3.291  0.0054
 ## 
-## Results are given on the log (not the response) scale. 
+## Results are given on the log10 (not the response) scale. 
 ## P value adjustment: dunnettx method for 2 tests</code></pre>
-
 </div>
+</div>
+<div id="a-complete-one-way-anova-example" class="section level2 hasAnchor" number="2.9">
+<h2><span class="header-section-number">2.9</span> A Complete One-Way ANOVA Example<a href="introduction-to-statistical-modeling-and-designed-experiments.html#a-complete-one-way-anova-example" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+
 </div>
 </div>
 <h3>References</h3>
@@ -1253,9 +1180,6 @@ Lenth, R., <em>Emmeans: Estimated Marginal Means, Aka Least-Squares Means</em>, 
 </div>
 <div id="ref-Walpole2007" class="csl-entry">
 Walpole, R. E., Myers, R. H., Myers, S. L. and Ye, K., <em>Probability &amp; Statistics for Engineers and Scientists</em>, Upper Saddle River: Pearson Education, 2007.
-</div>
-<div id="ref-WeissText" class="csl-entry">
-Weiss, N. A., <em>Introductory Statistics</em>, Pearson Education, 2012.
 </div>
 <div id="ref-Wesson1976" class="csl-entry">
 Wesson, J. A., Influence of Physical Restraint and Restraint-Facilitating Drugs on Blood Measurements of White-Tailed Deer and Other Selected Mammals, Master’s thesis, Virginia Polytechnic Institute; State University, 1976.
@@ -1281,42 +1205,42 @@ Wesson, J. A., Influence of Physical Restraint and Restraint-Facilitating Drugs 
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": null,
-"text": null
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["introStatModeling.pdf", "introStatModeling.epub"],
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "subsection"
-}
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["introStatModeling.pdf", "introStatModeling.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
 });
 });
 </script>
@@ -1327,7 +1251,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

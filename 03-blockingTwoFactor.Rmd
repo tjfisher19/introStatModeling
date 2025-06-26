@@ -14,6 +14,17 @@ The learning objectives of this unit include:
 * Understanding the rationale and structure of a two-factor design.
 * Performing a full analysis involving multiple predictor variables.
 
+```{r ch3-setup, include=FALSE}
+library(knitr)
+library(kableExtra)
+library(tidyverse)
+library(broom)
+library(emmeans)
+library(gridExtra)
+library(ggfortify)
+options(dplyr.summarise.inform = FALSE,
+        warn = -1)
+```
 
 
 ## Blocking
@@ -167,7 +178,7 @@ Likewise, a different variety may prefer a different climate -- this information
 **A better plot** to consider is a profile plot similar to that used in the matched pairs design in Figure \@ref(fig:ch2-7) from Section \@ref(paired-t-test).
 Here, we explore the response at each treatment level within each block term.
 
-```{r ch3-3profile, fig.align='center', fig.cap='Profiles of each barley yield by variety profiling across each of the 12 Location & Year combinations.',out.width='70%', fig.asp=0.55}
+```{r ch3-3profile, fig.align='center', fig.cap='Profiles of each barley yield by variety profiling across each of the 12 Location and Year combinations.',out.width='70%', fig.asp=0.55}
 ggplot(fisherBarleyData) + 
   geom_line(aes(x=Variety, y=Yield, 
                 color=LocationYear, group=LocationYear) ) +
@@ -180,7 +191,7 @@ In particular, each line corresponds to one of the block terms (this is the comm
 This can be considered *visual clutter*.
 Since the specific Location & Year combinations are not necessarily of interest in our study, we can *mute* their impact by plotting each line with the same color as in Figure \@ref(fig:ch3-ImprovedProfile).
 
-```{r ch3-ImprovedProfile, fig.align='center', fig.cap='Profiles of each barley yield by variety profiling across each of the 12 Location & Year combinations.',out.width='70%', fig.asp=0.55}
+```{r ch3-ImprovedProfile, fig.align='center', fig.cap='Profiles of each barley yield by variety profiling across each of the 12 Location and Year combinations.',out.width='70%', fig.asp=0.55}
 ggplot(fisherBarleyData) + 
   geom_line(aes(x=Variety, y=Yield, 
                 group=LocationYear), color="gray30" ) +
@@ -196,7 +207,7 @@ There is some evidence that the Trebi variety may result in more yield across al
 To determine the effect variety has on yield we proceed with a formal analysis.
 Below is a formal analysis in a call of `aov()` -- making sure to check underlying assumptions in Figure \@ref(fig:ch3-4).
 
-```{r ch3-4, fig.width=7, fig.height=7, fig.align='center', fig.cap='Residual diagnostic plots when the response variable is the barley yield as  a function of location & year (block) and variety. Here, the residuals appear fairly homoskedastic based on the Residuals vs Fitted and Scale-Location plots. The normality assumption is satisfied based on the Normal Q-Q plot.', fig.asp=1, out.width='80%'}
+```{r ch3-4, fig.width=7, fig.height=7, fig.align='center', fig.cap='Residual diagnostic plots when the response variable is the barley yield as a function of location and year (block) and variety. Here, the residuals appear fairly homoskedastic based on the Residuals vs Fitted and Scale-Location plots. The normality assumption is satisfied based on the Normal Q-Q plot.', fig.asp=1, out.width='80%'}
 barley.fit <- aov(Yield ~ LocationYear + Variety, data=fisherBarleyData)
 autoplot(barley.fit)
 ```

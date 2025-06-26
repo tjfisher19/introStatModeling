@@ -1,166 +1,86 @@
 
-# Introduction to Statistical Modeling and Designed Experiments
+# Statistical Modeling and Designed Experiments
 
-We begin our dive into Statistical Modeling by building from some introductory statistics material, namely two-sample inference and analysis of variance. 
+We begin our dive into Statistical Modeling by building from some introductory statistics material, namely two-sample inference.
+After introducing some crucial concepts, we expand two-sample inference into analysis of variance. 
 The learning objective of this unit include:
 
+* Distinguishing between observational studies and designed experiments.
 * Understanding the basic structure of statistical model.
 * Understanding that statistical inference can be formulated as the comparison of models.
-* Distinguishing between observational studies and designed experiments.
 * Performing a full analysis involving a one-factor experiment.
 
-## Statistical Analyses is Modeling
-
-Think of a model airplane.
-It is just a simplified representation of the real thing.  
-
-In many statistical problems (and all the problems we will encounter in this course), we are interested in describing the relationship that may exist among several different measured variables.
-For example, your current GPA could be impacted by how much you study.
-Or there may be several contributing factors – your credit hour load, your ACT score, whether or not you have a part-time job, etc. 
-
-Of course, what makes your GPA is the result of a very highly complex combination of factors, some important and others not so important.
-
-A **statistical model** is a mechanism we will use to try to describe the structural relationship between some measured outcome (called the *response *variable) and one or more impacting variables (called *predictor* variables or *factors* or *features*, depending on the contextual circumstance) in a simplified mathematical way.
-
-It is in this sense that you can think of a statistical model as a "simplification" in much the same way as the model airplane: we know that the true relationship between response and predictor variables is very detailed and complex. 
-The goal of the model is not to capture all the intricacies of the complexity but rather, the model only seeks to describe the essential features of any relationships that exist. 
-
-### Example of a two-sample $t$-test as a model
-
-It turns out, we have already fit a statistical model. 
-Consider a variation of the two-sample $t$-test we performed in the previous chapter on the University Admissions data [@KutnerText]. 
-For cohesiveness we input the data again.
-
-```{r ch2-1web, eval=FALSE}
-uadata <- read_table("https://tjfisher19.github.io/introStatModeling/data/univadmissions.txt")
-```
-```{r ch2-1}
-uadata.trim <- uadata %>%
-  filter(year %in% c(1996, 2000) )
-
-t.test(act ~ year, data=uadata.trim, conf.level=0.98, 
-       alternative="two.sided", var.equal=TRUE)
+```{r ch2setup, include=FALSE}
+library(knitr)
+library(kableExtra)
+library(tidyverse)
+library(ggfortify)
+library(emmeans)
+options(dplyr.summarise.inform = FALSE,
+        warn = -1)
 ```
 
-Looking at the code you'll note here we are performing a `two.sided` or "not equal to" test. 
-More importantly note the `act ~ year` notation -- this is known as a **formula** in R. 
-In particular, we are telling R that the ACT scores are a function of the student's incoming Year. 
-This concept should be familiar as it is similar to the regression ideas from your Intro Statistics course. 
-
-It turns out that nearly all statistical inference can be framed in terms of modeling. 
-To see this we first must cover some light *math*.
-
-Recall from Intro Statistics that a random variable $Y$ is typically assumed to come from a Normal distribution with mean $\mu$ and standard deviation $\sigma$. 
-Standard shorthand notation for this is to write
-$$Y \sim N(\mu, \sigma).$$
-You may also remember that if you subtract off the mean, $\mu$, from a random variable it will just shift the distribution by $\mu$ units. 
-For example
-$$ Y - \mu \sim N(0, \sigma)$$
-We could reformulate the above via
-\begin{equation}
-Y = \mu + \varepsilon 
-(\#eq:baseModel)
-\end{equation}
-where
-$$\varepsilon \sim N(0, \sigma).$$
-
-The equation \@ref(eq:baseModel) can be considered a *baseline* model.
-Here, we are simply stating that the random variable $Y$ is a function of a mean $\mu$ and random component $\varepsilon$, which happens to be from a Normal distribution with mean 0 and standard deviation $\sigma$.
-In words have the model
-$$\textbf{Data} = \textbf{Systematic Structure} + \textbf{Random Variation}$$
-where in the base model the Systematic Structure is simply the constant $\mu$. 
-We will consider more complicated structures later.
-
-**Estimation**
-
-A quick note about estimation. 
-In your Intro Stat class you worked with this model regularly. 
-We would estimate $\mu$ with the sample mean $\bar{Y}$ and estimate $\sigma$ with the sample standard deviation $S$. 
-You learned about one-sample hypothesis testing and confidence intervals all based from this baseline model.
-
-**Two-sample $t$-test as a Model**
-
-Now consider the case of testing if ACT scores were different in 1996 compared to 2000. 
-Let's create a new variable called $\tau$ that measures how the 2000 ACT scores deviate from the 1996 ACT scores. 
-That is, considering a model
-$$Y_i = \mu + \tau + \varepsilon_i$$
-Here the value $\mu$ corresponds to the mean ACT score in 1996 and is the baseline, $\tau$ measures how the year 2000 ACT scores **differ** from 1996 and $\varepsilon_i$ is the underlying random part of the $i^\mathrm{th}$ observation $Y_i$.
-
-Another way to frame this model is to consider a variable $X$ such that if observation $i$ is from 1996 then $X_i$ takes on the value zero and if the observation if from 2000 then $X_i$ takes on the value one. We'll let $Y_i$ be the observed ACT score for student $i$ and consider the following
-
-\begin{equation}
-Y_i = \mu + \delta\cdot X_i + \varepsilon_i.
-(\#eq:twoSampleTtest)
-\end{equation}
-
-Now $\mu$ is the mean of 1996 ACT scores, $\delta$ is the effect the year 2000 has on ACT scores (*i.e.*, if ACT scores increased by 4 units from 1996 to 2000, $\delta=4$), thus $\mu+\delta$ is the mean ACT score in the year 2000 (the $\tau$ effect in the above). 
-Lastly, $\varepsilon_i$ is how observation $i$ deviates from the mean and we assume $\varepsilon_i \sim N(0, \sigma)$ for standard deviation $\sigma$ for all $i=1,\ldots,n$.
-
-When performing a two-sample $t$-test we are essentially testing $H_0:\ \delta=0$ versus $H_A:\ \delta\neq 0$. 
-Note that if $H_0$ were true, we are back to the baseline model \@ref(eq:baseModel). 
-
-So to put it another way, a two-sample $t$-test essentially is a choice of
-
-$$H_0: \textrm{Baseline Model} ~~ Y_i = \mu + \varepsilon_i$$
-and
-$$H_A: \textrm{More complex model} ~~ Y_i = \mu + \delta\cdot X_i + \varepsilon_i.$$
-
-To tie everything together note that in $H_A$ we are essentially saying observation $Y_i$ is a function of the variable $X_i$. 
-
-Because of this we typically refer to $Y_i$ as the **response** (or dependent) variable and $X_i$ as a **predictor** (or independent) variable. 
-This coincides with the R `formula` notation, `response ~ predictor`.
 
 
-## Observational Studies versus designed experiments
 
-Before we introduce more statistical models we need to step back and discuss the **source of our data**. 
-Are the data a "sample of convenience", or were they obtained via a designed experiment or some random sampling scheme?
+## Observational Studies versus designed experiments {#dataSources}
+
+Before introducing some details on statistical models we need to step back and discuss the **source of our data**. 
+Are the data a "sample of convenience", or were they obtained via a designed experiment, or some random sampling scheme, or by some sort of survey?
 How the data were collected has a crucial impact on what conclusions can be meaningfully made.
 
 It is important to recognize that there are two primary methods for obtaining data for analysis: **designed experiments** and **observational studies**. 
-There is a third type of data collected through **survey sampling** methods that incorporates elements from both designed experiments and observational studies, but we exclude it here.
-It is important to know the distinction because each type of data results in a different approach to interpreting estimated models. 
+There is a third type of data collected through **survey sampling** methods that incorporates elements from both designed experiments and observational studies, but are excluded here.
+It is crucial to know the distinction between each type of data, as this results in a different approach to interpreting estimated models. 
+
+
+
+
 
 ### Observational Studies
 
 In many situations a practitioner (perhaps you, or a client) simply collect measurements on predictor and response variables as they naturally occur, without intervention from the data collector. 
 Such data is called **observational data**.
 
-Interpreting models built on observational data can be challenging.
+Interpreting models built on observational data can be more challenging.
 There are many opportunities for error and any conclusions will carry with them substantial unquantifiable uncertainty.
-Nevertheless, there are many important questions for which only observational data will ever be available.
-For example, how else would we study something like differences in prevalence of obesity, diabetes and other cardiovascular risk factors between different ethnic groups?
+Nevertheless, there are many important questions for which only observational data will be available.
+For example, how else can we study something like differences in prevalence of obesity, diabetes and other cardiovascular risk factors between different ethnic groups?
 Or the effect of socio-economic status on self esteem?
-It may be impossible to design experiments to investigate these, so we must make the attempt to build good models with observational data in spite of their shortcomings.
+It may be impossible to design experiments to investigate these questions, so we must make the attempt to build good models with observational data in spite of their shortcomings.
 
 In observational studies, establishing causal connections between response and predictor variables is nearly impossible.
-In the limited scope of a single study, the best one can hope for is to establish associations between predictor variables and response variables.
-But even this can be difficult due to the uncontrolled nature of observational data.  Why?
-It is because unmeasured and possibly unsuspected "lurking" variables may be the real cause of an observed relationship between $Y$ and some predictor $X$.
+In the limited scope of a single study, the best one can hope is to establish associations between predictor variables and response variables.
+But even this can be difficult due to the uncontrolled nature of observational data. 
+Unmeasured and possibly unsuspected "lurking" variables may be the real cause of an observed relationship between $Y$ and some predictor $X$.
 
-In observational studies, it is important to adjust for the effects of possible confounding variables.
+In observational studies, it is important to adjust for the effects of possible confounding variables (more on that later).
 Unfortunately, one can never be sure that the all relevant confounding variables have been identified.
 As a result, one must take care in interpreting estimated models involving observational data.
 
-This topic will be more thoroughly visited later.
+For the next few chapters we will concentrate on analyses of data from experiments, but the topic of observational studies will be more thoroughly visited later.
+
+
+
+
 
 
 ### Designed experiments
 
 In a **designed experiment**, the researcher has control over the settings of the predictor variables.
-For example, suppose we wish to study several physical exercise regimens and how they impact calorie burn.
+For example, suppose we wish to study several physical exercise regimens and how they impact calorie burn. 
+In a designed experiment, we (the experimenter) assign the different exercise regimes to participants, thus controlling the settings of the predictor variables.
 Typically the values of the predictor variables are discrete (that is, a countably finite number of controlled values).
-Because of this, predictor variables of this type are known as **factors**.
-The **experimental units** (EUs) are the people we use for the study.
-We can control some of the predictors such as the amount of time spent exercising or the amount of carbohydrates consumed prior to exercising.
-Some other predictors may not be controlled but could be measured, such as baseline metabolic variables.
-Other variables, such as the temperature in the room or the type of exercise done, could be held fixed.
+Because of this, predictor variables of this type are known as **factors** and the specific values are often called the **treatments**.
+The **experimental units** (EUs) are the entities to which the treatment are applied; *e.g.*, the people we use for the study.
+We may control multiple predictor variables in a study, such as the amount of time spent exercising or the amount of carbohydrates consumed prior to exercising.
+Other predictors may not be controlled but ccan be measured, such as baseline metabolic variables and the partipant's age, so a designed experiment can include some *observational* elements.
+Other variables, such as the temperature in the room or the type of exercise done, could be held fixed to control for potential environmental factors (we typically these **nuisance variables**).
 
 Having control over the conditions in an experiment allows us to make stronger conclusions from the analysis.
 Another key feature from a designed experiment is that the model is chosen for us!
-We will see later in the class that with observational data we typically need to select a model.
-But with a designed experiment the model is predetermined based on the experiment. 
-
+We will see later in the class that with observational data we typically need to select a model, but with a designed experiment the model is predetermined based on the experiment. 
+We discuss more on modeling later in this chapter.
 
 
 
@@ -178,23 +98,24 @@ There are a plethora of structural possibilities of which we will only scratch t
 
 Consider, for example, these four scenarios:
 
-1. Suppose a study is conducted on the effects a new drug has on patient blood pressure. At the start of the study the blood pressure of all participants is measured. After receiving the drug for two months the blood pressure of each patient is measured again. The analysis to determine the effect of the drug on blood pressure is the **Paired $t$-test** from your Intro stat class. Here the *pairing* of each observation is the difference between the before and after blood pressure.
+1. Suppose a study is conducted on the effects a new drug has on patient blood pressure. At the start of the study the blood pressure of all participants is measured. After receiving the drug for two months the blood pressure of each patient is measured again. The analysis to determine the effect of the drug on blood pressure is the **Paired $t$-test** from your introductory statistics class. Here the *pairing* of each observation is the difference between the before and after blood pressure.
 
-2. We may have a simple design with only one factor, where each subject (experimental unit) is measured only under one of the factor levels. For example, suppose three different drugs are administered to 18 subjects. Each person is randomly assigned to receive only one of the three drugs. A response is measured after drug administration. The analysis we use for such data is known as a **one-way analysis of variance**.
+2. Consider a simple design with a single categorical input variable, or one factor, where each subject (experimental unit) is measured only under one of the factor levels. For example, suppose three different drugs are administered to 18 subjects. Each person is randomly assigned to receive only one of the three drugs. A response is measured after drug administration. The analysis we use for such data is known as a **one-way analysis of variance**.
 
-3.	We may have a design with two factors, where every level of the first factor appears with every level of the second factor. For example, suppose your data are from an experiment in which alertness levels of male and female subjects were measured after they had been given one of two possible dosages of a drug. Such an experimental design is known as a factorial design. Here, the two factors are gender and dosage. The analysis we use for such data is known as a **two-way analysis of variance.**
+3.	We may have a design with two factors, where every level of the first factor appears with every level of the second factor. For example, suppose your data are from an experiment in which alertness levels of subjects were measured after they had been given one of three possible dosages of a drugand whether or not they were allowed to nap for 20 minutes. Such an experimental design is known as a factorial design. Here, the two factors are drug dosage and the occurrence of a nap. The analysis we use for such data is known as a **two-way analysis of variance.**
 
-4.	Suppose we have a design with only one factor of interest (word type). Five subjects are asked to memorize a list of words. The words on this list are of three types: positive words, negative words and neutral words. The response variable is the number of words recalled by word type, with a goal of determining if the ability to recall words is affected by the word type. Note that even though there is only one factor of interest (word type) with three levels (negative, neutral and positive), this data structure differs greatly from a one-way analysis of variance mentioned earlier because each subject is observed under every factor level. Thus, there will be variability in the responses within subjects as well as between subjects. This fact will affect how we analyze the data.
+4.	Suppose we have a design with only one factor of interest (word type). Five subjects are asked to memorize a list of words. The words on this list are of three types: positive words, negative words and neutral words. The response variable is the number of words recalled by word type, with a goal of determining if the ability to recall words is affected by the word type. Note that even though there is only one factor of interest (word type) with three levels (negative, neutral and positive), this data structure differs greatly from a one-way analysis of variance mentioned above because each subject is observed under every factor level. Thus, there will be variability in the responses within subjects (how a individual varies between positive, negative and neutral words) as well as between subjects (how two different people vary). This fact will affect how we analyze the data. This is known as a **within-subjects analysis of variance**, or **repeated measures**.
 
-We will cover each of these analyses. 
+We will cover each of these analyses in the next few chapters. 
 
 ### Analysis of variance
 
-**Analysis of variance** (ANOVA) is an analytic tool in statistics to partition the variation in a response variable and attribute it to known sources in the experiment.
-It is essentially an extension of the more familiar $t$-test. As stated earlier, there are many different experimental structures possible when conducting an experiment.
+**Analysis of variance** (ANOVA) is an analytic tool in statistics to partition the variation in a response variable and attribute it to known sources in a model.
+In practice, it is essentially an extension of the more familiar two-sample $t$-test. 
+As stated earlier, there are many different experimental structures possible when conducting an experiment and ANOVA can adapt to many of those structures.
 Some of the other widely used structures in practice are known as nested designs, split-plot designs, and repeated measures designs.
-It is worth saying again that the structure of the experimental data will dictate how an analysis of variance is used to model the data.
-In each of these designs, some variant of an Analysis of Variance is used for analysis.
+It is worth reiterating that the structure of the experimental data will dictate how an analysis of variance is used to model the data.
+In each of the designs described above, some variant of an Analysis of Variance is used for analysis.
 
 ### Elements of a designed experiment
 
@@ -208,7 +129,7 @@ tab <- data.frame("Vitamin E" = c("0 mg", "400 mg"),
                   "250 mg" = c("Treatment 2", "Treatment 5"),
                   "500 mg" = c("Treatment 3", "Treatment 6"))
 names(tab) <- c("Vitamin E", "0 mg", "250 mg", "500 mg")
-kable(tab) %>% kable_styling(full_width=FALSE) %>%
+kable(tab) |> kable_styling(full_width=FALSE) |>
   add_header_above(c(" " = 1, "Vitamin C" = 3))
 ```
 In this hypothetical experiment, the researcher is studying the possible effects of Vitamin C and Vitamin E on health.
@@ -232,15 +153,17 @@ A well-designed experiment includes design features that allow researchers to el
 * **Control**: Control refers to steps taken to reduce the effects of extraneous variables (*i.e.*, variables other than the factor(s) and response).
 These extraneous variables are called lurking variables.
 Control involves making the experiment as similar as possible for experimental units in each treatment condition.
-Two control strategies are control groups and placebos:
+Several strategies exist to help add some *control variables* to an experiment (all are closely related):
 
-    + **Control group**: A control group is a baseline group that receives no treatment or a neutral treatment. To assess treatment effects, the experimenter compares results in the treatment group to results in the control group.
+    + **Control group**: A control group is a baseline group that receives no treatment or a neutral treatment. To assess treatment effects, the experimenter compares results in the treatment group to results in the control group. In the above hypothetical example, the treatment of 0 mg of Vitamin C and 0 mg of Vitamin E likely acts as a control.
 
     + **Placebo**: Often, participants in an experiment respond differently after they receive a treatment, even if the treatment is neutral. A neutral treatment that has no "real" effect on the dependent variable is called a placebo, and a participant's positive response to a placebo is called the placebo effect. To control for the placebo effect, researchers often administer a neutral treatment (*i.e.*, a placebo) to the control group. The classic example is using a sugar pill in drug research. The drug is effective only if participants who receive the drug have better outcomes than participants who receive the sugar pill.
+    
+    + **Baseline treatment**: another approach that is similar to a control or placebo group is the application of some sort of standard *accepted* treatment. For example, suppose we recruit 15 patients that have recently been diagnosed with a particular disease. We wish to study the effects of two new drugs, call them experimental drugs A and B. It would be unethical to assign some participants to a control (no treatment) or placebo (sugar pill) group, so we may compare the two new experimental drugs to an established treatment (this way all patients receive some sort of treatment for their disease). The established treatment acts as a *control group* or *placebo group* in this setting.
 
-    + **Blinding**: Of course, if participants in the control group know that they are receiving a placebo, the placebo effect will be reduced or eliminated; and the placebo will not serve its intended control purpose. Blinding is the practice of not telling participants whether they are receiving a placebo. In this way, participants in the control and treatment groups experience the placebo effect equally. Often, knowledge of which groups receive placebos is also kept from people who administer or evaluate the experiment. This practice is called double blinding. It prevents the experimenter from "spilling the beans" to participants through subtle cues; and it assures that the analyst's evaluation is not tainted by awareness of actual treatment conditions. 
+* **Blinding**: Of course, if participants know which group they have been assigned, it can bias the results.  For example, if someone knows they are receiving a placebo, the placebo effect will be reduced or eliminated; and the placebo will not serve its intended control purpose. Blinding is the practice of not telling participants whether they are receiving a placebo or even what treatment they receive. In this way, participants in the control and treatment groups experience the placebo effect equally. Often, knowledge of which groups receive placebos is also kept from people who administer or evaluate the experiment. This practice is called double blinding. It prevents the experimenter from "spilling the beans" to participants through subtle cues; and it assures that the analyst's evaluation is not tainted by awareness of actual treatment conditions. 
 
-* **Randomization**: Randomization refers to the practice of using chance methods (random number generation, etc.) to assign experimental units to treatments. In this way, the potential effects of lurking variables are distributed at chance levels (hopefully roughly evenly) across treatment conditions. For example, suppose we had 12 experimental units which we wanted to completely randomly allocate to three different treatments (call them A, B and C). We can accomplish this as follows in R:
+* **Randomization**: Randomization refers to the practice of using chance methods (random number generation, etc...) to assign experimental units to treatments. In this way, the potential effects of lurking variables are distributed at chance levels (hopefully roughly evenly) across treatment conditions. For example, suppose we had 12 experimental units which we wanted to completely randomly allocate to three different treatments (call them A, B and C). We can accomplish this as follows in R:
 
 ```{r ch2-3}
 ids <- 1:12
@@ -256,22 +179,19 @@ Randomization is arguably one of the most important pieces of any well-designed 
 Failure to randomize can lead to confounded conclusions (see discussion below) and biased results! 
 
 **Example:** Consider a contrived, but simple, experiment where you might be comparing a new heart disease drug to a placebo.
-Suppose your sample consists of one-hundred adults with with diagnosed heart disease.
+Suppose your sample consists of one-hundred adults each with diagnosed heart disease.
 Further, suppose the ages of the adults are uniformly distributed across the range 20 to 90.
 Out of convenience suppose the new drug is administered to the youngest fifty volunteers and the placebo to the oldest 50 volunteers.
-Would you trust the results of this experiment?
 
-However, if the drug/placebo assignment was randomly assigned to different patients of different ages and backgrounds, the randomization would help eliminate any bias age.
+The results of this experiment would not be trustworthy since there is the potential for the age of the patients to influence the results. However, if the drug/placebo assignment was randomly assigned to different patients of different ages and backgrounds, the randomization would help eliminate any age bias.
 
 * **Replication**: Replication refers to the practice of assigning each treatment to many experimental units. The purpose of replication is as follows:
 
-    + Estimate the noise in the system. Recall early in the text when we discussed sources of variation in data. What do I mean by that? Well, think of this: if you were to apply precisely the same treatment to a set of different individuals, the response would naturally vary  due to myriad reasons of little to no interest to the researcher. So, responses vary to some degree due to simple random chance fluctuations, or "noise." For our purposes, this constitutes a single source of variation. 
-    + Now, lets apply different treatments to a set of individuals.  The responses would still vary, but now there are two sources of variation: the random chance element from above (because we still have different individuals), but now we add in the effect that the different treatments have on the response. So, one purpose of replication is so that **we can estimate how much noise is naturally in the system, so that we can see if the variability in response introduced by changing the treatment rises above the noise**. The more replication in an experiment, the better you can estimate the noise. However, this comes at an expense!
-    + Help wash out the effect of lurking variables. This was also mentioned as a reason for randomization. When coupled with randomization, replication provides the "opportunity" for your experiment to have a mix of all those lurkers appear under each treatment, thus mitigating their effects from biasing your results.
+    + Estimate the noise in the system. Recall earlier in the text when we discussed sources of variation in data. If you were to apply precisely the same treatment to a set of different individuals, the response would naturally vary due to myriad reasons of little-to-no interest to the researcher. So, responses vary to some degree due to simple random chance fluctuations, or "noise." For our purposes, this constitutes a single source of variation. 
+    + Now, apply different treatments to a set of individuals. The responses would still vary, but now there are two sources of variation: the random element described in the previous bullet point (because we still have different individuals), but now we also incorporate the different treatments and how they may influence the response. So, one purpose of replication is **we can estimate the natural noise in the system, and can determine if the variability introduced by changing the treatment rises above the noise**. The more replication in an experiment, the better you can estimate the noise. However, this comes at an expense!
+    + Help wash out the effect of lurking variables. This was also mentioned as a reason for randomization. When coupled with randomization, replication provides the "opportunity" for your experiment to have a mix of all those lurking variable appear under each treatment, thus mitigating their effects from biasing your results.
 
 #### Confounding
-
-This sounds serious. What is it?  
 
 **Confounding** is a condition that occurs when the experimental controls do not allow the experimenter to reasonably eliminate plausible alternative explanations for an observed relationship between factors and the response.
 Needless to say, confounding renders experimental results to be seriously impaired, if not totally useless.
@@ -285,153 +205,152 @@ At the end of the test period, the men report fewer colds.
 As a result, many variables are confounded, and it is impossible to say whether the drug was effective. 
 For example:
 
-* Gender is confounded with drug use. Perhaps, men are less vulnerable to the particular cold virus circulating during the experiment, and the new medicine had no effect at all. Or perhaps the men experienced a placebo effect.
+* Biological sex is confounded with drug use. Perhaps, men are less vulnerable to the particular cold virus circulating during the experiment, and the new medicine had no effect at all but less men happened to ill. Or perhaps the men experienced a placebo effect.
 
-This experiment could be strengthened with a few controls.
-Women and men could be randomly assigned to treatments. One treatment group could receive a placebo.
-Blinding could be implemented to reduce the influence of "expectation" on the part of participants with regard to the outcome of a treatment.
+This experiment could be strengthened with a few controls that would mitigate the confounding effects:
+
+* Women and men could be randomly assigned to treatments. 
+   + One treatment group could receive a placebo.
+* Blinding could be implemented to reduce the influence of "expectation" on the part of participants with regard to the outcome of a treatment.
+
 Then, after all this, if the treatment group (*i.e.*, the group getting the medicine) exhibits sufficiently fewer colds than the control group, it would be reasonable to conclude that the medicine was the reason for effectively preventing colds, and not some other lurking reason. 
 
 
 
-## Paired $t$-test
 
-Now that the framework for experimental design is complete let's consider our first example, the paired $t$-test (also known as the **matched pairs design**).
-Arguably the simplest example of such a design is a before and after study as outlined in the fictional example below.
+## Statistical Analyses is Modeling
 
-**Example.** In an effort to student the effectiveness of a new cholesterol drug 20 patients with high cholesterol are selected and their cholesterol is measured at the beginning of the study.
-The patients then take the new drug for 45 days.
-At the conclusion of the 45 days their cholesterol is measured and compared to that at the beginning of the study.
+Think of a model airplane or a Lego kit of the Eiffel Tower -- it is just a simplified representation of the real thing.  
 
-The above is an example of a designed experiment.
-The experimental units are the 20 individuals, the response is the difference in cholesterol (before and after) and the pairing attempts to control for confounding variability (variability within an individual is somewhat controlled via the pairing mechanism).
+In many statistical problems we are interested in describing the relationship that may exist among several different measured variables.
+For example, your current GPA could be impacted by how much you study.
+However, there may be several contributing factors – your credit hour load, your ACT score, whether or not you have a part-time job, etc...
 
-The use of the paired $t$-test is not limited to experimental designs, it also appears in observational studies.
-The paired $t$ does follow the model form discussed above but is actually somewhat complex due to the pairing mechanism.
-We will revisit the model statement in a later section.
+Of course, what makes your GPA is the result of a very highly complex combination of factors, some important and others not so important.
 
-### Paired $t$-test example
+A **statistical model** is a mechanism to describe the structural relationship between some measured outcome (called the **response** variable) and one or more impacting variables (called **predictor** variables or **factors** or *features*, depending on the contextual circumstance) in a simplified mathematical way.
 
-To demonstrates the implementation of a paired $t$-test in R we consider another example. 
+It is in this sense that you can think of a statistical model as a "simplification": we know that the true relationship between response and predictor variables is very complex and detailed. 
+The goal of the model is not to capture all the intricacies of the complexity but rather, the model only seeks to describe the essential features of any relationships that exist. 
 
-**Example.** Carbon Emissions (originally in @WeissText).
+### Example of a two-sample $t$-test as a model
 
-The makers of the MAGNETIZER Engine Energizer System (EES) claim that it improves the gas mileage and reduces emissions in automobiles by using magnetic free energy to increase the amount of oxygen in the fuel for greater combustion efficiency.
-Test results for 14 vehicles that underwent testing is available in the file `carCOemissions.csv`.
-The data includes the emitted carbon monoxide (CO) levels, in parts per million, of each of the 14 vehicles tested before and after installation of the EES.
+It turns out, we have already fit a statistical model. 
+Consider a variation of the two-sample $t$-test we performed in the previous chapter on the University Admissions data [@KutnerText]. 
+For completeness we input the data again.
 
-This is a classic before-after (Paired design) study. Below is some code to implement the test.
-
-```{r, eval=FALSE}
-www <- "https://tjfisher19.github.io/introStatModeling/data/carCOemissions.csv"
-vehicleCO <- read_csv(www, col_types = cols())
-vehicleCO
+```{r ch2-uadata, include=FALSE}
+uadata <- read_table("docs/data/univadmissions.txt", col_types = cols())
 ```
 
-```{r ch2-4, echo=FALSE}
-vehicleCO <- read_csv("docs/data/carCOemissions.csv", col_types = cols())
-vehicleCO
+```{r ch2-1web, eval=FALSE}
+uadata <- read_table("https://tjfisher19.github.io/introStatModeling/data/univadmissions.txt")
 ```
 
-First we note each row of the data consist of an `id` with a `before` and `after` measurement.
-In the paired $t$-test, we are comparing the differences between the before and after measurements.
-We perform this test in two different ways: (1) we explicitly calculate the difference and (2) we use features in the `t.test` function.
+We look to compare the ACT scores in 1996 and compare them to the ACT scores in 2000. 
+Similar to code from Chapter 1, we filter to the years 1996 and 2000 and convert the year variable into a factor variable.
 
-**Method 1**
+```{r ch2-1}
+uadata.trim <- uadata |>
+  filter(year %in% c(1996, 2000) ) |>
+  mutate(year = factor(year) ) 
 
-```{r ch2-5a}
-vehicleCO <- vehicleCO %>%
-  mutate(Difference = before - after)
-t.test(vehicleCO$Difference)
+t.test(act ~ year, data=uadata.trim, conf.level=0.98, 
+       alternative="two.sided", var.equal=TRUE)
 ```
 
-**Method 2**
+Looking at the code you'll note here we are performing a `two.sided` or "not equal to" test (in chapter 1 we performed a `greater` than test, or ">" test). 
+More importantly note the `act ~ year` notation -- this is known as a `formula` in R. 
+We are telling R that the ACT scores are a function of the student's incoming Year. 
+This concept should be somewhat familiar as it is similar to the regression ideas you likely saw in your Intro Statistics course. 
 
-```{r ch2-5b}
-t.test(vehicleCO$before, vehicleCO$after, paired=TRUE)
-```
+It turns out that nearly all statistical inference can be framed in terms of modeling. 
+To see this we first must cover some *light math*.
 
-In the **first method**, since we explicitly calculated the Difference as a new variable, we are determining if it is significantly different than zero (essentially it reduces to a one-sample $t$-test from your Intro Stat course).
-In the **second method**, we compare the before and after measures but we tell R that the data are paired with the `paired=TRUE` option. Lastly we note both methods provide the same findings with a $p$-value of approximately `r round(t.test(vehicleCO$before, vehicleCO$after, paired=TRUE)$p.value, 4)`, thus we have strong evidence to support that the EES system changes carbon monoxide levels.
+Recall from Intro Statistics that a random variable $Y$ is typically assumed to come from a Normal distribution with mean $\mu$ and standard deviation $\sigma$. 
+Standard shorthand notation for this is to write
+$$Y \sim N(\mu, \sigma).$$
+You may also remember that if you subtract off the mean, $\mu$, from the random variable $Y$ it will just shift the distribution by $\mu$ units. 
+For example
+$$ Y - \mu \sim N(0, \sigma)$$
+Thus, we could reformulate this equation further with 
+\begin{equation}
+Y = \mu + \varepsilon 
+(\#eq:baseModel)
+\end{equation}
+where
+$$\varepsilon \sim N(0, \sigma).$$
 
-**Graphical comparison**
+The equation \@ref(eq:baseModel) can be considered a *baseline* model.
+Here, we are simply stating that the random variable $Y$ is a function of a mean $\mu$ and some random component $\varepsilon$, which happens to be from a Normal distribution with mean 0 and standard deviation $\sigma$.
+In words have the model
+$$\textbf{Data} = \textbf{Systematic Structure} + \textbf{Random Variation}$$
+where in the baseline model the Systematic Structure is simply the constant $\mu$. 
 
-To graphically compare paired data we must use some caution and consider the pairing feature in the data. 
-Ultimately we are interested in the pairwise difference between observations. 
-Thus, side-by-side boxplots are **not** appropriate since they do not account for the pairing. 
-We can however report a visualization of the differences.
-Figure \@ref(fig:ch2-5) provides a horizontal boxplot, with overlayed *jittered* observations, of the differences (the `coord_clip()` function causes the vertical-horizontal switch while the *jittering* just add some minor random perturbation to the data to visually separate observations, specifying a maximum shift with `width=0.25`).
+**Estimation**
 
-```{r ch2-5, fig.align='center', fig.cap='Box-whiskers plot showing the distribution of difference in CO emissions (Before installation of EES - After installation) demonstrating a CO emissions decreased for most vehicles under study.', out.width='70%', fig.asp=0.55}
-ggplot(vehicleCO) + 
-  geom_boxplot(aes(x="",y=Difference) )+
-  geom_jitter(aes(x="", y=Difference), width=0.25 ) +
-  labs(x="", y="Changes in CO Levels (ppm)", 
-       title="Effects of Engine Energizer System (EES) on 14 vehicles", 
-       subtitle="Change in Carbon Monoxide Emissions after installation of EES") +
-  coord_flip() +
-  theme_minimal()
-```
+A quick note about estimation. 
+In your Intro Stat class you worked with this model regularly. 
+We would estimate $\mu$ with the sample mean $\bar{y}$ and estimate $\sigma$ with the sample standard deviation $s$. 
+One-sample hypothesis testing and confidence intervals are all formulated using this baseline model.
 
-Another type of plot that can be handy for this sort of data (and will be more important later) is known as a profile plot.
-Here we use the `id` values to group data.Basically we wish to draw a line for each and every individual vehicle.
-We begin with some data manipulation.
+**Two-sample $t$-test as a Model**
 
-```{r ch2-6}
-vehicleCO.tall <- vehicleCO %>%
-  select(-Difference) %>% 
-  pivot_longer(c(before, after), names_to="Time", values_to="CO") %>%
-  mutate(id=factor(id),
-         Time=factor(Time, levels=c("before","after")))
-```
+Now consider the case of a two-sample $t$-test; for example, testing if ACT scores were different in 1996 compared to 2000.
+From a hypothesis testing perspective we are comparing:
+$$H_0: \mu_{1996} = \mu_{2000}~~~~\text{vs.}~~~~H_A: \mu_{1996} \neq \mu_{2000}$$
+If $H_0$ were true, we have $\mu_{1996}=\mu_{2000}=\mu$ and the baseline model \@ref(eq:baseModel) is true.
+But, in the case of the alternative hypothesis, we have $\mu_{1996} \neq \mu_{2000}$ and thus our model is:
+$$Y = \mu_j + \varepsilon, ~~~\text{where}~j=1996~\text{or}~2000$$
+To further expand the model, le's create a new variable called $\tau$ that measures how the 2000 ACT scores deviate from the 1996 ACT scores. 
+That is, consider a model for the $i^\mathrm{th}$ observation:
+$$Y_i = \mu_{1996} + \tau + \varepsilon_i$$
+Here the value $\mu_{1996}$ corresponds to the mean ACT score in 1996 and works as a baseline mean, $\tau$ measures how the year 2000 ACT scores **differ** from 1996 (increase? decrease? no change?) and $\varepsilon_i$ is the underlying random part of the $i^\mathrm{th}$ observation $Y_i$. Thus, if $Y_i$ is an observation from the year 2000, the structural component will be $\mu_{1996}+\tau$, whereas if the observation is from 1996, the structural component is simply $\mu_{1996}$.
 
-Let's step through the above R code.
-In the first statement `select(-Difference)` we are telling R to drop the `Difference` variable as we do not need it for the plot.
-Then we are pivoting from wide-to-long format (or wide-to-tall) with the `before` and `after` measurements.
-The resulting dataset has two new variables, one called `Time` which states if it is the *before* or *after* measure and another called `CO` with the corresponding Carbon Monoxide emissions at that time.
-Lastly, we tell R to treat `id` as a factor and set the levels of `Time` so that `before` is first (otherwise it would put things in alphabetical order, by default).
+Another way to frame this model is to augment with a random variable $X_i$. If observation $i$ is from 1996 then $X_i$ takes on the value zero and if the observation is from 2000 then $X_i$ takes on the value one. Variables of this structure are known as *indicator* or *dummy* variables. Let $Y_i$ be the observed ACT score for student $i$ and consider the following:
+\begin{equation}
+Y_i = \mu_{1996} + \delta\cdot X_i + \varepsilon_i.
+(\#eq:twoSampleTtest)
+\end{equation}
 
-Now that the data is in a tall format, we can make our profile plot in Figure \@ref(fig:ch2-7).
-Here we simply tell R to treat the factor `Time` as the $x$-variable with `CO` as the $y$-variable, but group each line by vehicle `id`.
+Now $\mu_{1996}$ is the mean of 1996 ACT scores (when $X_i=0$), $\delta$ is the effect the year 2000 has on mean ACT scores (*e.g.*, suppose mean ACT scores in 1996 were 27, but in 2000 they were 31, thus $\delta=4$), thus $\mu_{1996}+\delta$ is the mean ACT score in the year 2000 ($\delta$ works much like the $\tau$ effect above). 
+Lastly, $\varepsilon_i$ is how observation $i$ deviates from the structural component and we assume $\varepsilon_i \sim N(0, \sigma)$ for standard deviation $\sigma$ for all $i=1,\ldots,n$.
 
-```{r ch2-7, fig.align='center', fig.cap='Profiles of each vehicle demonstrating a general decrease in CO emissions after EES installation.',out.width='70%', fig.asp=0.55}
-ggplot(vehicleCO.tall) + 
-  geom_line(aes(x=Time, y=CO, group=id) ) +
-  theme_minimal() + 
-  labs(y="CO Emissions (ppm)", x="Installation of EES")
-```
+When performing a two-sample $t$-test we are essentially testing $H_0:\ \delta=0$ versus $H_A:\ \delta\neq 0$. 
+Note that if $H_0$ were true, we are back to the baseline model \@ref(eq:baseModel). 
 
-To jazz up our plot we can add the overall effect by including some summary values.
-First we calculate summary statistics. Since we use a `group` variable for each vehicle we need to *trick* R into plotting the overall summary line as well, thus we create an `id="Summary"` variable in `vehicleCO.summary` to use as a `group` variable.
-We also tweak the $x$-axis scale by limiting the amount of space around the before and after markings.
-The code below produces Figure \@ref(fig:ch2-7).
+So to frame this another way, a two-sample $t$-test is a choice of
 
-```{r ch2-7annotated, message=FALSE, fig.align='center', fig.cap='Profiles of each vehicle, with average profile highlighted in a thick dark red line, demonstrating a general decrease in CO emissions after EES installation.', out.width='70%', fig.asp=0.55}
-vehicleCO.summary <- vehicleCO.tall %>%
-  group_by(Time) %>%
-  summarize(CO=mean(CO),
-            id="Summary")
+$$H_0: \textrm{Baseline Model} ~~~ Y_i = \mu + \varepsilon_i$$
+and
+$$H_A: \textrm{More complex model} ~~~ Y_i = \mu + \delta\cdot X_i + \varepsilon_i.$$
 
-ggplot(vehicleCO.tall) + 
-  geom_line(aes(x=Time, y=CO, group=id), color="gray50" ) +
-  geom_line(data=vehicleCO.summary, aes(x=Time, y=CO, group=id), color="darkred", size=2) +
-  labs(y="CO Emissions (ppm)", x="Installation of EES") + 
-  scale_x_discrete(expand=c(0.075, 0.075) ) + 
-  theme_minimal()
-```
+To tie everything together note that in $H_A$ we are essentially describing observation $Y_i$ as a function of the variable $X_i$. Because of this we typically refer to $Y_i$ as the **response** (or dependent) variable and $X_i$ as a **predictor** (or independent) variable. 
+This coincides with the R `formula` notation, `response ~ predictor`.
 
-Based on the two plots, coupled with the results of the paired $t$-test, it is clear there is significant decrease in CO emissions after installation of the EES.
+**Back to the example**
+
+In this observational study, we compared the ACT scores of incoming freshmen in 1996 and compared them to ACT scores for the incoming class of 2000. With a $p$-value of 0.7634 on 277 degrees of freedom, we do not have evidence to suggest that the ACT scores for freshmen in 1996 differs from those in 2000.
+
+
+
+
 
 ## One-Way ANOVA
 
-When there is a single factor whose levels may only change between different EUs, we can analyze the effect of the factor on the response by using a one-way analysis of variance (one-way ANOVA) on the between-subjects factor.
-If we had a single factor with just two levels, you could still use a one-way ANOVA, but it would be equivalent to running an independent samples $t$-test (see earlier material).  
+When there is a single factor variable whose levels may only change between different experimental units, we can analyze the effect of the factor on the response using a one-way analysis of variance (one-way ANOVA) on the between-subjects factor.
+If we had a single factor with just two levels, you could still use a one-way ANOVA, but it would be equivalent to running an independent samples $t$-test (see above for an example). In this sense, one-way ANOVA is an extension of the two-sample $t$-test (think a $k$-sample test).
 
 In this design, we observe random samples from $k$ different populations.
 As a designed experiment, these populations may be defined on the basis of an administered treatment.
 The levels of the factor being manipulated by the researcher form the different treatments.
 Frequently, the data are obtained by collecting a random sample of individuals to participate in the study, and then randomly allocating a single treatment to each of the study participants.
 If so, then **the individual subjects (experimental units) receiving treatment $j$ may be thought of as a random sample from the population of all individuals who could be administered treatment $j$**. 
+
+In an observation study, the different factor levels are observed when the data is collected.
+Again, if the data are collected as a random sample, the individual subjects in each of the $k$ treatmetns can be considered a random sample from that sub-population.
+
+### Model Structure
 
 The one-way data structure looks like the following:
 
@@ -446,6 +365,7 @@ Y_{13} & Y_{23} & \ldots & Y_{k3} \\
 Y_{1n_{1}} & Y_{2n_{2}} & \ldots & Y_{kn_{k}} \\
 \hline
 \end{array}$$
+where $Y_{ji}$ is the $i^\mathrm{th}$ observation within treatment $j$, for $j=1,\ldots,k$ and $i=1,\ldots, n_j$.
 
 The model for such data has the form 
 \begin{equation}
@@ -453,7 +373,9 @@ Y_{ji} = \mu_j + \varepsilon_{ji}
 (\#eq:onewayAnovaModel)
 \end{equation}
 where $\mu_j$ is the mean of the $j^\mathrm{th}$ treatment, $j=1,\ldots,k$, or more commonly,
-$$Y_{ji} = \mu + \tau_j + \varepsilon_{ji}$$
+$$
+Y_{ji} = \mu + \tau_j + \varepsilon_{ji}
+$$
 where 
 
 * $Y_{ji}$ is the $i^\mathrm{th}$ observation in the $j^\mathrm{th}$ treatment.
@@ -461,28 +383,69 @@ where
 * $\tau_j$ is the deviation of the mean by the $j^\mathrm{th}$ treatment population from the overall mean $\mu$.
 * $\varepsilon_{ji}$ is the random error term.
 
+Similar to the two-sample $t$-test formulas above, this equation can also be written as 
+\begin{equation}
+Y_{i} = \mu_1 + \delta_2 X_{2i} + \delta_3 X_{3i} + \ldots + \delta_k X_{ki} + \varepsilon_{i}
+(\#eq:onewayAnovaLinearModel)
+\end{equation}
+where
+
+* $Y_i$ is the $i^\mathrm{th}$ observation.
+* $\mu_1$ is the mean of the first treatment.
+* $\delta_j$ is the difference between the $j^\mathrm{th}$ treatment mean and the first treatment mean; *i.e.*, \mu_j = \mu_1 + \delta_j$.
+* $X_{ji}$ is an indicator variable, indicating if the $i^\mathrm{th}$ observation is in the $j^\mathrm{th}$ treatment; *i.e.*, $X_{ji}=1$ when the $i^\mathrm{th}$ observation is in group $j$, otherwise $X_{ji}=0$.
+
 The usual test of interest in a one-way analysis of variance is to compare the population means.
 The null and alternative hypotheses are given by:
 
 $$H_0: \mu_1 = \mu_2 = \ldots = \mu_k$$
-$$H_a: \textrm{at least two of the population means differ}$$
+$$H_a: ~\textrm{at least two of the population means differ}$$
 
-Expressed in terms of the more commonly used model parameters, we really want to test to see if there are no treatment mean deviations among the populations, so the above hypotheses can be equivalently expressed as follows:
+Expressed in terms of the $\tau$-model parameters, we really want to test to see if there are no treatment mean deviations among the populations, so the above hypotheses can be equivalently expressed as follows:
 
 $$H_0: \tau_1 = \tau_2 = \ldots = \tau_k = 0$$
-$$H_a: \textrm{at least one } \tau_j \neq 0$$
+$$H_a: ~\text{at least one } \tau_j \neq 0~~~~~\text{for}~j=1,\ldots, k$$
 
-In terms of modeling, we are testing
+An alternative formulation is based on the coefficients on the function with indicator variables:
 
-$$H_0: \textrm{Baseline Model:} ~~ Y_{ji} = \mu + \varepsilon_{ji}$$
+$$H_0: \delta_2 = \delta_3 = \ldots = \delta_k = 0$$
+$$H_A: ~\text{at least one } \delta_j \neq 0~~~~\text{for}~j=2,\ldots,k$$
+With this last formulation, under $H_0$ all the $\delta_j$ terms equal zero, so the $X_{ji}$ terms have no effect on the response, and the model reduces to the baseline model $Y = \mu+\varepsilon$ in \@ref(eq:baseModel).
 
-$$H_0: \textrm{More Complex Model:} ~~ Y_{ji} = \mu + \tau_j + \varepsilon_{ji},~~\textrm{at least one}~\tau_j\neq0$$
+In terms of modeling, we are testing:
 
-We can test these hypotheses by partitioning the total variability in the response into two components: (1) variation between treatments, and (2) variation within treatments.
-The latter partition is essentially residual error (unexplained variability) while the former is the explained variability.
-An $F$-test is performed to run the test. 
+$$H_0: \textrm{Baseline Model:} ~~~ Y_{ji} = \mu + \varepsilon_{ji}$$
+$$H_a: \textrm{More Complex Model:} ~~~ Y_{ji} = \mu + \tau_j + \varepsilon_{ji},~~\textrm{at least one}~\tau_j\neq0$$
+and we note the more complicated model can be expressed a few different ways.
 
-The $F$-test works like other hypothesis test. 
+### Testing Procedure
+
+We test these equivalent hypotheses by partitioning the total variability in the response into two components: (1) variation between treatments, and (2) variation within treatments:
+$$\textbf{Variance in Response} = \textbf{Variance between Treatments} + \textbf{Variance within Treatments}$$
+Recall from section \@ref(variabilityDiscussion) that the variance is essentially a function of the sum of square deviations.
+In this sense, we decompose the sum of square deviations as follows:
+\begin{equation}
+\begin{split}
+SST &= SSM + SSE \\
+\displaystyle\sum_{j=1}^k\sum_{i=1}^{n_j} \left(y_{ji} - \bar{y}\right)^2 &= \displaystyle\sum_{j=1}^kn_j\left(\bar{y} - \bar{y}_j\right)^2 + \sum_{j=1}^k\sum_{i=1}^{n_j}\left(y_{ji} - \bar{y}_j\right)^2
+\end{split}
+(\#eq:anovaDecomp)
+\end{equation}
+where $\bar{y}_j$ is the mean of the $j^\mathrm{th}$ group with sample size $n_j$ and $\bar{y}$ is the mean of all the observations. 
+Before describing these terms in some detail please note we will never **need these equations** to perform our analysis, but their structure can be helpful in explanation. Here,
+
+* $SST$ is the **total sum of squares** (or sum of squares total). From the equation, this is the same squared deviations in the calculation of $s^2$. SST essentially measures the total variability in the response variable (without including any effects from the treatments).
+* $SSM$ is the **model sum of squares** (or the sum of squares explained by the model), which in a one-way ANOVA captures the variance between the treatments. Note that the equation compares the means of each treatment group to the overall mean, essentially measuring the variability among the $k$ different means.
+* $SSE$ is often called the **sum of squares error** (a bit of a misnomer since no *error* has occurred) or residual squared error. It measure the unexplained variability, or the variability within the different treatments (look at the equation, it compares each observation to its treatment mean). 
+
+
+The variation between treatments ($SSM$), effectively is the variability that is explained by the structural components in the model. 
+The latter partition ($SSE$) is essentially residual error, or unexplained variability.
+The derivation of this partitioning are outside the scope of this text, but we will *hint* at the ideas further in Chapter \@ref(regInferenceChp).
+The resulting method for this hypothesis is the ANOVA $F$-test which essentially compares $SSM$ to $SSE$ -- if $SSM$ is *large* relative to $SSE$, then the different treatments are explaining substantial variability in the response. If $SSM$ is *small* relative to $SSE$, then the treatments are not explaining much variability. 
+The details of this derivation are not important for our purposes, but the resulting method is known as the $F$-test.
+
+The $F$-test works like other hypothesis test you may have seen (*e.g.*, the $t$-test or $\chi^2$ goodness-of-fit test). 
 The test statistic is a ratio of variance estimates and follows the Fisher-Snedecor distribution (or $F$-distribution for short).
 The details of this distribution are not important for this course and are covered in a Mathematical Statistics course.
 An example of a one-way ANOVA in R is provided below.
@@ -493,7 +456,7 @@ An example of a one-way ANOVA in R is provided below.
 
 Immobilization of free-ranging white-tailed deer by drugs allows researchers the opportunity to closely examine deer and gather valuable physiological information. 
 Wildlife biologists tested the "knockdown" time (time, measured in minutes, from injection to immobilization) of three different immobilizing drugs.
-Thirty male white-tailed deer were randomly assigned to each of three treatments: Group *A* received 5mg of liquid succinylcholine chloride (SCC); group *B* received 8 mg of powdered SSC; and group *C* received 200 mg of phencyclidine hydrochloride. 
+Thirty male white-tailed deer were randomly assigned to each of three treatments: Group A received 5mg of liquid succinylcholine chloride (SCC); group B received 8 mg of powdered SSC; and group C received 200 mg of phencyclidine hydrochloride. 
 
 Original Source: @Wesson1976
 
@@ -512,178 +475,393 @@ glimpse(deer_knockdown_times)
 
 **Note** the subtle change in the code compared to `read_csv()` and `read_table()`. When loading an R data.frame from a website, we need to use the `url()` function to open and close the internet connection inside the `load()` function.
 
-We can then plot the data.
+After inputting the data into R, we will take a quick look at some summary statistics. Using the methods of Chapter 1, we build a table of summary statistics by treatment group.
 
-```{r ch2-8, fig.align='center', fig.cap="Side-by-side Box-whiskers plots, with data overlayed jittered data, and treatement means (gray diamond), showing the distribution of 'knockdown' times for each of the three drug treatments, `A`, `B` and `C`. Overall we see immobilization times is highest in treatment `A`, followed by `B` and `C`. We Also note that variability appears greatest in treatment `A`, followed by `B` and `C`.", out.width='70%', fig.asp=0.65}
-ggplot(deer_knockdown_times, aes(x=Drug, y=Knockdown_time )) + 
+```{r ch2-8summaryTable}
+deer_knockdown_times |>
+  group_by(Drug) |>
+  summarize(Mean = mean(Knockdown_time),
+            SD = sd(Knockdown_time),
+            Min = min(Knockdown_time),
+            Median = median(Knockdown_time),
+            Max = max(Knockdown_time) ) |>
+  kable(digits=3) |>
+  kable_styling(full_width=FALSE)
+```
+
+
+We also provide a plot of the data -- here we plot Box-Whiskers plots by Drug, while overlaying the original data using a jitter plot and including the sample mean of each group.
+
+```{r ch2-8, fig.align='center', fig.cap="Box-whiskers plots, with data overlayed jittered data, and treatement means (gray diamond), showing the distribution of 'knockdown' times for each of the three drug treatments, A, B and C. Overall we see immobilization times is highest in treatment A, followed by B and C. We Also note that variability appears greatest in treatment A, followed by B and C.", out.width='60%', fig.asp=0.55}
+ggplot(deer_knockdown_times, aes(x=Knockdown_time, y=Drug)) + 
   geom_boxplot() + 
-  geom_jitter(width=0.25) +
+  geom_jitter(height=0.25) +
   stat_summary(fun="mean", geom="point", shape=23, fill="gray60", size=4) + 
-  labs(x="Drug Treatment", y="Time to Immobilization (min)") + 
+  labs(x="Time to Immobilization (min)", y="Drug Treatment" ) + 
   theme_minimal()
 ```
 
-Visually it appears the immobilization times under drug C seem to be noticeably lower on average than for the other two drugs.
-Also, we may suspect the variance of immobilization times is different between the three drugs.
-That is, the distributions of times for drugs *A* and *B* are more disperse than for drug *C*.  
+Visually it appears the immobilization times under drug C seem to be noticeably lower on average than for the other two drugs (Drug C has a mean of 4.9 compared to 10.3 and 9.0 for A and B, respectively).
+Also, we may suspect the variance of immobilization times is different between the three drugs (the width of the box-plots and the reported standard deviations).
+That is, the distributions of immobilization times for drugs A and B are more disperse than for drug C.  
 
-To perform One-Way ANOVA we employ the `aov` function (for Analysis Of Variance).
-We use the `summary()` function to see its full output.
+To perform One-Way ANOVA we employ the `aov()` function (for Analysis Of Variance).
 
 ```{r ch2-9}
 fit.drug <- aov(Knockdown_time ~ Drug, data=deer_knockdown_times)
-summary(fit.drug)
 ```
 
-We see One-Way ANOVA report a significant $p$-value ($p$-value of 0.0102) but we'll soon see there are problems with this result.
+That's it!
+The single line of code above fits the model described in \@ref(eq:onewayAnovaModel) with $k=3$ treatments corresponding to the three Drug types.
 
-## Assumption Checking{#assumptionCheck}
+#### Coding Notes
 
-Arguably the most important aspect in statistics is the assumptions made with the chosen statistical model.
+The line of code above is fairly straightforward but R has done many things in that single line of code.
+The provided formula, `Knockdown_times ~ Drug`, and data declaration, `data=deer_knockdowntimes`, provide `aov()` all the information needed to fit the model. 
+Later in the class we will see more complex formula statements but they all have the same general form: `response ~ predictor`.
+
+The function call, `aov()`, estimates (or fits) the aforementioned linear model and calculates many associated parameters regarding that model.
+The `fit.drug <-` part of the code says to save that model in a new object that we call `fit.drug`.
+Much like the data types discussion in Section \@ref(dataTypesSection), the object `fit.drug` is a variable in R and has an associated type:
+
+```{r ch2-9a}
+class(fit.drug)
+```
+
+The object `fit.drug` has two associated classes: the `aov` type and `lm` type. 
+This is because all ANOVA models are technically Linear Models (hence `lm`), so both object classes are assigned.
+Recall the derivation above where we write the response as a function of indicator variables in the form of a linear model, see \@ref(eq:onewayAnovaLinearModel).
+We also mentioned that the `aov()` calculates many parameters associated with that model. 
+The below code is only provided for explanatory purposes (it will never be needed to complete an analysis) but we can see most of the information that is stored in the `fit.drug` object with the `names()` function.
+
+```{r ch2-9b}
+names(fit.drug)
+```
+
+The object has 13 components of information stored in it!
+Some of these pieces of information are *technical* parameters that you will never need (*e.g*, `qr`), but others are part of a formal analysis and we will use them later.
+Although rarely needed for the analysis, it is worth noting that one piece of information is the model `coefficients`.
+Their exploration can be enlightening towards understanding the equation of the ANOVA model \@ref(eq:onewayAnovaLinearModel). 
+
+```{r ch2-9c}
+coefficients(fit.drug)
+```
+
+Here the `(Intercept)` has the value 10.3, which corresponds to the mean immobilization times for Drug A.
+The variable `DrugB` takes on the value -1.3, which is the estimated $\delta_j$ term from equation \@ref(eq:onewayAnovaLinearModel) for treatment B, and note that $10.3 + (-1.3) = 9.0$ which is the mean immobilization times for Drug B.
+Likewise, `DrugC` is the estimated value of $\delta_j$ in \@ref(eq:onewayAnovaLinearModel) for treatment C and $10.3 - 5.4 = 4.9$ is the mean immobilization time for Drug C. 
+
+
+
+Before proceeding with the analysis of the model output, we need to check the assumptions of our underlying model.
+
+
+
+
+
+
+
+## Model Assumptions \& Assessment {#assumptionCheck}
+
+Arguably the most important aspect in an analysis is the assumptions made with the chosen statistical model.
 In the field of statistics there are two types of assumptions made:
 
 1. Assumptions about the systematic structure.
 2. Assumptions about the random variation.
 
-Most of the time, when referring to assumptions we are concerned about 2: Assumptions about the random variation. 
+Most of the time, when referring to "assumptions" we are concerned about 2: Assumptions about the random variation. 
 However, it is important to consider the assumptions on the structure.
-In all of our models/testing discussed above, we are assuming the response variable is a linear function on the predictor variable (consider \@ref(eq:twoSampleTtest)). 
-Based on context, it is important to consider if a linear structure is appropriate.
 
-In this class, along with nearly all methods you learned in your Intro Stat course, we make the following assumptions about the underlying stochastic (*i.e.*, random) part of the response variable, $\varepsilon$:
+
+
+### Structural Assumptions
+
+In all of our models/testing discussed above, we are assuming the response variable is a linear function on the predictor variable(s) (consider \@ref(eq:twoSampleTtest) and \@ref(eq:onewayAnovaModel), both are linear equations).
+This assumption becomes more important later in the course when discussing linear regression.
+Here, since the model is looking at factors, or categorical treatments, as the inputs, the linear equation reduces to comparing the mean of each group.  
+From context, it is important to determine if this structure is appropriate.
+
+
+
+### Random Variation Assumptions
+
+In this class, along with nearly all methods you learned in your introductory statistics course, we make the following assumptions about the underlying random variation (*i.e.*, stochastic part) of the response variable, $\varepsilon$:
 
 * The $\varepsilon_i$ terms are independent.
-* The variance of $\varepsilon_i$ is homogeneous; *i.e.*, $Var(\epsilon_i)=\sigma^2$ is constant for all $i=1,\ldots,n$. This is sometimes known as being homoskedastic.
+* The variance of $\varepsilon_i$ is homogeneous; *i.e.*, $Var(\epsilon_i)=\sigma^2$ is constant for all $i=1,\ldots,n$. This is sometimes known as being homoskedastic or having "constant variance".
 * The $\varepsilon_i$ terms are Normally distributed.
 
 Collectively, the three assumptions simply state
 $$\varepsilon_i \stackrel{iid}{\sim} N(0, \sigma^2), ~~\textrm{for variance}~\sigma^2$$
 
 **Important Note.** In the above bullet points, the assumptions are listed in their order of importance. 
-If you lack independence, *nearly all* statistical methods we will cover in this text are invalid. 
-The constant variance assumption can be important but in many cases we can address it. 
-Lastly, the Normality assumption tends to not be all that important except in small sample sizes and when the data is heavily skewed -- we can also address it in many cases.
+If you lack independence, *nearly all* statistical methods we cover in this text are invalid. 
+The constant variance assumption is important but in many cases violations of the assumption can be addressed. 
+Lastly, the Normality assumption tends to not be all that important except in small sample sizes and when the data are heavily skewed -- but we can also address issues with Normality in many cases.
 
-### Independence
+
+
+#### Independence
 
 In general, independence (or lack thereof) is the result of the sampling scheme employed during data collection. 
 If you collect your data according to a well designed experiment or a simple random sampling scheme with one observation per subject, there is usually no reason to suspect you will have a problem. 
-Data collected sequentially in time (*e.g.*, daily high temperatures or repeated measures on the same subject) will exhibit a phenomenon known as autocorrelation (or serial correlation) and is a major problem!
-Specialized methods are needed for this type of data (see Section \@ref(within-subject-designs)).
+Data collected sequentially in time (*e.g.*, daily high temperatures or repeated measures on the same subject) will exhibit a phenomenon known as autocorrelation (also called serial correlation) and is a major problem!
+Specialized methods are needed for this type of data. We will briefly cover the idea of repeated measures in Section \@ref(within-subject-designs), while a general treatment of autocorrelation is excluded from our work.
 
 
 
-### Constant Variance
+#### Constant Variance
 
-To assess the constant variance assumption we typically consider two simple plots: a Residuals vs Fitted plot and Scale-Location plot as seen in Figure \@ref(fig:ch2-10) (code to generate the plot available below).
+To assess the constant variance assumption we typically consider two simple plots: the 'Residuals vs Fitted' plot and 'Scale-Location' plots as seen in Figure \@ref(fig:ch2-10) (code to generate the plot is provided below). 
 
-```{r ch2-10, echo=FALSE,  fig.cap='Residual diagnostic plots showing a *fanning* effect in the residuals vs fitted and increasing linear trend in the Scale-Location plot, thus suggesting the variance increases with the mean.', out.width='70%', fig.align='center', fig.asp=0.55}
+```{r ch2-10, echo=FALSE,  fig.cap='Residual diagnostic plots showing a *fanning* effect in the residuals vs fitted and increasing linear trend in the Scale-Location plot, thus suggesting the variance increases with the mean.', out.width='70%', fig.align='center', fig.asp=0.50}
 autoplot(fit.drug, which=c(1,3), nrow=1)
 ```
 
-**What is a residual?** 
+Before reading these plots, we need to answer two questions: **What is a residual?** *and* **What is a fitted value?** 
 
-Consider the baseline model \@ref(eq:baseModel). 
-We can estimate $\mu$ with $\bar{Y}$ and we would predict each observed $Y_i$ with $\hat{Y}_i=\bar{Y}$. 
-From there, we can approximate the random variation of the $i^\mathrm{th}$ observation $\varepsilon_i$ with $e_i = Y_i - \hat{Y}_i = Y_i - \bar{Y}$. 
-The values $\hat{Y}_i$ are known as the *fitted*, or *predicted*, values and $e_j$ as the sample *residuals*.
+Consider the baseline model \@ref(eq:baseModel), $Y = \mu + \varepsilon$. 
+We can estimate $\mu$ with $\bar{y}$, then we could *predict* each unobserved $Y_i$ with $\hat{Y}_i=\bar{y}$. 
+From there, we can approximate the random noise of the $i^\mathrm{th}$ observation $\varepsilon_i$ with $e_i = Y_i - \hat{Y}_i = Y_i - \bar{y}$. 
+The values $\hat{Y}_i$ are known as the **fitted**, or *predicted*, values and the $e_i$ terms are the sample **residuals**.
 
-In the case of the One-Way ANOVA model \@ref(eq:onewayAnovaModel), we would calculate a different mean $\bar{Y}_J$ for each of the $k$ treatments and each $Y_{ji}$ would be predicted by the appropriate $\bar{Y}_j$ for $j=1,\ldots,k$.
-The sample residuals would be found by $e_{ji} = Y_{ji} - \hat{Y}_{ji} = Y_{ji} - \bar{Y}_j$.
+In the case of the One-Way ANOVA model \@ref(eq:onewayAnovaModel), we would calculate a different mean $\bar{y}_J$ for each of the $k$ treatments and each $Y_{ji}$ would be predicted by the appropriate $\bar{y}_j$ for $j=1,\ldots,k$.
+The sample residuals would be found by $e_{ji} = Y_{ji} - \hat{Y}_{ji} = Y_{ji} - \bar{y}_j$.
+Also recall that a fitted `aov` object in R already contains the residuals and fitted values.
 
 **How to read these plots?**
 
 A residuals versus fitted plot is provided in the left panel of Figure \@ref(fig:ch2-10). 
 If all is well, you should see fairly uniform ("constant") spread of the points in the vertical direction and the scatter should be symmetric vertically around zero. 
-The vertical spread here looks like it might be expanding as the fitted values increase (fanning effect), suggesting that there may be non-constant error variance.  
+The vertical spread here looks like it might be expanding as the fitted values increase (look at the dots from left-to-right, we see a 'fanning' effect where the vertical spread for fitted values around 5 is more narrow, than the spread at fitted values of 9, and the largest is at the fitted values near 10.5), suggesting that there may be non-constant error variance.  
+
+**Note:** In the case of ANOVA, you will also see *stacked* dots, or vertical stratification in the Residuals vs Fitted plot. This is an artifact of the fitted values -- all observations in the same treatment are predicted with the same value ($\bar{y}_j$), so you should expect to see this stratification.  Also, when looking at ANOVA, we can generally *ignore* the plotted trend line (blue line in the left panel above). It will be more useful when assessing linear regression. 
 
 An attempt at refining the residuals vs fitted plot is given in the plot on the right in Figure \@ref(fig:ch2-10), called the Scale-Location plot. 
 The difference now is that instead of plotting the raw residuals $e_{ij}$ on the vertical axis, R first standardizes them (so you can better check for extreme cases), takes their absolute value (to double the resolution in the plot) and then takes their square root (to remove skew that sometimes affects these plots). 
-R then adds a trend line through the points: if the constant variance assumption is OK, this trend line should be roughly horizontal. 
-Here, you can see it trending upward, so we may have a constant variance problem. 
+R then adds a trend line through the points: if the constant variance assumption is reasonable, this trend line should be roughly horizontal. 
+Here, you can see it trending upward, so we likely have a variance that is increasing with the fitted values (*i.e.*, we not have constant variance).
 
-Using the absolute values of the residuals is a good refinement. 
-The reason is because we really do not care if a residual is positive or negative: all we are looking for is if the scatter is uniform across the plot. 
-Thus, by looking at the magnitude of the residuals only by taking absolute values (and not their direction), we are actually improving the resolution of the information that the plot contains in addressing constant variance.
+**Note:** Using the absolute values of the residuals in the Scale-Location plot is often a good refinement. 
+The reason being we typically do not care if a residual is positive or negative: all we are looking for is if the scatter is uniform across the plot. 
+Thus, by looking at the magnitude of the residuals only (and not their direction), we are actually improving the resolution of the information that the plot contains in addressing constant variance.
+Also, like with the Residuals vs Fitted plot, we will see vertical stratifications since our fitted values are the sample mean within a treatment group.
 
 
-### Checking Normality
+#### Checking Normality
 
 
 We typically make this assessment with a Normal quantile-quantile (Q-Q) plot. 
 
-```{r ch2-11, echo=FALSE, out.width='65%', fig.cap='Normal Q-Q plot demonstrating the residuals may deviation from the Normality assumption.', fig.align='center'}
+```{r ch2-11, echo=FALSE, out.width='65%', fig.cap='Normal Q-Q plot demonstrating the residuals may deviation from the Normality assumption.', fig.align='center', out.width='60%', fig.asp=0.55}
 autoplot(fit.drug, which=c(2), nrow=1)
 ```
 
 In a normal Q-Q plot, the observed sample values (the "sample quantiles") are plotted against the corresponding quantiles from a reference normal distribution (the "theoretical quantiles").
-If the parent population is normally distributed, then the sample values should reasonably match up one-to-one with normal reference quantiles, resulting in a plot of points that line up in a linear (straight line) fashion.  
+If the parent population is normally distributed, then the sample values should reasonably match up one-to-one with normal reference quantiles, resulting in a plot of points that line up in a linear "45-degree" fashion.  
 
 A normal Q-Q plot of the residuals is presented in Figure \@ref(fig:ch2-11).
 A common *tool* to analyze these plots is sometimes known as the "fat pencil" test.
-Consider the thick pencils children are given when learning to write -- if you lay that pencil on the plotted line, if all the points are covered by the pencil the data is approximately normally distributed.
+Consider the thick pencils children are given when learning to write -- lay that pencil on the plotted line, if all the points are covered by the pencil then the data is approximately normally distributed.
 
 In Figure \@ref(fig:ch2-11) there is some deviation from the line (observations 13 and 7).
 Coupled with the issues with variance outlined above, we may have evidence to suggest the normality assumption is not met.
 
 **Note:** It is quite common for violations of constant variance and normality to go hand-in-hand.
-That is, if there are concerns about one, it is common for there to be concerns regarding the other.
+That is, if there are concerns about one, it is likely there will be concerns regarding the other.
 
 ### Code to check assumptions
 
 The code to generate the above plots can be achieved via the `autoplot` function when including the `ggfortify` library [@R-ggfortify]. 
-The `autoplot` function provides 4 plots by default seen in Figure \@ref(fig:ch2-12) (note: we will discuss the Constant Leverage plot in Section \@ref(detecting-and-dealing-with-unusual-observations)).
+The `autoplot` function on the fitted model provides 4 plots by default as seen in Figure \@ref(fig:ch2-12) (note: we will discuss the Constant Leverage plot in Section \@ref(detecting-and-dealing-with-unusual-observations)).
 
-```{r ch2-12, message=FALSE, fig.align='center', fig.cap='Residual plots for the One-Way ANOVA studying the effect of different drugs on immobilization times - Top-left a Residuals vs Fitted Plot; Top-right a Normal Q-Q plot of the residuals; Bottom-left the Scale-Location plot; and Bottom-right a Residuals vs Leverage plot.', fig.asp=1, out.width='80%'}
+```{r ch2-12, message=FALSE, fig.align='center', fig.cap='Residual plots for the One-Way ANOVA studying the effect of different drugs on immobilization times - Top-left a Residuals vs Fitted Plot; Top-right a Normal Q-Q plot of the residuals; Bottom-left the Scale-Location plot; and Bottom-right a Residuals vs Leverage plot.', fig.asp=0.9, out.width='70%'}
 library(ggfortify)
 autoplot(fit.drug)
 ```
 
-### Transforming your response
 
-We have evidence from the above plots that the variance appears to be increasing with the response (determined by assessing the constant variance assumption) and that there may be some violations to normality. 
-One way to typically address this issue is to transform the response variable. 
-We will go into more details later but common transformations include $Y^*=log(Y)$, $Y^*=\sqrt{Y}$ and $Y^*=1/Y$. 
-Here we will use a logarithmic as it is fairly common. 
-Later in the class we will describe the other transformations in more detail. 
-We can achieve this in R with the following which provides the residuals plots in Figure \@ref(fig:ch2-13).
+#### Coding Notes
 
-```{r ch2-13, fig.width=7, fig.height=7, fig.align='center', fig.cap='Residual diagnostic plots when the response variable is the logarithm of the immobilization time. Here the heteroskedasticity and non-normality in the original model has been improved, albeit not entirely mitigated, with some minor fanning in the residuals vs fitted plot.', fig.asp=1, out.width='80%'}
-fit.log.drug <- aov(log(Knockdown_time) ~ Drug, data=deer_knockdown_times)
+You can think of the `autoplot()` function in `ggfortify` package as a *smart* function.
+That is, it makes some reasonable decisions for you.
+Specifically, you pass in the fitted ANOVA model (in this case `fit.drug`) and the `autoplot()` function determines the class of that model (here, the `aov` or `lm` type). 
+Recognizing that model type, `autoplot` extracts the residuals and fitted values from the model, and generates the 4 plots in Figure \@ref(fig:ch2-12). 
+With different object types, `autoplot()` will behave differently.
+
+
+
+## Transforming your response
+
+In cases where we have violations of our underlying assumptions, a common remedy is to **transform the response variable**. 
+
+In our working example, we have evidence from the above residual diagnostic plots that the variance appears to be increasing with the response (determined by assessing the constant variance assumption) and that there may be some violations to normality.
+One way to address this issue is to transform the response variable. 
+We will go into more details in a later chapter but common transformations include $Y^*=log_{10}(Y)$, $Y^*=\sqrt{Y}$ and $Y^*=1/Y$. 
+Here we will use a logarithmic as it is fairly common and more interpretable than most other transformations.
+To transform the response variable we use the `log10()` function.
+
+**Math Tangent**: Note that the logarithm function is a monotone increasing function.
+So if $a>b$ then $\log(a)>\log(b)$.
+Thus, if an ANOVA model tells us that the mean of the log-response under the treatments differ, we can reasonably infer that the mean of the treatments differ (in the original units).
+Also, recall from an algebra course that the base of the logarithm does not affect the overall behavior of the function (you can easily convert from one base to another with the 'change of base formula').
+For this reason, we recommend you use a base-10 logarithm as it is commonly used in most scientific fields and is fairly interpretable (can interpret as orders of magnitude).
+
+The following R code fits the one-way ANOVA model to the logarithm of knockdown times (transformed response) and provides the residuals plots in Figure \@ref(fig:ch2-13).
+
+```{r ch2-13, fig.width=7, fig.height=7, fig.align='center', fig.cap='Residual diagnostic plots when the response variable is the logarithm of the immobilization time. Here the heteroskedasticity and non-normality in the original model has been improved, albeit not entirely mitigated, with some minor fanning in the residuals vs fitted plot.', fig.asp=0.9, out.width='70%'}
+fit.log.drug <- aov(log10(Knockdown_time) ~ Drug, data=deer_knockdown_times)
 autoplot(fit.log.drug)
 ```
 
-This is a bit better but other transformations can be considered.
-For now we proceed with the logarithmic transformation.
+Note the improvement in the Normal Q-Q plot -- the observed quantiles closely match the theoretical quantiles.
+The Scale-Location plot shows that the issues with a changing variance have largely been addressed as we see a nearly horizontal line.
+In the Residuals vs Fitted plot the violation in constant variance has improved although some indication the vertical spread is increasing is still present.  
 
-The test comparing the three drug population means (on a log scale) is given via the `summary()` command:
+Overall, the logarithmic transformation has improved our model assumptions.
+We can try other transformations but a *perfect transformation* is unlikely to exist.
+When the variance increases with the fitted values, a logarithm on the response tends to useful.
+Later in the text we will discuss other approaches to transforming the response, but for now we proceed with the logarithmic transformation.
+
+### A note on logarithmic transformations
+
+Although logarithms tend to be somewhat easy to interpret, we do need to step through what is happening mathematically to properly interpret the results. 
+Before doing so, recall some properties of logarithms from your Algebra course:
+
+* $\log_{10}(1) = 0$,
+* For an $x$ such that $0 < a < 1$, $\log_{10}(a) < 0$,
+* For an $a>1$, $\log_{10}(a) > 0$,
+* $\log_{10}(ab) = \log_{10}(a) + \log_{10}(b)$ and $\log_{10}(a/b) = \log_{10}(a) - \log_10(b)$,
+
+and also recall the following power function properties:
+
+* $10^0 = 1$,
+* For an $a < 0$, then $0 < 10^a < 1$,
+* For an $a > 0$, then $10^a > 1$,
+* $10^{a+b} = 10^a\times 10^b$,
+
+and of course the relationship between power functions and logarithms:
+
+* $\log_{10}(10^a) = 10^{\log_{10}(b)} = a$.
+
+Now, if you consider equation \@ref(eq:onewayAnovaModel) with regard to our working example, $Y$ is the knockdown time but we fit the ANOVA model on $\log_{10}(Y)$. 
+So we have fit the following model:
+$$log_{10}(Y) = \mu_j + \varepsilon$$
+where each $\mu_j$ corresponds to the mean of the logarithm of the response in treatment $j$.
+Using the indicator variable ideas (see \@ref(eq:twoSampleTtest) for the two-sample $t$-test derivation), the model can be expressed as
+$$\log_{10}(Y_{i}) = \mu_A + \delta_B X_{Bi} + \delta_C X_{Ci} + \varepsilon_{ji}$$
+where $\mu_A$ is the mean of the logarithm of knockdown times in group A. $X_{Bi}$ takes on the value 1 if the $i^\mathrm{th}$ observation is in group B, otherwise it is zero. Likewise $X_{Ci}$ for group C. The value $\delta_B$ measures how the mean of log-knockdown times in group B differs from A, and $\delta_C$ how group C differs from A. 
+
+If we were to "un"-log the above model to the original units by raising each side to the power of 10, we get:
+$$10^{\log_{10}(Y)} = Y = 10^{\mu_j + \varepsilon} = 10^{\mu_j}\times 10^\varepsilon$$
+and
+$$10^{\log_{10}(Y_i)} = Y_i = 10^{\mu_A + \delta_B X_{Bi} + \delta_C X_{Ci} + \varepsilon_{ji}} = 10^{\mu_A} \times 10^{\delta_B X_{Bi}}\times 10^{\delta_C X_{Ci}} \times 10^{\varepsilon_{i}}$$
+by properties of logarithms and power rules.So technically speaking, in terms of the original units, we have fit a **multiplicative model** because the effects of each treatment (the $\delta_j$ terms) are changing the response by multiplicative factors.
+
+Interpretation of the multiplicative model is a bit more nuanced than that of a linear models since we are no longer simply adding or subtracting effects of different treatments. 
+
+Consider an observation from group A, $\mu_A$ is the mean of the base-10 logarithm knockdown times in group A. Now both $X_{Bi} = X_{Ci} = 0$ since the observation is in group A, and $10^0 = 1$. The expected value of $\varepsilon$ is zero, so the three power terms to the right all reduce to one, and the knockdown times are modeled via $Y_i = 10^{\mu_A}$ where $\mu_A$ is on a log-scale so we get back to the original units since $10^{\log_{10}(a)}=a$. 
+
+However, suppose the observation is from group B, now $X_{Bi}=1$ and $X_{Ci}=0$.
+The term $\delta_B$ measures how the mean of the logarithm of knockdown times in group B differ from group A; *i.e.*, $\delta_B = \mu_B - \mu_A$ where $\mu_A$ and $\mu_B$ are the means of the logarithm of knockdown times in groups A and B, respectively.
+In terms of the original units, the model is $10^{\mu_A}\times 10^{\delta_B}$, which effectively multiplies the effect of treatment A by $10^\delta_B$.
+Now, in this case we can replace $\delta_B$ with $\mu_B - \mu_A$ and some algebra results in $10^{\mu_B}$, and since $\mu_B$ is the mean of the logarithm knockdown times in group B, we are in the original units.
+
+
+
+
+## ANOVA Testing in R
+
+In the working example above, we fit a initial model, assessed its assumptions, transformed the response variable and fit the model again. Specifically, the following code was used in our model fitting for the deer immobilization times as a function of drug treatments:
+
+```{r ch2-fullmodelfit, eval=FALSE}
+# Input data from the course repository
+site <- "https://tjfisher19.github.io/introStatModeling/data/deerKnockdown.RData"
+load(url(site))
+
+# Fit the model with the original response
+fit.drug <- aov(Knockdown_time ~ Drug, data=deer_knockdown_times)
+
+# Check model assumptions
+autoplot(fit.drug)
+# We determined a transformation is warranted due to issues
+#    with the constant variance and normality assumption
+
+# Consider a log10 transformation on the response
+#    and asses the model assumptions
+fit.log.drug <- aov(log10(Knockdown_time) ~ Drug, data=deer_knockdown_times)
+autoplot(fit.log.drug)
+# Model assumptions looked acceptable
+```
+
+Now that we have assessed that the model reasonably meets the underlying assumptions, we can proceed and perform the analysis.
+The test comparing the three drug population means (on a log scale) is provided via an ANOVA table. 
+There are actually three different approaches to building this table in R.
+The `summary()` and `anova()` (excluded here, the result is nearly identical to `summary()`) commands both provide the table in R output:
 
 ```{r ch2-14}
 summary(fit.log.drug)
 ```
 
-The result is significant ($F$ = 8.219, $\textrm{df}_1$ = 2, $\textrm{df}_2$ = 27, $p$-value = 0.00163).
-Thus, we could conclude that at least two of the drugs produce significantly different log-mean immobilization times.
+An alternative approach that is useful when making reports is to use the `tidy()` function in the `broom` package [@R-broom] (installed along with the `tidyverse`).
+It creates a `data.frame` with the ANOVA table, then the `kable()` outputs an aesthetically pleasing table to a report:
 
-**Math Tangent**: Note that the logarithm function is a monotone increasing function. So if $a>b$ then $\log(a)>\log(b)$. Thus, we can infer that the mean immobilzation times for the three drug treatments also differs.
+```{r}
+library(broom)
+drug.anova.df <- tidy(fit.log.drug)
+kable(drug.anova.df, digits=3) |>
+  kable_styling(full_width=FALSE)
+```
 
-Of course, what remains to be seen is which pairs of drugs produce different log-mean immobilization times.
+### Reading an ANOVA table
+
+The ANOVA table includes quite a bit of information.
+The mathematical derivation and details on these components are not important for our purposes, but we do step through all the components of the ANOVA table:
+
+* Degrees of freedom (df). Here, we see two different degrees of freedom are reported.
+   + The df corresponding to the term `Drug` is the degrees of freedom associated with the different treatments. When there are $k$ treatments, there will be $k-1$ degrees of freedom.
+   + The df corresponding to `Residuals` are the degrees of freedom associated with the within treatment squared deviations. In the case of a One-way ANOVA, this will take on the value of $n-k$ where there are $n$ total observations on $k$ treatments.
+* Sum of squared deviations (Sum Sq). These are the $SSM$ and $SSE$ terms from equation \@ref(eq:anovaDecomp).
+   + Here, 0.5357 is the $SSM$ and 0.8800 is the $SSE$, we could calculate the $SST$ via $SST = 0.5357 + 0.8800 = 1.4157$.
+* Mean squared deviation (Mean Sq) - These are known as the mean squared deviations, and are calculated by dividing the sum of squared deviations by their corresponding degrees of freedom
+   + Here, $0.5357/2 = 0.2679$ for the Mean Squared deviations of the model (sometimes labeled $MSM$) and $0.8800/27 = 0.0326$ for the mean squared error (often labeled $MSE$).
+* The $F$-statistic is reported.
+   + It is calculated as $MSM/MSE$, so $0.2679/0.0326 = 8.219$
+* And the corresponding $p$-value; *i.e.*, the probability of observing a larger $F$-statistic by pure chance alone when the null hypothesis is true.
+   + Here, the $p$-value is $0.00163$.
+
+Typically, when reporting the results of ANOVA, we report the $F$-statistic, the two degrees of freedom, and the corresponding $p$-value. 
+Collectively, these four measures provide a reader with information to deduce the sample size, number of treatments and *effect* of the experiment.
+
+In our working example, we would report using language similar to the following:
+> With an $F$-stat of 8.219 on 2 and 27 degrees of freedom ($p$-value = 0.00163), we can conclude that at least two of the drugs produce significantly different mean log-immobilization times.
+
+### Conclusions and Limitation of ANOVA
+
+The results of a simple One-Way ANOVA are somewhat limited.
+The null hypothesis suggest the mean response is the same across all treatments, while the alternative tells us there *some* difference between mean responses.
+Unfortunately it provide no details on which treatments differ, or the magnitude of the differences.
+
+Specifically, in regards to the ANOVA testing the logarithm of knockdown times, we found there is a difference among the three drug treatments; essentially ANOVA tells us that the null hypothesis $H_0:\ \mu_A = \mu_B = \mu_C$ is rejected in favor of an alternative.
+Of course, what remains to be seen is which pair, or pairs, of drugs produce different log-mean immobilization times and the magnitude of those differences.
 For that, we will need to look at techniques known as multiple comparison procedures.
 
 
 ## Follow-up procedures -- Multiple Comparisons
 
-When there is no significant difference detected among treatment means, we can safely conclude that the treatment had no effect on the mean response that was any larger than the type of change we might expect just due to random chance.
+When there is no significant difference detected among treatment means, we can safely conclude that the treatment had no effect on the mean response. 
+This effectively says that any differences in means were no larger than the type of change we might expect due to random chance.
 In such a case, the analysis is essentially over, except that we might want to assess the size of the observed treatment differences for descriptive purposes.
 
-However, if significant differences are detected among the treatments (as in the example above), the ANOVA $F$-test does not inform you where the differences lie.
-In such a situation, a follow-up procedure known as a multiple comparison procedure is warranted for seeking out pairwise mean differences where they exist.
+However, if significant differences are detected among the treatments (as in the knockdown times example above), the ANOVA $F$-test does not inform you where the differences lie.
+In such a situation, a follow-up procedure known as a multiple comparison procedure is necessary to seek out pairwise mean differences.
 
-There are numerous multiple comparison methods in existence, and they all have certain advantages and disadvantages, and some are designed for specific sorts of follow-up comparisons.
-Here we will discuss two procedures for handling the following scenarios:
+There are numerous multiple comparison methods in existence, and they all have certain advantages and disadvantages.
+Some are designed for specific follow-up comparisons and can be customizable (known as *contrasts*).
+Here we will discuss procedures for handling the following scenarios:
 
-1. All possible pairwise comparisons
-2. All comparisons versus a control group
+1. All possible pairwise comparisons.
+2. All comparisons versus a control group.
 
 So for example, if we had a one-way design with five treatment groups *A*, *B*, *C*, *D* and *E*, there would be 10 possible pairwise comparisons:
 
@@ -703,50 +881,71 @@ A~\textrm{vs.}~D  \\
 A~\textrm{vs.}~E  \\
 \end{array}$$
 
-So what is the big deal?
+Now, you may say to yourself, "So what is the big deal? I'll just do 10 two-sample $t$-test!"  
+
 Well, if you find yourself in a multiple comparison situation, it is because you have declared that at least two groups differ based on the result of a single hypothesis test (the $F$-test). 
-For that test, you used a specific criterion to make the decision (probably $p$-value < 0.05).
+For that test, you used a specific criterion to make the decision (probably $p$-value < 0.05). 
+You performed the analysis with an accepted false positive rate, known as the Type I error rate, or $\alpha$ (again, likely $\alpha=0.05$).
 
-But to tease out where the differences are, you now need to run multiple tests under the same "umbrella". 
+But to tease out where the differences are, you now need to run multiple tests under the same "umbrella" or model. 
 That gives rise to something known as the multiple testing problem. 
-The problem is an increase in the false positive rate (also known as Type I error rate) that occurs when statistical tests are used repeatedly.
+The problem is an increase in the false positive rate (the Type I error rate) that occurs when statistical tests are used repeatedly.
 
-**Multiple testing problem**. If $m$ independent comparisons are made, each using a Type I error rate of $\alpha_{PCER}$, then the family-wise (overall) Type I error rate for all comparisons considered simultaneously is given by
-$$\alpha_{FWER} = 1 -  (1 - \alpha_{PCER})^m.$$
+### Multiple testing problem
 
-**Illustration: Coin flips.** Suppose that we declare that a coin is biased if in 10 flips it landed heads at least 9 times. 
+If $m$ independent comparisons are made, each using a Type I error rate of $\alpha$, then the family-wise (overall) Type I error rate (FWER) for all comparisons considered simultaneously is given by
+$$\alpha_{FWER} = 1 -  (1 - \alpha)^m.$$
+
+**Illustration: Coin flips.** 
+
+Suppose that we declare that a coin is biased if in 10 flips it landed heads at least 9 times. 
 Indeed, if one assumes as a null hypothesis that the coin is fair, then it can be shown that the probability that a fair coin would come up heads at least 9 out of 10 times is 0.0107. 
-This is relatively unlikely, and under usual statistical criteria such as "reject $H_0$ if $p$-value < 0.05", one would declare that the null hypothesis should be rejected — *i.e.*, declare the coin is unfair.
+This is relatively unlikely, and under usual statistical criteria such as "reject $H_0$ if $p$-value < 0.05", one would declare that the null hypothesis should be rejected given this probability — *i.e.*, declare the coin is unfair.
 
-A multiple testing problem arises if one wanted to use this test (which is appropriate for testing the fairness of a *single* coin) to test the fairness of many coins.
-Now, imagine if you were to test 100 coins by this method. 
-Given that the probability of a fair coin coming up 9 or 10 heads in 10 flips is 0.0107, one would expect that when flipping 100 coins ten times each, to see a particular (*i.e.*, pre-selected) coin come up heads 9 or 10 times would still be very unlikely, but seeing *some* coin (as in *any* of the 100 coins) behave that way, without concern for which one, would be more likely than not. 
-In fact, the likelihood that all 100 fair coins are identified as fair by this criterion is $(1 - 0.0107)^{100} \approx 0.34$. 
-Therefore the application of a "single-test coin-fairness criterion" to multiple comparisons would more likely than not **falsely identify** **at least one fair coin as unfair!**
+A multiple testing problem arises if someone wanted to use this criteria (which is appropriate for testing the fairness of a *single* coin) to test the fairness of many coins.
+So, imagine you were to test 100 different coins using this method. 
+For any particular coin (*i.e.*, some pre-selected coin), we would expect the likelihood of it flipping heads 9 or 10 times to be relatively small (in fact, it would be with probability 0.0107). 
+However, seeing *some* coin (as in *any* of the 100 coins) behave that way, without concern for which coin, is more likely. 
+In fact, the probability that all 100 fair coins are identified as fair by this criterion is $(1 - 0.0107)^{100} \approx 0.34$. This suggest, even if all 100 coins were in fact fair, the probably *some* coin is incorrectly flagged as unfair is approximately 66%.
+Therefore the application of a "single coin fairness criterion" to multiple comparisons would more likely than not **falsely identify** at least one fair coin as unfair!
 
-But alas, multiple testing is a reality and a natural follow-up procedure to ANOVA.
+The above illustration may seem contrived, but multiple testing is a reality and a natural follow-up procedure to ANOVA.
+If you conducted two hypothesis tests, each at $\alpha=0.05$, the family-wise error rate is `r 1-(0.95^2)`. 
+For three tests (*e.g.*, A vs B, A vs C and B vs C), the overall Type I error rate is `r 1-(0.95^3)`.
+
 To address the problem, many multiple comparison procedures have been developed that help control the accumulation of the false positive rate.
 Some methods perform better than others, but common to all of them is making adjustments to $p$-values or CIs based upon how many comparisons are being made. 
+
+One common approach is known as the *Bonferroni* method, which simply adjusts the significance level ($\alpha$) based on the number of test or confidence intervals being calculated.
+So for example, if you were making 6 comparisons and you wished to have a family-wide error rate of $\alpha_{FWER}=0.05$, perform each of the comparisons at $\alpha = 0.05/6 = 0.00833$.
+This method is known as being conservative since it guarantees a family-wide error rate less than nominal level (note, $1 - (1-0.008333)^6 = 0.04897 < 0.05$).
+
 Multiple comparisons in an ANOVA framework can be performed using the add-on R package `emmeans` [@R-emmeans]. 
-We will focus on two useful methods: Tukey’s HSD and Dunnett’s.
+The package `emmeans` is quite powerful. We only demonstrate a few pieces of its functionality here.
+For those interested in a more in depth look, we suggest checking out the [emmeans website](https://rvlenth.github.io/emmeans/index.html). 
+We will focus on two useful multicomparison methods: Tukey’s HSD and Dunnett’s.
+
+
 
 ### Tukey’s HSD method
 
-One of the more widely used methods is attributable to statistician John Tukey (creator of the Box-Whiskers plot and credited with creating the word "bit"). 
-It is sometimes referred to as Tukey’s Honestly Significant Difference method (honestly!). 
-It has the advantage of controlling the Type I error rate when performing all possible pairwise comparisons.
-First we load the library and then run our fitted model `fit.log.drug` through the `emmeans()` function. 
-Then we tell it to do a "pairwise" comparison via the `contrast()` function.
+One of the more widely used methods is attributed to statistician John Tukey (creator of the Box-Whiskers plot and credited with creating the word "bit"). 
+It is referred to as Tukey’s Honestly Significant Difference method (honestly!). 
+Essentially, it performs all pairwise two-sample $t$-test on all the treatments but has the advantage of controlling the Type I error rate.
+It *adjust* the $p$-values of each two-sample $t$-test to account for the fact you are performing more than one test.
+This is similar to the Bonferroni method, but Tukey's HSD is known to perform better.
+
+First we load the `emmeans` package and then run our fitted model `fit.log.drug` through the `emmeans()` function. We provide it a formula to inform how we wish to perform the comparisons. In this case the formula is simple since we only have a single factor input `~ Drug`. Lastly, to do a "pairwise" comparison we use the `contrast()` function and tell it the type of comparison to implement.
 
 ```{r ch2-15}
 library(emmeans)
-drug.mc <- emmeans(fit.log.drug, "Drug")
+drug.mc <- emmeans(fit.log.drug, ~ Drug)
 contrast(drug.mc, "pairwise")
 ```
 
-The significant differences are what we expected based on our earlier EDA: drug *C* is significantly different in terms of log-mean immobilization time as compared to the other two drugs. 
-This is borne out from the Tukey-adjusted $p$-values of 0.0027 (when comparing drugs *A* and *C*) and 0.0076 (when comparing drugs *B* and *C*). *B* and *A* are not significantly different. 
-The $p$-values in this output have been adjusted, so we can just compare them to our usual 0.05.
+The significant differences are what we expected based on our earlier EDA: drug C is significantly different in terms of log-mean immobilization time as compared to the other two drugs. 
+This is determined from the Tukey-adjusted $p$-values of 0.0027 (when comparing drugs A and C) and 0.0076 (when comparing drugs B and C). B and A are not significantly different ($p$-value of 0.9136). 
+The $p$-values in this output have been adjusted for performing 3 comparisons, so we can just compare them to the usual $\alpha=0.05$ or whatever Type I error rate you use.
 
 We can also obtain simultaneous 95% confidence intervals for the true mean differences due to each drug pairing using the `confint()` function on our `contrast` of an `emmeans` object:
 
@@ -756,55 +955,333 @@ confint(contrast(drug.mc, "pairwise"))
 
 These may be interpreted as follows:
 
-95\% CI for $\mu_A - \mu_B$ = (-0.386, 0.536).
-This interval contains 0, so we cannot conclude that the true log-mean immobilization time significantly differ between drugs *A* and *B*.
+95\% CI for $\mu_A - \mu_B$ = (-0.167, 0.233).
+This interval contains 0, so we cannot conclude that the true log-mean immobilization time significantly differ between drugs A and B.
 
-95\% CI for $\mu_A - \mu_C$ = (0.226, 1.148). 
-We can be 95\% confident that drug *A* produces a true log-mean immobilization time that is between 0.226 to 1.148 higher than drug *C*.
+95\% CI for $\mu_A - \mu_C$ = (0.0983, 0.499). 
+We can be 95\% confident that drug A produces a true log-mean immobilization time that is between 0.0983 to 0.499 higher than drug C.
 
-95\% CI for $\mu_B - \mu_C$ = (0.151, 1.073). 
-We can be 95\% confident that drug *B* produces a true log-mean immobilization time that is between 0.151 and 1.073 higher than drug *C*.
+95\% CI for $\mu_B - \mu_C$ = (0.066, 0.466). 
+We can be 95\% confident that drug B produces a true log-mean immobilization time that is between 0.066 and 0.466 higher than drug C.
 
-To put back in the original units we could "un"-log the intervals by taking exponents (use the `exp()` function since by default `log` takes a "natural log").
 
 We can also visualize these results via a plot:
 
-```{r ch2-17, fig.align='center', fig.cap='Tukey adjusted confidence interval plots comparing treatments treatments `A`, `B` and `C`. Here, we see that treatments `B` and `C` are significantly different as well as treatments `A` and `C`. We also note there is no significant difference between treatments `A` and `B`.', out.width='70%', fig.asp=0.55}
+```{r ch2-17, fig.align='center', fig.cap='Tukey adjusted confidence interval plots comparing treatments `A`, `B` and `C` on a log-scale. Here, we see that treatments `B` and `C` are significantly different as well as treatments `A` and `C`. We also note there is no significant difference between treatments `A` and `B` since the inverval includes zero.', out.width='60%', fig.asp=0.55}
 plot(contrast(drug.mc, "pairwise"))
 ```
 
-Here, we are interesting in comparing each plotted confident band to the value of 0.
+Here, we are interesting in comparing each plotted confident band to the value of 0. If zero is included in the interval, there is no statistical difference between those two treatments.  If the interval does not include zero, we can conclude there is a statistical difference.
+
+#### "Un"-transforming the response
+
+You should note in some of the above output that `emmeans` provides a message that the "Results are given on the `log10` (not the response) scale." To put back in the original units we could "un"-log the intervals by taking base-10 exponents (that is, raise 10 to the power of the value). But we need to take a moment to consider how to interpret the output.
+
+To explain, suppose we are interested in comparing groups A vs B. 
+Without a transformation, the Tukey HSD method effectively calculates the difference $\mu_A - \mu_B$ and this would lend itself to the two-sample $t$-test. 
+But when the response has been transformed with a logarithm, the two mean components are on a logarithmic scale and we would essentially be calculating the difference $\log_{10}(\mu_A) - \log_{10}(\mu_B)$, which by properties of logarithms is equivalent to $\log_{10}(\mu_A/\mu_B)$, or the logarithm of the ratio of the two mean values!
+Thus if we "un"-log that difference, we are left with $10^{\log_{10}(\mu_A/\mu_B)} = \mu_A/\mu_B$ and we are comparing the ratio of the mean of group A to mean of group B.
+If the mean of the two groups were equal, we'd expect this ratio to take on a value near one. 
+If the means differ, the ratio would be different than one.
+
+The `emmeans` provides the functionality to put the response in the original units when a logarithmic transformation has been used. We specify the `type="response"` parameter in the `contrast()` function call as follows:
+
+```{r ch2-15a}
+contrast(drug.mc, "pairwise", type="response")
+```
+
+You'll note that the `null` value is 1, and the results are consistent with the previous results -- a difference exist between group C and groups A and B.  We can also consider confidence intervals
+
+```{r ch2-16a}
+confint(contrast(drug.mc, "pairwise", type="response"))
+```
+
+and these intervals can also be visualized
+
+```{r ch2-17a, fig.align='center', fig.cap='Tukey adjusted confidence interval plots comparing the ratio of treatments `A`, `B` and `C` since the original model was fit on a log-scale. Here, we see that treatments `B` and `C` are significantly different as well as treatments `A` and `C`. We also note there is no significant difference between treatments `A` and `B` as the interval includes unity.', out.width='60%', fig.asp=0.55}
+plot(contrast(drug.mc, "pairwise", type="response"))
+```
+
 
 ### Dunnett multiple comparisons
 
 The Dunnett method is applicable when one of your experimental groups serves as a natural *control* to which you want to compare the remaining groups.
-**Note** that there is no *control* group in our working example, but we include the code below for demonstration purposes.
+**Note** that there is no *control* group in our working example of immobilization times, but we include the code below for demonstration purposes where treatment level "A" is the reference (`ref`) control group.
 
 In situations were a *control* group is present, it is advisable to use a method that only controls the family-wise error rate for the comparisons of interest, rather than over-controlling for all possible comparison such as when using a method like Tukey HSD. 
 We still use the `emmeans` package but specify the comparisons are against a *control* group. The code is below:
 
 ```{r ch2-18}
-contrast(drug.mc, "trt.vs.ctrl")
+contrast(drug.mc, "trt.vs.ctrl", ref="A")
 ```
 
-The two comparisons provided are *A* vs. *B* and *A* vs. *C*. 
-The only significant difference is between *A* and *C* ($p$-value = 0.0019). 
+The two comparisons provided are A vs. B and A vs. C. 
+The only significant difference is between A and C ($p$-value = 0.0019). 
 As before, here are simultaneous CIs and plots:
 
-```{r ch2-19, fig.align='center', fig.cap='Dunnett adjusted confidence interval plots demonstrating that treatment `c` is significantly different than control group `a`, while treatment `b` is not significantly different than control group `a`.', out.width='70%', fig.asp=0.55}
+```{r ch2-19, fig.align='center', fig.cap='Dunnett adjusted confidence interval plots demonstrating that treatment `C` is significantly different than control group `A`, while treatment `B` is not significantly different than control group `A`.', out.width='60%', fig.asp=0.55}
 confint(contrast(drug.mc, "trt.vs.ctrl"))
 plot(contrast(drug.mc, "trt.vs.ctrl"))
 ```
 
-It is interesting to compare the results you get via the two methods for the same comparisons (*e.g.*, *A* vs. *C*). 
+It is interesting to compare the results you get via the two methods (Tukey vs Dunnett) for the same comparisons (*e.g.*, A vs. C). 
 Can you explain what you see?
 
-**Note.** Group *A* was automatically chosen as the reference group for Dunnett (the default behavior is to choose the first factor level [in this case the first alphabetically]). 
-To change this from the default, just tell R to do so in the `contrast` statement. 
-In the below example we set the second (2) factor, *B*, to be the control with `ref=2`.
+**Note.** If you do not specify a `ref=` in the `contrast()` function, group A will automatically be chosen as the reference group for Dunnett (the default behavior is to choose the first factor level [in this case the first alphabetically]). 
+We recommend you always explicitly tell the code the reference groups. In the below example we set the second (2) factor, B, to be the control with `ref="B"`. 
 
 ```{r ch2-20}
+contrast(drug.mc, "trt.vs.ctrl", ref="B")
+```
+
+Alternatively we can pass in a numeric reference (based on factor order)
+
+```{r, eval=FALSE}
 contrast(drug.mc, "trt.vs.ctrl", ref=2)
 ```
 
+
+### Coding notes about `emmeans`
+
+As we mentioned above, the `emmeans` package [R-emmeans] includes more functionality than covered in this text.
+We do highlight two additional features from the `emmeans` package that may be useful.
+
+For one, you can build *adjusted* confidence intervals for each of the three treatments.
+That is, rather than building a standard 95% confidence interval for each treatment (see Section \@ref(#twoSampleInference)), the interval length can be adjusted since multiple comparisons are being made.
+
+Below we build *Bonferroni adjusted* 95% confidence intervals for mean immobilization times of each treatment, after backtransforming from the logarithm.
+
+```{r ch2-emmeanIntervals}
+confint(drug.mc, adjust="bonferroni", type="response")
+```
+We can also provide a plot of these intervals as seen in Figure \@ref(fig:ch2emmInt).
+
+```{r ch2emmInt, fig.align='center', fig.cap='Bonferroni adjusted confidence intervals for the immobilization time of the three drug treatments.', out.width='60%', fig.asp=0.55}
+plot(drug.mc, adjust="bonferroni", type="response")
+```
+
+Another feature that can be useful with `emmeans` functionality is the `tidy()` function from the `broom` package.
+However, we do recommend you use this function with some caution as it does not always work well and you can lose information.
+But, when it does work, the output is put into a data frame and can be processed with the `kable()` function for aesthestically pleasing tables.
+An example is provided below that uses the `tidy()` function, along with `select()` from `dplyr`, with `kable()` and `kable_styling()`.
+
+```{r ch2emmTidy}
+tidy(drug.mc, conf.int=TRUE, type="response", adjust="bonferroni")|>
+  select(Drug, response, std.error, conf.low, conf.high) |>
+  kable(digits=3) |>
+  kable_styling(full_width=FALSE)
+```
+
+
+## Two-sample $t$-test as ANOVA
+
+One-Way ANOVA was described as an extension of the two-sample $t$-test. 
+It is worth noting that when you only have two treatments ($k=2$), One-Way ANOVA and the two-sample $t$-test are equivalent. 
+Consider the University Admissions dataset once again. 
+For completeness, we include the code that inputs the data and filters the two years of study, 1996 and 2000.
+
+```{r, eval=FALSE}
+uadata <- read_table("https://tjfisher19.github.io/introStatModeling/data/univadmissions.txt")
+
+uadata.trim <- uadata |>
+  filter(year %in% c(1996, 2000) )
+```
+
+We start with a plot to compare ACT scores across the two years of study.
+
+```{r uadataPlot, fig.align='center', fig.cap="Box-whiskers plots, with overlayed means (gray diamond), showing the distribution of ACT scores for each of two university enrollment years, 1996 and 2000. Overall we see little difference in ACT scores between the two years.", out.width='60%', fig.asp=0.55}
+ggplot(uadata.trim, aes(x=act, y=year)) + 
+  geom_boxplot() +
+  stat_summary(geom="point", shape=23, fun="mean", size=3, fill="gray60") +
+  labs(x="ACT Scores", y="Enrollment Year",
+       title="ACT Scores as a function of Enrollment  Year") +
+  theme_minimal()
+```
+
+In Figure \@ref(fig:uadataPlot), we see little-to-no difference in the mean ACT scores between 1996 and 2000. 
+We can statistically test this via a One-Way ANOVA
+
+```{r uadataANOVA}
+uadata.anova <- aov(act ~ year, data=uadata.trim)
+```
+
+Although we didn't perform a residual analysis for the two-sample $t$-test, it makes the same assumptions as ANOVA -- the underlying random part of the data should be independent, have constant variance and be normally distributed.
+We assess these assumptions via the residual plots described above.
+
+```{r uadataResiduals, fig.align='center', fig.cap='Residual plots for the One-Way ANOVA studying the effect of enrollment year on ACT scores - Top-left a Residuals vs Fitted Plot; Top-right a Normal Q-Q plot of the residuals; Bottom-left the Scale-Location plot; and Bottom-right a Residuals vs Leverage plot.', fig.asp=0.9, out.width='70%'}
+autoplot(uadata.anova)
+```
+We get independence among the observations based on the data collection procedure.
+Here, it seems reasonable that each student will be independent of one another.
+We see no concerns regarding constant variance based on the Residuals vs Fitted plot and Scale-Location plot -- the verical spread appears to be about the same across the two groups. 
+The Normal Q-Q plot also looks satisfactory with most points near that 45-degree line.
+
+We proceed with a formal inference.
+
+```{r}
+summary(uadata.anova)
+```
+With an $F$-stat of 0.091 on 1 and 277 degrees of freedom ($p$-value=0.763), we do not have evidence to suggest that the mean ACT scores differed in 1996 than 2000. 
+
+Note, this is the same conclusion as with the two-sample $t$-test.
+In fact, we get the exact same $p$-value using both methods:
+
+```{r}
+t.test(act ~ year, data=uadata.trim, var.equal=TRUE)
+```
+
+Further, note that $t_0^2 = 0.301^2 = 0.091 = F$ and $\sqrt{F} = \sqrt{0.091} = 0.301 = t_0$ after rounding! The two-sample $t$-test and One-way ANOVa with $k=2$ are equivalent tests.  
+
+Follow-up multiple comparisons are not necessary here, for two reasons:
+
+1. We found that the different treatments do not significantly influence the response variable. So any multiple comparisons would simply repeat that same finding (no difference in treatments).
+2. We only have two treatments in this example. If we were to perform a follow-up procedure it would be the same two-sample $t$-test as above, and that is already equivalent to the One-way ANOVA analysis.
+
+
+
+
+## A Complete One-Way ANOVA Example
+
+We conclude this chapter by looking at another example of a One-Way ANOVA. 
+Here, the analysis has been somewhat streamlined as we are not introducing new techniques or modeling.
+We do take some time to incorporate some additional code.
+
+
+
+**Example:** Growth Behavior of Spruce Tress (from the text @Devore2011).
+
+A study was conducted looking at the bud strength of spruce seedlings under different conditions.
+Seeds that were deemed *healthy* and *diseased* were exposed to a solution of two different pH levels for two days, an acidic solution (pH of 5.5) and a neutral solution (pH of 7).
+Buds from the seedlings were then analyzed and a Bud Breaking Rating was recorded for each seedling (where a higher number indicates better *budding*).
+In the experiment, healthy seedlings exposed to a neutral solutions were considered a control compared to the other treatments.
+The control group is recorded with a 0 (zero), diseased seeds with the neutral buffer are allocated to group 1, healthy seeds with the acidic buffer are group 2, and diseased seeds with the acid buffer are group 3.
+
+The data are in the file `spruceTrees1way.csv` in the textbook repository.
+
+Data Source: @StehmanMeredith1995
+
+We begin by inputting the data and looking at it's structure.
+
+```{r, eval=FALSE}
+site <- "https://tjfisher19.github.io/introStatModeling/data/spruceTrees1way.csv"
+spruce_trees <- read_csv(site, show_col_types=FALSE)
+glimpse(spruce_trees)
+```
+
+```{r ch2-21, echo=FALSE}
+spruce_trees <- read_csv("docs/data/spruceTrees1way.csv", show_col_types=FALSE)
+glimpse(spruce_trees)
+```
+
+Note that the different treatments have been recorded as a number. 
+As discussed in the previous chapter, it is important for variables to be of the correct type for many functions in R.
+Specifically, if the `aov()` function sees a numeric predictor variable, the analysis will be different than if categorical.
+So the first step will be to convert the numeric `Treatment` variable into a factor variable.
+
+```{r ch2-21a}
+spruce_trees <- spruce_trees |>
+  mutate(Treatment = factor(Treatment) )
+glimpse(spruce_trees)
+```
+
+Now that the variable types are correct, we proceed with a short exploratory data analysis. 
+Note that there are only 5 observations in each treatment, thus Box-Whiskers plots do not make much sense here (why summarize 5 observations with 5 'summary statistics'?). 
+We build a short table and plot of the data with a mean added to the plot. 
+To provide more meaning to our results, we create some copies of our factor variable and add contextual labels.
+
+```{r ch2-22}
+spruce_trees <- spruce_trees |>
+  mutate(Trt_label = factor(Treatment, 
+                            levels=c(0, 1, 2, 3),
+                            labels=c("Control",
+                                     "Neutral & Diseased Seed",
+                                     "Acid & Healthy Seed",
+                                     "Acid & Diseased Seed") ),
+         Trt_label_plot = factor(Treatment, 
+                            levels=c(0, 1, 2, 3),
+                            labels=c("Control\n(Neutral & Healthy Seed)",
+                                     "Neutral & Diseased Seed",
+                                     "Acid & Healthy Seed",
+                                     "Acid & Diseased Seed") ))
+```
+
+Using some of the tools from before, we look at a table of summary statistics by treatment
+
+```{r ch2-23}
+spruce_trees |>
+  group_by(Trt_label) |>
+  summarize(Mean = mean(BudBreaking),
+            SD = sd(BudBreaking) ) |>
+  kable(col.names = c("Treatment", "Mean", "SD"),
+        digits=3) |>
+  kable_styling(full_width=FALSE)
+```
+
+and a plot of our data in Figure \@ref(fig:ch2-24).
+
+```{r ch2-24, fig.align='center', fig.cap="Jittered plot of the data, with overlayed treatement means (gray diamond), showing the distribution of Bud Breaking Ratings as a function of acid treatments on seedling health. Overall we see that diseased seeds treated in an acid solution appear to have lower Bud Breaking Ratings", out.width='60%', fig.asp=0.55}
+ggplot(spruce_trees, aes(x=BudBreaking, y=Trt_label_plot)) +
+  geom_jitter(height=0) + 
+  stat_summary(geom="point", shape=23, fun="mean", size=3, fill="gray60") +
+  theme_minimal() +
+  labs(y="",   # no label is needed here, its implied
+       x="Bud Breaking Rating")
+```
+
+Based on the summary statistic values and plot in Figure \@ref(fig:ch2-24), it appears the Bud Breaking Rating for diseased seeds in the acid solution result in a lower Bud Breaking Rating. It is unclear if other two treatments (Neutral & Diseased seeds, and Acid with healthy seeds) differ from the control.
+
+We fit our ANOVA model
+
+```{r ch2-25}
+spruce.anova <- aov(BudBreaking ~ Trt_label, data=spruce_trees)
+```
+
+and before conducting any inference we consider the assumptions by analyzing Figure \@ref(fig:ch2-26).
+
+```{r ch2-26, fig.align='center', fig.cap='Residual plots for the One-Way ANOVA studying the four treatments on the Bud Breaking Rating of Spruce seedlings - Top-left a Residuals vs Fitted Plot; Top-right a Normal Q-Q plot of the residuals; Bottom-left the Scale-Location plot; and Bottom-right a Residuals vs Leverage plot.', fig.asp=0.9, out.width='70%'}
+autoplot(spruce.anova) +
+  theme_minimal()
+```
+
+* **Independence** can be assumed from the design of the experiment. Each Spruce tree seed should be reasonably independent.
+* **Constant Variance** -- The Residuals vs Fitted plot shows no systematic changing of the variance (the vertical spread of the points looks fairly uniform or random). The Scale-Location shows some evidence of an increase in variability, but coupled with the Residuals vs Fitted plot, there is nothing overly concerning.  
+* **Normality** -- the Normal Q-Q plot shows the observed quantiles from the residuals largely follows that the of the theoretical values. Thus Normality looks okay.
+
+Overall, the model assumptions appear satisfactory, so we proceed with a formal inference.
+
+```{r ch2-27}
+summary(spruce.anova)
+```
+
+With an $F$-stat of 10.9 on 3 and 16 degrees of freedom ($p$-value=0.00038), we have evidence to suggest that the mean Bud Breaking Rating of spruce seelings varies by treatment.
+
+As a follow-up, we conduct a multiple comparison analysis. 
+We have a "control" in this experiment, thus use the Dunnett procedure.
+
+```{r ch2-28}
+spruce.mc <- emmeans(spruce.anova, ~Trt_label)
+contrast(spruce.mc, "trt.vs.ctrl", ref=1)
+```
+
+Not too surprising given the results of Figure \@ref(fig:ch2-24), the "Neutral & Diseased Seeds" and "Acid & Healthy Seed" Bud Breaking Ratings do not statistically differ from the control ($p$-values of 0.4589 and 0.9254, respectively). 
+However, we have evidence that the diseased seeds that underwent an acid solution before planting do result in a different Bud Breaking Rating ($p$-value of 0.0003).
+We can also look at confidence intervals to get a sense of the effect size.
+
+```{r}
+confint(contrast(spruce.mc, "trt.vs.ctrl", ref=1))
+```
+
+and the confidence intervals can be plotted as well. 
+
+```{r ch2-29, fig.align='center', fig.cap='Dunnett adjusted confidence interval plots comparing the three treatments to the control group. Here, we see that the Diseased seeds with acid solution group is significantly different than the control, while the other two groups are not significantly different.', out.width='60%', fig.asp=0.55}
+plot(contrast(spruce.mc, "trt.vs.ctrl", ref=1) ) +
+  theme_minimal()
+```
+
+From Figure \@ref(fig:ch2-29) and the report confidence intervals, the acid & diseased seeds result in reduction of approximately 0.235 to 0.725 on the Bud Breaking Rating. 
+Also note that the other two intervals include zero, which is consistent with not being significantly different. 
+
+**Overall Conclusions**
+
+Based on the analysis, we can conclude that a compared to a Control group of Healthy Seeds that underwent a Neutral Solution before planting, that Diseased Seeds that underwent an Acid solution before planting will result in a Bud Breaking Strength of 0.235 to 0.725 units less than that of a control group.
 

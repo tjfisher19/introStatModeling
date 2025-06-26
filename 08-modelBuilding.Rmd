@@ -53,7 +53,8 @@ Below is R code for the corn yield data. This code fits a simple linear regressi
 
 ```{r ch8.12}
 site <- "http://www.users.miamioh.edu/hughesmr/sta363/cornyield.txt"
-corn <- read.table(site, header=TRUE)
+site <- "docs/data/cornyield.txt"
+corn <- read_table(site)
 corn.fit <- lm(yield ~ rain, data=corn)
 corn <- corn %>%
   mutate(Std.Residuals = rstandard(corn.fit))

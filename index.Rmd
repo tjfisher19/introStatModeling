@@ -3,7 +3,9 @@ title: "Introduction to Statistical Modeling"
 author: "Michael R. Hughes and Thomas J. Fisher"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
-output: bookdown::html_book
+output: 
+  bookdown::gitbook:
+    css: "css_files/mystyle.css"
 documentclass: book
 bibliography: [book.bib, packages.bib]
 link-citations: yes
@@ -38,12 +40,13 @@ ggplot(dino_data) +
 ```
 
 
-This online text has been designed for **STA 363 - Introduction to Statistical Modeling** at Miami University. 
-What is now this text was originally a set of notes written by Mr. Mike Hughes and has since been reformulated into this bookdown version. 
-The original version of this document was not intended for publication but, as is common, has evolved into an textbook of sorts. 
-Future iterations will improve some coding examples and provide more references.
+This online text was designed for **STA 363 - Introduction to Statistical Modeling** at Miami University and has been used as a resource in other courses at Miami University (*e.g.*, STA 672 - Statistical Modeling and Study Design, a service course for graduate students in the life sciences). 
+The original version of this document was not intended for broad publication but, as is common, has evolved into an textbook of sorts. 
+What is now this text was originally a set of class notes written by Mr. Mike Hughes for use during class.
+Many of the data and coding examples have been updated and everything has been structured such that this work can largely *stand alone*.
 
-The bulletin description for the course states:
+
+The bulletin description for the STA 363 course states:
 
 > Applications of statistics using regression and design of experiments techniques. Regression topics include simple linear regression, correlation, multiple regression and selection of the best model. Design topics include the completely randomized design, multiple comparisons, blocking and factorials.
 
@@ -51,12 +54,13 @@ The book and course have been designed to be a follow-up to a standard introduct
 The course and text assumes the reader has a solid foundation in two-sample inference and some basic computing skills.
 
 The book mixes statistical background with applications using the R Project for Statistical Computing [@R-base].
-We have attempted to perform all data processing and analysis in this text using the *tidyverse*; thus all plots and functionality should follow the new grammar in R (*ggplot* and `%>%` type code).
+We have attempted to perform all data processing and graphics in this text using the `tidyverse` [@R-tidyverse]; thus all plots and data processing should follow the *tidy* grammar in R (`ggplot`, piping `|>` and `dplyr` function calls).
+All statistical modeling uses base R function calls (*e.g.*, `lm()` and `aov()`) and the `emmeans` package [@R-emmeans] is used for follow-up comparisons. 
 
 The book was designed with 13 chapters with the intent to be used during the 14-week semester at Miami University (one week reserved for midterm examination and end-of-semester review). 
-The first chapter is comprehensive. 
-It reviews introductory statistics material and provides a crash course in the basics of R and making plots with `ggplot2` [@R-ggplot2]. 
-Chapter 2 extends the idea of two-sample inference into multiple samples and introduces key concepts of experimental design.
+The first two chapters are very comprehensive. 
+Chapter 1 reviews introductory statistics material and provides a crash course in the basics of R, some elementary data handling with `dplyr` [@R-dplyr] and making plots with `ggplot2` [@R-ggplot2]. The development of the two-sample $t$-test is reviewed.
+Chapter 2 discusses the difference between designed experiments and observational studies, and extends the idea of two-sample inference into *multiple samples*. The key concepts of experimental design are introduced, some mathematical foundation for statistical models is introduced, and One-Way ANOVA is fully covered, including follow-up multiple comparisons.
 Chapters 3 and 4 cover some advanced design ideas (multiple factors, blocking and repeated measures), presenting all inference in the form of a linear model. 
 Chapters 5--10 cover the *classic* topics around multiple linear regression as well as some *data science* concepts (prediction, variable selection and model validation). 
 Chapters 11 and 12 provides an overview of statistical odds and logistic regression. 
@@ -94,8 +98,9 @@ When not teaching Statistical modeling, you'll most likely find him teaching one
 
 ## Statistics background{-}
 
-This text assumes the reader has completed an introductory statistics course. 
-For those needing a refresher, two links are provided below.
+This text assumes the reader has completed an introductory statistics course and a college algebra course. From a mathematics perspective, the reader should be comfortable with linear equations, power and logarithmic functions, and general mathematical operations. No calculus is required although in a few cases we may *hint* at its connection to a specific topic.
+
+For those needing a refresher on introductory statistics, two links are provided below.
 
 https://bookdown.org/chesterismay/rbasics/
 
@@ -103,7 +108,7 @@ http://moderndive.com/index.html
 
 ## Software{-}
 
-The text utilizes the R computing system. The course, STA 363 - Introduction to Statistical Modeling, utilizes RStudio and Rmarkdown. 
+The text utilizes the R computing system. The courses, STA 363 - Introduction to Statistical Modeling and STA 672 - Statistical Modeling and Study Design, both utilizes RStudio and Rmarkdown. 
 
 R is a free statistical software platform that can be easily downloaded from the Comprehensive R Archive Network (CRAN): https://cran.r-project.org/
 
@@ -184,7 +189,7 @@ Better yet, create a Github account, and github repository to manage your code a
 
 ## Data in this text{-}
 
-The data used in this text is available on the hosting website (https://github.com/tjfisher19/introStatModeling/tree/master/docs/data) and links are provided throughout the text.
+The data used in this text is available on the hosting website (https://github.com/tjfisher19/introStatModeling/docs/data) and links are provided throughout the text.
 Alternatively, all data used in the text can be downloaded as a single zip file: zipFileLinkHere
  
 
