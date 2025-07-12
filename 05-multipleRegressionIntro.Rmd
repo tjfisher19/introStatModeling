@@ -523,7 +523,7 @@ For our example, we will consider RLS, LLS and Power as potential predictor vari
 Let us look at the scatterplot matrix of the data.
 
 
-```{r ch5-14pairs, message=FALSE, fig.align='center', fig.cap='Pairs plot showing the relationship between the variables `RLS`, `LLS`, `Power` and `Hang_time`.', fig.asp=1, out.width='80%'}
+```{r ch5-14pairs, message=FALSE, fig.align='center', fig.cap='Pairs plot showing the relationship between right leg strength, left leg strengh, power and hang time.', fig.asp=1, out.width='80%'}
 ggpairs(punting, columns=c(4,5,8,2) )
 ```
 

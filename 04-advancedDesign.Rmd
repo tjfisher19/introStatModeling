@@ -1,4 +1,18 @@
 
+
+```{r ch4-setup, include=FALSE}
+library(knitr)
+library(kableExtra)
+library(tidyverse)
+library(broom)
+library(emmeans)
+library(patchwork)
+library(ggfortify)
+options(dplyr.summarise.inform = FALSE,
+        warn = -1)
+```
+
+
 # Advanced Designs
 
 The previous chapters have established the groundwork of experimental designed. 
@@ -7,8 +21,10 @@ This former work just scratches the surface of the field of experimental design 
 The objective of this chapter includes:
 
 * Understanding the basic structure of factorial designs.
+* Mixing blocking and factorial components in a design.
 * Understanding the basic structure of within-subject designs.
-* Building an appreciation for the complexity of experimental design.
+* Introducing *random effects* into a model.
+* **Building an appreciation** for the complexity of experimental design.
 
 ## Higher order factor models
 
@@ -20,7 +36,7 @@ This idea can, of course, be expanded to even more terms, consider the following
 
 **Example.** Marketing research contractors (@KutnerText). 
 
-A marketing research consultant evaluated the effects of free schedule, scope of work and type of supervisory control on the quality of work performed under contract by independent marketing research agencies.
+A marketing research consultant evaluated the effects of free schedule, scope of work and type of supervisory control on the quality of work performed under contracts by independent marketing research agencies.
 The design of this experiment can be summarized as follows
 
 $$\begin{array}{ll} 
@@ -39,8 +55,8 @@ $$\begin{array}{ll}
 
 The quality of work performed was measured by an index taking into account several characteristics of quality. 
 
-You should note there are **three factors** in this experiment, with 3, 2 and 2 levels for each factor.
-This means the number of treatments is $3\times 2\times 2 = 12$ and can be summarized in the following table.
+There are **three factors** in this experiment, with 3, 2 and 2 levels for each factor.
+So the number of treatments is $3\times 2\times 2 = 12$ and can be summarized in the following table.
 
 ```{r three_way_table, echo=FALSE}
 tab <- data.frame("Fee Level" = c("High", "Average", "Low"),
@@ -49,13 +65,13 @@ tab <- data.frame("Fee Level" = c("High", "Average", "Low"),
                   "In house" = c("Treatment 3", "Treatment 7", "Treatment 11"),
                   "Subcontracted" = c("Treatment 4", "Treatment 8", "Treatment 12"))
 names(tab) <- c("Fee Level", "In house", "Subcontracted", "In house", "Subcontracted")
-kable(tab) %>% kable_styling(full_width=FALSE) %>%
-  add_header_above(c(" " = 1, "Local Supervisers" = 2, "Traveling Supervisors" = 2)) %>%
+kable(tab) |> kable_styling(full_width=FALSE) |>
+  add_header_above(c(" " = 1, "Local Supervisers" = 2, "Traveling Supervisors" = 2)) |>
   add_header_above(c(" " = 1, "Supervision" = 4))
 ```
 
 Recall the main idea from two-factor experiments--the interaction terms are typically very important. 
-In this three factor design we have the three main effects (Fee level, Scope and Supervision) but then we also have pairwise interactions between these variables and an interaction among all three.
+In this three factor design we have the three main effects (Fee level, Scope and Supervision) but also have pairwise interactions between these variables and an interaction among all three.
 From a statistical modeling perspective, we are now essentially fitting the model 
 
 $$Y_{ijkm} = \mu + \alpha_i + \beta_j + \gamma_k + (\alpha\beta)_{ij} + (\alpha\gamma)_{ik} + (\beta\gamma)_{jk} + (\alpha\beta\gamma)_{ijk} + \varepsilon_{ijkm}$$
@@ -77,57 +93,185 @@ As you can see this model has grown greatly compared to to the two-way ANOVA exa
 
 **What will happen if there are four factors?**
 
-In general, if an experiment consisted of $n$ factors, we would potentially have $2^n - 1$ terms in our model.
+In general, if an experiment consisted of $m$ different factors, we would potentially have $2^m - 1$ terms in our model.
 Thus with four factors you are looking at $2^4 - 1 = 16-1=15$ terms in your ANOVA decomposition.
 With five factors, 31 terms. 
 This will quickly grow out of control.
+We may run out of Greek letters before long!
 
 Fortunately, for higher order factor problems there are statisticians available to help formulate a better design and potentially *optimize* some of the variables of study. 
-We leave out the details of these topics in this introductory text but want to provide insight that these advanced designs and analyses can be done. 
+We leave out the details of these topics in this text but want to provide insight that these advanced designs and analyses can be done. 
 Please consult a statistician before your experiment if you are planning a complex design!!
 
 ### Three-factor ANOVA Example
 
-**Example continued.** Below we complete the example involving the marketing research contractors.
+**Example continued.** Below we complete the example involving the marketing research contractors with the data available in the `marketingResearch.txt` file on the book data repository. 
 
-First we read in the data and make sure R properly treats the factors.
+First we read in the data and make sure R properly treats the factor variables.
+From (@KutnerText) we have three fee levels corresponding as 1=High, 2=Average, 3=Low.
+The two scope levels are 1=all work in-house, 2=subcontracted, and the two supervision levels are 1=local supervisors, 2=traveling supervisors. 
 
 ```{r ch4marketingData-noeval, eval=FALSE}
 data_site <- "https://tjfisher19.github.io/introStatModeling/data/marketingResearch.txt"
-marketing <- read_table(data_site, col_types=cols() )
+marketing <- read_table(data_site)
+glimpse(marketing)
 ```
 
 ```{r ch4marketingData-noEcho, echo=FALSE}
 marketing <- read_table("docs/data/marketingResearch.txt", col_types=cols() )
+glimpse(marketing)
 ```
 
 ```{r ch4marketingData}
-marketing <- marketing %>%
-  mutate(Fee = as.factor(Fee),
-         Scope = as.factor(Scope),
-         Supervision = as.factor(Supervision))
+marketing <- marketing |>
+  mutate(Fee = factor(Fee, levels=1:3,
+                      labels=c("High", "Average", "Low")),
+         Scope = factor(Scope, levels = 1:2,
+                        labels=c("In-house", "Subcontracted")),
+         Supervision = factor(Supervision, levels=1:2,
+                              labels=c("Local", "Traveling") ) )
 ```
 
-We leave out EDA and residual analysis from this example for brevity. We fit the ANOVA model.
+#### EDA for three-factors
 
-```{r ch4marketingANOVA}
+We have replication within each treatment (4 replicates for each of the $3\times 2\times 2 = 12$ unique treatments for $n=48$ total observations).
+Any EDA needs to account for the 12 unique treatments over the 3 different factor variables.
+Below we make a visual summarizing the mean response for each unique treatment, linking all profiles together for both supervision and scope -- these two variables were chosen as each factor has two unique values and this limits the number of colors and linetypes needed in the plot.
+
+```{r ch4marketingEDA, fig.align='center', fig.cap='Interaction plot for the 3-factor experiment looking at consulting quality as a function of fee, scope and supervision.', out.width='60%', fig.asp=0.55}
+ggplot(marketing, aes(x=Fee, y=Quality, color=Scope, linetype=Supervision,
+                      group=interaction(Scope, Supervision)) ) + 
+    stat_summary(fun=mean, geom="point") + 
+  stat_summary(fun=mean, geom="line") +
+  theme_minimal()
+```
+Visually, it appears the High and Average fee types have the highest quality regardless of scope & supervision. 
+We also see that the Fee type does not appear to interact with the Scope and Supervision variables as all four lines look reasonably parallel.
+The connection between Scope and Supervision is more complex; note the alternating colors when looking at the lines while the linetypes do not alternate in the same way. 
+This may be an indication of some sort of interaction between these two variables.
+
+#### Fitting a three-factor model
+
+We fit the ANOVA model.
+Here we used the notation `Fee*Scope*Supervision` so R will fit a full factorial model (*that is*, all main effects and interaction terms). 
+
+```{r ch4marketingANOVA, fig.align='center', fig.cap='Residual plots for the Three-Way ANOVA studying the twelve unique treatments on the quality of consultants - Top-left a Residuals vs Fitted Plot; Top-right a Normal Q-Q plot of the residuals; Bottom-left the Scale-Location plot; and Bottom-right a Residuals vs Leverage plot.', fig.asp=0.9, out.width='70%'}
 marketing.anova <- aov(Quality ~ Fee*Scope*Supervision, data=marketing)
+autoplot(marketing.anova)
 ```
 
-Here we used the notation `Fee*Scope*Supervision` so R will fit a full factorial model (that is, all main effects and interaction terms). 
+The residual plot in \@ref(fig:ch4marketingANOVA) shows that the constant variance assumption is generally met (no concerning patterns in either the Residuals vs Fitted or Scale-Location plot). 
+The Normal Q-Q plot does show some deviation from the 45-degree line but here we must make note of how it deviates.
+
+* We do see deviation in both tails
+* The *observed* or *sample* residuals generally have smaller $Z$-scores than is expected, this indicates the data is *light tailed* (less data in the extremes of the distribution).
+* We also note that the deviations are symmetric (on both sides)
+
+Given we have no skewness and the data is light tailed, the central limit theorem can justify the use of ANOVA in this setting.
+That is, even if the residuals are not exactly normally distributed, the sample size is adequate to provide some justification to the result.
+
 Now look at the ANOVA output.
 
 ```{r ch4markingSummary}
 summary(marketing.anova)
 ```
 
-As with the two-factor analysis, **always look at the most complex interaction term first.**
-Here we see that the three factor interaction term is not significant, thus we proceed to the pairwise interactions.
+Similar to the two-factor analysis, **always look at the most complex interaction term first.**
+Here the most complex term is the `Fee:Scope:Superversion` term. 
+That three factor interaction term is not significant ($F$-statistic of 0.267 on 2 and 36 degrees of freedom, $p$-value=0.767), thus we can proceed to the pairwise interactions.
 
-The interaction between Scope and Supervision is significant.
-Interactions involving the Fee level factor are not significant, thus we can interpret the Fee level main effect as being a significant influence on quality. 
-We can also conclude that some combination of Scope and Supervision influence quality. 
-We leave out any multiple comparisons analysis here as it gets very complex when three factors are involved.
+* The interaction between Scope and Supervision is significant ($F$-stat of 77.749 on 1 and 36 degrees of freedom, $p$-value$\approx 10^{-10}$).
+* Both interaction terms involving the Fee level factor are not significant
+   + The `Fee:Scope` term is not significant ($F$-stat of 0.108 on 2 and 36 degrees of freedom, $p$-value=0.898)
+   + The `Fee:Supervision` term is not significant ($F$-stat of 0.053 on 2 and 36 degrees of freedom, $p$-value=0.948), 
+   
+Thus, since the interaction of the Fee variable with any other factor variable does not appear to significantly influence the response, we can analyze its main effect variable.
+The Fee main effect influences the quality ($F$-stat of 679.336 on 2 and 36 degrees of freedom, $p$-value$\approx10^{-16}$).
+
+Overall, we can conclude that some combination of Scope and Supervision influence quality. 
+We also conclude that the different Fee types appear to influence Quality.
+
+#### Multiple comparisons
+
+In general, multiple comparisons analysis can get very complex when three or more factors are involved.
+In this case, we get lucky
+
+* Fee` is significant, but *only* as a main effect.
+* The `Scope` \& `Supervision` interaction term is significant, but it is only 2 variables and we covered that analysis in section \@ref(twoWayInteraction).
+
+First we consider the effects of Fee on the quality index
+
+```{r, fig.align='center', fig.cap='Tukey HSD comparison of three levels of the Fee variable on consultant quality. The Low fee option results in a lower quality than High or Average, which statistically are equivalent.', out.width='60%', fig.asp=0.55}
+marketing.mc.fee <- emmeans(marketing.anova, ~Fee)
+plot(contrast(marketing.mc.fee, "pairwise"))
+```
+We are building intervals of comparisons, so we look for the inclusion or exclusion of the value zero. We see that the "Low" fee level is statistically different than both "High" and "Average", while the later two are not statistically different.
+
+To analyze the Scope & Supervision influence on Quality we must do so conditionally. 
+
+```{r, fig.align='center', fig.cap='Tukey HSD comparison of two levels of the Scope variable on consultant quality conditioned on Supervision. In both settings of supervision, the In-house scope results in a higher quality than subcontracted. It also appears this difference is greater when Traveling Supervision is used.', out.width='60%', fig.asp=0.65}
+marketing.mc.scope <- emmeans(marketing.anova, ~Scope|Supervision)
+plot(contrast(marketing.mc.scope, "pairwise"))
+```
+
+### Summarizing higher order factors
+
+
+## Combling Blocks and Factorial Models
+
+
+```{r}
+dentalPain <- read_csv("docs/data/dentalPain.csv")
+glimpse(dentalPain)
+```
+
+```{r}
+dentalPain <- dentalPain |>
+  mutate(PainLevel = factor(PainLevel),
+         Codeine = factor(Codeine, levels=1:2,
+                          labels=c("Sugar Pill", "Codeine capsule")),
+         Acupuncture = factor(Acupuncture, levels=1:2,
+                              labels=c("Inactive Acupuncture",
+                                       "Active Acupuncture")))
+```
+
+```{r}
+dentalpain.anova <- aov(Relief ~ PainLevel + Codeine*Acupuncture,
+                        data=dentalPain)
+```
+
+```{r}
+autoplot(dentalpain.anova)
+```
+```{r}
+summary(dentalpain.anova)
+```
+
+```{r}
+dentalPain <- dentalPain |>
+  mutate(Treatment = paste(Codeine, Acupuncture))
+```
+
+```{r}
+dentalPain.anova2 <- aov(Relief ~ PainLevel + Treatment,
+                         data=dentalPain)
+```
+
+```{r}
+summary(dentalPain.anova2)
+```
+
+```{r}
+sort(unique(dentalPain$Treatment))
+```
+
+```{r}
+dental.em <- emmeans(dentalPain.anova2, ~Treatment)
+contrast(dental.em, "dunnett", ref=4)
+```
+
+
+
 
 ## Within-subject designs
 
@@ -138,7 +282,7 @@ As such, there is only one observation per experimental unit in the design.
 Drug was a **between-subjects factor**.
 
 *Why is that important to note?*
-Because, as you should realize by now, that assures that the observations in the data are all independent.
+Because, as you may realize by now, that assures that the observations in the data are all independent.
 It will be elaborated upon later in this course how crucial this assumption is to the validity of any statistical inferences we draw from the tests/CIs we derive.
 In fact, independence is more important to inference validity than either normality or constant variance assumptions.
 
@@ -159,13 +303,13 @@ If in any analysis we ignored this basic truth, that analysis would be seriously
 So how did we handle this before?
 A simple strategy which is common with paired data comparisons is to calculate each subject’s difference score (yielding a single difference measurement per subject) and then performing a one-sample $t$-test on the differences.
 Each difference score is independent because each came from a different randomly chosen subject.
-This is what was done in the paired $t$-test analysis in section 2.4.  Check back and remind yourself of this.
+This is what is done in the paired $t$-test analysis in section 2.4. 
 
 ### Blocks revisited: an approach to handling within-subjects factors
 
 The notion and purpose of blocking in an experimental design was introduced in section 3.1.
-If you recall that witty definition of blocks as relatively homogeneously sets of experimental material, it may occur to you that subjects can serve as blocks. 
-In fact, this was already stated in section 3.1.
+Recall the definition of block terms as a relatively homogeneously set of experimental material.
+We saw two examples where subjects serve as blocks. 
 What this means for us now is that using a block design approach in analysis is 'a way' to handle correlated (non-independent) observations such as in the paired $t$-test problem above. 
 We illustrate that here.
 
@@ -201,7 +345,7 @@ The data is structure that 2 observations (the before and after) are on each row
 We will reshape this data into a tall, or long, format.
 
 ```{r ch4-coData-reshape}
-vehicleCO_tall <- vehicleCO %>%
+vehicleCO_tall <- vehicleCO |>
   pivot_longer(cols=c(before, after),
                names_to="Time",
                values_to="Emitted_CO")
@@ -252,12 +396,12 @@ Again we see the same result. It turns out that for more complex studies this ge
 ### A more involved repeated measures case study
 
 If we can handle within-subjects factors using blocks, why not just stick with that all the time?  
-Well, the reason is that repeated measures designs can get complicated: multiple time measurement points (more than just two), the addition of between-subjects factors, etc.
+Well, the reason is that repeated measures designs can get complicated: multiple time measurement points (more than just two), the addition of between-subjects factors, etc...
 The following case study example illustrates this.
 
 **Example.** Cholesterol study (from the University of Sheffield [@sheffield2021]).
 
-A study tested whether cholesterol was reduced after using a certain brand of margarine as part of a low fat, low cholesterol diet. The subjects consumed on average 2.31g of the active ingredient, stanol ester, a day.  This data set `cholesterolreduction.csv` contains information on 18 people using margarine to reduce cholesterol over three time points.  
+A study tested whether cholesterol was reduced after using a certain brand of margarine as part of a low fat, low cholesterol diet. The subjects consumed on average 2.31g of the active ingredient, *stanol ester*, a day. This data set `cholesterolreduction.csv` contains information on 18 people using margarine to reduce cholesterol over three time points.  
 
 
 ```{r ch4tab, echo=FALSE}
@@ -289,13 +433,13 @@ Note that the data is currently in wide form.
 We need to convert it to tall form:
 
 ```{r ch4-5}
-chol_tall <- chol %>% 
+chol_tall <- chol |> 
   pivot_longer(cols=Before:After8weeks, 
                names_to="time.pt", 
                values_to="chol.level")
 head(chol_tall)
 
-chol_tall <- chol_tall %>%
+chol_tall <- chol_tall |>
   mutate(time.pt = factor(time.pt, 
                           levels=c("Before", "After4weeks", "After8weeks"),
                           labels=c("Before", "After 4 weeks", "After 8 weeks")))
@@ -309,8 +453,8 @@ Note here we have changed the variable `time.pt` to be a factor and we order the
 We are now ready for some EDA. A table of descriptive statistics by combinations of time and margarine group is our first cut:
 
 ```{r ch4-6}
-chol.summary <- chol_tall %>%
-  group_by(Margarine, time.pt) %>%
+chol.summary <- chol_tall |>
+  group_by(Margarine, time.pt) |>
   summarise(Mean = mean(chol.level),
             SD = sd(chol.level),
             SE = sd(chol.level)/sqrt(length(chol.level)),
@@ -372,7 +516,7 @@ It is worth noting that the group assigned to margarine level A had lower choles
 Of more concern to a fully correct analysis is addressing why there appears to be a difference between the margarine groups at the "Before" stage.  At that point, no margarines had been administered, so if the subjects had been truly randomly assigned to the margarine groups (as they should be in a properly designed experiment!), we would have expected consistent cholesterol readings between the groups at that point.  This can be formally tested as follows, with a simple independent samples $t$-test comparing the mean cholesterol levels of the A and B groups at the "Before" stage:
 
 ```{r ch4-10}
-BeforeDataOnly <- chol_tall %>%
+BeforeDataOnly <- chol_tall |>
   filter(time.pt == "Before")
 t.test(chol.level ~ Margarine, data=BeforeDataOnly, var.equal=TRUE)
 ```
@@ -384,7 +528,7 @@ The result is not statistically significant ($p$-value = 0.1932).  That is actua
 To get started, lets do a within-subjects (repeated measures) ANOVA on the Margarine A data only.  The goal here would be to see if there is an effective reduction in mean cholesterol over the eight-week trial by using margarine A.  Here goes: follow the code!
 
 ```{r ch4-11}
-MargarineA <- chol_tall %>% 
+MargarineA <- chol_tall |> 
   filter(Margarine == "A")
 RMaov_MargA <- aov(chol.level ~ time.pt + Error(factor(ID)/time.pt), data=MargarineA)
 summary(RMaov_MargA)
@@ -431,3 +575,4 @@ For example, suppose we had a repeated measures experiment with subjects measure
 
 Subtleties like this can be modeled and checked using advanced modeling techniques.
 
+## Random Effect Models

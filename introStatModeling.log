@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 23.12) (preloaded format=xelatex 2024.8.3)  26 JUN 2025 14:50
+This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 23.12) (preloaded format=xelatex 2024.8.3)  26 JUN 2025 16:51
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2791,18 +2791,1025 @@ Overfull \hbox (85.5pt too wide) in paragraph at lines 6502--6502
 File: introStatModeling_files/figure-latex/ch5-14pairs-1.pdf Graphic file (type
  pdf)
 <use introStatModeling_files/figure-latex/ch5-14pairs-1.pdf>
-! Missing $ inserted.
-<inserted text> 
-                $
-l.6521 ... `RLS`, `LLS`, `Power` and `Hang_time`.}
-                                                  \label{fig:ch5-14pairs} 
-Here is how much of TeX's memory you used:
- 21577 strings out of 409617
- 403977 string characters out of 5773405
- 1942191 words of memory out of 5000000
- 43314 multiletter control sequences out of 15000+600000
- 565675 words of font info for 107 fonts, out of 8000000 for 9000
- 1348 hyphenation exceptions out of 8191
- 90i,16n,120p,1062b,560s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on introStatModeling.pdf (157 pages).
+LaTeX Warning: Reference `fig:ch5-14pairs' on page 158 undefined on input line 
+6524.
+
+[158] [159] [160]
+
+LaTeX Warning: Reference `fig:ch5-14pairs' on page 161 undefined on input line 
+6619.
+
+[161]
+
+LaTeX Warning: Reference `example-of-spurious-correlation' on page 162 undefine
+d on input line 6695.
+
+
+LaTeX Warning: Reference `blocking' on page 162 undefined on input line 6696.
+
+
+Package natbib Warning: Citation `WeissText' on page 162 undefined on input lin
+e 6700.
+
+
+Package natbib Warning: Citation `Zhou1998' on page 162 undefined on input line
+ 6706.
+
+[162]
+Overfull \hbox (85.5pt too wide) in paragraph at lines 6725--6725
+[]\TU/lmtt/m/n/10 ## $ ClO2      <dbl> 2.06, 2.06, 2.06, 2.06, 2.06, 3.52, 3.52
+, 3.52, 3.52, 3.52, ~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 6725--6725
+[]\TU/lmtt/m/n/10 ## $ H2O2      <dbl> 0.0, 0.2, 0.4, 0.6, 0.8, 0.0, 0.2, 0.4, 
+0.6, 0.8, 0.0, 0.2, ~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 6725--6725
+[]\TU/lmtt/m/n/10 ## $ Whiteness <dbl> 10.55, 9.59, 8.98, 8.46, 7.73, 6.16, 5.5
+5, 5.06, 4.79, 4.74,~[] 
+ []
+
+[163]
+
+Package natbib Warning: Citation `Box1979' on page 164 undefined on input line 
+6807.
+
+[164]
+Chapter 6.
+[165
+
+]
+
+LaTeX Warning: Reference `assumptionCheck' on page 166 undefined on input line 
+6860.
+
+
+Package natbib Warning: Citation `KutnerText' on page 166 undefined on input li
+ne 6882.
+
+
+LaTeX Warning: Reference `simple-linear-regression-example' on page 166 undefin
+ed on input line 6884.
+
+
+LaTeX Warning: Reference `fig:ch6-1' on page 166 undefined on input line 6885.
+
+File: introStatModeling_files/figure-latex/ch6-1-1.pdf Graphic file (type pdf)
+<use introStatModeling_files/figure-latex/ch6-1-1.pdf>
+[166] [167]
+
+LaTeX Warning: Reference `assumptionCheck' on page 168 undefined on input line 
+6925.
+
+[168]
+Overfull \hbox (28.85312pt too wide) detected at line 6978
+[][] [] [][] [] [][] [] []  []  [][] [] [][] [] [][] [] [][][][] [] [][][][] []
+ [] [] [][][][] [] []
+ []
+
+[169]
+
+Package natbib Warning: Citation `McClaveSincich2008' on page 170 undefined on 
+input line 7015.
+
+
+LaTeX Warning: Reference `multiple-regression-example' on page 170 undefined on
+ input line 7017.
+
+[170]
+Overfull \hbox (43.5pt too wide) in paragraph at lines 7053--7053
+[]\TU/lmtt/m/n/10 ## lm(formula = saleprice ~ landvalue + impvalue + area, data
+ = appraisal)[] 
+ []
+
+[171]
+Underfull \hbox (badness 1496) in paragraph at lines 7076--7078
+[]\TU/lmr/m/n/10 Determine which predictors are significant predictors of the m
+ean
+ []
+
+
+Package natbib Warning: Citation `McClaveSincich2008' on page 172 undefined on 
+input line 7105.
+
+[172]
+Overfull \hbox (43.5pt too wide) in paragraph at lines 7136--7136
+[]\TU/lmtt/m/n/10 ## lm(formula = saleprice ~ landvalue + impvalue + area, data
+ = appraisal)[] 
+ []
+
+[173]
+
+LaTeX Warning: Reference `whymultiple' on page 174 undefined on input line 7175
+.
+
+[174]
+
+Package natbib Warning: Citation `McClaveSincich2008' on page 175 undefined on 
+input line 7236.
+
+[175] [176]
+
+Package natbib Warning: Citation `KutnerText' on page 177 undefined on input li
+ne 7322.
+
+[177]
+Underfull \vbox (badness 5119) has occurred while \output is active []
+
+[178]
+
+LaTeX Warning: Reference `fig:ch6-9' on page 179 undefined on input line 7424.
+
+File: introStatModeling_files/figure-latex/ch6-9-1.pdf Graphic file (type pdf)
+<use introStatModeling_files/figure-latex/ch6-9-1.pdf>
+[179]
+
+LaTeX Warning: Reference `fig:ch6-10' on page 180 undefined on input line 7483.
+
+
+File: introStatModeling_files/figure-latex/ch6-10-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch6-10-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[180]
+
+Package natbib Warning: Citation `McClaveSincich2008' on page 181 undefined on 
+input line 7502.
+
+[181]
+
+LaTeX Warning: Reference `fig:ch6-12' on page 182 undefined on input line 7550.
+
+
+File: introStatModeling_files/figure-latex/ch6-12-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch6-12-1.pdf>
+
+Underfull \vbox (badness 2042) has occurred while \output is active []
+
+[182]
+Overfull \hbox (43.5pt too wide) in paragraph at lines 7613--7613
+[]\TU/lmtt/m/n/10 ## lm(formula = saleprice ~ landvalue + impvalue + area, data
+ = appraisal)[] 
+ []
+
+[183]
+
+Package natbib Warning: Citation `akaike1973information' on page 184 undefined 
+on input line 7620.
+
+
+LaTeX Warning: Reference `model-selection' on page 184 undefined on input line 
+7641.
+
+
+Package natbib Warning: Citation `Schwarz1978' on page 184 undefined on input l
+ine 7644.
+
+[184]
+Chapter 7.
+[185
+
+]
+Overfull \hbox (9.94005pt too wide) in paragraph at lines 7708--7709
+[]$[][]$\TU/lmr/m/n/10 : the model is $[] [] [][] [] [][][][][] [] [][][][][] [
+]
+ []
+
+[186] [187]
+Overfull \hbox (59.25pt too wide) in paragraph at lines 7865--7865
+[]\TU/lmtt/m/n/10 ## lm(formula = saleprice ~ I(landvalue + impvalue) + area, d
+ata = appraisal)[] 
+ []
+
+
+Overfull \hbox (54.0pt too wide) in paragraph at lines 7865--7865
+[]\TU/lmtt/m/n/10 ##             (Intercept)  I(landvalue + impvalue)          
+           area[] 
+ []
+
+
+Overfull \hbox (54.0pt too wide) in paragraph at lines 7865--7865
+[]\TU/lmtt/m/n/10 ##                1386.277                    0.819          
+         13.605[] 
+ []
+
+
+Overfull \hbox (43.5pt too wide) in paragraph at lines 7883--7883
+[]\TU/lmtt/m/n/10 ## lm(formula = saleprice ~ landvalue + impvalue + area, data
+ = appraisal)[] 
+ []
+
+[188] [189] [190]
+Overfull \hbox (253.5pt too wide) in paragraph at lines 7972--7972
+[]\TU/lmtt/m/n/10 ## alternative hypothesis: true difference in means between g
+roup diabetic and group nondiabetic is not equal to 0[] 
+ []
+
+[191] [192] [193] [194]
+File: introStatModeling_files/figure-latex/ch7.11-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch7.11-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[195]
+File: introStatModeling_files/figure-latex/ch7.12-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch7.12-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[196] [197] [198]
+Overfull \hbox (23.69452pt too wide) has occurred while \output is active
+\TU/lmr/m/sl/10 7.3.  BRIDGING REGRESSION AND DESIGNED EXPERIMENTS – ANCOVA \TU
+/lmr/m/n/10 199
+ []
+
+[199] [200]
+Overfull \hbox (23.69452pt too wide) has occurred while \output is active
+\TU/lmr/m/sl/10 7.3.  BRIDGING REGRESSION AND DESIGNED EXPERIMENTS – ANCOVA \TU
+/lmr/m/n/10 201
+ []
+
+[201]
+File: introStatModeling_files/figure-latex/ch7.17-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch7.17-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[202]
+Underfull \hbox (badness 10000) in paragraph at lines 8447--8449
+
+ []
+
+File: introStatModeling_files/figure-latex/ch7.18-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch7.18-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \hbox (23.69452pt too wide) has occurred while \output is active
+\TU/lmr/m/sl/10 7.3.  BRIDGING REGRESSION AND DESIGNED EXPERIMENTS – ANCOVA \TU
+/lmr/m/n/10 203
+ []
+
+[203]
+Overfull \hbox (12.0pt too wide) in paragraph at lines 8494--8494
+[]\TU/lmtt/m/n/10 ## lm(formula = glu.red ~ weight + drug + weight:drug, data =
+ drug2)[] 
+ []
+
+
+Underfull \vbox (badness 4217) has occurred while \output is active []
+
+[204]
+Overfull \hbox (23.69452pt too wide) has occurred while \output is active
+\TU/lmr/m/sl/10 7.3.  BRIDGING REGRESSION AND DESIGNED EXPERIMENTS – ANCOVA \TU
+/lmr/m/n/10 205
+ []
+
+[205] [206]
+Overfull \hbox (23.69452pt too wide) has occurred while \output is active
+\TU/lmr/m/sl/10 7.3.  BRIDGING REGRESSION AND DESIGNED EXPERIMENTS – ANCOVA \TU
+/lmr/m/n/10 207
+ []
+
+[207]
+File: introStatModeling_files/figure-latex/ch7.23-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch7.23-1.pdf>
+[208]
+Overfull \hbox (12.0pt too wide) in paragraph at lines 8706--8706
+[]\TU/lmtt/m/n/10 ## lm(formula = glu.red ~ weight + drug + drug:weight, data =
+ drug4)[] 
+ []
+
+
+Overfull \hbox (23.69452pt too wide) has occurred while \output is active
+\TU/lmr/m/sl/10 7.3.  BRIDGING REGRESSION AND DESIGNED EXPERIMENTS – ANCOVA \TU
+/lmr/m/n/10 209
+ []
+
+[209] [210]
+Overfull \hbox (23.69452pt too wide) has occurred while \output is active
+\TU/lmr/m/sl/10 7.3.  BRIDGING REGRESSION AND DESIGNED EXPERIMENTS – ANCOVA \TU
+/lmr/m/n/10 211
+ []
+
+[211] [212
+
+]
+Chapter 8.
+
+Underfull \hbox (badness 10000) in paragraph at lines 8817--8819
+
+ []
+
+[213] [214]
+File: introStatModeling_files/figure-latex/ch8.12-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch8.12-1.pdf>
+[215]
+File: leavesCalcium.png Graphic file (type bmp)
+<leavesCalcium.png>
+
+Overfull \hbox (353.22763pt too wide) in paragraph at lines 8911--8912
+[][] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[216] [217]
+
+LaTeX Warning: Reference `advanced-designs' on page 218 undefined on input line
+ 8927.
+
+File: introStatModeling_files/figure-latex/ch8.7-1.pdf Graphic file (type pdf)
+<use introStatModeling_files/figure-latex/ch8.7-1.pdf>
+[218] [219]
+
+LaTeX Warning: Reference `logistic-regression' on page 220 undefined on input l
+ine 8962.
+
+
+LaTeX Warning: Reference `generalized-linear-models' on page 220 undefined on i
+nput line 8962.
+
+File: introStatModeling_files/figure-latex/ch8.8-1.pdf Graphic file (type pdf)
+<use introStatModeling_files/figure-latex/ch8.8-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[220] [221]
+File: introStatModeling_files/figure-latex/ch8.9-1.pdf Graphic file (type pdf)
+<use introStatModeling_files/figure-latex/ch8.9-1.pdf>
+File: introStatModeling_files/figure-latex/ch8.10-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch8.10-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[222]
+File: introStatModeling_files/figure-latex/ch8.11-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch8.11-1.pdf>
+
+Underfull \vbox (badness 1281) has occurred while \output is active []
+
+[223]
+Underfull \hbox (badness 3623) in paragraph at lines 9029--9030
+[]\TU/lmr/m/n/10 Let’s look at a simple linear regression to predict highway mi
+leage
+ []
+
+File: introStatModeling_files/figure-latex/ch8.1-1.pdf Graphic file (type pdf)
+<use introStatModeling_files/figure-latex/ch8.1-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[224]
+File: introStatModeling_files/figure-latex/ch8.2-1.pdf Graphic file (type pdf)
+<use introStatModeling_files/figure-latex/ch8.2-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[225]
+File: introStatModeling_files/figure-latex/ch8.4-1.pdf Graphic file (type pdf)
+<use introStatModeling_files/figure-latex/ch8.4-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[226]
+Underfull \vbox (badness 1014) has occurred while \output is active []
+
+[227]
+File: introStatModeling_files/figure-latex/ch8.14-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch8.14-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[228]
+File: introStatModeling_files/figure-latex/ch8.15-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch8.15-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[229] [230]
+File: introStatModeling_files/figure-latex/ch8.18-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch8.18-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[231] [232]
+File: introStatModeling_files/figure-latex/ch8.19-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch8.19-1.pdf>
+[233] [234]
+File: introStatModeling_files/figure-latex/ch8.21-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch8.21-1.pdf>
+File: introStatModeling_files/figure-latex/ch8.21.extended-1.pdf Graphic file (
+type pdf)
+<use introStatModeling_files/figure-latex/ch8.21.extended-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[235] [236]
+File: introStatModeling_files/figure-latex/ch8.22-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch8.22-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[237]
+Overfull \hbox (43.5pt too wide) in paragraph at lines 9379--9379
+[]\TU/lmtt/m/n/10 ## lm(formula = saleprice ~ landvalue + impvalue + area, data
+ = appraisal)[] 
+ []
+
+[238] [239] [240] [241]
+Overfull \hbox (43.5pt too wide) in paragraph at lines 9541--9541
+[]\TU/lmtt/m/n/10 ## lm(formula = saleprice ~ landvalue + impvalue + area, data
+ = appraisal)[] 
+ []
+
+[242]
+File: introStatModeling_files/figure-latex/ch8.26-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch8.26-1.pdf>
+[243]
+File: introStatModeling_files/figure-latex/ch8.28-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch8.28-1.pdf>
+
+Overfull \hbox (54.0pt too wide) in paragraph at lines 9623--9623
+[]\TU/lmtt/m/n/10 ## lm(formula = saleprice ~ landvalue + impvalue + area, data
+ = z.appraisal)[] 
+ []
+
+[244] [245] [246
+
+]
+Chapter 9.
+
+Underfull \vbox (badness 6741) has occurred while \output is active []
+
+[247] [248] [249]
+File: introStatModeling_files/figure-latex/ch9.3-1.pdf Graphic file (type pdf)
+<use introStatModeling_files/figure-latex/ch9.3-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[250] [251] [252]
+Overfull \hbox (22.5pt too wide) in paragraph at lines 9934--9934
+[]\TU/lmtt/m/n/10 ## bodyfat.pct ~ age + weight + neck + abdomen + hip + thigh 
++ ankle +[] 
+ []
+
+
+Overfull \hbox (27.75pt too wide) in paragraph at lines 9934--9934
+[]\TU/lmtt/m/n/10 ## bodyfat.pct ~ age + weight + neck + abdomen + hip + thigh 
++ biceps +[] 
+ []
+
+[253]
+Overfull \hbox (33.0pt too wide) in paragraph at lines 9934--9934
+[]\TU/lmtt/m/n/10 ## bodyfat.pct ~ age + weight + neck + abdomen + hip + thigh 
++ forearm +[] 
+ []
+
+
+Overfull \hbox (6.75pt too wide) in paragraph at lines 9947--9947
+[]\TU/lmtt/m/n/10 ## lm(formula = bodyfat.pct ~ age + weight + neck + abdomen +
+ hip +[] 
+ []
+
+
+Overfull \hbox (69.75pt too wide) in paragraph at lines 9947--9947
+[]\TU/lmtt/m/n/10 ## (Intercept)          age       weight         neck      ab
+domen          hip[] 
+ []
+
+
+Overfull \hbox (69.75pt too wide) in paragraph at lines 9947--9947
+[]\TU/lmtt/m/n/10 ##    -22.6564       0.0658      -0.0899      -0.4666       0
+.9448      -0.1954[] 
+ []
+
+[254]
+Overfull \hbox (6.75pt too wide) in paragraph at lines 9980--9980
+[]\TU/lmtt/m/n/10 ## lm(formula = bodyfat.pct ~ age + weight + neck + abdomen +
+ hip +[] 
+ []
+
+
+Overfull \hbox (69.75pt too wide) in paragraph at lines 9980--9980
+[]\TU/lmtt/m/n/10 ## (Intercept)          age       weight         neck      ab
+domen          hip[] 
+ []
+
+
+Overfull \hbox (69.75pt too wide) in paragraph at lines 9980--9980
+[]\TU/lmtt/m/n/10 ##    -22.6564       0.0658      -0.0899      -0.4666       0
+.9448      -0.1954[] 
+ []
+
+[255] [256] [257]
+Overfull \hbox (1.5pt too wide) in paragraph at lines 10133--10133
+[]\TU/lmtt/m/n/10 ## bodyfat.pct ~ abdomen + weight + wrist + forearm + neck + 
+age +[] 
+ []
+
+
+Overfull \hbox (1.5pt too wide) in paragraph at lines 10133--10133
+[]\TU/lmtt/m/n/10 ## bodyfat.pct ~ abdomen + weight + wrist + forearm + neck + 
+age +[] 
+ []
+
+
+Overfull \hbox (1.5pt too wide) in paragraph at lines 10146--10146
+[]\TU/lmtt/m/n/10 ## lm(formula = bodyfat.pct ~ abdomen + weight + wrist + fore
+arm +[] 
+ []
+
+
+Underfull \vbox (badness 2698) has occurred while \output is active []
+
+[258]
+Overfull \hbox (69.75pt too wide) in paragraph at lines 10146--10146
+[]\TU/lmtt/m/n/10 ## (Intercept)      abdomen       weight        wrist      fo
+rearm         neck[] 
+ []
+
+
+Overfull \hbox (69.75pt too wide) in paragraph at lines 10146--10146
+[]\TU/lmtt/m/n/10 ##    -22.6564       0.9448      -0.0899      -1.5367       0
+.5157      -0.4666[] 
+ []
+
+[259]
+File: introStatModeling_files/figure-latex/ch9.7-1.pdf Graphic file (type pdf)
+<use introStatModeling_files/figure-latex/ch9.7-1.pdf>
+
+Underfull \vbox (badness 2846) has occurred while \output is active []
+
+[260]
+Overfull \hbox (43.5pt too wide) in paragraph at lines 10214--10214
+[]\TU/lmtt/m/n/10 ## (Intercept)         age      weight        neck     abdome
+n         hip[] 
+ []
+
+
+Overfull \hbox (43.5pt too wide) in paragraph at lines 10214--10214
+[]\TU/lmtt/m/n/10 ## -23.3049918   0.0634833  -0.0984253  -0.4932953   0.949260
+7  -0.1828710[] 
+ []
+
+[261]
+Underfull \hbox (badness 1048) in paragraph at lines 10273--10275
+[]\TU/lmr/m/n/10 Assume all the $[][]$ terms have been standardized (see the se
+ction
+ []
+
+[262] [263] [264
+
+]
+Chapter 10.
+File: introStatModeling_files/figure-latex/ch10-1-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch10-1-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[265]
+Underfull \vbox (badness 3068) has occurred while \output is active []
+
+[266]
+Overfull \vbox (1.44139pt too high) detected at line 10391
+ []
+
+[267] [268]
+File: introStatModeling_files/figure-latex/ch10-4-1.pdf Graphic file (type pdf)
+
+<use introStatModeling_files/figure-latex/ch10-4-1.pdf>
+
+Overfull \hbox (43.5pt too wide) in paragraph at lines 10471--10471
+[]\TU/lmtt/m/n/10 ## (Intercept)      weight        neck     abdomen       ankl
+e      biceps[] 
+ []
+
+
+Overfull \hbox (43.5pt too wide) in paragraph at lines 10471--10471
+[]\TU/lmtt/m/n/10 ##  -36.886823   -0.151137   -0.370366    1.005815    0.36062
+0    0.371678[] 
+ []
+
+[269] [270]
+LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <14.4> not available
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 10566.
+
+File: introStatModeling_files/figure-latex/ch10-12-1.pdf Graphic file (type pdf
+)
+<use introStatModeling_files/figure-latex/ch10-12-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[271] [272]
+Overfull \hbox (4.28629pt too wide) in paragraph at lines 10629--10629
+[]\TU/lmr/bx/n/14.4 “Leave one out” Cross-Validation (LOOCV) 
+ []
+
+[273]
+Overfull \hbox (12.0pt too wide) in paragraph at lines 10679--10679
+[]\TU/lmtt/m/n/10 ## Tuning parameter []intercept[] was held constant at a valu
+e of TRUE[] 
+ []
+
+[274]
+File: CVfolds.png Graphic file (type bmp)
+<CVfolds.png>
+[275]
+Overfull \hbox (12.0pt too wide) in paragraph at lines 10758--10758
+[]\TU/lmtt/m/n/10 ## Tuning parameter []intercept[] was held constant at a valu
+e of TRUE[] 
+ []
+
+[276]
+Chapter 11.
+File: Roulette-Table-Wheel-1024x463.png Graphic file (type bmp)
+<Roulette-Table-Wheel-1024x463.png>
+[277
+
+]
+File: RMS_Titanic_3.jpg Graphic file (type bmp)
+<RMS_Titanic_3.jpg>
+[278] [279] [280] [281] [282] [283] [284
+
+]
+Chapter 12.
+[285] [286] [287] [288]
+File: introStatModeling_files/figure-latex/unnamed-chunk-31-1.pdf Graphic file 
+(type pdf)
+<use introStatModeling_files/figure-latex/unnamed-chunk-31-1.pdf>
+
+Overfull \hbox (8.54454pt too wide) has occurred while \output is active
+\TU/lmr/m/sl/10 12.2.  FITTING, INTERPRETING AND ASSESSING A LOGISTIC MODEL \TU
+/lmr/m/n/10 289
+ []
+
+[289]
+Overfull \hbox (22.5pt too wide) in paragraph at lines 11243--11243
+[]\TU/lmtt/m/n/10 ## glm(formula = Survived ~ UV.Level, family = binomial, data
+ = tadUV)[] 
+ []
+
+[290]
+Overfull \hbox (8.54454pt too wide) has occurred while \output is active
+\TU/lmr/m/sl/10 12.2.  FITTING, INTERPRETING AND ASSESSING A LOGISTIC MODEL \TU
+/lmr/m/n/10 291
+ []
+
+[291]
+File: introStatModeling_files/figure-latex/unnamed-chunk-37-1.pdf Graphic file 
+(type pdf)
+<use introStatModeling_files/figure-latex/unnamed-chunk-37-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[292]
+Underfull \vbox (badness 1314) has occurred while \output is active []
+
+[293]
+Overfull \hbox (17.25pt too wide) in paragraph at lines 11422--11422
+[]\TU/lmtt/m/n/10 ## glm(formula = Survive ~ Class + Gender + Age, family = "bi
+nomial",[] 
+ []
+
+[294]
+Overfull \hbox (17.25pt too wide) in paragraph at lines 11472--11472
+[]\TU/lmtt/m/n/10 ## glm(formula = Survive ~ Class * Gender + Age, family = "bi
+nomial",[] 
+ []
+
+[295]
+Overfull \hbox (232.51093pt too wide) detected at line 11504
+[][][][] [] [][] [] [][][][][][][][][][] [] [][][][][][][][][][] [] [][][][][][
+][][] [] [][][][][][][][] [] [][][][][][][][][] [] [][][][][][][][][][][][][][]
+ [] [][][][][][][][][][][][][][] [] [][][][][][][][][][][][]
+ []
+
+
+Overfull \hbox (17.25pt too wide) in paragraph at lines 11542--11542
+[]\TU/lmtt/m/n/10 ## glm(formula = Survive ~ Class + Gender + Age, family = "bi
+nomial",[] 
+ []
+
+[296]
+Overfull \hbox (17.25pt too wide) in paragraph at lines 11577--11577
+[]\TU/lmtt/m/n/10 ## glm(formula = Survive ~ Class * Gender + Age, family = "bi
+nomial",[] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[297] [298]
+Chapter 13.
+[299
+
+] [300] [301] [302]
+File: introStatModeling_files/figure-latex/13.3-1.pdf Graphic file (type pdf)
+<use introStatModeling_files/figure-latex/13.3-1.pdf>
+[303]
+Overfull \hbox (12.0pt too wide) in paragraph at lines 11768--11768
+[]\TU/lmtt/m/n/10 ##   YEAR  JAN  FEB  MAR  APR  MAY JUN  JUL  AUG  SEP  OCT  N
+OV  DEC[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 11768--11768
+[]\TU/lmtt/m/n/10 ## 1 1951  1.5  0.9 -0.1 -0.3 -0.7 0.2 -1.0 -0.2 -1.1 -1.0 -0
+.8 -0.7[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 11768--11768
+[]\TU/lmtt/m/n/10 ## 2 1952 -0.9 -0.6  0.5 -0.2  0.8 0.7  0.5  0.1 -0.2  0.4  0
+.0 -1.2[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 11768--11768
+[]\TU/lmtt/m/n/10 ## 3 1953  0.3 -0.5 -0.2  0.2 -1.7 0.1  0.0 -1.2 -1.2  0.1 -0
+.3 -0.5[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 11768--11768
+[]\TU/lmtt/m/n/10 ## 4 1954  0.7 -0.3  0.3  0.6  0.5 0.1  0.4  1.1  0.2  0.3  0
+.1  1.4[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 11768--11768
+[]\TU/lmtt/m/n/10 ## 5 1955 -0.5  1.9  0.6 -0.1  1.0 1.3  1.6  1.5  1.3  1.5  1
+.2  1.0[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 11768--11768
+[]\TU/lmtt/m/n/10 ## 6 1956  1.3  1.6  1.3  0.9  1.4 1.1  1.1  1.2  0.1  1.8  0
+.2  1.1[] 
+ []
+
+[304]
+Underfull \hbox (badness 1881) in paragraph at lines 11837--11838
+[]\TU/lmr/m/n/10 Let’s plot our response variable \TU/lmtt/m/n/10 Storms \TU/lm
+r/m/n/10 against our predictor variable
+ []
+
+File: introStatModeling_files/figure-latex/13.8-1.pdf Graphic file (type pdf)
+<use introStatModeling_files/figure-latex/13.8-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[305] [306]
+File: introStatModeling_files/figure-latex/13.10-1.pdf Graphic file (type pdf)
+<use introStatModeling_files/figure-latex/13.10-1.pdf>
+[307] [308]
+
+LaTeX Warning: Reference `eq:poissonModel' on page 309 undefined on input line 
+11983.
+
+[309]
+Overfull \hbox (85.5pt too wide) in paragraph at lines 12005--12005
+[]\TU/lmtt/m/n/10 ## $ id      <dbl> 1001, 1002, 1003, 1004, 1005, 1006, 1007, 
+1008, 1009, 1010, 10~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 12005--12005
+[]\TU/lmtt/m/n/10 ## $ gender  <fct> male, male, female, female, female, female
+, female, male, male~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 12005--12005
+[]\TU/lmtt/m/n/10 ## $ math    <dbl> 63, 27, 20, 16, 2, 71, 63, 3, 51, 49, 31, 
+22, 73, 77, 10, 89, ~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 12005--12005
+[]\TU/lmtt/m/n/10 ## $ daysabs <dbl> 4, 4, 2, 3, 3, 13, 11, 7, 10, 9, 4, 5, 5, 
+6, 1, 0, 1, 0, 5, 24~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 12005--12005
+[]\TU/lmtt/m/n/10 ## $ prog    <dbl> 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 2, 2, 1, 
+3, 2, 2, 2, 1, 2, 2,~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 12027--12027
+[]\TU/lmtt/m/n/10 ## $ id      <fct> 1001, 1002, 1003, 1004, 1005, 1006, 1007, 
+1008, 1009, 1010, 10~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 12027--12027
+[]\TU/lmtt/m/n/10 ## $ gender  <fct> male, male, female, female, female, female
+, female, male, male~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 12027--12027
+[]\TU/lmtt/m/n/10 ## $ math    <dbl> 63, 27, 20, 16, 2, 71, 63, 3, 51, 49, 31, 
+22, 73, 77, 10, 89, ~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 12027--12027
+[]\TU/lmtt/m/n/10 ## $ daysabs <dbl> 4, 4, 2, 3, 3, 13, 11, 7, 10, 9, 4, 5, 5, 
+6, 1, 0, 1, 0, 5, 24~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 12027--12027
+[]\TU/lmtt/m/n/10 ## $ prog    <fct> Academic, Academic, Academic, Academic, Ac
+ademic, Academic, Ac~[] 
+ []
+
+File: introStatModeling_files/figure-latex/ch13.15-1.pdf Graphic file (type pdf
+)
+<use introStatModeling_files/figure-latex/ch13.15-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[310]
+File: introStatModeling_files/figure-latex/ch13.16-1.pdf Graphic file (type pdf
+)
+<use introStatModeling_files/figure-latex/ch13.16-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[311]
+File: introStatModeling_files/figure-latex/ch13.17-1.pdf Graphic file (type pdf
+)
+<use introStatModeling_files/figure-latex/ch13.17-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[312]
+Overfull \hbox (1.5pt too wide) in paragraph at lines 12104--12104
+[]\TU/lmtt/m/n/10 ## glm(formula = daysabs ~ math + gender + prog, family = poi
+sson,[] 
+ []
+
+[313]
+Overfull \hbox (27.75pt too wide) in paragraph at lines 12145--12145
+[]\TU/lmtt/m/n/10 ## glm(formula = daysabs ~ math + gender + prog, family = qua
+sipoisson,[] 
+ []
+
+
+Overfull \hbox (17.25pt too wide) in paragraph at lines 12145--12145
+[]\TU/lmtt/m/n/10 ## (Dispersion parameter for quasipoisson family taken to be 
+6.51816)[] 
+ []
+
+[314]
+Overfull \hbox (22.5pt too wide) in paragraph at lines 12194--12194
+[]\TU/lmtt/m/n/10 ## glm.nb(formula = daysabs ~ math + gender + prog, data = at
+tendance,[] 
+ []
+
+
+Overfull \hbox (54.0pt too wide) in paragraph at lines 12194--12194
+[]\TU/lmtt/m/n/10 ## (Dispersion parameter for Negative Binomial(1.0473) family
+ taken to be 1)[] 
+ []
+
+[315]
+Overfull \hbox (111.75pt too wide) in paragraph at lines 12251--12251
+[]\TU/lmtt/m/n/10 ## glm.nb(formula = daysabs ~ math + prog, data = attendance,
+ init.theta = 1.032713156,[] 
+ []
+
+[316]
+Overfull \hbox (54.0pt too wide) in paragraph at lines 12251--12251
+[]\TU/lmtt/m/n/10 ## (Dispersion parameter for Negative Binomial(1.0327) family
+ taken to be 1)[] 
+ []
+
+
+Overfull \hbox (80.25pt too wide) in paragraph at lines 12271--12271
+[]\TU/lmtt/m/n/10 ##                  Model   theta Resid. df    2 x log-lik.  
+ Test    df LR stat.[] 
+ []
+
+
+Overfull \hbox (80.25pt too wide) in paragraph at lines 12271--12271
+[]\TU/lmtt/m/n/10 ## 2 math + gender + prog 1.04729       309        -1728.31 1
+ vs 2     1   2.9507[] 
+ []
+
+[317]
+Overfull \hbox (85.5pt too wide) in paragraph at lines 12297--12297
+[]\TU/lmtt/m/n/10 ## $ math <dbl> 1.00000, 1.98990, 2.97980, 3.96970, 4.95960, 
+5.94949, 6.93939, 7.~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 12297--12297
+[]\TU/lmtt/m/n/10 ## $ prog <fct> General, General, General, General, General, 
+General, General, Ge~[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 12315--12315
+[]\TU/lmtt/m/n/10 ##  $ fit           : Named num [1:300] 13.6 13.5 13.4 13.3 1
+3.3 ...[] 
+ []
+
+
+Overfull \hbox (6.75pt too wide) in paragraph at lines 12315--12315
+[]\TU/lmtt/m/n/10 ##  $ se.fit        : Named num [1:300] 2.66 2.63 2.6 2.56 2.
+53 ...[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 12337--12337
+[]\TU/lmtt/m/n/10 ## $ math              <dbl> 1.00000, 1.98990, 2.97980, 3.969
+70, 4.95960, 5.94949~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 12337--12337
+[]\TU/lmtt/m/n/10 ## $ prog              <fct> General, General, General, Gener
+al, General, General~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 12337--12337
+[]\TU/lmtt/m/n/10 ## $ DaysAbsent.Fitted <dbl> 13.5892, 13.5088, 13.4289, 13.34
+94, 13.2705, 13.1920~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 12337--12337
+[]\TU/lmtt/m/n/10 ## $ lo                <dbl> 8.36713, 8.35375, 8.33964, 8.324
+82, 8.30928, 8.29302~[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 12337--12337
+[]\TU/lmtt/m/n/10 ## $ up                <dbl> 18.8112, 18.6638, 18.5181, 18.37
+41, 18.2317, 18.0910~[] 
+ []
+
+[318]
+File: introStatModeling_files/figure-latex/ch13.25-1.pdf Graphic file (type pdf
+)
+<use introStatModeling_files/figure-latex/ch13.25-1.pdf>
+No file introStatModeling.bbl.
+
+Package natbib Warning: There were undefined citations.
+
+[319] (introStatModeling.aux)
+ ***********
+LaTeX2e <2023-11-01> patch level 1
+L3 programming layer <2024-01-04>
+ ***********
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 22297 strings out of 409617
+ 432143 string characters out of 5773405
+ 1950191 words of memory out of 5000000
+ 43983 multiletter control sequences out of 15000+600000
+ 565707 words of font info for 111 fonts, out of 8000000 for 9000
+ 1348 hyphenation exceptions out of 8191
+ 90i,16n,120p,1220b,708s stack positions out of 10000i,1000n,20000p,200000b,200000s
+
+Output written on introStatModeling.pdf (319 pages).

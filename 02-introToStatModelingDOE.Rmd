@@ -102,7 +102,7 @@ Consider, for example, these four scenarios:
 
 2. Consider a simple design with a single categorical input variable, or one factor, where each subject (experimental unit) is measured only under one of the factor levels. For example, suppose three different drugs are administered to 18 subjects. Each person is randomly assigned to receive only one of the three drugs. A response is measured after drug administration. The analysis we use for such data is known as a **one-way analysis of variance**.
 
-3.	We may have a design with two factors, where every level of the first factor appears with every level of the second factor. For example, suppose your data are from an experiment in which alertness levels of subjects were measured after they had been given one of three possible dosages of a drugand whether or not they were allowed to nap for 20 minutes. Such an experimental design is known as a factorial design. Here, the two factors are drug dosage and the occurrence of a nap. The analysis we use for such data is known as a **two-way analysis of variance.**
+3.	We may have a design with two factors, where every level of the first factor appears with every level of the second factor. For example, suppose your data are from an experiment in which alertness levels of subjects were measured after they had been given one of three possible dosages of a drug and whether or not they were allowed to nap for 20 minutes. Such an experimental design is known as a factorial design. Here, the two factors are drug dosage and the occurrence of a nap. The analysis we use for such data is known as a **two-way analysis of variance.**
 
 4.	Suppose we have a design with only one factor of interest (word type). Five subjects are asked to memorize a list of words. The words on this list are of three types: positive words, negative words and neutral words. The response variable is the number of words recalled by word type, with a goal of determining if the ability to recall words is affected by the word type. Note that even though there is only one factor of interest (word type) with three levels (negative, neutral and positive), this data structure differs greatly from a one-way analysis of variance mentioned above because each subject is observed under every factor level. Thus, there will be variability in the responses within subjects (how a individual varies between positive, negative and neutral words) as well as between subjects (how two different people vary). This fact will affect how we analyze the data. This is known as a **within-subjects analysis of variance**, or **repeated measures**.
 
@@ -561,7 +561,7 @@ Before proceeding with the analysis of the model output, we need to check the as
 
 
 
-## Model Assumptions \& Assessment {#assumptionCheck}
+## Model Assumptions and Assessment {#assumptionCheck}
 
 Arguably the most important aspect in an analysis is the assumptions made with the chosen statistical model.
 In the field of statistics there are two types of assumptions made:
@@ -680,6 +680,15 @@ library(ggfortify)
 autoplot(fit.drug)
 ```
 
+**A note about residual plots.** 
+
+Note that in each of the four plots provided in \@ref(fig:ch2-12) that three points have been annotated with a number (happens to be points 7, 8 and 13 in each of these plots). 
+These numeric values correspond to the observation number, or row number from the data, matching those points.
+Residual plots built with the `autoplot()` will automatically annotate the three largest (in magnitude) residuals in each plot. 
+This is meant to bring attention to **potentially** problematic points.
+However, it is up to the person analyzing these plots to determine if this points are in fact problematic.
+In the above plots, we have already identified issues with the assumptions on variance and normality and those three points happen to be the largest magnitude residuals of several that appear to violate our assumptions. 
+
 
 #### Coding Notes
 
@@ -716,7 +725,8 @@ autoplot(fit.log.drug)
 
 Note the improvement in the Normal Q-Q plot -- the observed quantiles closely match the theoretical quantiles.
 The Scale-Location plot shows that the issues with a changing variance have largely been addressed as we see a nearly horizontal line.
-In the Residuals vs Fitted plot the violation in constant variance has improved although some indication the vertical spread is increasing is still present.  
+In the Residuals vs Fitted plot the violation in constant variance has improved although some indication the vertical spread is increasing is still present.
+Also note that all four plots still annotate 3 points even though none of those three residuals appear to be problematic.
 
 Overall, the logarithmic transformation has improved our model assumptions.
 We can try other transformations but a *perfect transformation* is unlikely to exist.
@@ -935,7 +945,7 @@ Essentially, it performs all pairwise two-sample $t$-test on all the treatments 
 It *adjust* the $p$-values of each two-sample $t$-test to account for the fact you are performing more than one test.
 This is similar to the Bonferroni method, but Tukey's HSD is known to perform better.
 
-First we load the `emmeans` package and then run our fitted model `fit.log.drug` through the `emmeans()` function. We provide it a formula to inform how we wish to perform the comparisons. In this case the formula is simple since we only have a single factor input `~ Drug`. Lastly, to do a "pairwise" comparison we use the `contrast()` function and tell it the type of comparison to implement.
+First we load the `emmeans` package and then run our fitted model `fit.log.drug` through the `emmeans()` function. We provide it a formula to inform how we wish to perform the comparisons. In this case the formula is simple since we only have a single factor input `~ Drug`. Lastly, to do a "pairwise" comparison we use the `contrast()` function and tell it the type of comparison to implement, we can specify either `"pairwise"` or `"tukey"` and get the following result.
 
 ```{r ch2-15}
 library(emmeans)
@@ -965,10 +975,10 @@ We can be 95\% confident that drug A produces a true log-mean immobilization tim
 We can be 95\% confident that drug B produces a true log-mean immobilization time that is between 0.066 and 0.466 higher than drug C.
 
 
-We can also visualize these results via a plot:
+We can also visualize these results via a plot. The following code makes a plot of the confidence intervals from above, here we used the `"tukey"` notation to demonstrate the equivalency.
 
 ```{r ch2-17, fig.align='center', fig.cap='Tukey adjusted confidence interval plots comparing treatments `A`, `B` and `C` on a log-scale. Here, we see that treatments `B` and `C` are significantly different as well as treatments `A` and `C`. We also note there is no significant difference between treatments `A` and `B` since the inverval includes zero.', out.width='60%', fig.asp=0.55}
-plot(contrast(drug.mc, "pairwise"))
+plot(contrast(drug.mc, "tukey"))
 ```
 
 Here, we are interesting in comparing each plotted confident band to the value of 0. If zero is included in the interval, there is no statistical difference between those two treatments.  If the interval does not include zero, we can conclude there is a statistical difference.
@@ -1057,7 +1067,7 @@ confint(drug.mc, adjust="bonferroni", type="response")
 We can also provide a plot of these intervals as seen in Figure \@ref(fig:ch2emmInt).
 
 ```{r ch2emmInt, fig.align='center', fig.cap='Bonferroni adjusted confidence intervals for the immobilization time of the three drug treatments.', out.width='60%', fig.asp=0.55}
-plot(drug.mc, adjust="bonferroni", type="response")
+plot(drug.mc, int.adjust="bonferroni", type="response")
 ```
 
 Another feature that can be useful with `emmeans` functionality is the `tidy()` function from the `broom` package.
@@ -1140,7 +1150,7 @@ Follow-up multiple comparisons are not necessary here, for two reasons:
 
 
 
-## A Complete One-Way ANOVA Example
+## A Complete One-Way ANOVA Example{#completeOneWay}
 
 We conclude this chapter by looking at another example of a One-Way ANOVA. 
 Here, the analysis has been somewhat streamlined as we are not introducing new techniques or modeling.

@@ -423,7 +423,7 @@ $$\textbf{Sample Standard Deviation:}~~~ s = \sqrt{s^2} = \sqrt{\frac{1}{n-1}\su
 
 $$\textbf{Standard error of}~ \bar{x}:~~~ s_{\bar{x}} = \sqrt{s^2_{\bar{x}}} = \sqrt{\frac{s^2}{n}} = \frac{s}{\sqrt{n}}$$
 
-### Numeric Summaries in R
+### Numeric Summaries in R{#numericSummaries}
 
 We recommend using `dplyr` for data handling and summary statistics. We can pipe (`|>`) our data frame into a function to calculate numeric summaries, this function is `summarize()`.
 
