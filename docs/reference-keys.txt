@@ -275,3 +275,11 @@ fitting-a-negative-binomial-regression
 picking-between-quasi-poisson-and-negative-binomial
 infererence-on-predictor-variables
 plotting-fitted-model
+blockingSection
+twoFactorAsOneFactor
+fig:unnamed-chunk-1
+fig:unnamed-chunk-2
+fig:dentalPainProfile
+fig:dentalPainResiduals
+fig:dentalPainResiduals2
+fig:dentalPainMultComp

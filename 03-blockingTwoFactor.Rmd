@@ -28,7 +28,7 @@ options(dplyr.summarise.inform = FALSE,
 ```
 
 
-## Blocking
+## Blocking{#blockingSection}
 
 Randomized Block Designs are a bit of an odd duck.
 The details of the model are fairly straightforward (we are just adding another term to the ANOVA model in \@ref{eq:onewayAnovaModel}) but the analysis is nuanced.
@@ -1024,7 +1024,7 @@ Figure \@ref(fig:ch3-19)explore the performance of the dosage amounts while cond
 Graphically we can see that the Orange Juice delivery method tends to have higher tooth lengths than Vitamin C for the low dosage levels of ascorbic acid, while they are about equivalent for the high dosage level.
 
 
-### Two-factor reformulated as a One-Factor
+### Two-factor reformulated as a One-Factor{#twoFactorAsOneFactor}
 
 It turns out, we have actually seen a two factor experiment in the previous chapter, section \@ref(completeOneWay).
 Recall the experiment studying the strength of Spruce Tree seedlings.

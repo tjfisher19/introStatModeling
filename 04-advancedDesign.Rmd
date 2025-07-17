@@ -220,54 +220,163 @@ plot(contrast(marketing.mc.scope, "pairwise"))
 ## Combling Blocks and Factorial Models
 
 
-```{r}
+**Example.** Dental Pain treatments (@KutnerText).
+
+An anesthesiologist conducted a comparative study of the effects of acupuncture and codeine on postoperative dental pain in male subjects.
+For acupuncture, patients were provide two *inactive* acupuncture points or two active acupuncture points.
+For the codeine treatments, patients were provided with a sugar pill or a codeine capsule.
+Thirty-two patients were grouped into eight groups according to an initial evaluation of their level of pain tolerance as part of this study.
+Subjects in each group were then randomly assigned to one of the four unique treatments and a pain relief score was recorded for all subjects two hours after the initial treatment where the higher the value the more effective the treatment.
+
+Data Source: @Sung1977
+
+Before we conduct the analysis we take a moment to recap some of the design features in this study.
+Here, we have two factor variables, each with two levels, so there are $2\times 2=4$ treatments.
+Furthermore, the level of pain tolerance can be considered a confounding effect to the study, but the the experimenter has put patients into groups, or *blocks*, with similar pain tolerances.
+Thus, we have a $2\times 2$ with a block term experiment.
+
+The data are provided in the file `dentalPain.csv` in the textbook repository.
+In that file, everything is coded numerically:
+
+* The acupuncture variable is recorded as 1 and 2 in the data file for *inactive* and *active* acupuncture points, respectively.
+* The codeine variable is recorded as 1 and 2 for sugar pill and codeine capsule, respectively.
+* The block term, level of pain tolerance, is recorded numerically $1,\ldots,8$. 
+
+```{r, eval=FALSE}
+dentalPain <- read_csv("https://tjfisher19.github.io/introStatModeling/data/dentalPain.csv")
+glimpse(dentalPain)
+```
+
+```{r ch4dentalPainData, echo=FALSE}
 dentalPain <- read_csv("docs/data/dentalPain.csv")
 glimpse(dentalPain)
 ```
 
-```{r}
+Before proceeding with an analysis, we perform some data handling to clean up the factor variables and add appropriate labels.
+
+```{r dentalPainDataMunging}
 dentalPain <- dentalPain |>
   mutate(PainLevel = factor(PainLevel),
          Codeine = factor(Codeine, levels=1:2,
-                          labels=c("Sugar Pill", "Codeine capsule")),
+                          labels=c("Sugar Pill",
+                                   "Codeine Capsule")),
          Acupuncture = factor(Acupuncture, levels=1:2,
                               labels=c("Inactive Acupuncture",
                                        "Active Acupuncture")))
 ```
 
-```{r}
+As described above, there are two factor levels and we are interested in the $2\times 2=4$ unique treatments in this study, but there is also a block term.
+Unlike the previous example, we are not interested in the interaction of all the variables since the level of pain tolerance is a block term.
+An exploratory data analysis can be tricky here -- in a $2\times 2$ design we can make a simple interactions plot, but here we also have 8 block terms.
+Fortunately, since we only have 4 unique treatments, we can reformulate the data into a One-way model with a block term and treat it as in section \@ref{blockingSection} of the text.
+Below, we create a new `Treatment` variable as we did in Section \@ref(twoFactorAsOneFactor). Here we specify the `\n` variable to **sep**arate the two character strings that are being pasted together.
+The `\n` is a special *escape character* that will print a new line in some of our output.
+
+```{r dentalPainDataMunging2}
+dentalPain <- dentalPain |>
+  mutate(Treatment = paste(Codeine, Acupuncture, sep="\n"),
+         Treatment = factor(Treatment, 
+                            levels=c("Sugar Pill\nInactive Acupuncture",
+                                     "Sugar Pill\nActive Acupuncture",
+                                     "Codeine Capsule\nInactive Acupuncture",
+                                     "Codeine Capsule\nActive Acupuncture") ) )
+```
+
+Now, we can make a profile plot as we have seen before.
+In Figure \@ref(fig:dentalPainProfile) we have a profile plot of pain relief scores across 4 unique treatments for each of the 8 groups.
+
+```{r dentalPainProfile, fig.align='center', fig.cap='Profiles of pain relif scores for each unique combination of acupuncture and codeine treatments across each of the 8 level of pain tolerance..',out.width='60%', fig.asp=0.55}
+ggplot(dentalPain,
+       aes(x=Treatment, y=Relief, 
+                group=PainLevel)) + 
+  geom_line(color="gray30" ) +
+  stat_summary(fun="mean", geom="line", group=0,
+               color="navy", linewidth=2) +
+  labs(x="Treatment Plan", y="Pain Relief Score") + 
+  theme_minimal()
+```
+From Figure \@ref(fig:dentalPainProfile), it visually appears that the group receiving both active acupuncture and codeine report the highest pain relief scores. 
+We can formally check this with ANOVA.
+Recall, we have two factor variables and a block term, we use a formula of the form: `response ~ block + factor1*factor2`.
+
+```{r dentalPainModel}
 dentalpain.anova <- aov(Relief ~ PainLevel + Codeine*Acupuncture,
                         data=dentalPain)
 ```
 
-```{r}
+We check the model diagnostic plots to look for violations in our underlying assumptions as seen in Figure \@ref(fig:dentalPainResiduals).
+
+```{r dentalPainResiduals, fig.width=7, fig.height=7, fig.align='center', fig.cap='Residual diagnostic plots when the response variable is pain relief scores a function of pain tolerance and the treatments of acupuncture and codeine. Here, the Residuals vs Fitted and Scale-Location plots may suggest unequal variance. The Normal Q-Q plot may suggest that the residuals are slightly skewed to the right.', fig.asp=0.9, out.width='70%'}
 autoplot(dentalpain.anova)
 ```
-```{r}
+
+The results in Figure \@ref(fig:dentalPainResiduals) are far from *textbook*. In the Residuals vs Fitted plot and Scale-Location, there does appear to be some evidence that the variability is increasing with the fitted value. 
+The Q-Q plot shows some deviation (albeit with not very large $Z$-scores) from Normality and it would suggest some minor skewness. 
+
+In situations like this, there is no clear step to take. We can try a transformation such a logarithm, but first note that the very first observation in the data has a zero response.
+
+```{r dentalPainHead}
+head(dentalPain, n=1)
+```
+
+The value $\log_{10}(0)$ is undefined.
+When this happens, we can essentially *trick* a transformation to occur by adding some value to force the data to be strictly positive.
+It is customary to add 1 to the value of response which guarantees all response values are greater than or equal to 1. 
+Also $\log_{10}(1) = 0$ so any zero values in the original units are zero on the log-scale.
+Below, we perform a log-base 10 of the response plus one.
+
+```{r dentalPainResiduals2, fig.width=7, fig.height=7, fig.align='center', fig.cap='Residual diagnostic plots when the response variable is pain relief scores a function of pain tolerance and the treatments of acupuncture and codeine. Here, the residuals appear fairly homoskedastic based on the Residuals vs Fitted and Scale-Location plots. The residuals may not be Normally distributed as there is deviation in both tails.', fig.asp=0.9, out.width='70%' }
+logDentalpain.anova <- aov(log10(Relief+1) ~ PainLevel + Codeine*Acupuncture,
+                           data=dentalPain)
+autoplot(logDentalpain.anova)
+```
+
+Figure \ref@(fig:dentalPainResiduals2) shows *maybe* some improvement in the variability assumption. 
+Specifically, the Scale-Location plot no longer shows a slight increase in variability with respect to the fitted values. 
+However, the Q-Q plot may suggest more deviation from the Normality assumption after the transformation.
+**So it is not entirely clear if a transformation is helpful.**
+
+In situations such as these, it is likely best to use the original data. 
+Transforming a response comes with some cost -- we lost some contextual interpretation. 
+So we should always asks ourselves if that cost is worth any improvement we see in the model assumptions.
+Here, it is not clear transforming the response helps with our model assumption, so we will use the model fit on the original response.
+
+```{r dentalPainAnova}
 summary(dentalpain.anova)
 ```
 
-```{r}
-dentalPain <- dentalPain |>
-  mutate(Treatment = paste(Codeine, Acupuncture))
-```
+Recall, we look at the most *complex* interaction term first; here `Codeine:Acupuncture`.
+With an $F$-stat of 3.11 on 1 and 21 degrees of freedom ($p$-value = 0.0923), we do not have evidence that the effects of codeine on pain relief depends on the acupuncture treatment.
 
-```{r}
+That first result allows us to look at the main effects:
+
+* With an $F$-stat of 160 on 1 and 21 degrees of freedom ($p$-value$\approx 10^{-11}$), we have conclusive evidence that a codeine capsule influences the pain relief score.
+* With an $F$-stat of 234 on 1 and 21 degrees of freedom ($p$-value$\approx 10^{-13}$), we have conclusive evidence that the acupuncture treatment influences the pain relief score.
+
+So we have concluded that both Acupunture and Codeine appear to influence pain relief, and that they do not necessarily interact (that is, the influence of one on the response does not necessarily depend on the other).
+What remains to be see, is **how these treatments influence the response?**
+You should also note that this experiment includes a natural *control* group (Sugar pill and inactive acupuncture).
+So a Dunnett's multiple comparison method is appropriate. 
+
+Following the example in Section \@ref(twoFactorAsOneFactor) we refit the model as a One-Way block with the $2\times 2=4$ unique treatments.
+Note that residual analysis are not needed here because this is the same underlying model as above, just formulated a little differently.
+
+```{r dentalPainAnova2}
 dentalPain.anova2 <- aov(Relief ~ PainLevel + Treatment,
                          data=dentalPain)
-```
-
-```{r}
 summary(dentalPain.anova2)
 ```
+Not surprisingly, with an $F$-stat of 132.2 on 3 and 21 degrees of freedom ($p$-value$\approx 10^{-14}$) we have evidence that the different treatment influence pain relief scores.
 
-```{r}
-sort(unique(dentalPain$Treatment))
-```
+In a previous code chunk (for building the profile plot in Figure \@ref(fig:dentalPainProfile)) we already re-ordered the treatment levels so the control group is the first factor level.
+Below we provide code to perform the multiple comparisons.
 
-```{r}
+```{r dentalPainMultComp, fig.align='center', fig.cap="Dunnett adjusted confidence interval plots comparing the three treatments against the control. Here, all three treatments are significantly different than the control. Both a Codeine Capsule and Acupunture treatments alone improve pain relief scores by about 0.5 units, while when both are utilize pain relief scores improve by about 1.2 units. Self-induced treatment is not statistically different than the control (zero is in the interval) while the Therapist based treatment results in significantly more weight loss than the control.", out.width='60%', fig.asp=0.55}
 dental.em <- emmeans(dentalPain.anova2, ~Treatment)
-contrast(dental.em, "dunnett", ref=4)
+plot(contrast(dental.em, "dunnett", ref=1)) +
+  theme_minimal() +
+  labs(x="Difference in Pain Relief Scores",
+       y="")
 ```
 
 
