@@ -1,8 +1,8 @@
 
 # Statistical Modeling and Designed Experiments
 
-We begin our dive into Statistical Modeling by building from some introductory statistics material, namely two-sample inference.
-After introducing some crucial concepts, we expand two-sample inference into analysis of variance. 
+In this chapter we introduce the statistical model by building from some introductory statistics material, namely two-sample inference.
+After introducing some crucial concepts, we expand two-sample inference into analysis of variance in the context of experimental design. 
 The learning objective of this unit include:
 
 * Distinguishing between observational studies and designed experiments.

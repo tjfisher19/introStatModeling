@@ -23,7 +23,7 @@
 <meta name="author" content="Michael R. Hughes and Thomas J. Fisher" />
 
 
-<meta name="date" content="2025-07-17" />
+<meta name="date" content="2025-07-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -450,7 +450,7 @@ div.csl-indent {
 <h1><span class="header-section-number">Chapter 3</span> Multiple Factor Designed Experiments<a href="multiple-factor-designed-experiments.html#multiple-factor-designed-experiments" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>In the previous chapters we have seen how one variable (perhaps a factor with multiple treatments) can influence a response variable.
 It should not be much of a stretch to consider the case of multiple predictor variables influencing the response.</p>
-<p><strong>Example.</strong> Consider the admissions dataset with ACT scores as a response, besides the year of entry maybe a student’s home neighborhood or state could also be a predictor?</p>
+<p><strong>Example.</strong> Consider the admissions dataset from Chapter 1 where ACT scores are the response. Besides the year of entry maybe a student’s home neighborhood or state could also be a predictor?</p>
 <p>In this chapter we will introduce the ideas of including multiple predictors into a model.
 Specifically, we look at two key analyses for designed experiments – a Block design and Two-factor experiment.
 The learning objectives of this unit include:</p>
@@ -464,13 +464,13 @@ The learning objectives of this unit include:</p>
 <h2><span class="header-section-number">3.1</span> Blocking<a href="multiple-factor-designed-experiments.html#blockingSection" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Randomized Block Designs are a bit of an odd duck.
 The details of the model are fairly straightforward (we are just adding another term to the ANOVA model in @ref{eq:onewayAnovaModel}) but the analysis is nuanced.
-Essentially, the model includes <em>predictor</em> variables we suspect are influencing the response, but we are not interesting in statistically testing its impact.
-In some settings, the influence of the block terms can be substantial and when it is not included in the model, the impacts of the treatments are <em>hidden</em> by the strong effects of the block terms.
+Essentially, the model includes <em>predictor</em> variables we suspect are influencing the response, but we are not necessarily interested in statistically testing their impact.
+In some settings, the influence of the block terms can be substantial and when it is not included in the model, the impacts of the treatments are <em>hidden</em> by the strong effects of the block terms (we will see such an example).
 Thus, when a design includes block terms, it is vital that the statistical model include these effects.</p>
 <p>The design is best described in terms of the agricultural field trials that gave birth to it.
 When conducting field trials to compare plant varieties, there is concern that some areas of a field may be more fertile than others (<em>e.g.</em>, soil nutrients, access to water, shade versus sun, etc… all will influence plant growth).
-For example, if one were comparing three plant varieties (call them A, B and C), it would not be wise to plant one variety in one location (say along a creek), another variety in a different location, and the third variety way back near a forest because the effects of the three plant varieties could be confounded with the natural fertility of the land.
-See Figure <a href="multiple-factor-designed-experiments.html#fig:ch3-field">3.1</a> as an example of a poorly designed experiment.</p>
+So for example, if we were comparing three plant varieties (call them A, B and C), it would not be wise to plant one variety in one location (say along a creek), another variety in a different location, and the third variety way back near a forest because the effects of the three plant varieties could be confounded with the natural fertility of the land.
+See Figure <a href="multiple-factor-designed-experiments.html#fig:ch3-field">3.1</a> for a visual example of this poorly designed experiment.</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch3-field"></span>
 <img src="chap3_field.png" alt="Diagram of a poorly designed experiment that is ignoring the potential confouding factors of a creek and forest."  />
 <p class="caption">
@@ -478,9 +478,9 @@ Figure 3.1: Diagram of a poorly designed experiment that is ignoring the potenti
 </p>
 </div>
 <p>The natural fertility (next to the creek, compared to next to the forest, compared to the middle of the field) in this situation is a <strong>confounding factor</strong>.
-A confounding factor is something we are not necessarily interested in, but that none the less will have an impact on our assessment of the factor of interest (<em>e.g.</em>, plant variety).</p>
+A confounding factor is something we are not necessarily interested in, but that none the less will have an impact on our assessment of the factor of interest (<em>i.e.</em>, plant variety in our example).</p>
 <p>We could attempt to mitigate the effect of this confounding factor through randomization.
-For example, suppose by random allocation the treatments are distributed as such as in Figure <a href="multiple-factor-designed-experiments.html#fig:ch3-field-random">3.2</a>.</p>
+For example, suppose by random allocation the treatments are distributed as in Figure <a href="multiple-factor-designed-experiments.html#fig:ch3-field-random">3.2</a>.</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch3-field-random"></span>
 <img src="chap3_field_randomized.png" alt="Randomized Design that attempts to account for the confouding factors of a creek and forest."  />
 <p class="caption">
@@ -488,15 +488,15 @@ Figure 3.2: Randomized Design that attempts to account for the confouding factor
 </p>
 </div>
 <p>In Figure <a href="multiple-factor-designed-experiments.html#fig:ch3-field-random">3.2</a> the treatments have been randomly assigned to the different locations in an effort to mitigate the effects of the stream and forest on land fertility.
-However, by random chance we note that treatment “C” has 4 of its 6 replicates in proximity to the stream, with the remaining 2 next to the forest (never in the middle of the field).
+However, by random chance we note that treatment “C” has 4 of its 6 replicates in proximity to the stream, with the remaining 2 next to the forest (it is never allocated to the middle of the field).
 A block design looks to address this limitation of randomization when there are suspected (known) confounding effects.</p>
 <p>A <strong>block</strong> is defined to be “a relatively homogeneous set of experimental material.”
-In our hypothetical scenario, the plots adjacent to the stream may be a block, the plots adjacent to the forest a block, and everything in the middle is a block.</p>
-<p>We aim to assess the treatment effects without undue influence from a contaminating or confounding factor, such as land fertility.
-One way to do this would be to apply all the different treatments (<em>e.g.</em>, the three plant varieties) to the same area of the field (within a particular block term).
-That is, within one block area (say next the creek in Figures <a href="multiple-factor-designed-experiments.html#fig:ch3-field">3.1</a> and <a href="multiple-factor-designed-experiments.html#fig:ch3-field-random">3.2</a>), we should see consistency in natural fertility levels.
+In our hypothetical scenario, the plots adjacent to the stream may constitute a block, the plots adjacent to the forest a block, and everything in the middle is a block.</p>
+<p>We aim to assess the treatment effects (<em>i.e.</em>, plant varieties) without undue influence from a contaminating or confounding factor, such as land fertility.
+One way to do this would be to apply all the different treatments (<em>e.g.</em>, the three plant varieties) to the same area of the field (that is, within a particular block term).
+Thus, within one block area (say next the creek in Figures <a href="multiple-factor-designed-experiments.html#fig:ch3-field">3.1</a> and <a href="multiple-factor-designed-experiments.html#fig:ch3-field-random">3.2</a>), we should see fairly consistent natural fertility levels.
 Thus any differences observed in a measured response (such as crop yield) between plant varieties in that particular block will not be due to variation in fertility levels, but rather due to the different plant varieties themselves.</p>
-<p>A bock design is one that includes these potentially confounding effects in the model.
+<p>A block design is one that includes these potentially confounding effects in the model.
 It attempts to reduce the noise in the measured response in order to “clarify” the effect due to the treatments under study.</p>
 <p>A <strong>randomized block design</strong> in the field study would be conducted in the following way:</p>
 <ul>
@@ -506,14 +506,14 @@ It attempts to reduce the noise in the measured response in order to “clarify�
 </ul></li>
 <li>Each block is divided into a number of units equal to, or more than, the number of treatments.
 <ul>
-<li>In the example we have 3 treatments and segment each block into 6 units.</li>
+<li>In the example we have 3 treatments and we segment each block into 6 units.</li>
 </ul></li>
 <li>Within each block, the treatments are assigned at random so that a different treatment is applied to each unit. When all treatments are assigned at least once in each block, it is known as a “Complete” Block Design. <strong>The defining feature of the Randomized (Complete) Block Design is that each block sees each treatment at least once.</strong>
 <ul>
-<li>We have randomly allocated 2 replicates of each treatment in each block for a complete and balanced design.</li>
+<li>We have randomly allocated 2 replicates of each treatment into each block for a complete and balanced design.</li>
 </ul></li>
 </ul>
-<p>Figure <a href="multiple-factor-designed-experiments.html#fig:ch3-field-block">3.3</a> displays a randomized complete block design for the same experiment involving three plant varieties, “A”, “B” and “C”.</p>
+<p>Figure <a href="multiple-factor-designed-experiments.html#fig:ch3-field-block">3.3</a> displays a randomized complete block design for the same experiment involving three plant varieties, “A”, “B” and “C”, across the three blocks (along the creek, along the forest and in the middle).</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch3-field-block"></span>
 <img src="chap3_field_blocked.png" alt="Diagram of a Randomized Complete Block Design that accounts for the confouding factors of a creek and forest."  />
 <p class="caption">
@@ -524,13 +524,13 @@ Figure 3.3: Diagram of a Randomized Complete Block Design that accounts for the 
 A block design can accomplish this task.</p>
 <p><strong>What can serve as a block?</strong> It is important to note that subjects (<em>i.e.</em>, experimental units) themselves may form blocks in a block design.
 It is also possible that different experimental units may collectively form a “block”.
-It depends on the circumstances.
+It depends on the circumstances and the design.
 All that is needed is that a block, however formed, creates a “relatively homogeneous set of experimental material.”</p>
-<p><strong>An example.</strong> You likely have already seen the concept of a block design!
+<p><strong>An example.</strong> You likely saw the concept of a block design in your intro stats course!
 Recall the paired <span class="math inline">\(t\)</span>-test from your introductory statistics course.
 There, the <em>pairing</em> essentially acts as a block.
 You observe two responses within each block and those two responses act as a <em>treatment</em> in some way.
-We provide an example of a paired <span class="math inline">\(t\)</span>-test below.</p>
+We provide a paired <span class="math inline">\(t\)</span>-test example below and connect it to blocking.</p>
 <div id="model-form-of-a-randomized-block-design" class="section level3 hasAnchor" number="3.1.1">
 <h3><span class="header-section-number">3.1.1</span> Model form of a Randomized Block Design<a href="multiple-factor-designed-experiments.html#model-form-of-a-randomized-block-design" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Here is the data structure for a randomized block design (RBD) with one treatment replicate per block:</p>
@@ -565,13 +565,13 @@ We may also test for differences between blocks, but this is usually of secondar
 Here, the block terms correspond to growing fields &amp; farming seasons.</p>
 <p><strong>Example.</strong> Barley Yields (from <span class="citation">Fisher (<a href="#ref-Fisher1935">1935</a>)</span>).</p>
 <p>Data was collected on the yields of five varieties of barley grown at six different locations in 1931 and 1932.
-Of statistical interested is the mean difference in yield between the five different varieties.</p>
+Of statistical interested is the mean difference in yield between the five different varieties of barley.</p>
 <p>Original Source: <span class="citation">Immer et al. (<a href="#ref-ImmerHayesPowers1934">1934</a>)</span></p>
 <p>Before proceeding with the data analysis, we first note the variables and factors of interests in this study.</p>
 <ul>
 <li>Barley yield - this is the response variable, recorded in Bushels per acre.</li>
 <li>Barley variety - the variety, or species, of barley. This is the factor variable of interest. It has 5 levels.</li>
-<li>Location and Year - The six different location and years serve as a block term in this model. We note that within each location and year, the environment should be fairly homogenous, so the location and year will serve as a blocking term.</li>
+<li>Location and Year - The six different location and years serve as a block term in this model. We note that within each location and year, the environment should be fairly homogeneous, so the location and year will serve as a blocking term.</li>
 </ul>
 <p>The data is available in the file <code>fisherBarley.RData</code> on the class repository.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="multiple-factor-designed-experiments.html#cb1-1" tabindex="-1"></a><span class="fu">load</span>(<span class="fu">url</span>(<span class="st">&quot;https://tjfisher19.github.io/introStatModeling/data/fisherBarley.RData&quot;</span>))</span>
@@ -584,15 +584,15 @@ Of statistical interested is the mean difference in yield between the five diffe
 ## $ Location     &lt;chr&gt; &quot;University Farm&quot;, &quot;University Farm&quot;, &quot;Waseca&quot;, &quot;Waseca&quot;,…
 ## $ Year         &lt;dbl&gt; 1931, 1932, 1931, 1932, 1931, 1932, 1931, 1932, 1931, 193…</code></pre>
 <p>We note the data includes a <code>LocationYear</code> variable that combines the information of both the <code>Location</code> and <code>Year</code>.
-We also note we have a single observation for each <code>Variety</code> and <code>LocationYear</code> – this we have a complete randomized block design with a single observation in each.</p>
+We also note we have a single observation for each <code>Variety</code> and <code>LocationYear</code> – thus we have a complete randomized block design with a single observation in each.</p>
 <div id="eda-on-a-block-design" class="section level4 hasAnchor" number="3.1.2.1">
 <h4><span class="header-section-number">3.1.2.1</span> EDA on a Block Design<a href="multiple-factor-designed-experiments.html#eda-on-a-block-design" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>Although the design may not seem too complicated, we mentioned that the introduction of block effects make the analysis more nuanced.
-This begins when performing an exploratory data analysis.
+<p>Although the design may not seem too complicated, we mentioned that the inclusion of block effects make the analysis more nuanced.
+This nuance begins when performing an exploratory data analysis.
 Any summary statistics or plots of the data should incorporate the block effects in the analysis.
 This can be difficult in some cases – in our working example we only have a single observation for each treatment and block combination, so summary statistics are not viable.
 However we can make visuals to <em>see</em> what is happening with our data.</p>
-<p>We first proceed with an inappropriate simple visualization of the data.
+<p>We first proceed with an <strong>inappropriate simple visualization</strong> of the data in Figure <a href="multiple-factor-designed-experiments.html#fig:ch3-3">3.4</a>.
 We do this strictly for demonstration and learning purposes.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="multiple-factor-designed-experiments.html#cb3-1" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
 <span id="cb3-2"><a href="multiple-factor-designed-experiments.html#cb3-2" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(fisherBarleyData) <span class="sc">+</span> </span>
@@ -616,7 +616,7 @@ The results are in Figure <a href="multiple-factor-designed-experiments.html#fig
 <p><strong>Incorrect plots.</strong> We note that the plots in <strong>Figure <a href="multiple-factor-designed-experiments.html#fig:ch3-3">3.4</a> are not appropriate for this data</strong>.
 For one, Boxplots display a 5 number summary – for each block term we only have five observations (one for each variety). The figure on the left appears to summarize a sample of data when in fact we only have 5 observations; why not just display the raw data?
 Second, the figure on the right is ignoring the block structure.
-Each environmental condition consisting of a location &amp; year will have its own climate, rainfall, soil nutrients, etc… and may influence the barley yield.
+Each environmental condition consisting of a location &amp; year will have its own climate, rainfall, soil nutrients, etc… and that may influence the barley yield.
 For example, it is possible a particular barley variety may grow well in one Location and year due to <em>optimal</em> precipitation and sunshine levels, but another variety may grow poorly in that block term.
 This information cannot be deduced from this plot.</p>
 <p><strong>A better plot</strong> to consider is a <strong>profile plot</strong>.
@@ -633,10 +633,11 @@ Here, we explore the response at each treatment level within each block term.</p
 Figure 3.5: Profiles of each barley yield by variety profiling across each of the 12 Location and Year combinations.
 </p>
 </div>
-<p>This plot in Figure <a href="multiple-factor-designed-experiments.html#fig:ch3-3profile">3.5</a> is an improvement over the previous result but can be further tweaked for visual improvement.
-In particular, each line corresponds to one of the block terms (this is the common approach for these plots) but there are 12 different colors displayed, and it can be difficult to distinguish them.
+<p>The plot in Figure <a href="multiple-factor-designed-experiments.html#fig:ch3-3profile">3.5</a> is an improvement over the previous result but can be further tweaked for visual improvement.
+In particular, each line corresponds to one of the block terms (this is the common approach for these plots) but there are 12 different colors displayed, and it can be difficult or impossible to distinguish them.
+Furthermore, since we are not necessarily interested in comparing the block terms, why color them at all?
 This is considered <em>visual clutter</em>.
-Since the specific Location &amp; Year combinations are not necessarily of interest in our study, we can <em>mute</em> their impact by plotting each line with the same color as in Figure <a href="multiple-factor-designed-experiments.html#fig:ch3-ImprovedProfile">3.6</a>.</p>
+Since the specific Location &amp; Year combinations are not of interest in our study, we can <em>mute</em> their impact by plotting each line with the same color as in Figure <a href="multiple-factor-designed-experiments.html#fig:ch3-ImprovedProfile">3.6</a>.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="multiple-factor-designed-experiments.html#cb5-1" tabindex="-1"></a><span class="fu">ggplot</span>(fisherBarleyData) <span class="sc">+</span> </span>
 <span id="cb5-2"><a href="multiple-factor-designed-experiments.html#cb5-2" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span>Variety, <span class="at">y=</span>Yield, </span>
 <span id="cb5-3"><a href="multiple-factor-designed-experiments.html#cb5-3" tabindex="-1"></a>                <span class="at">group=</span>LocationYear), <span class="at">color=</span><span class="st">&quot;gray30&quot;</span> ) <span class="sc">+</span></span>
@@ -651,7 +652,7 @@ Figure 3.6: Profiles of each barley yield by variety profiling across each of th
 <p>From the profile plots in Figures <a href="multiple-factor-designed-experiments.html#fig:ch3-3profile">3.5</a> and <a href="multiple-factor-designed-experiments.html#fig:ch3-ImprovedProfile">3.6</a> it is clear that certain Location &amp; Years were more fruitful than others in terms of barley yield.
 However, this is not the research question of interest - we are interested in determine how the different varieties of barley influence yield (not which field and year combinations were better).
 From the plots, this is not as clear although there is some evidence that the Trebi variety may result in more yield across all the blocks.
-The Peatland variety variety also may result in a higher yeild than the other varieties.</p>
+The Peatland variety variety also may result in a higher yield than the other varieties.</p>
 </div>
 <div id="anova-analysis" class="section level4 hasAnchor" number="3.1.2.2">
 <h4><span class="header-section-number">3.1.2.2</span> ANOVA Analysis<a href="multiple-factor-designed-experiments.html#anova-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h4>
@@ -817,18 +818,18 @@ NA
 <p>The total sum of squares (effectively, the total variance) of barley yield is more than 44,000 (squared bushels/acre).
 When this variability is decomposed, the sum of squares on the block term (the Location and Yield) is almost 32,000, or 71.3% of the total variability.
 The variability attributed to the different variety of barley is significant (<span class="math inline">\(p\)</span>-value = 0.0000785).
-However, the variability attributed to the barley variety is only 11.9% of the total variability.
+However, the variability attributed to the barley variety is only 11.9% of the total variability (sum of squares of approximately 5310).
 Notice what happens when we fit the <strong>wrong model</strong> to the data and forget to include the block effect.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="multiple-factor-designed-experiments.html#cb10-1" tabindex="-1"></a>bad.barley.fit <span class="ot">&lt;-</span> <span class="fu">aov</span>(Yield <span class="sc">~</span> Variety, <span class="at">data=</span>fisherBarleyData)</span>
 <span id="cb10-2"><a href="multiple-factor-designed-experiments.html#cb10-2" tabindex="-1"></a><span class="fu">summary</span>(bad.barley.fit)</span></code></pre></div>
 <pre><code>##             Df Sum Sq Mean Sq F value Pr(&gt;F)
 ## Variety      4   5310  1327.5   1.852  0.132
 ## Residuals   55  39422   716.8</code></pre>
-<p>Here, the <span class="math inline">\(k=5\)</span> different varieties of barley still explain the same amount of variability (sum of squares of about 5,310, about 11.9%) but the residual (or unexplained variability) has increased substantially.
-Now, the <span class="math inline">\(F\)</span>-statistic is not significant and we are unable to claim a different in barley yields by variety.
+<p>Here, the <span class="math inline">\(k=5\)</span> different varieties of barley still explain the same amount of variability (sum of squares of approximately 5,310, or about 11.9%) but the residual (or unexplained variability) has increased substantially.
+Now, the <span class="math inline">\(F\)</span>-statistic is not significant and we are unable to claim a difference in yields by barley variety.
 By not including the block term in our model, we lose the ability to parse out the effects of the different treatments.
 In this sense, including block terms helps <em>clarify</em> the treatments.
-Another phrasing says that block terms increase the <em>sensitivity</em> of our testing procedures.</p>
+Another phrasing says that block terms increase the <em>sensitivity</em> of our testing procedure.</p>
 </div>
 </div>
 <div id="paired-t-test-as-a-block-anova" class="section level3 hasAnchor" number="3.1.3">
@@ -851,7 +852,7 @@ We will revisit the model statement in a later section.</p>
 <p>The makers of the MAGNETIZER Engine Energizer System (EES) claim that it improves the gas mileage and reduces emissions in automobiles by using magnetic free energy to increase the amount of oxygen in the fuel for greater combustion efficiency.
 Test results for 14 vehicles that underwent testing is available in the file <code>carCOemissions.csv</code>.
 The data includes the emitted carbon monoxide (CO) levels, in parts per million, of each of the 14 vehicles tested before and after installation of the EES.</p>
-<p>This is a classic before-after (Paired design) study. Below is some code to input the data.</p>
+<p>This is a classic before-after (paired design) study. Below is some code to input the data.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="multiple-factor-designed-experiments.html#cb12-1" tabindex="-1"></a>www <span class="ot">&lt;-</span> <span class="st">&quot;https://tjfisher19.github.io/introStatModeling/data/carCOemissions.csv&quot;</span></span>
 <span id="cb12-2"><a href="multiple-factor-designed-experiments.html#cb12-2" tabindex="-1"></a>vehicleCO <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(www, <span class="at">col_types =</span> <span class="fu">cols</span>())</span>
 <span id="cb12-3"><a href="multiple-factor-designed-experiments.html#cb12-3" tabindex="-1"></a><span class="fu">glimpse</span>(vehicleCO)</span></code></pre></div>
@@ -861,9 +862,9 @@ The data includes the emitted carbon monoxide (CO) levels, in parts per million,
 ## $ before &lt;dbl&gt; 1.60, 0.30, 3.80, 6.20, 3.60, 1.50, 2.00, 2.60, 0.15, 0.06, 0.6…
 ## $ after  &lt;dbl&gt; 0.15, 0.20, 2.80, 3.60, 1.00, 0.50, 1.60, 1.60, 0.06, 0.16, 0.3…</code></pre>
 <p>First note each row of the data consist of an <code>id</code> with a <code>before</code> and <code>after</code> measurement.
-In the paired <span class="math inline">\(t\)</span>-test, we are comparing the differences between the before and after measurements.
-This can easily be implemented in R with different approaches.
-We outline all three below but first look at visualizing the data.</p>
+In the paired <span class="math inline">\(t\)</span>-test, we are comparing the differences between the before and after measurements for each matching <code>id</code>.
+This can easily be implemented in R using several approaches.
+We outline three below but first explore visualizing the data.</p>
 </div>
 <div id="graphical-comparison-for-paired-design" class="section level4 hasAnchor" number="3.1.3.2">
 <h4><span class="header-section-number">3.1.3.2</span> Graphical comparison for paired design<a href="multiple-factor-designed-experiments.html#graphical-comparison-for-paired-design" class="anchor-section" aria-label="Anchor link to header"></a></h4>
@@ -1027,7 +1028,7 @@ Both methods provide the same findings with the same <span class="math inline">\
 </div>
 <div id="block-anova-implementation" class="section level4 hasAnchor" number="3.1.3.4">
 <h4><span class="header-section-number">3.1.3.4</span> Block ANOVA implementation<a href="multiple-factor-designed-experiments.html#block-anova-implementation" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>To implement the paired <span class="math inline">\(t\)</span>-test as a block ANOVA, we need the data in the format equivalent to the profile plot (that is, the <em>tall</em> format).
+<p>To implement the paired <span class="math inline">\(t\)</span>-test as a block ANOVA, we need the data in the format equivalent to the profile plot (that is, the <em>tall</em> or <em>long</em> format).
 We simply tell the function <code>aov()</code> that the CO measurements (variable <code>CO</code>) are a function of when the measurement was taken (variable <code>Time</code> with values <code>before</code> and <code>after</code>) and the block term (variable <code>id</code>).
 Note that the <code>id</code> variable, although recorded as a number, has been converted into a <code>factor</code> variable when building the profile plot.
 Below we fit the model and plot the residuals.</p>
@@ -1049,7 +1050,7 @@ In a sense, this simple paired <span class="math inline">\(t\)</span>-test datas
 <li>Although we have not discussed how it is constructed and its uses, the “Constant Leverage” plot in the lower-right panel is informative here. The <span class="math inline">\(x\)</span> axis is the combination of treatment and block terms (so <code>id=1,Time=before</code> and <code>id=1,Time=after</code> and so on… all <span class="math inline">\(14\times 2\)</span> combinations). The <span class="math inline">\(y\)</span>-axis is the standardized residuals (think <span class="math inline">\(Z\)</span>-scores from intro stat). When analyzing the plot from left-to-right, we see that the vertical spread in the residuals is fairly constant, except for the 4 points (three points are labeled, 7, 8 and 9). Due to the pairing nature of the design, these four points represent two vehicles. Even though those points may seem strange, notice their corresponding standardized values (<span class="math inline">\(\approx\pm 2\)</span>), which by standard metrics is only slightly abnormal.</li>
 </ul>
 <p>Although not exactly “textbook”, the residual plots do not show any clear violations in the underlying assumptions.
-Normality looks reasonable and there does not appear to be any systematic heterskedasticity in the residuals (the deer knockdown time example in chapter 2 is a clear example of variability increasing with the mean).
+Normality looks reasonable and there does not appear to be any systematic heterskedasticity in the residuals (whereas the deer knockdown time example in chapter 2 is a clear example of variability increasing with the mean).
 We proceed with an analysis using the ANOVA table.</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="multiple-factor-designed-experiments.html#cb24-1" tabindex="-1"></a><span class="fu">summary</span>(ees_anova)</span></code></pre></div>
 <pre><code>##             Df Sum Sq Mean Sq F value   Pr(&gt;F)    
@@ -1066,12 +1067,12 @@ With an <span class="math inline">\(F\)</span>-statistic of 9.897 on 13 and 1 de
 <h3><span class="header-section-number">3.1.4</span> Another Block ANOVA Example<a href="multiple-factor-designed-experiments.html#another-block-anova-example" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The first block design example had roots in agriculture, much like our original description of blocking.
 The second was the paired <span class="math inline">\(t\)</span>-test implemented as a block design.
-Here is a different example where once again the subjects, or experimental units, are treated as blocks but the data is not paired.</p>
+Here is a different example where once again the subjects, or experimental units, are treated as blocks but the data are not paired.</p>
 <p><strong>Example.</strong> Weight loss study (published in <span class="citation">Walpole et al. (<a href="#ref-Walpole2007">2007</a>)</span>).</p>
-<p>In a study for the treatment of obesity, 10 subjects with a median age of 41.5 were recruited. Two behavioral weight reduction treatment plans were compared with a control treatment were studied for their effects on weight change.
+<p>In a study for the treatment of obesity, 10 subjects with a median age of 41.5 were recruited. Two behavioral weight reduction treatment plans were compared with a control treatment for their effects on weight change.
 The two reduction treatments involved were a self-induced weight reduction program where patients were taught self-control (SC) and a therapist-controlled reduction program.
 Each of 10 subjects were assigned to the three treatment programs in a random order.
-Their weight was tracked for 5 weeks and their weight change was measured under each of the two treatments and control.</p>
+Their weight was tracked for 5 weeks and their weight change was measured under each of the two treatments and the control.</p>
 <p>Original Source: <span class="citation">Hall (<a href="#ref-Hall1975">1972</a>)</span></p>
 <p>Each subject gives three responses instead of one as in a usual one-way design.
 In this manner, each subject (or person) forms a block (a person is a fairly homogeneous).
@@ -1083,7 +1084,7 @@ The design is a randomized block design because the experimenter randomly determ
 ## $ Subject   &lt;dbl&gt; 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, …
 ## $ Treatment &lt;chr&gt; &quot;Control&quot;, &quot;Self-induced&quot;, &quot;Therapist&quot;, &quot;Control&quot;, &quot;Self-ind…
 ## $ WtChanges &lt;dbl&gt; 1.00, -2.25, -10.50, 3.75, -6.00, -13.50, 0.00, -2.00, 0.75,…</code></pre>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="multiple-factor-designed-experiments.html#cb27-1" tabindex="-1"></a>weightloss <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(<span class="st">&quot;https://tjfisher19.github.io/introStatModeling/data/weightlossStudy.csv&quot;</span>)</span>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="multiple-factor-designed-experiments.html#cb27-1" tabindex="-1"></a>weightloss <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://tjfisher19.github.io/introStatModeling/data/weightlossStudy.csv&quot;</span>)</span>
 <span id="cb27-2"><a href="multiple-factor-designed-experiments.html#cb27-2" tabindex="-1"></a><span class="fu">glimpse</span>(weightloss)</span></code></pre></div>
 <p>Before the formal analysis we conduct a short exploratory data analysis.
 We note that the data is in a tall-format.
@@ -1289,7 +1290,7 @@ Figure 3.15: Residual diagnostic plots when the response variable is the weight 
 </div>
 <p>There appears to be a minor violation in the constant variance assumption (there is some indication that fitted values away from zero are more variable?).
 But, this type of violation cannot be easily be remedied by the standard techniques (a logarithm or square root transformation is not possible due to the negative values, and an reciprocal transformation is not possible due to a 0 observation).
-A single observation (observation 16) has a largest <span class="math inline">\(z\)</span>-score value which deviates from the Normal line.
+A single observation (observation 16) has a large <span class="math inline">\(z\)</span>-score value which deviates from the Normal line.
 In situations like this, we proceed with the analysis making note of some potential minor assumption violations.</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="multiple-factor-designed-experiments.html#cb31-1" tabindex="-1"></a><span class="fu">summary</span>(weightloss.fit)</span></code></pre></div>
 <pre><code>##             Df Sum Sq Mean Sq F value  Pr(&gt;F)   
@@ -1402,7 +1403,8 @@ The <code>readr</code> package includes a <code>read_tsv()</code> function that 
 We will also manipulate the <code>Size</code> variable into a factor with a more logical order (recall that R will put the values in alphabetical order by default).</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="multiple-factor-designed-experiments.html#cb37-1" tabindex="-1"></a>highway_signs <span class="ot">&lt;-</span> highway_signs <span class="sc">|&gt;</span></span>
 <span id="cb37-2"><a href="multiple-factor-designed-experiments.html#cb37-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Material =</span> <span class="fu">factor</span>(Material),</span>
-<span id="cb37-3"><a href="multiple-factor-designed-experiments.html#cb37-3" tabindex="-1"></a>         <span class="at">Size =</span> <span class="fu">factor</span>(Size, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Small&quot;</span>, <span class="st">&quot;Medium&quot;</span>, <span class="st">&quot;Large&quot;</span>)))</span></code></pre></div>
+<span id="cb37-3"><a href="multiple-factor-designed-experiments.html#cb37-3" tabindex="-1"></a>         <span class="at">Size =</span> <span class="fu">factor</span>(Size, </span>
+<span id="cb37-4"><a href="multiple-factor-designed-experiments.html#cb37-4" tabindex="-1"></a>                       <span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Small&quot;</span>, <span class="st">&quot;Medium&quot;</span>, <span class="st">&quot;Large&quot;</span>)))</span></code></pre></div>
 <p>Now we will construct a plot of the data.
 We have 4 observations per treatment (combination of size and material) so a boxplot makes no sense here.
 We plot the raw data using color to distinguish the three sign materials.
@@ -1422,7 +1424,7 @@ Figure 3.17: Boxplot distribution of the texture values as a function of sauce a
 There may be a material effect as type 3 appears to have lower detection distances than type 1.
 Material type 2 is somewhere between types 1 and 3 in terms of detection distances.</p>
 <p>We fit the interaction model in <code>aov()</code> by telling R to include an interaction term with the notation <code>factor1:factor2</code>.
-Below is the specific example for this study but first run a check on the residuals in Figure <a href="multiple-factor-designed-experiments.html#fig:ch3-7">3.18</a>.</p>
+Below is the code for the working example but first we check the residuals in Figure <a href="multiple-factor-designed-experiments.html#fig:ch3-7">3.18</a>.</p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="multiple-factor-designed-experiments.html#cb39-1" tabindex="-1"></a>highway.fit <span class="ot">&lt;-</span> <span class="fu">aov</span>(Distance <span class="sc">~</span> Size <span class="sc">+</span> Material <span class="sc">+</span> Size<span class="sc">:</span>Material, <span class="at">data=</span>highway_signs)</span>
 <span id="cb39-2"><a href="multiple-factor-designed-experiments.html#cb39-2" tabindex="-1"></a><span class="fu">autoplot</span>(highway.fit)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch3-7"></span>
@@ -1441,7 +1443,7 @@ An alternative to this formulation is using the <code>*</code> notation in the f
 The formula <code>response ~ factor1*factor2</code> fit a full interaction model (main effects and interaction term) for predictor variables <code>factor1</code> and <code>factor2</code>.
 In our working example, the code is</p>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="multiple-factor-designed-experiments.html#cb40-1" tabindex="-1"></a>alt.highway.fit <span class="ot">&lt;-</span> <span class="fu">aov</span>(Distance <span class="sc">~</span> Size<span class="sc">*</span>Material, <span class="at">data=</span>highway_signs)</span></code></pre></div>
-<p>The reason we introduce both is that the <code>*</code> notation will <strong>include all interaction</strong> terms in a model. In the next chapter we cover more complicated designs and the inclusion of all interaction terms is not always appropriate, so it is imperative to know both usages.</p>
+<p>The reason we introduce both is that the <code>*</code> notation will <strong>include all interaction</strong> terms in a model. In the next chapter we cover more complicated designs and the inclusion of all interaction terms is not always appropriate, so it is important to know both usages.</p>
 </div>
 <div id="analysis-of-two-factor-experiment" class="section level4 hasAnchor" number="3.2.2.2">
 <h4><span class="header-section-number">3.2.2.2</span> Analysis of Two-factor experiment<a href="multiple-factor-designed-experiments.html#analysis-of-two-factor-experiment" class="anchor-section" aria-label="Anchor link to header"></a></h4>
@@ -1492,7 +1494,7 @@ Collectively, along with Figure <a href="multiple-factor-designed-experiments.ht
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p><strong>The first test to inspect is the interaction term.</strong></p>
-<p>The interaction is not significant (<span class="math inline">\(F\)</span> = 1.031, <span class="math inline">\(\textrm{df}_1\)</span> = 4, <span class="math inline">\(\textrm{df}_2\)</span> = 27, <span class="math inline">\(p\)</span>-value = 0.409). Thus, we conclude the effect that sign size type has on the mean detection distance does not depend on material type. Likewise, the effect of material type on detection distance does not depend on sign size.</p>
+<p>The interaction is not significant (<span class="math inline">\(F\)</span> = 1.031, <span class="math inline">\(\textrm{df}_1\)</span> = 4, <span class="math inline">\(\textrm{df}_2\)</span> = 27, <span class="math inline">\(p\)</span>-value = 0.409). Thus, we conclude the effect that sign size has on the mean detection distance does not depend on material type. Likewise, the effect of material type on detection distance does not depend on sign size.</p>
 <p>A visualization of the interaction between the two factors is informative here.
 Below, we build an interactions plot.
 An interaction plot is very similar to the Profile plot used in Block design – basically it is a plot of treatment means (here <span class="math inline">\(3\times 3\)</span> treatments), whereby the means for all treatments having a given fixed level of one of the factors are visually “connected”.
@@ -1528,7 +1530,7 @@ This is consistent with a no significant interaction term.</p>
 ## Residuals     27 1420315   52604                     
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<p>From the results, we see that the both material type and sign size appear to influence the detection distance of the fish (both <span class="math inline">\(p\)</span>-values are smaller than typically-used significance levels). Specifically,</p>
+<p>From the results, we see that the both material type and size appear to influence the detection distance of the caution signs (both <span class="math inline">\(p\)</span>-values are smaller than typically-used significance levels). Specifically,</p>
 <ul>
 <li>With an <span class="math inline">\(F\)</span>-statistic of 50.912 on 2 and 27 degrees of freedom (<span class="math inline">\(p\)</span>-value <span class="math inline">\(\approx 10^{-10}\)</span>), we have significant evidence that the size of the sign influences detection distances.</li>
 <li>With an <span class="math inline">\(F\)</span>-statistic of 23.198 on 2 and 27 degrees of freedom (<span class="math inline">\(p\)</span>-value <span class="math inline">\(\approx 10^{-6}\)</span>), we have significant evidence that the material of the sign influences detection distances.</li>
@@ -1537,7 +1539,7 @@ This is consistent with a no significant interaction term.</p>
 <div id="multiple-comparisons" class="section level4 hasAnchor" number="3.2.2.3">
 <h4><span class="header-section-number">3.2.2.3</span> Multiple Comparisons<a href="multiple-factor-designed-experiments.html#multiple-comparisons" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>The follow-up work involves multiple comparisons among the levels of the significant main effect factors.
-Here, since there is no interaction, we can perform multiple comparisons within each of the main effects separately.</p>
+Here, since there is no significant interaction, we can perform multiple comparisons within each of the main effects separately.</p>
 <p>First, we look at the influence of sign size.</p>
 <div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="multiple-factor-designed-experiments.html#cb48-1" tabindex="-1"></a>twoway.size.mc <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(highway.fit, <span class="sc">~</span>Size)</span></code></pre></div>
 <pre><code>## NOTE: Results may be misleading due to involvement in interactions</code></pre>
@@ -1551,10 +1553,10 @@ Here, since there is no interaction, we can perform multiple comparisons within 
 ## Confidence level used: 0.95 
 ## Conf-level adjustment: tukey method for comparing a family of 3 estimates</code></pre>
 <p>We first note that <code>emmeans</code> provides a “NOTE” about potentially misleading results.
-The <code>emmeans()</code> function recognizes that the model <code>highway.fit</code> includes an interaction term and that we are ignoring it (<code>~Size</code>).
+The <code>emmeans()</code> function recognizes that the model <code>highway.fit</code> includes an interaction term and that we are ignoring it when calling <code>emmeans()</code> (the <code>~Size</code> formula).
 It is basically reminding us to only consider this type of analysis if the interaction was deemed non-significant.
 We note that all of the adjusted 95% confidence do not include the value 0, thus all sign sizes result in different detection distances.</p>
-<p>For the three different material types we get a similar results. .</p>
+<p>For the three different material types we get a similar results.</p>
 <div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="multiple-factor-designed-experiments.html#cb52-1" tabindex="-1"></a>twoway.material.mc <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(highway.fit, <span class="sc">~</span>Material)</span></code></pre></div>
 <pre><code>## NOTE: Results may be misleading due to involvement in interactions</code></pre>
 <div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="multiple-factor-designed-experiments.html#cb54-1" tabindex="-1"></a><span class="fu">confint</span>(<span class="fu">contrast</span>(twoway.material.mc, <span class="st">&quot;pairwise&quot;</span>))</span></code></pre></div>
@@ -1573,7 +1575,7 @@ All three confidence intervals do not include the value of 0, indicating that al
 </div>
 <div id="twoWayInteraction" class="section level3 hasAnchor" number="3.2.3">
 <h3><span class="header-section-number">3.2.3</span> Example with Significant Interaction<a href="multiple-factor-designed-experiments.html#twoWayInteraction" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><strong>Example.</strong> Tooth growth in guinea pigs (original from <span class="citation">Crampton (<a href="#ref-Crampton-1947">1947</a>)</span>).</p>
+<p><strong>Example.</strong> Tooth growth in guinea pigs (originally from <span class="citation">Crampton (<a href="#ref-Crampton-1947">1947</a>)</span>).</p>
 <p>Consider an example that investigates the effects of ascorbic acid and delivery method on tooth growth in guinea pigs.
 Sixty guinea pigs are randomly assigned to receive one of three levels of ascorbic acid (0.5, 1.0 or 2.0 mg) via one of two delivery methods (orange juice or Vitamin C), under the restriction that each treatment combination has an equal number of guinea pigs.
 The response variable is the length of odontoblasts (cells responsible for tooth growth, measured in micrometers, or <span class="math inline">\(\mu m\)</span>).
@@ -1672,7 +1674,7 @@ Figure 3.20: Interaction plot demonstrating that the dose and supplement may int
 <li>There appears to be a substantial dose effect: higher doses of ascorbic acid generally result in higher mean length.</li>
 <li><strong>However, there may be an important interaction effect between the type of supplement and dose in determining mean tooth length.</strong> In particular, orange juice appears to be more effective than Vitamin C as a delivery method (longer tooth length) only at lower dose levels. At the high dose level, there appears to be no difference between the supplements.</li>
 </ol>
-<p>Once again, non-parallel traces may be the red flag.
+<p>Non-parallel traces may be the red flag.
 But, even if we suspect the two factor levels interact, we need to run the ANOVA test to confirm if this is a significant effect.
 First, check assumptions in Figure <a href="multiple-factor-designed-experiments.html#fig:ch3-16">3.21</a>.</p>
 <div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="multiple-factor-designed-experiments.html#cb60-1" tabindex="-1"></a>tooth.fit <span class="ot">&lt;-</span> <span class="fu">aov</span>(Length <span class="sc">~</span> Dosage <span class="sc">+</span> Supplement <span class="sc">+</span> Dosage<span class="sc">:</span>Supplement, <span class="at">data=</span>ToothGrowthDF)</span>
@@ -1711,14 +1713,14 @@ Thus, we conclude the effect that supplement has on the mean tooth growth depend
 <div id="multiple-comparisons-1" class="section level4 hasAnchor" number="3.2.3.1">
 <h4><span class="header-section-number">3.2.3.1</span> Multiple comparisons<a href="multiple-factor-designed-experiments.html#multiple-comparisons-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>In the case of a significant interaction effect in a two-factor ANOVA model, we typically follow up by performing multiple comparisons for the levels of one of the factors while holding the other factor fixed (the “conditioning” factor).
-So for example, in the present problem we could either</p>
+So for example, in the working example we could either</p>
 <ul>
 <li>Compare the supplements at each of the three dose levels (3 tests total), or</li>
 <li>Compare the dose levels within each of the supplement types (3 × 2 = 6 tests total).</li>
 </ul>
 <p>Often in practice, the context of the problem will dictate to the researcher which way makes the most sense.
 We’ll provide code that performs both cases using the <code>emmeans</code> package.
-Note that only change in the code is a slight modification of the <code>formaul</code> into <code>emmeans</code>.
+Note that only change in the code is a slight modification of the <em>formula</em> we input in <code>emmeans</code>.
 Here, we use the notation <code>~ factor1 | factor2</code>.
 This tells the <code>emmeans()</code> function to consider comparisons of <code>factor1</code> given values within <code>factor2</code>.
 You likely saw similar notation in your introductory statistics class when covering conditional probability (<em>i.e.</em>, <span class="math inline">\(P(A|B)\)</span>).</p>
@@ -1771,7 +1773,7 @@ We add some labels to the plot as Figure <a href="multiple-factor-designed-exper
 Figure 3.22: Graphical exploration of all treatments noting that the OJ supplement tends to result in higher tooth lengths than Vitamin C.
 </p>
 </div>
-<p>Figure <a href="multiple-factor-designed-experiments.html#fig:ch3-19">3.22</a>explore the performance of the dosage amounts while conditioning on the delivery type.
+<p>Figure <a href="multiple-factor-designed-experiments.html#fig:ch3-19">3.22</a> explores the performance of the dosage amounts while conditioning on the delivery type.
 Graphically we can see that the Orange Juice delivery method tends to have higher tooth lengths than Vitamin C for the low dosage levels of ascorbic acid, while they are about equivalent for the high dosage level.</p>
 </div>
 </div>
@@ -1787,7 +1789,7 @@ In the experiment, healthy seedlings exposed to a neutral solutions were conside
 <p>In this design there are actually two factors being studied, seed type (healthy or diseased) and solution type (pH of 5.5 or 7). This is a <span class="math inline">\(2\times 2\)</span> designed experiment.
 In the previous chapter, we analyzed this data as if it was a one-way experiment with 4 treatments.
 It turns out that all factorial models can be formulated into a One-Way model, although this reformulation is not always easy.
-Specifically, in the one-way design we consider each unique treatment combination (here, the <span class="math inline">\(2\times 2\)</span> combinations) to be the only factor in the study.
+Specifically, in the one-way design we consider each unique treatment combination (here, the <span class="math inline">\(2\times 2\)</span> combinations) to be the only factor in the study with four levels.
 This may make more sense by looking at the mathematical equations. First, recall the 2-factor equation from above:
 <span class="math display">\[Y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha\beta)_{ij} + \varepsilon_{ijk}\]</span>
 Using the spruce seedling example for the description of our design, <span class="math inline">\(\mu\)</span> could be interpreted as the average bud strength under the control setting (healthy seedlings with pH 7 solution).
@@ -1796,10 +1798,10 @@ Similarly, <span class="math inline">\(\beta_j\)</span> may be the influence of 
 Lastly, <span class="math inline">\((\alpha\beta)_{ij}\)</span> is the term for diseased and pH of 5.5.
 So the model can be expressed as:
 <span class="math display">\[\begin{align}
-\text{Control}:&amp;~~~ Y_{ijk} = \mu + \varepsilon_{ijk} = \mu_1 + \varepsilon_{ijk}\\
-\text{Diseased and pH 7}:&amp;~~~Y_{ijk} = \mu + \alpha_i + \varepsilon_{ijk} = \mu_2 + \varepsilon_{ijk}\\
-\text{Healthy and pH 5.5}&amp;~~~Y_{ijk} = \mu + \beta_j + \varepsilon_{ijk} = \mu_3 + \varepsilon_{ijk}\\
-\text{Diseased and pH 5.5}&amp;~~~Y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha\beta)_{ij} + \varepsilon_{ijk} = \mu_4 + \varepsilon_{ijk}
+\text{Control}:&amp;~~~~ Y_{ijk} = \mu + \varepsilon_{ijk} = \mu_1 + \varepsilon_{ijk}\\
+\text{Diseased and pH 7}:&amp;~~~~Y_{ijk} = \mu + \alpha_i + \varepsilon_{ijk} = \mu_2 + \varepsilon_{ijk}\\
+\text{Healthy and pH 5.5}&amp;~~~~Y_{ijk} = \mu + \beta_j + \varepsilon_{ijk} = \mu_3 + \varepsilon_{ijk}\\
+\text{Diseased and pH 5.5}&amp;~~~~Y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha\beta)_{ij} + \varepsilon_{ijk} = \mu_4 + \varepsilon_{ijk}
 \end{align}\]</span>
 and in this formulation <span class="math inline">\(\mu_1\)</span> is the mean under the control, <span class="math inline">\(\mu_2\)</span> is the mean for diseased seedlings with pH of 7, <span class="math inline">\(\mu_3\)</span> the mean for healthy seedlings and pH 5.5, and <span class="math inline">\(\mu_4\)</span> the mean for diseased seedlings and pH 5.5.
 The structure has been rewritten as a one-way model:
@@ -1863,7 +1865,7 @@ In this way, the two-factor design has been written as a one-factor design in th
 <li>The sum of squares on the residuals in both fits is 0.352 on 16 degrees of freedom.</li>
 <li>In the table for the two-way fit, the sum of squares for the <em>three</em> inputs (Acidity, Seed type &amp; the interaction) are 0.200, 0.392 and 0.128, respectively, each with 1 degree of freedom.
 <ul>
-<li>Note: <span class="math inline">\(0.200+0.392+0.128 = 0.720\)</span> and <span class="math inline">\(1+1+1=3\)</span>, the sum of squares and degrees of freedom on the treatments in the one-way ANOVA.</li>
+<li>Note: <span class="math inline">\(0.200+0.392+0.128 = 0.720\)</span> and <span class="math inline">\(1+1+1=3\)</span>, which matches the sum of squares and degrees of freedom on the treatments in the one-way ANOVA.</li>
 </ul></li>
 <li>The two-way ANOVA effectively decomposes the one-way sum of squares on treatments into multiple components.</li>
 </ul>
@@ -1877,24 +1879,25 @@ Consider the two previous examples.</p>
 <ul>
 <li>In the highway signs example (see Section <a href="multiple-factor-designed-experiments.html#highwaySigns">3.2.2</a>), the interaction term was not significant.
 <ul>
-<li>That is, any influence <em>sign material</em> may have on detection distance did not vary within the different <em>sign sizes</em>. Likwise, any influence <em>sign size</em> may have on detection distance did not vary within the different <em>sign materials</em>.</li>
+<li>That is, any influence <em>sign material</em> may have on detection distance did not vary within the different <em>sign sizes</em>. Likewise, any influence <em>sign size</em> may have on detection distance did not vary within the different <em>sign materials</em>.</li>
 <li>Both main effects were significant. This tells us that both <em>sign size</em> and <em>sign material</em> were predictive of the response without any influence from the other factor.</li>
 </ul></li>
 <li>In the tooth growth example (see Section <a href="multiple-factor-designed-experiments.html#twoWayInteraction">3.2.3</a>), the interaction term was significant.
 <ul>
-<li>We can not meaningfully interpret the main effects;</li>
+<li>We cannot meaningfully interpret the main effects;</li>
 <li>the influence of dosage depended on the delivery method, and likewise, the influence of the delivery method depended on the dosage.</li>
 </ul></li>
 </ul>
 <p>When reformulating these models as a One-Way experiment, we may lose some of this information.
-Looking at the two ANOVA tables for the spruce seedling problem. When treated as a one-way model, all we can say is that the four different treatments result in different bud breaking strength. There is no insight as to what may be driving the result.
+Look at the two ANOVA tables for the spruce seedling problem: When treated as a one-way model, all we can say is that the four different treatments result in different bud breaking strength. There is no insight as to what may be driving the result.
 However, with the two-way ANOVA, we know that it is an interaction of pH level and seedling type that are influencing bud breaking strength.</p>
-<p>The reformulation is still useful however! In spruce seedling example there is a control group (pH of 7 with healthy seedlings), but standard two-factor approaches do not allow us to compare all unique treatments to that control group.
+<p>The reformulation is still useful however! In the spruce seedling example there is a control group (pH of 7 with healthy seedlings), but standard two-factor approaches do not allow us to compare all unique treatments to that control group.
 Look at the the previous example for multiple comparisons when interaction is present, we used the notation <code>~ Factor1 | Factor2</code> telling the <code>emmeans()</code> function that the <code>Factor1</code> levels should be separated within <code>Factor2</code>. But here, the control group includes a level within each factor (essentially we have two values creating the control).</p>
-<p>So in situations like this, it is often better to reformulate the model for the purpose of performing multiple comparisons.</p>
+<p>So in situations like this, it is often easiest to reformulate the model for the purpose of performing multiple comparisons.
+Below, we provide code to show you how to create a new variable that combines the two factor variables.</p>
 <div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="multiple-factor-designed-experiments.html#cb78-1" tabindex="-1"></a>spruce_trees_twoway <span class="ot">&lt;-</span> spruce_trees_twoway <span class="sc">|&gt;</span></span>
 <span id="cb78-2"><a href="multiple-factor-designed-experiments.html#cb78-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Treatments =</span> <span class="fu">paste</span>(Acidity, Seed_Type) )</span></code></pre></div>
-<p>The <code>paste()</code> function “paste” together the values in <code>Acidity</code> with <code>Seed_Type</code> resulting in a new variable called <code>Treatments</code>. This variable will be a <code>character</code> variable and R will automatically sort in alphabetical order when using that variable. Let’s look at the results of this variable in alphabetical order so we know the location of the control group..</p>
+<p>The <code>paste()</code> function “paste” together the values in <code>Acidity</code> with <code>Seed_Type</code> resulting in a new variable called <code>Treatments</code>. This variable will be a <code>character</code> variable and R will automatically sort in alphabetical order when using that variable. Let’s look at the results of this variable in alphabetical order so we know the location of the control group (alternatively, we could set the <code>Treatments</code> variable as a factor type and specify the ordering).</p>
 <div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="multiple-factor-designed-experiments.html#cb79-1" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">unique</span>(spruce_trees_twoway<span class="sc">$</span>Treatments))</span></code></pre></div>
 <pre><code>## [1] &quot;pH 5.5 Diseased&quot; &quot;pH 5.5 Healthy&quot;  &quot;pH 7 Diseased&quot;   &quot;pH 7 Healthy&quot;</code></pre>
 <p>Note the control group is the fourth listed.</p>
@@ -1907,7 +1910,7 @@ Look at the the previous example for multiple comparisons when interaction is pr
 ##  pH 7 Diseased - pH 7 Healthy      -0.12 0.0938 16  -1.279  0.4589
 ## 
 ## P value adjustment: dunnettx method for 3 tests</code></pre>
-<p>The results above are verbatim the as in Section <a href="statistical-modeling-and-designed-experiments.html#completeOneWay">2.10</a>.</p>
+<p>These results are verbatim the same as in Section <a href="statistical-modeling-and-designed-experiments.html#completeOneWay">2.10</a>.</p>
 
 </div>
 </div>
