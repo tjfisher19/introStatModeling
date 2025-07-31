@@ -317,7 +317,7 @@ In this sense, including block terms helps *clarify* the treatments.
 Another phrasing says that block terms increase the *sensitivity* of our testing procedure.
 
 
-### Paired $t$-test as a Block ANOVA
+### Paired $t$-test as a Block ANOVA{#pairedTtest}
 
 In introductory statistics courses, the paired $t$-test (also known as the **matched pairs design**) is typically covered.
 Arguably the simplest example of such a design is a before and after study as outlined in the fictional example below.
@@ -647,7 +647,7 @@ Both confidence intervals comparing the therapist-based weight loss treatment an
 However, we do note that the interval comparing the self-induced method to the control is just outside the range of including zero, so the improvement may not be as contextually practical.
 
 
-## Two-factor Designs
+## Two-factor Designs{#twoFactorDesigns}
 
 A **factorial** structure in an experimental design is one in which there are two or more factors, and the levels of the factors are all observed in combination.
 For example, suppose you are testing for the effectiveness of three drugs (A, B, C) at three different dosages (5 mg, 10 mg, 25 mg). 
