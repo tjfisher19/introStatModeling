@@ -115,7 +115,7 @@ In practice, it is essentially an extension of the more familiar two-sample $t$-
 As stated earlier, there are many different experimental structures possible when conducting an experiment and ANOVA can adapt to many of those structures.
 Some of the other widely used structures in practice are known as nested designs, split-plot designs, and repeated measures designs.
 It is worth reiterating that the structure of the experimental data will dictate how an analysis of variance is used to model the data.
-In each of the designs described above, some variant of an Analysis of Variance is used for analysis.
+In each of the designs described, some variant of an Analysis of Variance is used for analysis.
 
 ### Elements of a designed experiment
 
@@ -148,7 +148,7 @@ But in an experiment to measure the tensile strength of string, the experimental
 When the experimental units are people, they are often called participants; when the experimental units are animals, they are often called subjects.
 
 **Three characteristics of a well-designed experiment.** While the elements above are common to all experiments, there are aspects to the manner in which the experiment is run which are critical to it being a "well-designed" experiment.
-A well-designed experiment includes design features that allow researchers to eliminate extraneous variables as an explanation for the observed relationship between the factor(s) and the response variable. Some of these features are listed below.
+A well-designed experiment includes design features that allow researchers to eliminate extraneous variables as an explanation for the observed relationship between the factor(s) and the response variable. Some of these features are listed:
 
 * **Control**: Control refers to steps taken to reduce the effects of extraneous variables (*i.e.*, variables other than the factor(s) and response).
 These extraneous variables are called lurking variables.
@@ -233,7 +233,7 @@ A **statistical model** is a mechanism to describe the structural relationship b
 It is in this sense that you can think of a statistical model as a "simplification": we know that the true relationship between response and predictor variables is very complex and detailed. 
 The goal of the model is not to capture all the intricacies of the complexity but rather, the model only seeks to describe the essential features of any relationships that exist. 
 
-### Example of a two-sample $t$-test as a model
+### Example of a two-sample $t$-test as a model {#twoSampletTest}
 
 It turns out, we have already fit a statistical model. 
 Consider a variation of the two-sample $t$-test we performed in the previous chapter on the University Admissions data [@KutnerText]. 
@@ -339,7 +339,7 @@ In this observational study, we compared the ACT scores of incoming freshmen in 
 ## One-Way ANOVA
 
 When there is a single factor variable whose levels may only change between different experimental units, we can analyze the effect of the factor on the response using a one-way analysis of variance (one-way ANOVA) on the between-subjects factor.
-If we had a single factor with just two levels, you could still use a one-way ANOVA, but it would be equivalent to running an independent samples $t$-test (see above for an example). In this sense, one-way ANOVA is an extension of the two-sample $t$-test (think a $k$-sample test).
+If we had a single factor with just two levels, you could still use a one-way ANOVA, but it would be equivalent to running an independent samples $t$-test (see Section \@ref(twoSampletTest) for an example). In this sense, one-way ANOVA is an extension of the two-sample $t$-test (think a $k$-sample test).
 
 In this design, we observe random samples from $k$ different populations.
 As a designed experiment, these populations may be defined on the basis of an administered treatment.
@@ -401,7 +401,7 @@ The null and alternative hypotheses are given by:
 $$H_0: \mu_1 = \mu_2 = \ldots = \mu_k$$
 $$H_a: ~\textrm{at least two of the population means differ}$$
 
-Expressed in terms of the $\tau$-model parameters, we really want to test to see if there are no treatment mean deviations among the populations, so the above hypotheses can be equivalently expressed as follows:
+Expressed in terms of the $\tau$-model parameters, we really want to test to see if there are no treatment mean deviations among the populations, so the hypotheses above can be equivalently expressed as follows:
 
 $$H_0: \tau_1 = \tau_2 = \ldots = \tau_k = 0$$
 $$H_a: ~\text{at least one } \tau_j \neq 0~~~~~\text{for}~j=1,\ldots, k$$
@@ -516,7 +516,7 @@ The single line of code above fits the model described in \@ref(eq:onewayAnovaMo
 
 #### Coding Notes
 
-The line of code above is fairly straightforward but R has done many things in that single line of code.
+The line of code is fairly straightforward but R has done many things in that single line.
 The provided formula, `Knockdown_times ~ Drug`, and data declaration, `data=deer_knockdowntimes`, provide `aov()` all the information needed to fit the model. 
 Later in the class we will see more complex formula statements but they all have the same general form: `response ~ predictor`.
 
@@ -532,7 +532,7 @@ The object `fit.drug` has two associated classes: the `aov` type and `lm` type.
 This is because all ANOVA models are technically Linear Models (hence `lm`), so both object classes are assigned.
 Recall the derivation above where we write the response as a function of indicator variables in the form of a linear model, see \@ref(eq:onewayAnovaLinearModel).
 We also mentioned that the `aov()` calculates many parameters associated with that model. 
-The below code is only provided for explanatory purposes (it will never be needed to complete an analysis) but we can see most of the information that is stored in the `fit.drug` object with the `names()` function.
+The next piece of code is only provided for explanatory purposes (it will never be needed to complete an analysis) but we can see most of the information that is stored in the `fit.drug` object with the `names()` function.
 
 ```{r ch2-9b}
 names(fit.drug)
@@ -594,7 +594,7 @@ In this class, along with nearly all methods you learned in your introductory st
 Collectively, the three assumptions simply state
 $$\varepsilon_i \stackrel{iid}{\sim} N(0, \sigma^2), ~~\textrm{for variance}~\sigma^2$$
 
-**Important Note.** In the above bullet points, the assumptions are listed in their order of importance. 
+**Important Note.** The bullet points list the assumptions in their order of importance. 
 If you lack independence, *nearly all* statistical methods we cover in this text are invalid. 
 The constant variance assumption is important but in many cases violations of the assumption can be addressed. 
 Lastly, the Normality assumption tends to not be all that important except in small sample sizes and when the data are heavily skewed -- but we can also address issues with Normality in many cases.
@@ -672,7 +672,7 @@ That is, if there are concerns about one, it is likely there will be concerns re
 
 ### Code to check assumptions
 
-The code to generate the above plots can be achieved via the `autoplot` function when including the `ggfortify` library [@R-ggfortify]. 
+The code to generate the plots above can be achieved via the `autoplot` function when including the `ggfortify` library [@R-ggfortify]. 
 The `autoplot` function on the fitted model provides 4 plots by default as seen in Figure \@ref(fig:ch2-12) (note: we will discuss the Constant Leverage plot in Section \@ref(detecting-and-dealing-with-unusual-observations)).
 
 ```{r ch2-12, message=FALSE, fig.align='center', fig.cap='Residual plots for the One-Way ANOVA studying the effect of different drugs on immobilization times - Top-left a Residuals vs Fitted Plot; Top-right a Normal Q-Q plot of the residuals; Bottom-left the Scale-Location plot; and Bottom-right a Residuals vs Leverage plot.', fig.asp=0.9, out.width='70%'}
@@ -687,7 +687,7 @@ These numeric values correspond to the observation number, or row number from th
 Residual plots built with the `autoplot()` will automatically annotate the three largest (in magnitude) residuals in each plot. 
 This is meant to bring attention to **potentially** problematic points.
 However, it is up to the person analyzing these plots to determine if this points are in fact problematic.
-In the above plots, we have already identified issues with the assumptions on variance and normality and those three points happen to be the largest magnitude residuals of several that appear to violate our assumptions. 
+In the plots above, we have already identified issues with the assumptions on variance and normality and those three points happen to be the largest magnitude residuals of several that appear to violate our assumptions. 
 
 
 #### Coding Notes
@@ -704,7 +704,7 @@ With different object types, `autoplot()` will behave differently.
 
 In cases where we have violations of our underlying assumptions, a common remedy is to **transform the response variable**. 
 
-In our working example, we have evidence from the above residual diagnostic plots that the variance appears to be increasing with the response (determined by assessing the constant variance assumption) and that there may be some violations to normality.
+In our working example we have evidence from the residual diagnostic plots that the variance appears to be increasing with the response (determined by assessing the constant variance assumption) and that there may be some violations to normality.
 One way to address this issue is to transform the response variable. 
 We will go into more details in a later chapter but common transformations include $Y^*=log_{10}(Y)$, $Y^*=\sqrt{Y}$ and $Y^*=1/Y$. 
 Here we will use a logarithmic as it is fairly common and more interpretable than most other transformations.
@@ -762,7 +762,7 @@ Using the indicator variable ideas (see \@ref(eq:twoSampleTtest) for the two-sam
 $$\log_{10}(Y_{i}) = \mu_A + \delta_B X_{Bi} + \delta_C X_{Ci} + \varepsilon_{ji}$$
 where $\mu_A$ is the mean of the logarithm of knockdown times in group A. $X_{Bi}$ takes on the value 1 if the $i^\mathrm{th}$ observation is in group B, otherwise it is zero. Likewise $X_{Ci}$ for group C. The value $\delta_B$ measures how the mean of log-knockdown times in group B differs from A, and $\delta_C$ how group C differs from A. 
 
-If we were to "un"-log the above model to the original units by raising each side to the power of 10, we get:
+If we were to "un"-log the model to the original units by raising each side to the power of 10, we get:
 $$10^{\log_{10}(Y)} = Y = 10^{\mu_j + \varepsilon} = 10^{\mu_j}\times 10^\varepsilon$$
 and
 $$10^{\log_{10}(Y_i)} = Y_i = 10^{\mu_A + \delta_B X_{Bi} + \delta_C X_{Ci} + \varepsilon_{ji}} = 10^{\mu_A} \times 10^{\delta_B X_{Bi}}\times 10^{\delta_C X_{Ci}} \times 10^{\varepsilon_{i}}$$
@@ -919,7 +919,7 @@ However, seeing *some* coin (as in *any* of the 100 coins) behave that way, with
 In fact, the probability that all 100 fair coins are identified as fair by this criterion is $(1 - 0.0107)^{100} \approx 0.34$. This suggest, even if all 100 coins were in fact fair, the probably *some* coin is incorrectly flagged as unfair is approximately 66%.
 Therefore the application of a "single coin fairness criterion" to multiple comparisons would more likely than not **falsely identify** at least one fair coin as unfair!
 
-The above illustration may seem contrived, but multiple testing is a reality and a natural follow-up procedure to ANOVA.
+The illustration may seem contrived, but multiple testing is a reality and a natural follow-up procedure to ANOVA.
 If you conducted two hypothesis tests, each at $\alpha=0.05$, the family-wise error rate is `r 1-(0.95^2)`. 
 For three tests (*e.g.*, A vs B, A vs C and B vs C), the overall Type I error rate is `r 1-(0.95^3)`.
 
@@ -950,7 +950,7 @@ First we load the `emmeans` package and then run our fitted model `fit.log.drug`
 ```{r ch2-15}
 library(emmeans)
 drug.mc <- emmeans(fit.log.drug, ~ Drug)
-contrast(drug.mc, "pairwise")
+contrast(drug.mc, "tukey")
 ```
 
 The significant differences are what we expected based on our earlier EDA: drug C is significantly different in terms of log-mean immobilization time as compared to the other two drugs. 
@@ -960,7 +960,7 @@ The $p$-values in this output have been adjusted for performing 3 comparisons, s
 We can also obtain simultaneous 95% confidence intervals for the true mean differences due to each drug pairing using the `confint()` function on our `contrast` of an `emmeans` object:
 
 ```{r ch2-16}
-confint(contrast(drug.mc, "pairwise"))
+confint(contrast(drug.mc, "tukey"))
 ```
 
 These may be interpreted as follows:
@@ -985,7 +985,7 @@ Here, we are interesting in comparing each plotted confident band to the value o
 
 #### "Un"-transforming the response
 
-You should note in some of the above output that `emmeans` provides a message that the "Results are given on the `log10` (not the response) scale." To put back in the original units we could "un"-log the intervals by taking base-10 exponents (that is, raise 10 to the power of the value). But we need to take a moment to consider how to interpret the output.
+You should note in some of the output above that `emmeans` provides a message that the "Results are given on the `log10` (not the response) scale." To put back in the original units we could "un"-log the intervals by taking base-10 exponents (that is, raise 10 to the power of the value). But we need to take a moment to consider how to interpret the output.
 
 To explain, suppose we are interested in comparing groups A vs B. 
 Without a transformation, the Tukey HSD method effectively calculates the difference $\mu_A - \mu_B$ and this would lend itself to the two-sample $t$-test. 
@@ -997,19 +997,19 @@ If the means differ, the ratio would be different than one.
 The `emmeans` provides the functionality to put the response in the original units when a logarithmic transformation has been used. We specify the `type="response"` parameter in the `contrast()` function call as follows:
 
 ```{r ch2-15a}
-contrast(drug.mc, "pairwise", type="response")
+contrast(drug.mc, "tukey", type="response")
 ```
 
 You'll note that the `null` value is 1, and the results are consistent with the previous results -- a difference exist between group C and groups A and B.  We can also consider confidence intervals
 
 ```{r ch2-16a}
-confint(contrast(drug.mc, "pairwise", type="response"))
+confint(contrast(drug.mc, "tukey", type="response"))
 ```
 
 and these intervals can also be visualized
 
 ```{r ch2-17a, fig.align='center', fig.cap='Tukey adjusted confidence interval plots comparing the ratio of treatments `A`, `B` and `C` since the original model was fit on a log-scale. Here, we see that treatments `B` and `C` are significantly different as well as treatments `A` and `C`. We also note there is no significant difference between treatments `A` and `B` as the interval includes unity.', out.width='60%', fig.asp=0.55}
-plot(contrast(drug.mc, "pairwise", type="response"))
+plot(contrast(drug.mc, "tukey", type="response"))
 ```
 
 
@@ -1019,10 +1019,10 @@ The Dunnett method is applicable when one of your experimental groups serves as 
 **Note** that there is no *control* group in our working example of immobilization times, but we include the code below for demonstration purposes where treatment level "A" is the reference (`ref`) control group.
 
 In situations were a *control* group is present, it is advisable to use a method that only controls the family-wise error rate for the comparisons of interest, rather than over-controlling for all possible comparison such as when using a method like Tukey HSD. 
-We still use the `emmeans` package but specify the comparisons are against a *control* group. The code is below:
+We still use the `emmeans` package but specify the comparisons are against a *control* with the parameter `"dunnett"` (or `"trt.vs.ctrl"`) and a `ref` level. The code is:
 
 ```{r ch2-18}
-contrast(drug.mc, "trt.vs.ctrl", ref="A")
+contrast(drug.mc, "dunnett", ref="A")
 ```
 
 The two comparisons provided are A vs. B and A vs. C. 
@@ -1030,24 +1030,24 @@ The only significant difference is between A and C ($p$-value = 0.0019).
 As before, here are simultaneous CIs and plots:
 
 ```{r ch2-19, fig.align='center', fig.cap='Dunnett adjusted confidence interval plots demonstrating that treatment `C` is significantly different than control group `A`, while treatment `B` is not significantly different than control group `A`.', out.width='60%', fig.asp=0.55}
-confint(contrast(drug.mc, "trt.vs.ctrl"))
-plot(contrast(drug.mc, "trt.vs.ctrl"))
+confint(contrast(drug.mc, "dunnett"))
+plot(contrast(drug.mc, "dunnett"))
 ```
 
 It is interesting to compare the results you get via the two methods (Tukey vs Dunnett) for the same comparisons (*e.g.*, A vs. C). 
 Can you explain what you see?
 
 **Note.** If you do not specify a `ref=` in the `contrast()` function, group A will automatically be chosen as the reference group for Dunnett (the default behavior is to choose the first factor level [in this case the first alphabetically]). 
-We recommend you always explicitly tell the code the reference groups. In the below example we set the second (2) factor, B, to be the control with `ref="B"`. 
+We recommend you always explicitly tell the code the reference groups. In the example below we set the second (2) factor, B, to be the control with `ref="B"`. 
 
 ```{r ch2-20}
-contrast(drug.mc, "trt.vs.ctrl", ref="B")
+contrast(drug.mc, "dunnett", ref="B")
 ```
 
 Alternatively we can pass in a numeric reference (based on factor order)
 
 ```{r, eval=FALSE}
-contrast(drug.mc, "trt.vs.ctrl", ref=2)
+contrast(drug.mc, "dunnett", ref=2)
 ```
 
 
@@ -1072,8 +1072,8 @@ plot(drug.mc, int.adjust="bonferroni", type="response")
 
 Another feature that can be useful with `emmeans` functionality is the `tidy()` function from the `broom` package.
 However, we do recommend you use this function with some caution as it does not always work well and you can lose information.
-But, when it does work, the output is put into a data frame and can be processed with the `kable()` function for aesthestically pleasing tables.
-An example is provided below that uses the `tidy()` function, along with `select()` from `dplyr`, with `kable()` and `kable_styling()`.
+But, when it does work, the output is put into a data frame and can be processed with the `kable()` function for aesthetically pleasing tables.
+An example is provided below that uses the `tidy()` function, `select()` from `dplyr`, as well as `kable()` and `kable_styling()`.
 
 ```{r ch2emmTidy}
 tidy(drug.mc, conf.int=TRUE, type="response", adjust="bonferroni")|>
@@ -1270,7 +1270,7 @@ We have a "control" in this experiment, thus use the Dunnett procedure.
 
 ```{r ch2-28}
 spruce.mc <- emmeans(spruce.anova, ~Trt_label)
-contrast(spruce.mc, "trt.vs.ctrl", ref=1)
+contrast(spruce.mc, "dunnett", ref=1)
 ```
 
 Not too surprising given the results of Figure \@ref(fig:ch2-24), the "Neutral & Diseased Seeds" and "Acid & Healthy Seed" Bud Breaking Ratings do not statistically differ from the control ($p$-values of 0.4589 and 0.9254, respectively). 
@@ -1278,13 +1278,13 @@ However, we have evidence that the diseased seeds that underwent an acid solutio
 We can also look at confidence intervals to get a sense of the effect size.
 
 ```{r}
-confint(contrast(spruce.mc, "trt.vs.ctrl", ref=1))
+confint(contrast(spruce.mc, "dunnett", ref=1))
 ```
 
 and the confidence intervals can be plotted as well. 
 
 ```{r ch2-29, fig.align='center', fig.cap='Dunnett adjusted confidence interval plots comparing the three treatments to the control group. Here, we see that the Diseased seeds with acid solution group is significantly different than the control, while the other two groups are not significantly different.', out.width='60%', fig.asp=0.55}
-plot(contrast(spruce.mc, "trt.vs.ctrl", ref=1) ) +
+plot(contrast(spruce.mc, "dunnett", ref=1) ) +
   theme_minimal()
 ```
 

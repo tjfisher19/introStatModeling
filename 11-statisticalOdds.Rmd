@@ -19,14 +19,87 @@ For discussion, suppose a player places a bet on **red**. What is the probabilit
 
 ## Probability versus Odds
 
-*Odds* are related to probabilities but are different. The *odds* of winning are calculated by counting the number of ways you win the game, and divide by the number of ways you lose the game. So in our working example there are 18 ways **red** occurs while there are 20 ways the outcome is not **red**. Thus the odds of red are 18/20 = `r 18/20`.
+*Odds* are related to probabilities but are different. The *odds* of winning are calculated by taking the ratio of the probability of winner the game over the probability of losing the game. Here, that reduces to counting the number of ways you win the game, and divide by the number of ways you lose the game. So in our working example there are 18 ways **red** occurs while there are 20 ways the outcome is not **red**. Thus the odds of red are 18/20 = `r 18/20`.
 
 Note,
-$$ \textrm{Odds of red} = \frac{18}{20} = \frac{P(red)}{P(not~red)} = \frac{18/38}{20/38} = \frac{18}{20} = 0.9 = \frac{9}{10}.$$
+$$ \textrm{Odds of red} = \frac{P(red)}{P(not~red)} = \frac{18/38}{20/38} = \frac{18}{20} = 0.9 = \frac{9}{10}.$$
 
-In the gambling world, one may say the odds of **red** are 9 to 10. 
+In the gambling world, one may say the odds of **red** are 9 to 10. Essentially, there are 9 ways for red to occur for every 10 ways it will not occur.
 
 **Thought exercise:** For those who like games of chance, in a standard casino betting on **red** or **black** typically pays a 1 to 1 ratio, meaning if you bet \$100 on **black** and the outcome is **black**, you win \$100. *Should you play this game?* *Would* you play this game?
+
+### Relationship between Odds and Probability
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(patchwork)
+
+df <- data.frame(Prop = c(seq(0.001, 0.90, 0.001),
+                          seq(0.90, 0.99, 0.01) ) ) |>
+  mutate(Prop = round(Prop, 3),
+         Odds = Prop/(1-Prop),
+         Log_Odds = log(Odds) )
+
+
+df_label1 <- df |>
+  filter(Prop %in% c(0.50, 0.75, 0.95) ) |>
+  mutate(Prop_x = case_when(Prop==0.50 ~ 0.50,
+                            Prop==0.75 ~ 0.75,
+                            Prop==0.95 ~ 0.95),
+         Prop_y = case_when(Prop==0.50 ~ 5,
+                            Prop==0.75 ~ 8,
+                            Prop==0.95 ~ 20),
+         Label = paste0("(", Prop, ", ", round(Odds,4), ")"))
+
+
+
+p1 <- ggplot(df, aes(x=Prop, y=Odds) ) + 
+  geom_line() +
+  geom_point(data=df_label1) +
+  geom_text(data=df_label1, aes(x=Prop_x, y=Prop_y, label=Label), hjust=1 ) +
+  labs(x=expression("Proportion ("*italic(p)*")"), 
+       y=expression("Odds ("*italic(p)*"/(1-"*italic(p)*"))"),
+       title="Relationship between Proportions and Odds",
+       subtitle=expression("As "*italic(p)*" increases, Odds increase") ) +
+  annotate(geom="rect", xmin=-0.01, xmax=0.1, ymin=-1.5, ymax=1.5, fill=NA, color="gray50") +
+  annotate(geom="segment", x=0.05, y=1.5, xend=0.20, yend=35, arrow = arrow(length = unit(0.2, "cm"), type = "closed"), color="gray50") + 
+  theme_minimal() +
+  theme(plot.title.position = "plot" )
+
+
+
+
+df_label2 <- df |>
+  filter(Prop %in% c(0.01, 0.03, 0.05, 0.07) ) |>
+  mutate(Prop_x = case_when(Prop==0.01 ~ 0.019,
+                            Prop==0.03 ~ 0.021,
+                            Prop==0.05 ~ 0.057,
+                            Prop==0.07 ~ 0.060),
+         Prop_y = case_when(Prop==0.01 ~ 0.007,
+                            Prop==0.03 ~ 0.035,
+                            Prop==0.05 ~ 0.048,
+                            Prop==0.07 ~ 0.078),
+         Label = paste0("(", Prop, ", ", round(Odds,4), ")"))
+
+p2 <- ggplot(df, aes(x=Prop, y=Odds) ) + 
+  geom_line() +
+  geom_point(data=df_label2) +
+  geom_text(data=df_label2, aes(x=Prop_x, y=Prop_y, label=Label) ) +
+  scale_x_continuous(limits=c(0, 0.08)) +
+  scale_y_continuous(limits=c(0, 0.08) ) +
+  labs(x=expression("Proportion ("*italic(p)*")"), 
+       y=expression("Odds ("*italic(p)*"/(1-"*italic(p)*"))"),
+       subtitle=expression("For small "*italic(p)~"(0<"*italic(p)*"<0.1), odds and "*italic(p)*" are about equal" ) ) +
+  theme_minimal() +
+  theme(
+    plot.background = element_rect(colour = "black", fill="white"),
+    plot.title.position = "plot"
+  )
+
+
+p1 + inset_element(p2, 0.05, 0.4, 0.8, 0.95)
+```
+
 
 ## Odds ratios
 

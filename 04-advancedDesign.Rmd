@@ -205,7 +205,7 @@ We also conclude that the different Fee types appear to influence Quality.
 In general, multiple comparisons analysis can get very complicated when three or more factors are involved.
 In this case, we get lucky
 
-* Fee` is significant, but *only* as a main effect.
+* `Fee` is significant, but *only* as a main effect.
 * The `Scope` \& `Supervision` interaction term is significant, but that interaction term only involves 2 variables and we covered that analysis in section \@ref(twoWayInteraction).
    + Further, there are only $2\times 2=4$ unique combinations of those four.
 
@@ -213,7 +213,7 @@ First we consider the effects of Fee on the quality index
 
 ```{r ch4markingFeeMC, fig.align='center', fig.cap='Tukey HSD comparison of three levels of the Fee variable on consultant quality. The Low fee option results in a lower quality than High or Average, which statistically are equivalent.', out.width='60%', fig.asp=0.55}
 marketing.mc.fee <- emmeans(marketing.anova, ~Fee)
-plot(contrast(marketing.mc.fee, "pairwise"))
+plot(contrast(marketing.mc.fee, "tukey"))
 ```
 
 Figure \@ref(fig:ch4markingFeeMC) provides intervals for pairwise comparisons of the fee levels, so we look for the inclusion or exclusion of the value zero. We see that the "Low" fee level is statistically different than both "High" and "Average", while the later two are not statistically different.
@@ -223,7 +223,7 @@ This can be achieved by using the conditional comparisons we saw in Chapter 2, s
 
 ```{r ch4markingScopeSupervsionMC, fig.align='center', fig.cap='Tukey HSD comparison of two levels of the Scope variable on consultant quality conditioned on Supervision. In both settings of supervision, the In-house scope results in a higher quality than subcontracted. It also appears this difference is greater when Traveling Supervision is used.', out.width='60%', fig.asp=0.65}
 marketing.mc.scope <- emmeans(marketing.anova, ~Scope|Supervision)
-plot(contrast(marketing.mc.scope, "pairwise"))
+plot(contrast(marketing.mc.scope, "tukey"))
 ```
 
 Figure \@ref(fig:ch4markingScopeSupervsionMC) provides interval comparisons for the scope variable within each supervision level. Note that since there are only 2 levels within scope, a single comparison is made within each supervision level (also only two).
@@ -260,10 +260,10 @@ We tell `emmeans()` to conduct a Tukey test on all pairwise comparisons.
 
 ```{r ch4markingAltScopeSupervsionMC, fig.align='center', fig.cap='Tukey HSD comparison of four unique treatments corresponding to the two levels of the Scope variable and two levels of the Supervision variable. Here we see that all unique treatments result in a different quality level. This is consistent with the findings above.', out.width='60%', fig.asp=0.65}
 marketing.mc.scope <- emmeans(marketing.anova.alt, ~ScopeSupervision)
-plot(contrast(marketing.mc.scope, "pairwise"))
+plot(contrast(marketing.mc.scope, "tukey"))
 ```
 
-Figure \ref@(fig:ch4markingAltScopeSupervsionMC) shows that all four treatments for Scope and Supervision result in different quality values. 
+Figure \@ref(fig:ch4markingAltScopeSupervsionMC) shows that all four treatments for Scope and Supervision result in different quality values. 
 The greatest difference is the In-house scope with Local Supervision compared to the Subcontracted Traveling Supervision.
 This is consistent with the conditional results which showed the difference between in-house and subcontracted depended on the supervision variable. 
 With this formulation of the model, we can gain some further insight into these differences.
@@ -339,7 +339,7 @@ As described above, there are two factor levels and we are interested in the $2\
 Unlike the previous example, we are not interested in the interaction of all the variables since the level of pain tolerance is a block term.
 An exploratory data analysis can be tricky here -- in a $2\times 2$ design we can make a simple interactions plot, but here we also have 8 block terms.
 Fortunately, since we only have 4 unique treatments, we can reformulate the data into a One-way model with a block term and treat it as in section \@ref{blockingSection} of the text.
-Below, we create a new `Treatment` variable as we did in Section \@ref(twoFactorAsOneFactor). Here we specify the `\n` variable to **sep**arate the two character strings that are being pasted together.
+Below we create a new `Treatment` variable as we did in Section \@ref(twoFactorAsOneFactor). Here we specify the `\n` variable to **sep**arate the two character strings that are being pasted together.
 The `\n` is a special *escape character* that will print a new line in some of our output.
 
 ```{r dentalPainDataMunging2}
@@ -397,7 +397,7 @@ The value $\log_{10}(0)$ is undefined.
 When this happens, we can essentially *trick* a transformation to occur by adding some value to force the data to be strictly positive.
 It is customary to add 1 to the value of response which guarantees all response values are greater than or equal to 1. 
 Also $\log_{10}(1) = 0$ so any zero values in the original units are zero on the log-scale.
-Below, we perform a log-base 10 of the response plus one.
+We perform a log-base 10 of the response plus one.
 
 ```{r dentalPainResiduals2, fig.width=7, fig.height=7, fig.align='center', fig.cap='Residual diagnostic plots when the response variable is pain relief scores a function of pain tolerance and the treatments of acupuncture and codeine. Here, the residuals appear fairly homoskedastic based on the Residuals vs Fitted and Scale-Location plots. The residuals may not be Normally distributed as there is deviation in both tails.', fig.asp=0.9, out.width='70%' }
 logDentalpain.anova <- aov(log10(Relief+1) ~ PainLevel + Codeine*Acupuncture,
@@ -468,7 +468,7 @@ When both Codeine and Active acupuncture are used, we see a greater effect as co
 
 In these chapters covering experimental design, we have seen different designs where factor(s) levels are manipulated by the researcher in order to measure a response. 
 In simpler design settings, the factors that are manipulated are of the "between-subjects" type.
-For example, Section \@ref(dentalPainExample) above provides a two-factor example on pain relief where each participant (experimental unit) had exactly one treatmenta randomly assigned to them.
+For example, Section \@ref(dentalPainExample) provides a two-factor example on pain relief where each participant (experimental unit) had exactly one treatment randomly assigned to them.
 As such, there is only one observation per experimental unit in that design. 
 The different treatments are a **between-subjects factor**.
 
@@ -745,8 +745,8 @@ Since there are three time points, a multiple comparison procedure is warranted 
 
 ```{r ch4-12, fig.align='center', fig.cap='Comparing the effects of time within the Margarine A treatment groups. We see there is no statistical difference between 4 and 8 weeks after treatment begins but both differ comparied to the initial \"before\" measure of Cholestorol.', out.width='70%', fig.asp=0.55}
 MargA.mc <- emmeans(RMaov_MargA, ~ time.pt)
-contrast(MargA.mc, "pairwise")
-plot(contrast(MargA.mc, "pairwise"))
+contrast(MargA.mc, "tukey")
+plot(contrast(MargA.mc, "tukey"))
 ```
 
 The significant reductions in mean cholesterol level under Margarine A occurs right after the start of the experiment.  The mean cholesterol level is reduced by 0.485 (SE = 0.041) by week 4 ($p$-value < 0.0001); and by 0.546 (SE = 0.041) by week 8 ($p$-value < 0.0001).  There is no appreciable change in mean cholesterol level between weeks 4 and 8 ($p$-value = 0.3229).
@@ -774,8 +774,8 @@ Here, we choose to condition on Margarine group, so we get a time-based comparis
 
 ```{r ch4-14, fig.align='center', fig.cap='Graphical exploration of all treatments noting that there is no statistical difference between 4 and 8 weeks after the study has began regardless of Margarine treatment.', out.width='70%', fig.asp=0.75}
 RMall.mc <- emmeans(RMaov_all, ~ time.pt | Margarine)
-contrast(RMall.mc, "pairwise")
-plot(contrast(RMall.mc, "pairwise"))
+contrast(RMall.mc, "tukey")
+plot(contrast(RMall.mc, "tukey"))
 ```
 
 Even though at first glance the time-based comparisons look about the same between the two margarine types (Figure \@ref(fig:ch4-9)), the interval estimates and plots reveal the true story: the reductions in mean cholesterol following the initiation of the study are larger for margarine B (mean=0.7111 mmol/L, SE=0.043 by week 8) than for margarine A (mean=0.546 mmol/L, SE=0.043 by week 8).  

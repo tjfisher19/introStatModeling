@@ -221,7 +221,7 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="2.3" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#statistical-analyses-is-modeling"><i class="fa fa-check"></i><b>2.3</b> Statistical Analyses is Modeling</a>
 <ul>
-<li class="chapter" data-level="2.3.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#example-of-a-two-sample-t-test-as-a-model"><i class="fa fa-check"></i><b>2.3.1</b> Example of a two-sample <span class="math inline">\(t\)</span>-test as a model</a></li>
+<li class="chapter" data-level="2.3.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#twoSampletTest"><i class="fa fa-check"></i><b>2.3.1</b> Example of a two-sample <span class="math inline">\(t\)</span>-test as a model</a></li>
 </ul></li>
 <li class="chapter" data-level="2.4" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#one-way-anova"><i class="fa fa-check"></i><b>2.4</b> One-Way ANOVA</a>
 <ul>
@@ -412,7 +412,10 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="11" data-path="statistical-odds.html"><a href="statistical-odds.html"><i class="fa fa-check"></i><b>11</b> Statistical Odds</a>
 <ul>
-<li class="chapter" data-level="11.1" data-path="statistical-odds.html"><a href="statistical-odds.html#probability-versus-odds"><i class="fa fa-check"></i><b>11.1</b> Probability versus Odds</a></li>
+<li class="chapter" data-level="11.1" data-path="statistical-odds.html"><a href="statistical-odds.html#probability-versus-odds"><i class="fa fa-check"></i><b>11.1</b> Probability versus Odds</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="statistical-odds.html"><a href="statistical-odds.html#relationship-between-odds-and-probability"><i class="fa fa-check"></i><b>11.1.1</b> Relationship between Odds and Probability</a></li>
+</ul></li>
 <li class="chapter" data-level="11.2" data-path="statistical-odds.html"><a href="statistical-odds.html#odds-ratios"><i class="fa fa-check"></i><b>11.2</b> Odds ratios</a></li>
 <li class="chapter" data-level="11.3" data-path="statistical-odds.html"><a href="statistical-odds.html#ideas-of-modeling-odds"><i class="fa fa-check"></i><b>11.3</b> Ideas of modeling odds</a></li>
 </ul></li>
@@ -538,7 +541,7 @@ In practice, it is essentially an extension of the more familiar two-sample <spa
 As stated earlier, there are many different experimental structures possible when conducting an experiment and ANOVA can adapt to many of those structures.
 Some of the other widely used structures in practice are known as nested designs, split-plot designs, and repeated measures designs.
 It is worth reiterating that the structure of the experimental data will dictate how an analysis of variance is used to model the data.
-In each of the designs described above, some variant of an Analysis of Variance is used for analysis.</p>
+In each of the designs described, some variant of an Analysis of Variance is used for analysis.</p>
 </div>
 <div id="elements-of-a-designed-experiment" class="section level3 hasAnchor" number="2.2.3">
 <h3><span class="header-section-number">2.2.3</span> Elements of a designed experiment<a href="statistical-modeling-and-designed-experiments.html#elements-of-a-designed-experiment" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -616,7 +619,7 @@ Treatment 1 is 0 mg of E and 0 mg of C; Treatment 2 is 0 mg of E and 250 mg of C
 But in an experiment to measure the tensile strength of string, the experimental units might be pieces of string.
 When the experimental units are people, they are often called participants; when the experimental units are animals, they are often called subjects.</p>
 <p><strong>Three characteristics of a well-designed experiment.</strong> While the elements above are common to all experiments, there are aspects to the manner in which the experiment is run which are critical to it being a “well-designed” experiment.
-A well-designed experiment includes design features that allow researchers to eliminate extraneous variables as an explanation for the observed relationship between the factor(s) and the response variable. Some of these features are listed below.</p>
+A well-designed experiment includes design features that allow researchers to eliminate extraneous variables as an explanation for the observed relationship between the factor(s) and the response variable. Some of these features are listed:</p>
 <ul>
 <li><p><strong>Control</strong>: Control refers to steps taken to reduce the effects of extraneous variables (<em>i.e.</em>, variables other than the factor(s) and response).
 These extraneous variables are called lurking variables.
@@ -700,8 +703,8 @@ However, there may be several contributing factors – your credit hour load, yo
 <p>A <strong>statistical model</strong> is a mechanism to describe the structural relationship between some measured outcome (called the <strong>response</strong> variable) and one or more impacting variables (called <strong>predictor</strong> variables or <strong>factors</strong> or <em>features</em>, depending on the contextual circumstance) in a simplified mathematical way.</p>
 <p>It is in this sense that you can think of a statistical model as a “simplification”: we know that the true relationship between response and predictor variables is very complex and detailed.
 The goal of the model is not to capture all the intricacies of the complexity but rather, the model only seeks to describe the essential features of any relationships that exist.</p>
-<div id="example-of-a-two-sample-t-test-as-a-model" class="section level3 hasAnchor" number="2.3.1">
-<h3><span class="header-section-number">2.3.1</span> Example of a two-sample <span class="math inline">\(t\)</span>-test as a model<a href="statistical-modeling-and-designed-experiments.html#example-of-a-two-sample-t-test-as-a-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="twoSampletTest" class="section level3 hasAnchor" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> Example of a two-sample <span class="math inline">\(t\)</span>-test as a model<a href="statistical-modeling-and-designed-experiments.html#twoSampletTest" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>It turns out, we have already fit a statistical model.
 Consider a variation of the two-sample <span class="math inline">\(t\)</span>-test we performed in the previous chapter on the University Admissions data <span class="citation">(<a href="#ref-KutnerText">Kutner et al., 2004</a>)</span>.
 For completeness we input the data again.</p>
@@ -787,7 +790,7 @@ This coincides with the R <code>formula</code> notation, <code>response ~ predic
 <div id="one-way-anova" class="section level2 hasAnchor" number="2.4">
 <h2><span class="header-section-number">2.4</span> One-Way ANOVA<a href="statistical-modeling-and-designed-experiments.html#one-way-anova" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>When there is a single factor variable whose levels may only change between different experimental units, we can analyze the effect of the factor on the response using a one-way analysis of variance (one-way ANOVA) on the between-subjects factor.
-If we had a single factor with just two levels, you could still use a one-way ANOVA, but it would be equivalent to running an independent samples <span class="math inline">\(t\)</span>-test (see above for an example). In this sense, one-way ANOVA is an extension of the two-sample <span class="math inline">\(t\)</span>-test (think a <span class="math inline">\(k\)</span>-sample test).</p>
+If we had a single factor with just two levels, you could still use a one-way ANOVA, but it would be equivalent to running an independent samples <span class="math inline">\(t\)</span>-test (see Section <a href="statistical-modeling-and-designed-experiments.html#twoSampletTest">2.3.1</a> for an example). In this sense, one-way ANOVA is an extension of the two-sample <span class="math inline">\(t\)</span>-test (think a <span class="math inline">\(k\)</span>-sample test).</p>
 <p>In this design, we observe random samples from <span class="math inline">\(k\)</span> different populations.
 As a designed experiment, these populations may be defined on the basis of an administered treatment.
 The levels of the factor being manipulated by the researcher form the different treatments.
@@ -842,7 +845,7 @@ where</p>
 The null and alternative hypotheses are given by:</p>
 <p><span class="math display">\[H_0: \mu_1 = \mu_2 = \ldots = \mu_k\]</span>
 <span class="math display">\[H_a: ~\textrm{at least two of the population means differ}\]</span></p>
-<p>Expressed in terms of the <span class="math inline">\(\tau\)</span>-model parameters, we really want to test to see if there are no treatment mean deviations among the populations, so the above hypotheses can be equivalently expressed as follows:</p>
+<p>Expressed in terms of the <span class="math inline">\(\tau\)</span>-model parameters, we really want to test to see if there are no treatment mean deviations among the populations, so the hypotheses above can be equivalently expressed as follows:</p>
 <p><span class="math display">\[H_0: \tau_1 = \tau_2 = \ldots = \tau_k = 0\]</span>
 <span class="math display">\[H_a: ~\text{at least one } \tau_j \neq 0~~~~~\text{for}~j=1,\ldots, k\]</span></p>
 <p>An alternative formulation is based on the coefficients on the function with indicator variables:</p>
@@ -1018,7 +1021,7 @@ That is, the distributions of immobilization times for drugs A and B are more di
 The single line of code above fits the model described in <a href="statistical-modeling-and-designed-experiments.html#eq:onewayAnovaModel">(2.3)</a> with <span class="math inline">\(k=3\)</span> treatments corresponding to the three Drug types.</p>
 <div id="coding-notes-4" class="section level4 hasAnchor" number="2.4.3.1">
 <h4><span class="header-section-number">2.4.3.1</span> Coding Notes<a href="statistical-modeling-and-designed-experiments.html#coding-notes-4" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>The line of code above is fairly straightforward but R has done many things in that single line of code.
+<p>The line of code is fairly straightforward but R has done many things in that single line.
 The provided formula, <code>Knockdown_times ~ Drug</code>, and data declaration, <code>data=deer_knockdowntimes</code>, provide <code>aov()</code> all the information needed to fit the model.
 Later in the class we will see more complex formula statements but they all have the same general form: <code>response ~ predictor</code>.</p>
 <p>The function call, <code>aov()</code>, estimates (or fits) the aforementioned linear model and calculates many associated parameters regarding that model.
@@ -1030,7 +1033,7 @@ Much like the data types discussion in Section <a href="introductory-statistics-
 This is because all ANOVA models are technically Linear Models (hence <code>lm</code>), so both object classes are assigned.
 Recall the derivation above where we write the response as a function of indicator variables in the form of a linear model, see <a href="statistical-modeling-and-designed-experiments.html#eq:onewayAnovaLinearModel">(2.4)</a>.
 We also mentioned that the <code>aov()</code> calculates many parameters associated with that model.
-The below code is only provided for explanatory purposes (it will never be needed to complete an analysis) but we can see most of the information that is stored in the <code>fit.drug</code> object with the <code>names()</code> function.</p>
+The next piece of code is only provided for explanatory purposes (it will never be needed to complete an analysis) but we can see most of the information that is stored in the <code>fit.drug</code> object with the <code>names()</code> function.</p>
 <div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="statistical-modeling-and-designed-experiments.html#cb88-1" tabindex="-1"></a><span class="fu">names</span>(fit.drug)</span></code></pre></div>
 <pre><code>##  [1] &quot;coefficients&quot;  &quot;residuals&quot;     &quot;effects&quot;       &quot;rank&quot;         
 ##  [5] &quot;fitted.values&quot; &quot;assign&quot;        &quot;qr&quot;            &quot;df.residual&quot;  
@@ -1077,7 +1080,7 @@ From context, it is important to determine if this structure is appropriate.</p>
 </ul>
 <p>Collectively, the three assumptions simply state
 <span class="math display">\[\varepsilon_i \stackrel{iid}{\sim} N(0, \sigma^2), ~~\textrm{for variance}~\sigma^2\]</span></p>
-<p><strong>Important Note.</strong> In the above bullet points, the assumptions are listed in their order of importance.
+<p><strong>Important Note.</strong> The bullet points list the assumptions in their order of importance.
 If you lack independence, <em>nearly all</em> statistical methods we cover in this text are invalid.
 The constant variance assumption is important but in many cases violations of the assumption can be addressed.
 Lastly, the Normality assumption tends to not be all that important except in small sample sizes and when the data are heavily skewed – but we can also address issues with Normality in many cases.</p>
@@ -1141,7 +1144,7 @@ That is, if there are concerns about one, it is likely there will be concerns re
 </div>
 <div id="code-to-check-assumptions" class="section level3 hasAnchor" number="2.5.3">
 <h3><span class="header-section-number">2.5.3</span> Code to check assumptions<a href="statistical-modeling-and-designed-experiments.html#code-to-check-assumptions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>The code to generate the above plots can be achieved via the <code>autoplot</code> function when including the <code>ggfortify</code> library <span class="citation">(<a href="#ref-R-ggfortify">Horikoshi et al., 2019</a>)</span>.
+<p>The code to generate the plots above can be achieved via the <code>autoplot</code> function when including the <code>ggfortify</code> library <span class="citation">(<a href="#ref-R-ggfortify">Horikoshi et al., 2019</a>)</span>.
 The <code>autoplot</code> function on the fitted model provides 4 plots by default as seen in Figure <a href="statistical-modeling-and-designed-experiments.html#fig:ch2-12">2.4</a> (note: we will discuss the Constant Leverage plot in Section <a href="model-building-considerations.html#detecting-and-dealing-with-unusual-observations">8.6</a>).</p>
 <div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="statistical-modeling-and-designed-experiments.html#cb92-1" tabindex="-1"></a><span class="fu">library</span>(ggfortify)</span>
 <span id="cb92-2"><a href="statistical-modeling-and-designed-experiments.html#cb92-2" tabindex="-1"></a><span class="fu">autoplot</span>(fit.drug)</span></code></pre></div>
@@ -1157,7 +1160,7 @@ These numeric values correspond to the observation number, or row number from th
 Residual plots built with the <code>autoplot()</code> will automatically annotate the three largest (in magnitude) residuals in each plot.
 This is meant to bring attention to <strong>potentially</strong> problematic points.
 However, it is up to the person analyzing these plots to determine if this points are in fact problematic.
-In the above plots, we have already identified issues with the assumptions on variance and normality and those three points happen to be the largest magnitude residuals of several that appear to violate our assumptions.</p>
+In the plots above, we have already identified issues with the assumptions on variance and normality and those three points happen to be the largest magnitude residuals of several that appear to violate our assumptions.</p>
 <div id="coding-notes-5" class="section level4 hasAnchor" number="2.5.3.1">
 <h4><span class="header-section-number">2.5.3.1</span> Coding Notes<a href="statistical-modeling-and-designed-experiments.html#coding-notes-5" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>You can think of the <code>autoplot()</code> function in <code>ggfortify</code> package as a <em>smart</em> function.
@@ -1171,7 +1174,7 @@ With different object types, <code>autoplot()</code> will behave differently.</p
 <div id="transforming-your-response" class="section level2 hasAnchor" number="2.6">
 <h2><span class="header-section-number">2.6</span> Transforming your response<a href="statistical-modeling-and-designed-experiments.html#transforming-your-response" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In cases where we have violations of our underlying assumptions, a common remedy is to <strong>transform the response variable</strong>.</p>
-<p>In our working example, we have evidence from the above residual diagnostic plots that the variance appears to be increasing with the response (determined by assessing the constant variance assumption) and that there may be some violations to normality.
+<p>In our working example we have evidence from the residual diagnostic plots that the variance appears to be increasing with the response (determined by assessing the constant variance assumption) and that there may be some violations to normality.
 One way to address this issue is to transform the response variable.
 We will go into more details in a later chapter but common transformations include <span class="math inline">\(Y^*=log_{10}(Y)\)</span>, <span class="math inline">\(Y^*=\sqrt{Y}\)</span> and <span class="math inline">\(Y^*=1/Y\)</span>.
 Here we will use a logarithmic as it is fairly common and more interpretable than most other transformations.
@@ -1226,7 +1229,7 @@ where each <span class="math inline">\(\mu_j\)</span> corresponds to the mean of
 Using the indicator variable ideas (see <a href="statistical-modeling-and-designed-experiments.html#eq:twoSampleTtest">(2.2)</a> for the two-sample <span class="math inline">\(t\)</span>-test derivation), the model can be expressed as
 <span class="math display">\[\log_{10}(Y_{i}) = \mu_A + \delta_B X_{Bi} + \delta_C X_{Ci} + \varepsilon_{ji}\]</span>
 where <span class="math inline">\(\mu_A\)</span> is the mean of the logarithm of knockdown times in group A. <span class="math inline">\(X_{Bi}\)</span> takes on the value 1 if the <span class="math inline">\(i^\mathrm{th}\)</span> observation is in group B, otherwise it is zero. Likewise <span class="math inline">\(X_{Ci}\)</span> for group C. The value <span class="math inline">\(\delta_B\)</span> measures how the mean of log-knockdown times in group B differs from A, and <span class="math inline">\(\delta_C\)</span> how group C differs from A.</p>
-<p>If we were to “un”-log the above model to the original units by raising each side to the power of 10, we get:
+<p>If we were to “un”-log the model to the original units by raising each side to the power of 10, we get:
 <span class="math display">\[10^{\log_{10}(Y)} = Y = 10^{\mu_j + \varepsilon} = 10^{\mu_j}\times 10^\varepsilon\]</span>
 and
 <span class="math display">\[10^{\log_{10}(Y_i)} = Y_i = 10^{\mu_A + \delta_B X_{Bi} + \delta_C X_{Ci} + \varepsilon_{ji}} = 10^{\mu_A} \times 10^{\delta_B X_{Bi}}\times 10^{\delta_C X_{Ci}} \times 10^{\varepsilon_{i}}\]</span>
@@ -1432,7 +1435,7 @@ For any particular coin (<em>i.e.</em>, some pre-selected coin), we would expect
 However, seeing <em>some</em> coin (as in <em>any</em> of the 100 coins) behave that way, without concern for which coin, is more likely.
 In fact, the probability that all 100 fair coins are identified as fair by this criterion is <span class="math inline">\((1 - 0.0107)^{100} \approx 0.34\)</span>. This suggest, even if all 100 coins were in fact fair, the probably <em>some</em> coin is incorrectly flagged as unfair is approximately 66%.
 Therefore the application of a “single coin fairness criterion” to multiple comparisons would more likely than not <strong>falsely identify</strong> at least one fair coin as unfair!</p>
-<p>The above illustration may seem contrived, but multiple testing is a reality and a natural follow-up procedure to ANOVA.
+<p>The illustration may seem contrived, but multiple testing is a reality and a natural follow-up procedure to ANOVA.
 If you conducted two hypothesis tests, each at <span class="math inline">\(\alpha=0.05\)</span>, the family-wise error rate is 0.0975.
 For three tests (<em>e.g.</em>, A vs B, A vs C and B vs C), the overall Type I error rate is 0.142625.</p>
 <p>To address the problem, many multiple comparison procedures have been developed that help control the accumulation of the false positive rate.
@@ -1455,7 +1458,7 @@ This is similar to the Bonferroni method, but Tukey’s HSD is known to perform 
 <p>First we load the <code>emmeans</code> package and then run our fitted model <code>fit.log.drug</code> through the <code>emmeans()</code> function. We provide it a formula to inform how we wish to perform the comparisons. In this case the formula is simple since we only have a single factor input <code>~ Drug</code>. Lastly, to do a “pairwise” comparison we use the <code>contrast()</code> function and tell it the type of comparison to implement, we can specify either <code>"pairwise"</code> or <code>"tukey"</code> and get the following result.</p>
 <div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="statistical-modeling-and-designed-experiments.html#cb98-1" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span>
 <span id="cb98-2"><a href="statistical-modeling-and-designed-experiments.html#cb98-2" tabindex="-1"></a>drug.mc <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(fit.log.drug, <span class="sc">~</span> Drug)</span>
-<span id="cb98-3"><a href="statistical-modeling-and-designed-experiments.html#cb98-3" tabindex="-1"></a><span class="fu">contrast</span>(drug.mc, <span class="st">&quot;pairwise&quot;</span>)</span></code></pre></div>
+<span id="cb98-3"><a href="statistical-modeling-and-designed-experiments.html#cb98-3" tabindex="-1"></a><span class="fu">contrast</span>(drug.mc, <span class="st">&quot;tukey&quot;</span>)</span></code></pre></div>
 <pre><code>##  contrast estimate     SE df t.ratio p.value
 ##  A - B      0.0328 0.0807 27   0.406  0.9136
 ##  A - C      0.2984 0.0807 27   3.696  0.0027
@@ -1467,7 +1470,7 @@ This is similar to the Bonferroni method, but Tukey’s HSD is known to perform 
 This is determined from the Tukey-adjusted <span class="math inline">\(p\)</span>-values of 0.0027 (when comparing drugs A and C) and 0.0076 (when comparing drugs B and C). B and A are not significantly different (<span class="math inline">\(p\)</span>-value of 0.9136).
 The <span class="math inline">\(p\)</span>-values in this output have been adjusted for performing 3 comparisons, so we can just compare them to the usual <span class="math inline">\(\alpha=0.05\)</span> or whatever Type I error rate you use.</p>
 <p>We can also obtain simultaneous 95% confidence intervals for the true mean differences due to each drug pairing using the <code>confint()</code> function on our <code>contrast</code> of an <code>emmeans</code> object:</p>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="statistical-modeling-and-designed-experiments.html#cb100-1" tabindex="-1"></a><span class="fu">confint</span>(<span class="fu">contrast</span>(drug.mc, <span class="st">&quot;pairwise&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="statistical-modeling-and-designed-experiments.html#cb100-1" tabindex="-1"></a><span class="fu">confint</span>(<span class="fu">contrast</span>(drug.mc, <span class="st">&quot;tukey&quot;</span>))</span></code></pre></div>
 <pre><code>##  contrast estimate     SE df lower.CL upper.CL
 ##  A - B      0.0328 0.0807 27  -0.1674    0.233
 ##  A - C      0.2984 0.0807 27   0.0983    0.499
@@ -1494,7 +1497,7 @@ Figure 2.6: Tukey adjusted confidence interval plots comparing treatments <code>
 <p>Here, we are interesting in comparing each plotted confident band to the value of 0. If zero is included in the interval, there is no statistical difference between those two treatments. If the interval does not include zero, we can conclude there is a statistical difference.</p>
 <div id="un-transforming-the-response" class="section level4 hasAnchor" number="2.8.2.1">
 <h4><span class="header-section-number">2.8.2.1</span> “Un”-transforming the response<a href="statistical-modeling-and-designed-experiments.html#un-transforming-the-response" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>You should note in some of the above output that <code>emmeans</code> provides a message that the “Results are given on the <code>log10</code> (not the response) scale.” To put back in the original units we could “un”-log the intervals by taking base-10 exponents (that is, raise 10 to the power of the value). But we need to take a moment to consider how to interpret the output.</p>
+<p>You should note in some of the output above that <code>emmeans</code> provides a message that the “Results are given on the <code>log10</code> (not the response) scale.” To put back in the original units we could “un”-log the intervals by taking base-10 exponents (that is, raise 10 to the power of the value). But we need to take a moment to consider how to interpret the output.</p>
 <p>To explain, suppose we are interested in comparing groups A vs B.
 Without a transformation, the Tukey HSD method effectively calculates the difference <span class="math inline">\(\mu_A - \mu_B\)</span> and this would lend itself to the two-sample <span class="math inline">\(t\)</span>-test.
 But when the response has been transformed with a logarithm, the two mean components are on a logarithmic scale and we would essentially be calculating the difference <span class="math inline">\(\log_{10}(\mu_A) - \log_{10}(\mu_B)\)</span>, which by properties of logarithms is equivalent to <span class="math inline">\(\log_{10}(\mu_A/\mu_B)\)</span>, or the logarithm of the ratio of the two mean values!
@@ -1502,7 +1505,7 @@ Thus if we “un”-log that difference, we are left with <span class="math inli
 If the mean of the two groups were equal, we’d expect this ratio to take on a value near one.
 If the means differ, the ratio would be different than one.</p>
 <p>The <code>emmeans</code> provides the functionality to put the response in the original units when a logarithmic transformation has been used. We specify the <code>type="response"</code> parameter in the <code>contrast()</code> function call as follows:</p>
-<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="statistical-modeling-and-designed-experiments.html#cb103-1" tabindex="-1"></a><span class="fu">contrast</span>(drug.mc, <span class="st">&quot;pairwise&quot;</span>, <span class="at">type=</span><span class="st">&quot;response&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="statistical-modeling-and-designed-experiments.html#cb103-1" tabindex="-1"></a><span class="fu">contrast</span>(drug.mc, <span class="st">&quot;tukey&quot;</span>, <span class="at">type=</span><span class="st">&quot;response&quot;</span>)</span></code></pre></div>
 <pre><code>##  contrast ratio    SE df null t.ratio p.value
 ##  A / B     1.08 0.200 27    1   0.406  0.9136
 ##  A / C     1.99 0.370 27    1   3.696  0.0027
@@ -1511,7 +1514,7 @@ If the means differ, the ratio would be different than one.</p>
 ## P value adjustment: tukey method for comparing a family of 3 estimates 
 ## Tests are performed on the log10 scale</code></pre>
 <p>You’ll note that the <code>null</code> value is 1, and the results are consistent with the previous results – a difference exist between group C and groups A and B. We can also consider confidence intervals</p>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="statistical-modeling-and-designed-experiments.html#cb105-1" tabindex="-1"></a><span class="fu">confint</span>(<span class="fu">contrast</span>(drug.mc, <span class="st">&quot;pairwise&quot;</span>, <span class="at">type=</span><span class="st">&quot;response&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="statistical-modeling-and-designed-experiments.html#cb105-1" tabindex="-1"></a><span class="fu">confint</span>(<span class="fu">contrast</span>(drug.mc, <span class="st">&quot;tukey&quot;</span>, <span class="at">type=</span><span class="st">&quot;response&quot;</span>))</span></code></pre></div>
 <pre><code>##  contrast ratio    SE df lower.CL upper.CL
 ##  A / B     1.08 0.200 27     0.68     1.71
 ##  A / C     1.99 0.370 27     1.25     3.15
@@ -1521,7 +1524,7 @@ If the means differ, the ratio would be different than one.</p>
 ## Conf-level adjustment: tukey method for comparing a family of 3 estimates 
 ## Intervals are back-transformed from the log10 scale</code></pre>
 <p>and these intervals can also be visualized</p>
-<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="statistical-modeling-and-designed-experiments.html#cb107-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">contrast</span>(drug.mc, <span class="st">&quot;pairwise&quot;</span>, <span class="at">type=</span><span class="st">&quot;response&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="statistical-modeling-and-designed-experiments.html#cb107-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">contrast</span>(drug.mc, <span class="st">&quot;tukey&quot;</span>, <span class="at">type=</span><span class="st">&quot;response&quot;</span>))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch2-17a"></span>
 <img src="introStatModeling_files/figure-html/ch2-17a-1.png" alt="Tukey adjusted confidence interval plots comparing the ratio of treatments `A`, `B` and `C` since the original model was fit on a log-scale. Here, we see that treatments `B` and `C` are significantly different as well as treatments `A` and `C`. We also note there is no significant difference between treatments `A` and `B` as the interval includes unity." width="60%" />
 <p class="caption">
@@ -1535,8 +1538,8 @@ Figure 2.7: Tukey adjusted confidence interval plots comparing the ratio of trea
 <p>The Dunnett method is applicable when one of your experimental groups serves as a natural <em>control</em> to which you want to compare the remaining groups.
 <strong>Note</strong> that there is no <em>control</em> group in our working example of immobilization times, but we include the code below for demonstration purposes where treatment level “A” is the reference (<code>ref</code>) control group.</p>
 <p>In situations were a <em>control</em> group is present, it is advisable to use a method that only controls the family-wise error rate for the comparisons of interest, rather than over-controlling for all possible comparison such as when using a method like Tukey HSD.
-We still use the <code>emmeans</code> package but specify the comparisons are against a <em>control</em> group. The code is below:</p>
-<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="statistical-modeling-and-designed-experiments.html#cb108-1" tabindex="-1"></a><span class="fu">contrast</span>(drug.mc, <span class="st">&quot;trt.vs.ctrl&quot;</span>, <span class="at">ref=</span><span class="st">&quot;A&quot;</span>)</span></code></pre></div>
+We still use the <code>emmeans</code> package but specify the comparisons are against a <em>control</em> with the parameter <code>"dunnett"</code> (or <code>"trt.vs.ctrl"</code>) and a <code>ref</code> level. The code is:</p>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="statistical-modeling-and-designed-experiments.html#cb108-1" tabindex="-1"></a><span class="fu">contrast</span>(drug.mc, <span class="st">&quot;dunnett&quot;</span>, <span class="at">ref=</span><span class="st">&quot;A&quot;</span>)</span></code></pre></div>
 <pre><code>##  contrast estimate     SE df t.ratio p.value
 ##  B - A     -0.0328 0.0807 27  -0.406  0.8750
 ##  C - A     -0.2984 0.0807 27  -3.696  0.0019
@@ -1546,7 +1549,7 @@ We still use the <code>emmeans</code> package but specify the comparisons are ag
 <p>The two comparisons provided are A vs. B and A vs. C.
 The only significant difference is between A and C (<span class="math inline">\(p\)</span>-value = 0.0019).
 As before, here are simultaneous CIs and plots:</p>
-<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="statistical-modeling-and-designed-experiments.html#cb110-1" tabindex="-1"></a><span class="fu">confint</span>(<span class="fu">contrast</span>(drug.mc, <span class="st">&quot;trt.vs.ctrl&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="statistical-modeling-and-designed-experiments.html#cb110-1" tabindex="-1"></a><span class="fu">confint</span>(<span class="fu">contrast</span>(drug.mc, <span class="st">&quot;dunnett&quot;</span>))</span></code></pre></div>
 <pre><code>##  contrast estimate     SE df lower.CL upper.CL
 ##  B - A     -0.0328 0.0807 27   -0.222    0.157
 ##  C - A     -0.2984 0.0807 27   -0.488   -0.109
@@ -1554,7 +1557,7 @@ As before, here are simultaneous CIs and plots:</p>
 ## Results are given on the log10 (not the response) scale. 
 ## Confidence level used: 0.95 
 ## Conf-level adjustment: dunnettx method for 2 estimates</code></pre>
-<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="statistical-modeling-and-designed-experiments.html#cb112-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">contrast</span>(drug.mc, <span class="st">&quot;trt.vs.ctrl&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="statistical-modeling-and-designed-experiments.html#cb112-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">contrast</span>(drug.mc, <span class="st">&quot;dunnett&quot;</span>))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch2-19"></span>
 <img src="introStatModeling_files/figure-html/ch2-19-1.png" alt="Dunnett adjusted confidence interval plots demonstrating that treatment `C` is significantly different than control group `A`, while treatment `B` is not significantly different than control group `A`." width="60%" />
 <p class="caption">
@@ -1564,8 +1567,8 @@ Figure 2.8: Dunnett adjusted confidence interval plots demonstrating that treatm
 <p>It is interesting to compare the results you get via the two methods (Tukey vs Dunnett) for the same comparisons (<em>e.g.</em>, A vs. C).
 Can you explain what you see?</p>
 <p><strong>Note.</strong> If you do not specify a <code>ref=</code> in the <code>contrast()</code> function, group A will automatically be chosen as the reference group for Dunnett (the default behavior is to choose the first factor level [in this case the first alphabetically]).
-We recommend you always explicitly tell the code the reference groups. In the below example we set the second (2) factor, B, to be the control with <code>ref="B"</code>.</p>
-<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="statistical-modeling-and-designed-experiments.html#cb113-1" tabindex="-1"></a><span class="fu">contrast</span>(drug.mc, <span class="st">&quot;trt.vs.ctrl&quot;</span>, <span class="at">ref=</span><span class="st">&quot;B&quot;</span>)</span></code></pre></div>
+We recommend you always explicitly tell the code the reference groups. In the example below we set the second (2) factor, B, to be the control with <code>ref="B"</code>.</p>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="statistical-modeling-and-designed-experiments.html#cb113-1" tabindex="-1"></a><span class="fu">contrast</span>(drug.mc, <span class="st">&quot;dunnett&quot;</span>, <span class="at">ref=</span><span class="st">&quot;B&quot;</span>)</span></code></pre></div>
 <pre><code>##  contrast estimate     SE df t.ratio p.value
 ##  A - B      0.0328 0.0807 27   0.406  0.8750
 ##  C - B     -0.2657 0.0807 27  -3.291  0.0054
@@ -1573,7 +1576,7 @@ We recommend you always explicitly tell the code the reference groups. In the be
 ## Results are given on the log10 (not the response) scale. 
 ## P value adjustment: dunnettx method for 2 tests</code></pre>
 <p>Alternatively we can pass in a numeric reference (based on factor order)</p>
-<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="statistical-modeling-and-designed-experiments.html#cb115-1" tabindex="-1"></a><span class="fu">contrast</span>(drug.mc, <span class="st">&quot;trt.vs.ctrl&quot;</span>, <span class="at">ref=</span><span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="statistical-modeling-and-designed-experiments.html#cb115-1" tabindex="-1"></a><span class="fu">contrast</span>(drug.mc, <span class="st">&quot;dunnett&quot;</span>, <span class="at">ref=</span><span class="dv">2</span>)</span></code></pre></div>
 </div>
 <div id="coding-notes-about-emmeans" class="section level3 hasAnchor" number="2.8.4">
 <h3><span class="header-section-number">2.8.4</span> Coding notes about <code>emmeans</code><a href="statistical-modeling-and-designed-experiments.html#coding-notes-about-emmeans" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -1601,8 +1604,8 @@ Figure 2.9: Bonferroni adjusted confidence intervals for the immobilization time
 </div>
 <p>Another feature that can be useful with <code>emmeans</code> functionality is the <code>tidy()</code> function from the <code>broom</code> package.
 However, we do recommend you use this function with some caution as it does not always work well and you can lose information.
-But, when it does work, the output is put into a data frame and can be processed with the <code>kable()</code> function for aesthestically pleasing tables.
-An example is provided below that uses the <code>tidy()</code> function, along with <code>select()</code> from <code>dplyr</code>, with <code>kable()</code> and <code>kable_styling()</code>.</p>
+But, when it does work, the output is put into a data frame and can be processed with the <code>kable()</code> function for aesthetically pleasing tables.
+An example is provided below that uses the <code>tidy()</code> function, <code>select()</code> from <code>dplyr</code>, as well as <code>kable()</code> and <code>kable_styling()</code>.</p>
 <div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="statistical-modeling-and-designed-experiments.html#cb119-1" tabindex="-1"></a><span class="fu">tidy</span>(drug.mc, <span class="at">conf.int=</span><span class="cn">TRUE</span>, <span class="at">type=</span><span class="st">&quot;response&quot;</span>, <span class="at">adjust=</span><span class="st">&quot;bonferroni&quot;</span>)<span class="sc">|&gt;</span></span>
 <span id="cb119-2"><a href="statistical-modeling-and-designed-experiments.html#cb119-2" tabindex="-1"></a>  <span class="fu">select</span>(Drug, response, std.error, conf.low, conf.high) <span class="sc">|&gt;</span></span>
 <span id="cb119-3"><a href="statistical-modeling-and-designed-experiments.html#cb119-3" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits=</span><span class="dv">3</span>) <span class="sc">|&gt;</span></span>
@@ -1909,7 +1912,7 @@ Figure 2.13: Residual plots for the One-Way ANOVA studying the four treatments o
 <p>As a follow-up, we conduct a multiple comparison analysis.
 We have a “control” in this experiment, thus use the Dunnett procedure.</p>
 <div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="statistical-modeling-and-designed-experiments.html#cb139-1" tabindex="-1"></a>spruce.mc <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(spruce.anova, <span class="sc">~</span>Trt_label)</span>
-<span id="cb139-2"><a href="statistical-modeling-and-designed-experiments.html#cb139-2" tabindex="-1"></a><span class="fu">contrast</span>(spruce.mc, <span class="st">&quot;trt.vs.ctrl&quot;</span>, <span class="at">ref=</span><span class="dv">1</span>)</span></code></pre></div>
+<span id="cb139-2"><a href="statistical-modeling-and-designed-experiments.html#cb139-2" tabindex="-1"></a><span class="fu">contrast</span>(spruce.mc, <span class="st">&quot;dunnett&quot;</span>, <span class="at">ref=</span><span class="dv">1</span>)</span></code></pre></div>
 <pre><code>##  contrast                          estimate     SE df t.ratio p.value
 ##  Neutral &amp; Diseased Seed - Control    -0.12 0.0938 16  -1.279  0.4589
 ##  Acid &amp; Healthy Seed - Control        -0.04 0.0938 16  -0.426  0.9254
@@ -1919,7 +1922,7 @@ We have a “control” in this experiment, thus use the Dunnett procedure.</p>
 <p>Not too surprising given the results of Figure <a href="statistical-modeling-and-designed-experiments.html#fig:ch2-24">2.12</a>, the “Neutral &amp; Diseased Seeds” and “Acid &amp; Healthy Seed” Bud Breaking Ratings do not statistically differ from the control (<span class="math inline">\(p\)</span>-values of 0.4589 and 0.9254, respectively).
 However, we have evidence that the diseased seeds that underwent an acid solution before planting do result in a different Bud Breaking Rating (<span class="math inline">\(p\)</span>-value of 0.0003).
 We can also look at confidence intervals to get a sense of the effect size.</p>
-<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="statistical-modeling-and-designed-experiments.html#cb141-1" tabindex="-1"></a><span class="fu">confint</span>(<span class="fu">contrast</span>(spruce.mc, <span class="st">&quot;trt.vs.ctrl&quot;</span>, <span class="at">ref=</span><span class="dv">1</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="statistical-modeling-and-designed-experiments.html#cb141-1" tabindex="-1"></a><span class="fu">confint</span>(<span class="fu">contrast</span>(spruce.mc, <span class="st">&quot;dunnett&quot;</span>, <span class="at">ref=</span><span class="dv">1</span>))</span></code></pre></div>
 <pre><code>##  contrast                          estimate     SE df lower.CL upper.CL
 ##  Neutral &amp; Diseased Seed - Control    -0.12 0.0938 16   -0.365    0.125
 ##  Acid &amp; Healthy Seed - Control        -0.04 0.0938 16   -0.285    0.205
@@ -1928,7 +1931,7 @@ We can also look at confidence intervals to get a sense of the effect size.</p>
 ## Confidence level used: 0.95 
 ## Conf-level adjustment: dunnettx method for 3 estimates</code></pre>
 <p>and the confidence intervals can be plotted as well.</p>
-<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="statistical-modeling-and-designed-experiments.html#cb143-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">contrast</span>(spruce.mc, <span class="st">&quot;trt.vs.ctrl&quot;</span>, <span class="at">ref=</span><span class="dv">1</span>) ) <span class="sc">+</span></span>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="statistical-modeling-and-designed-experiments.html#cb143-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">contrast</span>(spruce.mc, <span class="st">&quot;dunnett&quot;</span>, <span class="at">ref=</span><span class="dv">1</span>) ) <span class="sc">+</span></span>
 <span id="cb143-2"><a href="statistical-modeling-and-designed-experiments.html#cb143-2" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch2-29"></span>
 <img src="introStatModeling_files/figure-html/ch2-29-1.png" alt="Dunnett adjusted confidence interval plots comparing the three treatments to the control group. Here, we see that the Diseased seeds with acid solution group is significantly different than the control, while the other two groups are not significantly different." width="60%" />

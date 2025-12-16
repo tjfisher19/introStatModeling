@@ -221,7 +221,7 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="2.3" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#statistical-analyses-is-modeling"><i class="fa fa-check"></i><b>2.3</b> Statistical Analyses is Modeling</a>
 <ul>
-<li class="chapter" data-level="2.3.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#example-of-a-two-sample-t-test-as-a-model"><i class="fa fa-check"></i><b>2.3.1</b> Example of a two-sample <span class="math inline">\(t\)</span>-test as a model</a></li>
+<li class="chapter" data-level="2.3.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#twoSampletTest"><i class="fa fa-check"></i><b>2.3.1</b> Example of a two-sample <span class="math inline">\(t\)</span>-test as a model</a></li>
 </ul></li>
 <li class="chapter" data-level="2.4" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#one-way-anova"><i class="fa fa-check"></i><b>2.4</b> One-Way ANOVA</a>
 <ul>
@@ -412,7 +412,10 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="11" data-path="statistical-odds.html"><a href="statistical-odds.html"><i class="fa fa-check"></i><b>11</b> Statistical Odds</a>
 <ul>
-<li class="chapter" data-level="11.1" data-path="statistical-odds.html"><a href="statistical-odds.html#probability-versus-odds"><i class="fa fa-check"></i><b>11.1</b> Probability versus Odds</a></li>
+<li class="chapter" data-level="11.1" data-path="statistical-odds.html"><a href="statistical-odds.html#probability-versus-odds"><i class="fa fa-check"></i><b>11.1</b> Probability versus Odds</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="statistical-odds.html"><a href="statistical-odds.html#relationship-between-odds-and-probability"><i class="fa fa-check"></i><b>11.1.1</b> Relationship between Odds and Probability</a></li>
+</ul></li>
 <li class="chapter" data-level="11.2" data-path="statistical-odds.html"><a href="statistical-odds.html#odds-ratios"><i class="fa fa-check"></i><b>11.2</b> Odds ratios</a></li>
 <li class="chapter" data-level="11.3" data-path="statistical-odds.html"><a href="statistical-odds.html#ideas-of-modeling-odds"><i class="fa fa-check"></i><b>11.3</b> Ideas of modeling odds</a></li>
 </ul></li>
@@ -702,7 +705,7 @@ This is the block term and is not of concern to our analysis.
 So we <strong>ignore</strong> that <span class="math inline">\(F\)</span>-statistic and <span class="math inline">\(p\)</span>-value!</p>
 <p>We can investigate the differences in yields between the five varieties using a multiple comparison procedure.</p>
 <div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="multiple-factor-designed-experiments.html#cb152-1" tabindex="-1"></a>barley.mc <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(barley.fit, <span class="sc">~</span>Variety)</span>
-<span id="cb152-2"><a href="multiple-factor-designed-experiments.html#cb152-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">contrast</span>(barley.mc, <span class="st">&quot;pairwise&quot;</span>) )</span></code></pre></div>
+<span id="cb152-2"><a href="multiple-factor-designed-experiments.html#cb152-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">contrast</span>(barley.mc, <span class="st">&quot;tukey&quot;</span>) )</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch3-5a"></span>
 <img src="introStatModeling_files/figure-html/ch3-5a-1.png" alt="Tukey adjusted confidence interval plots comparing the give barley varieties (treatments). Here, we see that Trebi variety is statistically different than the other four varieties, while those four are all statistically similar (recall, we look for zero in the confidence interval of the differences)." width="60%" />
 <p class="caption">
@@ -852,7 +855,7 @@ Arguably the simplest example of such a design is a before and after study as ou
 <p><strong>Example.</strong> In an effort to study the effectiveness of a new cholesterol drug 20 patients with high cholesterol are selected and their cholesterol is measured at the beginning of the study.
 The patients then take the new drug for 45 days.
 At the conclusion of the 45 days their cholesterol is measured and compared to that at the beginning of the study.</p>
-<p>The above is an example of a designed experiment.
+<p>This is an example of a designed experiment.
 The experimental units are the 20 individuals.
 The response variable is the difference in cholesterol (before and after) levels.
 The pairing attempts to control for confounding variability (that is, the variability within each individual is somewhat controlled by the pairing).</p>
@@ -881,7 +884,7 @@ We outline three below but first explore visualizing the data.</p>
 </div>
 <div id="graphical-comparison-for-paired-design" class="section level4 hasAnchor" number="3.1.3.2">
 <h4><span class="header-section-number">3.1.3.2</span> Graphical comparison for paired design<a href="multiple-factor-designed-experiments.html#graphical-comparison-for-paired-design" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>Much like when including the block term in our above example, when graphically comparing paired data we must use some caution and consider the pairing feature in the data.
+<p>Much like when including the block term in our example above, when graphically comparing paired data we must use some caution and consider the pairing feature in the data.
 Ultimately we are interested in the pairwise difference between observations.
 Thus, side-by-side boxplots are <strong>not</strong> appropriate since they do not account for the pairing.</p>
 <p>However, there are multiple options for reporting paired data.
@@ -955,7 +958,7 @@ We must pivot our data from the original wide format into a longer or tall forma
 <span id="cb159-3"><a href="multiple-factor-designed-experiments.html#cb159-3" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">c</span>(before, after), <span class="at">names_to=</span><span class="st">&quot;Time&quot;</span>, <span class="at">values_to=</span><span class="st">&quot;CO&quot;</span>) <span class="sc">|&gt;</span></span>
 <span id="cb159-4"><a href="multiple-factor-designed-experiments.html#cb159-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id=</span><span class="fu">factor</span>(id),</span>
 <span id="cb159-5"><a href="multiple-factor-designed-experiments.html#cb159-5" tabindex="-1"></a>         <span class="at">Time=</span><span class="fu">factor</span>(Time, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;before&quot;</span>,<span class="st">&quot;after&quot;</span>)))</span></code></pre></div>
-<p>Let’s step through the above R code since some of this functionality has not been used since Section @ref{numericSummaries}.
+<p>Let’s step through the R code since some of this functionality has not been used since Section @ref{numericSummaries}.
 In the first statement <code>select(-Difference)</code> we are telling R to drop the <code>Difference</code> variable as we do not need it for the plot.
 Then we are pivoting from wide-to-long format (or wide-to-tall) with the <code>before</code> and <code>after</code> measurements.
 The resulting dataset has two new variables, one called <code>Time</code> which states if it is the <em>before</em> or <em>after</em> measure and another called <code>CO</code> with the corresponding Carbon Monoxide emissions at that time.
@@ -1268,7 +1271,7 @@ Therapist
 </tr>
 </tbody>
 </table>
-<p>The table above provides a look at the full dataset. We can make some quick assessments just by looking at the values in the table.</p>
+<p>The table provides a look at the full dataset. We can make some quick assessments just by looking at the values in the table.</p>
 <ul>
 <li>In the control treatment, 5 participants gained weight (positive value) and 4 lost weight (negative value) with 1 person finding no change. Based on the magnitude of these values the weight change in the control group is near 0 (on average it is 0.6).</li>
 <li>In the self-induced group, 9 patient experienced some weight loss and one found no change, on average the chant was -3.175.</li>
@@ -1315,7 +1318,7 @@ In situations like this, we proceed with the analysis making note of some potent
 <p>We see that there is a significant difference in the mean weight change between the three treatments (<span class="math inline">\(F\)</span> = 8.865, <span class="math inline">\(\textrm{df}_1\)</span> = 2, <span class="math inline">\(\textrm{df}_2\)</span> = 18, <span class="math inline">\(p\)</span>-value = 0.0021).</p>
 <p>As a follow-up, we can investigate the differences in mean weight changes between the three treatments using a multiple comparison procedure and noting that there is a control treatment.</p>
 <div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="multiple-factor-designed-experiments.html#cb176-1" tabindex="-1"></a>weightloss.mc <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(weightloss.fit, <span class="sc">~</span>Treatment)</span>
-<span id="cb176-2"><a href="multiple-factor-designed-experiments.html#cb176-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">contrast</span>(weightloss.mc, <span class="st">&quot;trt.vs.ctrl&quot;</span>, <span class="at">ref=</span><span class="dv">1</span>) ) <span class="sc">+</span></span>
+<span id="cb176-2"><a href="multiple-factor-designed-experiments.html#cb176-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">contrast</span>(weightloss.mc, <span class="st">&quot;dunnett&quot;</span>, <span class="at">ref=</span><span class="dv">1</span>) ) <span class="sc">+</span></span>
 <span id="cb176-3"><a href="multiple-factor-designed-experiments.html#cb176-3" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
 <span id="cb176-4"><a href="multiple-factor-designed-experiments.html#cb176-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">&quot;&quot;</span>, <span class="at">x=</span><span class="st">&quot;Change in Weight Loss (lbs)&quot;</span>,</span>
 <span id="cb176-5"><a href="multiple-factor-designed-experiments.html#cb176-5" tabindex="-1"></a>       <span class="at">title=</span><span class="st">&quot;Improvement in Weight Loss Treatments&quot;</span>,</span>
@@ -1460,7 +1463,7 @@ These consist of:</p>
 <li>Interaction means (<em>i.e.</em>, treatment means for all factor combinations).</li>
 </ul>
 <p>These means are purely descriptive, but informative nonetheless.
-We could calculate each one of the above using a series of <code>tidyverse</code> commands (<em>i.e.</em>, <code>summarize()</code> with <code>group_by()</code>).
+We could calculate each one of the means using a series of <code>tidyverse</code> commands (<em>i.e.</em>, <code>summarize()</code> with <code>group_by()</code>).
 R includes a function <code>model.tables()</code> that takes the input of an ANOVA fit and provides the means for all main effects and interaction effects.</p>
 <div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="multiple-factor-designed-experiments.html#cb183-1" tabindex="-1"></a><span class="fu">model.tables</span>(highway.fit, <span class="st">&quot;means&quot;</span>)</span></code></pre></div>
 <pre><code>## Tables of means
@@ -1501,7 +1504,6 @@ Collectively, along with Figure <a href="multiple-factor-designed-experiments.ht
 <p><strong>The first test to inspect is the interaction term.</strong></p>
 <p>The interaction is not significant (<span class="math inline">\(F\)</span> = 1.031, <span class="math inline">\(\textrm{df}_1\)</span> = 4, <span class="math inline">\(\textrm{df}_2\)</span> = 27, <span class="math inline">\(p\)</span>-value = 0.409). Thus, we conclude the effect that sign size has on the mean detection distance does not depend on material type. Likewise, the effect of material type on detection distance does not depend on sign size.</p>
 <p>A visualization of the interaction between the two factors is informative here.
-Below, we build an interactions plot.
 An interaction plot is very similar to the Profile plot used in Block design – basically it is a plot of treatment means (here <span class="math inline">\(3\times 3\)</span> treatments), whereby the means for all treatments having a given fixed level of one of the factors are visually “connected”.
 Typically you distinguish the lines via color or linetype which maps to the other factor variable.
 We can build an interaction plot seen in Figure <a href="multiple-factor-designed-experiments.html#fig:ch3-10">3.19</a> using aesthetic options in <code>ggplot()</code> and with the <code>stat_summary</code> functions.
@@ -1548,7 +1550,7 @@ Here, since there is no significant interaction, we can perform multiple compari
 <p>First, we look at the influence of sign size.</p>
 <div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="multiple-factor-designed-experiments.html#cb190-1" tabindex="-1"></a>twoway.size.mc <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(highway.fit, <span class="sc">~</span>Size)</span></code></pre></div>
 <pre><code>## NOTE: Results may be misleading due to involvement in interactions</code></pre>
-<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="multiple-factor-designed-experiments.html#cb192-1" tabindex="-1"></a><span class="fu">confint</span>(<span class="fu">contrast</span>(twoway.size.mc, <span class="st">&quot;pairwise&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="multiple-factor-designed-experiments.html#cb192-1" tabindex="-1"></a><span class="fu">confint</span>(<span class="fu">contrast</span>(twoway.size.mc, <span class="st">&quot;tukey&quot;</span>))</span></code></pre></div>
 <pre><code>##  contrast       estimate   SE df lower.CL upper.CL
 ##  Small - Medium     -401 93.6 27     -633     -169
 ##  Small - Large      -941 93.6 27    -1174     -709
@@ -1564,7 +1566,7 @@ We note that all of the adjusted 95% confidence do not include the value 0, thus
 <p>For the three different material types we get a similar results.</p>
 <div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="multiple-factor-designed-experiments.html#cb194-1" tabindex="-1"></a>twoway.material.mc <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(highway.fit, <span class="sc">~</span>Material)</span></code></pre></div>
 <pre><code>## NOTE: Results may be misleading due to involvement in interactions</code></pre>
-<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="multiple-factor-designed-experiments.html#cb196-1" tabindex="-1"></a><span class="fu">confint</span>(<span class="fu">contrast</span>(twoway.material.mc, <span class="st">&quot;pairwise&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="multiple-factor-designed-experiments.html#cb196-1" tabindex="-1"></a><span class="fu">confint</span>(<span class="fu">contrast</span>(twoway.material.mc, <span class="st">&quot;tukey&quot;</span>))</span></code></pre></div>
 <pre><code>##  contrast              estimate   SE df lower.CL upper.CL
 ##  Material1 - Material2      362 93.6 27    129.8      594
 ##  Material1 - Material3      636 93.6 27    403.6      868
@@ -1731,7 +1733,7 @@ This tells the <code>emmeans()</code> function to consider comparisons of <code>
 You likely saw similar notation in your introductory statistics class when covering conditional probability (<em>i.e.</em>, <span class="math inline">\(P(A|B)\)</span>).</p>
 <p>First, we consider how dosages influences length for a fixed supplement type.</p>
 <div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="multiple-factor-designed-experiments.html#cb205-1" tabindex="-1"></a>tooth.mc.dose <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(tooth.fit, <span class="sc">~</span> Dosage <span class="sc">|</span> Supplement )</span>
-<span id="cb205-2"><a href="multiple-factor-designed-experiments.html#cb205-2" tabindex="-1"></a><span class="fu">contrast</span>(tooth.mc.dose, <span class="st">&quot;pairwise&quot;</span>)</span></code></pre></div>
+<span id="cb205-2"><a href="multiple-factor-designed-experiments.html#cb205-2" tabindex="-1"></a><span class="fu">contrast</span>(tooth.mc.dose, <span class="st">&quot;tukey&quot;</span>)</span></code></pre></div>
 <pre><code>## Supplement = Vitamin C:
 ##  contrast        estimate   SE df t.ratio p.value
 ##  0.5 mg - 1.0 mg    -8.79 1.62 54  -5.413  &lt;.0001
@@ -1751,7 +1753,7 @@ For the Vitamin C supplement, we can conclude that all three dosages result in d
 For Orange Juice, the dosage of 0.5 mg is different than 1.0 mg and 2.0 mg, but 1.0 mg and 2.0 mg of Orange Juice do not result in differing tooth lengths.</p>
 <p>Similar, we can make comparisons by conditioning on the other factor variable (remember, typically the context of the problem will dictate the ordering).</p>
 <div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="multiple-factor-designed-experiments.html#cb207-1" tabindex="-1"></a>tooth.mc.supp <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(tooth.fit, <span class="sc">~</span> Supplement <span class="sc">|</span> Dosage )</span>
-<span id="cb207-2"><a href="multiple-factor-designed-experiments.html#cb207-2" tabindex="-1"></a><span class="fu">contrast</span>(tooth.mc.supp, <span class="st">&quot;pairwise&quot;</span>)</span></code></pre></div>
+<span id="cb207-2"><a href="multiple-factor-designed-experiments.html#cb207-2" tabindex="-1"></a><span class="fu">contrast</span>(tooth.mc.supp, <span class="st">&quot;tukey&quot;</span>)</span></code></pre></div>
 <pre><code>## Dosage = 0.5 mg:
 ##  contrast                 estimate   SE df t.ratio p.value
 ##  Vitamin C - Orange Juice    -5.25 1.62 54  -3.233  0.0021
@@ -1766,7 +1768,7 @@ For Orange Juice, the dosage of 0.5 mg is different than 1.0 mg and 2.0 mg, but 
 <p>At a dose level of 0.5 mg, ascorbic acid delivery via orange juice produces significantly larger mean tooth growth than does delivery via Vitamin C (determined by the adjusted <span class="math inline">\(p\)</span>-value of 0.0021).
 Similarly, at <code>Dosage = 1.0 mg</code>, there is a difference in tooth length between Vitamin C and Orange Juice, but not at <code>Dosage = 2.0 mg</code>.</p>
 <p>We can also use plotting features to graphically explore the factors while holding another factor constant.
-Below, we build Bonferroni adjusted confidence intervals comparing the dosage levels for each of the two supplements.
+Below, we construct Bonferroni adjusted confidence intervals comparing the dosage levels for each of the two supplements.
 We add some labels to the plot as Figure <a href="multiple-factor-designed-experiments.html#fig:ch3-19">3.22</a> provides a decent summarization of the findings.</p>
 <div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="multiple-factor-designed-experiments.html#cb209-1" tabindex="-1"></a><span class="fu">plot</span>(tooth.mc.dose, <span class="at">int.adjust=</span><span class="st">&quot;bonferroni&quot;</span>, <span class="at">type=</span><span class="st">&quot;response&quot;</span>) <span class="sc">+</span></span>
 <span id="cb209-2"><a href="multiple-factor-designed-experiments.html#cb209-2" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>

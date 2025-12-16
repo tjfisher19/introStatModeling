@@ -221,7 +221,7 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="2.3" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#statistical-analyses-is-modeling"><i class="fa fa-check"></i><b>2.3</b> Statistical Analyses is Modeling</a>
 <ul>
-<li class="chapter" data-level="2.3.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#example-of-a-two-sample-t-test-as-a-model"><i class="fa fa-check"></i><b>2.3.1</b> Example of a two-sample <span class="math inline">\(t\)</span>-test as a model</a></li>
+<li class="chapter" data-level="2.3.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#twoSampletTest"><i class="fa fa-check"></i><b>2.3.1</b> Example of a two-sample <span class="math inline">\(t\)</span>-test as a model</a></li>
 </ul></li>
 <li class="chapter" data-level="2.4" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#one-way-anova"><i class="fa fa-check"></i><b>2.4</b> One-Way ANOVA</a>
 <ul>
@@ -412,7 +412,10 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="11" data-path="statistical-odds.html"><a href="statistical-odds.html"><i class="fa fa-check"></i><b>11</b> Statistical Odds</a>
 <ul>
-<li class="chapter" data-level="11.1" data-path="statistical-odds.html"><a href="statistical-odds.html#probability-versus-odds"><i class="fa fa-check"></i><b>11.1</b> Probability versus Odds</a></li>
+<li class="chapter" data-level="11.1" data-path="statistical-odds.html"><a href="statistical-odds.html#probability-versus-odds"><i class="fa fa-check"></i><b>11.1</b> Probability versus Odds</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="statistical-odds.html"><a href="statistical-odds.html#relationship-between-odds-and-probability"><i class="fa fa-check"></i><b>11.1.1</b> Relationship between Odds and Probability</a></li>
+</ul></li>
 <li class="chapter" data-level="11.2" data-path="statistical-odds.html"><a href="statistical-odds.html#odds-ratios"><i class="fa fa-check"></i><b>11.2</b> Odds ratios</a></li>
 <li class="chapter" data-level="11.3" data-path="statistical-odds.html"><a href="statistical-odds.html#ideas-of-modeling-odds"><i class="fa fa-check"></i><b>11.3</b> Ideas of modeling odds</a></li>
 </ul></li>
@@ -508,7 +511,7 @@ div.csl-indent {
 <ol start="3" style="list-style-type: decimal">
 <li><strong>Translate the problem into statistical terms</strong>. This can be a challenging step and oftentimes requires creativity on the part of the statistician (in other words, not every problem fits into a neat little box like in an intro stats course!). Care must be taken at this step.</li>
 </ol>
-<p>Connected to the above guidance is a good understanding of the <strong>Data Collection</strong> - It is vitally important to understand how the data was collected. Consider:</p>
+<p>Connected to the guidance is a good understanding of the <strong>Data Collection</strong> - It is vitally important to understand how the data was collected. Consider:</p>
 <ul>
 <li>Are the data observational or experimental? Are the data a “sample of convenience”, or were they obtained via random sampling? Did the experiment include randomization? How the data were collected has a crucial impact on what conclusions can be meaningfully made. We discuss this topic more in Section <a href="statistical-modeling-and-designed-experiments.html#dataSources">2.1</a>.</li>
 <li>Is there “non-response”? The data you don’t see may be just as important as the data you do see! This aligns with the concern of whether a sample is representative of the intended target population.</li>
@@ -619,10 +622,10 @@ It is a rectangular array of information (essentially a table or matrix or or sp
 </div>
 <div id="dataTypesSection" class="section level3 hasAnchor" number="1.3.2">
 <h3><span class="header-section-number">1.3.2</span> Types of Data<a href="introductory-statistics-in-r.html#dataTypesSection" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>You’ll notice in the above examples we see a mix of numeric and character values in the data frames. In R, every object has a type or <em>class</em>. To discover the type for a specific variable use the <code>class</code> function,</p>
+<p>You should notice in the examples above we see a mix of numeric and character values in the data frames. In R, every object has a type or <em>class</em>. To discover the type for a specific variable use the <code>class</code> function,</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="introductory-statistics-in-r.html#cb12-1" tabindex="-1"></a><span class="fu">class</span>(iris)</span></code></pre></div>
 <pre><code>## [1] &quot;data.frame&quot;</code></pre>
-<p>We see that the class of the object <code>iris</code> is a <code>data.frame</code> consisting of 150 rows and 5 columns. You should also note from above that the first four columns are numeric while the last column appears to be characters. We can explore the class of each variable by specifying the name of the column of the dataset using the <code>$</code> notation. First, let’s get the list of variables in the dataset using the <code>names()</code> function.</p>
+<p>We see that the class of the object <code>iris</code> is a <code>data.frame</code> consisting of 150 rows and 5 columns. You should also note that the first four columns are numeric while the last column appears to be characters. We can explore the class of each variable by specifying the name of the column of the dataset using the <code>$</code> notation. First, let’s get the list of variables in the dataset using the <code>names()</code> function.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="introductory-statistics-in-r.html#cb14-1" tabindex="-1"></a><span class="fu">names</span>(iris)</span></code></pre></div>
 <pre><code>## [1] &quot;Sepal.Length&quot; &quot;Sepal.Width&quot;  &quot;Petal.Length&quot; &quot;Petal.Width&quot;  &quot;Species&quot;</code></pre>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="introductory-statistics-in-r.html#cb16-1" tabindex="-1"></a><span class="fu">class</span>(iris<span class="sc">$</span>Sepal.Length)</span></code></pre></div>
@@ -640,7 +643,7 @@ It is a rectangular array of information (essentially a table or matrix or or sp
 <h4><span class="header-section-number">1.3.3.1</span> <code>read_table()</code> – for Space delimited files<a href="introductory-statistics-in-r.html#read_table-for-space-delimited-files" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>One common tool is the <code>read_table()</code> command. Below are two examples:</p>
 <ol style="list-style-type: decimal">
-<li>Read a file directly from the web. The below code imports the file <code>univadmissions.txt</code> (details about the data are below) from the textbook data repository into the current R session, and assigns the name <code>uadata</code> to the data frame object:</li>
+<li>Read a file directly from the web. The code imports the file <code>univadmissions.txt</code> (details about the data are below) from the textbook data repository into the current R session, and assigns the name <code>uadata</code> to the data frame object:</li>
 </ol>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="introductory-statistics-in-r.html#cb20-1" tabindex="-1"></a>site <span class="ot">&lt;-</span> <span class="st">&quot;https://tjfisher19.github.io/introStatModeling/data/univadmissions.txt&quot;</span></span>
 <span id="cb20-2"><a href="introductory-statistics-in-r.html#cb20-2" tabindex="-1"></a><span class="fu">class</span>(site)</span></code></pre></div>
@@ -657,9 +660,9 @@ It is a rectangular array of information (essentially a table or matrix or or sp
 ## 4     4       1.32     95    23  1996
 ## 5     5       1.48     77    28  1996
 ## 6     6       1.57     47    23  1996</code></pre>
-<p>A few notes on the above code. In the first line, we are creating a string of characters (that happens to be a web address) and <em>assigning</em> it to the R object <code>site</code> using the <code>&lt;-</code> notation. You should note the <code>class</code> of the object <code>site</code> is <code>character</code>. The third line, <code>options(readr.show_col_types = FALSE)</code>, is <em>entirely optional</em> and tells the <code>readr</code> package to suppress some extra output from display. The key is we are applying the function <code>read_table()</code> with the file specified in the <code>site</code> variable. Lastly, the output of the function is being assigned to <code>uadata</code>, again using the <code>&lt;-</code> notation. We will be using this same data again below.</p>
+<p>A few notes on the code above. In the first line, we are creating a string of characters (that happens to be a web address) and <em>assigning</em> it to the R object <code>site</code> using the <code>&lt;-</code> notation. You should note the <code>class</code> of the object <code>site</code> is <code>character</code>. The third line, <code>options(readr.show_col_types = FALSE)</code>, is <em>entirely optional</em> and tells the <code>readr</code> package to suppress some extra output from display. The key is we are applying the function <code>read_table()</code> with the file specified in the <code>site</code> variable. Lastly, the output of the function is being assigned to <code>uadata</code>, again using the <code>&lt;-</code> notation. We will be using this same data again below.</p>
 <ol start="2" style="list-style-type: decimal">
-<li>Another option is to download the file to your computer, then read it. You could go to the URL above and save the data file to your default working directory on your computer. After saving it into a folder (or directory), you can read the file with code similar to:</li>
+<li>Another option is to download the file to your computer, then read it. You could go to the provided URL and save the data file to your default working directory on your computer. After saving it into a folder (or directory), you can read the file with code similar to:</li>
 </ol>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="introductory-statistics-in-r.html#cb24-1" tabindex="-1"></a>uadata <span class="ot">&lt;-</span> <span class="fu">read_table</span>(<span class="st">&quot;univadmissions.txt&quot;</span>)</span></code></pre></div>
 <p>If you save the file to a directory on your computer other than the local directory (where your R code is stored), you must provide the path in the <code>read_table()</code> command:</p>
@@ -668,7 +671,7 @@ It is a rectangular array of information (essentially a table or matrix or or sp
 </div>
 <div id="read_csv-for-comma-separated-value-files" class="section level4 hasAnchor" number="1.3.3.2">
 <h4><span class="header-section-number">1.3.3.2</span> <code>read_csv()</code> – for Comma Separated Value files<a href="introductory-statistics-in-r.html#read_csv-for-comma-separated-value-files" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>Similar to the above examples, reading in a Comma Separated Value (CSV) file is very similar. This is becoming the standard format for transferring files. An example of some <strong>non-executed code</strong> is provided below:</p>
+<p>Similar to the examples above, reading in a Comma Separated Value (CSV) file is very similar. This is becoming the standard format for transferring files. An example of some <strong>non-executed code</strong> is provided below:</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="introductory-statistics-in-r.html#cb26-1" tabindex="-1"></a>uadata_csv <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;c:/My Documents/My STA363 Files/univadmissions.csv&quot;</span>)</span></code></pre></div>
 <p><strong>Note:</strong> the file <code>univadmissions.csv</code> does not exist but this code has been included for example purposes.</p>
 </div>
@@ -683,7 +686,7 @@ It is a rectangular array of information (essentially a table or matrix or or sp
 </div>
 <div id="referencing-data-from-inside-a-data-frame" class="section level2 hasAnchor" number="1.4">
 <h2><span class="header-section-number">1.4</span> Referencing data from inside a data frame<a href="introductory-statistics-in-r.html#referencing-data-from-inside-a-data-frame" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>We saw above that we can access a specific variable within a dataset using the <code>$</code> notation. We can also access specific observations in the dataset based on rules we may wish to implement. As a working example we will consider the university admissions data we read in above.</p>
+<p>We saw in the example above that we can access a specific variable within a dataset using the <code>$</code> notation. We can also access specific observations in the dataset based on rules we may wish to implement. As a working example we will consider the university admissions data we read in above.</p>
 <p><strong>Example:</strong> University admissions (originally in <span class="citation">Kutner et al. (<a href="#ref-KutnerText">2004</a>)</span>).</p>
 <p>The director of admissions at a state university wanted to determine how accurately students’ grade point averages at the end of their freshman year could be predicted by entrance test scores and high school class rank. The academic years covered 1996 through 2000. This example uses the <code>univadmissions.txt</code> dataset in the repository. The variables are as follows:</p>
 <ul>
@@ -693,7 +696,7 @@ It is a rectangular array of information (essentially a table or matrix or or sp
 <li><code>act</code> – ACT entrance exam score</li>
 <li><code>year</code> – Calendar year the freshman entered university</li>
 </ul>
-<p>This is the first dataset we input above in the <code>uadata</code> data frame.</p>
+<p>This is the first dataset we input in the code above, creating the <code>uadata</code> data frame.</p>
 <p>The <code>tidyverse</code> package <span class="citation">(<a href="#ref-R-tidyverse">Wickham, 2017</a>)</span> is actually a wrapper for many R packages. One of the key packages we use for data processing is the <code>dplyr</code> package <span class="citation">(<a href="#ref-R-dplyr">Wickham, François, et al., 2021</a>)</span>. It includes many functions that are similar to <a href="https://www.tutorialspoint.com/sql/sql-overview.htm">SQL</a> (for those who know it). These tools tend to be very readable and easy to understand. First we will load the package <code>tidyverse</code> and then take a <em>glimpse</em> of the dataset:</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="introductory-statistics-in-r.html#cb29-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)   <span class="co"># Load the necessary package</span></span>
 <span id="cb29-2"><a href="introductory-statistics-in-r.html#cb29-2" tabindex="-1"></a><span class="fu">glimpse</span>(uadata)      <span class="co"># Take a glimpse at the data</span></span></code></pre></div>
@@ -728,7 +731,7 @@ It is a rectangular array of information (essentially a table or matrix or or sp
 ##  9   269       3.93     99    29  1997
 ## 10   270       3.96     99    29  1997
 ## # ℹ 19 more rows</code></pre>
-<p>Another useful <code>dplyr</code> command for choosing specific variables is the <code>select</code> function. Below we select the ACT scores for students who have a first year GPA greater than 3.9 and with a graduating year of 1998.</p>
+<p>Another useful <code>dplyr</code> command for choosing specific variables is the <code>select</code> function. Here, we select the ACT scores for students who have a first year GPA greater than 3.9 and with a graduating year of 1998.</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="introductory-statistics-in-r.html#cb33-1" tabindex="-1"></a>uadata <span class="sc">|&gt;</span></span>
 <span id="cb33-2"><a href="introductory-statistics-in-r.html#cb33-2" tabindex="-1"></a>  <span class="fu">filter</span>(gpa.endyr1 <span class="sc">&gt;</span> <span class="fl">3.9</span>, </span>
 <span id="cb33-3"><a href="introductory-statistics-in-r.html#cb33-3" tabindex="-1"></a>         year<span class="sc">==</span><span class="dv">1998</span>) <span class="sc">|&gt;</span></span>
@@ -742,8 +745,8 @@ It is a rectangular array of information (essentially a table or matrix or or sp
 ## 4    21
 ## 5    27
 ## 6    32</code></pre>
-<p>Note in the above, we take the <code>uadata</code> and pipe it to a <code>filter</code>, which selects only those observations with <code>gpa.endyr1</code> greater than 3.9 and <code>year</code> equal (<code>==</code>) to 1998, then we pipe that subset of the data to the <code>select</code> function that returns the variable <code>act</code>.</p>
-<p><strong>IMPORTANT NOTE</strong> - R is <strong>an <em>evolving</em> language</strong> and as such occasionally has some wonky behavior. In fact, there are multiple versions of both the <code>filter</code> and <code>select</code> functions in R. If you ever use one and receive a strange error (<code>comparison is possible only for atomic and list types</code> or an <code>unused argument</code> error), first check for a typo. If the error still occurs it is likely the case that R is trying to use a different version of the <code>filter</code> or <code>select</code>. You can always force R to use the <code>dplyr</code> version by specifying the package as in the below example:</p>
+<p>Note in the example above, we take the <code>uadata</code> and pipe it to a <code>filter</code>, which selects only those observations with <code>gpa.endyr1</code> greater than 3.9 and <code>year</code> equal (<code>==</code>) to 1998, then we pipe that subset of the data to the <code>select</code> function that returns the variable <code>act</code>.</p>
+<p><strong>IMPORTANT NOTE</strong> - R is <strong>an <em>evolving</em> language</strong> and as such occasionally has some wonky behavior. In fact, there are multiple versions of both the <code>filter</code> and <code>select</code> functions in R. If you ever use one and receive a strange error (<code>comparison is possible only for atomic and list types</code> or an <code>unused argument</code> error), first check for a typo. If the error still occurs it is likely the case that R is trying to use a different version of the <code>filter</code> or <code>select</code>. You can always force R to use the <code>dplyr</code> version by specifying the package as in the example below:</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="introductory-statistics-in-r.html#cb35-1" tabindex="-1"></a>uadata <span class="sc">|&gt;</span></span>
 <span id="cb35-2"><a href="introductory-statistics-in-r.html#cb35-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(gpa.endyr1 <span class="sc">&gt;</span> <span class="fl">3.9</span>, </span>
 <span id="cb35-3"><a href="introductory-statistics-in-r.html#cb35-3" tabindex="-1"></a>                year<span class="sc">==</span><span class="dv">1998</span>) <span class="sc">|&gt;</span></span>
@@ -900,7 +903,7 @@ This function essentially does some <em>internal organization</em> of our data.
 Specifically, for each unique <code>Variable</code> name, it would group the data together.
 So, all the <code>gpa.endyr1</code> values will be considered a group, and separate from all the <code>hs.pct</code> and <code>act</code> <em>groups</em>.
 This function is particularly useful when coupled with <code>summarize()</code> (such as in the example above) because summary statistics will be calculated for each group.</p>
-<p>The function <code>summarize()</code> tells R to calculate summary statistics across rows (or grouped rows) within a <code>data.frame</code>. In the above example, we compute a list of summary statistics (hence, <code>list(Mean=mean, SD=sd, Min=min, Median=median, Max=max)</code>) on all the non-grouped variables (<code>everything()</code>). We will see more examples below.</p>
+<p>The function <code>summarize()</code> tells R to calculate summary statistics across rows (or grouped rows) within a <code>data.frame</code>. In the working example, we compute a list of summary statistics (hence, <code>list(Mean=mean, SD=sd, Min=min, Median=median, Max=max)</code>) on all the non-grouped variables (<code>everything()</code>). We will see more examples below.</p>
 <p>The code above introduces a few keys points to know:</p>
 <ul>
 <li>The code is spread across multiple lines with most lines ending with the piping operator <code>|&gt;</code>. This is done for readability (and recommended by all users of R). When performing an analysis, you often will revisit the code at a later time. Readable code is paramount to reproducibility.</li>
@@ -1004,10 +1007,9 @@ Figure 1.2: Density plot showing left-skewed distribution for the <code>gpa.endy
 The trick to working with plotting on the computer is to think in terms of <em>layers</em>.
 The first line <code>ggplot(uadata)</code> sets up a plot object based on the dataset <code>uadata</code>.
 The <code>+</code> says to add a layer, this layer is a density plot (<code>geom_density</code>) where the aesthetic values include an <span class="math inline">\(x\)</span>-axis variable matching that of <code>gpa.endyr</code>.</p>
-<p>To generate even more complex distributional plots, first we need to perform some data processing.
-Above we saw <code>pivot_longer()</code>.
-The purpose of the <code>pivot_longer()</code> function is to collect variables in a dataset and create a <em>tall</em> (or <em>longer</em>, wide-to-long) dataset.
-We specify the variables (or columns) we want to pivot (the <code>c(gpa.endyr1, hs.pct, act)</code> part in the below code), the name of the new variable (here called <code>var_names</code>) storing the column names, and the variable name that will store the values (here called <code>values</code>).</p>
+<p>To generate even more complex distributional plots, first we need to perform some data processing using <code>pivot_longer()</code>.
+The purpose of the <code>pivot_longer()</code> function is to collect variables in a dataset and create a <em>tall</em> (or <em>longer</em>, wide-to-long) dataset (we saw an example earlier in Section <a href="introductory-statistics-in-r.html#numericSummaries">1.6.2</a>).
+We specify the variables (or columns) we want to pivot (the <code>c(gpa.endyr1, hs.pct, act)</code> part in the code below), the name of the new variable (here called <code>var_names</code>) storing the column names, and the variable name that will store the values (here called <code>values</code>).</p>
 <div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="introductory-statistics-in-r.html#cb53-1" tabindex="-1"></a>uadata.tall <span class="ot">&lt;-</span> uadata <span class="sc">|&gt;</span></span>
 <span id="cb53-2"><a href="introductory-statistics-in-r.html#cb53-2" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">c</span>(gpa.endyr1, hs.pct, act), </span>
 <span id="cb53-3"><a href="introductory-statistics-in-r.html#cb53-3" tabindex="-1"></a>               <span class="at">names_to=</span><span class="st">&quot;var_names&quot;</span>, <span class="at">values_to=</span><span class="st">&quot;values&quot;</span> )</span>
@@ -1035,12 +1037,12 @@ We specify the variables (or columns) we want to pivot (the <code>c(gpa.endyr1, 
 <pre><code>## [1] 705   5</code></pre>
 <div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="introductory-statistics-in-r.html#cb59-1" tabindex="-1"></a><span class="fu">dim</span>(uadata.tall)</span></code></pre></div>
 <pre><code>## [1] 2115    4</code></pre>
-<p>Take a minute and step through the above code to understand it.
+<p>Take a minute and step through the code to understand it.
 The data is now in a <em>tall</em>, or <em>long</em>, format.
 We can now utilize the <code>ggplot2</code> package for more advanced plotting.
 Here we want to draw a density plot for the <code>values</code> in the tall, or long, version of the dataset, called <code>uadata.tall</code>.
 But we want a different plot for each <code>var_names</code> <em>variable</em> (that is, <code>act</code>, <code>gpa.endyr1</code>, and <code>hs.pct</code>) so we add a <code>facet_grid()</code> layer.
-Figure <a href="introductory-statistics-in-r.html#fig:ch1-20">1.3</a> provides the result for the below code.</p>
+Figure <a href="introductory-statistics-in-r.html#fig:ch1-20">1.3</a> provides the result for the code below.</p>
 <div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="introductory-statistics-in-r.html#cb61-1" tabindex="-1"></a><span class="fu">ggplot</span>(uadata.tall) <span class="sc">+</span></span>
 <span id="cb61-2"><a href="introductory-statistics-in-r.html#cb61-2" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x=</span>values)) <span class="sc">+</span> </span>
 <span id="cb61-3"><a href="introductory-statistics-in-r.html#cb61-3" tabindex="-1"></a>  <span class="fu">facet_grid</span>(.<span class="sc">~</span>var_names, <span class="at">scales=</span><span class="st">&quot;free_x&quot;</span>) <span class="sc">+</span> </span>
@@ -1076,7 +1078,7 @@ Depending on whether we facet on the <span class="math inline">\(y\)</span>-axis
 Also note that the code for plotting a histogram is similar to that of a density plot (<code>geom_histogram</code> vs <code>geom_density</code>).</p>
 <p><strong>Bar Graphs</strong></p>
 <p>The best visual tool for simple counts is the Bar Graph (<strong>note:</strong> you should never use a pie chart, see <a href="http://www.businessinsider.com/pie-charts-are-the-worst-2013-6">here for an explanation</a> ).
-The below code generates a simple (and fairly boring) bar graph (Figure <a href="introductory-statistics-in-r.html#fig:ch1-21">1.5</a>) displaying the number of observations for each <code>year</code> in the <code>uadata</code>.</p>
+The code below generates a simple (and fairly boring) bar graph (Figure <a href="introductory-statistics-in-r.html#fig:ch1-21">1.5</a>) displaying the number of observations for each <code>year</code> in the <code>uadata</code>.</p>
 <div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="introductory-statistics-in-r.html#cb63-1" tabindex="-1"></a><span class="fu">ggplot</span>(uadata) <span class="sc">+</span> </span>
 <span id="cb63-2"><a href="introductory-statistics-in-r.html#cb63-2" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x=</span>year) )</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch1-21"></span>
@@ -1090,8 +1092,8 @@ Figure 1.5: Bar graph displaying the number of observations in the <code>uadata<
 </div>
 <div id="descriptive-statistics-and-visualizations-by-levels-of-a-factor-variable" class="section level3 hasAnchor" number="1.6.5">
 <h3><span class="header-section-number">1.6.5</span> Descriptive statistics and visualizations by levels of a factor variable<a href="introductory-statistics-in-r.html#descriptive-statistics-and-visualizations-by-levels-of-a-factor-variable" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>While the above summaries are informative, they overlook the fact that we have several years of data and that it may be more interesting to see how things might be changing year-to-year. This is why treating <code>year</code> as a factor is important, because it enables us to split out descriptions of the numeric variables by levels of the factor.</p>
-<p>One of the simplest and best visualization tool for comparing distributions is the side-by-side boxplot, which displays information about quartiles (<span class="math inline">\(Q_1\)</span>, <span class="math inline">\(Q_2\)</span> and <span class="math inline">\(Q_3\)</span>) and potential outliers. The below code generates Figure <a href="introductory-statistics-in-r.html#fig:ch1-22">1.6</a>.</p>
+<p>While the summaries above are informative, they overlook the fact that we have several years of data and that it may be more interesting to see how things might be changing year-to-year. This is why treating <code>year</code> as a factor is important, because it enables us to split out descriptions of the numeric variables by levels of the factor.</p>
+<p>One of the simplest and best visualization tool for comparing distributions is the side-by-side boxplot, which displays information about quartiles (<span class="math inline">\(Q_1\)</span>, <span class="math inline">\(Q_2\)</span> and <span class="math inline">\(Q_3\)</span>) and potential outliers. The code below generates Figure <a href="introductory-statistics-in-r.html#fig:ch1-22">1.6</a>.</p>
 <div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="introductory-statistics-in-r.html#cb64-1" tabindex="-1"></a><span class="fu">ggplot</span>(uadata) <span class="sc">+</span></span>
 <span id="cb64-2"><a href="introductory-statistics-in-r.html#cb64-2" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>act, <span class="at">y=</span>year) ) <span class="sc">+</span></span>
 <span id="cb64-3"><a href="introductory-statistics-in-r.html#cb64-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;ACT scores of Incoming Freshmen&quot;</span>,</span>
@@ -1140,7 +1142,7 @@ All three variables appear pretty stable over the years; the left skews in GPA a
 <p>We now revisit calculating summary statistics.
 Extensive grouped numeric summary statistics are available by using the <code>group_by()</code> and <code>summarize()</code> functions in <code>tidyverse</code>.
 Recall that the <code>group_by</code> function tells R to treat each value of the specified variable (in this case, called <code>var_names</code>) as a collection of similar options, then to perform the <code>summarize</code> function on each value in the grouped variables.
-The below example is a more detailed version of the summary table from above.</p>
+The next piece of code provides a more detailed version of the summary table from above.</p>
 <div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="introductory-statistics-in-r.html#cb67-1" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
 <span id="cb67-2"><a href="introductory-statistics-in-r.html#cb67-2" tabindex="-1"></a></span>
 <span id="cb67-3"><a href="introductory-statistics-in-r.html#cb67-3" tabindex="-1"></a>summary.table <span class="ot">&lt;-</span> uadata.tall <span class="sc">|&gt;</span></span>
@@ -1267,7 +1269,7 @@ hs.pct
 </table>
 <p>Here, we first pipe the <code>uadata.tall</code> into a <code>group_by()</code> function grouping by the <code>var_names</code> variable.
 Then we take that output and pipe it to the <code>summarize</code> function which allows us to calculate various summary statistics for each of the groups.
-In the above we calculate the mean and standard deviation of each group, along with the 5-number summary.
+In the code above we calculate the mean and standard deviation of each group, along with the 5-number summary.
 Lastly, we wrap the constructed table (its technically a data frame) in the <code>kable()</code> function from the <code>knitr</code> package <span class="citation">(<a href="#ref-R-knitr">Xie, 2025</a>)</span> (where <code>kable</code> means ‘knitr’ ‘table’) for a nice display.
 We pipe that output to the <code>kable_styling()</code> function in the <code>kableExtra</code> package <span class="citation">(<a href="#ref-R-kableExtra">Zhu, 2024</a>)</span> for some additional formatting options (here, we condence the width of the table).</p>
 <p>In the next example we group by both the <code>year</code> and the variables of interest.</p>
@@ -1520,13 +1522,13 @@ Values of <span class="math inline">\(r\)</span> near <span class="math inline">
 A frequently used rule of thumb is that <span class="math inline">\(|r| &gt; 0.80\)</span> or so qualifies as a strong linear relationship.
 We can calculate the Pearson correlation with the <code>cor()</code> function in R.
 When applied to a <code>data.frame</code>, or <code>matrix</code>, it displays a correlation matrix (correlation of all variable pairs).
-In the below code we specify to only calculate the correlation based on the 3 numeric variables.</p>
+In the code below we specify to only calculate the correlation based on the 3 numeric variables.</p>
 <div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="introductory-statistics-in-r.html#cb69-1" tabindex="-1"></a><span class="fu">cor</span>(uadata <span class="sc">|&gt;</span> <span class="fu">select</span>(gpa.endyr1, hs.pct, act))</span></code></pre></div>
 <pre><code>##            gpa.endyr1   hs.pct      act
 ## gpa.endyr1   1.000000 0.398479 0.365611
 ## hs.pct       0.398479 1.000000 0.442507
 ## act          0.365611 0.442507 1.000000</code></pre>
-<p>All pairwise correlations in this example are of modest magnitude (<span class="math inline">\(r \approx 0.4\)</span>) (see Figure <a href="introductory-statistics-in-r.html#fig:ch1-17">1.1</a> or the above correlation matrix).</p>
+<p>All pairwise correlations in this example are of modest magnitude (<span class="math inline">\(r \approx 0.4\)</span>) (see Figure <a href="introductory-statistics-in-r.html#fig:ch1-17">1.1</a> or the correlation matrix above).</p>
 <p>To visualize the relationship between numeric variables, we typically use a scatterplot.
 A scatterplot is a simple bivariate plot where dots, or points, are plotted at each (<span class="math inline">\(x,y\)</span>) pair on the Cartesian plane.
 The code below uses <code>ggplot</code>() to build a scatterplot using <code>geom_point()</code>.</p>
@@ -1611,7 +1613,7 @@ In R, we can perform this test, and construct the associated <span class="math i
 <span class="math display">\[\bar{x}_A - \bar{x}_B \pm t_{\alpha/2} {SE}_{\bar{x}_A-\bar{x}_B}\]</span>
 using the function <code>t.test()</code>.
 Here <span class="math inline">\(t_{\alpha/2}\)</span> is the <span class="math inline">\(1-\alpha/2\)</span> quantile from the <span class="math inline">\(t\)</span>-distribution (the degrees of freedom depend on your assumption about equal variance).</p>
-<p>Before jumping to an example, take a moment to look at the above null and alternative hypotheses.
+<p>Before jumping to an example, take a moment to look at the null and alternative hypotheses above.
 The null hypothesis states <span class="math inline">\(\mu_A=\mu_B\)</span>, which effectively says there is no difference in the mean between the two groups.
 That is, whether the data came from group A or group B it does not provide any explanation about the variability in the data.
 However, the alternative says that there is a difference and that knowing the group from which the data came helps explain some of the observed variability.</p>

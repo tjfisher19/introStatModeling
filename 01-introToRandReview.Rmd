@@ -65,7 +65,7 @@ Beware of contextual problems that are "fishing expeditions": if you look hard e
 
 3. **Translate the problem into statistical terms**. This can be a challenging step and oftentimes requires creativity on the part of the statistician (in other words, not every problem fits into a neat little box like in an intro stats course!). Care must be taken at this step.
 
-Connected to the above guidance is a good understanding of the **Data Collection** - It is vitally important to understand how the data was collected. Consider:
+Connected to the guidance is a good understanding of the **Data Collection** - It is vitally important to understand how the data was collected. Consider:
 
 * Are the data observational or experimental? Are the data a "sample of convenience", or were they obtained via random sampling? Did the experiment include randomization? How the data were collected has a crucial impact on what conclusions can be meaningfully made. We discuss this topic more in Section \@ref(dataSources).
 * Is there "non-response"? The data you don't see may be just as important as the data you do see! This aligns with the concern of whether a sample is representative of the intended target population.
@@ -143,13 +143,13 @@ There are 88 observations in this study with 5 recorded variables.
 
 ### Types of Data{#dataTypesSection}
 
-You'll notice in the above examples we see a mix of numeric and character values in the data frames. In R, every object has a type or *class*. To discover the type for a specific variable use the `class` function,
+You should notice in the examples above we see a mix of numeric and character values in the data frames. In R, every object has a type or *class*. To discover the type for a specific variable use the `class` function,
 
 ```{r ch1-4}
 class(iris)
 ```
 
-We see that the class of the object `iris` is a `data.frame` consisting of 150 rows and 5 columns. You should also note from above that the first four columns are numeric while the last column appears to be characters. We can explore the class of each variable by specifying the name of the column of the dataset using the `$` notation. First, let's get the list of variables in the dataset using the `names()` function.
+We see that the class of the object `iris` is a `data.frame` consisting of 150 rows and 5 columns. You should also note that the first four columns are numeric while the last column appears to be characters. We can explore the class of each variable by specifying the name of the column of the dataset using the `$` notation. First, let's get the list of variables in the dataset using the `names()` function.
 
 ```{r ch1-5}
 names(iris)
@@ -171,7 +171,7 @@ There are multiple functions to import a data file in R. The tools we will outli
 
 One common tool is the `read_table()` command. Below are two examples:
 
-1. Read a file directly from the web. The below code imports the file `univadmissions.txt` (details about the data are below) from the textbook data repository into the current R session, and assigns the name `uadata` to the data frame object:
+1. Read a file directly from the web. The code imports the file `univadmissions.txt` (details about the data are below) from the textbook data repository into the current R session, and assigns the name `uadata` to the data frame object:
 
 ```{r}
 site <- "https://tjfisher19.github.io/introStatModeling/data/univadmissions.txt"
@@ -190,9 +190,9 @@ uadata <- read_table("docs/data/univadmissions.txt")
 head(uadata)
 ```
 
-A few notes on the above code. In the first line, we are creating a string of characters (that happens to be a web address) and *assigning* it to the R object `site` using the `<-` notation. You should note the `class` of the object `site` is `character`. The third line, `options(readr.show_col_types = FALSE)`, is *entirely optional* and tells the `readr` package to suppress some extra output from display. The key is we are applying the function `read_table()` with the file specified in the `site` variable. Lastly, the output of the function is being assigned to `uadata`, again using the `<-` notation. We will be using this same data again below.
+A few notes on the code above. In the first line, we are creating a string of characters (that happens to be a web address) and *assigning* it to the R object `site` using the `<-` notation. You should note the `class` of the object `site` is `character`. The third line, `options(readr.show_col_types = FALSE)`, is *entirely optional* and tells the `readr` package to suppress some extra output from display. The key is we are applying the function `read_table()` with the file specified in the `site` variable. Lastly, the output of the function is being assigned to `uadata`, again using the `<-` notation. We will be using this same data again below.
 
-2.  Another option is to download the file to your computer, then read it. You could go to the URL above and save the data file to your default working directory on your computer. After saving it into a folder (or directory), you can read the file with code similar to:
+2.  Another option is to download the file to your computer, then read it. You could go to the provided URL and save the data file to your default working directory on your computer. After saving it into a folder (or directory), you can read the file with code similar to:
 
 ```{r, eval=FALSE}
 uadata <- read_table("univadmissions.txt")
@@ -208,7 +208,7 @@ The function `read_table()` automatically converts a space delimited text file t
 
 #### `read_csv()` -- for Comma Separated Value files
 
-Similar to the above examples, reading in a Comma Separated Value (CSV) file is very similar. This is becoming the standard format for transferring files. An example of some **non-executed code** is provided below:
+Similar to the examples above, reading in a Comma Separated Value (CSV) file is very similar. This is becoming the standard format for transferring files. An example of some **non-executed code** is provided below:
 
 ```{r, eval=FALSE}
 uadata_csv <- read_csv("c:/My Documents/My STA363 Files/univadmissions.csv")
@@ -232,7 +232,7 @@ load("uaDataInRformat.RData")
 
 ## Referencing data from inside a data frame
 
-We saw above that we can access a specific variable within a dataset using the `$` notation. We can also access specific observations in the dataset based on rules we may wish to implement. As a working example we will consider the university admissions data we read in above.
+We saw in the example above that we can access a specific variable within a dataset using the `$` notation. We can also access specific observations in the dataset based on rules we may wish to implement. As a working example we will consider the university admissions data we read in above.
 
 **Example:** University admissions (originally in @KutnerText).
 
@@ -244,7 +244,7 @@ The director of admissions at a state university wanted to determine how accurat
 * `act` -- ACT entrance exam score
 * `year` -- Calendar year the freshman entered university
 
-This is the first dataset we input above in the `uadata` data frame.
+This is the first dataset we input in the code above, creating the `uadata` data frame.
 
 The `tidyverse` package [@R-tidyverse] is actually a wrapper for many R packages. One of the key packages we use for data processing is the `dplyr` package [@R-dplyr]. It includes many functions that are similar to [SQL](https://www.tutorialspoint.com/sql/sql-overview.htm) (for those who know it). These tools tend to be very readable and easy to understand. First we will load the package `tidyverse` and then take a *glimpse* of the dataset:
 
@@ -269,7 +269,7 @@ uadata |>
   filter(gpa.endyr1 > 3.9)
 ```
 
-Another useful `dplyr` command for choosing specific variables is the `select` function. Below we select the ACT scores for students who have a first year GPA greater than 3.9 and with a graduating year of 1998.
+Another useful `dplyr` command for choosing specific variables is the `select` function. Here, we select the ACT scores for students who have a first year GPA greater than 3.9 and with a graduating year of 1998.
 
 ```{r ch1-9}
 uadata |>
@@ -278,9 +278,9 @@ uadata |>
   select(act)
 ```
 
-Note in the above, we take the `uadata` and pipe it to a `filter`, which selects only those observations with `gpa.endyr1` greater than 3.9 and `year` equal (`==`) to 1998, then we pipe that subset of the data to the `select` function that returns the variable `act`.
+Note in the example above, we take the `uadata` and pipe it to a `filter`, which selects only those observations with `gpa.endyr1` greater than 3.9 and `year` equal (`==`) to 1998, then we pipe that subset of the data to the `select` function that returns the variable `act`.
 
-**IMPORTANT NOTE** - R is **an *evolving* language** and as such occasionally has some wonky behavior. In fact, there are multiple versions of both the `filter` and `select` functions in R. If you ever use one and receive a strange error (`comparison is possible only for atomic and list types` or an `unused argument` error), first check for a typo. If the error still occurs it is likely the case that R is trying to use a different version of the `filter` or `select`. You can always force R to use the `dplyr` version by specifying the package as in the below example:
+**IMPORTANT NOTE** - R is **an *evolving* language** and as such occasionally has some wonky behavior. In fact, there are multiple versions of both the `filter` and `select` functions in R. If you ever use one and receive a strange error (`comparison is possible only for atomic and list types` or an `unused argument` error), first check for a typo. If the error still occurs it is likely the case that R is trying to use a different version of the `filter` or `select`. You can always force R to use the `dplyr` version by specifying the package as in the example below:
 
 ```{r eval=FALSE}
 uadata |>
@@ -450,7 +450,7 @@ Specifically, for each unique `Variable` name, it would group the data together.
 So, all the `gpa.endyr1` values will be considered a group, and separate from all the `hs.pct` and `act` *groups*. 
 This function is particularly useful when coupled with `summarize()` (such as in the example above) because summary statistics will be calculated for each group.
 
-The function `summarize()` tells R to calculate summary statistics across rows (or grouped rows) within a `data.frame`.  In the above example, we compute a list of summary statistics (hence, `list(Mean=mean, SD=sd, Min=min, Median=median, Max=max)`) on all the non-grouped variables (`everything()`). We will see more examples below.
+The function `summarize()` tells R to calculate summary statistics across rows (or grouped rows) within a `data.frame`.  In the working example, we compute a list of summary statistics (hence, `list(Mean=mean, SD=sd, Min=min, Median=median, Max=max)`) on all the non-grouped variables (`everything()`). We will see more examples below.
 
 The code above introduces a few keys points to know:
 
@@ -548,10 +548,9 @@ The trick to working with plotting on the computer is to think in terms of *laye
 The first line `ggplot(uadata)` sets up a plot object based on the dataset `uadata`. 
 The `+` says to add a layer, this layer is a density plot (`geom_density`) where the aesthetic values include an $x$-axis variable matching that of `gpa.endyr`.
 
-To generate even more complex distributional plots, first we need to perform some data processing. 
-Above we saw `pivot_longer()`. 
-The purpose of the `pivot_longer()` function is to collect variables in a dataset and create a *tall* (or *longer*, wide-to-long) dataset. 
-We specify the variables (or columns) we want to pivot (the `c(gpa.endyr1, hs.pct, act)` part in the below code), the name of the new variable (here called `var_names`) storing the column names, and the variable name that will store the values (here called `values`). 
+To generate even more complex distributional plots, first we need to perform some data processing using `pivot_longer()`. 
+The purpose of the `pivot_longer()` function is to collect variables in a dataset and create a *tall* (or *longer*, wide-to-long) dataset (we saw an example earlier in Section \@ref(numericSummaries)). 
+We specify the variables (or columns) we want to pivot (the `c(gpa.endyr1, hs.pct, act)` part in the code below), the name of the new variable (here called `var_names`) storing the column names, and the variable name that will store the values (here called `values`). 
 
 ```{r ch1-19}
 uadata.tall <- uadata |>
@@ -563,12 +562,12 @@ dim(uadata)
 dim(uadata.tall)
 ```
 
-Take a minute and step through the above code to understand it. 
+Take a minute and step through the code to understand it. 
 The data is now in a *tall*, or *long*, format. 
 We can now utilize the `ggplot2` package for more advanced plotting. 
 Here we want to draw a density plot for the `values` in the tall, or long, version of the dataset, called `uadata.tall`.
 But we want a different plot for each `var_names` *variable* (that is, `act`, `gpa.endyr1`, and `hs.pct`) so we add a `facet_grid()` layer. 
-Figure \@ref(fig:ch1-20) provides the result for the below code.
+Figure \@ref(fig:ch1-20) provides the result for the code below.
 
 ```{r ch1-20, fig.align='center', fig.cap='Side-by-side density plots showing the relative distributions of `act`, `gpa.endyr1` and `hs.pct`.', , out.width='70%', fig.asp=0.50}
 ggplot(uadata.tall) +
@@ -603,7 +602,7 @@ Also note that the code for plotting a histogram is similar to that of a density
 **Bar Graphs**
 
 The best visual tool for simple counts is the Bar Graph (**note:** you should never use a pie chart, see [here for an explanation](http://www.businessinsider.com/pie-charts-are-the-worst-2013-6) ). 
-The below code generates a simple (and fairly boring) bar graph (Figure \@ref(fig:ch1-21)) displaying the number of observations for each `year` in the `uadata`.
+The code below generates a simple (and fairly boring) bar graph (Figure \@ref(fig:ch1-21)) displaying the number of observations for each `year` in the `uadata`.
 
 ```{r ch1-21, fig.align='center', fig.cap='Bar graph displaying the number of observations in the `uadata` per `year`.', out.width='60%', fig.asp=0.55}
 ggplot(uadata) + 
@@ -616,9 +615,9 @@ We see here that nothing too interesting is happening. A fairly uniform distribu
 
 ### Descriptive statistics and visualizations by levels of a factor variable
 
-While the above summaries are informative, they overlook the fact that we have several years of data and that it may be more interesting to see how things might be changing year-to-year. This is why treating `year` as a factor is important, because it enables us to split out descriptions of the numeric variables by levels of the factor.
+While the summaries above are informative, they overlook the fact that we have several years of data and that it may be more interesting to see how things might be changing year-to-year. This is why treating `year` as a factor is important, because it enables us to split out descriptions of the numeric variables by levels of the factor.
 
-One of the simplest and best visualization tool for comparing distributions is the side-by-side boxplot, which displays information about quartiles ($Q_1$, $Q_2$ and $Q_3$) and potential outliers. The below code generates Figure \@ref(fig:ch1-22).
+One of the simplest and best visualization tool for comparing distributions is the side-by-side boxplot, which displays information about quartiles ($Q_1$, $Q_2$ and $Q_3$) and potential outliers. The code below generates Figure \@ref(fig:ch1-22).
 
 ```{r ch1-22, fig.align='center', fig.cap='Side-by-side Box-whiskers plots showing the distribution of ACT scores in the `uadata` per year.', out.width='60%', fig.asp=0.55}
 ggplot(uadata) +
@@ -663,7 +662,7 @@ All three variables appear pretty stable over the years; the left skews in GPA a
 We now revisit calculating summary statistics. 
 Extensive grouped numeric summary statistics are available by using the `group_by()` and `summarize()` functions in `tidyverse`.
 Recall that the `group_by` function tells R to treat each value of the specified variable (in this case, called `var_names`) as a collection of similar options, then to perform the `summarize` function on each value in the grouped variables.
-The below example is a more detailed version of the summary table from above.
+The next piece of code provides a more detailed version of the summary table from above.
 
 ```{r ch1-24}
 library(knitr)
@@ -684,7 +683,7 @@ kable(summary.table, digits=3) |>
 
 Here, we first pipe the `uadata.tall` into a `group_by()` function grouping by the `var_names` variable. 
 Then we take that output and pipe it to the `summarize` function which allows us to calculate various summary statistics for each of the groups. 
-In the above we calculate the mean and standard deviation of each group, along with the 5-number summary. 
+In the code above we calculate the mean and standard deviation of each group, along with the 5-number summary. 
 Lastly, we wrap the constructed table (its technically a data frame) in the `kable()` function from the `knitr` package [@R-knitr] (where `kable` means 'knitr' 'table') for a nice display.
 We pipe that output to the `kable_styling()` function in the `kableExtra` package [@R-kableExtra] for some additional formatting options (here, we condence the width of the table).
 
@@ -712,13 +711,13 @@ Values of $r$ near $\pm 1$ indicate a near perfect (positive or negative) linear
 A frequently used rule of thumb is that $|r| > 0.80$ or so qualifies as a strong linear relationship. 
 We can calculate the Pearson correlation with the `cor()` function in R. 
 When applied to a `data.frame`, or `matrix`, it displays a correlation matrix (correlation of all variable pairs). 
-In the below code we specify to only calculate the correlation based on the 3 numeric variables.
+In the code below we specify to only calculate the correlation based on the 3 numeric variables.
 
 ```{r ch1-25_cor}
 cor(uadata |> select(gpa.endyr1, hs.pct, act))
 ```
 
-All pairwise correlations in this example are of modest magnitude ($r \approx 0.4$) (see Figure \@ref(fig:ch1-17) or the above correlation matrix).
+All pairwise correlations in this example are of modest magnitude ($r \approx 0.4$) (see Figure \@ref(fig:ch1-17) or the correlation matrix above).
 
 To visualize the relationship between numeric variables, we typically use a scatterplot.
 A scatterplot is a simple bivariate plot where dots, or points, are plotted at each ($x,y$) pair on the Cartesian plane.
@@ -829,7 +828,7 @@ $$\bar{x}_A - \bar{x}_B \pm t_{\alpha/2} {SE}_{\bar{x}_A-\bar{x}_B}$$
 using the function `t.test()`. 
 Here $t_{\alpha/2}$ is the $1-\alpha/2$ quantile from the $t$-distribution (the degrees of freedom depend on your assumption about equal variance).
 
-Before jumping to an example, take a moment to look at the above null and alternative hypotheses. 
+Before jumping to an example, take a moment to look at the null and alternative hypotheses above. 
 The null hypothesis states $\mu_A=\mu_B$, which effectively says there is no difference in the mean between the two groups. 
 That is, whether the data came from group A or group B it does not provide any explanation about the variability in the data.
 However, the alternative says that there is a difference and that knowing the group from which the data came helps explain some of the observed variability. 

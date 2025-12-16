@@ -271,7 +271,7 @@ We can investigate the differences in yields between the five varieties using a 
 
 ```{r ch3-5a, fig.align='center', fig.cap='Tukey adjusted confidence interval plots comparing the give barley varieties (treatments). Here, we see that Trebi variety is statistically different than the other four varieties, while those four are all statistically similar (recall, we look for zero in the confidence interval of the differences).', out.width='60%', fig.asp=0.55}
 barley.mc <- emmeans(barley.fit, ~Variety)
-plot(contrast(barley.mc, "pairwise") )
+plot(contrast(barley.mc, "tukey") )
 ```
 
 
@@ -326,7 +326,7 @@ Arguably the simplest example of such a design is a before and after study as ou
 The patients then take the new drug for 45 days.
 At the conclusion of the 45 days their cholesterol is measured and compared to that at the beginning of the study.
 
-The above is an example of a designed experiment.
+This is an example of a designed experiment.
 The experimental units are the 20 individuals.
 The response variable is the difference in cholesterol (before and after) levels.
 The pairing attempts to control for confounding variability (that is, the variability within each individual is somewhat controlled by the pairing).
@@ -364,7 +364,7 @@ We outline three below but first explore visualizing the data.
 
 #### Graphical comparison for paired design
 
-Much like when including the block term in our above example, when graphically comparing paired data we must use some caution and consider the pairing feature in the data. 
+Much like when including the block term in our example above, when graphically comparing paired data we must use some caution and consider the pairing feature in the data. 
 Ultimately we are interested in the pairwise difference between observations. 
 Thus, side-by-side boxplots are **not** appropriate since they do not account for the pairing. 
 
@@ -443,7 +443,7 @@ vehicleCO.tall <- vehicleCO |>
          Time=factor(Time, levels=c("before","after")))
 ```
 
-Let's step through the above R code since some of this functionality has not been used since Section \@ref{numericSummaries}.
+Let's step through the R code since some of this functionality has not been used since Section \@ref{numericSummaries}.
 In the first statement `select(-Difference)` we are telling R to drop the `Difference` variable as we do not need it for the plot.
 Then we are pivoting from wide-to-long format (or wide-to-tall) with the `before` and `after` measurements.
 The resulting dataset has two new variables, one called `Time` which states if it is the *before* or *after* measure and another called `CO` with the corresponding Carbon Monoxide emissions at that time.
@@ -590,7 +590,7 @@ knitr::kable(weightloss_wide) |>
   kable_styling(full_width=FALSE, bootstrap_options = "striped")
 ```
 
-The table above provides a look at the full dataset. We can make some quick assessments just by looking at the values in the table.
+The table provides a look at the full dataset. We can make some quick assessments just by looking at the values in the table.
 
 * In the control treatment, 5 participants gained weight (positive value) and 4 lost weight (negative value) with 1 person finding no change. Based on the magnitude of these values the weight change in the control group is near 0 (on average it is `r mean(weightloss_wide$Control)`).
 * In the self-induced group, 9 patient experienced some weight loss and one found no change, on average the chant was `r mean(weightloss_wide$"Self-induced")`.
@@ -635,7 +635,7 @@ As a follow-up, we can investigate the differences in mean weight changes betwee
 
 ```{r ch3-WeightMC, fig.align='center', fig.cap="Dunnett adjusted confidence interval plots comparing the two weight-loss treatments against the control. Here, we see that Self-induced treatment is not statistically different than the control (zero is in the interval) while the Therapist based treatment results in significantly more weight loss than the control.", out.width='60%', fig.asp=0.55}
 weightloss.mc <- emmeans(weightloss.fit, ~Treatment)
-plot(contrast(weightloss.mc, "trt.vs.ctrl", ref=1) ) +
+plot(contrast(weightloss.mc, "dunnett", ref=1) ) +
   theme_minimal() +
   labs(y="", x="Change in Weight Loss (lbs)",
        title="Improvement in Weight Loss Treatments",
@@ -795,7 +795,7 @@ These consist of:
 * Interaction means (*i.e.*, treatment means for all factor combinations).
 
 These means are purely descriptive, but informative nonetheless. 
-We could calculate each one of the above using a series of `tidyverse` commands (*i.e.*, `summarize()` with `group_by()`). 
+We could calculate each one of the means using a series of `tidyverse` commands (*i.e.*, `summarize()` with `group_by()`). 
 R includes a function `model.tables()` that takes the input of an ANOVA fit and provides the means for all main effects and interaction effects.
 
 ```{r ch3-8}
@@ -819,7 +819,6 @@ summary(highway.fit)
 The interaction is not significant ($F$ = 1.031, $\textrm{df}_1$ = 4, $\textrm{df}_2$ = 27, $p$-value = 0.409). Thus, we conclude the effect that sign size has on the mean detection distance does not depend on material type. Likewise, the effect of material type on detection distance does not depend on sign size.
 
 A visualization of the interaction between the two factors is informative here.
-Below, we build an interactions plot. 
 An interaction plot is very similar to the Profile plot used in Block design -- basically it is a plot of treatment means (here $3\times 3$ treatments), whereby the means for all treatments having a given fixed level of one of the factors are visually "connected". 
 Typically you distinguish the lines via color or linetype which maps to the other factor variable.
 We can build an interaction plot seen in Figure \@ref(fig:ch3-10) using aesthetic options in `ggplot()` and with the `stat_summary` functions. 
@@ -865,7 +864,7 @@ First, we look at the influence of sign size.
 
 ```{r ch3-12}
 twoway.size.mc <- emmeans(highway.fit, ~Size)
-confint(contrast(twoway.size.mc, "pairwise"))
+confint(contrast(twoway.size.mc, "tukey"))
 ```
 We first note that `emmeans` provides a "NOTE" about potentially misleading results. 
 The `emmeans()` function recognizes that the model `highway.fit` includes an interaction term and that we are ignoring it when calling `emmeans()` (the `~Size` formula). 
@@ -876,7 +875,7 @@ For the three different material types we get a similar results.
 
 ```{r ch3-12fish}
 twoway.material.mc <- emmeans(highway.fit, ~Material)
-confint(contrast(twoway.material.mc, "pairwise"))
+confint(contrast(twoway.material.mc, "tukey"))
 ```
 Again, we are given the warning due to the interaction term in the model.
 All three confidence intervals do not include the value of 0, indicating that all three material types result in different mean detection distances.
@@ -993,7 +992,7 @@ First, we consider how dosages influences length for a fixed supplement type.
 
 ```{r ch3-18}
 tooth.mc.dose <- emmeans(tooth.fit, ~ Dosage | Supplement )
-contrast(tooth.mc.dose, "pairwise")
+contrast(tooth.mc.dose, "tukey")
 ```
 
 Here, we see output that is similar to the output introduced in Chapter 2.
@@ -1005,14 +1004,14 @@ Similar, we can make comparisons by conditioning on the other factor variable (r
 
 ```{r ch3-18a}
 tooth.mc.supp <- emmeans(tooth.fit, ~ Supplement | Dosage )
-contrast(tooth.mc.supp, "pairwise")
+contrast(tooth.mc.supp, "tukey")
 ```
 
 At a dose level of 0.5 mg, ascorbic acid delivery via orange juice produces significantly larger mean tooth growth than does delivery via Vitamin C (determined by the adjusted $p$-value of 0.0021).
 Similarly, at `Dosage = 1.0 mg`, there is a difference in tooth length between Vitamin C and Orange Juice, but not at `Dosage = 2.0 mg`.
 
 We can also use plotting features to graphically explore the factors while holding another factor constant.
-Below, we build Bonferroni adjusted confidence intervals comparing the dosage levels for each of the two supplements. 
+Below, we construct Bonferroni adjusted confidence intervals comparing the dosage levels for each of the two supplements. 
 We add some labels to the plot as Figure \@ref(fig:ch3-19) provides a decent summarization of the findings.
 
 ```{r ch3-19, fig.align='center', fig.cap='Graphical exploration of all treatments noting that the OJ supplement tends to result in higher tooth lengths than Vitamin C.', out.width='60%', fig.asp=0.75}

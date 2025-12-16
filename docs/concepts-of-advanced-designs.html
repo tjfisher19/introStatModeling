@@ -221,7 +221,7 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="2.3" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#statistical-analyses-is-modeling"><i class="fa fa-check"></i><b>2.3</b> Statistical Analyses is Modeling</a>
 <ul>
-<li class="chapter" data-level="2.3.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#example-of-a-two-sample-t-test-as-a-model"><i class="fa fa-check"></i><b>2.3.1</b> Example of a two-sample <span class="math inline">\(t\)</span>-test as a model</a></li>
+<li class="chapter" data-level="2.3.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#twoSampletTest"><i class="fa fa-check"></i><b>2.3.1</b> Example of a two-sample <span class="math inline">\(t\)</span>-test as a model</a></li>
 </ul></li>
 <li class="chapter" data-level="2.4" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#one-way-anova"><i class="fa fa-check"></i><b>2.4</b> One-Way ANOVA</a>
 <ul>
@@ -412,7 +412,10 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="11" data-path="statistical-odds.html"><a href="statistical-odds.html"><i class="fa fa-check"></i><b>11</b> Statistical Odds</a>
 <ul>
-<li class="chapter" data-level="11.1" data-path="statistical-odds.html"><a href="statistical-odds.html#probability-versus-odds"><i class="fa fa-check"></i><b>11.1</b> Probability versus Odds</a></li>
+<li class="chapter" data-level="11.1" data-path="statistical-odds.html"><a href="statistical-odds.html#probability-versus-odds"><i class="fa fa-check"></i><b>11.1</b> Probability versus Odds</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="statistical-odds.html"><a href="statistical-odds.html#relationship-between-odds-and-probability"><i class="fa fa-check"></i><b>11.1.1</b> Relationship between Odds and Probability</a></li>
+</ul></li>
 <li class="chapter" data-level="11.2" data-path="statistical-odds.html"><a href="statistical-odds.html#odds-ratios"><i class="fa fa-check"></i><b>11.2</b> Odds ratios</a></li>
 <li class="chapter" data-level="11.3" data-path="statistical-odds.html"><a href="statistical-odds.html#ideas-of-modeling-odds"><i class="fa fa-check"></i><b>11.3</b> Ideas of modeling odds</a></li>
 </ul></li>
@@ -731,7 +734,7 @@ We also conclude that the different Fee types appear to influence Quality.</p>
 <p>In general, multiple comparisons analysis can get very complicated when three or more factors are involved.
 In this case, we get lucky</p>
 <ul>
-<li>Fee` is significant, but <em>only</em> as a main effect.</li>
+<li><code>Fee</code> is significant, but <em>only</em> as a main effect.</li>
 <li>The <code>Scope</code> &amp; <code>Supervision</code> interaction term is significant, but that interaction term only involves 2 variables and we covered that analysis in section <a href="multiple-factor-designed-experiments.html#twoWayInteraction">3.2.3</a>.
 <ul>
 <li>Further, there are only <span class="math inline">\(2\times 2=4\)</span> unique combinations of those four.</li>
@@ -740,7 +743,7 @@ In this case, we get lucky</p>
 <p>First we consider the effects of Fee on the quality index</p>
 <div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="concepts-of-advanced-designs.html#cb232-1" tabindex="-1"></a>marketing.mc.fee <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(marketing.anova, <span class="sc">~</span>Fee)</span></code></pre></div>
 <pre><code>## NOTE: Results may be misleading due to involvement in interactions</code></pre>
-<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="concepts-of-advanced-designs.html#cb234-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">contrast</span>(marketing.mc.fee, <span class="st">&quot;pairwise&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="concepts-of-advanced-designs.html#cb234-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">contrast</span>(marketing.mc.fee, <span class="st">&quot;tukey&quot;</span>))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch4markingFeeMC"></span>
 <img src="introStatModeling_files/figure-html/ch4markingFeeMC-1.png" alt="Tukey HSD comparison of three levels of the Fee variable on consultant quality. The Low fee option results in a lower quality than High or Average, which statistically are equivalent." width="60%" />
 <p class="caption">
@@ -752,7 +755,7 @@ Figure 4.3: Tukey HSD comparison of three levels of the Fee variable on consulta
 This can be achieved by using the conditional comparisons we saw in Chapter 2, section <a href="multiple-factor-designed-experiments.html#twoWayInteraction">3.2.3</a>.</p>
 <div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="concepts-of-advanced-designs.html#cb235-1" tabindex="-1"></a>marketing.mc.scope <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(marketing.anova, <span class="sc">~</span>Scope<span class="sc">|</span>Supervision)</span></code></pre></div>
 <pre><code>## NOTE: Results may be misleading due to involvement in interactions</code></pre>
-<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="concepts-of-advanced-designs.html#cb237-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">contrast</span>(marketing.mc.scope, <span class="st">&quot;pairwise&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="concepts-of-advanced-designs.html#cb237-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">contrast</span>(marketing.mc.scope, <span class="st">&quot;tukey&quot;</span>))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch4markingScopeSupervsionMC"></span>
 <img src="introStatModeling_files/figure-html/ch4markingScopeSupervsionMC-1.png" alt="Tukey HSD comparison of two levels of the Scope variable on consultant quality conditioned on Supervision. In both settings of supervision, the In-house scope results in a higher quality than subcontracted. It also appears this difference is greater when Traveling Supervision is used." width="60%" />
 <p class="caption">
@@ -785,14 +788,14 @@ The interaction term is not significant which matches our previous result that t
 We tell <code>emmeans()</code> to conduct a Tukey test on all pairwise comparisons.</p>
 <div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="concepts-of-advanced-designs.html#cb241-1" tabindex="-1"></a>marketing.mc.scope <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(marketing.anova.alt, <span class="sc">~</span>ScopeSupervision)</span></code></pre></div>
 <pre><code>## NOTE: Results may be misleading due to involvement in interactions</code></pre>
-<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="concepts-of-advanced-designs.html#cb243-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">contrast</span>(marketing.mc.scope, <span class="st">&quot;pairwise&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="concepts-of-advanced-designs.html#cb243-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">contrast</span>(marketing.mc.scope, <span class="st">&quot;tukey&quot;</span>))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch4markingAltScopeSupervsionMC"></span>
 <img src="introStatModeling_files/figure-html/ch4markingAltScopeSupervsionMC-1.png" alt="Tukey HSD comparison of four unique treatments corresponding to the two levels of the Scope variable and two levels of the Supervision variable. Here we see that all unique treatments result in a different quality level. This is consistent with the findings above." width="60%" />
 <p class="caption">
 Figure 4.5: Tukey HSD comparison of four unique treatments corresponding to the two levels of the Scope variable and two levels of the Supervision variable. Here we see that all unique treatments result in a different quality level. This is consistent with the findings above.
 </p>
 </div>
-<p>Figure @(fig:ch4markingAltScopeSupervsionMC) shows that all four treatments for Scope and Supervision result in different quality values.
+<p>Figure <a href="concepts-of-advanced-designs.html#fig:ch4markingAltScopeSupervsionMC">4.5</a> shows that all four treatments for Scope and Supervision result in different quality values.
 The greatest difference is the In-house scope with Local Supervision compared to the Subcontracted Traveling Supervision.
 This is consistent with the conditional results which showed the difference between in-house and subcontracted depended on the supervision variable.
 With this formulation of the model, we can gain some further insight into these differences.</p>
@@ -859,7 +862,7 @@ In that file, everything is coded numerically:</p>
 Unlike the previous example, we are not interested in the interaction of all the variables since the level of pain tolerance is a block term.
 An exploratory data analysis can be tricky here – in a <span class="math inline">\(2\times 2\)</span> design we can make a simple interactions plot, but here we also have 8 block terms.
 Fortunately, since we only have 4 unique treatments, we can reformulate the data into a One-way model with a block term and treat it as in section @ref{blockingSection} of the text.
-Below, we create a new <code>Treatment</code> variable as we did in Section <a href="multiple-factor-designed-experiments.html#twoFactorAsOneFactor">3.2.4</a>. Here we specify the <code>\n</code> variable to <strong>sep</strong>arate the two character strings that are being pasted together.
+Below we create a new <code>Treatment</code> variable as we did in Section <a href="multiple-factor-designed-experiments.html#twoFactorAsOneFactor">3.2.4</a>. Here we specify the <code>\n</code> variable to <strong>sep</strong>arate the two character strings that are being pasted together.
 The <code>\n</code> is a special <em>escape character</em> that will print a new line in some of our output.</p>
 <div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="concepts-of-advanced-designs.html#cb247-1" tabindex="-1"></a>dentalPain <span class="ot">&lt;-</span> dentalPain <span class="sc">|&gt;</span></span>
 <span id="cb247-2"><a href="concepts-of-advanced-designs.html#cb247-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Treatment =</span> <span class="fu">paste</span>(Codeine, Acupuncture, <span class="at">sep=</span><span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>),</span>
@@ -912,7 +915,7 @@ The Q-Q plot shows some deviation (albeit with not very large <span class="math 
 When this happens, we can essentially <em>trick</em> a transformation to occur by adding some value to force the data to be strictly positive.
 It is customary to add 1 to the value of response which guarantees all response values are greater than or equal to 1.
 Also <span class="math inline">\(\log_{10}(1) = 0\)</span> so any zero values in the original units are zero on the log-scale.
-Below, we perform a log-base 10 of the response plus one.</p>
+We perform a log-base 10 of the response plus one.</p>
 <div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="concepts-of-advanced-designs.html#cb253-1" tabindex="-1"></a>logDentalpain.anova <span class="ot">&lt;-</span> <span class="fu">aov</span>(<span class="fu">log10</span>(Relief<span class="sc">+</span><span class="dv">1</span>) <span class="sc">~</span> PainLevel <span class="sc">+</span> Codeine<span class="sc">*</span>Acupuncture,</span>
 <span id="cb253-2"><a href="concepts-of-advanced-designs.html#cb253-2" tabindex="-1"></a>                           <span class="at">data=</span>dentalPain)</span>
 <span id="cb253-3"><a href="concepts-of-advanced-designs.html#cb253-3" tabindex="-1"></a><span class="fu">autoplot</span>(logDentalpain.anova)</span></code></pre></div>
@@ -990,7 +993,7 @@ When both Codeine and Active acupuncture are used, we see a greater effect as co
 <h2><span class="header-section-number">4.3</span> Within-subject designs<a href="concepts-of-advanced-designs.html#within-subject-designs" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In these chapters covering experimental design, we have seen different designs where factor(s) levels are manipulated by the researcher in order to measure a response.
 In simpler design settings, the factors that are manipulated are of the “between-subjects” type.
-For example, Section <a href="concepts-of-advanced-designs.html#dentalPainExample">4.2.1</a> above provides a two-factor example on pain relief where each participant (experimental unit) had exactly one treatmenta randomly assigned to them.
+For example, Section <a href="concepts-of-advanced-designs.html#dentalPainExample">4.2.1</a> provides a two-factor example on pain relief where each participant (experimental unit) had exactly one treatment randomly assigned to them.
 As such, there is only one observation per experimental unit in that design.
 The different treatments are a <strong>between-subjects factor</strong>.</p>
 <p><strong>Why is that important to note?</strong></p>
@@ -1374,14 +1377,14 @@ All it says is that the mean cholesterol level is changing at some point over th
 Since there are three time points, a multiple comparison procedure is warranted with the output below and in Figure <a href="concepts-of-advanced-designs.html#fig:ch4-12">4.13</a>.</p>
 <div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="concepts-of-advanced-designs.html#cb283-1" tabindex="-1"></a>MargA.mc <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(RMaov_MargA, <span class="sc">~</span> time.pt)</span></code></pre></div>
 <pre><code>## Note: re-fitting model with sum-to-zero contrasts</code></pre>
-<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="concepts-of-advanced-designs.html#cb285-1" tabindex="-1"></a><span class="fu">contrast</span>(MargA.mc, <span class="st">&quot;pairwise&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="concepts-of-advanced-designs.html#cb285-1" tabindex="-1"></a><span class="fu">contrast</span>(MargA.mc, <span class="st">&quot;tukey&quot;</span>)</span></code></pre></div>
 <pre><code>##  contrast                      estimate     SE df t.ratio p.value
 ##  Before - After 4 weeks          0.4856 0.0411 16  11.817  &lt;.0001
 ##  Before - After 8 weeks          0.5467 0.0411 16  13.304  &lt;.0001
 ##  After 4 weeks - After 8 weeks   0.0611 0.0411 16   1.487  0.3229
 ## 
 ## P value adjustment: tukey method for comparing a family of 3 estimates</code></pre>
-<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="concepts-of-advanced-designs.html#cb287-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">contrast</span>(MargA.mc, <span class="st">&quot;pairwise&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="concepts-of-advanced-designs.html#cb287-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">contrast</span>(MargA.mc, <span class="st">&quot;tukey&quot;</span>))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch4-12"></span>
 &lt;img src=“introStatModeling_files/figure-html/ch4-12-1.png” alt=“Comparing the effects of time within the Margarine A treatment groups. We see there is no statistical difference between 4 and 8 weeks after treatment begins but both differ comparied to the initial”before” measure of Cholestorol.” width=“70%” /&gt;
 <p class="caption">
@@ -1421,7 +1424,7 @@ Experimental context will dictate which of the two factors is the more reasonabl
 Here, we choose to condition on Margarine group, so we get a time-based comparison of mean cholesterol levels, but specific to each Margarine group, as seen in Figure <a href="concepts-of-advanced-designs.html#fig:ch4-14">4.14</a></p>
 <div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="concepts-of-advanced-designs.html#cb290-1" tabindex="-1"></a>RMall.mc <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(RMaov_all, <span class="sc">~</span> time.pt <span class="sc">|</span> Margarine)</span></code></pre></div>
 <pre><code>## Note: re-fitting model with sum-to-zero contrasts</code></pre>
-<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="concepts-of-advanced-designs.html#cb292-1" tabindex="-1"></a><span class="fu">contrast</span>(RMall.mc, <span class="st">&quot;pairwise&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="concepts-of-advanced-designs.html#cb292-1" tabindex="-1"></a><span class="fu">contrast</span>(RMall.mc, <span class="st">&quot;tukey&quot;</span>)</span></code></pre></div>
 <pre><code>## Margarine = A:
 ##  contrast                      estimate    SE df t.ratio p.value
 ##  Before - After 4 weeks          0.4856 0.043 32  11.290  &lt;.0001
@@ -1435,7 +1438,7 @@ Here, we choose to condition on Margarine group, so we get a time-based comparis
 ##  After 4 weeks - After 8 weeks   0.0644 0.043 32   1.498  0.3051
 ## 
 ## P value adjustment: tukey method for comparing a family of 3 estimates</code></pre>
-<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="concepts-of-advanced-designs.html#cb294-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">contrast</span>(RMall.mc, <span class="st">&quot;pairwise&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="concepts-of-advanced-designs.html#cb294-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">contrast</span>(RMall.mc, <span class="st">&quot;tukey&quot;</span>))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch4-14"></span>
 <img src="introStatModeling_files/figure-html/ch4-14-1.png" alt="Graphical exploration of all treatments noting that there is no statistical difference between 4 and 8 weeks after the study has began regardless of Margarine treatment." width="70%" />
 <p class="caption">

@@ -118,7 +118,7 @@ analysis-of-variance
 elements-of-a-designed-experiment
 confounding
 statistical-analyses-is-modeling
-example-of-a-two-sample-t-test-as-a-model
+twoSampletTest
 one-way-anova
 model-structure
 testing-procedure
@@ -266,6 +266,7 @@ k-fold-cross-validation
 a-final-note
 statistical-odds
 probability-versus-odds
+relationship-between-odds-and-probability
 odds-ratios
 ideas-of-modeling-odds
 logistic-regression

@@ -221,7 +221,7 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="2.3" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#statistical-analyses-is-modeling"><i class="fa fa-check"></i><b>2.3</b> Statistical Analyses is Modeling</a>
 <ul>
-<li class="chapter" data-level="2.3.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#example-of-a-two-sample-t-test-as-a-model"><i class="fa fa-check"></i><b>2.3.1</b> Example of a two-sample <span class="math inline">\(t\)</span>-test as a model</a></li>
+<li class="chapter" data-level="2.3.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#twoSampletTest"><i class="fa fa-check"></i><b>2.3.1</b> Example of a two-sample <span class="math inline">\(t\)</span>-test as a model</a></li>
 </ul></li>
 <li class="chapter" data-level="2.4" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#one-way-anova"><i class="fa fa-check"></i><b>2.4</b> One-Way ANOVA</a>
 <ul>
@@ -412,7 +412,10 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="11" data-path="statistical-odds.html"><a href="statistical-odds.html"><i class="fa fa-check"></i><b>11</b> Statistical Odds</a>
 <ul>
-<li class="chapter" data-level="11.1" data-path="statistical-odds.html"><a href="statistical-odds.html#probability-versus-odds"><i class="fa fa-check"></i><b>11.1</b> Probability versus Odds</a></li>
+<li class="chapter" data-level="11.1" data-path="statistical-odds.html"><a href="statistical-odds.html#probability-versus-odds"><i class="fa fa-check"></i><b>11.1</b> Probability versus Odds</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="statistical-odds.html"><a href="statistical-odds.html#relationship-between-odds-and-probability"><i class="fa fa-check"></i><b>11.1.1</b> Relationship between Odds and Probability</a></li>
+</ul></li>
 <li class="chapter" data-level="11.2" data-path="statistical-odds.html"><a href="statistical-odds.html#odds-ratios"><i class="fa fa-check"></i><b>11.2</b> Odds ratios</a></li>
 <li class="chapter" data-level="11.3" data-path="statistical-odds.html"><a href="statistical-odds.html#ideas-of-modeling-odds"><i class="fa fa-check"></i><b>11.3</b> Ideas of modeling odds</a></li>
 </ul></li>
@@ -475,11 +478,15 @@ Figure 11.1: Image of American roulette table (with 0 and 00).
 <p><strong>Solution</strong> There are 38 possible outcomes in the game, of which 18 are <strong>red</strong>. The probability the player wins the game is simply 18/38, or 0.4737. The probability the player loses is the complement, which is 20/38 or 0.5263.</p>
 <div id="probability-versus-odds" class="section level2 hasAnchor" number="11.1">
 <h2><span class="header-section-number">11.1</span> Probability versus Odds<a href="statistical-odds.html#probability-versus-odds" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><em>Odds</em> are related to probabilities but are different. The <em>odds</em> of winning are calculated by counting the number of ways you win the game, and divide by the number of ways you lose the game. So in our working example there are 18 ways <strong>red</strong> occurs while there are 20 ways the outcome is not <strong>red</strong>. Thus the odds of red are 18/20 = 0.9.</p>
+<p><em>Odds</em> are related to probabilities but are different. The <em>odds</em> of winning are calculated by taking the ratio of the probability of winner the game over the probability of losing the game. Here, that reduces to counting the number of ways you win the game, and divide by the number of ways you lose the game. So in our working example there are 18 ways <strong>red</strong> occurs while there are 20 ways the outcome is not <strong>red</strong>. Thus the odds of red are 18/20 = 0.9.</p>
 <p>Note,
-<span class="math display">\[ \textrm{Odds of red} = \frac{18}{20} = \frac{P(red)}{P(not~red)} = \frac{18/38}{20/38} = \frac{18}{20} = 0.9 = \frac{9}{10}.\]</span></p>
-<p>In the gambling world, one may say the odds of <strong>red</strong> are 9 to 10.</p>
+<span class="math display">\[ \textrm{Odds of red} = \frac{P(red)}{P(not~red)} = \frac{18/38}{20/38} = \frac{18}{20} = 0.9 = \frac{9}{10}.\]</span></p>
+<p>In the gambling world, one may say the odds of <strong>red</strong> are 9 to 10. Essentially, there are 9 ways for red to occur for every 10 ways it will not occur.</p>
 <p><strong>Thought exercise:</strong> For those who like games of chance, in a standard casino betting on <strong>red</strong> or <strong>black</strong> typically pays a 1 to 1 ratio, meaning if you bet $100 on <strong>black</strong> and the outcome is <strong>black</strong>, you win $100. <em>Should you play this game?</em> <em>Would</em> you play this game?</p>
+<div id="relationship-between-odds-and-probability" class="section level3 hasAnchor" number="11.1.1">
+<h3><span class="header-section-number">11.1.1</span> Relationship between Odds and Probability<a href="statistical-odds.html#relationship-between-odds-and-probability" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><img src="introStatModeling_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
+</div>
 </div>
 <div id="odds-ratios" class="section level2 hasAnchor" number="11.2">
 <h2><span class="header-section-number">11.2</span> Odds ratios<a href="statistical-odds.html#odds-ratios" class="anchor-section" aria-label="Anchor link to header"></a></h2>

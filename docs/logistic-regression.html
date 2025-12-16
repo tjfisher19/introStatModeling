@@ -221,7 +221,7 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="2.3" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#statistical-analyses-is-modeling"><i class="fa fa-check"></i><b>2.3</b> Statistical Analyses is Modeling</a>
 <ul>
-<li class="chapter" data-level="2.3.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#example-of-a-two-sample-t-test-as-a-model"><i class="fa fa-check"></i><b>2.3.1</b> Example of a two-sample <span class="math inline">\(t\)</span>-test as a model</a></li>
+<li class="chapter" data-level="2.3.1" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#twoSampletTest"><i class="fa fa-check"></i><b>2.3.1</b> Example of a two-sample <span class="math inline">\(t\)</span>-test as a model</a></li>
 </ul></li>
 <li class="chapter" data-level="2.4" data-path="statistical-modeling-and-designed-experiments.html"><a href="statistical-modeling-and-designed-experiments.html#one-way-anova"><i class="fa fa-check"></i><b>2.4</b> One-Way ANOVA</a>
 <ul>
@@ -412,7 +412,10 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="11" data-path="statistical-odds.html"><a href="statistical-odds.html"><i class="fa fa-check"></i><b>11</b> Statistical Odds</a>
 <ul>
-<li class="chapter" data-level="11.1" data-path="statistical-odds.html"><a href="statistical-odds.html#probability-versus-odds"><i class="fa fa-check"></i><b>11.1</b> Probability versus Odds</a></li>
+<li class="chapter" data-level="11.1" data-path="statistical-odds.html"><a href="statistical-odds.html#probability-versus-odds"><i class="fa fa-check"></i><b>11.1</b> Probability versus Odds</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="statistical-odds.html"><a href="statistical-odds.html#relationship-between-odds-and-probability"><i class="fa fa-check"></i><b>11.1.1</b> Relationship between Odds and Probability</a></li>
+</ul></li>
 <li class="chapter" data-level="11.2" data-path="statistical-odds.html"><a href="statistical-odds.html#odds-ratios"><i class="fa fa-check"></i><b>11.2</b> Odds ratios</a></li>
 <li class="chapter" data-level="11.3" data-path="statistical-odds.html"><a href="statistical-odds.html#ideas-of-modeling-odds"><i class="fa fa-check"></i><b>11.3</b> Ideas of modeling odds</a></li>
 </ul></li>
@@ -537,7 +540,7 @@ Dividing one equation by the other yields something interesting:</p>
 <div class="sourceCode" id="cb524"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb524-1"><a href="logistic-regression.html#cb524-1" tabindex="-1"></a><span class="fu">ggplot</span>(tadUV) <span class="sc">+</span> </span>
 <span id="cb524-2"><a href="logistic-regression.html#cb524-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>UV.Level, <span class="at">y=</span>Survived)) <span class="sc">+</span> </span>
 <span id="cb524-3"><a href="logistic-regression.html#cb524-3" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
-<p><img src="introStatModeling_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
+<p><img src="introStatModeling_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
 <p>One thing we can see is that there is a higher prevalence of mortality under higher UV conditions. So there may be an association between survival and exposure.</p>
 <p>We model <span class="math inline">\(p = P(survival)\)</span> as a function of UV level as follows:</p>
 <div class="sourceCode" id="cb525"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb525-1"><a href="logistic-regression.html#cb525-1" tabindex="-1"></a>tadpole.fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(Survived <span class="sc">~</span> UV.Level, <span class="at">data=</span>tadUV, <span class="at">family=</span>binomial)</span>
@@ -607,7 +610,7 @@ Dividing one equation by the other yields something interesting:</p>
 <span id="cb538-5"><a href="logistic-regression.html#cb538-5" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>UV.Level, <span class="at">y=</span>Survived) ) <span class="sc">+</span></span>
 <span id="cb538-6"><a href="logistic-regression.html#cb538-6" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>fake.tadpoles, <span class="fu">aes</span>(<span class="at">x=</span>UV.Level, <span class="at">y=</span>Fitted) ) <span class="sc">+</span> </span>
 <span id="cb538-7"><a href="logistic-regression.html#cb538-7" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
-<p><img src="introStatModeling_files/figure-html/unnamed-chunk-47-1.png" width="672" /></p>
+<p><img src="introStatModeling_files/figure-html/unnamed-chunk-48-1.png" width="672" /></p>
 <p>The notions of logistic regression extend into multiple predictors, ANCOVA settings, variable selection, etc. We will see some of these applications in the below case study.</p>
 </div>
 <div id="case-study---titanic-dataset" class="section level2 hasAnchor" number="12.3">
