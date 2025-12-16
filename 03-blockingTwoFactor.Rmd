@@ -31,7 +31,7 @@ options(dplyr.summarise.inform = FALSE,
 ## Blocking{#blockingSection}
 
 Randomized Block Designs are a bit of an odd duck.
-The details of the model are fairly straightforward (we are just adding another term to the ANOVA model in \@ref{eq:onewayAnovaModel}) but the analysis is nuanced.
+The details of the model are fairly straightforward (we are just adding another term to the ANOVA model in \@ref(eq:onewayAnovaModel)) but the analysis is nuanced.
 Essentially, the model includes *predictor* variables we suspect are influencing the response, but we are not necessarily interested in statistically testing their impact.
 In some settings, the influence of the block terms can be substantial and when it is not included in the model, the impacts of the treatments are *hidden* by the strong effects of the block terms (we will see such an example).
 Thus, when a design includes block terms, it is vital that the statistical model include these effects.

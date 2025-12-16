@@ -23,7 +23,7 @@
 <meta name="author" content="Michael R. Hughes and Thomas J. Fisher" />
 
 
-<meta name="date" content="2025-07-30" />
+<meta name="date" content="2025-12-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -59,6 +59,7 @@
 
 
 <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -132,6 +133,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -293,7 +295,10 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="5" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html"><i class="fa fa-check"></i><b>5</b> Introduction to Multiple Regression</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#regression-model"><i class="fa fa-check"></i><b>5.1</b> Regression Model</a></li>
+<li class="chapter" data-level="5.1" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#regression-model"><i class="fa fa-check"></i><b>5.1</b> Regression Model</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#simple-linear-regression"><i class="fa fa-check"></i><b>5.1.1</b> Simple Linear Regression</a></li>
+</ul></li>
 <li class="chapter" data-level="5.2" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#fitting-a-regression-model"><i class="fa fa-check"></i><b>5.2</b> Fitting a regression model</a>
 <ul>
 <li class="chapter" data-level="5.2.1" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#simple-linear-regression-example"><i class="fa fa-check"></i><b>5.2.1</b> Simple Linear Regression Example</a></li>
@@ -471,7 +476,7 @@ The learning objectives of this unit include:</p>
 <div id="blockingSection" class="section level2 hasAnchor" number="3.1">
 <h2><span class="header-section-number">3.1</span> Blocking<a href="multiple-factor-designed-experiments.html#blockingSection" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Randomized Block Designs are a bit of an odd duck.
-The details of the model are fairly straightforward (we are just adding another term to the ANOVA model in @ref{eq:onewayAnovaModel}) but the analysis is nuanced.
+The details of the model are fairly straightforward (we are just adding another term to the ANOVA model in <a href="statistical-modeling-and-designed-experiments.html#eq:onewayAnovaModel">(2.3)</a>) but the analysis is nuanced.
 Essentially, the model includes <em>predictor</em> variables we suspect are influencing the response, but we are not necessarily interested in statistically testing their impact.
 In some settings, the influence of the block terms can be substantial and when it is not included in the model, the impacts of the treatments are <em>hidden</em> by the strong effects of the block terms (we will see such an example).
 Thus, when a design includes block terms, it is vital that the statistical model include these effects.</p>
@@ -1917,7 +1922,7 @@ Below, we provide code to show you how to create a new variable that combines th
 </div>
 </div>
 <h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
 <div id="ref-Crampton-1947" class="csl-entry">
 Crampton, E. W., <span class="nocase">The Growth of the Odontoblasts of the Incisor Tooth as a Criterion of the Vitamin C Intake of the Guinea Pig: Five Figures</span>, <em>The Journal of Nutrition</em>, vol. <strong>33</strong>, no. 5, pp. 491–504, from <a href="https://doi.org/10.1093/jn/33.5.491">https://doi.org/10.1093/jn/33.5.491</a>, May 1947. DOI: <a href="https://doi.org/10.1093/jn/33.5.491">10.1093/jn/33.5.491</a>
 </div>

@@ -23,7 +23,7 @@
 <meta name="author" content="Michael R. Hughes and Thomas J. Fisher" />
 
 
-<meta name="date" content="2025-07-30" />
+<meta name="date" content="2025-12-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -59,6 +59,7 @@
 
 
 <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -132,6 +133,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -293,7 +295,10 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="5" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html"><i class="fa fa-check"></i><b>5</b> Introduction to Multiple Regression</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#regression-model"><i class="fa fa-check"></i><b>5.1</b> Regression Model</a></li>
+<li class="chapter" data-level="5.1" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#regression-model"><i class="fa fa-check"></i><b>5.1</b> Regression Model</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#simple-linear-regression"><i class="fa fa-check"></i><b>5.1.1</b> Simple Linear Regression</a></li>
+</ul></li>
 <li class="chapter" data-level="5.2" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#fitting-a-regression-model"><i class="fa fa-check"></i><b>5.2</b> Fitting a regression model</a>
 <ul>
 <li class="chapter" data-level="5.2.1" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#simple-linear-regression-example"><i class="fa fa-check"></i><b>5.2.1</b> Simple Linear Regression Example</a></li>
@@ -717,9 +722,9 @@ Placebo &amp; 0 &amp; 0 &amp; 0 &amp; \mu_{P} = \beta_0 + \beta_1(0) + \beta_2(0
 <p>So when we have a regression model containing one qualitative predictor with more than two levels, what does the whole-model F-test really test? It all stems back to the interpretation of the model’s <span class="math inline">\(\beta\)</span> coefficients based on the coding scheme used.</p>
 <p>Consider the previous four drug example. The whole model <span class="math inline">\(F\)</span>-test would be a test of the hypothesis <span class="math inline">\(H_0: \beta_1 = \beta_2 = \beta_3 = 0\)</span>. If you look at the aforementioned table, it is not too difficult to see that</p>
 <ul>
-<li><span class="math inline">\(\beta_1 = (\beta_0 + \beta_1) – \beta_0 = \mu_A – \mu_P\)</span></li>
-<li><span class="math inline">\(\beta_2 = (\beta_0 + \beta_2) – \beta_0 = \mu_B – \mu_P\)</span></li>
-<li><span class="math inline">\(\beta_3 = (\beta_0 + \beta_3) – \beta_0 = \mu_C – \mu_P\)</span></li>
+<li><span class="math inline">\(\beta_1 =  (\beta_0 + \beta_1) – \beta_0 = \mu_A – \mu_P\)</span></li>
+<li><span class="math inline">\(\beta_2 =  (\beta_0 + \beta_2) – \beta_0 = \mu_B – \mu_P\)</span></li>
+<li><span class="math inline">\(\beta_3 =  (\beta_0 + \beta_3) – \beta_0 = \mu_C – \mu_P\)</span></li>
 </ul>
 <p>So, the following must be interchangeable:</p>
 <p><span class="math display">\[H_0: \beta_1 = \beta_2 = \beta_3 = 0 ~~\longleftrightarrow~~ H_0: \mu_A – \mu_P = \mu_B – \mu_P = \mu_C – \mu_P = 0\]</span></p>
@@ -892,8 +897,7 @@ A       &amp; 1 &amp;   Y = \beta_0 + \beta_1 X + \beta_2(1) + \beta_3(1\cdot X)
 <span id="cb392-2"><a href="more-on-multiple-linear-regression.html#cb392-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>weight, <span class="at">y=</span>glu.red, <span class="at">color=</span>drug) ) <span class="sc">+</span> </span>
 <span id="cb392-3"><a href="more-on-multiple-linear-regression.html#cb392-3" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">x=</span>weight, <span class="at">y=</span>glu.red, <span class="at">color=</span>drug), <span class="at">se=</span><span class="cn">FALSE</span>, <span class="at">method=</span><span class="st">&quot;lm&quot;</span>) <span class="sc">+</span> </span>
 <span id="cb392-4"><a href="more-on-multiple-linear-regression.html#cb392-4" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
-<pre><code>## `geom_smooth()` using formula
-## = &#39;y ~ x&#39;</code></pre>
+<pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="introStatModeling_files/figure-html/ch7.17-1.png" width="672" /></p>
 <p>We get to see the scatter of points, plus both a linear trend line for both drug groups. Here are some preliminary observations:</p>
 <ul>
@@ -1014,8 +1018,7 @@ A       &amp; 0 &amp;   31.116 - 0.013\times\textrm{weight} - 9.087() \\
 <p><span class="math display">\[D_A = \left\{\begin{array}{ll} 1 &amp; \textrm{if drug } A \\ 0 &amp; \textrm{otherwise}\end{array}\right., ~~~ D_B = \left\{\begin{array}{ll} 1 &amp; \textrm{if drug } B \\ 0 &amp; \textrm{otherwise}\end{array}\right.,~~~ D_C = \left\{\begin{array}{ll} 1 &amp; \textrm{if drug } C \\ 0 &amp; \textrm{otherwise}\end{array}\right.\]</span></p>
 <p>The above dummy variable coding scheme is the most meaningful way to code drug for this analysis because the placebo is the natural choice for a “reference” drug.</p>
 <p>The data are in the R workspace <code>drug4.RData</code> and let’s look at an advanced scatterplot</p>
-<pre><code>## `geom_smooth()` using formula
-## = &#39;y ~ x&#39;</code></pre>
+<pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="introStatModeling_files/figure-html/ch7.23-1.png" width="672" /></p>
 <p><em>Preliminary assessment:</em> It appears that drugs <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> perform very similarly across individuals of varying weights but lose their effectiveness in heavier individuals. However, weight does not appear to have as much of an impact on the effectiveness of drug <span class="math inline">\(C\)</span> (fairly shallow slope); moreover, glucose reduction for <span class="math inline">\(C\)</span> is generally quite high regardless of weight. The placebo <span class="math inline">\(P\)</span> appears to be largely ineffective (the responses tend to fluctuate around zero), but it is interesting that there appears to be some weight effect in the placebo (can you think of an explanation for this?).</p>
 <p><strong>Step 1.</strong> We start with the full interaction (“different slopes”) model. We also choose to set the placebo as the reference level. Checking residual assumptions are left as an exercise to the interested reader.</p>

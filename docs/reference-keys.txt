@@ -193,6 +193,7 @@ full-analysis-formal-comparison-of-margarines
 further-study
 introduction-to-multiple-regression
 regression-model
+simple-linear-regression
 fitting-a-regression-model
 simple-linear-regression-example
 multiple-regression-example

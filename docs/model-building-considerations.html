@@ -23,7 +23,7 @@
 <meta name="author" content="Michael R. Hughes and Thomas J. Fisher" />
 
 
-<meta name="date" content="2025-07-30" />
+<meta name="date" content="2025-12-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -59,6 +59,7 @@
 
 
 <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -132,6 +133,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -293,7 +295,10 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="5" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html"><i class="fa fa-check"></i><b>5</b> Introduction to Multiple Regression</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#regression-model"><i class="fa fa-check"></i><b>5.1</b> Regression Model</a></li>
+<li class="chapter" data-level="5.1" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#regression-model"><i class="fa fa-check"></i><b>5.1</b> Regression Model</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#simple-linear-regression"><i class="fa fa-check"></i><b>5.1.1</b> Simple Linear Regression</a></li>
+</ul></li>
 <li class="chapter" data-level="5.2" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#fitting-a-regression-model"><i class="fa fa-check"></i><b>5.2</b> Fitting a regression model</a>
 <ul>
 <li class="chapter" data-level="5.2.1" data-path="introduction-to-multiple-regression.html"><a href="introduction-to-multiple-regression.html#simple-linear-regression-example"><i class="fa fa-check"></i><b>5.2.1</b> Simple Linear Regression Example</a></li>
@@ -624,8 +629,7 @@ The thing you should notice is what a violation looks like. Typically, a violati
 <span id="cb429-3"><a href="model-building-considerations.html#cb429-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>Girth, <span class="at">y=</span>Volume) ) <span class="sc">+</span> </span>
 <span id="cb429-4"><a href="model-building-considerations.html#cb429-4" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">x=</span>Girth, <span class="at">y=</span>Volume), <span class="at">method=</span><span class="st">&quot;loess&quot;</span>) <span class="sc">+</span> </span>
 <span id="cb429-5"><a href="model-building-considerations.html#cb429-5" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
-<pre><code>## `geom_smooth()` using formula
-## = &#39;y ~ x&#39;</code></pre>
+<pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="introStatModeling_files/figure-html/ch8.14-1.png" width="672" /></p>
 <p>It’s pretty clear that the relationship is non-linear: the rate of increase in volume per inch of girth is higher for larger trees. If we fit the model <code>VOLUME</code> = <span class="math inline">\(\beta_0\)</span> + <span class="math inline">\(\beta_1\)</span><code>GIRTH</code> + <span class="math inline">\(\varepsilon\)</span> to these data, we are erroneously forcing the same rate of increase in volume regardless of tree size, since the rate parameter <span class="math inline">\(\beta_1\)</span> is the same regardless of girth. Let’s see the effect of doing this on the residual diagnostics:</p>
 <div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb431-1"><a href="model-building-considerations.html#cb431-1" tabindex="-1"></a>tree.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(Volume <span class="sc">~</span> Girth, <span class="at">data=</span>trees)     <span class="co"># fits an incorrect straight-line model</span></span>
